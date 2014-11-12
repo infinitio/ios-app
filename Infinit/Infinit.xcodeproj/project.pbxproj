@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		83568D991A136DB800766DA3 /* libGap-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83568D961A136DB300766DA3 /* libGap-iOS.a */; };
 		83B32D631A136485004AB945 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B32D621A136485004AB945 /* main.m */; };
 		83B32D691A136485004AB945 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B32D681A136485004AB945 /* ViewController.m */; };
 		83B32D6E1A136485004AB945 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83B32D6D1A136485004AB945 /* Images.xcassets */; };
@@ -48,30 +47,10 @@
 		83F4D0871A1389250068BEB2 /* libmetaclient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D0861A1389250068BEB2 /* libmetaclient.a */; };
 		83F4D0891A13892F0068BEB2 /* libtrophonius-client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D0881A13892F0068BEB2 /* libtrophonius-client.a */; };
 		83F4D08B1A1389430068BEB2 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D08A1A1389430068BEB2 /* libiconv.dylib */; };
+		83F4D0961A13902A0068BEB2 /* libGap-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D0931A1390170068BEB2 /* libGap-iOS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		83568D911A136DB300766DA3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83568D721A136D5D00766DA3 /* Gap.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 83568D781A136D7700766DA3;
-			remoteInfo = "Gap-iOS";
-		};
-		83568D951A136DB300766DA3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83568D721A136D5D00766DA3 /* Gap.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 83568D791A136D7700766DA3;
-			remoteInfo = "Gap-iOS";
-		};
-		83568D971A136DB300766DA3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83568D721A136D5D00766DA3 /* Gap.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 83568D841A136D7800766DA3;
-			remoteInfo = "Gap-iOSTests";
-		};
 		83B32D771A136486004AB945 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83B32D551A136485004AB945 /* Project object */;
@@ -79,10 +58,30 @@
 			remoteGlobalIDString = 83B32D5C1A136485004AB945;
 			remoteInfo = Infinit;
 		};
+		83F4D0921A1390170068BEB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83F4D08D1A1390160068BEB2 /* Gap.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 83568D791A136D7700766DA3;
+			remoteInfo = "Gap-iOS";
+		};
+		83F4D0941A1390170068BEB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83F4D08D1A1390160068BEB2 /* Gap.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 83568D841A136D7800766DA3;
+			remoteInfo = "Gap-iOSTests";
+		};
+		83F4D0971A1390340068BEB2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83F4D08D1A1390160068BEB2 /* Gap.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 83568D781A136D7700766DA3;
+			remoteInfo = "Gap-iOS";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		83568D721A136D5D00766DA3 /* Gap.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Gap.xcodeproj; path = "../../obj-c-gap/Gap/Gap.xcodeproj"; sourceTree = "<group>"; };
 		83B32D5D1A136485004AB945 /* Infinit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Infinit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83B32D611A136485004AB945 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83B32D621A136485004AB945 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -130,6 +129,7 @@
 		83F4D0861A1389250068BEB2 /* libmetaclient.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmetaclient.a; path = ../../../_build/ios/oracles/meta/client/lib/libmetaclient.a; sourceTree = "<group>"; };
 		83F4D0881A13892F0068BEB2 /* libtrophonius-client.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libtrophonius-client.a"; path = "../../../_build/ios/oracles/trophonius/client/lib/libtrophonius-client.a"; sourceTree = "<group>"; };
 		83F4D08A1A1389430068BEB2 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
+		83F4D08D1A1390160068BEB2 /* Gap.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Gap.xcodeproj; path = "../../objcpp-gap/Gap/Gap.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +137,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83F4D0961A13902A0068BEB2 /* libGap-iOS.a in Frameworks */,
 				83F4D08B1A1389430068BEB2 /* libiconv.dylib in Frameworks */,
 				83F4D0591A1388050068BEB2 /* libboost_signals-mt-s.a in Frameworks */,
 				83F4D07D1A1388C50068BEB2 /* libmetrics.a in Frameworks */,
@@ -162,7 +163,6 @@
 				83F4D0871A1389250068BEB2 /* libmetaclient.a in Frameworks */,
 				83F4D06B1A13883E0068BEB2 /* libssl.a in Frameworks */,
 				83F4D0851A1389120068BEB2 /* libminiupnp.a in Frameworks */,
-				83568D991A136DB800766DA3 /* libGap-iOS.a in Frameworks */,
 				83F4D0781A1388760068BEB2 /* libfrete.a in Frameworks */,
 				83F4D0831A1388F40068BEB2 /* libbackend.a in Frameworks */,
 				83F4D06D1A1388500068BEB2 /* libprotocol.a in Frameworks */,
@@ -183,15 +183,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		83568D731A136D5D00766DA3 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				83568D961A136DB300766DA3 /* libGap-iOS.a */,
-				83568D981A136DB300766DA3 /* Gap-iOSTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		83B32D541A136485004AB945 = {
 			isa = PBXGroup;
 			children = (
@@ -199,7 +190,7 @@
 				83B32D5F1A136485004AB945 /* Infinit */,
 				83B32D791A136486004AB945 /* InfinitTests */,
 				83B32D5E1A136485004AB945 /* Products */,
-				83568D721A136D5D00766DA3 /* Gap.xcodeproj */,
+				83F4D08D1A1390160068BEB2 /* Gap.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -302,6 +293,15 @@
 			name = Libraries;
 			sourceTree = "<group>";
 		};
+		83F4D08E1A1390160068BEB2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				83F4D0931A1390170068BEB2 /* libGap-iOS.a */,
+				83F4D0951A1390170068BEB2 /* Gap-iOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -316,7 +316,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				83568D921A136DB300766DA3 /* PBXTargetDependency */,
+				83F4D0981A1390340068BEB2 /* PBXTargetDependency */,
 			);
 			name = Infinit;
 			productName = Infinit;
@@ -372,8 +372,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 83568D731A136D5D00766DA3 /* Products */;
-					ProjectRef = 83568D721A136D5D00766DA3 /* Gap.xcodeproj */;
+					ProductGroup = 83F4D08E1A1390160068BEB2 /* Products */;
+					ProjectRef = 83F4D08D1A1390160068BEB2 /* Gap.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -385,18 +385,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		83568D961A136DB300766DA3 /* libGap-iOS.a */ = {
+		83F4D0931A1390170068BEB2 /* libGap-iOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libGap-iOS.a";
-			remoteRef = 83568D951A136DB300766DA3 /* PBXContainerItemProxy */;
+			remoteRef = 83F4D0921A1390170068BEB2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		83568D981A136DB300766DA3 /* Gap-iOSTests.xctest */ = {
+		83F4D0951A1390170068BEB2 /* Gap-iOSTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = "Gap-iOSTests.xctest";
-			remoteRef = 83568D971A136DB300766DA3 /* PBXContainerItemProxy */;
+			remoteRef = 83F4D0941A1390170068BEB2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -444,15 +444,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		83568D921A136DB300766DA3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Gap-iOS";
-			targetProxy = 83568D911A136DB300766DA3 /* PBXContainerItemProxy */;
-		};
 		83B32D781A136486004AB945 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 83B32D5C1A136485004AB945 /* Infinit */;
 			targetProxy = 83B32D771A136486004AB945 /* PBXContainerItemProxy */;
+		};
+		83F4D0981A1390340068BEB2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Gap-iOS";
+			targetProxy = 83F4D0971A1390340068BEB2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
