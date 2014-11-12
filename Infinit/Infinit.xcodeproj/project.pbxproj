@@ -48,6 +48,8 @@
 		83F4D0891A13892F0068BEB2 /* libtrophonius-client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D0881A13892F0068BEB2 /* libtrophonius-client.a */; };
 		83F4D08B1A1389430068BEB2 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D08A1A1389430068BEB2 /* libiconv.dylib */; };
 		83F4D0961A13902A0068BEB2 /* libGap-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D0931A1390170068BEB2 /* libGap-iOS.a */; };
+		83F4D09F1A13AE0D0068BEB2 /* InfinitPeerTransactionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F4D09E1A13AE0D0068BEB2 /* InfinitPeerTransactionsController.m */; };
+		83F4D0A21A13BC490068BEB2 /* InfinitPeerTransactionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F4D0A11A13BC490068BEB2 /* InfinitPeerTransactionCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -130,6 +132,10 @@
 		83F4D0881A13892F0068BEB2 /* libtrophonius-client.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libtrophonius-client.a"; path = "../../../_build/ios/oracles/trophonius/client/lib/libtrophonius-client.a"; sourceTree = "<group>"; };
 		83F4D08A1A1389430068BEB2 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		83F4D08D1A1390160068BEB2 /* Gap.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Gap.xcodeproj; path = "../../objcpp-gap/Gap/Gap.xcodeproj"; sourceTree = "<group>"; };
+		83F4D09D1A13AE0D0068BEB2 /* InfinitPeerTransactionsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitPeerTransactionsController.h; sourceTree = "<group>"; };
+		83F4D09E1A13AE0D0068BEB2 /* InfinitPeerTransactionsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitPeerTransactionsController.m; sourceTree = "<group>"; };
+		83F4D0A01A13BC490068BEB2 /* InfinitPeerTransactionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitPeerTransactionCell.h; sourceTree = "<group>"; };
+		83F4D0A11A13BC490068BEB2 /* InfinitPeerTransactionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitPeerTransactionCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +212,7 @@
 		83B32D5F1A136485004AB945 /* Infinit */ = {
 			isa = PBXGroup;
 			children = (
+				83F4D09C1A13ADC30068BEB2 /* Peer Transactions */,
 				83B32DF41A1365A9004AB945 /* Login */,
 				83B32D641A136485004AB945 /* AppDelegate.h */,
 				83B32E051A1365E9004AB945 /* AppDelegate.m */,
@@ -302,6 +309,17 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		83F4D09C1A13ADC30068BEB2 /* Peer Transactions */ = {
+			isa = PBXGroup;
+			children = (
+				83F4D09D1A13AE0D0068BEB2 /* InfinitPeerTransactionsController.h */,
+				83F4D09E1A13AE0D0068BEB2 /* InfinitPeerTransactionsController.m */,
+				83F4D0A01A13BC490068BEB2 /* InfinitPeerTransactionCell.h */,
+				83F4D0A11A13BC490068BEB2 /* InfinitPeerTransactionCell.m */,
+			);
+			name = "Peer Transactions";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -352,6 +370,11 @@
 				TargetAttributes = {
 					83B32D5C1A136485004AB945 = {
 						CreatedOnToolsVersion = 6.1;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					83B32D751A136486004AB945 = {
 						CreatedOnToolsVersion = 6.1;
@@ -427,8 +450,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				83B32E061A1365E9004AB945 /* AppDelegate.m in Sources */,
+				83F4D09F1A13AE0D0068BEB2 /* InfinitPeerTransactionsController.m in Sources */,
 				83B32D691A136485004AB945 /* ViewController.m in Sources */,
 				83B32E031A1365B1004AB945 /* InfinitLoginController.m in Sources */,
+				83F4D0A21A13BC490068BEB2 /* InfinitPeerTransactionCell.m in Sources */,
 				83B32D631A136485004AB945 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

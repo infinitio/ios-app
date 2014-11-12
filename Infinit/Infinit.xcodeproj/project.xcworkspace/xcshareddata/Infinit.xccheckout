@@ -10,22 +10,26 @@
 	<string>Infinit</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>0231D0A400E468B3D1E79460A4A8C8F25444FDE9</key>
+		<string>git.infinit.io:ios-app</string>
 		<key>2CBF2714414E477DC39C05184AC31F1B27BA1EA3</key>
 		<string>git.infinit.io:infinit</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>surface/ios/Infinit/Infinit.xcodeproj</string>
+	<string>Infinit/Infinit.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
+		<key>0231D0A400E468B3D1E79460A4A8C8F25444FDE9</key>
+		<string>../../..</string>
 		<key>2CBF2714414E477DC39C05184AC31F1B27BA1EA3</key>
 		<string>../../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>git.infinit.io:infinit</string>
+	<string>git.infinit.io:ios-app</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>2CBF2714414E477DC39C05184AC31F1B27BA1EA3</string>
+	<string>0231D0A400E468B3D1E79460A4A8C8F25444FDE9</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
@@ -34,7 +38,15 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>2CBF2714414E477DC39C05184AC31F1B27BA1EA3</string>
 			<key>IDESourceControlWCCName</key>
-			<string>ios-infinit</string>
+			<string>..</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>0231D0A400E468B3D1E79460A4A8C8F25444FDE9</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ios</string>
 		</dict>
 	</array>
 </dict>

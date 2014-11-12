@@ -8,8 +8,10 @@
 
 #import "InfinitLoginController.h"
 
+#import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitStateResult.h>
+#import <Gap/InfinitUserManager.h>
 
 @implementation InfinitLoginController
 
@@ -34,7 +36,9 @@
 - (IBAction)login:(id)sender
 {
   [self.spinner startAnimating];
+  self.spinner.hidden = NO;
   self.login.hidden = YES;
+  self.login.enabled = NO;
   if (self.email.text.length == 0)
   {
     self.error.hidden = NO;
@@ -47,23 +51,27 @@
     self.error.text = NSLocalizedString(@"Enter your password", nil);
     return;
   }
-  NSLog(@"xxx login tapped");
   [[InfinitStateManager sharedInstance] login:self.email.text
                                      password:self.password.text
                               performSelector:@selector(loginCallback:)
                                      onObject:self];
   [self.spinner stopAnimating];
+  self.spinner.hidden = YES;
   self.login.hidden = NO;
+  self.login.enabled = YES;
 }
 
 - (void)loginCallback:(InfinitStateResult*)result
 {
   if (result.success)
   {
+    [InfinitUserManager sharedInstance];
+    [InfinitPeerTransactionManager sharedInstance];
+    [self performSegueWithIdentifier:@"logged_in" sender:self];
   }
   else
   {
-    // XXX Handle login error
+    self.error.text = [NSString stringWithFormat:@"Error: %d", result.status];
   }
 }
 
