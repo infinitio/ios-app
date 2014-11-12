@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>8CC33616-422A-4345-9E06-80E38944F8F9</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Infinit</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>2CBF2714414E477DC39C05184AC31F1B27BA1EA3</key>
+		<string>git.infinit.io:infinit</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>surface/ios/Infinit/Infinit.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>2CBF2714414E477DC39C05184AC31F1B27BA1EA3</key>
+		<string>../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>git.infinit.io:infinit</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>2CBF2714414E477DC39C05184AC31F1B27BA1EA3</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>2CBF2714414E477DC39C05184AC31F1B27BA1EA3</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ios-infinit</string>
+		</dict>
+	</array>
+</dict>
+</plist>
