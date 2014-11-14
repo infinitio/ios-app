@@ -18,13 +18,28 @@
 
 @implementation InfinitPeerTransactionsController
 {
-  NSArray* _transactions;
+  NSMutableArray* _transactions;
+}
+
+#pragma mark - Init
+
+- (void)dealloc
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  _transactions = [[InfinitPeerTransactionManager sharedInstance] transactions];
+  _transactions = [[[InfinitPeerTransactionManager sharedInstance] transactions] mutableCopy];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(transactionUpdated:)
+                                               name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(transactionAdded:)
+                                               name:INFINIT_NEW_PEER_TRANSACTION_NOTIFICATION
+                                             object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -32,12 +47,49 @@
   [super didReceiveMemoryWarning];
 }
 
+#pragma mark - Update Handling
+
+- (void)transactionUpdated:(NSNotification*)notification
+{
+  @synchronized(_transactions)
+  {
+    NSInteger index = 0;
+    for (InfinitPeerTransaction* transaction in _transactions)
+    {
+      if ([transaction.id_ isEqual:notification.userInfo[@"id"]])
+      {
+        [self.table_view beginUpdates];
+        [self.table_view reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]
+                               withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.table_view endUpdates];
+        return;
+      }
+      index++;
+    }
+  }
+}
+
+- (void)transactionAdded:(NSNotification*)notification
+{
+  @synchronized(_transactions)
+  {
+    NSNumber* id_ = notification.userInfo[@"id"];
+    InfinitPeerTransaction* transaction =
+      [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
+    [_transactions insertObject:transaction atIndex:0];
+    [self.table_view beginUpdates];
+    [self.table_view insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
+                           withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.table_view endUpdates];
+  }
+}
+
 #pragma mark - Table
 
-- (BOOL)tableView:(UITableView*)tableView
-shouldHighlightRowAtIndexPath:(NSIndexPath*)indexPath
+- (NSString*)tableView:(UITableView*)tableView
+titleForHeaderInSection:(NSInteger)section
 {
-  return NO;
+  return @"Peer Transactions";
 }
 
 - (CGFloat)tableView:(UITableView*)tableView
@@ -49,13 +101,16 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
 - (CGFloat)tableView:(UITableView*)tableView
 heightForHeaderInSection:(NSInteger)section
 {
-  return 30.0f;
+  return 75.0f;
 }
 
 - (NSInteger)tableView:(UITableView*)tableView
  numberOfRowsInSection:(NSInteger)section
 {
-  return _transactions.count;
+  @synchronized(_transactions)
+  {
+    return _transactions.count;
+  }
 }
 
 - (UITableViewCell*)tableView:(UITableView*)tableView
@@ -63,13 +118,8 @@ heightForHeaderInSection:(NSInteger)section
 {
   NSString* identifier = @"peer_transaction_cell";
   InfinitPeerTransactionCell* cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-  if (cell == nil)
-  {
-    cell = [[InfinitPeerTransactionCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                             reuseIdentifier:identifier];
-  }
   InfinitPeerTransaction* transaction = _transactions[indexPath.row];
-  [cell setUpCellWithTransaction:transaction];
+  [cell setupCellWithTransaction:transaction];
   return cell;
 }
 
@@ -80,11 +130,7 @@ heightForHeaderInSection:(NSInteger)section
   CGPoint button_pos = [sender convertPoint:CGPointZero toView:self.table_view];
   NSIndexPath* index = [self.table_view indexPathForRowAtPoint:button_pos];
   if (index != nil)
-  {
-    InfinitPeerTransactionCell* cell =
-      (InfinitPeerTransactionCell*)[self.table_view cellForRowAtIndexPath:index];
-  [[InfinitPeerTransactionManager sharedInstance] acceptTransaction:cell.transaction];
-  }
+    [[InfinitPeerTransactionManager sharedInstance] acceptTransaction:_transactions[index.row]];
 }
 
 - (IBAction)rejectTapped:(UIButton*)sender
@@ -92,11 +138,7 @@ heightForHeaderInSection:(NSInteger)section
   CGPoint button_pos = [sender convertPoint:CGPointZero toView:self.table_view];
   NSIndexPath* index = [self.table_view indexPathForRowAtPoint:button_pos];
   if (index != nil)
-  {
-    InfinitPeerTransactionCell* cell =
-      (InfinitPeerTransactionCell*)[self.table_view cellForRowAtIndexPath:index];
-    [[InfinitPeerTransactionManager sharedInstance] rejectTransaction:cell.transaction];
-  }
+    [[InfinitPeerTransactionManager sharedInstance] rejectTransaction:_transactions[index.row]];
 }
 
 /*

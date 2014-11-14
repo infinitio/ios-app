@@ -12,13 +12,12 @@
 
 @interface InfinitPeerTransactionCell : UITableViewCell
 
-@property (weak) IBOutlet UILabel* filename;
-@property (weak) IBOutlet UILabel* other_person;
-@property (weak) IBOutlet UILabel* status;
-@property (weak) IBOutlet UIButton* accept;
-@property (weak) IBOutlet UIButton* reject;
-@property (weak) InfinitPeerTransaction* transaction;
+@property (nonatomic, weak) IBOutlet UILabel* filename;
+@property (nonatomic, weak) IBOutlet UILabel* other_person;
+@property (nonatomic, weak) IBOutlet UILabel* status;
+@property (nonatomic, weak) IBOutlet UIButton* accept;
+@property (nonatomic, weak) IBOutlet UIButton* reject;
 
-- (void)setUpCellWithTransaction:(InfinitPeerTransaction*)transaction;
+- (void)setupCellWithTransaction:(InfinitPeerTransaction*)transaction;
 
 @end

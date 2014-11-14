@@ -12,6 +12,8 @@
 	<dict>
 		<key>0231D0A400E468B3D1E79460A4A8C8F25444FDE9</key>
 		<string>git.infinit.io:ios-app</string>
+		<key>0ABE5A79E60A41543B3649DEF8DC6A02FA5B6819</key>
+		<string>git.infinit.io:objc++-gap</string>
 		<key>2CBF2714414E477DC39C05184AC31F1B27BA1EA3</key>
 		<string>git.infinit.io:infinit</string>
 	</dict>
@@ -21,8 +23,10 @@
 	<dict>
 		<key>0231D0A400E468B3D1E79460A4A8C8F25444FDE9</key>
 		<string>../../..</string>
+		<key>0ABE5A79E60A41543B3649DEF8DC6A02FA5B6819</key>
+		<string>../../../../objcpp-gap</string>
 		<key>2CBF2714414E477DC39C05184AC31F1B27BA1EA3</key>
-		<string>../../../../..</string>
+		<string>../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>git.infinit.io:ios-app</string>
@@ -38,7 +42,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>2CBF2714414E477DC39C05184AC31F1B27BA1EA3</string>
 			<key>IDESourceControlWCCName</key>
-			<string>..</string>
+			<string></string>
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
@@ -47,6 +51,14 @@
 			<string>0231D0A400E468B3D1E79460A4A8C8F25444FDE9</string>
 			<key>IDESourceControlWCCName</key>
 			<string>ios</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>0ABE5A79E60A41543B3649DEF8DC6A02FA5B6819</string>
+			<key>IDESourceControlWCCName</key>
+			<string>objcpp-gap</string>
 		</dict>
 	</array>
 </dict>

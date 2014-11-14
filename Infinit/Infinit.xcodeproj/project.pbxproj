@@ -50,6 +50,11 @@
 		83F4D0961A13902A0068BEB2 /* libGap-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D0931A1390170068BEB2 /* libGap-iOS.a */; };
 		83F4D09F1A13AE0D0068BEB2 /* InfinitPeerTransactionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F4D09E1A13AE0D0068BEB2 /* InfinitPeerTransactionsController.m */; };
 		83F4D0A21A13BC490068BEB2 /* InfinitPeerTransactionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F4D0A11A13BC490068BEB2 /* InfinitPeerTransactionCell.m */; };
+		83F4D0A61A14B48D0068BEB2 /* InfinitPeerSendController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F4D0A51A14B48D0068BEB2 /* InfinitPeerSendController.m */; };
+		83F72C9C1A1502940088106E /* InfinitPeerSendFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F72C9B1A1502940088106E /* InfinitPeerSendFileCell.m */; };
+		83F72CA11A15123F0088106E /* InfinitLinkTransactionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F72CA01A15123F0088106E /* InfinitLinkTransactionsController.m */; };
+		83F72CA41A15131A0088106E /* InfinitLinkTransactionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F72CA31A15131A0088106E /* InfinitLinkTransactionCell.m */; };
+		83FE9C8B1A161F6D00FC1CFD /* InfinitLinkSendController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FE9C8A1A161F6D00FC1CFD /* InfinitLinkSendController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,6 +141,16 @@
 		83F4D09E1A13AE0D0068BEB2 /* InfinitPeerTransactionsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitPeerTransactionsController.m; sourceTree = "<group>"; };
 		83F4D0A01A13BC490068BEB2 /* InfinitPeerTransactionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitPeerTransactionCell.h; sourceTree = "<group>"; };
 		83F4D0A11A13BC490068BEB2 /* InfinitPeerTransactionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitPeerTransactionCell.m; sourceTree = "<group>"; };
+		83F4D0A41A14B48D0068BEB2 /* InfinitPeerSendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitPeerSendController.h; sourceTree = "<group>"; };
+		83F4D0A51A14B48D0068BEB2 /* InfinitPeerSendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitPeerSendController.m; sourceTree = "<group>"; };
+		83F72C9A1A1502940088106E /* InfinitPeerSendFileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitPeerSendFileCell.h; sourceTree = "<group>"; };
+		83F72C9B1A1502940088106E /* InfinitPeerSendFileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitPeerSendFileCell.m; sourceTree = "<group>"; };
+		83F72C9F1A15123F0088106E /* InfinitLinkTransactionsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitLinkTransactionsController.h; sourceTree = "<group>"; };
+		83F72CA01A15123F0088106E /* InfinitLinkTransactionsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitLinkTransactionsController.m; sourceTree = "<group>"; };
+		83F72CA21A15131A0088106E /* InfinitLinkTransactionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitLinkTransactionCell.h; sourceTree = "<group>"; };
+		83F72CA31A15131A0088106E /* InfinitLinkTransactionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitLinkTransactionCell.m; sourceTree = "<group>"; };
+		83FE9C891A161F6D00FC1CFD /* InfinitLinkSendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitLinkSendController.h; sourceTree = "<group>"; };
+		83FE9C8A1A161F6D00FC1CFD /* InfinitLinkSendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitLinkSendController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +227,9 @@
 		83B32D5F1A136485004AB945 /* Infinit */ = {
 			isa = PBXGroup;
 			children = (
+				83FE9C871A161F4D00FC1CFD /* Link Send */,
+				83F4D0A31A14B4680068BEB2 /* Peer Send */,
+				83F72C9E1A15120D0088106E /* Link Transactions */,
 				83F4D09C1A13ADC30068BEB2 /* Peer Transactions */,
 				83B32DF41A1365A9004AB945 /* Login */,
 				83B32D641A136485004AB945 /* AppDelegate.h */,
@@ -318,6 +336,37 @@
 				83F4D0A11A13BC490068BEB2 /* InfinitPeerTransactionCell.m */,
 			);
 			name = "Peer Transactions";
+			sourceTree = "<group>";
+		};
+		83F4D0A31A14B4680068BEB2 /* Peer Send */ = {
+			isa = PBXGroup;
+			children = (
+				83F4D0A41A14B48D0068BEB2 /* InfinitPeerSendController.h */,
+				83F4D0A51A14B48D0068BEB2 /* InfinitPeerSendController.m */,
+				83F72C9A1A1502940088106E /* InfinitPeerSendFileCell.h */,
+				83F72C9B1A1502940088106E /* InfinitPeerSendFileCell.m */,
+			);
+			name = "Peer Send";
+			sourceTree = "<group>";
+		};
+		83F72C9E1A15120D0088106E /* Link Transactions */ = {
+			isa = PBXGroup;
+			children = (
+				83F72C9F1A15123F0088106E /* InfinitLinkTransactionsController.h */,
+				83F72CA01A15123F0088106E /* InfinitLinkTransactionsController.m */,
+				83F72CA21A15131A0088106E /* InfinitLinkTransactionCell.h */,
+				83F72CA31A15131A0088106E /* InfinitLinkTransactionCell.m */,
+			);
+			name = "Link Transactions";
+			sourceTree = "<group>";
+		};
+		83FE9C871A161F4D00FC1CFD /* Link Send */ = {
+			isa = PBXGroup;
+			children = (
+				83FE9C891A161F6D00FC1CFD /* InfinitLinkSendController.h */,
+				83FE9C8A1A161F6D00FC1CFD /* InfinitLinkSendController.m */,
+			);
+			name = "Link Send";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -450,11 +499,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				83B32E061A1365E9004AB945 /* AppDelegate.m in Sources */,
+				83FE9C8B1A161F6D00FC1CFD /* InfinitLinkSendController.m in Sources */,
 				83F4D09F1A13AE0D0068BEB2 /* InfinitPeerTransactionsController.m in Sources */,
 				83B32D691A136485004AB945 /* ViewController.m in Sources */,
+				83F72C9C1A1502940088106E /* InfinitPeerSendFileCell.m in Sources */,
+				83F4D0A61A14B48D0068BEB2 /* InfinitPeerSendController.m in Sources */,
 				83B32E031A1365B1004AB945 /* InfinitLoginController.m in Sources */,
+				83F72CA41A15131A0088106E /* InfinitLinkTransactionCell.m in Sources */,
 				83F4D0A21A13BC490068BEB2 /* InfinitPeerTransactionCell.m in Sources */,
 				83B32D631A136485004AB945 /* main.m in Sources */,
+				83F72CA11A15123F0088106E /* InfinitLinkTransactionsController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

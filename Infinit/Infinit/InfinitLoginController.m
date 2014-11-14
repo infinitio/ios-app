@@ -89,7 +89,7 @@
 - (void)animateTextField:(UITextField*)textField
                       up:(BOOL)up
 {
-  CGFloat dist = 95.0f;
+  CGFloat dist = 60.0f;
   CGFloat duration = 0.3f;
 
   CGFloat movement = (up ? -dist : dist);

@@ -10,15 +10,6 @@
 
 @implementation InfinitPeerTransactionCell
 
-- (void)awakeFromNib
-{
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-  [super setSelected:selected animated:animated];
-}
-
 - (NSString*)statusText:(gap_TransactionStatus)status
 {
   switch (status)
@@ -52,9 +43,8 @@
   }
 }
 
-- (void)setUpCellWithTransaction:(InfinitPeerTransaction*)transaction
+- (void)setupCellWithTransaction:(InfinitPeerTransaction*)transaction
 {
-  _transaction = transaction;
   if (transaction.sender.is_self)
     self.other_person.text = transaction.recipient.fullname;
   else
@@ -65,6 +55,7 @@
   self.accept.enabled = transaction.receivable;
   self.reject.hidden = !transaction.receivable;
   self.reject.enabled = transaction.receivable;
+  [self setNeedsDisplay];
 }
 
 @end
