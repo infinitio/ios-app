@@ -84,7 +84,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-49" y="225"/>
+            <point key="canvasLocation" x="185" y="-795"/>
         </scene>
         <!--Peer Send-->
         <scene sceneID="ufX-Ps-ROL">
@@ -201,51 +201,60 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Other User" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sOw-sX-HUu">
-                                                    <rect key="frame" x="22" y="8" width="66" height="16"/>
+                                                    <rect key="frame" x="70" y="15" width="66" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Filename" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eba-iw-l3M">
-                                                    <rect key="frame" x="22" y="35" width="55" height="16"/>
+                                                    <rect key="frame" x="70" y="42" width="55" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Status" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E1W-V2-SNv">
-                                                    <rect key="frame" x="22" y="62" width="39" height="16"/>
+                                                    <rect key="frame" x="70" y="68" width="39" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wWv-Eh-hmx">
-                                                    <rect key="frame" x="529" y="50" width="47" height="32"/>
+                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wWv-Eh-hmx">
+                                                    <rect key="frame" x="529" y="46" width="47" height="32"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <state key="normal" title="Reject">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
-                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h4m-T5-sby">
-                                                    <rect key="frame" x="524" y="7" width="52" height="32"/>
+                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h4m-T5-sby">
+                                                    <rect key="frame" x="524" y="8" width="52" height="32"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <state key="normal" title="Accept">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FEr-Cc-1Cf">
+                                                    <rect key="frame" x="9" y="25" width="50" height="50"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="50" id="SBn-iq-NqD"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="E1W-V2-SNv" firstAttribute="leading" secondItem="6OZ-0q-5AL" secondAttribute="leading" constant="70" id="B8S-0I-Eld"/>
+                                                <constraint firstItem="FEr-Cc-1Cf" firstAttribute="leading" secondItem="6OZ-0q-5AL" secondAttribute="leading" constant="9" id="DFw-Zk-z6D"/>
                                                 <constraint firstItem="h4m-T5-sby" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="sOw-sX-HUu" secondAttribute="trailing" constant="30" id="Gzp-8R-vQI"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="wWv-Eh-hmx" secondAttribute="trailing" constant="16" id="HyM-fO-Liv"/>
                                                 <constraint firstItem="h4m-T5-sby" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="E1W-V2-SNv" secondAttribute="trailing" constant="30" id="LSv-Gp-IdC"/>
-                                                <constraint firstItem="sOw-sX-HUu" firstAttribute="leading" secondItem="6OZ-0q-5AL" secondAttribute="leadingMargin" constant="14" id="Li5-0v-2z8"/>
-                                                <constraint firstItem="E1W-V2-SNv" firstAttribute="leading" secondItem="6OZ-0q-5AL" secondAttribute="leadingMargin" constant="14" id="YMr-7a-id6"/>
-                                                <constraint firstItem="eba-iw-l3M" firstAttribute="leading" secondItem="6OZ-0q-5AL" secondAttribute="leadingMargin" constant="14" id="cIH-SL-gbm"/>
+                                                <constraint firstItem="eba-iw-l3M" firstAttribute="leading" secondItem="6OZ-0q-5AL" secondAttribute="leading" constant="70" id="S9Y-mN-nAK"/>
+                                                <constraint firstItem="sOw-sX-HUu" firstAttribute="leading" secondItem="6OZ-0q-5AL" secondAttribute="leading" constant="70" id="Y3G-a5-0zK"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="h4m-T5-sby" secondAttribute="trailing" constant="16" id="jax-ig-x9a"/>
                                                 <constraint firstItem="h4m-T5-sby" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eba-iw-l3M" secondAttribute="trailing" constant="30" id="mlY-FN-hNg"/>
+                                                <constraint firstAttribute="centerY" secondItem="FEr-Cc-1Cf" secondAttribute="centerY" id="zG6-IU-bMw"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="accept" destination="h4m-T5-sby" id="8Uu-Ci-otU"/>
+                                            <outlet property="avatar" destination="FEr-Cc-1Cf" id="zis-Sw-kuo"/>
                                             <outlet property="filename" destination="eba-iw-l3M" id="Iyk-uk-0YG"/>
                                             <outlet property="other_person" destination="sOw-sX-HUu" id="KYp-JP-qZA"/>
                                             <outlet property="reject" destination="wWv-Eh-hmx" id="Re3-lF-Jt8"/>

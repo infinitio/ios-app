@@ -45,10 +45,8 @@
 
 - (void)setupCellWithTransaction:(InfinitPeerTransaction*)transaction
 {
-  if (transaction.sender.is_self)
-    self.other_person.text = transaction.recipient.fullname;
-  else
-    self.other_person.text = transaction.sender.fullname;
+  self.avatar.image = transaction.other_user.avatar;
+  self.other_person.text = transaction.other_user.fullname;
   self.filename.text = transaction.files[0];
   self.status.text = [self statusText:transaction.status];
   self.accept.hidden = !transaction.receivable;

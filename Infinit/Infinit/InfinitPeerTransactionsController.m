@@ -9,6 +9,7 @@
 #import "InfinitPeerTransactionsController.h"
 
 #import <Gap/InfinitPeerTransactionManager.h>
+#import <Gap/InfinitUserManager.h>
 
 #import "InfinitPeerTransactionCell.h"
 
@@ -39,6 +40,10 @@
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(transactionAdded:)
                                                name:INFINIT_NEW_PEER_TRANSACTION_NOTIFICATION
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(newAvatar:)
+                                               name:INFINIT_USER_AVATAR_NOTIFICATION
                                              object:nil];
 }
 
@@ -81,6 +86,34 @@
     [self.table_view insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
                            withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.table_view endUpdates];
+  }
+}
+
+- (void)newAvatar:(NSNotification*)notification
+{
+  NSNumber* user_id = notification.userInfo[@"id"];
+  InfinitUser* user = [[InfinitUserManager sharedInstance] userWithId:user_id];
+  NSUInteger indexes[_transactions.count];
+  NSUInteger size = 0;
+  NSUInteger row = 0;
+  @synchronized(_transactions)
+  {
+    for (InfinitPeerTransaction* transaction in _transactions)
+    {
+      if ([transaction.other_user isEqual:user])
+      {
+        indexes[++size] = row;
+      }
+      row++;
+    }
+    if (size > 0)
+    {
+      NSIndexPath* index_path = [NSIndexPath indexPathWithIndexes:indexes length:size];
+      [self.table_view beginUpdates];
+      [self.table_view reloadRowsAtIndexPaths:@[index_path]
+                             withRowAnimation:UITableViewRowAnimationAutomatic];
+      [self.table_view endUpdates];
+    }
   }
 }
 

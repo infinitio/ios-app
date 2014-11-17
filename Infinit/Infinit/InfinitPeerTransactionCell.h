@@ -12,6 +12,7 @@
 
 @interface InfinitPeerTransactionCell : UITableViewCell
 
+@property (nonatomic, weak) IBOutlet UIImageView* avatar;
 @property (nonatomic, weak) IBOutlet UILabel* filename;
 @property (nonatomic, weak) IBOutlet UILabel* other_person;
 @property (nonatomic, weak) IBOutlet UILabel* status;

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		836F5C8C1A166720007C9C4E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836F5C8B1A166720007C9C4E /* SystemConfiguration.framework */; };
 		83B32D631A136485004AB945 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B32D621A136485004AB945 /* main.m */; };
 		83B32D691A136485004AB945 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B32D681A136485004AB945 /* ViewController.m */; };
 		83B32D6E1A136485004AB945 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83B32D6D1A136485004AB945 /* Images.xcassets */; };
@@ -89,6 +90,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		836F5C8B1A166720007C9C4E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		83B32D5D1A136485004AB945 /* Infinit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Infinit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83B32D611A136485004AB945 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83B32D621A136485004AB945 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				836F5C8C1A166720007C9C4E /* SystemConfiguration.framework in Frameworks */,
 				83F4D0961A13902A0068BEB2 /* libGap-iOS.a in Frameworks */,
 				83F4D08B1A1389430068BEB2 /* libiconv.dylib in Frameworks */,
 				83F4D0591A1388050068BEB2 /* libboost_signals-mt-s.a in Frameworks */,
@@ -204,9 +207,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		836F5C8A1A16670F007C9C4E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				836F5C8B1A166720007C9C4E /* SystemConfiguration.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		83B32D541A136485004AB945 = {
 			isa = PBXGroup;
 			children = (
+				836F5C8A1A16670F007C9C4E /* Frameworks */,
 				83F4D0211A13740F0068BEB2 /* Libraries */,
 				83B32D5F1A136485004AB945 /* Infinit */,
 				83B32D791A136486004AB945 /* InfinitTests */,

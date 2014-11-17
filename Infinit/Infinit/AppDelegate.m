@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 
+#import <Gap/InfinitConnectionManager.h>
 #import <Gap/InfinitStateManager.h>
 
 @interface AppDelegate ()
@@ -18,6 +19,7 @@
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
+  [InfinitConnectionManager sharedInstance];
   [InfinitStateManager startState];
   return YES;
 }
