@@ -59,6 +59,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		8396104D1A2326680044B874 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83F4D08D1A1390160068BEB2 /* Gap.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 83F35D1F1A1D02EE00DF7F35;
+			remoteInfo = "Gap-OSX";
+		};
 		83B32D771A136486004AB945 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83B32D551A136485004AB945 /* Project object */;
@@ -72,13 +79,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 83568D791A136D7700766DA3;
 			remoteInfo = "Gap-iOS";
-		};
-		83F4D0941A1390170068BEB2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83F4D08D1A1390160068BEB2 /* Gap.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 83568D841A136D7800766DA3;
-			remoteInfo = "Gap-iOSTests";
 		};
 		83F4D0971A1390340068BEB2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -334,7 +334,7 @@
 			isa = PBXGroup;
 			children = (
 				83F4D0931A1390170068BEB2 /* libGap-iOS.a */,
-				83F4D0951A1390170068BEB2 /* Gap-iOSTests.xctest */,
+				8396104E1A2326680044B874 /* Gap-OSX.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -469,18 +469,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		8396104E1A2326680044B874 /* Gap-OSX.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = "Gap-OSX.framework";
+			remoteRef = 8396104D1A2326680044B874 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		83F4D0931A1390170068BEB2 /* libGap-iOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = "libGap-iOS.a";
 			remoteRef = 83F4D0921A1390170068BEB2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		83F4D0951A1390170068BEB2 /* Gap-iOSTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Gap-iOSTests.xctest";
-			remoteRef = 83F4D0941A1390170068BEB2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -643,24 +643,24 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/elle/aws/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/elle/aws/miniupnp/miniupnpc/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/elle/cryptography/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/elle/curl/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/elle/boost/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/elle/elle/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/elle/libarchive/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/elle/openssl/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/elle/protocol/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/elle/reactor/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/elle/zlib/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/metrics/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/oracles/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/elle/reactor/lib/reactor",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/elle/reactor/miniupnp/miniupnpc/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/oracles/meta/client/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/oracles/trophonius/client/lib",
+					../../../_build/ios/lib,
+					../../../_build/ios/elle/aws/lib,
+					../../../_build/ios/elle/aws/miniupnp/miniupnpc/lib,
+					../../../_build/ios/elle/cryptography/lib,
+					../../../_build/ios/elle/curl/lib,
+					../../../_build/ios/elle/boost/lib,
+					../../../_build/ios/elle/elle/lib,
+					../../../_build/ios/elle/libarchive/lib,
+					../../../_build/ios/elle/openssl/lib,
+					../../../_build/ios/elle/protocol/lib,
+					../../../_build/ios/elle/reactor/lib,
+					../../../_build/ios/elle/zlib/lib,
+					../../../_build/ios/metrics/lib,
+					../../../_build/ios/oracles/lib,
+					../../../_build/ios/elle/reactor/lib/reactor,
+					../../../_build/ios/elle/reactor/miniupnp/miniupnpc/lib,
+					../../../_build/ios/oracles/meta/client/lib,
+					../../../_build/ios/oracles/trophonius/client/lib,
 				);
 				LINKER_DISPLAYS_MANGLED_NAMES = YES;
 				ONLY_ACTIVE_ARCH = NO;
@@ -686,24 +686,24 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/elle/aws/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/elle/aws/miniupnp/miniupnpc/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/elle/cryptography/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/elle/curl/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/elle/boost/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/elle/elle/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/elle/libarchive/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/elle/openssl/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/elle/protocol/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/elle/reactor/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/elle/zlib/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/metrics/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/oracles/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/elle/reactor/lib/reactor",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/elle/reactor/miniupnp/miniupnpc/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/oracles/meta/client/lib",
-					"/Users/chris/sandbox/ios-infinit/_build/ios/oracles/trophonius/client/lib",
+					../../../_build/ios/lib,
+					../../../_build/ios/elle/aws/lib,
+					../../../_build/ios/elle/aws/miniupnp/miniupnpc/lib,
+					../../../_build/ios/elle/cryptography/lib,
+					../../../_build/ios/elle/curl/lib,
+					../../../_build/ios/elle/boost/lib,
+					../../../_build/ios/elle/elle/lib,
+					../../../_build/ios/elle/libarchive/lib,
+					../../../_build/ios/elle/openssl/lib,
+					../../../_build/ios/elle/protocol/lib,
+					../../../_build/ios/elle/reactor/lib,
+					../../../_build/ios/elle/zlib/lib,
+					../../../_build/ios/metrics/lib,
+					../../../_build/ios/oracles/lib,
+					../../../_build/ios/elle/reactor/lib/reactor,
+					../../../_build/ios/elle/reactor/miniupnp/miniupnpc/lib,
+					../../../_build/ios/oracles/meta/client/lib,
+					../../../_build/ios/oracles/trophonius/client/lib,
 				);
 				LINKER_DISPLAYS_MANGLED_NAMES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
