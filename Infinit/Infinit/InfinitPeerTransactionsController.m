@@ -15,6 +15,8 @@
 
 @interface InfinitPeerTransactionsController ()
 
+@property (nonatomic, weak) IBOutlet UITableView* table_view;
+
 @end
 
 @implementation InfinitPeerTransactionsController
