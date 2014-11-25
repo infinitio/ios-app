@@ -10,9 +10,11 @@
 #import "InfinitPeerSendFileCell.h"
 
 #import <Gap/InfinitPeerTransactionManager.h>
+#import <Gap/InfinitTemporaryFileManager.h>
 #import <Gap/InfinitUserManager.h>
 #import <Gap/InfinitUtilities.h>
 
+#import <MobileCoreServices/UTCoreTypes.h>
 #import <Photos/Photos.h>
 
 @interface InfinitPeerSendController ()
@@ -22,13 +24,14 @@
 @implementation InfinitPeerSendController
 {
 @private
-  NSMutableArray* _files;
+  NSString* _managed_files_id;
 }
 
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  _files = [NSMutableArray array];
+  self.recipient.delegate = self;
+  _managed_files_id = [[InfinitTemporaryFileManager sharedInstance] createManagedFiles];
   UIGestureRecognizer* tapper =
     [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
   tapper.cancelsTouchesInView = NO;
@@ -45,6 +48,21 @@
   [super didReceiveMemoryWarning];
 }
 
+#pragma mark - Text Field
+
+- (BOOL)textFieldShouldReturn:(UITextField*)textField
+{
+  [[InfinitUserManager sharedInstance] searchUsers:textField.text
+                                   performSelector:@selector(searchResults:)
+                                          onObject:self];
+  return YES;
+}
+
+- (void)searchResults:(NSArray*)results
+{
+
+}
+
 #pragma mark - Table
 
 - (CGFloat)tableView:(UITableView*)tableView
@@ -56,10 +74,9 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
 - (NSInteger)tableView:(UITableView*)tableView
  numberOfRowsInSection:(NSInteger)section
 {
-  @synchronized(_files)
-  {
-    return _files.count;
-  }
+  NSArray* files =
+    [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:_managed_files_id];
+  return files.count;
 }
 
 - (UITableViewCell*)tableView:(UITableView*)tableView
@@ -67,7 +84,9 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
   NSString* identifier = @"peer_send_cell";
   InfinitPeerSendFileCell* cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-  cell.file_path.text = [_files[indexPath.row] lastPathComponent];
+  NSArray* files =
+    [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:_managed_files_id];
+  cell.file_path.text = [files[indexPath.row] lastPathComponent];
   [cell setNeedsDisplay];
   return cell;
 }
@@ -77,7 +96,7 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
 - (void)clearInterface
 {
   self.recipient.text = @"";
-  [_files removeAllObjects];
+  _managed_files_id = [[InfinitTemporaryFileManager sharedInstance] createManagedFiles];
   [self.table_view reloadData];
   self.send.enabled = YES;
 }
@@ -90,13 +109,17 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
 - (IBAction)sendTapped:(UIButton*)sender
 {
   self.send.enabled = NO;
-  if (_files.count == 0)
+  NSArray* files =
+    [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:_managed_files_id];
+  if (files.count == 0)
     return;
   if ([InfinitUtilities stringIsEmail:self.recipient.text])
   {
-    [[InfinitPeerTransactionManager sharedInstance] sendFiles:_files
-                                                 toRecipients:@[self.recipient.text]
-                                                  withMessage:@"from iOS"];
+    NSArray* ids = [[InfinitPeerTransactionManager sharedInstance] sendFiles:files
+                                                                toRecipients:@[self.recipient.text]
+                                                                 withMessage:@"from iOS"];
+    [[InfinitTemporaryFileManager sharedInstance] setTransactionId:ids[0]
+                                                   forManagedFiles:_managed_files_id];
     [self clearInterface];
   }
   else
@@ -112,9 +135,14 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
   if (user == nil)
     return;
 
-  [[InfinitPeerTransactionManager sharedInstance] sendFiles:_files
-                                               toRecipients:@[user]
-                                                withMessage:@"from iOS"];
+  NSArray* files =
+    [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:_managed_files_id];
+
+  NSArray* ids = [[InfinitPeerTransactionManager sharedInstance] sendFiles:files
+                                                              toRecipients:@[user]
+                                                               withMessage:@"from iOS"];
+  [[InfinitTemporaryFileManager sharedInstance] setTransactionId:ids[0]
+                                                 forManagedFiles:_managed_files_id];
   [self clearInterface];
 }
 
@@ -124,9 +152,11 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
   UIImagePickerController* image_picker_controller = [[UIImagePickerController alloc] init];
   image_picker_controller.modalPresentationStyle = UIModalPresentationCurrentContext;
+  image_picker_controller.modalPresentationCapturesStatusBarAppearance = YES;
   image_picker_controller.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+  image_picker_controller.mediaTypes = @[(id)kUTTypeImage,
+                                         (id)kUTTypeMovie];
   image_picker_controller.delegate = self;
-
   self.image_picker_controller = image_picker_controller;
   [self presentViewController:self.image_picker_controller animated:YES completion:nil];
 }
@@ -134,28 +164,34 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
 - (void)imagePickerController:(UIImagePickerController*)picker
 didFinishPickingMediaWithInfo:(NSDictionary*)info
 {
+  NSLog(@"xxx info: %@", info);
   [self dismissViewControllerAnimated:YES completion:nil];
   PHAsset* asset = [[PHAsset fetchAssetsWithALAssetURLs:@[info[UIImagePickerControllerReferenceURL]]
                                                 options:nil] firstObject];
-  [asset requestContentEditingInputWithOptions:nil
-                             completionHandler:^(PHContentEditingInput* contentEditingInput,
-                                                 NSDictionary* info)
+  NSLog(@"xxx asset: %@", asset);
+  if (asset.mediaType == PHAssetMediaTypeImage)
   {
-    NSString* file_path = contentEditingInput.fullSizeImageURL.path;
-    NSString* temp_dir = NSTemporaryDirectory();
-    if (![[NSFileManager defaultManager] fileExistsAtPath:temp_dir isDirectory:nil])
+    [asset requestContentEditingInputWithOptions:nil
+                               completionHandler:^(PHContentEditingInput* contentEditingInput,
+                                                   NSDictionary* info)
     {
-      [[NSFileManager defaultManager] createDirectoryAtPath:temp_dir
-                                withIntermediateDirectories:YES
-                                                 attributes:nil
-                                                      error:nil];
-    }
-    NSString* send_path = [temp_dir stringByAppendingPathComponent:file_path.lastPathComponent];
-    [[NSFileManager defaultManager] copyItemAtPath:file_path toPath:send_path error:nil];
-    [_files addObject:send_path];
+      NSString* file_path = contentEditingInput.fullSizeImageURL.path;
+      [[InfinitTemporaryFileManager sharedInstance] addFiles:@[file_path]
+                                              toManagedFiles:_managed_files_id
+                                                        copy:YES];
+      [self.table_view reloadData];
+    }];
+  }
+  else if (asset.mediaType == PHAssetMediaTypeVideo)
+  {
+    NSString* file_path = info[UIImagePickerControllerMediaURL];
+    [[InfinitTemporaryFileManager sharedInstance] addFiles:@[file_path]
+                                            toManagedFiles:_managed_files_id
+                                                      copy:NO];
     [self.table_view reloadData];
-  }];
+  }
 }
+
 /*
 #pragma mark - Navigation
 
