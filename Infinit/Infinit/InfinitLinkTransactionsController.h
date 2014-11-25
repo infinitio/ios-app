@@ -11,6 +11,4 @@
 @interface InfinitLinkTransactionsController : UIViewController <UITableViewDataSource,
                                                                  UITableViewDelegate>
 
-@property (nonatomic, weak) IBOutlet UITableView* table_view;
-
 @end

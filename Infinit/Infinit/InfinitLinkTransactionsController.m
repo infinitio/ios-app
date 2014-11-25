@@ -13,6 +13,8 @@
 
 @interface InfinitLinkTransactionsController ()
 
+@property (nonatomic, weak) IBOutlet UITableView* table_view;
+
 @end
 
 @implementation InfinitLinkTransactionsController
