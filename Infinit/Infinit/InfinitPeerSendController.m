@@ -7,6 +7,7 @@
 //
 
 #import "InfinitPeerSendController.h"
+
 #import "InfinitPeerSendFileCell.h"
 
 #import <Gap/InfinitPeerTransactionManager.h>
@@ -18,6 +19,11 @@
 #import <Photos/Photos.h>
 
 @interface InfinitPeerSendController ()
+
+@property (nonatomic) UIImagePickerController* image_picker_controller;
+@property (nonatomic, weak) IBOutlet UITextField* recipient;
+@property (nonatomic, weak) IBOutlet UIButton* send;
+@property (nonatomic, weak) IBOutlet UITableView* table_view;
 
 @end
 

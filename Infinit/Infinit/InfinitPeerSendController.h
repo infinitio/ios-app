@@ -11,11 +11,6 @@
 @interface InfinitPeerSendController : UIViewController <UIImagePickerControllerDelegate,
                                                          UINavigationControllerDelegate,
                                                          UITableViewDataSource,
-                                                         UITableViewDelegate>
-
-@property (nonatomic) UIImagePickerController* image_picker_controller;
-@property (nonatomic, weak) IBOutlet UITextField* recipient;
-@property (nonatomic, weak) IBOutlet UIButton* send;
-@property (nonatomic, weak) IBOutlet UITableView* table_view;
-
+                                                         UITableViewDelegate,
+                                                         UITextFieldDelegate>
 @end
