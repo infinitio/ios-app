@@ -10,10 +10,4 @@
 
 @interface InfinitLoginController : UIViewController <UITextFieldDelegate>
 
-@property (nonatomic, weak) IBOutlet UITextField* email;
-@property (nonatomic, weak) IBOutlet UITextField* password;
-@property (nonatomic, weak) IBOutlet UIButton* login;
-@property (nonatomic, weak) IBOutlet UILabel* error;
-@property (nonatomic, weak) IBOutlet UIActivityIndicatorView* spinner;
-
 @end

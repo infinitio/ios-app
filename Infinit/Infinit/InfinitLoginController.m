@@ -13,6 +13,16 @@
 #import <Gap/InfinitStateResult.h>
 #import <Gap/InfinitUserManager.h>
 
+@interface InfinitLoginController ()
+
+@property (nonatomic, weak) IBOutlet UITextField* email;
+@property (nonatomic, weak) IBOutlet UITextField* password;
+@property (nonatomic, weak) IBOutlet UIButton* login;
+@property (nonatomic, weak) IBOutlet UILabel* error;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView* spinner;
+
+@end
+
 @implementation InfinitLoginController
 
 - (void)viewDidLoad
@@ -80,10 +90,15 @@
 - (BOOL)textFieldShouldReturn:(UITextField*)textField
 {
   if (textField == self.email)
+  {
     [self.password becomeFirstResponder];
+    return NO;
+  }
   else if (textField == self.password)
+  {
     [self login:self];
-  return NO;
+  }
+  return YES;
 }
 
 - (void)animateTextField:(UITextField*)textField
