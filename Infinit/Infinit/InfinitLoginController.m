@@ -34,8 +34,8 @@
   tapper.cancelsTouchesInView = NO;
   [self.view addGestureRecognizer:tapper];
 
-  self.email.text = @"chris@infinit.io";
-  self.password.text = @"password";
+  self.email.text = @"mike.dee@infinit.io";
+  self.password.text = @"mdeesta3@";
 }
 
 - (void)handleSingleTap:(UITapGestureRecognizer*)sender
@@ -65,6 +65,9 @@
                                      password:self.password.text
                               performSelector:@selector(loginCallback:)
                                      onObject:self];
+    /*registration call
+    [[InfinitStateManager sharedInstance] registerFullname:@"MikeDee" email:@"mike.dee@infinit.io" password:@"mdeesta3@" performSelector:@selector(loginCallback:) onObject:self];
+    */
   [self.spinner stopAnimating];
   self.spinner.hidden = YES;
   self.login.hidden = NO;

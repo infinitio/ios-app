@@ -56,6 +56,17 @@
 		83F72CA11A15123F0088106E /* InfinitLinkTransactionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F72CA01A15123F0088106E /* InfinitLinkTransactionsController.m */; };
 		83F72CA41A15131A0088106E /* InfinitLinkTransactionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F72CA31A15131A0088106E /* InfinitLinkTransactionCell.m */; };
 		83FE9C8B1A161F6D00FC1CFD /* InfinitLinkSendController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FE9C8A1A161F6D00FC1CFD /* InfinitLinkSendController.m */; };
+		D05D5D0A1A24BFAB005529E8 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D05D5D091A24BFAB005529E8 /* ShareViewController.m */; };
+		D05D5D0C1A24BFAB005529E8 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D05D5D0B1A24BFAB005529E8 /* MainInterface.storyboard */; };
+		D05D5D0F1A24BFAB005529E8 /* InfinitShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D05D5D041A24BFAB005529E8 /* InfinitShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D05D5D171A24C499005529E8 /* InfMediaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D05D5D161A24C499005529E8 /* InfMediaViewController.m */; };
+		D05D5D1A1A24C4B1005529E8 /* InfCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D05D5D191A24C4B1005529E8 /* InfCollectionViewCell.m */; };
+		D068E54B1A28DD4200F0072D /* FileInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = D068E54A1A28DD4200F0072D /* FileInformation.m */; };
+		D0AFCBAF1A254613003AC152 /* SendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AFCBAE1A254613003AC152 /* SendViewController.m */; };
+		D0AFCBB31A254688003AC152 /* SendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AFCBB21A254688003AC152 /* SendCell.m */; };
+		D0AFCBB71A264889003AC152 /* EmailSignupVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AFCBB61A264889003AC152 /* EmailSignupVC.m */; };
+		D0AFCBBA1A2758F8003AC152 /* TabBarBadgeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AFCBB91A2758F8003AC152 /* TabBarBadgeLabel.m */; };
+		D0AFCBBE1A275B51003AC152 /* InfinitTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AFCBBD1A275B51003AC152 /* InfinitTabBarController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,7 +98,28 @@
 			remoteGlobalIDString = 83568D781A136D7700766DA3;
 			remoteInfo = "Gap-iOS";
 		};
+		D05D5D0D1A24BFAB005529E8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83B32D551A136485004AB945 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D05D5D031A24BFAB005529E8;
+			remoteInfo = InfinitShareExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D05D5D141A24BFAB005529E8 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				D05D5D0F1A24BFAB005529E8 /* InfinitShareExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		836F5C8B1A166720007C9C4E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -153,6 +185,27 @@
 		83F72CA31A15131A0088106E /* InfinitLinkTransactionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitLinkTransactionCell.m; sourceTree = "<group>"; };
 		83FE9C891A161F6D00FC1CFD /* InfinitLinkSendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitLinkSendController.h; sourceTree = "<group>"; };
 		83FE9C8A1A161F6D00FC1CFD /* InfinitLinkSendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitLinkSendController.m; sourceTree = "<group>"; };
+		D05D5D041A24BFAB005529E8 /* InfinitShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = InfinitShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		D05D5D071A24BFAB005529E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D05D5D081A24BFAB005529E8 /* ShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareViewController.h; sourceTree = "<group>"; };
+		D05D5D091A24BFAB005529E8 /* ShareViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareViewController.m; sourceTree = "<group>"; };
+		D05D5D0B1A24BFAB005529E8 /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
+		D05D5D151A24C499005529E8 /* InfMediaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfMediaViewController.h; sourceTree = "<group>"; };
+		D05D5D161A24C499005529E8 /* InfMediaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfMediaViewController.m; sourceTree = "<group>"; };
+		D05D5D181A24C4B1005529E8 /* InfCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfCollectionViewCell.h; sourceTree = "<group>"; };
+		D05D5D191A24C4B1005529E8 /* InfCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfCollectionViewCell.m; sourceTree = "<group>"; };
+		D068E5491A28DD4200F0072D /* FileInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileInformation.h; path = ../FileInformation.h; sourceTree = "<group>"; };
+		D068E54A1A28DD4200F0072D /* FileInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileInformation.m; path = ../FileInformation.m; sourceTree = "<group>"; };
+		D0AFCBAD1A254613003AC152 /* SendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendViewController.h; sourceTree = "<group>"; };
+		D0AFCBAE1A254613003AC152 /* SendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendViewController.m; sourceTree = "<group>"; };
+		D0AFCBB11A254688003AC152 /* SendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendCell.h; sourceTree = "<group>"; };
+		D0AFCBB21A254688003AC152 /* SendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendCell.m; sourceTree = "<group>"; };
+		D0AFCBB51A264889003AC152 /* EmailSignupVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailSignupVC.h; sourceTree = "<group>"; };
+		D0AFCBB61A264889003AC152 /* EmailSignupVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailSignupVC.m; sourceTree = "<group>"; };
+		D0AFCBB81A2758F8003AC152 /* TabBarBadgeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarBadgeLabel.h; sourceTree = "<group>"; };
+		D0AFCBB91A2758F8003AC152 /* TabBarBadgeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarBadgeLabel.m; sourceTree = "<group>"; };
+		D0AFCBBC1A275B51003AC152 /* InfinitTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitTabBarController.h; sourceTree = "<group>"; };
+		D0AFCBBD1A275B51003AC152 /* InfinitTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitTabBarController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +257,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D05D5D011A24BFAB005529E8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -218,6 +278,7 @@
 		83B32D541A136485004AB945 = {
 			isa = PBXGroup;
 			children = (
+				D05D5D051A24BFAB005529E8 /* InfinitShareExtension */,
 				836F5C8A1A16670F007C9C4E /* Frameworks */,
 				83F4D0211A13740F0068BEB2 /* Libraries */,
 				83B32D5F1A136485004AB945 /* Infinit */,
@@ -232,6 +293,7 @@
 			children = (
 				83B32D5D1A136485004AB945 /* Infinit.app */,
 				83B32D761A136486004AB945 /* InfinitTests.xctest */,
+				D05D5D041A24BFAB005529E8 /* InfinitShareExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -239,6 +301,7 @@
 		83B32D5F1A136485004AB945 /* Infinit */ = {
 			isa = PBXGroup;
 			children = (
+				D0AFCBB41A254699003AC152 /* Send */,
 				83FE9C871A161F4D00FC1CFD /* Link Send */,
 				83F4D0A31A14B4680068BEB2 /* Peer Send */,
 				83F72C9E1A15120D0088106E /* Link Transactions */,
@@ -252,6 +315,7 @@
 				83B32E091A136614004AB945 /* Main.storyboard */,
 				83B32D6D1A136485004AB945 /* Images.xcassets */,
 				83B32D601A136485004AB945 /* Supporting Files */,
+				D0AFCBBB1A275904003AC152 /* Custom Views/VCs */,
 			);
 			path = Infinit;
 			sourceTree = "<group>";
@@ -285,6 +349,8 @@
 		83B32DF41A1365A9004AB945 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				D0AFCBB51A264889003AC152 /* EmailSignupVC.h */,
+				D0AFCBB61A264889003AC152 /* EmailSignupVC.m */,
 				83B32E011A1365B1004AB945 /* InfinitLoginController.h */,
 				83B32E021A1365B1004AB945 /* InfinitLoginController.m */,
 			);
@@ -381,6 +447,53 @@
 			name = "Link Send";
 			sourceTree = "<group>";
 		};
+		D05D5D051A24BFAB005529E8 /* InfinitShareExtension */ = {
+			isa = PBXGroup;
+			children = (
+				D05D5D081A24BFAB005529E8 /* ShareViewController.h */,
+				D05D5D091A24BFAB005529E8 /* ShareViewController.m */,
+				D05D5D0B1A24BFAB005529E8 /* MainInterface.storyboard */,
+				D05D5D061A24BFAB005529E8 /* Supporting Files */,
+			);
+			path = InfinitShareExtension;
+			sourceTree = "<group>";
+		};
+		D05D5D061A24BFAB005529E8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D05D5D071A24BFAB005529E8 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D0AFCBB41A254699003AC152 /* Send */ = {
+			isa = PBXGroup;
+			children = (
+				D068E5491A28DD4200F0072D /* FileInformation.h */,
+				D068E54A1A28DD4200F0072D /* FileInformation.m */,
+				D0AFCBB11A254688003AC152 /* SendCell.h */,
+				D0AFCBB21A254688003AC152 /* SendCell.m */,
+				D0AFCBAD1A254613003AC152 /* SendViewController.h */,
+				D0AFCBAE1A254613003AC152 /* SendViewController.m */,
+				D05D5D181A24C4B1005529E8 /* InfCollectionViewCell.h */,
+				D05D5D191A24C4B1005529E8 /* InfCollectionViewCell.m */,
+				D05D5D151A24C499005529E8 /* InfMediaViewController.h */,
+				D05D5D161A24C499005529E8 /* InfMediaViewController.m */,
+			);
+			name = Send;
+			sourceTree = "<group>";
+		};
+		D0AFCBBB1A275904003AC152 /* Custom Views/VCs */ = {
+			isa = PBXGroup;
+			children = (
+				D0AFCBBC1A275B51003AC152 /* InfinitTabBarController.h */,
+				D0AFCBBD1A275B51003AC152 /* InfinitTabBarController.m */,
+				D0AFCBB81A2758F8003AC152 /* TabBarBadgeLabel.h */,
+				D0AFCBB91A2758F8003AC152 /* TabBarBadgeLabel.m */,
+			);
+			name = "Custom Views/VCs";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -391,11 +504,13 @@
 				83B32D591A136485004AB945 /* Sources */,
 				83B32D5A1A136485004AB945 /* Frameworks */,
 				83B32D5B1A136485004AB945 /* Resources */,
+				D05D5D141A24BFAB005529E8 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				83F4D0981A1390340068BEB2 /* PBXTargetDependency */,
+				D05D5D0E1A24BFAB005529E8 /* PBXTargetDependency */,
 			);
 			name = Infinit;
 			productName = Infinit;
@@ -420,6 +535,23 @@
 			productReference = 83B32D761A136486004AB945 /* InfinitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		D05D5D031A24BFAB005529E8 /* InfinitShareExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D05D5D131A24BFAB005529E8 /* Build configuration list for PBXNativeTarget "InfinitShareExtension" */;
+			buildPhases = (
+				D05D5D001A24BFAB005529E8 /* Sources */,
+				D05D5D011A24BFAB005529E8 /* Frameworks */,
+				D05D5D021A24BFAB005529E8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = InfinitShareExtension;
+			productName = InfinitShareExtension;
+			productReference = D05D5D041A24BFAB005529E8 /* InfinitShareExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -440,6 +572,9 @@
 					83B32D751A136486004AB945 = {
 						CreatedOnToolsVersion = 6.1;
 						TestTargetID = 83B32D5C1A136485004AB945;
+					};
+					D05D5D031A24BFAB005529E8 = {
+						CreatedOnToolsVersion = 6.1;
 					};
 				};
 			};
@@ -464,6 +599,7 @@
 			targets = (
 				83B32D5C1A136485004AB945 /* Infinit */,
 				83B32D751A136486004AB945 /* InfinitTests */,
+				D05D5D031A24BFAB005529E8 /* InfinitShareExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -503,6 +639,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D05D5D021A24BFAB005529E8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D05D5D0C1A24BFAB005529E8 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -511,16 +655,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				83B32E061A1365E9004AB945 /* AppDelegate.m in Sources */,
+				D0AFCBB71A264889003AC152 /* EmailSignupVC.m in Sources */,
+				D0AFCBBA1A2758F8003AC152 /* TabBarBadgeLabel.m in Sources */,
 				83FE9C8B1A161F6D00FC1CFD /* InfinitLinkSendController.m in Sources */,
 				83F4D09F1A13AE0D0068BEB2 /* InfinitPeerTransactionsController.m in Sources */,
+				D05D5D171A24C499005529E8 /* InfMediaViewController.m in Sources */,
 				83B32D691A136485004AB945 /* ViewController.m in Sources */,
 				83F72C9C1A1502940088106E /* InfinitPeerSendFileCell.m in Sources */,
+				D0AFCBAF1A254613003AC152 /* SendViewController.m in Sources */,
 				83F4D0A61A14B48D0068BEB2 /* InfinitPeerSendController.m in Sources */,
 				83B32E031A1365B1004AB945 /* InfinitLoginController.m in Sources */,
 				83F72CA41A15131A0088106E /* InfinitLinkTransactionCell.m in Sources */,
 				83F4D0A21A13BC490068BEB2 /* InfinitPeerTransactionCell.m in Sources */,
 				83B32D631A136485004AB945 /* main.m in Sources */,
+				D0AFCBB31A254688003AC152 /* SendCell.m in Sources */,
+				D05D5D1A1A24C4B1005529E8 /* InfCollectionViewCell.m in Sources */,
 				83F72CA11A15123F0088106E /* InfinitLinkTransactionsController.m in Sources */,
+				D068E54B1A28DD4200F0072D /* FileInformation.m in Sources */,
+				D0AFCBBE1A275B51003AC152 /* InfinitTabBarController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +681,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				83B32D7D1A136486004AB945 /* InfinitTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D05D5D001A24BFAB005529E8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D05D5D0A1A24BFAB005529E8 /* ShareViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,6 +704,11 @@
 			isa = PBXTargetDependency;
 			name = "Gap-iOS";
 			targetProxy = 83F4D0971A1390340068BEB2 /* PBXContainerItemProxy */;
+		};
+		D05D5D0E1A24BFAB005529E8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D05D5D031A24BFAB005529E8 /* InfinitShareExtension */;
+			targetProxy = D05D5D0D1A24BFAB005529E8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -640,6 +805,7 @@
 					../../../_build/ios/fist/src,
 				);
 				INFOPLIST_FILE = Infinit/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -683,6 +849,7 @@
 					../../../_build/ios/fist/src,
 				);
 				INFOPLIST_FILE = Infinit/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -746,6 +913,30 @@
 			};
 			name = Release;
 		};
+		D05D5D101A24BFAB005529E8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = InfinitShareExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		D05D5D111A24BFAB005529E8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = InfinitShareExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -772,6 +963,15 @@
 			buildConfigurations = (
 				83B32D841A136486004AB945 /* Debug */,
 				83B32D851A136486004AB945 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D05D5D131A24BFAB005529E8 /* Build configuration list for PBXNativeTarget "InfinitShareExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D05D5D101A24BFAB005529E8 /* Debug */,
+				D05D5D111A24BFAB005529E8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
