@@ -10,9 +10,11 @@
 
 @implementation TabBarBadgeLabel
 
-- (id)initWithFrame:(CGRect)frame onItem:(NSInteger)itemNumber withBadge:(NSInteger)badgeCount
+- (id)initWithFrame:(CGRect)frame
+             onItem:(NSInteger)itemNumber
+          withBadge:(NSInteger)badgeCount
 {
-    frame.origin.x = 60 + 50*itemNumber;
+    frame.origin.x = 60 + 50 * itemNumber;
     frame.origin.y = 5;
     
     self = [super initWithFrame:frame];

@@ -10,6 +10,8 @@
 
 @interface TabBarBadgeLabel : UILabel
 
-- (id)initWithFrame:(CGRect)frame onItem:(NSInteger)itemNumber withBadge:(NSInteger)badgeCount;
+- (id)initWithFrame:(CGRect)frame
+             onItem:(NSInteger)itemNumber
+          withBadge:(NSInteger)badgeCount;
 
 @end

@@ -7,7 +7,6 @@
 //
 
 #import "InfinitTabBarController.h"
-#import "TabBarBadgeLabel.h"
 
 @interface InfinitTabBarController ()
 
@@ -15,21 +14,21 @@
 
 @implementation InfinitTabBarController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
     self.tabBar.tintColor = [UIColor cyanColor];
     
     //Check for the badge items here.
-    TabBarBadgeLabel *badgeLabel = [[TabBarBadgeLabel alloc] initWithFrame:CGRectMake(0, 0, 16, 16) onItem:0 withBadge:4];
-    [self.tabBar addSubview:badgeLabel];
+    _badgeLabel = [[TabBarBadgeLabel alloc] initWithFrame:CGRectMake(0, 0, 16, 16)
+                                                                    onItem:0
+                                                                 withBadge:4];
+    [self.tabBar addSubview:_badgeLabel];
     
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+
 
 
 

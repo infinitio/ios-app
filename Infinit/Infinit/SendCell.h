@@ -10,9 +10,9 @@
 
 @interface SendCell : UITableViewCell
 
-@property (nonatomic, strong) UIImageView *portraitImageView;
-@property (nonatomic, strong) UILabel *nameLabel;
-@property (nonatomic, strong) UIImageView *checkMark;
+@property (nonatomic, strong) UIImageView* portraitImageView;
+@property (nonatomic, strong) UILabel* nameLabel;
+@property (nonatomic, strong) UIImageView* checkMark;
 
 
 

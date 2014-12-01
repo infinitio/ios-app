@@ -15,6 +15,4 @@
 @property (nonatomic, strong) UIDynamicAnimator* animator;
 @property (nonatomic, strong) UILabel* durationLabel;
 
-
-
 @end

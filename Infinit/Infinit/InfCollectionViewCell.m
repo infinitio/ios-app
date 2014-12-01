@@ -17,14 +17,11 @@
         // Initialization code
         _animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.contentView];
 
-        
-        //What should the frame be?  Less.
         _checkMark = [[UIImageView alloc] initWithFrame:CGRectMake(26, 26 , 52, 52)];
         _checkMark.image = [UIImage imageNamed:@"icon-picture-check.png"];
         _checkMark.hidden = NO;
         
         _imageView = [[UIImageView alloc] initWithFrame:self.contentView.bounds];
-
         
         [self.contentView addSubview:_imageView];
         [self.contentView addSubview:_checkMark];
@@ -33,10 +30,6 @@
         _durationLabel = [[UILabel alloc] initWithFrame:durationFrame];
         _durationLabel.textColor = [UIColor whiteColor];
         _durationLabel.font = [UIFont boldSystemFontOfSize:12];
-
-        
-
-
     }
     return self;
 }
@@ -45,10 +38,7 @@
 {
     [_animator removeAllBehaviors];
     _imageView.image = nil;
-    
     _durationLabel.text = nil;
-    
-    
     _checkMark.hidden = NO;
 }
 

@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TabBarBadgeLabel.h"
 
 @interface InfinitTabBarController : UITabBarController
+
+@property (strong, nonatomic) TabBarBadgeLabel* badgeLabel;
 
 @end

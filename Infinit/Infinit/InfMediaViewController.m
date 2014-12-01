@@ -17,13 +17,11 @@
 
 @interface InfMediaViewController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate>
 
-@property(nonatomic, strong) NSArray *assets;
-@property(nonatomic, strong) UICollectionView *mediaCollectionView;
-@property (nonatomic, strong) NSMutableDictionary *selectedMedia;
-@property (nonatomic, strong) UIButton *nextButton;
-@property(nonatomic, strong) NSMutableArray *filesToSend;
-
-
+@property(nonatomic, strong) NSArray* assets;
+@property(nonatomic, strong) UICollectionView* mediaCollectionView;
+@property (nonatomic, strong) NSMutableDictionary* selectedMedia;
+@property (nonatomic, strong) UIButton* nextButton;
+@property(nonatomic, strong) NSMutableArray* filesToSend;
 
 @end
 
@@ -36,9 +34,11 @@
 
 
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithNibName:(NSString*)nibNameOrNil
+               bundle:(NSBundle*)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithNibName:nibNameOrNil
+                           bundle:nibBundleOrNil];
     if (self) {
 
     }
@@ -47,19 +47,10 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+
     self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
     self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:242/255.0 green:94/255.0 blue:90/255.0 alpha:1];
-    
-    [super viewWillAppear:animated];
-    
-    //Clear the managed Files every time the view appears.
-    /*
-    if(_managed_files_id) {
-        [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:_managed_files_id];
-        _managed_files_id = [[InfinitTemporaryFileManager sharedInstance] createManagedFiles];
-    }
-     */
-
     
 }
     
@@ -67,28 +58,22 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
+
     _managed_files_id = [[InfinitTemporaryFileManager sharedInstance] createManagedFiles];
     
     //Collection View Creation
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
-    mediaCollectionView = [[UICollectionView alloc] initWithFrame:self.view.frame collectionViewLayout:layout];
+    mediaCollectionView = [[UICollectionView alloc] initWithFrame:self.view.frame
+                                             collectionViewLayout:layout];
     [mediaCollectionView setDataSource:self];
     [mediaCollectionView setDelegate:self];
-    
-    [mediaCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
+    [mediaCollectionView registerClass:[UICollectionViewCell class]
+            forCellWithReuseIdentifier:@"cellIdentifier"];
     [mediaCollectionView setBackgroundColor:[UIColor blackColor]];
-    
-    [mediaCollectionView registerClass:[InfCollectionViewCell class] forCellWithReuseIdentifier:@"mediaCell"];
+    [mediaCollectionView registerClass:[InfCollectionViewCell class]
+            forCellWithReuseIdentifier:@"mediaCell"];
     [self.view addSubview:mediaCollectionView];
-    
-    //Back Bar Should Say Cancel
-    /*
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc]
-                                   initWithTitle: @"Cancel"
-                                   style: UIBarButtonItemStyleBordered
-                                   target:self action: @selector(popBack)];
-    [self.navigationItem setLeftBarButtonItem:backButton];
-     */
      
     //The height of the screen - the button size - the navbar size - the status bar size.
     nextButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 49 - 50, 320, 50)];
@@ -96,85 +81,96 @@
     [nextButton setTitle:@"Next (0 Selected)" forState:UIControlStateNormal];
     [nextButton addTarget:self action:@selector(nextButtonSelected) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:nextButton];
-        
-    [super viewDidLoad];
     
+    //Back Could Say Cancel if the view is pushed onto stack.
+    /*
+     UIBarButtonItem *backButton = [[UIBarButtonItem alloc]
+     initWithTitle: @"Cancel"
+     style: UIBarButtonItemStyleBordered
+     target:self action: @selector(popBack)];
+     [self.navigationItem setLeftBarButtonItem:backButton];
+     */
+    
+    
+    [self loadAssets];
+    
+}
+
+- (void)loadAssets
+{
     assets = [@[] mutableCopy];
-    __block NSMutableArray *tmpAssets = [@[] mutableCopy];
-    // 1
-    ALAssetsLibrary *assetsLibrary = [self defaultAssetsLibrary];
-    // 2
-    [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-        
-        
+    __block NSMutableArray* tmpAssets = [@[] mutableCopy];
+    ALAssetsLibrary* assetsLibrary = [self defaultAssetsLibrary];
+    
+    [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:^(ALAssetsGroup* group, BOOL* stop) {
         [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
-            
-            
             if(result)
             {
-                // 3
                 [tmpAssets addObject:result];
             }
         }];
         
-        // 4
+        // Can sort these things.  DO THIS. *****
         //NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO];
         //self.assets = [tmpAssets sortedArrayUsingDescriptors:@[sort]];
         self.assets = tmpAssets;
         
-        // 5
         [self.mediaCollectionView reloadData];
-    } failureBlock:^(NSError *error) {
+    } failureBlock:^(NSError* error) {
         NSLog(@"Error loading images %@", error);
     }];
 }
 
 - (void)nextButtonSelected
 {
-    NSArray *managedFiles = [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:_managed_files_id];
+    NSArray* managedFiles = [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:_managed_files_id];
     //Create Files for each one if it isn't managed already.
-    NSMutableArray *filesToSend = [[NSMutableArray alloc] init];
+    NSMutableArray* filesToSend = [[NSMutableArray alloc] init];
     
-    for(NSIndexPath *indexPath in selectedMedia)
+    for(NSIndexPath* indexPath in selectedMedia)
     {
-        FileInformation *fileInfoObject = [selectedMedia objectForKey:indexPath];
+        FileInformation* fileInfoObject = [selectedMedia objectForKey:indexPath];
         [filesToSend addObject:fileInfoObject.fileName];
         
         if(![managedFiles containsObject:fileInfoObject.fileName])
         {
-            ALAsset *asset = self.assets[self.assets.count - 1 - fileInfoObject.indexPath.row];;
-            ALAssetRepresentation *rep = [asset defaultRepresentation];
-            Byte *buffer = (Byte*)malloc(rep.size);
-            NSUInteger buffered = [rep getBytes:buffer fromOffset:0.0 length:rep.size error:nil];
-            NSData *fileData = [NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES];//this is NSData may be what you want
+            ALAsset* asset = self.assets[self.assets.count - 1 - fileInfoObject.indexPath.row];
+            ALAssetRepresentation* rep = [asset defaultRepresentation];
+            Byte* buffer = (Byte*)malloc(rep.size);
+            NSUInteger buffered = [rep getBytes:buffer
+                                     fromOffset:0.0
+                                         length:rep.size
+                                          error:nil];
+            NSData* fileData = [NSData dataWithBytesNoCopy:buffer
+                                                    length:buffered
+                                              freeWhenDone:YES];
             
-            [[InfinitTemporaryFileManager sharedInstance] addData:fileData withFilename:fileInfoObject.fileName toManagedFiles:_managed_files_id];
+            [[InfinitTemporaryFileManager sharedInstance] addData:fileData
+                                                     withFilename:fileInfoObject.fileName
+                                                   toManagedFiles:_managed_files_id];
         }
     }
     
     //Update array.
     managedFiles = [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:_managed_files_id];
 
-    
     //Removal here.
-    for(NSString *managedFile in managedFiles)
+    for(NSString* managedFile in managedFiles)
     {
         if(![filesToSend containsObject:managedFile])
         {
-            [[InfinitTemporaryFileManager sharedInstance] removeFiles:@[managedFile] fromManagedFiles:_managed_files_id];
+            [[InfinitTemporaryFileManager sharedInstance] removeFiles:@[managedFile]
+                                                     fromManagedFiles:_managed_files_id];
         }
     }
     
     NSInteger count = managedFiles.count;
     NSLog([NSString stringWithFormat:@"%ld is the count of files", (long)count]);
-    //Let's present the send view controller.
+    
+    //Present the send view controller.
     SendViewController *viewController = [[SendViewController alloc] init];
-//    viewController.hidesBottomBarWhenPushed = YES;
+    //viewController.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:viewController animated:YES];
-    
-    
-
-
     
 }
 
@@ -185,10 +181,10 @@
 
 #pragma mark AssetsLirbary Call
 
-- (ALAssetsLibrary *)defaultAssetsLibrary
+- (ALAssetsLibrary*)defaultAssetsLibrary
 {
     static dispatch_once_t pred = 0;
-    static ALAssetsLibrary *library = nil;
+    static ALAssetsLibrary* library = nil;
     dispatch_once(&pred, ^{
         library = [[ALAssetsLibrary alloc] init];
     });
@@ -197,16 +193,19 @@
 
 #pragma mark - UICollectionView Datasource
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+- (NSInteger)collectionView:(UICollectionView*)collectionView
+     numberOfItemsInSection:(NSInteger)section
 {
     return assets.count;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+- (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView
+                 cellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
-    InfCollectionViewCell *cell= (InfCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"mediaCell" forIndexPath:indexPath];
+    InfCollectionViewCell* cell= (InfCollectionViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"mediaCell"
+                                                                                                   forIndexPath:indexPath];
     
-    ALAsset *asset = self.assets[self.assets.count - 1 - indexPath.row];
+    ALAsset* asset = self.assets[self.assets.count - 1 - indexPath.row];
     UIImage* image = [[UIImage alloc] init];
     CGFloat scale  = 1;
     
@@ -214,7 +213,7 @@
     {
         
         if ([asset valueForProperty:ALAssetPropertyDuration] != ALErrorInvalidProperty) {
-            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
             [formatter setDateFormat:@"mm:ss"];
 
             cell.durationLabel.text = [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:[[asset valueForProperty:ALAssetPropertyDuration] doubleValue]]];
@@ -223,8 +222,9 @@
         }
         
         
-        UIImage *thumbnail = [UIImage imageWithCGImage:[asset thumbnail]
-                            scale:scale orientation:UIImageOrientationUp];
+        UIImage* thumbnail = [UIImage imageWithCGImage:[asset thumbnail]
+                                                 scale:scale
+                                           orientation:UIImageOrientationUp];
         
         image = thumbnail;
         
@@ -233,15 +233,13 @@
     if ([asset valueForProperty:ALAssetPropertyType] == ALAssetTypePhoto)
     {
         image = [UIImage imageWithCGImage:[asset thumbnail]
-                                             scale:scale orientation:UIImageOrientationUp];
+                                    scale:scale
+                              orientation:UIImageOrientationUp];
     }
     
-    //Custom Cell please.
     cell.imageView.image = image;
-    
     cell.backgroundColor=[UIColor greenColor];
     
-    //Control to show the stuff.
     if([selectedMedia objectForKey:indexPath])
     {
         cell.checkMark.hidden = NO;
@@ -249,7 +247,7 @@
         cell.checkMark.hidden = YES;
     }
     
-    /*
+    /* Animation stuff.
     if(indexPath.row <12) {
         
         
@@ -296,30 +294,41 @@
 
 #pragma mark – UICollectionViewDelegateFlowLayout
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+- (CGSize)collectionView:(UICollectionView*)collectionView
+                  layout:(UICollectionViewLayout*)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath*)indexPath
 {
     return CGSizeMake(104, 104);
 }
 
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+- (UIEdgeInsets)collectionView:(UICollectionView*)collectionView
+                        layout:(UICollectionViewLayout*)collectionViewLayout
+        insetForSectionAtIndex:(NSInteger)section
 {
     return UIEdgeInsetsMake(0, 0, 0, 0);
    
 }
 
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+- (CGFloat)collectionView:(UICollectionView*)collectionView
+                   layout:(UICollectionViewLayout*)collectionViewLayout
+minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
     return 2.0;
 }
 
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+- (CGFloat)collectionView:(UICollectionView*)collectionView
+                   layout:(UICollectionViewLayout*)collectionViewLayout
+minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
     return 2.0;
 }
 
-#pragma mark - UICollectionViewDelegate
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+# pragma mark - UICollectionViewDelegate
+
+- (void)collectionView:(UICollectionView*)collectionView didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
     //Redraw The Image as blurry, and put a check mark on it.
-    InfCollectionViewCell* cell = (InfCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    InfCollectionViewCell* cell = (InfCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
 
     
     if(selectedMedia == nil)
@@ -332,32 +341,35 @@
         _filesToSend = [[NSMutableArray alloc] init];
     }
     
-    ALAsset *asset = self.assets[self.assets.count - 1 - indexPath.row];;
-    ALAssetRepresentation *rep = [asset defaultRepresentation];
-    NSString *fileName = [rep filename];
+    ALAsset* asset = self.assets[self.assets.count - 1 - indexPath.row];
+    ALAssetRepresentation* rep = [asset defaultRepresentation];
+    NSString* fileName = [rep filename];
     
     if([selectedMedia objectForKey:indexPath])
     {
+        cell.checkMark.hidden = YES;
+        
         [selectedMedia removeObjectForKey:indexPath];
         
-        cell.checkMark.hidden = YES;
-        [selectedMedia removeObjectForKey:indexPath];
         NSString *buttonString = [NSString stringWithFormat:@"Next (%lu Selected)", (unsigned long)selectedMedia.allKeys.count];
-        [nextButton setTitle:buttonString forState:UIControlStateNormal];
-    } else {
-        FileInformation * fileInfoObject = [[FileInformation alloc] init];
+        [nextButton setTitle:buttonString
+                    forState:UIControlStateNormal];
+    }
+    else
+    {
+        cell.checkMark.hidden = NO;
+
+        FileInformation* fileInfoObject = [[FileInformation alloc] init];
         fileInfoObject.fileName = fileName;
         fileInfoObject.indexPath = indexPath;
         [selectedMedia setObject:fileInfoObject forKey:indexPath];
-
-        cell.checkMark.hidden = NO;
-        NSString *buttonString = [NSString stringWithFormat:@"Next (%lu Selected)", (unsigned long)selectedMedia.allKeys.count];
-        [nextButton setTitle:buttonString forState:UIControlStateNormal];
         
-
+        NSString* buttonString = [NSString stringWithFormat:@"Next (%lu Selected)", (unsigned long)selectedMedia.allKeys.count];
+        [nextButton setTitle:buttonString
+                    forState:UIControlStateNormal];
     }
-    [collectionView deselectItemAtIndexPath:indexPath animated:NO];
     
+    [collectionView deselectItemAtIndexPath:indexPath animated:NO];
 }
 
 @end

@@ -10,7 +10,7 @@
 
 @interface FileInformation : NSObject
 
-@property (nonatomic, strong) NSIndexPath *indexPath;
-@property (nonatomic, strong) NSString *fileName;
+@property (nonatomic, strong) NSIndexPath* indexPath;
+@property (nonatomic, strong) NSString* fileName;
 
 @end

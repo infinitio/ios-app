@@ -10,14 +10,13 @@
 
 @implementation SendCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (id)initWithStyle:(UITableViewCellStyle)style
+    reuseIdentifier:(NSString*)reuseIdentifier
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    self = [super initWithStyle:style
+                reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
-        
-
-        
         self.backgroundColor = [UIColor whiteColor];
         _portraitImageView = [[UIImageView alloc] initWithFrame:(CGRect){12,15,25,25}];
         
@@ -31,19 +30,16 @@
         [self.contentView addSubview:_portraitImageView];
         [self.contentView addSubview:_nameLabel];
         [self.contentView addSubview:_checkMark];
-    
-
     }
     return self;
 }
 
 
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+- (void)setSelected:(BOOL)selected
+           animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 @end
