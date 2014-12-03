@@ -8,9 +8,5 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InfinitPeerSendController : UIViewController <UIImagePickerControllerDelegate,
-                                                         UINavigationControllerDelegate,
-                                                         UITableViewDataSource,
-                                                         UITableViewDelegate,
-                                                         UITextFieldDelegate>
+@interface InfinitPeerSendController : UIViewController
 @end

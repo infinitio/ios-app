@@ -15,11 +15,16 @@
 #import <Gap/InfinitUserManager.h>
 #import <Gap/InfinitUtilities.h>
 
+#import <AssetsLibrary/AssetsLibrary.h>
 #import <MobileCoreServices/UTCoreTypes.h>
-#import <Photos/Photos.h>
 
-@interface InfinitPeerSendController ()
+@interface InfinitPeerSendController () <UIImagePickerControllerDelegate,
+                                         UINavigationControllerDelegate,
+                                         UITableViewDataSource,
+                                         UITableViewDelegate,
+                                         UITextFieldDelegate>
 
+@property (nonatomic, weak) IBOutlet UIButton* clear;
 @property (nonatomic) UIImagePickerController* image_picker_controller;
 @property (nonatomic, weak) IBOutlet UITextField* recipient;
 @property (nonatomic, weak) IBOutlet UIButton* send;
@@ -31,10 +36,13 @@
 {
 @private
   NSString* _managed_files_id;
+
+  NSMutableArray* _asset_urls;
 }
 
 - (void)viewDidLoad
 {
+  _asset_urls = [NSMutableArray array];
   [super viewDidLoad];
   self.recipient.delegate = self;
   _managed_files_id = [[InfinitTemporaryFileManager sharedInstance] createManagedFiles];
@@ -112,6 +120,15 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
   [self showImagePicker];
 }
 
+- (IBAction)clearTapped:(UIButton*)sender
+{
+  NSLog(@"xxx cleared");
+  [[InfinitTemporaryFileManager sharedInstance] removeAssetLibraryURLList:_asset_urls
+                                                         fromManagedFiles:_managed_files_id];
+  [_asset_urls removeAllObjects];
+  [self.table_view reloadData];
+}
+
 - (IBAction)sendTapped:(UIButton*)sender
 {
   self.send.enabled = NO;
@@ -167,35 +184,22 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
   [self presentViewController:self.image_picker_controller animated:YES completion:nil];
 }
 
+- (void)doneCopyingFiles
+{
+  NSLog(@"xxx done copying files: %@", [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:_managed_files_id]);
+  [self.table_view reloadData];
+}
+
 - (void)imagePickerController:(UIImagePickerController*)picker
 didFinishPickingMediaWithInfo:(NSDictionary*)info
 {
   NSLog(@"xxx info: %@", info);
   [self dismissViewControllerAnimated:YES completion:nil];
-  PHAsset* asset = [[PHAsset fetchAssetsWithALAssetURLs:@[info[UIImagePickerControllerReferenceURL]]
-                                                options:nil] firstObject];
-  NSLog(@"xxx asset: %@", asset);
-  if (asset.mediaType == PHAssetMediaTypeImage)
-  {
-    [asset requestContentEditingInputWithOptions:nil
-                               completionHandler:^(PHContentEditingInput* contentEditingInput,
-                                                   NSDictionary* info)
-    {
-      NSString* file_path = contentEditingInput.fullSizeImageURL.path;
-      [[InfinitTemporaryFileManager sharedInstance] addFiles:@[file_path]
-                                              toManagedFiles:_managed_files_id
-                                                        copy:YES];
-      [self.table_view reloadData];
-    }];
-  }
-  else if (asset.mediaType == PHAssetMediaTypeVideo)
-  {
-    NSString* file_path = info[UIImagePickerControllerMediaURL];
-    [[InfinitTemporaryFileManager sharedInstance] addFiles:@[file_path]
-                                            toManagedFiles:_managed_files_id
-                                                      copy:NO];
-    [self.table_view reloadData];
-  }
+  [_asset_urls addObject:info[UIImagePickerControllerReferenceURL]];
+  [[InfinitTemporaryFileManager sharedInstance] addAssetsLibraryURLList:@[info[UIImagePickerControllerReferenceURL]]
+                                                        toManagedFiles:_managed_files_id
+                                                        performSelector:@selector(doneCopyingFiles)
+                                                               onObject:self];
 }
 
 /*
