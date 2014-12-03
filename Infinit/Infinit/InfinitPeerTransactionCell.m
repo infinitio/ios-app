@@ -38,6 +38,8 @@
       return @"rejected";
     case gap_transaction_deleted:
       return @"deleted";
+    case gap_transaction_paused:
+      return @"paused";
     default:
       return @"unknown";
   }
@@ -49,10 +51,6 @@
   self.other_person.text = transaction.other_user.fullname;
   self.filename.text = transaction.files[0];
   self.status.text = [self statusText:transaction.status];
-  self.accept.hidden = !transaction.receivable;
-  self.accept.enabled = transaction.receivable;
-  self.reject.hidden = !transaction.receivable;
-  self.reject.enabled = transaction.receivable;
   [self setNeedsDisplay];
 }
 

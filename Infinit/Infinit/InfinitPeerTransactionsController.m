@@ -13,7 +13,9 @@
 
 #import "InfinitPeerTransactionCell.h"
 
-@interface InfinitPeerTransactionsController ()
+@interface InfinitPeerTransactionsController () <UITableViewDataSource,
+                                                 UITableViewDelegate,
+                                                 UIAlertViewDelegate>
 
 @property (nonatomic, weak) IBOutlet UITableView* table_view;
 
@@ -58,18 +60,17 @@
 
 - (void)transactionUpdated:(NSNotification*)notification
 {
+  NSInteger index = 0;
   @synchronized(_transactions)
   {
-    NSInteger index = 0;
     for (InfinitPeerTransaction* transaction in _transactions)
     {
       if ([transaction.id_ isEqual:notification.userInfo[@"id"]])
       {
-        [self.table_view beginUpdates];
-        [self.table_view reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]
-                               withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self.table_view endUpdates];
-        return;
+        InfinitPeerTransactionCell* cell =
+          (InfinitPeerTransactionCell*)[self.table_view cellForRowAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
+        [cell setupCellWithTransaction:transaction];
+        break;
       }
       index++;
     }
@@ -78,17 +79,14 @@
 
 - (void)transactionAdded:(NSNotification*)notification
 {
-  @synchronized(_transactions)
-  {
-    NSNumber* id_ = notification.userInfo[@"id"];
-    InfinitPeerTransaction* transaction =
-      [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
-    [_transactions insertObject:transaction atIndex:0];
-    [self.table_view beginUpdates];
-    [self.table_view insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
-                           withRowAnimation:UITableViewRowAnimationAutomatic];
-    [self.table_view endUpdates];
-  }
+  NSNumber* id_ = notification.userInfo[@"id"];
+  InfinitPeerTransaction* transaction =
+    [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
+  [_transactions insertObject:transaction atIndex:0];
+  [self.table_view beginUpdates];
+  [self.table_view insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
+                         withRowAnimation:UITableViewRowAnimationAutomatic];
+  [self.table_view endUpdates];
 }
 
 - (void)newAvatar:(NSNotification*)notification
@@ -160,20 +158,70 @@ heightForHeaderInSection:(NSInteger)section
 
 #pragma mark - Table Interaction
 
-- (IBAction)acceptTapped:(UIButton*)sender
+- (void)alertView:(UIAlertView*)alertView
+clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-  CGPoint button_pos = [sender convertPoint:CGPointZero toView:self.table_view];
-  NSIndexPath* index = [self.table_view indexPathForRowAtPoint:button_pos];
-  if (index != nil)
-    [[InfinitPeerTransactionManager sharedInstance] acceptTransaction:_transactions[index.row]];
+  InfinitPeerTransaction* transaction = _transactions[self.table_view.indexPathForSelectedRow.row];
+  switch (transaction.status)
+  {
+    case gap_transaction_waiting_accept:
+      if (buttonIndex == alertView.firstOtherButtonIndex)
+        [[InfinitPeerTransactionManager sharedInstance] acceptTransaction:transaction];
+      else if (buttonIndex == alertView.firstOtherButtonIndex + 1)
+        [[InfinitPeerTransactionManager sharedInstance] rejectTransaction:transaction];
+      break;
+    case gap_transaction_paused:
+      if (buttonIndex == alertView.firstOtherButtonIndex)
+        [[InfinitPeerTransactionManager sharedInstance] resumeTransaction:transaction];
+      break;
+    case gap_transaction_transferring:
+      if (buttonIndex == alertView.firstOtherButtonIndex)
+        [[InfinitPeerTransactionManager sharedInstance] pauseTransaction:transaction];
+      break;
+
+    default:
+      [alertView dismissWithClickedButtonIndex:0 animated:NO];
+      break;
+  }
+  [self.table_view deselectRowAtIndexPath:self.table_view.indexPathForSelectedRow animated:YES];
 }
 
-- (IBAction)rejectTapped:(UIButton*)sender
+- (void)tableView:(UITableView*)tableView
+didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
-  CGPoint button_pos = [sender convertPoint:CGPointZero toView:self.table_view];
-  NSIndexPath* index = [self.table_view indexPathForRowAtPoint:button_pos];
-  if (index != nil)
-    [[InfinitPeerTransactionManager sharedInstance] rejectTransaction:_transactions[index.row]];
+  UIAlertView* alert = nil;
+  InfinitPeerTransaction* transaction = _transactions[indexPath.row];
+  switch (transaction.status)
+  {
+    case gap_transaction_waiting_accept:
+      if (transaction.receivable)
+      {
+        alert = [[UIAlertView alloc] initWithTitle:@"Accept/Reject"
+                                           message:nil
+                                          delegate:self
+                                 cancelButtonTitle:@"Back"
+                                 otherButtonTitles:@"Accept", @"Reject", nil];
+      }
+      break;
+    case gap_transaction_paused:
+      alert = [[UIAlertView alloc] initWithTitle:@"Paused"
+                                         message:nil
+                                        delegate:self
+                               cancelButtonTitle:@"Back"
+                               otherButtonTitles:@"Resume", nil];
+      break;
+    case gap_transaction_transferring:
+      alert = [[UIAlertView alloc] initWithTitle:@"Running"
+                                         message:nil
+                                        delegate:self
+                               cancelButtonTitle:@"Back"
+                               otherButtonTitles:@"Pause", nil];
+
+    default:
+      [self.table_view deselectRowAtIndexPath:self.table_view.indexPathForSelectedRow animated:YES];
+      return;
+  }
+  [alert show];
 }
 
 /*

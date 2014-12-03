@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InfinitPeerTransactionsController : UIViewController <UITableViewDataSource,
-                                                                 UITableViewDelegate>
+@interface InfinitPeerTransactionsController : UIViewController
 
 @end

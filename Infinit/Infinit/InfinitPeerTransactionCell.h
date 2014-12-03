@@ -16,8 +16,6 @@
 @property (nonatomic, weak) IBOutlet UILabel* filename;
 @property (nonatomic, weak) IBOutlet UILabel* other_person;
 @property (nonatomic, weak) IBOutlet UILabel* status;
-@property (nonatomic, weak) IBOutlet UIButton* accept;
-@property (nonatomic, weak) IBOutlet UIButton* reject;
 
 - (void)setupCellWithTransaction:(InfinitPeerTransaction*)transaction;
 
