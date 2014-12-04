@@ -141,8 +141,8 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
     NSArray* ids = [[InfinitPeerTransactionManager sharedInstance] sendFiles:files
                                                                 toRecipients:@[self.recipient.text]
                                                                  withMessage:@"from iOS"];
-    [[InfinitTemporaryFileManager sharedInstance] setTransactionId:ids[0]
-                                                   forManagedFiles:_managed_files_id];
+    [[InfinitTemporaryFileManager sharedInstance] setTransactionIds:ids
+                                                    forManagedFiles:_managed_files_id];
     [self clearInterface];
   }
   else
@@ -164,8 +164,8 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
   NSArray* ids = [[InfinitPeerTransactionManager sharedInstance] sendFiles:files
                                                               toRecipients:@[user]
                                                                withMessage:@"from iOS"];
-  [[InfinitTemporaryFileManager sharedInstance] setTransactionId:ids[0]
-                                                 forManagedFiles:_managed_files_id];
+  [[InfinitTemporaryFileManager sharedInstance] setTransactionIds:ids
+                                                  forManagedFiles:_managed_files_id];
   [self clearInterface];
 }
 
