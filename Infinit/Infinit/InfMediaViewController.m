@@ -21,15 +21,11 @@
 @property(nonatomic, strong) UICollectionView* mediaCollectionView;
 @property (nonatomic, strong) NSMutableDictionary* selectedMedia;
 @property (nonatomic, strong) UIButton* nextButton;
-@property(nonatomic, strong) NSMutableArray* filesToSend;
+@property(nonatomic, strong) NSMutableArray* assetURLArray;
 
 @end
 
 @implementation InfMediaViewController
-{
-@private
-    NSString* _managed_files_id;
-}
 @synthesize assets, mediaCollectionView, selectedMedia, nextButton;
 
 
@@ -59,9 +55,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    _managed_files_id = [[InfinitTemporaryFileManager sharedInstance] createManagedFiles];
-    
+  
     //Collection View Creation
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
     mediaCollectionView = [[UICollectionView alloc] initWithFrame:self.view.frame
@@ -123,54 +117,17 @@
 
 - (void)nextButtonSelected
 {
-    NSArray* managedFiles = [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:_managed_files_id];
-    //Create Files for each one if it isn't managed already.
-    NSMutableArray* filesToSend = [[NSMutableArray alloc] init];
-    
-    for(NSIndexPath* indexPath in selectedMedia)
-    {
-        FileInformation* fileInfoObject = [selectedMedia objectForKey:indexPath];
-        [filesToSend addObject:fileInfoObject.fileName];
-        
-        if(![managedFiles containsObject:fileInfoObject.fileName])
-        {
-            ALAsset* asset = self.assets[self.assets.count - 1 - fileInfoObject.indexPath.row];
-            ALAssetRepresentation* rep = [asset defaultRepresentation];
-            Byte* buffer = (Byte*)malloc(rep.size);
-            NSUInteger buffered = [rep getBytes:buffer
-                                     fromOffset:0.0
-                                         length:rep.size
-                                          error:nil];
-            NSData* fileData = [NSData dataWithBytesNoCopy:buffer
-                                                    length:buffered
-                                              freeWhenDone:YES];
-            
-            [[InfinitTemporaryFileManager sharedInstance] addData:fileData
-                                                     withFilename:fileInfoObject.fileName
-                                                   toManagedFiles:_managed_files_id];
-        }
-    }
-    
-    //Update array.
-    managedFiles = [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:_managed_files_id];
+  _assetURLArray = [[NSMutableArray alloc] init];
+  
+  for(NSIndexPath* indexPath in selectedMedia)
+  {
+    ALAsset *asset = assets[self.assets.count - 1 - indexPath.row];
+    [_assetURLArray addObject:asset.defaultRepresentation.url];
+  }
 
-    //Removal here.
-    for(NSString* managedFile in managedFiles)
-    {
-        if(![filesToSend containsObject:managedFile])
-        {
-            [[InfinitTemporaryFileManager sharedInstance] removeFiles:@[managedFile]
-                                                     fromManagedFiles:_managed_files_id];
-        }
-    }
-    
-    NSInteger count = managedFiles.count;
-    NSLog([NSString stringWithFormat:@"%ld is the count of files", (long)count]);
-    
-    //Present the send view controller.
-    SendViewController *viewController = [[SendViewController alloc] init];
-    //viewController.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:viewController animated:YES];
+  SendViewController *viewController = [[SendViewController alloc] init];
+  viewController.assetURLarray = _assetURLArray;
+  [self.navigationController pushViewController:viewController animated:YES];
     
 }
 
@@ -336,15 +293,7 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
         selectedMedia = [[NSMutableDictionary alloc] init];
     }
     
-    if(_filesToSend == nil)
-    {
-        _filesToSend = [[NSMutableArray alloc] init];
-    }
-    
-    ALAsset* asset = self.assets[self.assets.count - 1 - indexPath.row];
-    ALAssetRepresentation* rep = [asset defaultRepresentation];
-    NSString* fileName = [rep filename];
-    
+  
     if([selectedMedia objectForKey:indexPath])
     {
         cell.checkMark.hidden = YES;
@@ -358,11 +307,8 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     else
     {
         cell.checkMark.hidden = NO;
-
-        FileInformation* fileInfoObject = [[FileInformation alloc] init];
-        fileInfoObject.fileName = fileName;
-        fileInfoObject.indexPath = indexPath;
-        [selectedMedia setObject:fileInfoObject forKey:indexPath];
+      
+        [selectedMedia setObject:indexPath forKey:indexPath];
         
         NSString* buttonString = [NSString stringWithFormat:@"Next (%lu Selected)", (unsigned long)selectedMedia.allKeys.count];
         [nextButton setTitle:buttonString

@@ -8,6 +8,13 @@
 
 #import "SendViewController.h"
 #import "SendCell.h"
+#import <Gap/InfinitTemporaryFileManager.h>
+#import <Gap/InfinitUserManager.h>
+#import <Gap/InfinitUtilities.h>
+#import <Gap/InfinitPeerTransactionManager.h>
+
+
+
 
 @interface SendViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -15,9 +22,16 @@
 @property (nonatomic, strong) NSMutableDictionary* selectedRecipients;
 @property (nonatomic, strong) UIButton* sendButton;
 
+
+
+
 @end
 
 @implementation SendViewController
+{
+@private
+NSString* _managed_files_id;
+}
 @synthesize peopleArray;
 
 - (id)initWithNibName:(NSString*)nibNameOrNil
@@ -33,32 +47,33 @@
 
 - (void)viewDidLoad
 {
-    self.view.backgroundColor = [UIColor whiteColor];
-    
-    UITableView* tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height - 50)
-                                                          style:UITableViewStylePlain];
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    [tableView setSeparatorInset:UIEdgeInsetsZero];
-    [tableView registerClass:[SendCell class]
-      forCellReuseIdentifier:@"sendcell"];
-    [self.view addSubview:tableView];
-    
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-    //Do a send button.  To people.
-    //The height of the screen - the button size - the navbar size - the status bar size.
-    _sendButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 49 - 50, 320, 50)];
-    _sendButton.backgroundColor = [UIColor colorWithRed:242/255.0 green:94/255.0 blue:90/255.0 alpha:1];
-    [_sendButton setTitle:@"Send (0 Selected)"
-                 forState:UIControlStateNormal];
-    [_sendButton addTarget:self
-                    action:@selector(sendButtonSelected)
-          forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_sendButton];
-    
-    [self loadPeople];
+  [super viewDidLoad];
+
+  _managed_files_id = [[InfinitTemporaryFileManager sharedInstance] createManagedFiles];
+
+  self.view.backgroundColor = [UIColor whiteColor];
+  
+  UITableView* tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, self.view.frame.size.height - 50)
+                                                        style:UITableViewStylePlain];
+  tableView.delegate = self;
+  tableView.dataSource = self;
+  [tableView setSeparatorInset:UIEdgeInsetsZero];
+  [tableView registerClass:[SendCell class]
+    forCellReuseIdentifier:@"sendcell"];
+  [self.view addSubview:tableView];
+  
+  //Do a send button.  To people.
+  //The height of the screen - the button size - the navbar size - the status bar size.
+  _sendButton = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 49 - 50, 320, 50)];
+  _sendButton.backgroundColor = [UIColor colorWithRed:242/255.0 green:94/255.0 blue:90/255.0 alpha:1];
+  [_sendButton setTitle:@"Send (0 Selected)"
+               forState:UIControlStateNormal];
+  [_sendButton addTarget:self
+                  action:@selector(sendButtonSelected)
+        forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:_sendButton];
+  
+  [self loadPeople];
 }
 
 - (void)loadPeople
@@ -177,8 +192,36 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
 
 - (void)sendButtonSelected
 {
-    //Do the actual send here.  Need the files, plus the recipients.
+  _sendButton.enabled = NO;
+  
+  
+  [[InfinitTemporaryFileManager sharedInstance] addAssetsLibraryURLList:_assetURLarray
+                                                         toManagedFiles:_managed_files_id
+                                                        performSelector:@selector(addAssetsLibraryURLListCallback)
+                                                               onObject:self];
     [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+- (void)addAssetsLibraryURLListCallback
+{
+  NSArray* files =
+  [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:_managed_files_id];
+  if (files.count == 0)
+    return;
+  if ([InfinitUtilities stringIsEmail:@"mike@grazer.co"])
+  {
+    NSArray* ids = [[InfinitPeerTransactionManager sharedInstance] sendFiles:files
+                                                                toRecipients:@[@"mike@grazer.co"]
+                                                                 withMessage:@"from iOS"];
+    [[InfinitTemporaryFileManager sharedInstance] setTransactionId:ids[0]
+                                                   forManagedFiles:_managed_files_id];
+  }
+  else
+  {
+    [[InfinitUserManager sharedInstance] userWithHandle:@"mike@grazer.co"
+                                        performSelector:@selector(userWithHandleCallback:)
+                                               onObject:self];
+  }
 }
 
 @end

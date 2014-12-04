@@ -10,4 +10,7 @@
 
 @interface SendViewController : UIViewController
 
+@property NSArray* assetURLarray;
+
+
 @end
