@@ -73,6 +73,16 @@ heightForHeaderInSection:(NSInteger)section
   return cell;
 }
 
+#pragma mark - User Interaction
+
+- (void)tableView:(UITableView*)tableView
+didSelectRowAtIndexPath:(NSIndexPath*)indexPath
+{
+  InfinitLinkTransaction* transaction = _transactions[indexPath.row];
+  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:transaction.link]];
+  [self.table_view deselectRowAtIndexPath:indexPath animated:YES];
+}
+
 /*
 #pragma mark - Navigation
 

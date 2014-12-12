@@ -12,7 +12,7 @@
 
 - (void)setupCellWithTransaction:(InfinitLinkTransaction*)transaction
 {
-//  self.click_count.text = [NSString stringWithFormat:@"%@", transaction.click_count];
+  self.click_count.text = [NSString stringWithFormat:@"%@", transaction.click_count];
   self.link.text = transaction.link;
   self.name.text = transaction.name;
 }
