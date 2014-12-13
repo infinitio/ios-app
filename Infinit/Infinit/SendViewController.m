@@ -213,7 +213,7 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
     NSArray* ids = [[InfinitPeerTransactionManager sharedInstance] sendFiles:files
                                                                 toRecipients:@[@"mike@grazer.co"]
                                                                  withMessage:@"from iOS"];
-    [[InfinitTemporaryFileManager sharedInstance] setTransactionId:ids[0]
+    [[InfinitTemporaryFileManager sharedInstance] setTransactionIds:ids[0]
                                                    forManagedFiles:_managed_files_id];
   }
   else
