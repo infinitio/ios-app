@@ -62,6 +62,7 @@
 		D05D5D0F1A24BFAB005529E8 /* InfinitShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D05D5D041A24BFAB005529E8 /* InfinitShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D05D5D171A24C499005529E8 /* InfMediaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D05D5D161A24C499005529E8 /* InfMediaViewController.m */; };
 		D05D5D1A1A24C4B1005529E8 /* InfCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D05D5D191A24C4B1005529E8 /* InfCollectionViewCell.m */; };
+		D0659F661A3E865A0001ACAE /* InfinitWelcomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0659F651A3E865A0001ACAE /* InfinitWelcomeController.m */; };
 		D068E54B1A28DD4200F0072D /* FileInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = D068E54A1A28DD4200F0072D /* FileInformation.m */; };
 		D0AFCBAF1A254613003AC152 /* SendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AFCBAE1A254613003AC152 /* SendViewController.m */; };
 		D0AFCBB31A254688003AC152 /* SendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AFCBB21A254688003AC152 /* SendCell.m */; };
@@ -196,6 +197,8 @@
 		D05D5D161A24C499005529E8 /* InfMediaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfMediaViewController.m; sourceTree = "<group>"; };
 		D05D5D181A24C4B1005529E8 /* InfCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfCollectionViewCell.h; sourceTree = "<group>"; };
 		D05D5D191A24C4B1005529E8 /* InfCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfCollectionViewCell.m; sourceTree = "<group>"; };
+		D0659F641A3E865A0001ACAE /* InfinitWelcomeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitWelcomeController.h; sourceTree = "<group>"; };
+		D0659F651A3E865A0001ACAE /* InfinitWelcomeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitWelcomeController.m; sourceTree = "<group>"; };
 		D068E5491A28DD4200F0072D /* FileInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileInformation.h; path = ../FileInformation.h; sourceTree = "<group>"; };
 		D068E54A1A28DD4200F0072D /* FileInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileInformation.m; path = ../FileInformation.m; sourceTree = "<group>"; };
 		D0AFCBAD1A254613003AC152 /* SendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendViewController.h; sourceTree = "<group>"; };
@@ -357,6 +360,8 @@
 				D0AFCBB61A264889003AC152 /* EmailSignupVC.m */,
 				83B32E011A1365B1004AB945 /* InfinitLoginController.h */,
 				83B32E021A1365B1004AB945 /* InfinitLoginController.m */,
+				D0659F641A3E865A0001ACAE /* InfinitWelcomeController.h */,
+				D0659F651A3E865A0001ACAE /* InfinitWelcomeController.m */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -664,6 +669,7 @@
 				83FE9C8B1A161F6D00FC1CFD /* InfinitLinkSendController.m in Sources */,
 				83F4D09F1A13AE0D0068BEB2 /* InfinitPeerTransactionsController.m in Sources */,
 				D05D5D171A24C499005529E8 /* InfMediaViewController.m in Sources */,
+				D0659F661A3E865A0001ACAE /* InfinitWelcomeController.m in Sources */,
 				83B32D691A136485004AB945 /* ViewController.m in Sources */,
 				83F72C9C1A1502940088106E /* InfinitPeerSendFileCell.m in Sources */,
 				D0AFCBAF1A254613003AC152 /* SendViewController.m in Sources */,

@@ -6,6 +6,163 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
+        <!--Infinit Welcome Controller-->
+        <scene sceneID="8lo-rn-yxz">
+            <objects>
+                <viewController id="z8c-Mh-SQ1" customClass="InfinitWelcomeController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cvr-81-2Cd"/>
+                        <viewControllerLayoutGuide type="bottom" id="e8d-Yh-XzY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="C1z-9F-Php">
+                        <rect key="frame" x="0.0" y="0.0" width="700" height="1100"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="bg" translatesAutoresizingMaskIntoConstraints="NO" id="jJJ-Jx-QXW">
+                                <rect key="frame" x="190" y="0.0" width="320" height="568"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sdV-sz-36U">
+                                <rect key="frame" x="365" y="469" width="125" height="2"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uxW-Ck-QDb">
+                                <rect key="frame" x="210" y="488" width="280" height="60"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="LOG IN">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="loginButtonSelected:" destination="z8c-Mh-SQ1" eventType="touchUpInside" id="ocS-aY-kie"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Ll-4d-pK2">
+                                <rect key="frame" x="210" y="323" width="280" height="60"/>
+                                <color key="backgroundColor" red="0.23137254901960785" green="0.34901960784313724" blue="0.59607843137254901" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <inset key="imageEdgeInsets" minX="-15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="SIGN UP WITH FACEBOOK" image="icon-facebook-white">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="facebookButtonSelected:" destination="z8c-Mh-SQ1" eventType="touchUpInside" id="XUK-lb-YS4"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cUm-Pm-ow2">
+                                <rect key="frame" x="210" y="391" width="280" height="60"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="SIGN UP WITH EMAIL">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="signupWithEmailSelected:" destination="z8c-Mh-SQ1" eventType="touchUpInside" id="coG-tE-bFd"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="or" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rux-55-a1T">
+                                <rect key="frame" x="335" y="459" width="31" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="The smartest way to send files" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zfi-ZH-cuk">
+                                <rect key="frame" x="210" y="250" width="280" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="QZk-N4-E1a">
+                                <rect key="frame" x="276" y="161" width="148" height="81"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sAm-0g-9Nv">
+                                <rect key="frame" x="16" y="576" width="320" height="280"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eRi-m6-Ykv">
+                                        <rect key="frame" x="8" y="8" width="48" height="30"/>
+                                        <state key="normal" title="Back">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UNu-2q-NjX">
+                                        <rect key="frame" x="116" y="8" width="62" height="54"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <inset key="titleEdgeInsets" minX="-28" minY="37" maxX="0.0" maxY="0.0"/>
+                                        <inset key="imageEdgeInsets" minX="14" minY="-10" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" title="AVATAR" image="icon-photo">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter email address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zrs-3R-bHq">
+                                        <rect key="frame" x="45" y="95" width="134" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon-email" translatesAutoresizingMaskIntoConstraints="NO" id="34c-a1-msf">
+                                        <rect key="frame" x="8" y="103" width="21" height="14"/>
+                                    </imageView>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter full name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jz7-ls-Zsj">
+                                        <rect key="frame" x="45" y="131" width="134" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon-fullname" translatesAutoresizingMaskIntoConstraints="NO" id="k8N-mm-I89">
+                                        <rect key="frame" x="8" y="138" width="20" height="16"/>
+                                    </imageView>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Choose a password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="S6b-cY-3Fy">
+                                        <rect key="frame" x="45" y="166" width="134" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon-password" translatesAutoresizingMaskIntoConstraints="NO" id="Cgv-6c-ajr">
+                                        <rect key="frame" x="12" y="171" width="13" height="19"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="By signing up, you accept the Terms and Conditions of Infinit." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y0i-54-Otg">
+                                        <rect key="frame" x="20" y="226" width="280" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ust-Wr-3Xl">
+                                        <rect key="frame" x="8" y="211" width="312" height="7"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MW3-Bu-JxA">
+                                <rect key="frame" x="210" y="469" width="125" height="2"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="jJJ-Jx-QXW" firstAttribute="centerX" secondItem="QZk-N4-E1a" secondAttribute="centerX" id="2Zn-4a-gcK"/>
+                            <constraint firstItem="cUm-Pm-ow2" firstAttribute="centerX" secondItem="jJJ-Jx-QXW" secondAttribute="centerX" id="Dsp-9k-RTN"/>
+                            <constraint firstItem="rux-55-a1T" firstAttribute="top" secondItem="cUm-Pm-ow2" secondAttribute="top" constant="68" id="H7N-eJ-G08"/>
+                            <constraint firstItem="Zfi-ZH-cuk" firstAttribute="centerX" secondItem="jJJ-Jx-QXW" secondAttribute="centerX" id="M39-X5-f4o"/>
+                            <constraint firstItem="uxW-Ck-QDb" firstAttribute="centerX" secondItem="jJJ-Jx-QXW" secondAttribute="centerX" id="Pfp-j6-6qd"/>
+                            <constraint firstItem="rux-55-a1T" firstAttribute="top" secondItem="uxW-Ck-QDb" secondAttribute="top" constant="-29" id="QEZ-8Y-sYT"/>
+                            <constraint firstItem="cUm-Pm-ow2" firstAttribute="top" secondItem="3Ll-4d-pK2" secondAttribute="top" constant="68" id="gZC-Pu-nYh"/>
+                            <constraint firstAttribute="centerX" secondItem="jJJ-Jx-QXW" secondAttribute="centerX" id="iUX-Ea-5HB"/>
+                            <constraint firstItem="Zfi-ZH-cuk" firstAttribute="top" secondItem="QZk-N4-E1a" secondAttribute="top" constant="89" id="igH-H7-YnE"/>
+                            <constraint firstItem="3Ll-4d-pK2" firstAttribute="centerX" secondItem="jJJ-Jx-QXW" secondAttribute="centerX" id="oJj-Hx-3eV"/>
+                            <constraint firstItem="rux-55-a1T" firstAttribute="centerX" secondItem="jJJ-Jx-QXW" secondAttribute="centerX" constant="0.5" id="wz6-JI-eIe"/>
+                            <constraint firstItem="jJJ-Jx-QXW" firstAttribute="top" secondItem="QZk-N4-E1a" secondAttribute="top" constant="-161" id="x6U-iP-2OO"/>
+                            <constraint firstItem="3Ll-4d-pK2" firstAttribute="top" secondItem="Zfi-ZH-cuk" secondAttribute="top" constant="73" id="xQu-oL-SF9"/>
+                        </constraints>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="700" height="1100"/>
+                    <connections>
+                        <outlet property="avatarButton" destination="UNu-2q-NjX" id="wcd-py-c3O"/>
+                        <outlet property="signupFormView" destination="sAm-0g-9Nv" id="Iin-1W-GxJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="y4f-aE-x70" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-684" y="-695"/>
+        </scene>
         <!--Login-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -506,4 +663,13 @@
             <point key="canvasLocation" x="1525" y="-346"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="bg" width="1863" height="2210"/>
+        <image name="icon-email" width="42" height="28"/>
+        <image name="icon-facebook-white" width="35" height="35"/>
+        <image name="icon-fullname" width="42" height="33"/>
+        <image name="icon-password" width="27" height="39"/>
+        <image name="icon-photo" width="29" height="23"/>
+        <image name="logo" width="295" height="162"/>
+    </resources>
 </document>
