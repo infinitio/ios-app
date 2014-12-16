@@ -54,6 +54,10 @@
 
   self.showingLoginForm = NO;
   
+  [self.view bringSubviewToFront:self.signupFormView];
+  [self.view bringSubviewToFront:self.loginFormView];
+
+  
   self.signupFormView.frame = CGRectMake(0,
                                          self.view.frame.size.height,
                                          self.signupFormView.frame.size.width,
