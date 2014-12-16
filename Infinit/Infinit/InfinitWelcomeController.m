@@ -33,6 +33,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *loginEmailImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *loginPasswordImageView;
 
+@property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *balloonImageView;
+
 
 @property BOOL showingLoginForm;
 
@@ -44,6 +47,8 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+  
+  [self addParallax];
   
   self.signupErrorLabel.text = @"Can we change it";
 
@@ -316,9 +321,33 @@
       self.loginPasswordImageView.image = [UIImage imageNamed:@"icon-password-valid"];
     }
   }
+}
+
+- (void)addParallax
+{
+  // Set vertical effect
+  UIInterpolatingMotionEffect* verticalMotionEffect =
+  [[UIInterpolatingMotionEffect alloc]
+   initWithKeyPath:@"center.y"
+   type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+  verticalMotionEffect.minimumRelativeValue = @(-1);
+  verticalMotionEffect.maximumRelativeValue = @(1);
   
+  // Set horizontal effect
+  UIInterpolatingMotionEffect *horizontalMotionEffect =
+  [[UIInterpolatingMotionEffect alloc]
+   initWithKeyPath:@"center.x"
+   type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+  horizontalMotionEffect.minimumRelativeValue = @(-1);
+  horizontalMotionEffect.maximumRelativeValue = @(1);
   
+  // Create group to combine both
+  UIMotionEffectGroup *group = [UIMotionEffectGroup new];
+  group.motionEffects = @[horizontalMotionEffect, verticalMotionEffect];
   
+  // Add both effects to your view
+  [self.view addMotionEffect:group];
+
 }
 
 
