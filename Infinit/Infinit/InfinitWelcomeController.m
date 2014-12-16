@@ -105,6 +105,11 @@
 
 - (IBAction)signupWithEmailSelected:(id)sender
 {
+  self.signupFormView.frame = CGRectMake(0,
+                                         self.view.frame.size.height,
+                                         self.signupFormView.frame.size.width,
+                                         self.signupFormView.frame.size.height);
+
   [UIView animateWithDuration:1 delay:.1 usingSpringWithDamping:1 initialSpringVelocity:2 options:UIViewAnimationOptionCurveEaseIn animations:^{
     self.signupFormView.frame = CGRectMake(0,
                                            self.view.frame.size.height - 280,
@@ -118,6 +123,10 @@
 - (IBAction)loginButtonSelected:(id)sender
 {
   self.showingLoginForm = YES;
+  self.loginFormView.frame = CGRectMake(0,
+                                        self.view.frame.size.height,
+                                        self.loginFormView.frame.size.width,
+                                        self.loginFormView.frame.size.height);
 
   [UIView animateWithDuration:1 delay:.1 usingSpringWithDamping:1 initialSpringVelocity:2 options:UIViewAnimationOptionCurveEaseIn animations:^{
     self.loginFormView.frame = CGRectMake(0,
