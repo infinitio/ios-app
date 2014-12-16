@@ -44,6 +44,13 @@
 
 @implementation InfinitWelcomeController
 
+- (void)viewWillAppear:(BOOL)animated
+{
+  [super viewWillAppear:animated];
+  [self.view bringSubviewToFront:self.signupFormView];
+  [self.view bringSubviewToFront:self.loginFormView];
+}
+
 - (void)viewDidLoad
 {
   [super viewDidLoad];
@@ -54,8 +61,6 @@
 
   self.showingLoginForm = NO;
   
-  [self.view bringSubviewToFront:self.signupFormView];
-  [self.view bringSubviewToFront:self.loginFormView];
 
   
   self.signupFormView.frame = CGRectMake(0,
