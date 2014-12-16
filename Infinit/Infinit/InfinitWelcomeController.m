@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UIView* signupFormView;
 @property (weak, nonatomic) IBOutlet UIView *loginFormView;
 @property (weak, nonatomic) IBOutlet UIButton* avatarButton;
+@property (weak, nonatomic) IBOutlet UIButton *loginAvatarButton;
 
 @property (weak, nonatomic) IBOutlet UITextField *signupEmailTextfield;
 @property (weak, nonatomic) IBOutlet UITextField *signupFullnameTextfield;
@@ -21,6 +22,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *loginEmailTextfield;
 @property (weak, nonatomic) IBOutlet UITextField *loginPasswordTextfield;
 
+@property BOOL showingLoginForm;
+
+
 @end
 
 @implementation InfinitWelcomeController
@@ -28,6 +32,8 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+  
+  self.showingLoginForm = NO;
   
   self.signupFormView.frame = CGRectMake(0,
                                          self.view.frame.size.height,
@@ -46,11 +52,14 @@
   self.avatarButton.layer.cornerRadius = self.avatarButton.frame.size.width/2;
   self.avatarButton.layer.borderWidth = 2;
   self.avatarButton.layer.borderColor = ([[[UIColor blackColor] colorWithAlphaComponent:1] CGColor]);
-  self.avatarButton.backgroundColor = [UIColor redColor];
+  
+  self.loginAvatarButton.layer.cornerRadius = self.avatarButton.frame.size.width/2;
+  self.loginAvatarButton.layer.borderWidth = 2;
+  self.loginAvatarButton.layer.borderColor = ([[[UIColor blackColor] colorWithAlphaComponent:1] CGColor]);
   
   [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(keyboardWasShown:)
-                                               name:UIKeyboardDidShowNotification
+                                           selector:@selector(keyboardWillShow:)
+                                               name:UIKeyboardWillShowNotification
                                              object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(keyboardWillHide)
@@ -68,7 +77,7 @@
 {
   [UIView animateWithDuration:1 delay:.1 usingSpringWithDamping:1 initialSpringVelocity:2 options:UIViewAnimationOptionCurveEaseIn animations:^{
     self.signupFormView.frame = CGRectMake(0,
-                                           self.view.frame.size.height - self.signupFormView.frame.size.height,
+                                           self.view.frame.size.height - 280,
                                            self.signupFormView.frame.size.width,
                                            self.signupFormView.frame.size.height);
   }completion:^(BOOL finished) {
@@ -78,15 +87,11 @@
 
 - (IBAction)loginButtonSelected:(id)sender
 {
-  CGRect viewFrame = self.view.frame;
-  CGRect formFrame = self.loginFormView.frame;
-  CGFloat newOrigin = viewFrame.size.height - formFrame.size.height;
-  NSLog(@"%f",newOrigin);
-
+  self.showingLoginForm = YES;
 
   [UIView animateWithDuration:1 delay:.1 usingSpringWithDamping:1 initialSpringVelocity:2 options:UIViewAnimationOptionCurveEaseIn animations:^{
     self.loginFormView.frame = CGRectMake(0,
-                                           self.view.frame.size.height - self.loginFormView.frame.size.height,
+                                           self.view.frame.size.height - 280,
                                            self.loginFormView.frame.size.width,
                                            self.loginFormView.frame.size.height);
   }completion:^(BOOL finished) {
@@ -99,6 +104,7 @@
 
 - (IBAction)signupBackButtonSelected:(id)sender
 {
+  [self.view endEditing:YES];
   [UIView animateWithDuration:1 delay:.1 usingSpringWithDamping:1 initialSpringVelocity:2 options:UIViewAnimationOptionCurveEaseIn animations:^{
     self.signupFormView.frame = CGRectMake(0,
                                            self.view.frame.size.height,
@@ -111,6 +117,7 @@
 
 - (IBAction)loginBackButtonSelected:(id)sender
 {
+  [self.view endEditing:YES];
   [UIView animateWithDuration:1 delay:.1 usingSpringWithDamping:1 initialSpringVelocity:2 options:UIViewAnimationOptionCurveEaseIn animations:^{
     self.loginFormView.frame = CGRectMake(0,
                                            self.view.frame.size.height,
@@ -143,7 +150,7 @@
 
 
 
-- (void)keyboardWasShown:(NSNotification *)notification
+- (void)keyboardWillShow:(NSNotification *)notification
 {
   
   // Get the size of the keyboard.
@@ -154,6 +161,31 @@
   int width = MAX(keyboardSize.height,keyboardSize.width);
   
   //your other code here..........
+  if(self.showingLoginForm == YES)
+  {
+    //Move login form up.
+    [UIView animateWithDuration:1 delay:.1 usingSpringWithDamping:1 initialSpringVelocity:2 options:UIViewAnimationOptionCurveEaseIn animations:^{
+      self.loginFormView.frame = CGRectMake(0,
+                                            self.view.frame.size.height - 280 +30 - height,
+                                            self.loginFormView.frame.size.width,
+                                            self.loginFormView.frame.size.height);
+    }completion:^(BOOL finished) {
+      
+      CGRect frame = self.loginFormView.frame;
+      NSLog(@"Happy times");
+    }];
+    
+  } else {
+    //Move the signup form up.
+    [UIView animateWithDuration:1 delay:.1 usingSpringWithDamping:1 initialSpringVelocity:2 options:UIViewAnimationOptionCurveEaseIn animations:^{
+      self.signupFormView.frame = CGRectMake(0,
+                                             self.view.frame.size.height - 280 + 30 - height ,
+                                             self.signupFormView.frame.size.width,
+                                             self.signupFormView.frame.size.height);
+    }completion:^(BOOL finished) {
+      NSLog(@"Happy times");
+    }];
+  }
   
   
 }
@@ -166,6 +198,10 @@
 
 - (void)textFieldDidBeginEditing:(UITextField*)textField
 {
+  if(textField == self.loginEmailTextfield || textField == self.loginPasswordTextfield)
+  {
+  }
+  
 }
 
 - (void)textFieldDidEndEditing:(UITextField*)textField
