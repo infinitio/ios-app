@@ -184,7 +184,7 @@
                         options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
                        self.loginFormView.frame = CGRectMake(0,
-                                            self.view.frame.size.height - 280 +30 - height,
+                                            20,
                                             self.loginFormView.frame.size.width,
                                             self.loginFormView.frame.size.height);
     }completion:^(BOOL finished) {
@@ -203,7 +203,7 @@
                      animations:^
                     {
                       self.signupFormView.frame = CGRectMake(0,
-                      self.view.frame.size.height - 280 + 30 - height ,
+                      20,
                       self.signupFormView.frame.size.width,
                       self.signupFormView.frame.size.height);
                     }
