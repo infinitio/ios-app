@@ -174,7 +174,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lnI-Gx-1f4">
-                                <rect key="frame" x="320" y="576" width="320" height="516"/>
+                                <rect key="frame" x="0.0" y="576" width="320" height="516"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qDT-8z-Yes">
                                         <rect key="frame" x="0.0" y="39" width="320" height="2"/>
