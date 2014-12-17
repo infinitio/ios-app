@@ -51,6 +51,13 @@
   [self.view bringSubviewToFront:self.loginFormView];
 }
 
+- (void)awakeFromNib
+{
+  
+  
+  
+}
+
 - (void)viewDidLoad
 {
   [super viewDidLoad];
@@ -68,14 +75,12 @@
                                          self.signupFormView.frame.size.width,
                                          self.signupFormView.frame.size.height);
   
-  [self.view bringSubviewToFront:self.signupFormView];
   
   self.loginFormView.frame = CGRectMake(0,
                                         self.view.frame.size.height,
                                         self.loginFormView.frame.size.width,
                                         self.loginFormView.frame.size.height);
   
-  [self.view bringSubviewToFront:self.loginFormView];
   
   self.avatarButton.layer.cornerRadius = self.avatarButton.frame.size.width/2;
   self.avatarButton.layer.borderWidth = 2;

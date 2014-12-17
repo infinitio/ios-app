@@ -17,11 +17,13 @@
 
 @interface InfMediaViewController () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate>
 
-@property(nonatomic, strong) NSArray* assets;
 @property(nonatomic, strong) UICollectionView* mediaCollectionView;
+
+@property(nonatomic, strong) NSArray* assets;
 @property (nonatomic, strong) NSMutableDictionary* selectedMedia;
-@property (nonatomic, strong) UIButton* nextButton;
 @property(nonatomic, strong) NSMutableArray* assetURLArray;
+
+@property (nonatomic, strong) UIButton* nextButton;
 
 @end
 
@@ -62,8 +64,6 @@
                                              collectionViewLayout:layout];
     [mediaCollectionView setDataSource:self];
     [mediaCollectionView setDelegate:self];
-    [mediaCollectionView registerClass:[UICollectionViewCell class]
-            forCellWithReuseIdentifier:@"cellIdentifier"];
     [mediaCollectionView setBackgroundColor:[UIColor blackColor]];
     [mediaCollectionView registerClass:[InfCollectionViewCell class]
             forCellWithReuseIdentifier:@"mediaCell"];
@@ -75,19 +75,8 @@
     [nextButton setTitle:@"Next (0 Selected)" forState:UIControlStateNormal];
     [nextButton addTarget:self action:@selector(nextButtonSelected) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:nextButton];
-    
-    //Back Could Say Cancel if the view is pushed onto stack.
-    /*
-     UIBarButtonItem *backButton = [[UIBarButtonItem alloc]
-     initWithTitle: @"Cancel"
-     style: UIBarButtonItemStyleBordered
-     target:self action: @selector(popBack)];
-     [self.navigationItem setLeftBarButtonItem:backButton];
-     */
-    
-    
+  
     [self loadAssets];
-    
 }
 
 - (void)loadAssets
