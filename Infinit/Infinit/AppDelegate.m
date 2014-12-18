@@ -8,8 +8,8 @@
 
 #import "AppDelegate.h"
 
-#import <Gap/InfinitConnectionManager.h>
 #import <Gap/InfinitStateManager.h>
+#import <Gap/InfinitConnectionManager.h>
 
 @interface AppDelegate ()
 @end

@@ -49,7 +49,7 @@
 		83F4D0871A1389250068BEB2 /* libmetaclient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D0861A1389250068BEB2 /* libmetaclient.a */; };
 		83F4D0891A13892F0068BEB2 /* libtrophonius-client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D0881A13892F0068BEB2 /* libtrophonius-client.a */; };
 		83F4D08B1A1389430068BEB2 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D08A1A1389430068BEB2 /* libiconv.dylib */; };
-		83F4D0961A13902A0068BEB2 /* libGap-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D0931A1390170068BEB2 /* libGap-iOS.a */; };
+		83F4D0961A13902A0068BEB2 /* libGap-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D0931A1390170068BEB2 /* libGap-iOS.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		83F4D09F1A13AE0D0068BEB2 /* InfinitPeerTransactionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F4D09E1A13AE0D0068BEB2 /* InfinitPeerTransactionsController.m */; };
 		83F4D0A21A13BC490068BEB2 /* InfinitPeerTransactionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F4D0A11A13BC490068BEB2 /* InfinitPeerTransactionCell.m */; };
 		83F4D0A61A14B48D0068BEB2 /* InfinitPeerSendController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F4D0A51A14B48D0068BEB2 /* InfinitPeerSendController.m */; };
@@ -610,6 +610,7 @@
 				TargetAttributes = {
 					83B32D5C1A136485004AB945 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = CHMLNGDA6V;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -850,6 +851,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -895,6 +897,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
