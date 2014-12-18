@@ -10,10 +10,11 @@
 
 @interface SendCell : UITableViewCell
 
-@property (nonatomic, strong) UIImageView* portraitImageView;
-@property (nonatomic, strong) UILabel* nameLabel;
-@property (nonatomic, strong) UIImageView* checkMark;
 
+@property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
+
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *checkMark;
 
 
 @end

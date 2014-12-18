@@ -10,9 +10,12 @@
 
 @implementation SendCell
 
+/*
 - (id)initWithStyle:(UITableViewCellStyle)style
     reuseIdentifier:(NSString*)reuseIdentifier
 {
+  
+  
     self = [super initWithStyle:style
                 reuseIdentifier:reuseIdentifier];
     if (self) {
@@ -25,7 +28,7 @@
         _nameLabel.font = [UIFont boldSystemFontOfSize:12];
         
         _checkMark = [[UIImageView alloc] initWithFrame:(CGRect){250,10,23,23}];
-        _checkMark.image = [UIImage imageNamed:@"icon-contact-select.png"];
+        _checkMark.image = [UIImage imageNamed:@"icon-contact-check"];
         
         [self.contentView addSubview:_portraitImageView];
         [self.contentView addSubview:_nameLabel];
@@ -33,6 +36,14 @@
     }
     return self;
 }
+ */
+
+- (void)awakeFromNib
+{
+  self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.width/2;
+  self.avatarImageView.clipsToBounds = YES;
+}
+
 
 
 

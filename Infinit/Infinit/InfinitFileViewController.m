@@ -8,7 +8,7 @@
 
 #import "InfinitFileViewController.h"
 
-@interface InfinitFileViewController ()
+@interface InfinitFileViewController () <UIGestureRecognizerDelegate, UIActionSheetDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *fileImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
@@ -27,7 +27,17 @@
   self.avatarImageView.layer.borderWidth = 4;
   self.avatarImageView.layer.borderColor = ([[UIColor whiteColor] CGColor]);
   
+  UILongPressGestureRecognizer *gestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self
+                                                                                                  action:@selector(handleLongPress:)];
+  self.fileImageView.userInteractionEnabled = YES;
+  gestureRecognizer.minimumPressDuration = 0.3;
+  gestureRecognizer.delegate = self;
+  gestureRecognizer.numberOfTouchesRequired = 1;
+  [self.fileImageView addGestureRecognizer:gestureRecognizer];
+  
   //title will be the name of the file. Image for a photo.  Sound board for the music.  Static image otherwise (for zip etc...)
+  
+  
   
   
 }
@@ -36,10 +46,31 @@
   [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)handleLongPress:(UILongPressGestureRecognizer*)gestureRecognizer
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+  if (gestureRecognizer.state == UIGestureRecognizerStateBegan)
+  {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Save To Camera Roll", @"Share", @"Copy Link", @"Delete", @"More...", nil];
+    actionSheet.actionSheetStyle = UIActionSheetStyleBlackTranslucent;
+    actionSheet.destructiveButtonIndex = 3;
+    [actionSheet showInView:self.tabBarController.view];
+  }
+}
+
+-(void)actionSheet:(UIActionSheet *)actionSheet
+clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+  
+  
+  switch (buttonIndex)
+  {
+    case 0:
+      UIImageWriteToSavedPhotosAlbum(self.fileImageView.image, nil, nil, nil);
+      break;
+      
+    default:
+      break;
+  }
 }
 
 /*

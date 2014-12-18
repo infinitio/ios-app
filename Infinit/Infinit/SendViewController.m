@@ -140,10 +140,10 @@ NSString* _managed_files_id;
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    cell.nameLabel.text = [[peopleArray objectAtIndex:indexPath.row] objectForKey:@"name"];
-    
-    cell.portraitImageView.image = [[peopleArray objectAtIndex:indexPath.row] objectForKey:@"picture"];
-    
+//    cell.nameLabel.text = [[peopleArray objectAtIndex:indexPath.row] objectForKey:@"name"];
+  
+//    cell.avatarImageView.image = [[peopleArray objectAtIndex:indexPath.row] objectForKey:@"picture"];
+  
     return cell;
 }
 
