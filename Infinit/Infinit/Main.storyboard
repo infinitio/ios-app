@@ -1459,7 +1459,7 @@
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
-                                        <inset key="separatorInset" minX="40" minY="0.0" maxX="22" maxY="0.0"/>
+                                        <inset key="separatorInset" minX="40" minY="0.0" maxX="8" maxY="0.0"/>
                                         <connections>
                                             <outlet property="avatarImageView" destination="695-GN-s1x" id="gF2-D2-zbG"/>
                                             <outlet property="checkMark" destination="nrA-9p-fEf" id="kMn-4Q-oEH"/>
