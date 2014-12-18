@@ -13,41 +13,14 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-  
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-        _animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.contentView];
 
-        _checkMark = [[UIImageView alloc] initWithFrame:CGRectMake(26, 26 , 52, 52)];
-        _checkMark.image = [UIImage imageNamed:@"icon-picture-check.png"];
-        _checkMark.hidden = NO;
-        
-        _imageView = [[UIImageView alloc] initWithFrame:self.contentView.bounds];
-        
-        [self.contentView addSubview:_imageView];
-        [self.contentView addSubview:_checkMark];
-        
-        CGRect durationFrame = CGRectMake(70, 86, 40, 18);
-        _durationLabel = [[UILabel alloc] initWithFrame:durationFrame];
-        _durationLabel.textColor = [UIColor whiteColor];
-        _durationLabel.font = [UIFont boldSystemFontOfSize:12];
-    }
-    return self;
-}
-
-
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
-  
-  
-  self = [super initWithCoder:aDecoder];
+  self = [super initWithFrame:frame];
   if (self) {
     // Initialization code
     _animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.contentView];
-    
-    _checkMark = [[UIImageView alloc] initWithFrame:CGRectMake(26, 26 , 52, 52)];
-    _checkMark.image = [UIImage imageNamed:@"icon-picture-check.png"];
+
+    _checkMark = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-checked.png"]];
+    _checkMark.center = CGPointMake(self.frame.size.width / 2, self.frame.size.height / 2);
     _checkMark.hidden = NO;
     
     _imageView = [[UIImageView alloc] initWithFrame:self.contentView.bounds];
@@ -63,12 +36,14 @@
   return self;
 }
 
+
+
 - (void)prepareForReuse
 {
-    [_animator removeAllBehaviors];
-    _imageView.image = nil;
-    _durationLabel.text = nil;
-    _checkMark.hidden = NO;
+  [_animator removeAllBehaviors];
+  _imageView.image = nil;
+  _durationLabel.text = nil;
+  _checkMark.hidden = NO;
 }
 
 @end

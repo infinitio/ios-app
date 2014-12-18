@@ -73,6 +73,8 @@
 		D0BC70471A41C04C006923F2 /* InfinitMediaCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BC70461A41C04C006923F2 /* InfinitMediaCollectionViewController.m */; };
 		D0BC704A1A41CAE2006923F2 /* InfinitFileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BC70491A41CAE2006923F2 /* InfinitFileTableViewController.m */; };
 		D0BC704E1A41D0E1006923F2 /* FileTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BC704D1A41D0E1006923F2 /* FileTableViewCell.m */; };
+		D0BD351F1A42202300AB8EF9 /* InfinitFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BD351E1A42202300AB8EF9 /* InfinitFileViewController.m */; };
+		D0BD35231A4245AF00AB8EF9 /* InfinitSelectPeopleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BD35221A4245AF00AB8EF9 /* InfinitSelectPeopleViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -223,6 +225,10 @@
 		D0BC70491A41CAE2006923F2 /* InfinitFileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFileTableViewController.m; sourceTree = SOURCE_ROOT; };
 		D0BC704C1A41D0E1006923F2 /* FileTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileTableViewCell.h; sourceTree = "<group>"; };
 		D0BC704D1A41D0E1006923F2 /* FileTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileTableViewCell.m; sourceTree = "<group>"; };
+		D0BD351D1A42202300AB8EF9 /* InfinitFileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFileViewController.h; sourceTree = "<group>"; };
+		D0BD351E1A42202300AB8EF9 /* InfinitFileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFileViewController.m; sourceTree = "<group>"; };
+		D0BD35211A4245AF00AB8EF9 /* InfinitSelectPeopleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSelectPeopleViewController.h; sourceTree = "<group>"; };
+		D0BD35221A4245AF00AB8EF9 /* InfinitSelectPeopleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSelectPeopleViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -505,6 +511,8 @@
 				D05D5D161A24C499005529E8 /* InfMediaViewController.m */,
 				D0BC70451A41C04B006923F2 /* InfinitMediaCollectionViewController.h */,
 				D0BC70461A41C04C006923F2 /* InfinitMediaCollectionViewController.m */,
+				D0BD35211A4245AF00AB8EF9 /* InfinitSelectPeopleViewController.h */,
+				D0BD35221A4245AF00AB8EF9 /* InfinitSelectPeopleViewController.m */,
 			);
 			name = Send;
 			sourceTree = "<group>";
@@ -523,10 +531,12 @@
 		D0BC704B1A41CAF1006923F2 /* Files */ = {
 			isa = PBXGroup;
 			children = (
-				D0BC704C1A41D0E1006923F2 /* FileTableViewCell.h */,
-				D0BC704D1A41D0E1006923F2 /* FileTableViewCell.m */,
 				D0BC70481A41CAE2006923F2 /* InfinitFileTableViewController.h */,
 				D0BC70491A41CAE2006923F2 /* InfinitFileTableViewController.m */,
+				D0BD351D1A42202300AB8EF9 /* InfinitFileViewController.h */,
+				D0BD351E1A42202300AB8EF9 /* InfinitFileViewController.m */,
+				D0BC704C1A41D0E1006923F2 /* FileTableViewCell.h */,
+				D0BC704D1A41D0E1006923F2 /* FileTableViewCell.m */,
 			);
 			name = Files;
 			sourceTree = "<group>";
@@ -694,6 +704,7 @@
 				83B32E061A1365E9004AB945 /* AppDelegate.m in Sources */,
 				D0AFCBB71A264889003AC152 /* EmailSignupVC.m in Sources */,
 				D0AFCBBA1A2758F8003AC152 /* TabBarBadgeLabel.m in Sources */,
+				D0BD35231A4245AF00AB8EF9 /* InfinitSelectPeopleViewController.m in Sources */,
 				83FE9C8B1A161F6D00FC1CFD /* InfinitLinkSendController.m in Sources */,
 				83F4D09F1A13AE0D0068BEB2 /* InfinitPeerTransactionsController.m in Sources */,
 				D05D5D171A24C499005529E8 /* InfMediaViewController.m in Sources */,
@@ -712,6 +723,7 @@
 				D05D5D1A1A24C4B1005529E8 /* InfCollectionViewCell.m in Sources */,
 				D0BC70431A41B4B7006923F2 /* InfTabBarController.m in Sources */,
 				D0BC704A1A41CAE2006923F2 /* InfinitFileTableViewController.m in Sources */,
+				D0BD351F1A42202300AB8EF9 /* InfinitFileViewController.m in Sources */,
 				83F72CA11A15123F0088106E /* InfinitLinkTransactionsController.m in Sources */,
 				D068E54B1A28DD4200F0072D /* FileInformation.m in Sources */,
 				D0AFCBBE1A275B51003AC152 /* InfinitTabBarController.m in Sources */,

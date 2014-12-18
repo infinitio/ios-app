@@ -199,7 +199,7 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     
     [_selectedMedia removeObjectForKey:indexPath];
     
-    NSString *buttonString = [NSString stringWithFormat:@"Next (%lu)", (unsigned long)_selectedMedia.allKeys.count];
+    NSString* buttonString = [NSString stringWithFormat:@"Next (%lu)", (unsigned long)_selectedMedia.allKeys.count];
     [UIView performWithoutAnimation:^ {
       [self.nextButton setTitle:buttonString];
     }];  }
@@ -217,6 +217,19 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
   }
   
   [collectionView deselectItemAtIndexPath:indexPath animated:NO];
+}
+
+- (IBAction)backButtonClicked:(id)sender
+{
+  [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+  if([segue.identifier isEqualToString:@"send2Segue"])
+  {
+    
+  }
 }
 
 

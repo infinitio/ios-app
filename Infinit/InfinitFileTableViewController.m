@@ -11,6 +11,7 @@
 
 
 @interface InfinitFileTableViewController ()
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @end
 
@@ -18,6 +19,9 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  UITextField *txfSearchField = [_searchBar valueForKey:@"_searchField"];
+  txfSearchField.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1];
   
   // Uncomment the following line to preserve selection between presentations.
   // self.clearsSelectionOnViewWillAppear = NO;
