@@ -35,8 +35,14 @@ static NSString * const reuseIdentifier = @"mediaCell";
   // Register cell classes
   [self.collectionView registerClass:[InfCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
   
-  // Do any additional setup after loading the view.
   
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+  [super viewWillAppear:animated];
+  
+  //Makes sure we get the most recent ones even when view has been loaded before.
   [self loadAssets];
 }
 
@@ -176,6 +182,41 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
   //Redraw The Image as blurry, and put a check mark on it.
   InfCollectionViewCell* cell = (InfCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
+  /*
+  [self.collectionView bringSubviewToFront:cell];
+  [UIView animateWithDuration:.2
+                   animations:^{
+                    cell.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y -15, cell.frame.size.width, cell.frame.size.height);
+
+                   }
+                   completion:^(BOOL finished){
+                    [UIView animateWithDuration:.3
+                                          delay:0
+                         usingSpringWithDamping:.5
+                          initialSpringVelocity:.1
+                                        options:0
+                                     animations:^{
+                                       cell.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y +15, cell.frame.size.width, cell.frame.size.height);
+                                     }completion:nil];
+  }];
+  */
+  [UIView animateWithDuration:.2
+                        delay:0
+       usingSpringWithDamping:.7
+        initialSpringVelocity:.2
+                      options:0
+                   animations:^{
+                     cell.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y -15, cell.frame.size.width, cell.frame.size.height);
+                   }completion:^(BOOL finished){
+                     [UIView animateWithDuration:.2
+                                           delay:0
+                          usingSpringWithDamping:.5
+                           initialSpringVelocity:.1
+                                         options:0
+                                      animations:^{
+                                        cell.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y +15, cell.frame.size.width, cell.frame.size.height);
+                                      }completion:nil];
+                   }];
   
   
   if(_selectedMedia == nil)

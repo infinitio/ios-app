@@ -138,7 +138,7 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   
   if([_selectedRecipients objectForKey:indexPath])
   {
-    cell.checkMark.image = [UIImage imageNamed:@"icon-contact-checked"];
+    cell.checkMark.image = [UIImage imageNamed:@"icon-contact-check"];
     [_selectedRecipients removeObjectForKey:indexPath];
     
     NSString* buttonString = [NSString stringWithFormat:@"SEND (%lu)", (unsigned long)_selectedRecipients.allKeys.count];

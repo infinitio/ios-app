@@ -165,27 +165,6 @@
 
 - (IBAction)signupWithEmailSelected:(id)sender
 {
-  self.showingLoginForm = YES;
-  self.loginFormView.frame = CGRectMake(0,
-                                        self.view.frame.size.height,
-                                        self.loginFormView.frame.size.width,
-                                        self.loginFormView.frame.size.height);
-  
-  [UIView animateWithDuration:.5
-                        delay:.1
-       usingSpringWithDamping:.7
-        initialSpringVelocity:5
-                      options:0
-                   animations:^{
-                     self.loginFormView.frame = CGRectMake(0,
-                                                           self.view.frame.size.height - 280,
-                                                           self.loginFormView.frame.size.width,
-                                                           self.loginFormView.frame.size.height);
-                   }completion:^(BOOL finished) {
-                     
-                     NSLog(@"Happy times");
-                   }];
-  /*
   self.signupFormView.frame = CGRectMake(0,
                                          self.view.frame.size.height,
                                          self.signupFormView.frame.size.width,
@@ -209,7 +188,7 @@
   }completion:^(BOOL finished) {
     NSLog(@"Happy times");
   }];
-   */
+   
 }
 
 - (IBAction)loginButtonSelected:(id)sender
@@ -434,13 +413,13 @@
     }
   }
   
-  if((self.loginPasswordTextfield.text.length >3 && [InfinitUtilities stringIsEmail:self.loginEmailTextfield.text]))
+  if((self.loginPasswordTextfield.text.length >=3 && [InfinitUtilities stringIsEmail:self.loginEmailTextfield.text]))
   {
     //Show next button
     self.loginNextButton.hidden = NO;
   }
   
-  if(self.signupPasswordTextfield.text.length >3 && self.signupFullnameTextfield.text.length > 3 && [InfinitUtilities stringIsEmail:self.signupEmailTextfield.text])
+  if(self.signupPasswordTextfield.text.length >=3 && self.signupFullnameTextfield.text.length >= 3 && [InfinitUtilities stringIsEmail:self.signupEmailTextfield.text])
   {
     //Show next button
     self.signupNextButton.hidden = NO;
