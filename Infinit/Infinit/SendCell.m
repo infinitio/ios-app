@@ -46,11 +46,12 @@
 
 
 
-
-- (void)setSelected:(BOOL)selected
-           animated:(BOOL)animated
+-(void)prepareForReuse
 {
-    [super setSelected:selected animated:animated];
+  self.checkMark.image = [UIImage imageNamed:@"icon-contact-check"];
+  self.avatarImageView.image = nil;
+  self.nameLabel.text = nil;
+
 }
 
 @end

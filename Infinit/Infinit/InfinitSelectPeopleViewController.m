@@ -69,44 +69,41 @@
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, error);
     ABRecordRef source = ABAddressBookCopyDefaultSource(addressBook);
     CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook, source, kABPersonSortByFirstName);
-    CFIndex nPeople = ABAddressBookGetPersonCount(addressBook);
     
     _people = [[NSMutableArray alloc] init];
 
-    for (int i = 0; i < nPeople; i++)
+    for (int i = 0; i < CFArrayGetCount(allPeople); i++)
     {
-
       ABRecordRef person = CFArrayGetValueAtIndex(allPeople, i);
-      NSString *firstName = (__bridge NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
-      NSString *lastName = (__bridge NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);
-
-      NSMutableDictionary *userDict = [[NSMutableDictionary alloc] init];
-      if(firstName && lastName)
+      if(person)
       {
-        [userDict setObject:[NSString stringWithFormat:@"%@ %@", firstName, lastName] forKey:@"fullname"];
+        NSString *firstName = (__bridge NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
+        NSString *lastName = (__bridge NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);
+        
+        NSMutableDictionary *userDict = [[NSMutableDictionary alloc] init];
+        if(firstName && lastName)
+        {
+          [userDict setObject:[NSString stringWithFormat:@"%@ %@", firstName, lastName] forKey:@"fullname"];
+        }
+        else if(firstName)
+        {
+          [userDict setObject:firstName forKey:@"fullname"];
+        }
+        else if(lastName)
+        {
+          [userDict setObject:lastName forKey:@"fullname"];
+        }
+        
+        NSData  *imgData = (__bridge NSData *)ABPersonCopyImageData(person);
+        UIImage *image = [UIImage imageWithData:imgData];
+        if(image)
+        {
+          [userDict setObject:image forKey:@"avatar"];
+        }
+        
+        [_people addObject:userDict];
       }
-      else if(firstName)
-      {
-        [userDict setObject:firstName forKey:@"fullname"];
-      }
-      else if(lastName)
-      {
-        [userDict setObject:lastName forKey:@"fullname"];
-      }
-      
-      NSData  *imgData = (__bridge NSData *)ABPersonCopyImageData(person);
-      UIImage *image = [UIImage imageWithData:imgData];
-      if(image)
-      {
-        [userDict setObject:image forKey:@"avatar"];
-      }
-      
-      [_people addObject:userDict];
     }
-    
-    
-    
-    
   }
 }
 
@@ -136,10 +133,29 @@
 - (NSInteger)tableView:(UITableView*)tableView
  numberOfRowsInSection:(NSInteger)section
 {
-  if(section == 0)
-    return 5;
-  else
-    return _people.count - 5;
+  if(_people)
+  {
+    if(section == 0)
+    {
+      if(_people.count > 5)
+      {
+        return 5;
+      } else
+      {
+        return _people.count;
+      }
+    } else if(section == 1)
+    {
+      if(_people.count > 5)
+      {
+        return _people.count - 5;
+      } else
+      {
+        return 0;
+      }
+    }
+  }
+  return 0;
 }
 
 
@@ -161,6 +177,14 @@
   {
     cell.avatarImageView.image = image;
   }
+  
+  if([_selectedRecipients objectForKey:indexPath])
+  {
+    cell.checkMark.image = [UIImage imageNamed:@"icon-contact-checked"];
+  } else
+  {
+    cell.checkMark.image = [UIImage imageNamed:@"icon-contact-check"];
+  }
 
   
   return cell;
@@ -172,7 +196,7 @@ heightForHeaderInSection:(NSInteger)section
   
   if (section == 1)
   {
-    CGFloat height = 30.0;
+    CGFloat height = 38.0;
     return height;
   } else {
     CGFloat height = 0.0;
