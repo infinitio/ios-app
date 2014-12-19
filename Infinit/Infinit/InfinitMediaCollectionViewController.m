@@ -182,41 +182,74 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
   //Redraw The Image as blurry, and put a check mark on it.
   InfCollectionViewCell* cell = (InfCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
-  /*
+  
   [self.collectionView bringSubviewToFront:cell];
-  [UIView animateWithDuration:.2
-                   animations:^{
-                    cell.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y -15, cell.frame.size.width, cell.frame.size.height);
 
-                   }
-                   completion:^(BOOL finished){
-                    [UIView animateWithDuration:.3
-                                          delay:0
-                         usingSpringWithDamping:.5
-                          initialSpringVelocity:.1
-                                        options:0
-                                     animations:^{
-                                       cell.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y +15, cell.frame.size.width, cell.frame.size.height);
-                                     }completion:nil];
-  }];
-  */
-  [UIView animateWithDuration:.2
+  /*
+  [UIView animateWithDuration:.3
                         delay:0
-       usingSpringWithDamping:.7
-        initialSpringVelocity:.2
-                      options:0
+       usingSpringWithDamping:.3
+        initialSpringVelocity:1
+                      options:UIViewAnimationOptionCurveEaseInOut
                    animations:^{
-                     cell.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y -15, cell.frame.size.width, cell.frame.size.height);
+                     cell.contentView.layer.transform = CATransform3DMakeScale(0.7, 0.7, 1.0);
                    }completion:^(BOOL finished){
-                     [UIView animateWithDuration:.2
+                     [UIView animateWithDuration:.3
                                            delay:0
-                          usingSpringWithDamping:.5
-                           initialSpringVelocity:.1
-                                         options:0
+                          usingSpringWithDamping:.3
+                           initialSpringVelocity:1
+                                         options:UIViewAnimationOptionCurveEaseInOut
                                       animations:^{
-                                        cell.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y +15, cell.frame.size.width, cell.frame.size.height);
+                                        cell.contentView.layer.transform = CATransform3DIdentity;
                                       }completion:nil];
                    }];
+   */
+  
+  /*
+  [UIView animateWithDuration:.1
+                        delay:0
+       usingSpringWithDamping:.7
+        initialSpringVelocity:2
+                      options:UIViewAnimationOptionCurveEaseOut
+                   animations:^{
+                     cell.contentView.transform = CGAffineTransformMakeScale(.7, .7);
+                   }completion:^(BOOL finished){
+                     [UIView animateWithDuration:.1
+                                           delay:0
+                          usingSpringWithDamping:.7
+                           initialSpringVelocity:2
+                                         options:UIViewAnimationOptionCurveEaseOut
+                                      animations:^{
+                                        cell.contentView.transform = CGAffineTransformMakeScale(1.3, 1.3);
+                                      }completion:^(BOOL finished){
+                                        [UIView animateWithDuration:.1
+                                                              delay:0
+                                             usingSpringWithDamping:.7
+                                              initialSpringVelocity:2
+                                                            options:UIViewAnimationOptionCurveEaseOut
+                                                         animations:^{
+                                                           cell.contentView.transform = CGAffineTransformIdentity;
+                                                         }completion:nil];
+                                      }];
+                   }];
+   */
+  
+  [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    cell.contentView.transform = CGAffineTransformMakeScale(.8, .8);
+  } completion:^(BOOL finished){
+    // do something once the animation finishes, put it here
+    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+      cell.contentView.transform = CGAffineTransformMakeScale(1.2, 1.2);
+    } completion:^(BOOL finished){
+      // do something once the animation finishes, put it here
+      [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        cell.contentView.transform = CGAffineTransformIdentity;
+      } completion:^(BOOL finished){
+        // do something once the animation finishes, put it here
+        
+      }];
+    }];
+  }];
   
   
   if(_selectedMedia == nil)
