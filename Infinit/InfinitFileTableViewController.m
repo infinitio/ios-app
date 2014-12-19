@@ -17,8 +17,10 @@
 
 @implementation InfinitFileTableViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
   [super viewDidLoad];
+  self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-logo-red"]];
   
   UITextField *txfSearchField = [_searchBar valueForKey:@"_searchField"];
   txfSearchField.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1];

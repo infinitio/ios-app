@@ -21,6 +21,7 @@
 {
   [InfinitConnectionManager sharedInstance];
   [InfinitStateManager startState];
+  
   return YES;
 }
 

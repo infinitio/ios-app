@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) UIImageView* imageView;
 @property (nonatomic, strong) UIImageView* checkMark;
+@property (nonatomic, strong) UIView* blackLayer;
 @property (nonatomic, strong) UIDynamicAnimator* animator;
 @property (nonatomic, strong) UILabel* durationLabel;
 

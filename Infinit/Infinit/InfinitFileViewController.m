@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *senderLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sizeAndDateLabel;
+@property (weak, nonatomic) IBOutlet UIView *whiteBorderView;
 
 @end
 
@@ -24,8 +25,8 @@
   [super viewDidLoad];
   // Do any additional setup after loading the view.
   self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.width/2;
-  self.avatarImageView.layer.borderWidth = 4;
-  self.avatarImageView.layer.borderColor = ([[UIColor whiteColor] CGColor]);
+  self.whiteBorderView.layer.cornerRadius = self.whiteBorderView.frame.size.width/2;
+
   
   UILongPressGestureRecognizer *gestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self
                                                                                                   action:@selector(handleLongPress:)];

@@ -28,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *signupProfileImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *signupPasswordImageView;
 
+// NEED TO MAKE THIS WORK
 @property (weak, nonatomic) IBOutlet UILabel *signupErrorLabel;
 
 @property (weak, nonatomic) IBOutlet UIImageView *loginEmailImageView;
@@ -36,9 +37,15 @@
 @property (weak, nonatomic) IBOutlet UIImageView *logoImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *balloonImageView;
 
+@property (weak, nonatomic) IBOutlet UIButton *signUpWithFacebookButton;
+@property (weak, nonatomic) IBOutlet UIButton* signupWithEmailButton;
+@property (weak, nonatomic) IBOutlet UIButton* loginButton;
+@property (weak, nonatomic) IBOutlet UILabel *taglineLabel;
+
+@property (weak, nonatomic) IBOutlet UIButton *loginNextButton;
+@property (weak, nonatomic) IBOutlet UIButton *signupNextButton;
 
 @property BOOL showingLoginForm;
-
 
 @end
 
@@ -62,11 +69,34 @@
 {
   [super viewDidLoad];
   
+  /* Get names of fonts.
+  for (NSString* family in [UIFont familyNames])
+  {
+    NSLog(@"%@", family);
+    
+    for (NSString* name in [UIFont fontNamesForFamilyName: family])
+    {
+      NSLog(@"  %@", name);
+    }
+  }
+   */
+  
   [self addParallax];
   
   self.signupErrorLabel.text = @"Can we change it";
 
   self.showingLoginForm = NO;
+  
+  self.signUpWithFacebookButton.layer.cornerRadius = 5.0;
+  self.signupWithEmailButton.layer.cornerRadius = 5.0;
+  self.loginButton.layer.cornerRadius = 5.0;
+  
+  self.signupWithEmailButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Semibold" size:15];
+  self.loginButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Semibold" size:15];
+  self.signUpWithFacebookButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Semibold" size:15];
+
+  self.taglineLabel.font = [UIFont fontWithName:@"" size:12];
+
   
 
   
@@ -83,12 +113,28 @@
   
   
   self.avatarButton.layer.cornerRadius = self.avatarButton.frame.size.width/2;
-  self.avatarButton.layer.borderWidth = 2;
-  self.avatarButton.layer.borderColor = ([[[UIColor colorWithRed:181/255.0 green:181/255.0 blue:181/255.0 alpha:1] colorWithAlphaComponent:1] CGColor]);
+  self.avatarButton.layer.borderWidth = 1;
+  self.avatarButton.layer.borderColor = ([[[UIColor colorWithRed:194/255.0 green:211/255.0 blue:211/255.0 alpha:1] colorWithAlphaComponent:1] CGColor]);
+  // the space between the image and text
+  CGFloat spacing = 6.0;
+  
+  // lower the text and push it left so it appears centered
+  //  below the image
+  CGSize imageSize = self.avatarButton.imageView.image.size;
+  self.avatarButton.titleEdgeInsets = UIEdgeInsetsMake(0.0, - imageSize.width, - (imageSize.height + spacing), 0.0);
+  self.loginAvatarButton.titleEdgeInsets = UIEdgeInsetsMake(0.0, - imageSize.width, - (imageSize.height + spacing), 0.0);
+
+  
+  // raise the image and push it right so it appears centered
+  //  above the text
+  CGSize titleSize = [self.avatarButton.titleLabel.text sizeWithAttributes:@{NSFontAttributeName: self.avatarButton.titleLabel.font}];
+  self.avatarButton.imageEdgeInsets = UIEdgeInsetsMake(- (titleSize.height + spacing), 0.0, 0.0, - titleSize.width);
+  self.loginAvatarButton.imageEdgeInsets = UIEdgeInsetsMake(- (titleSize.height + spacing), 0.0, 0.0, - titleSize.width);
+
   
   self.loginAvatarButton.layer.cornerRadius = self.avatarButton.frame.size.width/2;
-  self.loginAvatarButton.layer.borderWidth = 2;
-  self.loginAvatarButton.layer.borderColor = ([[[UIColor colorWithRed:181/255.0 green:181/255.0 blue:181/255.0 alpha:1] colorWithAlphaComponent:1] CGColor]);
+  self.loginAvatarButton.layer.borderWidth = 1;
+  self.loginAvatarButton.layer.borderColor = ([[[UIColor colorWithRed:194/255.0 green:211/255.0 blue:211/255.0 alpha:1] colorWithAlphaComponent:1] CGColor]);
   
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(keyboardWillShow:)
@@ -119,19 +165,51 @@
 
 - (IBAction)signupWithEmailSelected:(id)sender
 {
+  self.showingLoginForm = YES;
+  self.loginFormView.frame = CGRectMake(0,
+                                        self.view.frame.size.height,
+                                        self.loginFormView.frame.size.width,
+                                        self.loginFormView.frame.size.height);
+  
+  [UIView animateWithDuration:.5
+                        delay:.1
+       usingSpringWithDamping:.7
+        initialSpringVelocity:5
+                      options:0
+                   animations:^{
+                     self.loginFormView.frame = CGRectMake(0,
+                                                           self.view.frame.size.height - 280,
+                                                           self.loginFormView.frame.size.width,
+                                                           self.loginFormView.frame.size.height);
+                   }completion:^(BOOL finished) {
+                     
+                     NSLog(@"Happy times");
+                   }];
+  /*
   self.signupFormView.frame = CGRectMake(0,
                                          self.view.frame.size.height,
                                          self.signupFormView.frame.size.width,
                                          self.signupFormView.frame.size.height);
 
-  [UIView animateWithDuration:1 delay:.1 usingSpringWithDamping:1 initialSpringVelocity:2 options:UIViewAnimationOptionCurveEaseIn animations:^{
-    self.signupFormView.frame = CGRectMake(0,
-                                           self.view.frame.size.height - 280,
-                                           self.signupFormView.frame.size.width,
-                                           self.signupFormView.frame.size.height);
+  [UIView animateWithDuration:.5
+                        delay:.1
+       usingSpringWithDamping:.7
+        initialSpringVelocity:5
+                      options:0
+                   animations:^{
+                     self.signupFormView.frame = CGRectMake(0,
+                                                            self.view.frame.size.height - 280,
+                                                            self.signupFormView.frame.size.width,
+                                                            self.signupFormView.frame.size.height);
+                     //Move the balloon and background and logo and label as well.  Put them on a view?
+                     
+                     
+                     
+                     
   }completion:^(BOOL finished) {
     NSLog(@"Happy times");
   }];
+   */
 }
 
 - (IBAction)loginButtonSelected:(id)sender
@@ -142,14 +220,18 @@
                                         self.loginFormView.frame.size.width,
                                         self.loginFormView.frame.size.height);
 
-  [UIView animateWithDuration:1 delay:.1 usingSpringWithDamping:1 initialSpringVelocity:2 options:UIViewAnimationOptionCurveEaseIn animations:^{
-    self.loginFormView.frame = CGRectMake(0,
-                                           self.view.frame.size.height - 280,
-                                           self.loginFormView.frame.size.width,
-                                           self.loginFormView.frame.size.height);
+  [UIView animateWithDuration:.5
+                        delay:.1
+       usingSpringWithDamping:.7
+        initialSpringVelocity:5
+                      options:0
+                   animations:^{
+                                self.loginFormView.frame = CGRectMake(0,
+                                 self.view.frame.size.height - 280,
+                                 self.loginFormView.frame.size.width,
+                                 self.loginFormView.frame.size.height);
   }completion:^(BOOL finished) {
     
-    CGRect frame = self.loginFormView.frame;
     NSLog(@"Happy times");
   }];
   
@@ -158,11 +240,16 @@
 - (IBAction)signupBackButtonSelected:(id)sender
 {
   [self.view endEditing:YES];
-  [UIView animateWithDuration:1 delay:.1 usingSpringWithDamping:1 initialSpringVelocity:2 options:UIViewAnimationOptionCurveEaseIn animations:^{
-    self.signupFormView.frame = CGRectMake(0,
-                                           self.view.frame.size.height,
-                                           self.signupFormView.frame.size.width,
-                                           self.signupFormView.frame.size.height);
+  [UIView animateWithDuration:.5
+                        delay:.1
+       usingSpringWithDamping:.7
+        initialSpringVelocity:5
+                      options:0
+                   animations:^{
+                                self.signupFormView.frame = CGRectMake(0,
+                                 self.view.frame.size.height,
+                                 self.signupFormView.frame.size.width,
+                                 self.signupFormView.frame.size.height);
   }completion:^(BOOL finished) {
     NSLog(@"Happy times");
   }];
@@ -171,14 +258,19 @@
 - (IBAction)loginBackButtonSelected:(id)sender
 {
   [self.view endEditing:YES];
-  [UIView animateWithDuration:1 delay:.1 usingSpringWithDamping:1 initialSpringVelocity:2 options:UIViewAnimationOptionCurveEaseIn animations:^{
-    self.loginFormView.frame = CGRectMake(0,
-                                           self.view.frame.size.height,
-                                           self.loginFormView.frame.size.width,
-                                           self.loginFormView.frame.size.height);
-  }completion:^(BOOL finished) {
-    NSLog(@"Happy times");
-  }];
+  [UIView animateWithDuration:.5
+                        delay:.1
+       usingSpringWithDamping:.7
+        initialSpringVelocity:5
+                      options:0
+                   animations:^
+                  {
+                    self.loginFormView.frame = CGRectMake(0,
+                     self.view.frame.size.height,
+                     self.loginFormView.frame.size.width,
+                     self.loginFormView.frame.size.height);
+                  }
+                   completion:nil];
 }
 - (IBAction)addAvatarButtonSelected:(id)sender
 {
@@ -200,29 +292,27 @@
   if(self.showingLoginForm == YES)
   {
     //Move login form up.
-    [UIView animateWithDuration:1
+    [UIView animateWithDuration:.5
                           delay:.1
-         usingSpringWithDamping:1
-          initialSpringVelocity:2
-                        options:UIViewAnimationOptionCurveEaseIn
-                     animations:^{
+         usingSpringWithDamping:.7
+          initialSpringVelocity:5
+                        options:0
+                     animations:^
+                    {
                        self.loginFormView.frame = CGRectMake(0,
                                             20,
                                             self.loginFormView.frame.size.width,
                                             self.loginFormView.frame.size.height);
-    }completion:^(BOOL finished) {
-      CGRect frame = self.loginFormView.frame;
-      NSLog(@"Happy times");
-    }];
+                     }completion:nil];
     
   } else
   {
     //Move the signup form up.
-    [UIView animateWithDuration:1
+    [UIView animateWithDuration:.5
                           delay:.1
-         usingSpringWithDamping:1
-          initialSpringVelocity:2
-                        options:UIViewAnimationOptionCurveEaseIn
+         usingSpringWithDamping:.7
+          initialSpringVelocity:5
+                        options:0
                      animations:^
                     {
                       self.signupFormView.frame = CGRectMake(0,
@@ -230,10 +320,7 @@
                       self.signupFormView.frame.size.width,
                       self.signupFormView.frame.size.height);
                     }
-                     completion:^(BOOL finished)
-    {
-      NSLog(@"Happy times");
-    }];
+                     completion:nil];
   }
 }
 
@@ -243,6 +330,7 @@
 {
   if(textField == self.loginEmailTextfield || textField == self.loginPasswordTextfield)
   {
+    
   }
   
 }
@@ -328,6 +416,7 @@
     {
       self.loginEmailImageView.image = [UIImage imageNamed:@"icon-email-error"];
       //      self.loginErrorLabel.text = @"Email Invalid";
+      
     } else {
       self.loginEmailImageView.image = [UIImage imageNamed:@"icon-email-valid"];
     }
@@ -344,6 +433,20 @@
       self.loginPasswordImageView.image = [UIImage imageNamed:@"icon-password-valid"];
     }
   }
+  
+  if((self.loginPasswordTextfield.text.length >3 && [InfinitUtilities stringIsEmail:self.loginEmailTextfield.text]))
+  {
+    //Show next button
+    self.loginNextButton.hidden = NO;
+  }
+  
+  if(self.signupPasswordTextfield.text.length >3 && self.signupFullnameTextfield.text.length > 3 && [InfinitUtilities stringIsEmail:self.signupEmailTextfield.text])
+  {
+    //Show next button
+    self.signupNextButton.hidden = NO;
+  }
+  
+  
 }
 
 - (void)addParallax
@@ -373,5 +476,9 @@
 
 }
 
+-(BOOL)prefersStatusBarHidden
+{
+  return YES;
+}
 
 @end

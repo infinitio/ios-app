@@ -64,6 +64,21 @@
 		D05D5D1A1A24C4B1005529E8 /* InfCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D05D5D191A24C4B1005529E8 /* InfCollectionViewCell.m */; };
 		D0659F661A3E865A0001ACAE /* InfinitWelcomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0659F651A3E865A0001ACAE /* InfinitWelcomeController.m */; };
 		D068E54B1A28DD4200F0072D /* FileInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = D068E54A1A28DD4200F0072D /* FileInformation.m */; };
+		D09848131A43391B002D26AC /* SourceSansPro-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = D09848041A43391B002D26AC /* SourceSansPro-Black.otf */; };
+		D09848141A43391B002D26AC /* SourceSansPro-BlackIt.otf in Resources */ = {isa = PBXBuildFile; fileRef = D09848051A43391B002D26AC /* SourceSansPro-BlackIt.otf */; };
+		D09848151A43391B002D26AC /* SourceSansPro-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D09848061A43391B002D26AC /* SourceSansPro-Bold.otf */; };
+		D09848161A43391B002D26AC /* SourceSansPro-BoldIt.otf in Resources */ = {isa = PBXBuildFile; fileRef = D09848071A43391B002D26AC /* SourceSansPro-BoldIt.otf */; };
+		D09848171A43391B002D26AC /* SourceSansPro-ExtraLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = D09848081A43391B002D26AC /* SourceSansPro-ExtraLight.otf */; };
+		D09848181A43391B002D26AC /* SourceSansPro-ExtraLightIt.otf in Resources */ = {isa = PBXBuildFile; fileRef = D09848091A43391B002D26AC /* SourceSansPro-ExtraLightIt.otf */; };
+		D09848191A43391B002D26AC /* SourceSansPro-It.otf in Resources */ = {isa = PBXBuildFile; fileRef = D098480A1A43391B002D26AC /* SourceSansPro-It.otf */; };
+		D098481A1A43391B002D26AC /* SourceSansPro-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = D098480B1A43391B002D26AC /* SourceSansPro-Light.otf */; };
+		D098481B1A43391B002D26AC /* SourceSansPro-LightIt.otf in Resources */ = {isa = PBXBuildFile; fileRef = D098480C1A43391B002D26AC /* SourceSansPro-LightIt.otf */; };
+		D098481C1A43391B002D26AC /* SourceSansPro-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = D098480D1A43391B002D26AC /* SourceSansPro-Regular.otf */; };
+		D098481D1A43391B002D26AC /* SourceSansPro-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D098480E1A43391B002D26AC /* SourceSansPro-Semibold.otf */; };
+		D098481E1A43391B002D26AC /* SourceSansPro-SemiboldIt.otf in Resources */ = {isa = PBXBuildFile; fileRef = D098480F1A43391B002D26AC /* SourceSansPro-SemiboldIt.otf */; };
+		D098481F1A43391B002D26AC /* LucidaGrande.ttc in Resources */ = {isa = PBXBuildFile; fileRef = D09848101A43391B002D26AC /* LucidaGrande.ttc */; };
+		D09848201A43391B002D26AC /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D09848111A43391B002D26AC /* Montserrat-Bold.ttf */; };
+		D09848211A43391B002D26AC /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D09848121A43391B002D26AC /* Montserrat-Regular.ttf */; };
 		D0AFCBAF1A254613003AC152 /* SendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AFCBAE1A254613003AC152 /* SendViewController.m */; };
 		D0AFCBB31A254688003AC152 /* SendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AFCBB21A254688003AC152 /* SendCell.m */; };
 		D0AFCBB71A264889003AC152 /* EmailSignupVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AFCBB61A264889003AC152 /* EmailSignupVC.m */; };
@@ -75,6 +90,7 @@
 		D0BC704E1A41D0E1006923F2 /* FileTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BC704D1A41D0E1006923F2 /* FileTableViewCell.m */; };
 		D0BD351F1A42202300AB8EF9 /* InfinitFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BD351E1A42202300AB8EF9 /* InfinitFileViewController.m */; };
 		D0BD35231A4245AF00AB8EF9 /* InfinitSelectPeopleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BD35221A4245AF00AB8EF9 /* InfinitSelectPeopleViewController.m */; };
+		D0BD35261A43306400AB8EF9 /* InfinitHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BD35251A43306400AB8EF9 /* InfinitHomeViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -207,6 +223,21 @@
 		D0659F651A3E865A0001ACAE /* InfinitWelcomeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitWelcomeController.m; sourceTree = "<group>"; };
 		D068E5491A28DD4200F0072D /* FileInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileInformation.h; path = ../FileInformation.h; sourceTree = "<group>"; };
 		D068E54A1A28DD4200F0072D /* FileInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileInformation.m; path = ../FileInformation.m; sourceTree = "<group>"; };
+		D09848041A43391B002D26AC /* SourceSansPro-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Black.otf"; sourceTree = "<group>"; };
+		D09848051A43391B002D26AC /* SourceSansPro-BlackIt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-BlackIt.otf"; sourceTree = "<group>"; };
+		D09848061A43391B002D26AC /* SourceSansPro-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Bold.otf"; sourceTree = "<group>"; };
+		D09848071A43391B002D26AC /* SourceSansPro-BoldIt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-BoldIt.otf"; sourceTree = "<group>"; };
+		D09848081A43391B002D26AC /* SourceSansPro-ExtraLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-ExtraLight.otf"; sourceTree = "<group>"; };
+		D09848091A43391B002D26AC /* SourceSansPro-ExtraLightIt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-ExtraLightIt.otf"; sourceTree = "<group>"; };
+		D098480A1A43391B002D26AC /* SourceSansPro-It.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-It.otf"; sourceTree = "<group>"; };
+		D098480B1A43391B002D26AC /* SourceSansPro-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Light.otf"; sourceTree = "<group>"; };
+		D098480C1A43391B002D26AC /* SourceSansPro-LightIt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-LightIt.otf"; sourceTree = "<group>"; };
+		D098480D1A43391B002D26AC /* SourceSansPro-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Regular.otf"; sourceTree = "<group>"; };
+		D098480E1A43391B002D26AC /* SourceSansPro-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Semibold.otf"; sourceTree = "<group>"; };
+		D098480F1A43391B002D26AC /* SourceSansPro-SemiboldIt.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-SemiboldIt.otf"; sourceTree = "<group>"; };
+		D09848101A43391B002D26AC /* LucidaGrande.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = LucidaGrande.ttc; sourceTree = "<group>"; };
+		D09848111A43391B002D26AC /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
+		D09848121A43391B002D26AC /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		D0AFCBAD1A254613003AC152 /* SendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendViewController.h; sourceTree = "<group>"; };
 		D0AFCBAE1A254613003AC152 /* SendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendViewController.m; sourceTree = "<group>"; };
 		D0AFCBB11A254688003AC152 /* SendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendCell.h; sourceTree = "<group>"; };
@@ -229,6 +260,8 @@
 		D0BD351E1A42202300AB8EF9 /* InfinitFileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFileViewController.m; sourceTree = "<group>"; };
 		D0BD35211A4245AF00AB8EF9 /* InfinitSelectPeopleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSelectPeopleViewController.h; sourceTree = "<group>"; };
 		D0BD35221A4245AF00AB8EF9 /* InfinitSelectPeopleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSelectPeopleViewController.m; sourceTree = "<group>"; };
+		D0BD35241A43306400AB8EF9 /* InfinitHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitHomeViewController.h; sourceTree = "<group>"; };
+		D0BD35251A43306400AB8EF9 /* InfinitHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitHomeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -326,21 +359,23 @@
 		83B32D5F1A136485004AB945 /* Infinit */ = {
 			isa = PBXGroup;
 			children = (
+				D0BD35281A43307A00AB8EF9 /* Home */,
 				D0BC704B1A41CAF1006923F2 /* Files */,
 				D0BC70411A41B4B7006923F2 /* InfTabBarController.h */,
 				D0BC70421A41B4B7006923F2 /* InfTabBarController.m */,
 				D0AFCBB41A254699003AC152 /* Send */,
+				83B32DF41A1365A9004AB945 /* Login */,
 				83FE9C871A161F4D00FC1CFD /* Link Send */,
 				83F4D0A31A14B4680068BEB2 /* Peer Send */,
 				83F72C9E1A15120D0088106E /* Link Transactions */,
 				83F4D09C1A13ADC30068BEB2 /* Peer Transactions */,
-				83B32DF41A1365A9004AB945 /* Login */,
 				83B32D641A136485004AB945 /* AppDelegate.h */,
 				83B32E051A1365E9004AB945 /* AppDelegate.m */,
 				83B32D671A136485004AB945 /* ViewController.h */,
 				83B32D681A136485004AB945 /* ViewController.m */,
 				83B32E071A13660D004AB945 /* LaunchScreen.xib */,
 				83B32E091A136614004AB945 /* Main.storyboard */,
+				D09848021A43390D002D26AC /* Fonts */,
 				83B32D6D1A136485004AB945 /* Images.xcassets */,
 				83B32D601A136485004AB945 /* Supporting Files */,
 				D0AFCBBB1A275904003AC152 /* Custom Views/VCs */,
@@ -496,6 +531,28 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		D09848021A43390D002D26AC /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				D09848041A43391B002D26AC /* SourceSansPro-Black.otf */,
+				D09848051A43391B002D26AC /* SourceSansPro-BlackIt.otf */,
+				D09848061A43391B002D26AC /* SourceSansPro-Bold.otf */,
+				D09848071A43391B002D26AC /* SourceSansPro-BoldIt.otf */,
+				D09848081A43391B002D26AC /* SourceSansPro-ExtraLight.otf */,
+				D09848091A43391B002D26AC /* SourceSansPro-ExtraLightIt.otf */,
+				D098480A1A43391B002D26AC /* SourceSansPro-It.otf */,
+				D098480B1A43391B002D26AC /* SourceSansPro-Light.otf */,
+				D098480C1A43391B002D26AC /* SourceSansPro-LightIt.otf */,
+				D098480D1A43391B002D26AC /* SourceSansPro-Regular.otf */,
+				D098480E1A43391B002D26AC /* SourceSansPro-Semibold.otf */,
+				D098480F1A43391B002D26AC /* SourceSansPro-SemiboldIt.otf */,
+				D09848101A43391B002D26AC /* LucidaGrande.ttc */,
+				D09848111A43391B002D26AC /* Montserrat-Bold.ttf */,
+				D09848121A43391B002D26AC /* Montserrat-Regular.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
 		D0AFCBB41A254699003AC152 /* Send */ = {
 			isa = PBXGroup;
 			children = (
@@ -539,6 +596,15 @@
 				D0BC704D1A41D0E1006923F2 /* FileTableViewCell.m */,
 			);
 			name = Files;
+			sourceTree = "<group>";
+		};
+		D0BD35281A43307A00AB8EF9 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				D0BD35241A43306400AB8EF9 /* InfinitHomeViewController.h */,
+				D0BD35251A43306400AB8EF9 /* InfinitHomeViewController.m */,
+			);
+			name = Home;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -674,9 +740,24 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D09848211A43391B002D26AC /* Montserrat-Regular.ttf in Resources */,
+				D098481D1A43391B002D26AC /* SourceSansPro-Semibold.otf in Resources */,
+				D09848191A43391B002D26AC /* SourceSansPro-It.otf in Resources */,
 				83B32E0A1A136614004AB945 /* Main.storyboard in Resources */,
 				83B32E081A13660D004AB945 /* LaunchScreen.xib in Resources */,
+				D098481E1A43391B002D26AC /* SourceSansPro-SemiboldIt.otf in Resources */,
+				D098481C1A43391B002D26AC /* SourceSansPro-Regular.otf in Resources */,
+				D09848161A43391B002D26AC /* SourceSansPro-BoldIt.otf in Resources */,
+				D09848181A43391B002D26AC /* SourceSansPro-ExtraLightIt.otf in Resources */,
+				D09848171A43391B002D26AC /* SourceSansPro-ExtraLight.otf in Resources */,
 				83B32D6E1A136485004AB945 /* Images.xcassets in Resources */,
+				D09848201A43391B002D26AC /* Montserrat-Bold.ttf in Resources */,
+				D09848131A43391B002D26AC /* SourceSansPro-Black.otf in Resources */,
+				D098481A1A43391B002D26AC /* SourceSansPro-Light.otf in Resources */,
+				D098481F1A43391B002D26AC /* LucidaGrande.ttc in Resources */,
+				D098481B1A43391B002D26AC /* SourceSansPro-LightIt.otf in Resources */,
+				D09848151A43391B002D26AC /* SourceSansPro-Bold.otf in Resources */,
+				D09848141A43391B002D26AC /* SourceSansPro-BlackIt.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -728,6 +809,7 @@
 				83F72CA11A15123F0088106E /* InfinitLinkTransactionsController.m in Sources */,
 				D068E54B1A28DD4200F0072D /* FileInformation.m in Sources */,
 				D0AFCBBE1A275B51003AC152 /* InfinitTabBarController.m in Sources */,
+				D0BD35261A43306400AB8EF9 /* InfinitHomeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,15 +14,15 @@
 
 @implementation InfinitHomeViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+  // Do any additional setup after loading the view.
+  
+  self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-logo-red"]];
+
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 /*
 #pragma mark - Navigation

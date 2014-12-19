@@ -25,16 +25,17 @@
 
 static NSString * const reuseIdentifier = @"mediaCell";
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Register cell classes
-    [self.collectionView registerClass:[InfCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
-    
-    // Do any additional setup after loading the view.
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+  self.navigationController.navigationBar.clipsToBounds = YES;
+  // Uncomment the following line to preserve selection between presentations
+  // self.clearsSelectionOnViewWillAppear = NO;
+  
+  // Register cell classes
+  [self.collectionView registerClass:[InfCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
+  
+  // Do any additional setup after loading the view.
   
   [self loadAssets];
 }
@@ -63,19 +64,6 @@ static NSString * const reuseIdentifier = @"mediaCell";
     NSLog(@"Error loading images %@", error);
   }];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
-
-
 
 #pragma mark AssetsLirbary Call
 
@@ -135,14 +123,17 @@ static NSString * const reuseIdentifier = @"mediaCell";
   }
   
   cell.imageView.image = image;
-  cell.backgroundColor=[UIColor greenColor];
   
+
   if([_selectedMedia objectForKey:indexPath])
   {
     cell.checkMark.hidden = NO;
+    cell.blackLayer.hidden = NO;
   } else {
     cell.checkMark.hidden = YES;
+    cell.blackLayer.hidden = YES;
   }
+ 
   
   
   return cell;
@@ -196,6 +187,7 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
   if([_selectedMedia objectForKey:indexPath])
   {
     cell.checkMark.hidden = YES;
+    cell.blackLayer.hidden = YES;
     
     [_selectedMedia removeObjectForKey:indexPath];
     
@@ -206,7 +198,8 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
   else
   {
     cell.checkMark.hidden = NO;
-    
+    cell.blackLayer.hidden = NO;
+
     [_selectedMedia setObject:indexPath forKey:indexPath];
     
     NSString* buttonString = [NSString stringWithFormat:@"Next (%lu)", (unsigned long)_selectedMedia.allKeys.count];
@@ -230,6 +223,11 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
   {
     
   }
+}
+
+-(BOOL)prefersStatusBarHidden
+{
+  return YES;
 }
 
 
