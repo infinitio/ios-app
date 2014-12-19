@@ -8,6 +8,8 @@
 
 #import "InfinitSelectPeopleViewController.h"
 #import "SendCell.h"
+#import <AddressBook/AddressBook.h>
+#import "Gap/InfinitUser.h"
 
 @interface InfinitSelectPeopleViewController () <UITextFieldDelegate>
 
@@ -17,6 +19,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
 @property (weak, nonatomic) IBOutlet UIView *topGrayBar;
 @property (weak, nonatomic) IBOutlet UIView *bottomGrayBar;
+
+@property (strong, nonatomic) NSMutableArray *people;
+
 
 
 @property (strong, nonatomic) NSMutableDictionary *selectedRecipients;
@@ -33,7 +38,76 @@
   
   self.topGrayBar.backgroundColor = [self.tableView separatorColor];
   self.bottomGrayBar.backgroundColor = [self.tableView separatorColor];
+  
+  [self fetchContacts];
 
+}
+
+
+-(void)fetchContacts
+{
+  CFErrorRef *error = nil;
+  ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, error);
+  
+  __block BOOL accessGranted = NO;
+  if (ABAddressBookRequestAccessWithCompletion != NULL) { // we're on iOS 6 or later.
+    dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+    ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
+      accessGranted = granted;
+      dispatch_semaphore_signal(sema);
+    });
+    dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+    
+  }
+  else { // we're on iOS 5 or older
+    accessGranted = YES;
+  }
+  
+  if (accessGranted) {
+    
+    
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, error);
+    ABRecordRef source = ABAddressBookCopyDefaultSource(addressBook);
+    CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook, source, kABPersonSortByFirstName);
+    CFIndex nPeople = ABAddressBookGetPersonCount(addressBook);
+    
+    _people = [[NSMutableArray alloc] init];
+
+    for (int i = 0; i < nPeople; i++)
+    {
+
+      ABRecordRef person = CFArrayGetValueAtIndex(allPeople, i);
+      NSString *firstName = (__bridge NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
+      NSString *lastName = (__bridge NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);
+
+      NSMutableDictionary *userDict = [[NSMutableDictionary alloc] init];
+      if(firstName && lastName)
+      {
+        [userDict setObject:[NSString stringWithFormat:@"%@ %@", firstName, lastName] forKey:@"fullname"];
+      }
+      else if(firstName)
+      {
+        [userDict setObject:firstName forKey:@"fullname"];
+      }
+      else if(lastName)
+      {
+        [userDict setObject:lastName forKey:@"fullname"];
+      }
+      
+      NSData  *imgData = (__bridge NSData *)ABPersonCopyImageData(person);
+      UIImage *image = [UIImage imageWithData:imgData];
+      if(image)
+      {
+        [userDict setObject:image forKey:@"avatar"];
+      }
+      
+      [_people addObject:userDict];
+    }
+    
+    
+    
+    
+  }
 }
 
 - (IBAction)backButtonSelected:(id)sender
@@ -65,7 +139,7 @@
   if(section == 0)
     return 5;
   else
-    return 10;
+    return _people.count - 5;
 }
 
 
@@ -75,7 +149,19 @@
   SendCell* cell = (SendCell*)[tableView dequeueReusableCellWithIdentifier:@"sendCell"
                                                               forIndexPath:indexPath];
   
-  // Configure the cell...
+  
+  NSString *name = [_people[indexPath.row] objectForKey:@"fullname"];
+  if(name)
+  {
+    cell.nameLabel.text = name;
+  }
+  
+  UIImage *image = [_people[indexPath.row] objectForKey:@"avatar"];
+  if(image)
+  {
+    cell.avatarImageView.image = image;
+  }
+
   
   return cell;
 }
