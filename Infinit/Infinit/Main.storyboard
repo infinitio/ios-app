@@ -1104,26 +1104,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pzx-Yz-7lk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3768" y="-428"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="oOL-hE-JBb">
-            <objects>
-                <viewController id="Tj0-iU-f7i" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="fcA-8b-eZR"/>
-                        <viewControllerLayoutGuide type="bottom" id="fhl-Ma-HEr"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="nOt-6L-Xf5">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="aeU-AG-OaH"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0BP-tS-1yh" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3666" y="-1371"/>
+            <point key="canvasLocation" x="4276" y="-382"/>
         </scene>
         <!--Peer Transactions-->
         <scene sceneID="9zu-el-xk5">
@@ -1435,6 +1416,53 @@
             </objects>
             <point key="canvasLocation" x="3666" y="-2182"/>
         </scene>
+        <!--Contacts-->
+        <scene sceneID="X3E-I0-sv2">
+            <objects>
+                <tableViewController id="lS9-fU-6Dn" customClass="InfinitContactsTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" id="abi-7a-tqj">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="aq4-w8-Kt3">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </searchBar>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="contactCell" rowHeight="50" id="X4U-uT-yq2" customClass="ContactCell">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="X4U-uT-yq2" id="WpT-cb-ACZ">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S3p-Ct-ynM">
+                                            <rect key="frame" x="30" y="10" width="305" height="29"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="S3p-Ct-ynM" firstAttribute="leading" secondItem="WpT-cb-ACZ" secondAttribute="leadingMargin" constant="22" id="bTR-tn-xCk"/>
+                                        <constraint firstAttribute="centerY" secondItem="S3p-Ct-ynM" secondAttribute="centerY" id="cRd-5r-WzA"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="nameLabel" destination="S3p-Ct-ynM" id="Tiy-8P-ouh"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="lS9-fU-6Dn" id="2oJ-Ba-gSQ"/>
+                            <outlet property="delegate" destination="lS9-fU-6Dn" id="1Xz-fX-w9S"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Contacts" id="etl-8W-yNo"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="L27-JD-oDP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3619" y="-1456"/>
+        </scene>
         <!--Inf Tab Bar Controller-->
         <scene sceneID="6Af-Rg-f4V">
             <objects>
@@ -1619,7 +1647,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i3I-pq-WDh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3857" y="-388"/>
+            <point key="canvasLocation" x="3649" y="-382"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="DjW-cd-32Q">
@@ -2072,7 +2100,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="Tj0-iU-f7i" kind="relationship" relationship="rootViewController" id="avf-hQ-uQJ"/>
+                        <segue destination="lS9-fU-6Dn" kind="relationship" relationship="rootViewController" id="pJY-lp-KIg"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HDw-82-BuU" userLabel="First Responder" sceneMemberID="firstResponder"/>
