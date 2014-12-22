@@ -138,9 +138,10 @@ NSString * const CGLAlphabetizerGroupDisplayNameKey = @"displayName";
     }
     
     // now sort all the arrays
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:keyPath ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastName" ascending:YES];
+    NSSortDescriptor *secondDescriptor = [[NSSortDescriptor alloc] initWithKey:@"firstName" ascending:YES];
     for (NSString *key in dictionary) {
-        [dictionary[key] sortUsingDescriptors:@[sortDescriptor]];
+        [dictionary[key] sortUsingDescriptors:@[sortDescriptor, secondDescriptor]];
     }
     
     return dictionary;
