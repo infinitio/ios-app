@@ -1330,7 +1330,11 @@
                                 <action selector="switchStyleButtonSelected:" destination="Vme-Ot-Hsf" id="Khb-lR-CG0"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="icon-sort" id="mcG-UR-s5l"/>
+                        <barButtonItem key="rightBarButtonItem" image="icon-sort" id="mcG-UR-s5l">
+                            <connections>
+                                <action selector="sortButtonSelected:" destination="Vme-Ot-Hsf" id="BF7-VA-u1L"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="styleBarButton" destination="7P6-3S-Rvg" id="4eZ-Dc-GD7"/>
