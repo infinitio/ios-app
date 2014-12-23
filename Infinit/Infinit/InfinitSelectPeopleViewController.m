@@ -38,6 +38,11 @@
   [super viewDidLoad];
   // Do any additional setup after loading the view.
   
+  NSDictionary * attributes = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold" size:14]};
+  [_inviteBarButton setTitleTextAttributes:attributes forState:UIControlStateNormal];
+  
+  _sendButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14];
+  
   [[NSBundle mainBundle] loadNibNamed:@"inviteView" owner:self options:nil];
 
 //  self.topGrayBar.backgroundColor = [self.tableView separatorColor];
@@ -201,11 +206,11 @@ heightForHeaderInSection:(NSInteger)section
   
   if (section == 1)
   {
-    CGFloat height = 38.0;
+    CGFloat height = 25.0;
     return height;
   } else
   {
-    CGFloat height = 38.0;
+    CGFloat height = 25.0;
     return height;
   }
   
@@ -215,7 +220,7 @@ heightForHeaderInSection:(NSInteger)section
 {
   if (indexPath.section == 0)
   {
-    return 40;
+    return 61;
   } else {
     return 349;
   }
@@ -226,10 +231,10 @@ viewForHeaderInSection:(NSInteger)section
 {
   if (section == 1)
   {
-    UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+    UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
     headerView.backgroundColor = [UIColor colorWithRed:216/255.0 green:216/255.0 blue:216/255.0 alpha:1];
     
-    UILabel* otherContactsLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 15, 100, 10)];
+    UILabel* otherContactsLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 0, 200, 25)];
     otherContactsLabel.text = @"Other contacts";
     otherContactsLabel.font = [UIFont systemFontOfSize:10];
     otherContactsLabel.textColor = [UIColor colorWithRed:41/255.0 green:41/255.0 blue:41/255.0 alpha:1];
@@ -243,11 +248,11 @@ viewForHeaderInSection:(NSInteger)section
     return headerView;
   } else
   {
-    UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
+    UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
     headerView.backgroundColor = [UIColor colorWithRed:216/255.0 green:216/255.0 blue:216/255.0 alpha:1];
     
-    UILabel* myContactsLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 15, 200, 10)];
-    myContactsLabel.text = @"My contacts on infinit";
+    UILabel* myContactsLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 0, 200, 25)];
+    myContactsLabel.text = @"My contacts on Infinit";
     myContactsLabel.font = [UIFont systemFontOfSize:10];
     myContactsLabel.textColor = [UIColor colorWithRed:41/255.0 green:41/255.0 blue:41/255.0 alpha:1];
     [headerView addSubview:myContactsLabel];
@@ -267,8 +272,10 @@ viewForHeaderInSection:(NSInteger)section
 - (void)tableView:(UITableView*)tableView
 didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
-  //IF the cell is my computer do this.  For now we do it.
+  //IF the cell is my computer show the popover view :-).
+  /*
   [self showMyComputerView];
+   */
   
   //Let's put the checkmark on here.  Put it into the dictionary too.
   //Redraw The Image as blurry, and put a check mark on it.
@@ -285,14 +292,21 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
     [_selectedRecipients removeObjectForKey:indexPath];
     
     NSString* buttonString = [NSString stringWithFormat:@"SEND (%lu)", (unsigned long)_selectedRecipients.allKeys.count];
+    
     [_sendButton setTitle:buttonString
                  forState:UIControlStateNormal];
+    
+    if(_selectedRecipients.allKeys.count == 0)
+    {
+      self.sendButton.hidden = YES;
+    }
   }
   else
   {
+    self.sendButton.hidden = NO;
     cell.checkMark.image = [UIImage imageNamed:@"icon-contact-checked"];
     [_selectedRecipients setObject:indexPath forKey:indexPath];
-    
+  
     NSString* buttonString = [NSString stringWithFormat:@"SEND (%lu)", (unsigned long)_selectedRecipients.allKeys.count];
     [_sendButton setTitle:buttonString
                  forState:UIControlStateNormal];

@@ -36,6 +36,12 @@ static NSString * const reuseIdentifier = @"mediaCell";
   [self.collectionView registerClass:[InfCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
   
   
+  NSDictionary * lightAttributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:17],NSForegroundColorAttributeName: [UIColor whiteColor]};
+  [self.navigationController.navigationBar setTitleTextAttributes:lightAttributes];
+  
+  NSDictionary * attributes = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold" size:14]};
+  [_nextButton setTitleTextAttributes:attributes forState:UIControlStateNormal];
+  
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -228,7 +234,8 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     NSString* buttonString = [NSString stringWithFormat:@"Next (%lu)", (unsigned long)_selectedMedia.allKeys.count];
     [UIView performWithoutAnimation:^ {
       [self.nextButton setTitle:buttonString];
-    }];  }
+    }];
+  }
   else
   {
     cell.checkMark.hidden = NO;
