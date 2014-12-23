@@ -1998,48 +1998,13 @@
                                     <outlet property="delegate" destination="9ZK-3B-PXo" id="BMB-wD-Hdm"/>
                                 </connections>
                             </textField>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Optional note..." translatesAutoresizingMaskIntoConstraints="NO" id="ljX-HQ-cdN">
-                                <rect key="frame" x="155" y="369" width="290" height="80"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="5u6-un-Bdd"/>
-                                    <constraint firstAttribute="height" constant="80" id="Dmm-FY-zGG"/>
-                                    <constraint firstAttribute="width" constant="290" id="hAX-rJ-Vtu"/>
-                                    <constraint firstAttribute="width" constant="320" id="izQ-Cc-8kU"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="5u6-un-Bdd"/>
-                                        <exclude reference="izQ-Cc-8kU"/>
-                                    </mask>
-                                </variation>
-                                <connections>
-                                    <outlet property="delegate" destination="9ZK-3B-PXo" id="gfI-86-hsh"/>
-                                </connections>
-                            </textView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gep-sU-leZ">
-                                <rect key="frame" x="160" y="339" width="157" height="22"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="157" id="6Yg-8L-jOQ"/>
-                                    <constraint firstAttribute="height" constant="22" id="WpO-hV-bfH"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="Or share a link to..." image="icon-link">
-                                    <color key="titleColor" red="0.16862745100000001" green="0.74509803919999995" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="shareLinkButtonSelected:" destination="9ZK-3B-PXo" eventType="touchUpInside" id="04O-B4-K9I"/>
-                                </connections>
-                            </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="40" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Gnb-fF-2Af">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="40" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Gnb-fF-2Af">
                                 <rect key="frame" x="140" y="50" width="320" height="450"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="288" id="FK0-i4-Q5v"/>
                                     <constraint firstAttribute="height" constant="400" id="MW8-zC-bIP"/>
+                                    <constraint firstAttribute="height" constant="450" id="RJr-kI-oj8"/>
                                     <constraint firstAttribute="width" constant="320" id="WG4-7p-od3"/>
                                     <constraint firstAttribute="height" constant="278" id="c6e-Rz-8sG"/>
                                 </constraints>
@@ -2231,6 +2196,7 @@
                                     <mask key="constraints">
                                         <exclude reference="FK0-i4-Q5v"/>
                                         <exclude reference="MW8-zC-bIP"/>
+                                        <exclude reference="c6e-Rz-8sG"/>
                                     </mask>
                                 </variation>
                                 <connections>
@@ -2289,14 +2255,10 @@
                             <constraint firstAttribute="centerX" secondItem="NST-La-JUB" secondAttribute="centerX" constant="139" id="NBX-3a-QnI"/>
                             <constraint firstItem="NST-La-JUB" firstAttribute="leading" secondItem="nF7-gs-IAg" secondAttribute="leadingMargin" id="O2y-tG-V02"/>
                             <constraint firstItem="uol-vL-97j" firstAttribute="centerY" secondItem="NST-La-JUB" secondAttribute="centerY" id="WIW-H8-G4z"/>
-                            <constraint firstItem="ljX-HQ-cdN" firstAttribute="top" secondItem="gep-sU-leZ" secondAttribute="bottom" constant="8" id="XFB-hA-CEU"/>
                             <constraint firstItem="Gnb-fF-2Af" firstAttribute="top" secondItem="i8F-aD-XN0" secondAttribute="bottom" constant="50" id="dKg-p9-HGo"/>
                             <constraint firstAttribute="centerX" secondItem="Gnb-fF-2Af" secondAttribute="centerX" id="jSv-7V-10n"/>
-                            <constraint firstAttribute="centerX" secondItem="ljX-HQ-cdN" secondAttribute="centerX" id="jUU-4c-v4j"/>
                             <constraint firstItem="zqG-cb-qD6" firstAttribute="top" secondItem="z9O-hM-TV6" secondAttribute="bottom" id="lOb-1C-BxS"/>
-                            <constraint firstAttribute="centerX" secondItem="gep-sU-leZ" secondAttribute="centerX" constant="61.5" id="mQZ-E8-14p"/>
                             <constraint firstItem="uol-vL-97j" firstAttribute="centerY" secondItem="NST-La-JUB" secondAttribute="centerY" constant="2" id="ncd-6F-UpE"/>
-                            <constraint firstItem="gep-sU-leZ" firstAttribute="top" secondItem="Gnb-fF-2Af" secondAttribute="bottom" constant="11" id="z4L-oL-sMV"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -2325,7 +2287,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="inviteBarButton" destination="4Vl-dc-Wkf" id="4qd-dn-xRE"/>
-                        <outlet property="optionNoteTextView" destination="ljX-HQ-cdN" id="Pcx-se-r2c"/>
                         <outlet property="searchTextField" destination="uol-vL-97j" id="Y8S-Pa-Fph"/>
                         <outlet property="sendButton" destination="z9O-hM-TV6" id="OMg-We-jpg"/>
                         <outlet property="tableView" destination="Gnb-fF-2Af" id="gxb-5O-7y4"/>
@@ -2427,7 +2388,6 @@
         <image name="icon-fullname" width="21" height="16"/>
         <image name="icon-grid" width="24" height="24"/>
         <image name="icon-infinit-red" width="21" height="21"/>
-        <image name="icon-link" width="20" height="22"/>
         <image name="icon-more" width="30" height="9"/>
         <image name="icon-password" width="14" height="20"/>
         <image name="icon-photo" width="33" height="26"/>
