@@ -35,11 +35,6 @@
   _sortShowing = NO;
 
   
-
-//  [self.collectionView registerClass:[FileListCell class] forCellWithReuseIdentifier:@"listCell"];
-//  [self.collectionView registerClass:[FileGridCell class] forCellWithReuseIdentifier:@"gridCell"];
-
-  
 }
 
 #pragma mark <UICollectionViewDataSource>

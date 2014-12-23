@@ -185,30 +185,31 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
   
   [self.collectionView bringSubviewToFront:cell];
 
-  
-  [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-    cell.contentView.transform = CGAffineTransformMakeScale(.85, .85);
+  [UIView animateWithDuration:0.12 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    cell.contentView.transform = CGAffineTransformMakeScale(.75, .75);
   } completion:^(BOOL finished){
     // do something once the animation finishes, put it here
-    [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-      cell.contentView.transform = CGAffineTransformMakeScale(1.15, 1.15);
+    [UIView animateWithDuration:0.12 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+      cell.contentView.transform = CGAffineTransformMakeScale(1.25, 1.25);
     } completion:^(BOOL finished){
       // do something once the animation finishes, put it here
-      [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        cell.contentView.transform = CGAffineTransformMakeScale(.95, .95);
+      [UIView animateWithDuration:0.12 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        cell.contentView.transform = CGAffineTransformMakeScale(.9, .9);
       } completion:^(BOOL finished){
         // do something once the animation finishes, put it here
-        [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-          cell.contentView.transform = CGAffineTransformMakeScale(1.05, 1.05);
-        } completion:^(BOOL finished){
-          // do something once the animation finishes, put it here
-          [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        [UIView animateWithDuration:0.12 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+          cell.contentView.transform = CGAffineTransformMakeScale(1.1, 1.1);
+        } completion:^(BOOL finished) {
+          
+          [UIView animateWithDuration:0.12 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
             cell.contentView.transform = CGAffineTransformIdentity;
           } completion:nil];
         }];
       }];
     }];
   }];
+    
+
   
   
   if(_selectedMedia == nil)

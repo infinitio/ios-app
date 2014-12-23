@@ -69,7 +69,6 @@
 {
   [super viewDidLoad];
   
-  /* Get names of fonts.
   for (NSString* family in [UIFont familyNames])
   {
     NSLog(@"%@", family);
@@ -79,7 +78,7 @@
       NSLog(@"  %@", name);
     }
   }
-   */
+   
   
   [self addParallax];
   
