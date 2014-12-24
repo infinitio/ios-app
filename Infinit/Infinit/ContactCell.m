@@ -10,6 +10,17 @@
 
 @implementation ContactCell
 
+-(void)awakeFromNib
+{
+  self.clipsToBounds = YES;
+  
+  self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.height/2;
+  
+  self.favButton.layer.cornerRadius = 4.0f;
+  self.filesButton.layer.cornerRadius = 4.0f;
+  self.sendButton.layer.cornerRadius = 4.0f;
+
+}
 
 - (void)prepareForReuse
 {

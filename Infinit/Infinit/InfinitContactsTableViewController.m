@@ -11,19 +11,21 @@
 #import "CGLContact.h"
 #import "CGLAlphabetizer.h"
 #import "ContactCell.h"
+#import "ImportContactsCell.h"
+#import "SendCell.h"
+
 
 
 @interface InfinitContactsTableViewController ()
 
 @property (strong, nonatomic) NSMutableArray* people;
-
 @property (strong, nonatomic) NSArray* alphabetIndexes;
-
 @property (strong, nonatomic) NSDictionary* sortedContacts;
 @property (strong, nonatomic) NSMutableDictionary* cleanedContacts;
 
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *inviteBarButton;
 
-
+@property int selectedRow;
 
 @end
 
@@ -32,6 +34,12 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+  
+  //Do this so that selected row isnt in the indexPath row space yet.
+  _selectedRow = -1;
+  
+  NSDictionary * attributes = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold" size:18]};
+  [_inviteBarButton setTitleTextAttributes:attributes forState:UIControlStateNormal];
 
   [self fetchContacts];
 }
@@ -112,6 +120,8 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+  
+  /*  Phone book logic.  Sections for the alphabet.
   if([_alphabetIndexes containsObject:@"#"])
   {
     NSMutableArray* purgeArray = [NSMutableArray arrayWithArray:_alphabetIndexes];
@@ -126,24 +136,68 @@
   } else {
     return 0;
   }
+   
+   */
+  return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+  if(section == 0)
+    return 1;
+  else
+    return 1;
   
+  /* Phone book logic.  How many contacts in each letter of the alphabet.
   NSArray *array = _sortedContacts[_alphabetIndexes[section]];
   if(array)
   {
     return array.count;
   } else {
     return 0;
-
   }
+   */
 }
 
 - (UITableViewCell*)tableView:(UITableView*)tableView
          cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
+  if(indexPath.section == 0)
+  {
+    ContactCell* cell = (ContactCell*)[tableView dequeueReusableCellWithIdentifier:@"contactCell"
+                                                                forIndexPath:indexPath];
+    
+    cell.nameLabel.text = @"My Computer";
+    /*
+     NSString *name = [_people[indexPath.row] objectForKey:@"fullname"];
+     if(name)
+     {
+     cell.nameLabel.text = name;
+     }
+     
+     UIImage *image = [_people[indexPath.row] objectForKey:@"avatar"];
+     if(image)
+     {
+     cell.avatarImageView.image = image;
+     }
+     */
+    
+    return cell;
+  }
+  else
+  {
+    ImportContactsCell* cell = (ImportContactsCell*)[tableView dequeueReusableCellWithIdentifier:@"importCell"
+                                                                                    forIndexPath:indexPath];
+    /*
+     [cell.importPhoneContactsButton addTarget:self action:@selector(importPhoneContacts) forControlEvents:UIControlEventTouchUpInside];
+     [cell.importFacebookButton addTarget:self action:@selector(importFacebookContacts) forControlEvents:UIControlEventTouchUpInside];
+     [cell.findPeopleButton addTarget:self action:@selector(findPeopleButton) forControlEvents:UIControlEventTouchUpInside];
+     */
+    return cell;
+  }
+
+  
+  /* Phone book style like whatsapp.
   ContactCell *cell = (ContactCell*)[tableView dequeueReusableCellWithIdentifier:@"contactCell"
                                                           forIndexPath:indexPath];
   
@@ -166,86 +220,104 @@
   
   
   return cell;
+   */
 }
 
 - (CGFloat)tableView:(UITableView*)tableView
 heightForHeaderInSection:(NSInteger)section
 {
-  CGFloat height = 45.0;
-  return height;
+  
+  if (section == 1)
+  {
+    CGFloat height = 25.0;
+    return height;
+  } else
+  {
+    CGFloat height = 25.0;
+    return height;
+  }
+  
+}
+
+- (CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  if (indexPath.section == 0)
+  {
+    if(indexPath.row == _selectedRow)
+    {
+      return 100;
+    } else {
+      return 50;
+    }
+  } else {
+    return 349;
+  }
 }
 
 - (UIView*)tableView:(UITableView*)tableView
 viewForHeaderInSection:(NSInteger)section
 {
-
-  UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 30)];
-  headerView.backgroundColor = [UIColor lightGrayColor];
-  
-  UILabel* otherContactsLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 10, 100, 25)];
-  otherContactsLabel.text = _alphabetIndexes[section];
-  otherContactsLabel.font = [UIFont systemFontOfSize:20];
-  otherContactsLabel.textColor = [UIColor blackColor];
-  [headerView addSubview:otherContactsLabel];
-  
-  return headerView;
-
+  if (section == 1)
+  {
+    UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
+    headerView.backgroundColor = [UIColor colorWithRed:243/255.0 green:243/255.0 blue:243/255.0 alpha:1];
+    
+    UILabel* otherContactsLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 0, 200, 25)];
+    otherContactsLabel.text = @"Other contacts";
+    otherContactsLabel.font = [UIFont fontWithName:@"SourceSansPro-Semibold" size:10.5];
+    otherContactsLabel.textColor = [UIColor colorWithRed:41/255.0 green:41/255.0 blue:41/255.0 alpha:.46];
+    [headerView addSubview:otherContactsLabel];
+    
+//    UIView* grayBar = [[UIView alloc] initWithFrame:CGRectMake(40, 0, 258, 1)];
+//    grayBar.backgroundColor = [self.tableView separatorColor];
+//    grayBar.alpha = .5;
+//    [headerView addSubview:grayBar];
+    
+    return headerView;
+  } else
+  {
+    UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
+    headerView.backgroundColor = [UIColor colorWithRed:243/255.0 green:243/255.0 blue:243/255.0 alpha:1];
+    
+    UILabel* myContactsLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 0, 200, 25)];
+    myContactsLabel.text = @"My contacts on Infinit";
+    myContactsLabel.font = [UIFont fontWithName:@"SourceSansPro-Semibold" size:10.5];
+    myContactsLabel.textColor = [UIColor colorWithRed:41/255.0 green:41/255.0 blue:41/255.0 alpha:.46];
+    [headerView addSubview:myContactsLabel];
+    
+//    UIView* grayBar = [[UIView alloc] initWithFrame:CGRectMake(40, 0, 258, 1)];
+//    grayBar.backgroundColor = [self.tableView separatorColor];
+//    grayBar.alpha = .5;
+//    [headerView addSubview:grayBar];
+    
+    return headerView;
+  }
 }
 
-- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
+- (void)tableView:(UITableView*)tableView
+didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
-  return _alphabetIndexes;
+  //IF the cell is my computer show the popover view :-).
+  /*
+   [self showMyComputerView];
+   */
+  
+  //Let's put the checkmark on here.  Put it into the dictionary too.
+  //Redraw The Image as blurry, and put a check mark on it.
+  ContactCell* cell = (ContactCell*)[tableView cellForRowAtIndexPath:indexPath];
+  
+  if(_selectedRow == indexPath.row)
+  {
+    _selectedRow = -1;
+  } else {
+    _selectedRow = indexPath.row;
+  }
+  [tableView beginUpdates];
+  [tableView endUpdates];
+  
+  [tableView deselectRowAtIndexPath:indexPath
+                           animated:NO];
+  
 }
-
-- (NSInteger)tableView:(UITableView*)tableView
-sectionForSectionIndexTitle:(NSString*)title
-               atIndex:(NSInteger)index
-{
-  return index;
-}
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

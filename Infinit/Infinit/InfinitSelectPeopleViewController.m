@@ -38,7 +38,7 @@
   [super viewDidLoad];
   // Do any additional setup after loading the view.
   
-  NSDictionary * attributes = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold" size:14]};
+  NSDictionary * attributes = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold" size:18]};
   [_inviteBarButton setTitleTextAttributes:attributes forState:UIControlStateNormal];
   
   _sendButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14];
@@ -232,35 +232,35 @@ viewForHeaderInSection:(NSInteger)section
   if (section == 1)
   {
     UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
-    headerView.backgroundColor = [UIColor colorWithRed:216/255.0 green:216/255.0 blue:216/255.0 alpha:1];
+    headerView.backgroundColor = [UIColor colorWithRed:243/255.0 green:243/255.0 blue:243/255.0 alpha:1];
     
     UILabel* otherContactsLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 0, 200, 25)];
     otherContactsLabel.text = @"Other contacts";
-    otherContactsLabel.font = [UIFont systemFontOfSize:10];
-    otherContactsLabel.textColor = [UIColor colorWithRed:41/255.0 green:41/255.0 blue:41/255.0 alpha:1];
+    otherContactsLabel.font = [UIFont fontWithName:@"SourceSansPro-Semibold" size:10.5];
+    otherContactsLabel.textColor = [UIColor colorWithRed:41/255.0 green:41/255.0 blue:41/255.0 alpha:.46];
     [headerView addSubview:otherContactsLabel];
     
-    UIView* grayBar = [[UIView alloc] initWithFrame:CGRectMake(40, 0, 258, 1)];
-    grayBar.backgroundColor = [self.tableView separatorColor];
-    grayBar.alpha = .5;
-    [headerView addSubview:grayBar];
+//    UIView* grayBar = [[UIView alloc] initWithFrame:CGRectMake(40, 0, 258, 1)];
+//    grayBar.backgroundColor = [self.tableView separatorColor];
+//    grayBar.alpha = .5;
+//    [headerView addSubview:grayBar];
     
     return headerView;
   } else
   {
     UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
-    headerView.backgroundColor = [UIColor colorWithRed:216/255.0 green:216/255.0 blue:216/255.0 alpha:1];
+    headerView.backgroundColor = [UIColor colorWithRed:243/255.0 green:243/255.0 blue:243/255.0 alpha:1];
     
     UILabel* myContactsLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 0, 200, 25)];
     myContactsLabel.text = @"My contacts on Infinit";
-    myContactsLabel.font = [UIFont systemFontOfSize:10];
-    myContactsLabel.textColor = [UIColor colorWithRed:41/255.0 green:41/255.0 blue:41/255.0 alpha:1];
+    myContactsLabel.font = [UIFont fontWithName:@"SourceSansPro-Semibold" size:10.5];
+    myContactsLabel.textColor = [UIColor colorWithRed:41/255.0 green:41/255.0 blue:41/255.0 alpha:.46];
     [headerView addSubview:myContactsLabel];
     
-    UIView* grayBar = [[UIView alloc] initWithFrame:CGRectMake(40, 0, 258, 1)];
-    grayBar.backgroundColor = [self.tableView separatorColor];
-    grayBar.alpha = .5;
-    [headerView addSubview:grayBar];
+//    UIView* grayBar = [[UIView alloc] initWithFrame:CGRectMake(40, 0, 258, 1)];
+//    grayBar.backgroundColor = [self.tableView separatorColor];
+//    grayBar.alpha = .5;
+//    [headerView addSubview:grayBar];
     
     return headerView;
   }
@@ -340,7 +340,7 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   importPhoneButton.layer.cornerRadius = 2.5f;
   importPhoneButton.layer.borderWidth = 1.0f;
   importPhoneButton.layer.borderColor = ([[[UIColor colorWithRed:137/255.0 green:137/255.0 blue:137/255.0 alpha:1] colorWithAlphaComponent:1] CGColor]);
-  importPhoneButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14];
+  importPhoneButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:10.5];
   [_inviteBarButtonView addSubview:importPhoneButton];
   
   UIButton *findFacebookFriendsButton = [[UIButton alloc] initWithFrame:CGRectMake(27, 339, 266, 55)];
@@ -366,7 +366,7 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   findPeopleButton.layer.cornerRadius = 2.5f;
   findPeopleButton.layer.borderWidth = 1.0f;
   findPeopleButton.layer.borderColor = ([[[UIColor colorWithRed:242/255.0 green:94/255.0 blue:90/255.0 alpha:1] colorWithAlphaComponent:1] CGColor]);
-  findPeopleButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14];
+  findPeopleButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:10.5];
   [_inviteBarButtonView addSubview:findPeopleButton];
   
   UIButton *cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(27, 475, 266, 55)];

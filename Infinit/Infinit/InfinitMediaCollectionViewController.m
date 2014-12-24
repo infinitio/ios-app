@@ -39,7 +39,7 @@ static NSString * const reuseIdentifier = @"mediaCell";
   NSDictionary * lightAttributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:17],NSForegroundColorAttributeName: [UIColor whiteColor]};
   [self.navigationController.navigationBar setTitleTextAttributes:lightAttributes];
   
-  NSDictionary * attributes = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold" size:14]};
+  NSDictionary * attributes = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold" size:18]};
   [_nextButton setTitleTextAttributes:attributes forState:UIControlStateNormal];
   
 }
