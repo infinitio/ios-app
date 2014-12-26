@@ -12,7 +12,7 @@
 #import "CGLAlphabetizer.h"
 #import "ContactCell.h"
 #import "ImportContactsCell.h"
-#import "SendCell.h"
+#import "ContactOtherCell.h"
 
 
 
@@ -146,7 +146,7 @@
   if(section == 0)
     return 1;
   else
-    return 1;
+    return 10;
   
   /* Phone book logic.  How many contacts in each letter of the alphabet.
   NSArray *array = _sortedContacts[_alphabetIndexes[section]];
@@ -186,41 +186,20 @@
   }
   else
   {
+    ContactOtherCell* cell = (ContactOtherCell*)[tableView dequeueReusableCellWithIdentifier:@"otherContactCell"
+                                                                      forIndexPath:indexPath];
+    
+    
+    return cell;
+    /* IF we don't have anybody.
     ImportContactsCell* cell = (ImportContactsCell*)[tableView dequeueReusableCellWithIdentifier:@"importCell"
-                                                                                    forIndexPath:indexPath];
-    /*
+                                                                                  forIndexPath:indexPath];
      [cell.importPhoneContactsButton addTarget:self action:@selector(importPhoneContacts) forControlEvents:UIControlEventTouchUpInside];
      [cell.importFacebookButton addTarget:self action:@selector(importFacebookContacts) forControlEvents:UIControlEventTouchUpInside];
      [cell.findPeopleButton addTarget:self action:@selector(findPeopleButton) forControlEvents:UIControlEventTouchUpInside];
-     */
     return cell;
+     */
   }
-
-  
-  /* Phone book style like whatsapp.
-  ContactCell *cell = (ContactCell*)[tableView dequeueReusableCellWithIdentifier:@"contactCell"
-                                                          forIndexPath:indexPath];
-  
-  // Configure the cell...
-  NSString *sectionIndexTitle = _alphabetIndexes[indexPath.section];
-  CGLContact *contact = _sortedContacts[sectionIndexTitle][indexPath.row];
-  
-  if(contact.firstName && contact.lastName)
-  {
-    cell.nameLabel.text = [NSString stringWithFormat:@"%@ %@", contact.firstName, contact.lastName];
-  }
-  else if(contact.firstName)
-  {
-    cell.nameLabel.text = contact.firstName;
-  }
-  else if(contact.lastName)
-  {
-    cell.nameLabel.text = contact.lastName;
-  }
-  
-  
-  return cell;
-   */
 }
 
 - (CGFloat)tableView:(UITableView*)tableView
@@ -250,7 +229,8 @@ heightForHeaderInSection:(NSInteger)section
       return 50;
     }
   } else {
-    return 349;
+    return 55;
+    //IF its the invite one make it 349.
   }
 }
 

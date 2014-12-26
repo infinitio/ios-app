@@ -64,6 +64,7 @@
 		D01A64581A4861930041A8C2 /* FileListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D01A64571A4861930041A8C2 /* FileListCell.m */; };
 		D01A645B1A48635C0041A8C2 /* InfinitFileCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D01A645A1A48635C0041A8C2 /* InfinitFileCollectionViewController.m */; };
 		D01A645E1A48B38D0041A8C2 /* InfinitContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D01A645D1A48B38D0041A8C2 /* InfinitContactViewController.m */; };
+		D02FF50B1A4DACA600A93DBD /* ContactOtherCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D02FF50A1A4DACA600A93DBD /* ContactOtherCell.m */; };
 		D03FAAF31A4798B9005A8244 /* InfinitContactsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D03FAAF21A4798B9005A8244 /* InfinitContactsTableViewController.m */; };
 		D03FAAF61A479BF3005A8244 /* CGLAlphabetizer.m in Sources */ = {isa = PBXBuildFile; fileRef = D03FAAF51A479BF3005A8244 /* CGLAlphabetizer.m */; };
 		D03FAAF91A479D2C005A8244 /* CGLContact.m in Sources */ = {isa = PBXBuildFile; fileRef = D03FAAF81A479D2C005A8244 /* CGLContact.m */; };
@@ -234,6 +235,8 @@
 		D01A645A1A48635C0041A8C2 /* InfinitFileCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFileCollectionViewController.m; sourceTree = "<group>"; };
 		D01A645C1A48B38D0041A8C2 /* InfinitContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitContactViewController.h; sourceTree = "<group>"; };
 		D01A645D1A48B38D0041A8C2 /* InfinitContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitContactViewController.m; sourceTree = "<group>"; };
+		D02FF5091A4DACA600A93DBD /* ContactOtherCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactOtherCell.h; sourceTree = "<group>"; };
+		D02FF50A1A4DACA600A93DBD /* ContactOtherCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactOtherCell.m; sourceTree = "<group>"; };
 		D03FAAF11A4798B9005A8244 /* InfinitContactsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitContactsTableViewController.h; sourceTree = "<group>"; };
 		D03FAAF21A4798B9005A8244 /* InfinitContactsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitContactsTableViewController.m; sourceTree = "<group>"; };
 		D03FAAF41A479BF3005A8244 /* CGLAlphabetizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGLAlphabetizer.h; sourceTree = "<group>"; };
@@ -548,6 +551,8 @@
 		D03FAAF01A4797B4005A8244 /* Contact */ = {
 			isa = PBXGroup;
 			children = (
+				D02FF5091A4DACA600A93DBD /* ContactOtherCell.h */,
+				D02FF50A1A4DACA600A93DBD /* ContactOtherCell.m */,
 				D03FAAF71A479D2C005A8244 /* CGLContact.h */,
 				D03FAAF81A479D2C005A8244 /* CGLContact.m */,
 				D03FAAF41A479BF3005A8244 /* CGLAlphabetizer.h */,
@@ -872,6 +877,7 @@
 				D03FAAF91A479D2C005A8244 /* CGLContact.m in Sources */,
 				83B32D631A136485004AB945 /* main.m in Sources */,
 				D00045BD1A499A20008DB448 /* ImportContactsCell.m in Sources */,
+				D02FF50B1A4DACA600A93DBD /* ContactOtherCell.m in Sources */,
 				D0AFCBB31A254688003AC152 /* SendCell.m in Sources */,
 				D05D5D1A1A24C4B1005529E8 /* InfCollectionViewCell.m in Sources */,
 				D01A645B1A48635C0041A8C2 /* InfinitFileCollectionViewController.m in Sources */,

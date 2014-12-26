@@ -92,7 +92,13 @@
   else if([viewController.title isEqualToString:@"SETTINGS"])
   {
     [self moveTealShadowLineToItem:4];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    //Should really instantiate and present modally.
+//    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"welcomeVC"];
+    [self presentViewController:viewController animated:YES completion:nil];
+    
     return NO;
   }
   return YES;
