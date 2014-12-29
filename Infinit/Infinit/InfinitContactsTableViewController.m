@@ -16,6 +16,7 @@
 
 
 
+
 @interface InfinitContactsTableViewController ()
 
 @property (strong, nonatomic) NSMutableArray* people;
@@ -24,6 +25,8 @@
 @property (strong, nonatomic) NSMutableDictionary* cleanedContacts;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *inviteBarButton;
+@property (strong, nonatomic) UIView *inviteBarButtonView;
+
 
 @property int selectedRow;
 
@@ -298,6 +301,75 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   [tableView deselectRowAtIndexPath:indexPath
                            animated:NO];
   
+}
+- (IBAction)inviteBarButtonSelected:(id)sender
+{
+  _inviteBarButtonView = [[UIView alloc] initWithFrame:  CGRectMake(0, 0, 320, 568)];
+  _inviteBarButtonView.backgroundColor = [UIColor colorWithRed:81/255.0 green:81/255.0 blue:73/255.0 alpha:1];
+  
+  UIButton *importPhoneButton = [[UIButton alloc] initWithFrame:CGRectMake(27, 271, 266, 55)];
+  [importPhoneButton setTitle:@"IMPORT PHONE CONTACTS" forState:UIControlStateNormal];
+  [importPhoneButton setTitleColor:[UIColor colorWithRed:137/255.0 green:137/255.0 blue:137/255.0 alpha:1]
+                          forState:UIControlStateNormal];
+  importPhoneButton.backgroundColor = [UIColor whiteColor];
+  importPhoneButton.layer.cornerRadius = 2.5f;
+  importPhoneButton.layer.borderWidth = 1.0f;
+  importPhoneButton.layer.borderColor = ([[[UIColor colorWithRed:137/255.0 green:137/255.0 blue:137/255.0 alpha:1] colorWithAlphaComponent:1] CGColor]);
+  importPhoneButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:10.5];
+  [_inviteBarButtonView addSubview:importPhoneButton];
+  
+  UIButton *findFacebookFriendsButton = [[UIButton alloc] initWithFrame:CGRectMake(27, 339, 266, 55)];
+  [findFacebookFriendsButton setTitle:@"FIND FACEBOOK FRIENDS" forState:UIControlStateNormal];
+  [findFacebookFriendsButton setTitleColor:[UIColor colorWithRed:42/255.0 green:108/255.0 blue:181/255.0 alpha:1]
+                                  forState:UIControlStateNormal];
+  [findFacebookFriendsButton setImage:[UIImage imageNamed:@"icon-facebook-blue"]
+                             forState:UIControlStateNormal];
+  findFacebookFriendsButton.backgroundColor = [UIColor whiteColor];
+  findFacebookFriendsButton.layer.cornerRadius = 2.5f;
+  findFacebookFriendsButton.layer.borderWidth = 1.0f;
+  findFacebookFriendsButton.layer.borderColor = ([[[UIColor colorWithRed:42/255.0 green:108/255.0 blue:181/255.0 alpha:1] colorWithAlphaComponent:1] CGColor]);
+  findFacebookFriendsButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14];
+  [_inviteBarButtonView addSubview:findFacebookFriendsButton];
+  
+  UIButton *findPeopleButton = [[UIButton alloc] initWithFrame:CGRectMake(27, 407, 266, 55)];
+  [findPeopleButton setTitle:@"FIND PEOPLE ON INFINIT" forState:UIControlStateNormal];
+  [findPeopleButton setTitleColor:[UIColor colorWithRed:242/255.0 green:94/255.0 blue:90/255.0 alpha:1]
+                         forState:UIControlStateNormal];
+  [findPeopleButton setImage:[UIImage imageNamed:@"icon-infinit-red"]
+                    forState:UIControlStateNormal];
+  findPeopleButton.backgroundColor = [UIColor whiteColor];
+  findPeopleButton.layer.cornerRadius = 2.5f;
+  findPeopleButton.layer.borderWidth = 1.0f;
+  findPeopleButton.layer.borderColor = ([[[UIColor colorWithRed:242/255.0 green:94/255.0 blue:90/255.0 alpha:1] colorWithAlphaComponent:1] CGColor]);
+  findPeopleButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:10.5];
+  [_inviteBarButtonView addSubview:findPeopleButton];
+  
+  UIButton *cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(27, 475, 266, 55)];
+  [cancelButton setTitle:@"CANCEL" forState:UIControlStateNormal];
+  [cancelButton setTitleColor:[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1]
+                     forState:UIControlStateNormal];
+  cancelButton.layer.cornerRadius = 2.5f;
+  cancelButton.layer.borderWidth = 1.0f;
+  cancelButton.layer.borderColor = ([[UIColor whiteColor] CGColor]);
+  cancelButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14];
+  [cancelButton addTarget:self
+                   action:@selector(cancelInviteBarButtonView)
+         forControlEvents:UIControlEventTouchUpInside];
+  cancelButton.titleLabel.textColor = [UIColor whiteColor];
+  [_inviteBarButtonView addSubview:cancelButton];
+  
+  UITapGestureRecognizer *dismissInviteButtonView =
+  [[UITapGestureRecognizer alloc] initWithTarget:self
+                                          action:@selector(cancelInviteBarButtonView)];
+  [_inviteBarButtonView addGestureRecognizer:dismissInviteButtonView];
+  
+  
+  [[[[UIApplication sharedApplication] delegate] window] addSubview:_inviteBarButtonView];
+}
+
+- (void)cancelInviteBarButtonView
+{
+  [_inviteBarButtonView removeFromSuperview];
 }
 
 @end

@@ -45,6 +45,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *loginNextButton;
 @property (weak, nonatomic) IBOutlet UIButton *signupNextButton;
 
+@property (weak, nonatomic) IBOutlet UIView *balloonContainerView;
+
+
 @property BOOL showingLoginForm;
 
 @end
@@ -228,6 +231,7 @@
                                  self.view.frame.size.height,
                                  self.signupFormView.frame.size.width,
                                  self.signupFormView.frame.size.height);
+                                self.balloonContainerView.frame = CGRectMake(0,0,self.balloonContainerView.frame.size.width,self.balloonContainerView.frame.size.height);
   }completion:^(BOOL finished) {
     NSLog(@"Happy times");
   }];
@@ -247,6 +251,7 @@
                      self.view.frame.size.height,
                      self.loginFormView.frame.size.width,
                      self.loginFormView.frame.size.height);
+                    self.balloonContainerView.frame = CGRectMake(0,0,self.balloonContainerView.frame.size.width,self.balloonContainerView.frame.size.height);
                   }
                    completion:nil];
 }
@@ -281,6 +286,8 @@
                                             20,
                                             self.loginFormView.frame.size.width,
                                             self.loginFormView.frame.size.height);
+                      //Also move the background up with it.
+                      self.balloonContainerView.frame = CGRectMake(0,-(self.view.frame.size.height - 280),self.balloonContainerView.frame.size.width,self.balloonContainerView.frame.size.height);
                      }completion:nil];
     
   } else
@@ -297,6 +304,7 @@
                       20,
                       self.signupFormView.frame.size.width,
                       self.signupFormView.frame.size.height);
+                      self.balloonContainerView.frame = CGRectMake(0,-(self.view.frame.size.height - 280),self.balloonContainerView.frame.size.width,self.balloonContainerView.frame.size.height);
                     }
                      completion:nil];
   }
