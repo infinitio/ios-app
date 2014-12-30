@@ -99,7 +99,9 @@
 		D0BC704E1A41D0E1006923F2 /* FileTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BC704D1A41D0E1006923F2 /* FileTableViewCell.m */; };
 		D0BD351F1A42202300AB8EF9 /* InfinitFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BD351E1A42202300AB8EF9 /* InfinitFileViewController.m */; };
 		D0BD35231A4245AF00AB8EF9 /* InfinitSelectPeopleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BD35221A4245AF00AB8EF9 /* InfinitSelectPeopleViewController.m */; };
-		D0BD35261A43306400AB8EF9 /* InfinitHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BD35251A43306400AB8EF9 /* InfinitHomeViewController.m */; };
+		D0D613C81A52E51600D454B6 /* InfinitHomeCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D613C71A52E51600D454B6 /* InfinitHomeCollectionViewController.m */; };
+		D0D613CC1A52E6D500D454B6 /* HomeSmallCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D613CB1A52E6D500D454B6 /* HomeSmallCollectionViewCell.m */; };
+		D0D613CF1A52F77700D454B6 /* HomeLargeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D0D613CE1A52F77700D454B6 /* HomeLargeCollectionViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -286,8 +288,12 @@
 		D0BD351E1A42202300AB8EF9 /* InfinitFileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFileViewController.m; sourceTree = "<group>"; };
 		D0BD35211A4245AF00AB8EF9 /* InfinitSelectPeopleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSelectPeopleViewController.h; sourceTree = "<group>"; };
 		D0BD35221A4245AF00AB8EF9 /* InfinitSelectPeopleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSelectPeopleViewController.m; sourceTree = "<group>"; };
-		D0BD35241A43306400AB8EF9 /* InfinitHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitHomeViewController.h; sourceTree = "<group>"; };
-		D0BD35251A43306400AB8EF9 /* InfinitHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitHomeViewController.m; sourceTree = "<group>"; };
+		D0D613C61A52E51600D454B6 /* InfinitHomeCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitHomeCollectionViewController.h; sourceTree = "<group>"; };
+		D0D613C71A52E51600D454B6 /* InfinitHomeCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitHomeCollectionViewController.m; sourceTree = "<group>"; };
+		D0D613CA1A52E6D500D454B6 /* HomeSmallCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeSmallCollectionViewCell.h; sourceTree = "<group>"; };
+		D0D613CB1A52E6D500D454B6 /* HomeSmallCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeSmallCollectionViewCell.m; sourceTree = "<group>"; };
+		D0D613CD1A52F77700D454B6 /* HomeLargeCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeLargeCollectionViewCell.h; sourceTree = "<group>"; };
+		D0D613CE1A52F77700D454B6 /* HomeLargeCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeLargeCollectionViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -652,8 +658,12 @@
 		D0BD35281A43307A00AB8EF9 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				D0BD35241A43306400AB8EF9 /* InfinitHomeViewController.h */,
-				D0BD35251A43306400AB8EF9 /* InfinitHomeViewController.m */,
+				D0D613CD1A52F77700D454B6 /* HomeLargeCollectionViewCell.h */,
+				D0D613CE1A52F77700D454B6 /* HomeLargeCollectionViewCell.m */,
+				D0D613C61A52E51600D454B6 /* InfinitHomeCollectionViewController.h */,
+				D0D613C71A52E51600D454B6 /* InfinitHomeCollectionViewController.m */,
+				D0D613CA1A52E6D500D454B6 /* HomeSmallCollectionViewCell.h */,
+				D0D613CB1A52E6D500D454B6 /* HomeSmallCollectionViewCell.m */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -844,6 +854,8 @@
 				D03FAAFC1A47A3B1005A8244 /* ContactCell.m in Sources */,
 				83F4D09F1A13AE0D0068BEB2 /* InfinitPeerTransactionsController.m in Sources */,
 				D01A645E1A48B38D0041A8C2 /* InfinitContactViewController.m in Sources */,
+				D0D613CF1A52F77700D454B6 /* HomeLargeCollectionViewCell.m in Sources */,
+				D0D613CC1A52E6D500D454B6 /* HomeSmallCollectionViewCell.m in Sources */,
 				D03FAAF31A4798B9005A8244 /* InfinitContactsTableViewController.m in Sources */,
 				D00045C11A49AD55008DB448 /* inviteView.m in Sources */,
 				D0659F661A3E865A0001ACAE /* InfinitWelcomeController.m in Sources */,
@@ -868,8 +880,8 @@
 				D0BC704A1A41CAE2006923F2 /* InfinitFileTableViewController.m in Sources */,
 				D0BD351F1A42202300AB8EF9 /* InfinitFileViewController.m in Sources */,
 				83F72CA11A15123F0088106E /* InfinitLinkTransactionsController.m in Sources */,
+				D0D613C81A52E51600D454B6 /* InfinitHomeCollectionViewController.m in Sources */,
 				D0AFCBBE1A275B51003AC152 /* InfinitTabBarController.m in Sources */,
-				D0BD35261A43306400AB8EF9 /* InfinitHomeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
