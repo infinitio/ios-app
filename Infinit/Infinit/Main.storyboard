@@ -2650,7 +2650,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="350"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vTN-kY-rgc">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-grid" translatesAutoresizingMaskIntoConstraints="NO" id="vTN-kY-rgc">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="272"/>
                                             <color key="backgroundColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
