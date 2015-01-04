@@ -10,4 +10,6 @@
 
 @interface InfinitFileViewController : UIViewController
 
+//To look at the individual files.
+
 @end

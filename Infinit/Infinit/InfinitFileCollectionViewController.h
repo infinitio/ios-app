@@ -10,4 +10,6 @@
 
 @interface InfinitFileCollectionViewController : UICollectionViewController
 
+//Root view controller for the Files Tab
+
 @end
