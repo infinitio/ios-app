@@ -279,7 +279,7 @@
                                  self.signupFormView.frame.size.width,
                                  self.signupFormView.frame.size.height);
                                 self.balloonContainerView.frame = CGRectMake(0,
-                                                                             0,
+                                                                             -20,
                                                                              self.balloonContainerView.frame.size.width,
                                                                              self.balloonContainerView.frame.size.height);
   }
@@ -303,7 +303,10 @@
                      self.view.frame.size.height,
                      self.loginFormView.frame.size.width,
                      self.loginFormView.frame.size.height);
-                    self.balloonContainerView.frame = CGRectMake(0,0,self.balloonContainerView.frame.size.width,self.balloonContainerView.frame.size.height);
+                    self.balloonContainerView.frame = CGRectMake(0,
+                                                                 -20,
+                                                                 self.balloonContainerView.frame.size.width,
+                                                                 self.balloonContainerView.frame.size.height);
   }
                    completion:nil];
 }

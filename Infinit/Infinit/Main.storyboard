@@ -21,7 +21,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="73M-fO-zUC">
                                 <rect key="frame" x="190" y="0.0" width="320" height="325"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="bg_empty" translatesAutoresizingMaskIntoConstraints="NO" id="jJJ-Jx-QXW">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_empty" translatesAutoresizingMaskIntoConstraints="NO" id="jJJ-Jx-QXW">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="306"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="306" id="C2K-eT-OfF"/>
@@ -35,7 +35,7 @@
                                             <constraint firstAttribute="width" constant="174" id="eXh-jw-D1k"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="QZk-N4-E1a">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="QZk-N4-E1a">
                                         <rect key="frame" x="68" y="98" width="184" height="102"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="148" id="D2Q-zS-S3x"/>
@@ -50,7 +50,7 @@
                                             </mask>
                                         </variation>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="The smartest way to send files" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zfi-ZH-cuk">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The smartest way to send files" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zfi-ZH-cuk">
                                         <rect key="frame" x="43" y="211" width="234" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="234" id="PDV-rh-YM2"/>
@@ -67,6 +67,7 @@
                                     <constraint firstItem="Zfi-ZH-cuk" firstAttribute="top" secondItem="QZk-N4-E1a" secondAttribute="bottom" constant="11" id="8ki-fl-wis"/>
                                     <constraint firstItem="QZk-N4-E1a" firstAttribute="top" secondItem="jJJ-Jx-QXW" secondAttribute="top" constant="98" id="9w5-Ud-LuI"/>
                                     <constraint firstAttribute="width" constant="320" id="CCJ-Z8-btP"/>
+                                    <constraint firstItem="jJJ-Jx-QXW" firstAttribute="top" secondItem="73M-fO-zUC" secondAttribute="top" id="GYG-Gb-JdV"/>
                                     <constraint firstItem="Zfi-ZH-cuk" firstAttribute="centerX" secondItem="jJJ-Jx-QXW" secondAttribute="centerX" id="IeA-3a-TRg"/>
                                     <constraint firstAttribute="centerX" secondItem="jJJ-Jx-QXW" secondAttribute="centerX" id="PQF-lU-AYX"/>
                                     <constraint firstItem="MPM-0x-DvQ" firstAttribute="top" secondItem="73M-fO-zUC" secondAttribute="top" id="Rt5-l0-tw5"/>
