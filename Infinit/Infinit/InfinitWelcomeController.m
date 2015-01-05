@@ -7,7 +7,12 @@
 //
 
 #import "InfinitWelcomeController.h"
+
 #import <Gap/InfinitUtilities.h>
+#import <Gap/InfinitPeerTransactionManager.h>
+#import <Gap/InfinitStateManager.h>
+#import <Gap/InfinitStateResult.h>
+#import <Gap/InfinitUserManager.h>
 
 
 @interface InfinitWelcomeController () <UITextFieldDelegate>
@@ -490,6 +495,48 @@
   }
   
   
+}
+
+- (IBAction)signupNextButtonSelected:(id)sender
+{
+  //Start  spinner of some sort?
+  
+   [[InfinitStateManager sharedInstance] registerFullname:self.signupFullnameTextfield.text
+                                                    email:self.signupEmailTextfield.text
+                                                 password:self.signupPasswordTextfield.text
+                                          performSelector:@selector(loginCallback:)
+                                                 onObject:self];
+  
+}
+
+- (IBAction)loginNextButtonSelected:(id)sender
+{
+  //Try to log in to infinit.
+  [[InfinitStateManager sharedInstance] login:self.loginEmailTextfield.text
+                                     password:self.loginPasswordTextfield.text
+                              performSelector:@selector(loginCallback:)
+                                     onObject:self];
+
+}
+
+- (void)loginCallback:(InfinitStateResult*)result
+{
+  if (result.success)
+  {
+    [InfinitUserManager sharedInstance];
+    [InfinitPeerTransactionManager sharedInstance];
+    
+    UIStoryboard* storyboard =
+      [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    UIViewController* viewController =
+      [storyboard instantiateViewControllerWithIdentifier:@"welcomeVC"];
+    [self presentViewController:viewController animated:YES completion:nil];
+    
+  }
+  else
+  {
+//    self.error.text = [NSString stringWithFormat:@"Error: %d", result.status];
+  }
 }
 
 - (void)addParallax

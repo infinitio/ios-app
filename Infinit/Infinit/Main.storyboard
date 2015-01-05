@@ -355,8 +355,7 @@
                                             </mask>
                                         </variation>
                                         <connections>
-                                            <action selector="signupBackButtonSelected:" destination="z8c-Mh-SQ1" eventType="touchUpInside" id="4YI-uC-GFj"/>
-                                            <segue destination="Sta-NW-erU" kind="presentation" id="xUY-Va-Ckf"/>
+                                            <action selector="signupNextButtonSelected:" destination="z8c-Mh-SQ1" eventType="touchUpInside" id="q2B-UI-ftr"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8wZ-X5-6D2">
@@ -625,8 +624,7 @@
                                             </mask>
                                         </variation>
                                         <connections>
-                                            <action selector="signupBackButtonSelected:" destination="z8c-Mh-SQ1" eventType="touchUpInside" id="Znp-6n-tr3"/>
-                                            <segue destination="Sta-NW-erU" kind="presentation" id="hXk-Mp-P4j"/>
+                                            <action selector="loginNextButtonSelected:" destination="z8c-Mh-SQ1" eventType="touchUpInside" id="xug-qa-gUZ"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mTL-N7-iT7">
@@ -2820,7 +2818,6 @@
         <image name="logo" width="184" height="102"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="yiG-BZ-Am5"/>
         <segue reference="Kxx-xK-6YF"/>
     </inferredMetricsTieBreakers>
 </document>
