@@ -12,7 +12,12 @@
 
 - (void)awakeFromNib
 {
+  
+}
 
+- (void)prepareForReuse
+{
+  self.image_view.image = nil;
 }
 
 @end

@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface inviteView : UIView
-@property (weak, nonatomic) IBOutlet UIButton *importPhoneButton;
-@property (weak, nonatomic) IBOutlet UIButton *findFacebookButton;
-@property (weak, nonatomic) IBOutlet UIButton *findPeopleInfinitButton;
-@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic) IBOutlet UIButton* importPhoneButton;
+@property (weak, nonatomic) IBOutlet UIButton* findFacebookButton;
+@property (weak, nonatomic) IBOutlet UIButton* findPeopleInfinitButton;
+@property (weak, nonatomic) IBOutlet UIButton* cancelButton;
 
 @end

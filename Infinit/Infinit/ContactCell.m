@@ -13,18 +13,16 @@
 -(void)awakeFromNib
 {
   self.clipsToBounds = YES;
-  
-  self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.height/2;
-  
-  self.favButton.layer.cornerRadius = 4.0f;
-  self.filesButton.layer.cornerRadius = 4.0f;
-  self.sendButton.layer.cornerRadius = 4.0f;
-
+  self.avatar_image_view.layer.cornerRadius = self.avatar_image_view.frame.size.height/2;
+  self.fav_button.layer.cornerRadius = 4.0f;
+  self.files_button.layer.cornerRadius = 4.0f;
+  self.send_button.layer.cornerRadius = 4.0f;
 }
 
 - (void)prepareForReuse
 {
-  self.nameLabel.text = nil;
+  self.name_label.text = nil;
+  self.avatar_image_view.image = nil;
 }
 
 @end

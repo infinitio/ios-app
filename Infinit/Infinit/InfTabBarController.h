@@ -12,7 +12,7 @@
 
 @interface InfTabBarController : UITabBarController <UITabBarControllerDelegate>
 
-@property (strong, nonatomic) TabBarBadgeLabel* badgeLabel;
+@property (strong, nonatomic) TabBarBadgeLabel* badge_label;
 
 
 @end

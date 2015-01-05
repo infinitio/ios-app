@@ -10,8 +10,8 @@
 
 @interface FileListCell : UICollectionViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *fromLabel;
+@property (weak, nonatomic) IBOutlet UIImageView* image_view;
+@property (weak, nonatomic) IBOutlet UILabel* name_label;
+@property (weak, nonatomic) IBOutlet UILabel* from_label;
 
 @end

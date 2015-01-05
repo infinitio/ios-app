@@ -26,7 +26,6 @@
   _findPeopleInfinitButton.layer.borderColor = ([[[UIColor colorWithRed:242/255.0 green:94/255.0 blue:90/255.0 alpha:1] colorWithAlphaComponent:1] CGColor]);
   _findFacebookButton.layer.borderColor = ([[[UIColor colorWithRed:42/255.0 green:108/255.0 blue:181/255.0 alpha:1] colorWithAlphaComponent:1] CGColor]);
   _cancelButton.layer.borderColor = ([[UIColor whiteColor] CGColor]);
-
 }
 
 @end

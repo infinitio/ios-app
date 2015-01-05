@@ -10,7 +10,7 @@
 
 @interface HomeSmallCollectionViewCell : UICollectionViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property (weak, nonatomic) IBOutlet UILabel *notificationLabel;
+@property (weak, nonatomic) IBOutlet UIImageView* image_view;
+@property (weak, nonatomic) IBOutlet UILabel* notification_label;
 
 @end

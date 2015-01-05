@@ -9,11 +9,12 @@
 #import "InfinitContactViewController.h"
 
 @interface InfinitContactViewController ()
-@property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
-@property (weak, nonatomic) IBOutlet UILabel *emailLabel;
-@property (weak, nonatomic) IBOutlet UILabel *phoneNumber;
-@property (weak, nonatomic) IBOutlet UIButton *displayAllFilesButton;
-@property (weak, nonatomic) IBOutlet UIButton *sendAFileButton;
+
+@property (weak, nonatomic) IBOutlet UIImageView* avatar_image_view;
+@property (weak, nonatomic) IBOutlet UILabel* email_label;
+@property (weak, nonatomic) IBOutlet UILabel* phone_number;
+@property (weak, nonatomic) IBOutlet UIButton* display_all_files_button;
+@property (weak, nonatomic) IBOutlet UIButton* send_file_button;
 
 @end
 
@@ -22,14 +23,11 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  
-  
 }
 
 - (void)didReceiveMemoryWarning
 {
   [super didReceiveMemoryWarning];
-  
 }
 
 

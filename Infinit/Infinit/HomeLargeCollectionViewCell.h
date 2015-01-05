@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @interface HomeLargeCollectionViewCell : UICollectionViewCell
-@property (weak, nonatomic) IBOutlet UIButton *acceptButton;
-@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property (weak, nonatomic) IBOutlet UIImageView *blurImageView;
-@property (weak, nonatomic) IBOutlet UILabel *filesLabel;
-@property (weak, nonatomic) IBOutlet UILabel *notificationLabel;
+
+@property (weak, nonatomic) IBOutlet UIButton* accept_button;
+@property (weak, nonatomic) IBOutlet UIButton* cancel_button;
+@property (weak, nonatomic) IBOutlet UIImageView* image_view;
+@property (weak, nonatomic) IBOutlet UIImageView* blur_image_view;
+@property (weak, nonatomic) IBOutlet UILabel* files_label;
+@property (weak, nonatomic) IBOutlet UILabel* notification_label;
 
 @end

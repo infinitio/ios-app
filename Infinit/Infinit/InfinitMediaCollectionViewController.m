@@ -7,23 +7,26 @@
 //
 
 #import "InfinitMediaCollectionViewController.h"
+
 #import "InfCollectionViewCell.h"
+
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AVFoundation/AVFoundation.h>
+
 #import <Gap/InfinitTemporaryFileManager.h>
 
 @interface InfinitMediaCollectionViewController ()
 
 @property(nonatomic, strong) NSArray* assets;
-@property (nonatomic, strong) NSMutableDictionary* selectedMedia;
-@property(nonatomic, strong) NSMutableArray* assetURLArray;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *nextButton;
+@property (nonatomic, strong) NSMutableDictionary* selected_media;
+@property(nonatomic, strong) NSMutableArray* assetURL_array;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem* next_button;
 
 @end
 
 @implementation InfinitMediaCollectionViewController
 
-static NSString * const reuseIdentifier = @"mediaCell";
+static NSString* const reuseIdentifier = @"mediaCell";
 
 - (void)viewDidLoad
 {
@@ -36,11 +39,14 @@ static NSString * const reuseIdentifier = @"mediaCell";
   [self.collectionView registerClass:[InfCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
   
   
-  NSDictionary * lightAttributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:17],NSForegroundColorAttributeName: [UIColor whiteColor]};
+  NSDictionary* lightAttributes =
+    @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:17],
+      NSForegroundColorAttributeName: [UIColor whiteColor]};
   [self.navigationController.navigationBar setTitleTextAttributes:lightAttributes];
   
-  NSDictionary * attributes = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold" size:18]};
-  [_nextButton setTitleTextAttributes:attributes forState:UIControlStateNormal];
+  NSDictionary* attributes =
+    @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold" size:18]};
+  [_next_button setTitleTextAttributes:attributes forState:UIControlStateNormal];
   
 }
 
@@ -137,7 +143,7 @@ static NSString * const reuseIdentifier = @"mediaCell";
   cell.imageView.image = image;
   
 
-  if([_selectedMedia objectForKey:indexPath])
+  if([_selected_media objectForKey:indexPath])
   {
     cell.checkMark.hidden = NO;
     cell.blackLayer.hidden = NO;
@@ -218,22 +224,22 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
 
   
   
-  if(_selectedMedia == nil)
+  if(_selected_media == nil)
   {
-    _selectedMedia = [[NSMutableDictionary alloc] init];
+    _selected_media = [[NSMutableDictionary alloc] init];
   }
   
   
-  if([_selectedMedia objectForKey:indexPath])
+  if([_selected_media objectForKey:indexPath])
   {
     cell.checkMark.hidden = YES;
     cell.blackLayer.hidden = YES;
     
-    [_selectedMedia removeObjectForKey:indexPath];
+    [_selected_media removeObjectForKey:indexPath];
     
-    NSString* buttonString = [NSString stringWithFormat:@"Next (%lu)", (unsigned long)_selectedMedia.allKeys.count];
+    NSString* buttonString = [NSString stringWithFormat:@"Next (%lu)", (unsigned long)_selected_media.allKeys.count];
     [UIView performWithoutAnimation:^ {
-      [self.nextButton setTitle:buttonString];
+      [self.next_button setTitle:buttonString];
     }];
   }
   else
@@ -241,12 +247,12 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     cell.checkMark.hidden = NO;
     cell.blackLayer.hidden = NO;
 
-    [_selectedMedia setObject:indexPath forKey:indexPath];
+    [_selected_media setObject:indexPath forKey:indexPath];
     
-    NSString* buttonString = [NSString stringWithFormat:@"Next (%lu)", (unsigned long)_selectedMedia.allKeys.count];
+    NSString* buttonString = [NSString stringWithFormat:@"Next (%lu)", (unsigned long)_selected_media.allKeys.count];
     
     [UIView performWithoutAnimation:^ {
-      [self.nextButton setTitle:buttonString];
+      [self.next_button setTitle:buttonString];
     }];
   }
   

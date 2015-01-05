@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface ContactOtherCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *infoLabel;
-@property (weak, nonatomic) IBOutlet UIButton *inviteButton;
+
+@property (weak, nonatomic) IBOutlet UIImageView* avatar_image_view;
+@property (weak, nonatomic) IBOutlet UILabel* name_label;
+@property (weak, nonatomic) IBOutlet UILabel* info_label;
+@property (weak, nonatomic) IBOutlet UIButton* invite_button;
 
 @end

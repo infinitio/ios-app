@@ -13,18 +13,18 @@
 - (void)awakeFromNib {
   // Initialization code
   
-  self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.height/2;
-
-  self.inviteButton.layer.cornerRadius = 4.0f;
-  self.inviteButton.layer.borderWidth = 1.0f;
-  self.inviteButton.layer.borderColor = ([[[UIColor colorWithRed:133/255.0 green:133/255.0 blue:133/255.0 alpha:1] colorWithAlphaComponent:1] CGColor]);
-  self.inviteButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:13.5];
+  self.avatar_image_view.layer.cornerRadius = self.avatar_image_view.frame.size.height/2;
+  self.invite_button.layer.cornerRadius = 4.0f;
+  self.invite_button.layer.borderWidth = 1.0f;
+  self.invite_button.layer.borderColor = ([[[UIColor colorWithRed:133/255.0 green:133/255.0 blue:133/255.0 alpha:1] colorWithAlphaComponent:1] CGColor]);
+  self.invite_button.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:13.5];
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+- (void)prepareForReuse
+{
+  self.name_label.text = nil;
+  self.info_label.text = nil;
+  self.avatar_image_view.image = nil;
 }
 
 @end

@@ -7,21 +7,20 @@
 //
 
 #import "InfinitFileCollectionViewController.h"
+
 #import "FileGridCell.h"
 #import "FileListCell.h"
 
 @interface InfinitFileCollectionViewController ()
 
-@property BOOL listShowing;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem* styleBarButton;
-
+@property BOOL list_showing;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem* style_bar_button;
 
 //Sort Properties
-@property BOOL sortShowing;
-@property (strong, nonatomic) UIView* sortView;
-@property (strong, nonatomic) UISegmentedControl* sortControl;
-@property (strong, nonatomic) UISwitch* linksOnlySwitch;
-
+@property BOOL sort_showing;
+@property (strong, nonatomic) UIView* sort_view;
+@property (strong, nonatomic) UISegmentedControl* sort_control;
+@property (strong, nonatomic) UISwitch* links_only_switch;
 
 @end
 
@@ -31,10 +30,8 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  _listShowing = YES;
-  _sortShowing = NO;
-
-  
+  self.list_showing = YES;
+  self.sort_showing = NO;
 }
 
 #pragma mark <UICollectionViewDataSource>
@@ -51,18 +48,19 @@
     return 27;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
+- (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView
+                 cellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
-  if(_listShowing)
+  if(self.list_showing)
   {
-    FileListCell* cell = (FileListCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"listCell" forIndexPath:indexPath];
+    FileListCell* cell =
+      (FileListCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"listCell" forIndexPath:indexPath];
     return cell;
-
   }
   else
   {
-    FileGridCell* cell = (FileGridCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"gridCell" forIndexPath:indexPath];
+    FileGridCell* cell =
+      (FileGridCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"gridCell" forIndexPath:indexPath];
     return cell;
   }
 }
@@ -73,10 +71,12 @@
                   layout:(UICollectionViewLayout*)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath*)indexPath
 {
-  if(_listShowing)
+  if(self.list_showing)
   {
     return CGSizeMake(320, 80);
-  } else {
+  }
+  else
+  {
     return CGSizeMake(104, 104);
   }
 }
@@ -92,10 +92,12 @@
                    layout:(UICollectionViewLayout*)collectionViewLayout
 minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
 {
-  if(_listShowing)
+  if(self.list_showing)
   {
     return 0.0;
-  } else {
+  }
+  else
+  {
     return 2.0;
   }
 }
@@ -104,106 +106,93 @@ minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
                    layout:(UICollectionViewLayout*)collectionViewLayout
 minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
-  if(_listShowing)
+  if(self.list_showing)
   {
     return 0.0;
-  } else {
+  }
+  else
+  {
     return 2.0;
   }
 }
 
-#pragma mark <UICollectionViewDelegate>
-
-/*
-// Uncomment this method to specify if the specified item should be highlighted during tracking
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;
-}
-*/
-
-/*
-// Uncomment this method to specify if the specified item should be selected
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-*/
-
-/*
-// Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-	return NO;
-}
-
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	return NO;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	
-}
-*/
 - (IBAction)switchStyleButtonSelected:(id)sender
 {
-  if(_listShowing)
+  if(self.list_showing)
   {
-    _listShowing = NO;
-    [_styleBarButton setImage:[UIImage imageNamed:@"icon-list"]];
+    self.list_showing = NO;
+    [self.style_bar_button setImage:[UIImage imageNamed:@"icon-list"]];
     [self.collectionView reloadData];
-  } else {
-    _listShowing = YES;
-    [_styleBarButton setImage:[UIImage imageNamed:@"icon-grid"]];
+  }
+  else
+  {
+    self.list_showing = YES;
+    [self.style_bar_button setImage:[UIImage imageNamed:@"icon-grid"]];
     [self.collectionView reloadData];
   }
 }
 - (IBAction)sortButtonSelected:(id)sender
 {
   
-  if(_sortShowing == NO)
+  if(self.sort_showing == NO)
   {
-    _sortShowing = YES;
-    if(!_sortView)
+    self.sort_showing = YES;
+    if(!self.sort_view)
     {
       //Add a view with a segmented Control and a switch.
-      _sortView = [[UIView alloc] initWithFrame:CGRectMake(0, -108, 320, 108)];
-      _sortView.backgroundColor = [UIColor whiteColor];
+      self.sort_view =
+        [[UIView alloc] initWithFrame:CGRectMake(0, -108, 320, 108)];
+      self.sort_view.backgroundColor = [UIColor whiteColor];
       
-      NSArray *itemsArray = [NSArray arrayWithObjects:@"Date", @"Name", @"Sender", @"Size", nil];
-      _sortControl = [[UISegmentedControl alloc] initWithItems:itemsArray];
-      _sortControl.frame = CGRectMake(10, 16, 300, 32);
-      _sortControl.selectedSegmentIndex = 0;
-      _sortControl.tintColor = [UIColor colorWithRed:43/255.0 green:190/255.0 blue:189/255.0 alpha:1];
-      [_sortView addSubview:_sortControl];
+      NSArray* items_array =
+        [NSArray arrayWithObjects:@"Date", @"Name", @"Sender", @"Size", nil];
+      self.sort_control = [[UISegmentedControl alloc] initWithItems:items_array];
+      self.sort_control.frame = CGRectMake(10, 16, 300, 32);
+      self.sort_control.selectedSegmentIndex = 0;
+      self.sort_control.tintColor = [UIColor colorWithRed:43/255.0 green:190/255.0 blue:189/255.0 alpha:1];
+      [self.sort_view addSubview:self.sort_control];
       
-      UILabel *linksOnlyLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 55, 200, 20)];
-      linksOnlyLabel.text = @"Show my links only";
-      linksOnlyLabel.textAlignment = NSTextAlignmentLeft;
-      [_sortView addSubview:linksOnlyLabel];
+      UILabel* links_only_label =
+        [[UILabel alloc] initWithFrame:CGRectMake(10, 55, 200, 20)];
+      links_only_label.text = @"Show my links only";
+      links_only_label.textAlignment = NSTextAlignmentLeft;
+      [self.sort_view addSubview:links_only_label];
       
-      _linksOnlySwitch = [[UISwitch alloc] initWithFrame:CGRectMake(260, 50, 40, 20)];
-//      _linksOnlySwitch.tintColor = [UIColor colorWithRed:43/255.0 green:190/255.0 blue:189/255.0 alpha:1];
-      [_sortView addSubview:_linksOnlySwitch];
+      self.links_only_switch = [[UISwitch alloc] initWithFrame:CGRectMake(260, 50, 40, 20)];
+//      _links_only_switch.tintColor = [UIColor colorWithRed:43/255.0 green:190/255.0 blue:189/255.0 alpha:1];
+      [self.sort_view addSubview:self.links_only_switch];
       
-      [self.view addSubview:_sortView];
+      [self.view addSubview:self.sort_view];
     }
     
-    [UIView animateWithDuration:.5 animations:^{
-      _sortView.frame = CGRectMake(0, 0, 320, 108);
-      self.collectionView.frame = CGRectMake(self.collectionView.frame.origin.x,self.collectionView.frame.origin.y + 108, self.collectionView.frame.size.width, self.collectionView.frame.size.height);
-    } completion:^(BOOL finished){
-      self.collectionView.frame = CGRectMake(self.collectionView.frame.origin.x,self.collectionView.frame.origin.y, self.collectionView.frame.size.width, self.collectionView.frame.size.height - 108);
+    [UIView animateWithDuration:.5 animations:^
+    {
+      self.sort_view.frame = CGRectMake(0, 0, 320, 108);
+      self.collectionView.frame = CGRectMake(self.collectionView.frame.origin.x,
+                                             self.collectionView.frame.origin.y + 108,
+                                             self.collectionView.frame.size.width,
+                                             self.collectionView.frame.size.height);
+    }
+    completion:^(BOOL finished)
+    {
+      self.collectionView.frame = CGRectMake(self.collectionView.frame.origin.x,
+                                             self.collectionView.frame.origin.y,
+                                             self.collectionView.frame.size.width,
+                                            self.collectionView.frame.size.height - 108);
     }];
-  } else {
-    _sortShowing = NO;
-    [UIView animateWithDuration:.5 animations:^{
-      _sortView.frame = CGRectMake(0, -108, 320, 108);
-      self.collectionView.frame = CGRectMake(self.collectionView.frame.origin.x,self.collectionView.frame.origin.y - 108, self.collectionView.frame.size.width, self.collectionView.frame.size.height + 108);
-    }];
-
   }
-
-  
-  
-  
+  else
+  {
+    self.sort_showing = NO;
+    [UIView animateWithDuration:.5 animations:^
+    {
+      self.sort_view.frame = CGRectMake(0, -108, 320, 108);
+      self.collectionView.frame = CGRectMake(self.collectionView.frame.origin.x,
+                                             self.collectionView.frame.origin.y - 108,
+                                             self.collectionView.frame.size.width,
+                                             self.collectionView.frame.size.height + 108);
+    }];
+  }
 }
 
 @end

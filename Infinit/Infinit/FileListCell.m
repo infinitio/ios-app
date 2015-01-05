@@ -16,4 +16,11 @@
 
 }
 
+- (void)prepareForReuse
+{
+  self.from_label.text = nil;
+  self.name_label.text = nil;
+  self.image_view.image = nil;
+}
+
 @end

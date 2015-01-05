@@ -1245,6 +1245,7 @@
                                 <size key="customSize" width="104" height="104"/>
                                 <connections>
                                     <outlet property="imageView" destination="adJ-dL-mYb" id="F8U-K9-sza"/>
+                                    <outlet property="image_view" destination="adJ-dL-mYb" id="Fqh-qi-Xsj"/>
                                     <segue destination="dsK-LE-4zb" kind="push" id="Kxx-xK-6YF"/>
                                 </connections>
                             </collectionViewCell>
@@ -1297,8 +1298,11 @@
                                 <size key="customSize" width="320" height="80"/>
                                 <connections>
                                     <outlet property="fromLabel" destination="woc-RV-At6" id="ZzA-fA-fmJ"/>
+                                    <outlet property="from_label" destination="woc-RV-At6" id="sNk-n4-eGH"/>
                                     <outlet property="imageView" destination="eIY-Hc-XhI" id="i18-Fo-7gf"/>
+                                    <outlet property="image_view" destination="eIY-Hc-XhI" id="h6s-wZ-aAH"/>
                                     <outlet property="nameLabel" destination="rzW-ep-TKD" id="dJA-Ep-Uur"/>
+                                    <outlet property="name_label" destination="rzW-ep-TKD" id="JBD-D6-EqU"/>
                                     <segue destination="dsK-LE-4zb" kind="push" id="8qo-TH-pYl"/>
                                 </connections>
                             </collectionViewCell>
@@ -1322,6 +1326,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="styleBarButton" destination="7P6-3S-Rvg" id="4eZ-Dc-GD7"/>
+                        <outlet property="style_bar_button" destination="7P6-3S-Rvg" id="EvH-aH-IFM"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ODg-qD-CUV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1607,10 +1612,15 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="avatarImageView" destination="6XI-wq-YVg" id="uDW-De-LA8"/>
+                                    <outlet property="avatar_image_view" destination="6XI-wq-YVg" id="rt8-0A-Fb0"/>
                                     <outlet property="favButton" destination="pyg-MG-ZVU" id="Trp-kW-RGb"/>
+                                    <outlet property="fav_button" destination="pyg-MG-ZVU" id="Av8-Ep-Yd4"/>
                                     <outlet property="filesButton" destination="0EZ-KU-Jcr" id="lhU-Cp-asd"/>
+                                    <outlet property="files_button" destination="0EZ-KU-Jcr" id="Wky-ab-gKG"/>
                                     <outlet property="nameLabel" destination="9Am-rX-Q3y" id="PsY-Qi-BFM"/>
+                                    <outlet property="name_label" destination="9Am-rX-Q3y" id="o8L-28-vCW"/>
                                     <outlet property="sendButton" destination="kb3-y0-OxQ" id="Rub-2s-6Ug"/>
+                                    <outlet property="send_button" destination="kb3-y0-OxQ" id="Lv0-5N-6n0"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="otherContactCell" rowHeight="55" id="7mx-3c-bXc" customClass="ContactOtherCell">
@@ -1676,9 +1686,13 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="avatarImageView" destination="EOy-Fu-Vtf" id="SkF-8L-c3y"/>
+                                    <outlet property="avatar_image_view" destination="EOy-Fu-Vtf" id="xR7-Rv-dwm"/>
                                     <outlet property="infoLabel" destination="TGh-xJ-x2j" id="qd3-pF-xeR"/>
+                                    <outlet property="info_label" destination="TGh-xJ-x2j" id="qKS-Qc-eG2"/>
                                     <outlet property="inviteButton" destination="MWy-fF-wfZ" id="Opp-cs-jhd"/>
+                                    <outlet property="invite_button" destination="MWy-fF-wfZ" id="iWz-So-BYe"/>
                                     <outlet property="nameLabel" destination="gwg-tq-l61" id="mWq-8n-dnh"/>
+                                    <outlet property="name_label" destination="gwg-tq-l61" id="XWJ-r8-I0l"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="importCell" rowHeight="349" id="bt7-uC-zgU" customClass="ImportContactsCell">
@@ -1780,7 +1794,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="inviteBarButton" destination="OE5-oG-1Uo" id="DLQ-UB-4ax"/>
+                        <outlet property="invite_bar_button" destination="OE5-oG-1Uo" id="UdK-7z-Nag"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L27-JD-oDP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2640,7 +2654,9 @@
                                 <size key="customSize" width="320" height="61"/>
                                 <connections>
                                     <outlet property="imageView" destination="KGG-ge-nXD" id="oqf-Wk-410"/>
+                                    <outlet property="image_view" destination="KGG-ge-nXD" id="cf8-Ob-Aqi"/>
                                     <outlet property="notificationLabel" destination="Jpp-Ex-pee" id="ycF-ka-I5J"/>
+                                    <outlet property="notification_label" destination="Jpp-Ex-pee" id="xTs-ZQ-PoV"/>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="largeCell" id="c0q-cC-AED" customClass="HomeLargeCollectionViewCell">
@@ -2662,7 +2678,7 @@
                                             <rect key="frame" x="105" y="51" width="110" height="110"/>
                                             <color key="backgroundColor" red="0.16862745100000001" green="0.74509803919999995" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
                                         </imageView>
-                                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O4q-p2-Dcj">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O4q-p2-Dcj">
                                             <rect key="frame" x="27" y="80" width="45" height="45"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="45" id="1oM-c5-bii"/>
@@ -2710,9 +2726,11 @@
                                     <constraint firstAttribute="centerX" secondItem="q6E-KY-Ew5" secondAttribute="centerX" id="4hx-Vk-xdu"/>
                                     <constraint firstItem="1uk-xU-T3B" firstAttribute="top" secondItem="q6E-KY-Ew5" secondAttribute="bottom" constant="30" id="9D0-mC-dUa"/>
                                     <constraint firstAttribute="centerX" secondItem="6cr-e1-CH4" secondAttribute="centerX" id="Anf-Pu-4UD"/>
+                                    <constraint firstItem="vTN-kY-rgc" firstAttribute="leading" secondItem="O4q-p2-Dcj" secondAttribute="trailing" constant="-72" id="Ebv-1D-bHu"/>
                                     <constraint firstItem="vTN-kY-rgc" firstAttribute="leading" secondItem="c0q-cC-AED" secondAttribute="leadingMargin" constant="-8" id="Fb0-en-6PI"/>
                                     <constraint firstAttribute="centerX" secondItem="1uk-xU-T3B" secondAttribute="centerX" constant="-0.5" id="L0g-d7-c9G"/>
                                     <constraint firstItem="O4q-p2-Dcj" firstAttribute="top" secondItem="c0q-cC-AED" secondAttribute="topMargin" constant="72" id="Pa1-u0-sId"/>
+                                    <constraint firstItem="q6E-KY-Ew5" firstAttribute="leading" secondItem="O4q-p2-Dcj" secondAttribute="trailing" constant="33" id="cBG-kt-m7q"/>
                                     <constraint firstItem="vTN-kY-rgc" firstAttribute="top" secondItem="c0q-cC-AED" secondAttribute="topMargin" constant="-8" id="g5a-Jf-Src"/>
                                     <constraint firstItem="q6E-KY-Ew5" firstAttribute="leading" secondItem="O4q-p2-Dcj" secondAttribute="trailing" constant="33" id="omJ-He-L7v"/>
                                     <constraint firstItem="skB-Om-39m" firstAttribute="leading" secondItem="q6E-KY-Ew5" secondAttribute="trailing" constant="32" id="pFH-v7-nx0"/>
@@ -2723,16 +2741,24 @@
                                 <size key="customSize" width="320" height="350"/>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="cBG-kt-m7q"/>
+                                        <exclude reference="omJ-He-L7v"/>
                                         <exclude reference="t7j-iy-oYl"/>
                                     </mask>
                                 </variation>
                                 <connections>
                                     <outlet property="acceptButton" destination="O4q-p2-Dcj" id="bmW-6y-aE7"/>
+                                    <outlet property="accept_button" destination="O4q-p2-Dcj" id="Hh9-NX-HNq"/>
                                     <outlet property="blurImageView" destination="vTN-kY-rgc" id="xYd-oR-Y6d"/>
+                                    <outlet property="blur_image_view" destination="vTN-kY-rgc" id="B1U-EW-tKb"/>
                                     <outlet property="cancelButton" destination="skB-Om-39m" id="IYB-aj-PNv"/>
+                                    <outlet property="cancel_button" destination="skB-Om-39m" id="w9A-3l-jsh"/>
                                     <outlet property="filesLabel" destination="1uk-xU-T3B" id="QXf-F5-Xef"/>
+                                    <outlet property="files_label" destination="1uk-xU-T3B" id="RGW-s1-vDM"/>
                                     <outlet property="imageView" destination="q6E-KY-Ew5" id="OhE-BO-HzZ"/>
+                                    <outlet property="image_view" destination="q6E-KY-Ew5" id="oaL-yo-wSP"/>
                                     <outlet property="notificationLabel" destination="6cr-e1-CH4" id="O7c-p2-GL3"/>
+                                    <outlet property="notification_label" destination="6cr-e1-CH4" id="AFk-eZ-T91"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -2794,7 +2820,7 @@
         <image name="logo" width="184" height="102"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="xUY-Va-Ckf"/>
+        <segue reference="yiG-BZ-Am5"/>
         <segue reference="Kxx-xK-6YF"/>
     </inferredMetricsTieBreakers>
 </document>

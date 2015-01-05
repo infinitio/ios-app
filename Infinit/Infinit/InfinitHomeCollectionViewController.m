@@ -7,6 +7,7 @@
 //
 
 #import "InfinitHomeCollectionViewController.h"
+
 #import "HomeSmallCollectionViewCell.h"
 #import "HomeLargeCollectionViewCell.h"
 
@@ -19,13 +20,8 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-logo-red"]];
-
-  
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-  
+  self.navigationItem.titleView =
+    [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-logo-red"]];
 }
 
 
@@ -47,13 +43,15 @@
 {
   if(indexPath.row == 0)
   {
-    HomeLargeCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"largeCell" forIndexPath:indexPath];
+    HomeLargeCollectionViewCell* cell =
+      [collectionView dequeueReusableCellWithReuseIdentifier:@"largeCell" forIndexPath:indexPath];
     
     // Configure the cell
     
     return cell;
   } else {
-    HomeSmallCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"smallCell" forIndexPath:indexPath];
+    HomeSmallCollectionViewCell* cell =
+      [collectionView dequeueReusableCellWithReuseIdentifier:@"smallCell" forIndexPath:indexPath];
     
     // Configure the cell
     
@@ -71,7 +69,9 @@
   if(indexPath.row == 0)
   {
     return CGSizeMake(320, 350);
-  } else {
+  }
+  else
+  {
     return CGSizeMake(320, 61);
   }
 }

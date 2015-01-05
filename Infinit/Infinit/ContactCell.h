@@ -10,13 +10,10 @@
 
 @interface ContactCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
-@property (weak, nonatomic) IBOutlet UIButton *filesButton;
-@property (weak, nonatomic) IBOutlet UIButton *sendButton;
-@property (weak, nonatomic) IBOutlet UIButton *favButton;
-
-
-@property (weak, nonatomic) IBOutlet UIButton *inviteButton;
+@property (weak, nonatomic) IBOutlet UILabel* name_label;
+@property (weak, nonatomic) IBOutlet UIImageView* avatar_image_view;
+@property (weak, nonatomic) IBOutlet UIButton* files_button;
+@property (weak, nonatomic) IBOutlet UIButton* send_button;
+@property (weak, nonatomic) IBOutlet UIButton* fav_button;
 
 @end

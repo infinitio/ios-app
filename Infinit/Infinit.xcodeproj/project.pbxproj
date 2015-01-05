@@ -13,7 +13,6 @@
 		83B32D691A136485004AB945 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B32D681A136485004AB945 /* ViewController.m */; };
 		83B32D6E1A136485004AB945 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83B32D6D1A136485004AB945 /* Images.xcassets */; };
 		83B32D7D1A136486004AB945 /* InfinitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B32D7C1A136486004AB945 /* InfinitTests.m */; };
-		83B32E031A1365B1004AB945 /* InfinitLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B32E021A1365B1004AB945 /* InfinitLoginController.m */; };
 		83B32E061A1365E9004AB945 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B32E051A1365E9004AB945 /* AppDelegate.m */; };
 		83B32E081A13660D004AB945 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83B32E071A13660D004AB945 /* LaunchScreen.xib */; };
 		83B32E0A1A136614004AB945 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83B32E091A136614004AB945 /* Main.storyboard */; };
@@ -89,7 +88,6 @@
 		D098481F1A43391B002D26AC /* LucidaGrande.ttc in Resources */ = {isa = PBXBuildFile; fileRef = D09848101A43391B002D26AC /* LucidaGrande.ttc */; };
 		D09848201A43391B002D26AC /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D09848111A43391B002D26AC /* Montserrat-Bold.ttf */; };
 		D09848211A43391B002D26AC /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D09848121A43391B002D26AC /* Montserrat-Regular.ttf */; };
-		D0AFCBB71A264889003AC152 /* EmailSignupVC.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AFCBB61A264889003AC152 /* EmailSignupVC.m */; };
 		D0AFCBBA1A2758F8003AC152 /* TabBarBadgeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AFCBB91A2758F8003AC152 /* TabBarBadgeLabel.m */; };
 		D0AFCBBE1A275B51003AC152 /* InfinitTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AFCBBD1A275B51003AC152 /* InfinitTabBarController.m */; };
 		D0BC70431A41B4B7006923F2 /* InfTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BC70421A41B4B7006923F2 /* InfTabBarController.m */; };
@@ -166,8 +164,6 @@
 		83B32D761A136486004AB945 /* InfinitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InfinitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		83B32D7B1A136486004AB945 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		83B32D7C1A136486004AB945 /* InfinitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfinitTests.m; sourceTree = "<group>"; };
-		83B32E011A1365B1004AB945 /* InfinitLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitLoginController.h; sourceTree = "<group>"; };
-		83B32E021A1365B1004AB945 /* InfinitLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitLoginController.m; sourceTree = "<group>"; };
 		83B32E051A1365E9004AB945 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		83B32E071A13660D004AB945 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		83B32E091A136614004AB945 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -266,8 +262,6 @@
 		D09848101A43391B002D26AC /* LucidaGrande.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = LucidaGrande.ttc; sourceTree = "<group>"; };
 		D09848111A43391B002D26AC /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		D09848121A43391B002D26AC /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
-		D0AFCBB51A264889003AC152 /* EmailSignupVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailSignupVC.h; sourceTree = "<group>"; };
-		D0AFCBB61A264889003AC152 /* EmailSignupVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailSignupVC.m; sourceTree = "<group>"; };
 		D0AFCBB81A2758F8003AC152 /* TabBarBadgeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarBadgeLabel.h; sourceTree = "<group>"; };
 		D0AFCBB91A2758F8003AC152 /* TabBarBadgeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarBadgeLabel.m; sourceTree = "<group>"; };
 		D0AFCBBC1A275B51003AC152 /* InfinitTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitTabBarController.h; sourceTree = "<group>"; };
@@ -433,10 +427,6 @@
 		83B32DF41A1365A9004AB945 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				D0AFCBB51A264889003AC152 /* EmailSignupVC.h */,
-				D0AFCBB61A264889003AC152 /* EmailSignupVC.m */,
-				83B32E011A1365B1004AB945 /* InfinitLoginController.h */,
-				83B32E021A1365B1004AB945 /* InfinitLoginController.m */,
 				D0659F641A3E865A0001ACAE /* InfinitWelcomeController.h */,
 				D0659F651A3E865A0001ACAE /* InfinitWelcomeController.m */,
 			);
@@ -612,6 +602,17 @@
 			name = "Cutom TabBarController";
 			sourceTree = "<group>";
 		};
+		D0517F821A5ACBC8008F06D2 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				D0D613CD1A52F77700D454B6 /* HomeLargeCollectionViewCell.h */,
+				D0D613CE1A52F77700D454B6 /* HomeLargeCollectionViewCell.m */,
+				D0D613CA1A52E6D500D454B6 /* HomeSmallCollectionViewCell.h */,
+				D0D613CB1A52E6D500D454B6 /* HomeSmallCollectionViewCell.m */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
 		D05D5D051A24BFAB005529E8 /* InfinitShareExtension */ = {
 			isa = PBXGroup;
 			children = (
@@ -693,12 +694,9 @@
 		D0BD35281A43307A00AB8EF9 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				D0D613CD1A52F77700D454B6 /* HomeLargeCollectionViewCell.h */,
-				D0D613CE1A52F77700D454B6 /* HomeLargeCollectionViewCell.m */,
 				D0D613C61A52E51600D454B6 /* InfinitHomeCollectionViewController.h */,
 				D0D613C71A52E51600D454B6 /* InfinitHomeCollectionViewController.m */,
-				D0D613CA1A52E6D500D454B6 /* HomeSmallCollectionViewCell.h */,
-				D0D613CB1A52E6D500D454B6 /* HomeSmallCollectionViewCell.m */,
+				D0517F821A5ACBC8008F06D2 /* Cells */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -880,7 +878,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				83B32E061A1365E9004AB945 /* AppDelegate.m in Sources */,
-				D0AFCBB71A264889003AC152 /* EmailSignupVC.m in Sources */,
 				D0AFCBBA1A2758F8003AC152 /* TabBarBadgeLabel.m in Sources */,
 				D0BD35231A4245AF00AB8EF9 /* InfinitSelectPeopleViewController.m in Sources */,
 				83FE9C8B1A161F6D00FC1CFD /* InfinitLinkSendController.m in Sources */,
@@ -899,7 +896,6 @@
 				D03FAAF61A479BF3005A8244 /* CGLAlphabetizer.m in Sources */,
 				D01A64541A4861800041A8C2 /* FileGridCell.m in Sources */,
 				83F4D0A61A14B48D0068BEB2 /* InfinitPeerSendController.m in Sources */,
-				83B32E031A1365B1004AB945 /* InfinitLoginController.m in Sources */,
 				83F72CA41A15131A0088106E /* InfinitLinkTransactionCell.m in Sources */,
 				83F4D0A21A13BC490068BEB2 /* InfinitPeerTransactionCell.m in Sources */,
 				D03FAAF91A479D2C005A8244 /* CGLContact.m in Sources */,
