@@ -12,13 +12,13 @@
 
 - (void)awakeFromNib
 {
-  self.imageView.layer.cornerRadius = self.imageView.frame.size.height/2;
+  self.image_view.layer.cornerRadius = self.image_view.frame.size.height/2;
 }
 
 - (void)prepareForReuse
 {
-  self.notificationLabel.text = nil;
-  self.imageView.image = nil;
+  self.notification_label.text = nil;
+  self.image_view.image = nil;
 }
 
 @end

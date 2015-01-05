@@ -521,6 +521,8 @@
 
 - (void)loginCallback:(InfinitStateResult*)result
 {
+  
+  
   if (result.success)
   {
     [InfinitUserManager sharedInstance];

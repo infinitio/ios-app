@@ -11,6 +11,12 @@
 #import "HomeSmallCollectionViewCell.h"
 #import "HomeLargeCollectionViewCell.h"
 
+#import <Gap/InfinitLinkTransactionManager.h>
+#import <Gap/InfinitPeerTransactionManager.h>
+#import <Gap/InfinitUserManager.h>
+
+
+
 @interface InfinitHomeCollectionViewController ()
 
 @end
@@ -22,8 +28,34 @@
   [super viewDidLoad];
   self.navigationItem.titleView =
     [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-logo-red"]];
+  
+  [self loadTransactions];
 }
 
+- (void)loadTransactions
+{
+  //Load them and display current ones in the right fashion.
+  NSMutableArray* linkTransactions =
+    [NSMutableArray arrayWithArray:[[InfinitLinkTransactionManager sharedInstance] transactions]];
+  
+  NSMutableArray* peerTransactions =
+    [[[InfinitPeerTransactionManager sharedInstance] transactions] mutableCopy];
+  
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(transactionUpdated:)
+                                               name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(transactionAdded:)
+                                               name:INFINIT_NEW_PEER_TRANSACTION_NOTIFICATION
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(newAvatar:)
+                                               name:INFINIT_USER_AVATAR_NOTIFICATION
+                                             object:nil];
+  
+  
+}
 
 
 #pragma mark <UICollectionViewDataSource>
@@ -44,14 +76,18 @@
   if(indexPath.row == 0)
   {
     HomeLargeCollectionViewCell* cell =
-      [collectionView dequeueReusableCellWithReuseIdentifier:@"largeCell" forIndexPath:indexPath];
+      [collectionView dequeueReusableCellWithReuseIdentifier:@"largeCell"
+                                                forIndexPath:indexPath];
     
     // Configure the cell
     
     return cell;
-  } else {
+  }
+  else
+  {
     HomeSmallCollectionViewCell* cell =
-      [collectionView dequeueReusableCellWithReuseIdentifier:@"smallCell" forIndexPath:indexPath];
+      [collectionView dequeueReusableCellWithReuseIdentifier:@"smallCell"
+                                                forIndexPath:indexPath];
     
     // Configure the cell
     
@@ -96,9 +132,5 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
   return 2.0;
 }
-
-#pragma mark <UICollectionViewDelegate>
-
-
 
 @end
