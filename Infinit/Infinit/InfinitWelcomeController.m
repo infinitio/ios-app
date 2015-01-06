@@ -9,6 +9,7 @@
 #import "InfinitWelcomeController.h"
 
 #import <MobileCoreServices/MobileCoreServices.h>
+#import "AppDelegate.h"
 
 #import <Gap/InfinitUtilities.h>
 #import <Gap/InfinitPeerTransactionManager.h>
@@ -16,6 +17,7 @@
 #import <Gap/InfinitStateResult.h>
 #import <Gap/InfinitUserManager.h>
 
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface InfinitWelcomeController () <UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -213,6 +215,18 @@
 - (IBAction)facebookButtonSelected:(id)sender
 {
   
+  // Open a session showing the user the login UI
+  // You must ALWAYS ask for public_profile permissions when opening a session
+  [FBSession openActiveSessionWithReadPermissions:@[@"public_profile", @"email", @"user_friends", @"user_birthday"]
+                                     allowLoginUI:YES
+                                completionHandler:
+   ^(FBSession *session, FBSessionState state, NSError *error) {
+     
+     // Retrieve the app delegate
+     AppDelegate *appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+     // Call the app delegate's sessionStateChanged:state:error method to handle session state changes
+     [appDelegate sessionStateChanged:session state:state error:error];
+   }];
 }
 
 - (IBAction)signupWithEmailSelected:(id)sender
