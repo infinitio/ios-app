@@ -43,8 +43,6 @@
   
   _sendButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14];
   
-  [[NSBundle mainBundle] loadNibNamed:@"inviteView" owner:self options:nil];
-
 //  self.topGrayBar.backgroundColor = [self.tableView separatorColor];
 //  self.bottomGrayBar.backgroundColor = [self.tableView separatorColor];
   

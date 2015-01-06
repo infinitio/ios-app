@@ -325,7 +325,7 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
                            animated:NO];
 }
 
-- (IBAction)invite_bar_buttonSelected:(id)sender
+- (IBAction)inviteBarButtonSelected:(id)sender
 {
   self.invite_bar_button_view =
     [[UIView alloc] initWithFrame:  CGRectMake(0, 0, 320, 568)];

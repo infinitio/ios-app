@@ -39,6 +39,7 @@
 
 // NEED TO MAKE THIS WORK
 @property (weak, nonatomic) IBOutlet UILabel* signupErrorLabel;
+@property (weak, nonatomic) IBOutlet UILabel *loginErrorLabel;
 
 @property (weak, nonatomic) IBOutlet UIImageView* loginEmailImageView;
 @property (weak, nonatomic) IBOutlet UIImageView* loginPasswordImageView;
@@ -61,6 +62,7 @@
 
 @property BOOL showingLoginForm;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *loginViewTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *signupViewTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *balloonContainerTopConstraint;
 @end
@@ -231,6 +233,7 @@
 
 - (IBAction)signupWithEmailSelected:(id)sender
 {
+
   self.signupFormView.frame = CGRectMake(0,
                                          self.view.frame.size.height,
                                          self.signupFormView.frame.size.width,
@@ -282,7 +285,7 @@
   }
   completion:^(BOOL finished)
   {
-    NSLog(@"Happy times");
+    self.loginViewTopConstraint.constant = self.view.frame.size.height - 280;
   }];
 }
 
@@ -310,7 +313,6 @@
   {
     self.signupViewTopConstraint.constant = self.view.frame.size.height;
     self.balloonContainerTopConstraint.constant = -20;
-    NSLog(@"Happy times");
   }];
 }
 
@@ -334,7 +336,11 @@
                                                                  self.balloonContainerView.frame.size.width,
                                                                  self.balloonContainerView.frame.size.height);
   }
-                   completion:nil];
+                   completion:^(BOOL finished)
+   {
+     self.loginViewTopConstraint.constant = self.view.frame.size.height;
+     self.balloonContainerTopConstraint.constant = -20;
+   }];
 }
 - (IBAction)addAvatarButtonSelected:(id)sender
 {
@@ -364,15 +370,16 @@
                      animations:^
      {
                        self.loginFormView.frame = CGRectMake(0,
-                                            20,
+                                            0,
                                             self.loginFormView.frame.size.width,
                                             self.loginFormView.frame.size.height);
                       //Also move the background up with it.
-                      self.balloonContainerView.frame = CGRectMake(0,-(self.view.frame.size.height - 280),self.balloonContainerView.frame.size.width,self.balloonContainerView.frame.size.height);
+       self.balloonContainerView.frame = CGRectMake(0,-(self.view.frame.size.height - 280) - 20,self.balloonContainerView.frame.size.width,self.balloonContainerView.frame.size.height);
       }
                      completion:^(BOOL finished)
      {
-       
+       self.loginViewTopConstraint.constant = 0;
+       self.balloonContainerTopConstraint.constant = -(self.view.frame.size.height - 280) - 20;
      }];
     
   } else
@@ -535,11 +542,13 @@
 
 - (IBAction)signupNextButtonSelected:(id)sender
 {
-  //Start  spinner of some sort?
-  
-   [[InfinitStateManager sharedInstance] registerFullname:self.signupFullnameTextfield.text
-                                                    email:self.signupEmailTextfield.text
-                                                 password:self.signupPasswordTextfield.text
+  //Put error if need be.
+  NSString* fullname = self.signupFullnameTextfield.text;
+  NSString* email = self.signupEmailTextfield.text;
+  NSString* password = self.signupPasswordTextfield.text;
+   [[InfinitStateManager sharedInstance] registerFullname:fullname
+                                                    email:email
+                                                 password:password
                                           performSelector:@selector(loginCallback:)
                                                  onObject:self];
   
@@ -563,21 +572,55 @@
   {
     [InfinitUserManager sharedInstance];
     [InfinitPeerTransactionManager sharedInstance];
-    //Add avatar.
-//    [[InfinitStateManager sharedInstance] setSelfAvatar:self.avatar_image performSelector:@selector(setSelfAvatarCallback:) onObject:self];
-    [[InfinitStateManager sharedInstance] setSelfAvatar:self.avatar_image performSelector:nil onObject:self];
-
+    
+    //Add avatar if they have picked a photo.
+    if(self.avatar_image)
+    {
+      [[InfinitStateManager sharedInstance] setSelfAvatar:self.avatar_image performSelector:nil onObject:self];
+    }
     
     UIStoryboard* storyboard =
       [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
     UIViewController* viewController =
-      [storyboard instantiateViewControllerWithIdentifier:@"welcomeVC"];
+      [storyboard instantiateViewControllerWithIdentifier:@"tabbarcontroller"];
     [self presentViewController:viewController animated:YES completion:nil];
     
   }
   else
   {
-//    self.error.text = [NSString stringWithFormat:@"Error: %d", result.status];
+    NSString *resultStatusString = [[NSString alloc] init];
+    switch (result.status)
+    {
+      case gap_email_password_dont_match:
+        resultStatusString = NSLocalizedString(@"Login/Password don't match.", @"Login/Password don't match.");
+        break;
+      case gap_already_logged_in:
+        resultStatusString = NSLocalizedString(@"You are already logged in.", @"You are already logged in.");
+        break;
+      case gap_email_not_confirmed:
+        resultStatusString = NSLocalizedString(@"Your email has not been confirmed.", @"Your email has not been confirmed.");
+        break;
+      case gap_handle_already_registered:
+        resultStatusString = NSLocalizedString(@"This handle has already been taken.", @"This handle has already been taken.");
+      case gap_meta_down_with_message:
+        resultStatusString = NSLocalizedString(@"Our Server is down. Thanks for being patient.", @"Our Server is down. Thanks for being patient.");
+        break;
+      default:
+        resultStatusString = [NSString stringWithFormat:@"%@.",
+                 NSLocalizedString(@"Unknown login error", @"unknown login error")];
+        break;
+    }
+
+    if(self.showingLoginForm)
+    {
+      self.loginErrorLabel.text = [NSString stringWithFormat:@"Error: %@", resultStatusString];
+      self.loginErrorLabel.hidden = NO;
+    }
+    else
+    {
+      self.signupErrorLabel.text = [NSString stringWithFormat:@"Error: %@", resultStatusString];
+      self.signupErrorLabel.hidden = NO;
+    }
   }
 }
 

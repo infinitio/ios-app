@@ -127,8 +127,8 @@
                                     <constraint firstAttribute="height" constant="1" id="Rxb-IZ-yrS"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sAm-0g-9Nv">
-                                <rect key="frame" x="190" y="576" width="320" height="569"/>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sAm-0g-9Nv">
+                                <rect key="frame" x="0.0" y="576" width="320" height="569"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W2y-MJ-ZYk">
                                         <rect key="frame" x="0.0" y="41" width="320" height="483"/>
@@ -248,15 +248,27 @@
                                                 <color key="textColor" red="0.70980392160000005" green="0.70980392160000005" blue="0.70980392160000005" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ynS-cc-Zu7">
+                                                <rect key="frame" x="26" y="202" width="272" height="21"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="21" id="MG8-4j-PCr"/>
+                                                    <constraint firstAttribute="width" constant="272" id="zuD-QJ-JLC"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                                <color key="textColor" red="0.94901960784313721" green="0.36862745098039218" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
+                                            <constraint firstAttribute="centerX" secondItem="ynS-cc-Zu7" secondAttribute="centerX" constant="-2" id="20e-HV-kcX"/>
                                             <constraint firstAttribute="centerX" secondItem="ust-Wr-3Xl" secondAttribute="centerX" id="36k-ls-Ney"/>
                                             <constraint firstItem="ust-Wr-3Xl" firstAttribute="top" secondItem="jz7-ls-Zsj" secondAttribute="bottom" constant="9" id="507-OO-ZIn"/>
                                             <constraint firstItem="Xmn-Mk-TfC" firstAttribute="top" secondItem="S6b-cY-3Fy" secondAttribute="bottom" constant="9" id="Akh-LL-iEn"/>
                                             <constraint firstAttribute="centerX" secondItem="aeF-HR-vH9" secondAttribute="centerX" id="Cw9-9r-qbq"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="483" id="DYD-7L-21i"/>
                                             <constraint firstItem="jz7-ls-Zsj" firstAttribute="top" secondItem="aeF-HR-vH9" secondAttribute="bottom" constant="10" id="GC5-aO-wlA"/>
+                                            <constraint firstItem="ynS-cc-Zu7" firstAttribute="top" secondItem="Xmn-Mk-TfC" secondAttribute="bottom" constant="8" id="J4X-WI-j2M"/>
                                             <constraint firstItem="S6b-cY-3Fy" firstAttribute="leading" secondItem="jz7-ls-Zsj" secondAttribute="leading" id="JNE-mi-6b2"/>
                                             <constraint firstItem="k8N-mm-I89" firstAttribute="centerY" secondItem="jz7-ls-Zsj" secondAttribute="centerY" id="KNu-mc-wcw"/>
                                             <constraint firstItem="Zrs-3R-bHq" firstAttribute="leading" secondItem="34c-a1-msf" secondAttribute="trailing" constant="23" id="MTC-Y3-B0m"/>
@@ -401,13 +413,28 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lnI-Gx-1f4">
-                                <rect key="frame" x="190" y="576" width="320" height="524"/>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lnI-Gx-1f4">
+                                <rect key="frame" x="320" y="576" width="320" height="524"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hb8-jK-zQ8">
                                         <rect key="frame" x="0.0" y="39" width="320" height="483"/>
+                                        <subviews>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="icT-0H-jlV">
+                                                <rect key="frame" x="24" y="177" width="272" height="21"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="21" id="2lE-OR-Ro8"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="M41-yH-tzD"/>
+                                                    <constraint firstAttribute="width" constant="272" id="PlV-JB-PCE"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="272" id="wX0-9F-PF0"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                                <color key="textColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
+                                            <constraint firstAttribute="centerX" secondItem="icT-0H-jlV" secondAttribute="centerX" id="6Sb-D5-V0W"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="7Ve-MM-2G9"/>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="Hbq-md-QEV"/>
                                             <constraint firstAttribute="width" constant="320" id="mBK-JM-Npz"/>
@@ -736,6 +763,7 @@
                                     <constraint firstItem="zzS-ZL-qgT" firstAttribute="top" secondItem="lnI-Gx-1f4" secondAttribute="top" constant="89" id="p5S-yD-wKf"/>
                                     <constraint firstAttribute="centerX" secondItem="EPD-96-0th" secondAttribute="centerX" id="pno-Fz-bQR"/>
                                     <constraint firstAttribute="trailing" secondItem="Hb8-jK-zQ8" secondAttribute="trailing" id="pry-1N-DVr"/>
+                                    <constraint firstItem="icT-0H-jlV" firstAttribute="top" secondItem="EPD-96-0th" secondAttribute="bottom" constant="13" id="qqI-I1-bJI"/>
                                     <constraint firstItem="zzS-ZL-qgT" firstAttribute="trailing" secondItem="lnI-Gx-1f4" secondAttribute="trailingMargin" id="quG-1g-8Re"/>
                                     <constraint firstItem="EPD-96-0th" firstAttribute="top" secondItem="Go5-Nw-esa" secondAttribute="bottom" constant="9" id="r70-cx-0So"/>
                                     <constraint firstItem="Go5-Nw-esa" firstAttribute="leading" secondItem="zzS-ZL-qgT" secondAttribute="leading" id="rhx-po-fuY"/>
@@ -871,6 +899,7 @@
                                 <exclude reference="saT-O3-p5W"/>
                                 <exclude reference="fkG-bB-Kwp"/>
                                 <exclude reference="ody-tx-efO"/>
+                                <exclude reference="OJA-7c-dOI"/>
                                 <exclude reference="GBY-jP-9KM"/>
                                 <exclude reference="H7N-eJ-G08"/>
                                 <exclude reference="OfI-ZC-lLR"/>
@@ -890,7 +919,6 @@
                                 <exclude reference="AU6-iM-2dq"/>
                                 <exclude reference="BVM-BV-Tzt"/>
                                 <exclude reference="VSM-3g-mba"/>
-                                <exclude reference="OJA-7c-dOI"/>
                             </mask>
                         </variation>
                     </view>
@@ -905,14 +933,17 @@
                         <outlet property="loginButton" destination="uxW-Ck-QDb" id="PFD-Ee-OhQ"/>
                         <outlet property="loginEmailImageView" destination="25o-Vc-9l3" id="JPf-dF-qVZ"/>
                         <outlet property="loginEmailTextfield" destination="zzS-ZL-qgT" id="lQp-y0-3km"/>
+                        <outlet property="loginErrorLabel" destination="icT-0H-jlV" id="jzq-ef-Bpt"/>
                         <outlet property="loginFormView" destination="lnI-Gx-1f4" id="EPY-qa-rIt"/>
                         <outlet property="loginNextButton" destination="tLS-Ky-1pm" id="5Ad-QM-7UT"/>
                         <outlet property="loginPasswordImageView" destination="UNc-Pl-Spl" id="38D-Yb-gR4"/>
                         <outlet property="loginPasswordTextfield" destination="Go5-Nw-esa" id="f2p-fS-OEc"/>
+                        <outlet property="loginViewTopConstraint" destination="yZI-qs-aqt" id="Jd8-UZ-hJT"/>
                         <outlet property="logoImageView" destination="QZk-N4-E1a" id="6bC-dQ-0oU"/>
                         <outlet property="signUpWithFacebookButton" destination="3Ll-4d-pK2" id="ITJ-bT-JYy"/>
                         <outlet property="signupEmailImageView" destination="34c-a1-msf" id="y6S-4K-11a"/>
                         <outlet property="signupEmailTextfield" destination="Zrs-3R-bHq" id="YtW-a8-rg6"/>
+                        <outlet property="signupErrorLabel" destination="ynS-cc-Zu7" id="1lK-CB-Yvm"/>
                         <outlet property="signupFormView" destination="sAm-0g-9Nv" id="Iin-1W-GxJ"/>
                         <outlet property="signupFullnameTextfield" destination="jz7-ls-Zsj" id="cUj-EL-79d"/>
                         <outlet property="signupNextButton" destination="PPX-Se-qcO" id="7nq-5w-ZbU"/>
@@ -1251,7 +1282,6 @@
                                 </constraints>
                                 <size key="customSize" width="104" height="104"/>
                                 <connections>
-                                    <outlet property="imageView" destination="adJ-dL-mYb" id="F8U-K9-sza"/>
                                     <outlet property="image_view" destination="adJ-dL-mYb" id="Fqh-qi-Xsj"/>
                                     <segue destination="dsK-LE-4zb" kind="push" id="Kxx-xK-6YF"/>
                                 </connections>
@@ -1304,11 +1334,8 @@
                                 </constraints>
                                 <size key="customSize" width="320" height="80"/>
                                 <connections>
-                                    <outlet property="fromLabel" destination="woc-RV-At6" id="ZzA-fA-fmJ"/>
                                     <outlet property="from_label" destination="woc-RV-At6" id="sNk-n4-eGH"/>
-                                    <outlet property="imageView" destination="eIY-Hc-XhI" id="i18-Fo-7gf"/>
                                     <outlet property="image_view" destination="eIY-Hc-XhI" id="h6s-wZ-aAH"/>
-                                    <outlet property="nameLabel" destination="rzW-ep-TKD" id="dJA-Ep-Uur"/>
                                     <outlet property="name_label" destination="rzW-ep-TKD" id="JBD-D6-EqU"/>
                                     <segue destination="dsK-LE-4zb" kind="push" id="8qo-TH-pYl"/>
                                 </connections>
@@ -1332,7 +1359,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="styleBarButton" destination="7P6-3S-Rvg" id="4eZ-Dc-GD7"/>
                         <outlet property="style_bar_button" destination="7P6-3S-Rvg" id="EvH-aH-IFM"/>
                     </connections>
                 </collectionViewController>
@@ -1458,11 +1484,11 @@
                         <barButtonItem key="rightBarButtonItem" image="icon-more" id="toa-S8-XR4"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="avatarImageView" destination="Y0y-aJ-iol" id="jqL-hw-JO9"/>
-                        <outlet property="fileImageView" destination="NON-Ho-xyP" id="CCq-x4-qeG"/>
-                        <outlet property="senderLabel" destination="218-g7-C0n" id="e7K-k9-c1A"/>
-                        <outlet property="sizeAndDateLabel" destination="d0l-PC-m4o" id="PKW-0j-WCd"/>
-                        <outlet property="whiteBorderView" destination="dgK-c5-3dj" id="bFj-sG-mGg"/>
+                        <outlet property="avatar_image_view" destination="Y0y-aJ-iol" id="k41-1h-P7p"/>
+                        <outlet property="file_image_view" destination="NON-Ho-xyP" id="rdK-pl-J5l"/>
+                        <outlet property="sender_label" destination="218-g7-C0n" id="Jcq-KE-qwZ"/>
+                        <outlet property="size_date_label" destination="d0l-PC-m4o" id="rxJ-ww-mlq"/>
+                        <outlet property="white_border_view" destination="dgK-c5-3dj" id="4bj-Or-MC4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mYl-Jp-sah" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1618,15 +1644,10 @@
                                     </variation>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="avatarImageView" destination="6XI-wq-YVg" id="uDW-De-LA8"/>
                                     <outlet property="avatar_image_view" destination="6XI-wq-YVg" id="rt8-0A-Fb0"/>
-                                    <outlet property="favButton" destination="pyg-MG-ZVU" id="Trp-kW-RGb"/>
                                     <outlet property="fav_button" destination="pyg-MG-ZVU" id="Av8-Ep-Yd4"/>
-                                    <outlet property="filesButton" destination="0EZ-KU-Jcr" id="lhU-Cp-asd"/>
                                     <outlet property="files_button" destination="0EZ-KU-Jcr" id="Wky-ab-gKG"/>
-                                    <outlet property="nameLabel" destination="9Am-rX-Q3y" id="PsY-Qi-BFM"/>
                                     <outlet property="name_label" destination="9Am-rX-Q3y" id="o8L-28-vCW"/>
-                                    <outlet property="sendButton" destination="kb3-y0-OxQ" id="Rub-2s-6Ug"/>
                                     <outlet property="send_button" destination="kb3-y0-OxQ" id="Lv0-5N-6n0"/>
                                 </connections>
                             </tableViewCell>
@@ -1692,13 +1713,9 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="avatarImageView" destination="EOy-Fu-Vtf" id="SkF-8L-c3y"/>
                                     <outlet property="avatar_image_view" destination="EOy-Fu-Vtf" id="xR7-Rv-dwm"/>
-                                    <outlet property="infoLabel" destination="TGh-xJ-x2j" id="qd3-pF-xeR"/>
                                     <outlet property="info_label" destination="TGh-xJ-x2j" id="qKS-Qc-eG2"/>
-                                    <outlet property="inviteButton" destination="MWy-fF-wfZ" id="Opp-cs-jhd"/>
                                     <outlet property="invite_button" destination="MWy-fF-wfZ" id="iWz-So-BYe"/>
-                                    <outlet property="nameLabel" destination="gwg-tq-l61" id="mWq-8n-dnh"/>
                                     <outlet property="name_label" destination="gwg-tq-l61" id="XWJ-r8-I0l"/>
                                 </connections>
                             </tableViewCell>
@@ -1901,7 +1918,7 @@
         <!--Inf Tab Bar Controller-->
         <scene sceneID="6Af-Rg-f4V">
             <objects>
-                <tabBarController id="Sta-NW-erU" customClass="InfTabBarController" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabbarcontroller" id="Sta-NW-erU" customClass="InfTabBarController" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="qtN-vB-yCR">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -2174,7 +2191,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="nextButton" destination="wjV-oF-oq1" id="gE7-he-sfl"/>
+                        <outlet property="next_button" destination="wjV-oF-oq1" id="Kh2-hk-dWz"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w8h-Ac-e3b" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2660,9 +2677,7 @@
                                 </constraints>
                                 <size key="customSize" width="320" height="61"/>
                                 <connections>
-                                    <outlet property="imageView" destination="KGG-ge-nXD" id="oqf-Wk-410"/>
                                     <outlet property="image_view" destination="KGG-ge-nXD" id="cf8-Ob-Aqi"/>
-                                    <outlet property="notificationLabel" destination="Jpp-Ex-pee" id="ycF-ka-I5J"/>
                                     <outlet property="notification_label" destination="Jpp-Ex-pee" id="xTs-ZQ-PoV"/>
                                 </connections>
                             </collectionViewCell>
@@ -2754,17 +2769,11 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <outlet property="acceptButton" destination="O4q-p2-Dcj" id="bmW-6y-aE7"/>
                                     <outlet property="accept_button" destination="O4q-p2-Dcj" id="Hh9-NX-HNq"/>
-                                    <outlet property="blurImageView" destination="vTN-kY-rgc" id="xYd-oR-Y6d"/>
                                     <outlet property="blur_image_view" destination="vTN-kY-rgc" id="B1U-EW-tKb"/>
-                                    <outlet property="cancelButton" destination="skB-Om-39m" id="IYB-aj-PNv"/>
                                     <outlet property="cancel_button" destination="skB-Om-39m" id="w9A-3l-jsh"/>
-                                    <outlet property="filesLabel" destination="1uk-xU-T3B" id="QXf-F5-Xef"/>
                                     <outlet property="files_label" destination="1uk-xU-T3B" id="RGW-s1-vDM"/>
-                                    <outlet property="imageView" destination="q6E-KY-Ew5" id="OhE-BO-HzZ"/>
                                     <outlet property="image_view" destination="q6E-KY-Ew5" id="oaL-yo-wSP"/>
-                                    <outlet property="notificationLabel" destination="6cr-e1-CH4" id="O7c-p2-GL3"/>
                                     <outlet property="notification_label" destination="6cr-e1-CH4" id="AFk-eZ-T91"/>
                                 </connections>
                             </collectionViewCell>
