@@ -8,6 +8,8 @@
 
 #import "InfinitWelcomeController.h"
 
+#import <MobileCoreServices/MobileCoreServices.h>
+
 #import <Gap/InfinitUtilities.h>
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitStateManager.h>
@@ -15,7 +17,7 @@
 #import <Gap/InfinitUserManager.h>
 
 
-@interface InfinitWelcomeController () <UITextFieldDelegate>
+@interface InfinitWelcomeController () <UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView* signupFormView;
 @property (weak, nonatomic) IBOutlet UIView*loginFormView;
@@ -52,9 +54,13 @@
 
 @property (weak, nonatomic) IBOutlet UIView* balloonContainerView;
 
+@property (strong, nonatomic) UIImage* avatar_image;
+@property (strong, nonatomic) UIImagePickerController* picker;
 
 @property BOOL showingLoginForm;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *signupViewTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *balloonContainerTopConstraint;
 @end
 
 @implementation InfinitWelcomeController
@@ -124,6 +130,7 @@
   self.avatarButton.layer.cornerRadius = self.avatarButton.frame.size.width/2;
   self.avatarButton.layer.borderWidth = 1;
   self.avatarButton.layer.borderColor = ([[[UIColor colorWithRed:194/255.0 green:211/255.0 blue:211/255.0 alpha:1] colorWithAlphaComponent:1] CGColor]);
+  self.avatarButton.clipsToBounds = YES;
   // the space between the image and text
   CGFloat spacing = 6.0;
   
@@ -234,6 +241,7 @@
   }
   completion:^(BOOL finished)
   {
+    self.signupViewTopConstraint.constant = self.view.frame.size.height - 280;
     NSLog(@"Happy times");
   }];
    
@@ -266,6 +274,7 @@
 
 - (IBAction)signupBackButtonSelected:(id)sender
 {
+  
   [self.view endEditing:YES];
   [UIView animateWithDuration:.5
                         delay:.1
@@ -279,18 +288,21 @@
                                  self.signupFormView.frame.size.width,
                                  self.signupFormView.frame.size.height);
                                 self.balloonContainerView.frame = CGRectMake(0,
-                                                                             -20,
+                                                                            -20,
                                                                              self.balloonContainerView.frame.size.width,
                                                                              self.balloonContainerView.frame.size.height);
   }
   completion:^(BOOL finished)
   {
+    self.signupViewTopConstraint.constant = self.view.frame.size.height;
+    self.balloonContainerTopConstraint.constant = -20;
     NSLog(@"Happy times");
   }];
 }
 
 - (IBAction)loginBackButtonSelected:(id)sender
 {
+  
   [self.view endEditing:YES];
   [UIView animateWithDuration:.5
                         delay:.1
@@ -344,7 +356,10 @@
                       //Also move the background up with it.
                       self.balloonContainerView.frame = CGRectMake(0,-(self.view.frame.size.height - 280),self.balloonContainerView.frame.size.width,self.balloonContainerView.frame.size.height);
       }
-                     completion:nil];
+                     completion:^(BOOL finished)
+     {
+       
+     }];
     
   } else
   {
@@ -357,12 +372,16 @@
                      animations:^
     {
                       self.signupFormView.frame = CGRectMake(0,
-                      20,
+                      0,
                       self.signupFormView.frame.size.width,
                       self.signupFormView.frame.size.height);
-                      self.balloonContainerView.frame = CGRectMake(0,-(self.view.frame.size.height - 280),self.balloonContainerView.frame.size.width,self.balloonContainerView.frame.size.height);
+                      self.balloonContainerView.frame = CGRectMake(0,-(self.view.frame.size.height - 280) - 20,self.balloonContainerView.frame.size.width,self.balloonContainerView.frame.size.height);
     }
-                     completion:nil];
+                     completion:^(BOOL finished)
+     {
+       self.signupViewTopConstraint.constant = 0;
+       self.balloonContainerTopConstraint.constant = -(self.view.frame.size.height - 280) - 20;
+     }];
   }
 }
 
@@ -530,6 +549,10 @@
   {
     [InfinitUserManager sharedInstance];
     [InfinitPeerTransactionManager sharedInstance];
+    //Add avatar.
+//    [[InfinitStateManager sharedInstance] setSelfAvatar:self.avatar_image performSelector:@selector(setSelfAvatarCallback:) onObject:self];
+    [[InfinitStateManager sharedInstance] setSelfAvatar:self.avatar_image performSelector:nil onObject:self];
+
     
     UIStoryboard* storyboard =
       [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
@@ -569,6 +592,76 @@
   [self.view addMotionEffect:group];
 
 }
+
+#pragma mark ImagePickerFlow
+- (IBAction)addAvatarButtonClicked:(id)sender
+{
+  UIActionSheet* actionSheet =
+    [[UIActionSheet alloc] initWithTitle:nil
+                                delegate:self
+                       cancelButtonTitle:@"Cancel"
+                  destructiveButtonTitle:nil
+                       otherButtonTitles:@"Take new photo", @"Choose a photo...", nil];
+  [actionSheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet*)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+  NSString* choice =
+    [actionSheet buttonTitleAtIndex:buttonIndex];
+  if([choice isEqualToString:@"Choose a photo..."])
+  {
+    [self presentImagePicker:UIImagePickerControllerSourceTypeSavedPhotosAlbum];
+  }
+  if([choice isEqualToString:@"Take new photo"])
+  {
+    [self presentImagePicker:UIImagePickerControllerSourceTypeCamera];
+  }
+}
+
+- (void)presentImagePicker:(UIImagePickerControllerSourceType)sourceType
+{
+  self.picker =
+    [[UIImagePickerController alloc] init];
+  self.picker.view.tintColor = [UIColor blackColor];
+  self.picker.sourceType = sourceType;
+  self.picker.mediaTypes = @[(NSString*)kUTTypeImage];
+  self.picker.allowsEditing = YES;
+  self.picker.delegate = self;
+  //If the source is the camera and not the library of photos.
+  if(sourceType == UIImagePickerControllerSourceTypeCamera)
+  {
+    self.picker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+  }
+  //Now Present the Picker
+  [self presentViewController:self.picker animated:YES completion:nil];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+  [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+//Add a photo to the  Parse Object
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+  self.avatar_image = info[UIImagePickerControllerEditedImage];
+  
+  self.avatarButton.titleEdgeInsets = UIEdgeInsetsMake(0.0,
+                                                       0.0,
+                                                       0.0,
+                                                       0.0);
+  self.avatarButton.imageEdgeInsets = UIEdgeInsetsMake(0.0,
+                                                       0.0,
+                                                       0.0,
+                                                       0.0);
+  
+  [self.avatarButton setTitle:@"" forState:UIControlStateNormal];
+  [self.avatarButton setImage:self.avatar_image forState:UIControlStateNormal];
+  
+  [self.picker dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 -(BOOL)prefersStatusBarHidden
 {
