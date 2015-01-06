@@ -70,9 +70,6 @@
 		D03FAAF91A479D2C005A8244 /* CGLContact.m in Sources */ = {isa = PBXBuildFile; fileRef = D03FAAF81A479D2C005A8244 /* CGLContact.m */; };
 		D03FAAFC1A47A3B1005A8244 /* ContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D03FAAFB1A47A3B1005A8244 /* ContactCell.m */; };
 		D05726B31A50BA880097083C /* SendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D05726B11A50BA880097083C /* SendCell.m */; };
-		D05D5D0A1A24BFAB005529E8 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D05D5D091A24BFAB005529E8 /* ShareViewController.m */; };
-		D05D5D0C1A24BFAB005529E8 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D05D5D0B1A24BFAB005529E8 /* MainInterface.storyboard */; };
-		D05D5D0F1A24BFAB005529E8 /* InfinitShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D05D5D041A24BFAB005529E8 /* InfinitShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D05D5D1A1A24C4B1005529E8 /* InfCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D05D5D191A24C4B1005529E8 /* InfCollectionViewCell.m */; };
 		D0659F661A3E865A0001ACAE /* InfinitWelcomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0659F651A3E865A0001ACAE /* InfinitWelcomeController.m */; };
 		D09848131A43391B002D26AC /* SourceSansPro-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = D09848041A43391B002D26AC /* SourceSansPro-Black.otf */; };
@@ -130,13 +127,6 @@
 			remoteGlobalIDString = 83568D781A136D7700766DA3;
 			remoteInfo = "Gap-iOS";
 		};
-		D05D5D0D1A24BFAB005529E8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83B32D551A136485004AB945 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D05D5D031A24BFAB005529E8;
-			remoteInfo = InfinitShareExtension;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -146,7 +136,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				D05D5D0F1A24BFAB005529E8 /* InfinitShareExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -242,11 +231,6 @@
 		D03FAAFB1A47A3B1005A8244 /* ContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactCell.m; sourceTree = "<group>"; };
 		D05726B11A50BA880097083C /* SendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendCell.m; sourceTree = "<group>"; };
 		D05726B21A50BA880097083C /* SendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendCell.h; sourceTree = "<group>"; };
-		D05D5D041A24BFAB005529E8 /* InfinitShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = InfinitShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		D05D5D071A24BFAB005529E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D05D5D081A24BFAB005529E8 /* ShareViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShareViewController.h; sourceTree = "<group>"; };
-		D05D5D091A24BFAB005529E8 /* ShareViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShareViewController.m; sourceTree = "<group>"; };
-		D05D5D0B1A24BFAB005529E8 /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
 		D05D5D181A24C4B1005529E8 /* InfCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfCollectionViewCell.h; sourceTree = "<group>"; };
 		D05D5D191A24C4B1005529E8 /* InfCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfCollectionViewCell.m; sourceTree = "<group>"; };
 		D0659F641A3E865A0001ACAE /* InfinitWelcomeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitWelcomeController.h; sourceTree = "<group>"; };
@@ -338,13 +322,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D05D5D011A24BFAB005529E8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -362,7 +339,6 @@
 		83B32D541A136485004AB945 = {
 			isa = PBXGroup;
 			children = (
-				D05D5D051A24BFAB005529E8 /* InfinitShareExtension */,
 				836F5C8A1A16670F007C9C4E /* Frameworks */,
 				83F4D0211A13740F0068BEB2 /* Libraries */,
 				83B32D5F1A136485004AB945 /* Infinit */,
@@ -377,7 +353,6 @@
 			children = (
 				83B32D5D1A136485004AB945 /* Infinit.app */,
 				83B32D761A136486004AB945 /* InfinitTests.xctest */,
-				D05D5D041A24BFAB005529E8 /* InfinitShareExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -621,25 +596,6 @@
 			name = Cells;
 			sourceTree = "<group>";
 		};
-		D05D5D051A24BFAB005529E8 /* InfinitShareExtension */ = {
-			isa = PBXGroup;
-			children = (
-				D05D5D081A24BFAB005529E8 /* ShareViewController.h */,
-				D05D5D091A24BFAB005529E8 /* ShareViewController.m */,
-				D05D5D0B1A24BFAB005529E8 /* MainInterface.storyboard */,
-				D05D5D061A24BFAB005529E8 /* Supporting Files */,
-			);
-			path = InfinitShareExtension;
-			sourceTree = "<group>";
-		};
-		D05D5D061A24BFAB005529E8 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				D05D5D071A24BFAB005529E8 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		D09848021A43390D002D26AC /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -725,7 +681,6 @@
 			);
 			dependencies = (
 				83F4D0981A1390340068BEB2 /* PBXTargetDependency */,
-				D05D5D0E1A24BFAB005529E8 /* PBXTargetDependency */,
 			);
 			name = Infinit;
 			productName = Infinit;
@@ -749,23 +704,6 @@
 			productName = InfinitTests;
 			productReference = 83B32D761A136486004AB945 /* InfinitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		D05D5D031A24BFAB005529E8 /* InfinitShareExtension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D05D5D131A24BFAB005529E8 /* Build configuration list for PBXNativeTarget "InfinitShareExtension" */;
-			buildPhases = (
-				D05D5D001A24BFAB005529E8 /* Sources */,
-				D05D5D011A24BFAB005529E8 /* Frameworks */,
-				D05D5D021A24BFAB005529E8 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = InfinitShareExtension;
-			productName = InfinitShareExtension;
-			productReference = D05D5D041A24BFAB005529E8 /* InfinitShareExtension.appex */;
-			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -815,7 +753,6 @@
 			targets = (
 				83B32D5C1A136485004AB945 /* Infinit */,
 				83B32D751A136486004AB945 /* InfinitTests */,
-				D05D5D031A24BFAB005529E8 /* InfinitShareExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -870,14 +807,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D05D5D021A24BFAB005529E8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D05D5D0C1A24BFAB005529E8 /* MainInterface.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -929,14 +858,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D05D5D001A24BFAB005529E8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D05D5D0A1A24BFAB005529E8 /* ShareViewController.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -949,11 +870,6 @@
 			isa = PBXTargetDependency;
 			name = "Gap-iOS";
 			targetProxy = 83F4D0971A1390340068BEB2 /* PBXContainerItemProxy */;
-		};
-		D05D5D0E1A24BFAB005529E8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D05D5D031A24BFAB005529E8 /* InfinitShareExtension */;
-			targetProxy = D05D5D0D1A24BFAB005529E8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1166,31 +1082,8 @@
 				INFOPLIST_FILE = InfinitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Infinit.app/Infinit";
-			};
-			name = Release;
-		};
-		D05D5D101A24BFAB005529E8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = InfinitShareExtension/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		D05D5D111A24BFAB005529E8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				INFOPLIST_FILE = InfinitShareExtension/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -1220,15 +1113,6 @@
 			buildConfigurations = (
 				83B32D841A136486004AB945 /* Debug */,
 				83B32D851A136486004AB945 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D05D5D131A24BFAB005529E8 /* Build configuration list for PBXNativeTarget "InfinitShareExtension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D05D5D101A24BFAB005529E8 /* Debug */,
-				D05D5D111A24BFAB005529E8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
