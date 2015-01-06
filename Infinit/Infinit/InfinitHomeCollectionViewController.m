@@ -79,6 +79,9 @@
       [collectionView dequeueReusableCellWithReuseIdentifier:@"largeCell"
                                                 forIndexPath:indexPath];
     
+    cell.notification_label.text = @"Mr. Fox wants to send you 4 files.";
+    cell.files_label.text = @"4 files";
+    
     // Configure the cell
     
     return cell;
@@ -88,6 +91,7 @@
     HomeSmallCollectionViewCell* cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"smallCell"
                                                 forIndexPath:indexPath];
+    cell.notification_label.text = @"Sent 12 photos to Amandine Grey.";
     
     // Configure the cell
     

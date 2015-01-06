@@ -196,6 +196,10 @@
     ContactOtherCell* cell =
       (ContactOtherCell*)[tableView dequeueReusableCellWithIdentifier:@"otherContactCell"
                                                          forIndexPath:indexPath];
+    cell.name_label.text = @"Koze";
+    cell.info_label.text = @"koze@gmail.com";
+    
+    
     return cell;
     
     /* IF we don't have anybody, show an import cell.
@@ -309,20 +313,24 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   
   //Let's put the checkmark on here.  Put it into the dictionary too.
   //Redraw The Image as blurry, and put a check mark on it.
-  ContactCell* cell =
+  
+  if(indexPath.section == 0)
+  {
+    ContactCell* cell =
     (ContactCell*)[tableView cellForRowAtIndexPath:indexPath];
-  if(self.selected_row == indexPath.row)
-  {
-    self.selected_row = -1;
+    if(self.selected_row == indexPath.row)
+    {
+      self.selected_row = -1;
+    }
+    else
+    {
+      self.selected_row = indexPath.row;
+    }
+    [tableView beginUpdates];
+    [tableView endUpdates];
+    [tableView deselectRowAtIndexPath:indexPath
+                             animated:NO];
   }
-  else
-  {
-    self.selected_row = indexPath.row;
-  }
-  [tableView beginUpdates];
-  [tableView endUpdates];
-  [tableView deselectRowAtIndexPath:indexPath
-                           animated:NO];
 }
 
 - (IBAction)inviteBarButtonSelected:(id)sender

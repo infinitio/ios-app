@@ -55,6 +55,9 @@
   {
     FileListCell* cell =
       (FileListCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"listCell" forIndexPath:indexPath];
+    cell.name_label.text = @"Sample_1.jpg";
+    cell.from_label.text = @"FROM GAETAN";
+    
     return cell;
   }
   else
