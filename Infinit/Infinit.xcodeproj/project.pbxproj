@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		833DFCBC1A2F837400B0D213 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 833DFCBB1A2F837400B0D213 /* AssetsLibrary.framework */; };
 		83612F8E1A5D7FDB00BDF7CE /* NSData+Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = 83612F8D1A5D7FDB00BDF7CE /* NSData+Conversion.m */; };
+		8365DE881A5E8694003527DE /* InfinitColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8365DE871A5E8694003527DE /* InfinitColor.m */; };
 		836F5C8C1A166720007C9C4E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836F5C8B1A166720007C9C4E /* SystemConfiguration.framework */; };
 		83B32D631A136485004AB945 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B32D621A136485004AB945 /* main.m */; };
 		83B32D691A136485004AB945 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B32D681A136485004AB945 /* ViewController.m */; };
@@ -151,6 +152,8 @@
 		833DFCBB1A2F837400B0D213 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		83612F8C1A5D7FDB00BDF7CE /* NSData+Conversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Conversion.h"; sourceTree = "<group>"; };
 		83612F8D1A5D7FDB00BDF7CE /* NSData+Conversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Conversion.m"; sourceTree = "<group>"; };
+		8365DE861A5E8694003527DE /* InfinitColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitColor.h; sourceTree = "<group>"; };
+		8365DE871A5E8694003527DE /* InfinitColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitColor.m; sourceTree = "<group>"; };
 		836F5C8B1A166720007C9C4E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		83B32D5D1A136485004AB945 /* Infinit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Infinit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83B32D611A136485004AB945 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -343,6 +346,8 @@
 			children = (
 				83612F8C1A5D7FDB00BDF7CE /* NSData+Conversion.h */,
 				83612F8D1A5D7FDB00BDF7CE /* NSData+Conversion.m */,
+				8365DE861A5E8694003527DE /* InfinitColor.h */,
+				8365DE871A5E8694003527DE /* InfinitColor.m */,
 			);
 			name = Utilities;
 			path = Infinit;
@@ -860,6 +865,7 @@
 				83B32D691A136485004AB945 /* ViewController.m in Sources */,
 				83F72C9C1A1502940088106E /* InfinitPeerSendFileCell.m in Sources */,
 				D03FAAF61A479BF3005A8244 /* CGLAlphabetizer.m in Sources */,
+				8365DE881A5E8694003527DE /* InfinitColor.m in Sources */,
 				D01A64541A4861800041A8C2 /* FileGridCell.m in Sources */,
 				83612F8E1A5D7FDB00BDF7CE /* NSData+Conversion.m in Sources */,
 				83F4D0A61A14B48D0068BEB2 /* InfinitPeerSendController.m in Sources */,
