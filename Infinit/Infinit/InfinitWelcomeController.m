@@ -8,8 +8,9 @@
 
 #import "InfinitWelcomeController.h"
 
-#import <MobileCoreServices/MobileCoreServices.h>
 #import "AppDelegate.h"
+
+#import <MobileCoreServices/MobileCoreServices.h>
 
 #import <Gap/InfinitUtilities.h>
 #import <Gap/InfinitPeerTransactionManager.h>
@@ -22,163 +23,161 @@
 #import "WelcomeLoginFormView.h"
 #import "WelcomeSignupFormView.h"
 
+#import "InfinitColor.h"
 
-@interface InfinitWelcomeController () <UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+
+@interface InfinitWelcomeController () <UITextFieldDelegate,
+                                        UIActionSheetDelegate,
+                                        UIImagePickerControllerDelegate,
+                                        UINavigationControllerDelegate>
 
 //@property (weak, nonatomic) IBOutlet UIView* signupFormView;
-@property (strong, nonatomic) WelcomeLoginFormView* loginFormView;
-@property (strong, nonatomic) WelcomeSignupFormView* signupFormView;
+@property (strong, nonatomic) WelcomeLoginFormView* login_form_view;
+@property (strong, nonatomic) WelcomeSignupFormView* signup_form_view;
 
+@property (weak, nonatomic) IBOutlet UIImageView* logo_image_view;
+@property (weak, nonatomic) IBOutlet UIImageView* balloon_image_view;
 
-
-@property (weak, nonatomic) IBOutlet UIImageView* logoImageView;
-@property (weak, nonatomic) IBOutlet UIImageView* balloonImageView;
-
-@property (weak, nonatomic) IBOutlet UIButton* signUpWithFacebookButton;
-@property (weak, nonatomic) IBOutlet UIButton* signupWithEmailButton;
-@property (weak, nonatomic) IBOutlet UIButton* loginButton;
-@property (weak, nonatomic) IBOutlet UILabel* taglineLabel;
-
-
-@property (weak, nonatomic) IBOutlet UIView* balloonContainerView;
+@property (weak, nonatomic) IBOutlet UIButton* signup_with_facebook_button;
+@property (weak, nonatomic) IBOutlet UIButton* signup_with_email_button;
+@property (weak, nonatomic) IBOutlet UIButton* login_button;
+@property (weak, nonatomic) IBOutlet UILabel* tagline;
 
 @property (strong, nonatomic) UIImage* avatar_image;
 @property (strong, nonatomic) UIImagePickerController* picker;
 
-@property BOOL showingLoginForm;
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *balloonContainerTopConstraint;
+@property BOOL showing_login_form;
 
 @end
 
 @implementation InfinitWelcomeController
 
-
-
-
 - (void)awakeFromNib
-{
-  
-  
-  
-}
+{}
 
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  
-  /*
-  for (NSString* family in [UIFont familyNames])
-  {
-    NSLog(@"%@", family);
-    
-    for (NSString* name in [UIFont fontNamesForFamilyName: family])
-    {
-      NSLog(@"  %@", name);
-    }
-  }
-   */
-  
-  self.loginFormView = [[[UINib nibWithNibName:@"WelcomeLoginFormView" bundle:nil] instantiateWithOwner:self options:nil] objectAtIndex:0];
-  self.loginFormView.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 600);
-  [self.view addSubview:self.loginFormView];
-  
 
-  
-  self.signupFormView = [[[UINib nibWithNibName:@"WelcomeSignupFormView" bundle:nil] instantiateWithOwner:self options:nil] objectAtIndex:0];
-  self.signupFormView.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 600);
-  [self.view addSubview:self.signupFormView];
-  
-  
-  [self.signupFormView.back_button addTarget:self
-                                     action:@selector(signupBackButtonSelected)
-                           forControlEvents:UIControlEventTouchUpInside];
-   [self.loginFormView.back_button addTarget:self
-                                      action:@selector(loginBackButtonSelected)
-                            forControlEvents:UIControlEventTouchUpInside];
-  
-  [self.signupFormView.avatar_button addTarget:self
-                                      action:@selector(addAvatarButtonClicked:)
-                            forControlEvents:UIControlEventTouchUpInside];
-  
-  
-  [self addParallax];
-  
+  [self addBalloonParallax];
 
-  self.showingLoginForm = NO;
-  
-  self.signUpWithFacebookButton.layer.cornerRadius = 5.0;
-  self.signupWithEmailButton.layer.cornerRadius = 5.0;
-  self.loginButton.layer.cornerRadius = 5.0;
-  
-  self.signupWithEmailButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Semibold" size:15];
-  self.loginButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Semibold" size:15];
-  self.signUpWithFacebookButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Semibold" size:15];
+  CAGradientLayer* gradient = [CAGradientLayer layer];
+  gradient.frame = self.view.bounds;
+  gradient.startPoint = CGPointMake(0.0f, 0.0f);
+  gradient.endPoint = CGPointMake(0.0f, 0.7f);
+  gradient.colors = @[(id)[InfinitColor colorWithRed:226 green:228 blue:227].CGColor,
+                      (id)[InfinitColor colorWithRed:227 green:231 blue:233].CGColor,
+                      (id)[InfinitColor colorWithRed:230 green:235 blue:238].CGColor,
+                      (id)[InfinitColor colorWithRed:234 green:240 blue:243].CGColor,
+                      (id)[InfinitColor colorWithRed:239 green:244 blue:248].CGColor,
+                      (id)[InfinitColor colorWithRed:240 green:250 blue:251].CGColor,
+                      (id)[InfinitColor colorWithRed:244 green:252 blue:252].CGColor,
+                      (id)[InfinitColor colorWithRed:246 green:252 blue:252].CGColor,
+                      (id)[InfinitColor colorWithRed:255 green:255 blue:255].CGColor];
+  [self.view.layer insertSublayer:gradient atIndex:0];
 
-  self.taglineLabel.font = [UIFont fontWithName:@"" size:12];
+  self.signup_with_facebook_button.layer.cornerRadius = 3.0f;
+  self.signup_with_email_button.layer.cornerRadius = 3.0f;
+  self.login_button.layer.cornerRadius = 3.0f;
 
-  
+  [self configureLoginView];
 
-  
+//  self.signup_form_view = [[[UINib nibWithNibName:@"WelcomeSignupFormView" bundle:nil] instantiateWithOwner:self options:nil] objectAtIndex:0];
+//  self.signup_form_view.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 600);
+//  [self.view addSubview:self.signup_form_view];
 
-  
-  
+//  [self.signup_form_view.back_button addTarget:self
+//                                        action:@selector(signupBackButtonSelected)
+//                              forControlEvents:UIControlEventTouchUpInside];
+//  [self.signup_form_view.back_button addTarget:self
+//                                        action:@selector(loginBackButtonTouched)
+//                              forControlEvents:UIControlEventTouchUpInside];
+//  
+//  [self.signup_form_view.avatar_button addTarget:self
+//                                      action:@selector(addAvatarButtonClicked:)
+//                            forControlEvents:UIControlEventTouchUpInside];
 
-  
+  self.showing_login_form = NO;
+//  
+//  self.signup_with_email_button.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Semibold" size:15];
+//  self.login_button.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Semibold" size:15];
+//  self.signup_with_facebook_button.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Semibold" size:15];
 
-
-   
-
-
-  
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(keyboardWillShow:)
                                                name:UIKeyboardWillShowNotification
                                              object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(textInputChanged:)
-                                               name:UITextFieldTextDidChangeNotification
-                                             object:self.signupFormView.signup_fullname_textifeld];
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(textInputChanged:)
-                                               name:UITextFieldTextDidChangeNotification
-                                             object:self.signupFormView.signup_password_textfield];
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(textInputChanged:)
-                                               name:UITextFieldTextDidChangeNotification
-                                             object:self.signupFormView.signup_email_textfield];
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(textInputChanged:)
-                                               name:UITextFieldTextDidChangeNotification
-                                             object:self.loginFormView.login_email_textfield];
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(textInputChanged:)
-                                               name:UITextFieldTextDidChangeNotification
-                                             object:self.loginFormView.login_password_textfield];
+  self.signup_with_facebook_button.enabled = NO;
+  self.signup_with_email_button.enabled = NO;
 }
 
--  (void)dealloc
+- (void)configureLoginView
 {
-  [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                  name:UITextFieldTextDidChangeNotification
-                                                object:self.signupFormView.signup_email_textfield];
-  [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                  name:UITextFieldTextDidChangeNotification
-                                                object:self.signupFormView.signup_fullname_textifeld];
-  [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                  name:UITextFieldTextDidChangeNotification
-                                                object:self.signupFormView.signup_password_textfield];
-  [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                  name:UITextFieldTextDidChangeNotification
-                                                object:self.loginFormView.login_email_textfield];
-  [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                  name:UITextFieldTextDidChangeNotification
-                                                object:self.loginFormView.login_password_textfield];
+  UINib* login_nib = [UINib nibWithNibName:@"WelcomeLoginFormView" bundle:nil];
+  self.login_form_view = [[login_nib instantiateWithOwner:self options:nil] firstObject];
+  [self.view addSubview:self.login_form_view];
+  [self.view bringSubviewToFront:self.login_form_view];
+  self.login_form_view.frame = CGRectMake(0.0f, self.view.frame.size.height,
+                                          self.view.frame.size.width, self.view.frame.size.height);
+
+  self.login_form_view.email_field.delegate = self;
+  self.login_form_view.password_field.delegate = self;
+
+  [self.login_form_view.email_field addTarget:self
+                                       action:@selector(loginEmailTextChanged:)
+                             forControlEvents:UIControlEventEditingChanged];
+  [self.login_form_view.email_field addTarget:self
+                                       action:@selector(loginEmailTextEditingEnded:)
+                             forControlEvents:UIControlEventEditingDidEnd];
+  [self.login_form_view.password_field addTarget:self
+                                          action:@selector(loginPasswordTextChanged:)
+                                forControlEvents:UIControlEventEditingChanged];
+  [self.login_form_view.password_field addTarget:self
+                                          action:@selector(loginPasswordTextEditingEnded:)
+                             forControlEvents:UIControlEventEditingDidEnd];
+
+  [self.login_form_view.back_button addTarget:self
+                                       action:@selector(loginBackButtonTapped)
+                             forControlEvents:UIControlEventTouchUpInside];
+  [self.login_form_view.next_button addTarget:self
+                                       action:@selector(loginNextButtonTapped:)
+                             forControlEvents:UIControlEventTouchUpInside];
 }
+
+- (void)addBalloonParallax
+{
+  // Set vertical effect
+  UIInterpolatingMotionEffect* vertical =
+    [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y"
+                                                    type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+  vertical.minimumRelativeValue = @(-25);
+  vertical.maximumRelativeValue = @(25);
+
+  // Set horizontal effect
+  UIInterpolatingMotionEffect* horizontal =
+    [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x"
+                                                    type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+  horizontal.minimumRelativeValue = @(-25);
+  horizontal.maximumRelativeValue = @(25);
+
+  // Create group to combine both
+  UIMotionEffectGroup* group = [UIMotionEffectGroup new];
+  group.motionEffects = @[horizontal, vertical];
+
+  // Add both effects to your view
+  [self.balloon_image_view addMotionEffect:group];
+}
+
+- (void)dealloc
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark Button Handling
 
 - (IBAction)facebookButtonSelected:(id)sender
 {
-  self.signUpWithFacebookButton.enabled = NO;
+  self.signup_with_facebook_button.enabled = NO;
 
   // Open a session showing the user the login UI
   // You must ALWAYS ask for public_profile permissions when opening a session
@@ -196,11 +195,11 @@
 
 - (IBAction)signupWithEmailSelected:(id)sender
 {
-  self.signupWithEmailButton.enabled = NO;
-  self.signupFormView.frame = CGRectMake(0,
+  self.signup_with_email_button.enabled = NO;
+  self.signup_form_view.frame = CGRectMake(0,
                                          self.view.frame.size.height,
-                                         self.signupFormView.frame.size.width,
-                                         self.signupFormView.frame.size.height);
+                                         self.signup_form_view.frame.size.width,
+                                         self.signup_form_view.frame.size.height);
 
   [UIView animateWithDuration:.5
                         delay:.1
@@ -209,10 +208,10 @@
                       options:0
                    animations:^
   {
-                     self.signupFormView.frame = CGRectMake(0,
+                     self.signup_form_view.frame = CGRectMake(0,
                                                             self.view.frame.size.height - 310,
-                                                            self.signupFormView.frame.size.width,
-                                                            self.signupFormView.frame.size.height);
+                                                            self.signup_form_view.frame.size.width,
+                                                            self.signup_form_view.frame.size.height);
                      //Move the balloon and background and logo and label as well.  Put them on a view?
                      
                      
@@ -226,191 +225,252 @@
    
 }
 
-- (void)loginButtonSelected:(id)sender
+- (IBAction)loginButtonTapped:(id)sender
 {
-  self.loginButton.enabled = NO;
-
-  self.showingLoginForm = YES;
-  self.loginFormView.frame = CGRectMake(0,
-                                        self.view.frame.size.height,
-                                        self.loginFormView.frame.size.width,
-                                        self.loginFormView.frame.size.height);
-  [UIView animateWithDuration:.5
-                        delay:.1
-       usingSpringWithDamping:.7
-        initialSpringVelocity:5
+  self.login_button.enabled = NO;
+  self.showing_login_form = YES;
+  [UIView animateWithDuration:0.5f
+                        delay:0.1f
+       usingSpringWithDamping:0.7f
+        initialSpringVelocity:20.f
                       options:0
                    animations:^
   {
-                                self.loginFormView.frame = CGRectMake(0,
-                                 self.view.frame.size.height - 310,
-                                 self.loginFormView.frame.size.width,
-                                 self.loginFormView.frame.size.height);
-    
+    self.login_form_view.frame =
+      CGRectMake(0, self.view.frame.size.height - self.login_form_view.height,
+                 self.login_form_view.frame.size.width, self.login_form_view.frame.size.height);
+
   }
-  completion:^(BOOL finished)
+                   completion:^(BOOL finished)
   {
+    if (!finished)
+    {
+      self.login_form_view.frame =
+        CGRectMake(0, self.view.frame.size.height - self.login_form_view.height,
+                   self.login_form_view.frame.size.width, self.login_form_view.frame.size.height);
+    }
   }];
+}
+
+- (void)loginBackButtonTapped
+{
+  self.login_button.enabled = YES;
+  self.showing_login_form = NO;
+
+  if (self.view.frame.origin.y != 0.0f)
+  {
+    [self.view endEditing:YES];
+    [UIView animateWithDuration:0.5f
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+      self.view.frame = CGRectMake(0.0f, 0.0f,
+                                   self.view.frame.size.width, self.view.frame.size.height);
+    } completion:^(BOOL finished) {
+      if (finished)
+      {
+        [UIView animateWithDuration:0.5f
+                              delay:0.0f
+                            options:UIViewAnimationOptionCurveEaseInOut animations:^{
+          self.login_form_view.frame = CGRectMake(0.0f,
+                                                  self.view.frame.size.height,
+                                                  self.login_form_view.frame.size.width,
+                                                  self.login_form_view.frame.size.height);
+        } completion:^(BOOL finished) {
+          if (!finished)
+          {
+            self.login_form_view.frame = CGRectMake(0.0f,
+                                                    self.view.frame.size.height,
+                                                    self.login_form_view.frame.size.width,
+                                                    self.login_form_view.frame.size.height);
+          }
+        }];
+      }
+      else
+      {
+        self.view.frame = CGRectMake(0.0f, 0.0f,
+                                     self.view.frame.size.width, self.view.frame.size.height);
+        self.login_form_view.frame = CGRectMake(0.0f,
+                                                self.view.frame.size.height,
+                                                self.login_form_view.frame.size.width,
+                                                self.login_form_view.frame.size.height);
+      }
+    }];
+  }
+  else
+  {
+    [UIView animateWithDuration:0.5f
+                          delay:0.1f
+         usingSpringWithDamping:0.7f
+          initialSpringVelocity:20.f
+                        options:0
+                     animations:^
+     {
+       self.login_form_view.frame =
+       CGRectMake(0, self.view.frame.size.height,
+                  self.login_form_view.frame.size.width, self.login_form_view.frame.size.height);
+
+     }
+                     completion:^(BOOL finished)
+     {
+       if (!finished)
+       {
+         self.login_form_view.frame =
+         CGRectMake(0, self.view.frame.size.height,
+                    self.login_form_view.frame.size.width, self.login_form_view.frame.size.height);
+       }
+     }];
+  }
+}
+
+- (void)loginNextButtonTapped:(id)sender
+{
+  self.login_form_view.next_button.enabled = NO;
+  [self tryLogin];
 }
 
 - (void)signupBackButtonSelected
 {
-  self.signupWithEmailButton.enabled = YES;
-
-  [self.view endEditing:YES];
-  [UIView animateWithDuration:.5
-                        delay:.1
-       usingSpringWithDamping:.7
-        initialSpringVelocity:5
-                      options:0
-                   animations:^
-  {
-                                self.signupFormView.frame = CGRectMake(0,
-                                 self.view.frame.size.height,
-                                 self.signupFormView.frame.size.width,
-                                 self.signupFormView.frame.size.height);
-                                self.balloonContainerView.frame = CGRectMake(0,
-                                                                            0,
-                                                                             self.balloonContainerView.frame.size.width,
-                                                                             self.balloonContainerView.frame.size.height);
-  }
-  completion:^(BOOL finished)
-  {
-    self.balloonContainerTopConstraint.constant = 0;
-  }];
+//  self.signup_with_email_button.enabled = YES;
+//
+//  [self.view endEditing:YES];
+//  [UIView animateWithDuration:.5
+//                        delay:.1
+//       usingSpringWithDamping:.7
+//        initialSpringVelocity:5
+//                      options:0
+//                   animations:^
+//  {
+//                                self.signup_form_view.frame = CGRectMake(0,
+//                                 self.view.frame.size.height,
+//                                 self.signup_form_view.frame.size.width,
+//                                 self.signup_form_view.frame.size.height);
+//                                self.balloon_container_view.frame = CGRectMake(0,
+//                                                                            0,
+//                                                                             self.balloon_container_view.frame.size.width,
+//                                                                             self.balloon_container_view.frame.size.height);
+//  }
+//  completion:^(BOOL finished)
+//  {
+//    self.balloon_container_top_constraint.constant = 0;
+//  }];
 }
 
-- (void)loginBackButtonSelected
-{
-  self.loginButton.enabled = YES;
-  self.showingLoginForm = NO;
-
-
-  [self.view endEditing:YES];
-  [UIView animateWithDuration:.5
-                        delay:.1
-       usingSpringWithDamping:.7
-        initialSpringVelocity:5
-                      options:0
-                   animations:^
-  {
-                    self.loginFormView.frame = CGRectMake(0,
-                     self.view.frame.size.height,
-                     self.loginFormView.frame.size.width,
-                     self.loginFormView.frame.size.height);
-    
-                    self.balloonContainerView.frame = CGRectMake(0,
-                                                                 0,
-                                                                 self.balloonContainerView.frame.size.width,
-                                                                 self.balloonContainerView.frame.size.height);
-  }
-                   completion:^(BOOL finished)
-   {
-     self.balloonContainerTopConstraint.constant = 0;
-   }];
-}
 - (IBAction)addAvatarButtonSelected:(id)sender
 {
   
 }
 
+#pragma mark Input Checks
+
+- (void)checkLoginInputs
+{
+  [self loginInputsGood];
+}
+
+- (BOOL)loginInputsGood
+{
+  if ([InfinitUtilities stringIsEmail:self.login_form_view.email_field.text] &&
+      self.login_form_view.password_field.text.length > 0)
+  {
+    self.login_form_view.next_button.enabled = YES;
+    self.login_form_view.next_button.hidden = NO;
+    return YES;
+  }
+  else
+  {
+    self.login_form_view.next_button.hidden = YES;
+    self.login_form_view.next_button.enabled = NO;
+    return NO;
+  }
+}
+
+- (void)loginEmailTextChanged:(id)sender
+{
+  if (self.login_form_view.email_field.text.length == 0)
+  {
+    self.login_form_view.email_image.image = [UIImage imageNamed:@"icon-email"];
+  }
+  [self checkLoginInputs];
+}
+
+- (void)loginEmailTextEditingEnded:(id)sender
+{
+  if ([InfinitUtilities stringIsEmail:self.login_form_view.email_field.text])
+  {
+    self.login_form_view.email_image.image = [UIImage imageNamed:@"icon-email-valid"];
+    self.login_form_view.error_label.hidden = YES;
+  }
+  else
+  {
+    self.login_form_view.email_image.image = [UIImage imageNamed:@"icon-email-error"];
+    self.login_form_view.error_label.text = NSLocalizedString(@"Email not valid.", nil);
+    self.login_form_view.error_label.hidden = NO;
+  }
+}
+
+- (void)loginPasswordTextChanged:(id)sender
+{
+  if (self.login_form_view.password_field.text.length == 0)
+  {
+    self.login_form_view.password_image.image = [UIImage imageNamed:@"icon-password"];
+  }
+  self.login_form_view.error_label.hidden = YES;
+  [self checkLoginInputs];
+}
+
+- (void)loginPasswordTextEditingEnded:(id)sender
+{
+  if (self.login_form_view.password_field.text.length == 0)
+  {
+    self.login_form_view.password_image.image = [UIImage imageNamed:@"icon-password-error"];
+    self.login_form_view.error_label.text = NSLocalizedString(@"Enter a password.", nil);
+    self.login_form_view.error_label.hidden = NO;
+  }
+  else
+  {
+    self.login_form_view.password_image.image = [UIImage imageNamed:@"icon-password-valid"];
+  }
+}
+
+#pragma mark Keyboard
 
 - (void)keyboardWillShow:(NSNotification*)notification
 {
-  
   // Get the size of the keyboard.
-  CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-  
-  //Given size may not account for screen rotation
-  int height = MIN(keyboardSize.height,keyboardSize.width);
-  int width = MAX(keyboardSize.height,keyboardSize.width);
-  
-  //your other code here..........
-  if(self.showingLoginForm == YES)
+  CGSize keyboard_size =
+    [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+
+  if (self.showing_login_form)
   {
-    //Move login form up.
-    [UIView animateWithDuration:.5
-                          delay:.1
-         usingSpringWithDamping:.7
-          initialSpringVelocity:5
-                        options:0
-                     animations:^
-     {
-                       self.loginFormView.frame = CGRectMake(0,
-                                            0,
-                                            self.loginFormView.frame.size.width,
-                                            self.loginFormView.frame.size.height);
-                      //Also move the background up with it.
-//       self.balloonContainerView.frame = CGRectMake(0,-310,self.balloonContainerView.frame.size.width,self.balloonContainerView.frame.size.height);
-      }
-                     completion:^(BOOL finished)
-     {
-//       self.balloonContainerTopConstraint.constant = -310;
-     }];
-    
-  } else
-  {
-    //Move the signup form up.
-    [UIView animateWithDuration:.5
-                          delay:.1
-         usingSpringWithDamping:.7
-          initialSpringVelocity:5
-                        options:0
-                     animations:^
-    {
-                      self.signupFormView.frame = CGRectMake(0,
-                      0,
-                      self.signupFormView.frame.size.width,
-                      self.signupFormView.frame.size.height);
-//                      self.balloonContainerView.frame = CGRectMake(0,-310,self.balloonContainerView.frame.size.width,self.balloonContainerView.frame.size.height);
-    }
-                     completion:^(BOOL finished)
-     {
-//       self.balloonContainerTopConstraint.constant = -310;
-     }];
+    [UIView animateWithDuration:0.5f animations:^{
+      self.view.frame = CGRectMake(0.0f, -keyboard_size.height,
+                                   self.view.frame.size.width, self.view.frame.size.height);
+    }];
   }
-}
-
-
-//- Text Field Delegate ----------------------------------------------------------------------------
-- (void)textFieldDidBeginEditing:(UITextField*)textField
-{
-  if(textField == self.loginFormView.login_email_textfield || textField == self.loginFormView.login_password_textfield)
-  {
-    
-  }
-}
-
-
-
-- (void)textFieldDidEndEditing:(UITextField*)textField
-{
-  
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField*)textField
 {
-  
-  //Logic for moving through text fields.
-  if (textField == self.signupFormView.signup_email_textfield)
+  if (textField == self.signup_form_view.signup_email_textfield)
   {
-    [self.signupFormView.signup_email_textfield becomeFirstResponder];
+    [self.signup_form_view.signup_email_textfield becomeFirstResponder];
   }
-  else if (textField == self.signupFormView.signup_fullname_textifeld)
+  else if (textField == self.signup_form_view.signup_fullname_textifeld)
   {
-    [self.signupFormView.signup_fullname_textifeld becomeFirstResponder];
+    [self.signup_form_view.signup_fullname_textifeld becomeFirstResponder];
   }
-  else if (textField == self.signupFormView.signup_password_textfield)
-  {
-      [textField resignFirstResponder];
-  }
-  else if (textField == self.loginFormView.login_email_textfield)
-  {
-    [self.loginFormView.login_password_textfield becomeFirstResponder];
-  }
-  else if (textField == self.loginFormView.login_password_textfield)
+  else if (textField == self.signup_form_view.signup_password_textfield)
   {
     [textField resignFirstResponder];
+  }
+  else if (textField == self.login_form_view.email_field)
+  {
+    [self.login_form_view.password_field becomeFirstResponder];
+  }
+  else if (textField == self.login_form_view.password_field)
+  {
+    [self tryLogin];
   }
   return YES;
 }
@@ -421,85 +481,85 @@
 //  _signupErrorLabel.text = @"Can we change now";
 
   
-  if(note.object == self.signupFormView.signup_password_textfield)
+  if(note.object == self.signup_form_view.signup_password_textfield)
   {
-    NSString* password = self.signupFormView.signup_password_textfield.text;
+    NSString* password = self.signup_form_view.signup_password_textfield.text;
     if(password.length < 3)
     {
       
-      self.signupFormView.signup_password_imageview.image = [UIImage imageNamed:@"icon-password-error"];
+      self.signup_form_view.signup_password_imageview.image = [UIImage imageNamed:@"icon-password-error"];
 //      [self.signupErrorLabel setText:@"Your password must be 3 characters min."];
     }
     else
     {
-      self.signupFormView.signup_password_imageview.image = [UIImage imageNamed:@"icon-password-valid"];
+      self.signup_form_view.signup_password_imageview.image = [UIImage imageNamed:@"icon-password-valid"];
     }
   }
-  if(note.object == self.signupFormView.signup_email_textfield)
+  if(note.object == self.signup_form_view.signup_email_textfield)
   {
-    NSString* email = self.signupFormView.signup_email_textfield.text;
+    NSString* email = self.signup_form_view.signup_email_textfield.text;
     if(![InfinitUtilities stringIsEmail:email])
     {
-      self.signupFormView.signup_email_imageview.image = [UIImage imageNamed:@"icon-email-error"];
+      self.signup_form_view.signup_email_imageview.image = [UIImage imageNamed:@"icon-email-error"];
 //      self.signupErrorLabel.text = @"Email Invalid";
     }
     else
     {
-      self.signupFormView.signup_email_imageview.image = [UIImage imageNamed:@"icon-email-valid"];
+      self.signup_form_view.signup_email_imageview.image = [UIImage imageNamed:@"icon-email-valid"];
     }
   }
-  if(note.object == self.signupFormView.signup_fullname_textifeld)
+  if(note.object == self.signup_form_view.signup_fullname_textifeld)
   {
-    NSString* fullname = self.signupFormView.signup_fullname_textifeld.text;
+    NSString* fullname = self.signup_form_view.signup_fullname_textifeld.text;
     if(fullname.length < 3)
     {
-      self.signupFormView.signup_fullname_imageview.image = [UIImage imageNamed:@"icon-fullname-error"];
+      self.signup_form_view.signup_fullname_imageview.image = [UIImage imageNamed:@"icon-fullname-error"];
 //      self.signupErrorLabel.text = @"Your name must be 3 characters min.";
     }
     else
     {
-      self.signupFormView.signup_fullname_imageview.image = [UIImage imageNamed:@"icon-fullname-valid"];
+      self.signup_form_view.signup_fullname_imageview.image = [UIImage imageNamed:@"icon-fullname-valid"];
     }
   }
-  if(note.object == self.loginFormView.login_email_textfield)
+  if(note.object == self.login_form_view.email_field)
   {
-    NSString* email = self.loginFormView.login_email_textfield.text;
+    NSString* email = self.login_form_view.email_field.text;
     if(![InfinitUtilities stringIsEmail:email])
     {
-      self.loginFormView.login_email_imageview.image = [UIImage imageNamed:@"icon-email-error"];
+      self.login_form_view.email_image.image = [UIImage imageNamed:@"icon-email-error"];
       //      self.loginFormView.login_error_label.text = @"Email Invalid";
       
     }
     else
     {
-      self.loginFormView.login_email_imageview.image = [UIImage imageNamed:@"icon-email-valid"];
+      self.login_form_view.email_image.image = [UIImage imageNamed:@"icon-email-valid"];
     }
   }
-  if(note.object == self.loginFormView.login_password_textfield)
+  if(note.object == self.login_form_view.password_field)
   {
-    NSString* password = self.loginFormView.login_password_textfield.text;
+    NSString* password = self.login_form_view.password_field.text;
     if(password.length < 3)
     {
       
-      self.loginFormView.login_password_imageview.image = [UIImage imageNamed:@"icon-password-error"];
+      self.login_form_view.password_image.image = [UIImage imageNamed:@"icon-password-error"];
       //      [self.signupErrorLabel setText:@"Your password must be 3 characters min."];
     }
     else
     {
-      self.loginFormView.login_password_imageview.image = [UIImage imageNamed:@"icon-password-valid"];
+      self.login_form_view.password_image.image = [UIImage imageNamed:@"icon-password-valid"];
     }
   }
   
-  if((self.loginFormView.login_password_textfield.text.length >=3 && [InfinitUtilities stringIsEmail:self.loginFormView.login_email_textfield.text]))
+  if((self.login_form_view.password_field.text.length >=3 && [InfinitUtilities stringIsEmail:self.login_form_view.email_field.text]))
   {
     //Show next button
-    self.loginFormView.next_button.hidden = NO;
+    self.login_form_view.next_button.hidden = NO;
   }
   
-  if(self.signupFormView.signup_password_textfield.text.length >=3 && self.signupFormView.signup_fullname_textifeld.text.length >= 3 && [InfinitUtilities stringIsEmail:self.signupFormView.signup_email_textfield.text])
+  if(self.signup_form_view.signup_password_textfield.text.length >=3 && self.signup_form_view.signup_fullname_textifeld.text.length >= 3 && [InfinitUtilities stringIsEmail:self.signup_form_view.signup_email_textfield.text])
   {
     //Show next button
-    self.signupFormView.next_button.hidden = NO;
+    self.signup_form_view.next_button.hidden = NO;
   }
   
   
@@ -508,9 +568,9 @@
 - (IBAction)signupNextButtonSelected:(id)sender
 {
   //Put error if need be.
-  NSString* fullname = self.signupFormView.signup_fullname_textifeld.text;
-  NSString* email = self.loginFormView.login_email_textfield.text;
-  NSString* password = self.loginFormView.login_password_textfield.text;
+  NSString* fullname = self.signup_form_view.signup_fullname_textifeld.text;
+  NSString* email = self.login_form_view.email_field.text;
+  NSString* password = self.login_form_view.password_field.text;
    [[InfinitStateManager sharedInstance] registerFullname:fullname
                                                     email:email
                                                  password:password
@@ -519,101 +579,75 @@
   
 }
 
-//Isn't connected yet.
-- (IBAction)loginnextbuttonSelected:(id)sender
-{
-  //Try to log in to infinit.
-  [[InfinitStateManager sharedInstance] login:self.loginFormView.login_email_textfield.text
-                                     password:self.loginFormView.login_password_textfield.text
-                              performSelector:@selector(loginCallback:)
-                                     onObject:self];
+#pragma mark Login/Register
 
+- (void)tryLogin
+{
+  self.login_form_view.error_label.hidden = YES;
+  if ([self loginInputsGood])
+  {
+    [self.login_form_view.activity startAnimating];
+    self.login_form_view.email_field.enabled = NO;
+    self.login_form_view.password_field.enabled = NO;
+    self.login_form_view.back_button.enabled = NO;
+    [[InfinitStateManager sharedInstance] login:self.login_form_view.email_field.text
+                                       password:self.login_form_view.password_field.text
+                                performSelector:@selector(loginCallback:)
+                                       onObject:self];
+  }
+  else
+  {
+    self.login_form_view.next_button.enabled = YES;
+  }
 }
 
 - (void)loginCallback:(InfinitStateResult*)result
 {
-  
-  
+  [self.login_form_view.activity stopAnimating];
   if (result.success)
   {
     [InfinitUserManager sharedInstance];
     [InfinitPeerTransactionManager sharedInstance];
-    
-    //Add avatar if they have picked a photo.
-    if(self.avatar_image)
-    {
-      [[InfinitStateManager sharedInstance] setSelfAvatar:self.avatar_image performSelector:nil onObject:self];
-    }
-    
+
     UIStoryboard* storyboard =
       [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-    UIViewController* viewController =
+    UIViewController* view_controller =
       [storyboard instantiateViewControllerWithIdentifier:@"tabbarcontroller"];
-    [self presentViewController:viewController animated:YES completion:nil];
-    
+    [self presentViewController:view_controller animated:YES completion:nil];
+    self.login_form_view.error_label.hidden = YES;
   }
   else
   {
-    NSString *resultStatusString = [[NSString alloc] init];
+    self.login_form_view.email_field.enabled = YES;
+    self.login_form_view.password_field.enabled = YES;
+    self.login_form_view.back_button.enabled = YES;
+    NSString* error_str;
     switch (result.status)
     {
       case gap_email_password_dont_match:
-        resultStatusString = NSLocalizedString(@"Login/Password don't match.", @"Login/Password don't match.");
+        error_str = NSLocalizedString(@"Login/Password don't match.", nil);
         break;
       case gap_already_logged_in:
-        resultStatusString = NSLocalizedString(@"You are already logged in.", @"You are already logged in.");
+        error_str = NSLocalizedString(@"You're already logged in.", nil);
         break;
       case gap_email_not_confirmed:
-        resultStatusString = NSLocalizedString(@"Your email has not been confirmed.", @"Your email has not been confirmed.");
+        error_str = NSLocalizedString(@"Your email has not been confirmed.", nil);
         break;
       case gap_handle_already_registered:
-        resultStatusString = NSLocalizedString(@"This handle has already been taken.", @"This handle has already been taken.");
+        error_str = NSLocalizedString(@"This handle has already been taken.", nil);
+        break;
       case gap_meta_down_with_message:
-        resultStatusString = NSLocalizedString(@"Our Server is down. Thanks for being patient.", @"Our Server is down. Thanks for being patient.");
+        error_str = NSLocalizedString(@"Our Server is down. Thanks for being patient.", nil);
         break;
+
       default:
-        resultStatusString = [NSString stringWithFormat:@"%@.",
-                 NSLocalizedString(@"Unknown login error", @"unknown login error")];
+        error_str = [NSString stringWithFormat:@"%@: %d",
+                              NSLocalizedString(@"Unknown login error", nil), result.status];
         break;
     }
-
-    if(self.showingLoginForm)
-    {
-      self.loginFormView.login_error_label.text = [NSString stringWithFormat:@"Error: %@", resultStatusString];
-      self.loginFormView.login_error_label.hidden = NO;
-    }
-    else
-    {
-      self.signupFormView.signup_error_label.text = [NSString stringWithFormat:@"Error: %@", resultStatusString];
-      self.signupFormView.signup_error_label.hidden = NO;
-    }
+    self.login_form_view.error_label.text = error_str;
+    self.login_form_view.error_label.hidden = NO;
   }
-}
-
-- (void)addParallax
-{
-  // Set vertical effect
-  UIInterpolatingMotionEffect* verticalMotionEffect =
-    [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y"
-                                                    type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
-  verticalMotionEffect.minimumRelativeValue = @(-25);
-  verticalMotionEffect.maximumRelativeValue = @(25);
-  
-  // Set horizontal effect
-  UIInterpolatingMotionEffect *horizontalMotionEffect =
-    [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x"
-                                                    type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
-  horizontalMotionEffect.minimumRelativeValue = @(-25);
-  horizontalMotionEffect.maximumRelativeValue = @(25);
-  
-  // Create group to combine both
-  UIMotionEffectGroup* group =
-    [UIMotionEffectGroup new];
-  group.motionEffects = @[horizontalMotionEffect, verticalMotionEffect];
-  
-  // Add both effects to your view
-  [self.balloonImageView addMotionEffect:group];
-
 }
 
 #pragma mark ImagePickerFlow
@@ -670,17 +704,17 @@
 {
   self.avatar_image = info[UIImagePickerControllerEditedImage];
   
-  self.signupFormView.avatar_button.titleEdgeInsets = UIEdgeInsetsMake(0.0,
+  self.signup_form_view.avatar_button.titleEdgeInsets = UIEdgeInsetsMake(0.0,
                                                        0.0,
                                                        0.0,
                                                        0.0);
-  self.signupFormView.avatar_button.imageEdgeInsets = UIEdgeInsetsMake(0.0,
+  self.signup_form_view.avatar_button.imageEdgeInsets = UIEdgeInsetsMake(0.0,
                                                        0.0,
                                                        0.0,
                                                        0.0);
   
-  [self.signupFormView.avatar_button setTitle:@"" forState:UIControlStateNormal];
-  [self.signupFormView.avatar_button setImage:self.avatar_image forState:UIControlStateNormal];
+  [self.signup_form_view.avatar_button setTitle:@"" forState:UIControlStateNormal];
+  [self.signup_form_view.avatar_button setImage:self.avatar_image forState:UIControlStateNormal];
   
   [self.picker dismissViewControllerAnimated:YES completion:nil];
 }
