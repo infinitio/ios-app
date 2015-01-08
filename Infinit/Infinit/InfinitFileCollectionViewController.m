@@ -64,6 +64,7 @@
   {
     FileGridCell* cell =
       (FileGridCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"gridCell" forIndexPath:indexPath];
+    cell.backgroundColor = [UIColor redColor];
     return cell;
   }
 }
@@ -76,11 +77,11 @@
 {
   if(self.list_showing)
   {
-    return CGSizeMake(320, 80);
+    return CGSizeMake(self.view.frame.size.width, 80);
   }
   else
   {
-    return CGSizeMake(104, 104);
+    return CGSizeMake(self.view.frame.size.width/3 - 2, self.view.frame.size.width/3 - 2);
   }
 }
 
@@ -144,13 +145,13 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     {
       //Add a view with a segmented Control and a switch.
       self.sort_view =
-        [[UIView alloc] initWithFrame:CGRectMake(0, -108, 320, 108)];
+        [[UIView alloc] initWithFrame:CGRectMake(0, -108, self.view.frame.size.width, 108)];
       self.sort_view.backgroundColor = [UIColor whiteColor];
       
       NSArray* items_array =
         [NSArray arrayWithObjects:@"Date", @"Name", @"Sender", @"Size", nil];
       self.sort_control = [[UISegmentedControl alloc] initWithItems:items_array];
-      self.sort_control.frame = CGRectMake(10, 16, 300, 32);
+      self.sort_control.frame = CGRectMake(10, 16, self.view.frame.size.width - 20, 32);
       self.sort_control.selectedSegmentIndex = 0;
       self.sort_control.tintColor = [UIColor colorWithRed:43/255.0 green:190/255.0 blue:189/255.0 alpha:1];
       [self.sort_view addSubview:self.sort_control];
@@ -161,7 +162,7 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
       links_only_label.textAlignment = NSTextAlignmentLeft;
       [self.sort_view addSubview:links_only_label];
       
-      self.links_only_switch = [[UISwitch alloc] initWithFrame:CGRectMake(260, 50, 40, 20)];
+      self.links_only_switch = [[UISwitch alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 60, 50, 40, 20)];
 //      _links_only_switch.tintColor = [UIColor colorWithRed:43/255.0 green:190/255.0 blue:189/255.0 alpha:1];
       [self.sort_view addSubview:self.links_only_switch];
       
@@ -170,7 +171,7 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     
     [UIView animateWithDuration:.5 animations:^
     {
-      self.sort_view.frame = CGRectMake(0, 0, 320, 108);
+      self.sort_view.frame = CGRectMake(0, 0, self.view.frame.size.width, 108);
       self.collectionView.frame = CGRectMake(self.collectionView.frame.origin.x,
                                              self.collectionView.frame.origin.y + 108,
                                              self.collectionView.frame.size.width,
@@ -189,7 +190,7 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
     self.sort_showing = NO;
     [UIView animateWithDuration:.5 animations:^
     {
-      self.sort_view.frame = CGRectMake(0, -108, 320, 108);
+      self.sort_view.frame = CGRectMake(0, -108, self.view.frame.size.width, 108);
       self.collectionView.frame = CGRectMake(self.collectionView.frame.origin.x,
                                              self.collectionView.frame.origin.y - 108,
                                              self.collectionView.frame.size.width,

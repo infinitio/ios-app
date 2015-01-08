@@ -7,10 +7,17 @@
 //
 
 #import "InfinitSelectPeopleViewController.h"
+
+#import <AddressBook/AddressBook.h>
+
 #import "SendCell.h"
 #import "ImportContactsCell.h"
-#import <AddressBook/AddressBook.h>
+
 #import "Gap/InfinitUser.h"
+#import <Gap/InfinitUtilities.h>
+#import <Gap/InfinitTemporaryFileManager.h>
+#import <Gap/InfinitPeerTransactionManager.h>
+
 #import "inviteView.h"
 
 @interface InfinitSelectPeopleViewController () <UITextFieldDelegate>
@@ -32,11 +39,20 @@
 @end
 
 @implementation InfinitSelectPeopleViewController
+{
+@private
+  NSString* _managed_files_id;
+  
+  NSMutableArray* _asset_urls;
+}
 
 - (void)viewDidLoad
 {
   [super viewDidLoad];
   // Do any additional setup after loading the view.
+  
+  _managed_files_id = [[InfinitTemporaryFileManager sharedInstance] createManagedFiles];
+
   
   NSDictionary * attributes = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold" size:18]};
   [_inviteBarButton setTitleTextAttributes:attributes forState:UIControlStateNormal];
@@ -127,6 +143,17 @@
 
 - (IBAction)sendButtonSelected:(id)sender
 {
+  [[InfinitTemporaryFileManager sharedInstance] addAssetsLibraryURLList:self.assetURL_array toManagedFiles:_managed_files_id performSelector:@selector(addAssetsLibraryCallback:) onObject:self];
+  
+  NSArray* files =
+  [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:_managed_files_id];
+  
+  //Recipients are infinit users.
+  NSArray* ids = [[InfinitPeerTransactionManager sharedInstance] sendFiles:files
+                                                              toRecipients:nil
+                                                               withMessage:@"from iOS"];
+  [[InfinitTemporaryFileManager sharedInstance] setTransactionIds:ids
+                                                  forManagedFiles:_managed_files_id];
   
 }
 
@@ -229,7 +256,7 @@ viewForHeaderInSection:(NSInteger)section
 {
   if (section == 1)
   {
-    UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
+    UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 25)];
     headerView.backgroundColor = [UIColor colorWithRed:243/255.0 green:243/255.0 blue:243/255.0 alpha:1];
     
     UILabel* otherContactsLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 0, 200, 25)];
@@ -246,7 +273,7 @@ viewForHeaderInSection:(NSInteger)section
     return headerView;
   } else
   {
-    UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
+    UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 25)];
     headerView.backgroundColor = [UIColor colorWithRed:243/255.0 green:243/255.0 blue:243/255.0 alpha:1];
     
     UILabel* myContactsLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 0, 200, 25)];
@@ -327,10 +354,10 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 
 - (IBAction)inviteBarButtonSelected:(id)sender
 {
-  _inviteBarButtonView = [[UIView alloc] initWithFrame:  CGRectMake(0, 0, 320, 568)];
+  _inviteBarButtonView = [[UIView alloc] initWithFrame:  CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height + 44)];
   _inviteBarButtonView.backgroundColor = [UIColor colorWithRed:81/255.0 green:81/255.0 blue:73/255.0 alpha:1];
   
-  UIButton *importPhoneButton = [[UIButton alloc] initWithFrame:CGRectMake(27, 271, 266, 55)];
+  UIButton *importPhoneButton = [[UIButton alloc] initWithFrame:CGRectMake(27, self.view.frame.size.height - 267, self.view.frame.size.width - 54, 55)];
   [importPhoneButton setTitle:@"IMPORT PHONE CONTACTS" forState:UIControlStateNormal];
   [importPhoneButton setTitleColor:[UIColor colorWithRed:137/255.0 green:137/255.0 blue:137/255.0 alpha:1]
                           forState:UIControlStateNormal];
@@ -338,10 +365,10 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   importPhoneButton.layer.cornerRadius = 2.5f;
   importPhoneButton.layer.borderWidth = 1.0f;
   importPhoneButton.layer.borderColor = ([[[UIColor colorWithRed:137/255.0 green:137/255.0 blue:137/255.0 alpha:1] colorWithAlphaComponent:1] CGColor]);
-  importPhoneButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:10.5];
+  importPhoneButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14];
   [_inviteBarButtonView addSubview:importPhoneButton];
   
-  UIButton *findFacebookFriendsButton = [[UIButton alloc] initWithFrame:CGRectMake(27, 339, 266, 55)];
+  UIButton *findFacebookFriendsButton = [[UIButton alloc] initWithFrame:CGRectMake(27, self.view.frame.size.height - 199, self.view.frame.size.width - 54, 55)];
   [findFacebookFriendsButton setTitle:@"FIND FACEBOOK FRIENDS" forState:UIControlStateNormal];
   [findFacebookFriendsButton setTitleColor:[UIColor colorWithRed:42/255.0 green:108/255.0 blue:181/255.0 alpha:1]
                                   forState:UIControlStateNormal];
@@ -354,7 +381,7 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   findFacebookFriendsButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14];
   [_inviteBarButtonView addSubview:findFacebookFriendsButton];
   
-  UIButton *findPeopleButton = [[UIButton alloc] initWithFrame:CGRectMake(27, 407, 266, 55)];
+  UIButton *findPeopleButton = [[UIButton alloc] initWithFrame:CGRectMake(27, self.view.frame.size.height - 131, self.view.frame.size.width - 54, 55)];
   [findPeopleButton setTitle:@"FIND PEOPLE ON INFINIT" forState:UIControlStateNormal];
   [findPeopleButton setTitleColor:[UIColor colorWithRed:242/255.0 green:94/255.0 blue:90/255.0 alpha:1]
                          forState:UIControlStateNormal];
@@ -364,10 +391,10 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   findPeopleButton.layer.cornerRadius = 2.5f;
   findPeopleButton.layer.borderWidth = 1.0f;
   findPeopleButton.layer.borderColor = ([[[UIColor colorWithRed:242/255.0 green:94/255.0 blue:90/255.0 alpha:1] colorWithAlphaComponent:1] CGColor]);
-  findPeopleButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:10.5];
+  findPeopleButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14];
   [_inviteBarButtonView addSubview:findPeopleButton];
   
-  UIButton *cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(27, 475, 266, 55)];
+  UIButton *cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(27, self.view.frame.size.height - 63, self.view.frame.size.width - 54, 55)];
   [cancelButton setTitle:@"CANCEL" forState:UIControlStateNormal];
   [cancelButton setTitleColor:[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1]
                      forState:UIControlStateNormal];
@@ -378,7 +405,7 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   [cancelButton addTarget:self
                    action:@selector(cancelInviteBarButtonView)
          forControlEvents:UIControlEventTouchUpInside];
-  cancelButton.titleLabel.textColor = [UIColor whiteColor];
+  [cancelButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [_inviteBarButtonView addSubview:cancelButton];
   
   UITapGestureRecognizer *dismissInviteButtonView =
@@ -397,7 +424,8 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 
 - (void)showMyComputerView
 {
-  _myComputerView = [[UIView alloc] initWithFrame:  CGRectMake(0, 0, 320, 568)];
+  _myComputerView = [[UIView alloc] initWithFrame:  CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height + 44)];
+  
   _myComputerView.backgroundColor = [UIColor colorWithRed:81/255.0 green:81/255.0 blue:73/255.0 alpha:1];
   
   UILabel *boldLabel = [[UILabel alloc] initWithFrame:CGRectMake(35, 142, 250, 70)];

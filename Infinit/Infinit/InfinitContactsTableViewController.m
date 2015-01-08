@@ -245,7 +245,7 @@ heightForHeaderInSection:(NSInteger)section
   {
     if(indexPath.row == self.selected_row)
     {
-      return 100;
+      return 95;
     }
     else
     {
@@ -265,7 +265,7 @@ viewForHeaderInSection:(NSInteger)section
   if (section == 1)
   {
     UIView* header_view =
-      [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
+      [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 25)];
     header_view.backgroundColor = [UIColor colorWithRed:243/255.0 green:243/255.0 blue:243/255.0 alpha:1];
     
     UILabel* other_contacts_label =
@@ -285,7 +285,7 @@ viewForHeaderInSection:(NSInteger)section
   }
   else
   {
-    UIView* header_view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 25)];
+    UIView* header_view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 25)];
     header_view.backgroundColor = [UIColor colorWithRed:243/255.0 green:243/255.0 blue:243/255.0 alpha:1];
     
     UILabel* my_contacts_label = [[UILabel alloc] initWithFrame:CGRectMake(8, 0, 200, 25)];
@@ -335,74 +335,70 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 
 - (IBAction)inviteBarButtonSelected:(id)sender
 {
-  self.invite_bar_button_view =
-    [[UIView alloc] initWithFrame:  CGRectMake(0, 0, 320, 568)];
+  self.invite_bar_button_view = [[UIView alloc] initWithFrame:  CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height + 44 + 20 + 49)];
   self.invite_bar_button_view.backgroundColor = [UIColor colorWithRed:81/255.0 green:81/255.0 blue:73/255.0 alpha:1];
   
-  UIButton* import_phone_button =
-    [[UIButton alloc] initWithFrame:CGRectMake(27, 271, 266, 55)];
-  [import_phone_button setTitle:@"IMPORT PHONE CONTACTS" forState:UIControlStateNormal];
-  [import_phone_button setTitleColor:[UIColor colorWithRed:137/255.0 green:137/255.0 blue:137/255.0 alpha:1]
+  UIButton *importPhoneButton = [[UIButton alloc] initWithFrame:CGRectMake(27, self.view.frame.size.height + 20 + 49 - 267, self.view.frame.size.width - 54, 55)];
+  [importPhoneButton setTitle:@"IMPORT PHONE CONTACTS" forState:UIControlStateNormal];
+  [importPhoneButton setTitleColor:[UIColor colorWithRed:137/255.0 green:137/255.0 blue:137/255.0 alpha:1]
                           forState:UIControlStateNormal];
-  import_phone_button.backgroundColor = [UIColor whiteColor];
-  import_phone_button.layer.cornerRadius = 2.5f;
-  import_phone_button.layer.borderWidth = 1.0f;
-  import_phone_button.layer.borderColor = ([[[UIColor colorWithRed:137/255.0 green:137/255.0 blue:137/255.0 alpha:1] colorWithAlphaComponent:1] CGColor]);
-  import_phone_button.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:10.5];
-  [self.invite_bar_button_view addSubview:import_phone_button];
+  importPhoneButton.backgroundColor = [UIColor whiteColor];
+  importPhoneButton.layer.cornerRadius = 2.5f;
+  importPhoneButton.layer.borderWidth = 1.0f;
+  importPhoneButton.layer.borderColor = ([[[UIColor colorWithRed:137/255.0 green:137/255.0 blue:137/255.0 alpha:1] colorWithAlphaComponent:1] CGColor]);
+  importPhoneButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14];
+  [self.invite_bar_button_view addSubview:importPhoneButton];
   
-  UIButton* find_facebook_friends_button =
-    [[UIButton alloc] initWithFrame:CGRectMake(27, 339, 266, 55)];
-  [find_facebook_friends_button setTitle:@"FIND FACEBOOK FRIENDS" forState:UIControlStateNormal];
-  [find_facebook_friends_button setTitleColor:[UIColor colorWithRed:42/255.0 green:108/255.0 blue:181/255.0 alpha:1]
+  UIButton *findFacebookFriendsButton = [[UIButton alloc] initWithFrame:CGRectMake(27, self.view.frame.size.height + 20 + 49 - 199, self.view.frame.size.width - 54, 55)];
+  [findFacebookFriendsButton setTitle:@"FIND FACEBOOK FRIENDS" forState:UIControlStateNormal];
+  [findFacebookFriendsButton setTitleColor:[UIColor colorWithRed:42/255.0 green:108/255.0 blue:181/255.0 alpha:1]
                                   forState:UIControlStateNormal];
-  [find_facebook_friends_button setImage:[UIImage imageNamed:@"icon-facebook-blue"]
+  [findFacebookFriendsButton setImage:[UIImage imageNamed:@"icon-facebook-blue"]
                              forState:UIControlStateNormal];
-  find_facebook_friends_button.backgroundColor = [UIColor whiteColor];
-  find_facebook_friends_button.layer.cornerRadius = 2.5f;
-  find_facebook_friends_button.layer.borderWidth = 1.0f;
-  find_facebook_friends_button.layer.borderColor = ([[[UIColor colorWithRed:42/255.0 green:108/255.0 blue:181/255.0 alpha:1] colorWithAlphaComponent:1] CGColor]);
-  find_facebook_friends_button.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14];
-  [self.invite_bar_button_view addSubview:find_facebook_friends_button];
+  findFacebookFriendsButton.backgroundColor = [UIColor whiteColor];
+  findFacebookFriendsButton.layer.cornerRadius = 2.5f;
+  findFacebookFriendsButton.layer.borderWidth = 1.0f;
+  findFacebookFriendsButton.layer.borderColor = ([[[UIColor colorWithRed:42/255.0 green:108/255.0 blue:181/255.0 alpha:1] colorWithAlphaComponent:1] CGColor]);
+  findFacebookFriendsButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14];
+  [self.invite_bar_button_view addSubview:findFacebookFriendsButton];
   
-  UIButton* find_people_button =
-    [[UIButton alloc] initWithFrame:CGRectMake(27, 407, 266, 55)];
-  [find_people_button setTitle:@"FIND PEOPLE ON INFINIT" forState:UIControlStateNormal];
-  [find_people_button setTitleColor:[UIColor colorWithRed:242/255.0 green:94/255.0 blue:90/255.0 alpha:1]
+  UIButton *findPeopleButton = [[UIButton alloc] initWithFrame:CGRectMake(27, self.view.frame.size.height + 20 + 49 - 131, self.view.frame.size.width - 54, 55)];
+  [findPeopleButton setTitle:@"FIND PEOPLE ON INFINIT" forState:UIControlStateNormal];
+  [findPeopleButton setTitleColor:[UIColor colorWithRed:242/255.0 green:94/255.0 blue:90/255.0 alpha:1]
                          forState:UIControlStateNormal];
-  [find_people_button setImage:[UIImage imageNamed:@"icon-infinit-red"]
+  [findPeopleButton setImage:[UIImage imageNamed:@"icon-infinit-red"]
                     forState:UIControlStateNormal];
-  find_people_button.backgroundColor = [UIColor whiteColor];
-  find_people_button.layer.cornerRadius = 2.5f;
-  find_people_button.layer.borderWidth = 1.0f;
-  find_people_button.layer.borderColor = ([[[UIColor colorWithRed:242/255.0 green:94/255.0 blue:90/255.0 alpha:1] colorWithAlphaComponent:1] CGColor]);
-  find_people_button.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:10.5];
-  [self.invite_bar_button_view addSubview:find_people_button];
+  findPeopleButton.backgroundColor = [UIColor whiteColor];
+  findPeopleButton.layer.cornerRadius = 2.5f;
+  findPeopleButton.layer.borderWidth = 1.0f;
+  findPeopleButton.layer.borderColor = ([[[UIColor colorWithRed:242/255.0 green:94/255.0 blue:90/255.0 alpha:1] colorWithAlphaComponent:1] CGColor]);
+  findPeopleButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14];
+  [self.invite_bar_button_view addSubview:findPeopleButton];
   
-  UIButton* cancel_button =
-    [[UIButton alloc] initWithFrame:CGRectMake(27, 475, 266, 55)];
-  [cancel_button setTitle:@"CANCEL" forState:UIControlStateNormal];
-  [cancel_button setTitleColor:[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1]
+  UIButton *cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(27, self.view.frame.size.height + 20 + 49 - 63, self.view.frame.size.width - 54, 55)];
+  [cancelButton setTitle:@"CANCEL" forState:UIControlStateNormal];
+  [cancelButton setTitleColor:[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1]
                      forState:UIControlStateNormal];
-  cancel_button.layer.cornerRadius = 2.5f;
-  cancel_button.layer.borderWidth = 1.0f;
-  cancel_button.layer.borderColor = ([[UIColor whiteColor] CGColor]);
-  cancel_button.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14];
-  [cancel_button addTarget:self
-                   action:@selector(cancelinvite_bar_button_view)
+  cancelButton.layer.cornerRadius = 2.5f;
+  cancelButton.layer.borderWidth = 1.0f;
+  cancelButton.layer.borderColor = ([[UIColor whiteColor] CGColor]);
+  cancelButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14];
+  [cancelButton addTarget:self
+                   action:@selector(cancelInviteBarButtonView)
          forControlEvents:UIControlEventTouchUpInside];
-  cancel_button.titleLabel.textColor = [UIColor whiteColor];
-  [self.invite_bar_button_view addSubview:cancel_button];
+  [cancelButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+  [self.invite_bar_button_view addSubview:cancelButton];
   
-  UITapGestureRecognizer* dismissInviteButtonView =
-    [[UITapGestureRecognizer alloc] initWithTarget:self
-                                            action:@selector(cancelinvite_bar_button_view)];
+  UITapGestureRecognizer *dismissInviteButtonView =
+  [[UITapGestureRecognizer alloc] initWithTarget:self
+                                          action:@selector(cancelInviteBarButtonView)];
   [self.invite_bar_button_view addGestureRecognizer:dismissInviteButtonView];
+  
   
   [[[[UIApplication sharedApplication] delegate] window] addSubview:self.invite_bar_button_view];
 }
 
-- (void)cancelinvite_bar_button_view
+- (void)cancelInviteBarButtonView
 {
   [self.invite_bar_button_view removeFromSuperview];
 }

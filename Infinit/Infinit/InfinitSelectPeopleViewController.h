@@ -10,4 +10,7 @@
 
 @interface InfinitSelectPeopleViewController : UIViewController
 
+@property (strong,nonatomic) NSMutableArray* assetURL_array;
+
+
 @end

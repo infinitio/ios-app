@@ -108,11 +108,11 @@
 {
   if(indexPath.row == 0)
   {
-    return CGSizeMake(320, 350);
+    return CGSizeMake(self.view.frame.size.width, self.view.frame.size.width * 1.09375);
   }
   else
   {
-    return CGSizeMake(320, 61);
+    return CGSizeMake(self.view.frame.size.width, 61);
   }
 }
 

@@ -29,24 +29,26 @@
   [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:8], NSFontAttributeName, nil] forState:UIControlStateNormal];
   
   UIView* shadowLine =
-    [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 1)];
+    [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 1)];
   shadowLine.backgroundColor = [UIColor grayColor];
   shadowLine.alpha = .5;
   [self.tabBar addSubview:shadowLine];
   
-  _teal_shadow_line = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 64, 1)];
+  
+  
+  _teal_shadow_line = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width/5, 1)];
   _teal_shadow_line.backgroundColor = [UIColor colorWithRed:43/255.0 green:190/255.0 blue:189/255.0 alpha:1];
   [self.tabBar addSubview:_teal_shadow_line];
   
   // Add the sendImage over the bar button item.
   UIImageView* sendBgImage =
     [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-tab-send-bg"]];
-  sendBgImage.center = CGPointMake(160, 22);
+  sendBgImage.center = CGPointMake(self.view.frame.size.width/2, 22);
   [self.tabBar addSubview:sendBgImage];
   
   UIImageView* sendImage =
     [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-tab-send"]];
-  sendImage.center = CGPointMake(160, 27);
+  sendImage.center = CGPointMake(self.view.frame.size.width/2, 27);
   [self.tabBar addSubview:sendImage];
   
   //Check for the badge items here.  Not yet
@@ -103,7 +105,7 @@
 
 -(void)teal_shadow_lineToItem:(NSInteger)itemNumber
 {
-  _teal_shadow_line.frame = CGRectMake(itemNumber * 64, 0, 64, 1);
+  _teal_shadow_line.frame = CGRectMake(itemNumber * self.view.frame.size.width/5, 0, self.view.frame.size.width/5, 1);
 }
 
 

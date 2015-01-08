@@ -64,6 +64,10 @@
 		D01A64581A4861930041A8C2 /* FileListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D01A64571A4861930041A8C2 /* FileListCell.m */; };
 		D01A645B1A48635C0041A8C2 /* InfinitFileCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D01A645A1A48635C0041A8C2 /* InfinitFileCollectionViewController.m */; };
 		D01A645E1A48B38D0041A8C2 /* InfinitContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D01A645D1A48B38D0041A8C2 /* InfinitContactViewController.m */; };
+		D02F432C1A5DA34F00447E84 /* WelcomeSignupFormView.m in Sources */ = {isa = PBXBuildFile; fileRef = D02F432B1A5DA34F00447E84 /* WelcomeSignupFormView.m */; };
+		D02F432E1A5DA36A00447E84 /* WelcomeSignupFormView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D02F432D1A5DA36A00447E84 /* WelcomeSignupFormView.xib */; };
+		D02F43301A5DA38200447E84 /* WelcomeLoginFormView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D02F432F1A5DA38200447E84 /* WelcomeLoginFormView.xib */; };
+		D02F43331A5DA39900447E84 /* WelcomeLoginFormView.m in Sources */ = {isa = PBXBuildFile; fileRef = D02F43321A5DA39900447E84 /* WelcomeLoginFormView.m */; };
 		D02FF50B1A4DACA600A93DBD /* ContactOtherCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D02FF50A1A4DACA600A93DBD /* ContactOtherCell.m */; };
 		D03FAAF31A4798B9005A8244 /* InfinitContactsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D03FAAF21A4798B9005A8244 /* InfinitContactsTableViewController.m */; };
 		D03FAAF61A479BF3005A8244 /* CGLAlphabetizer.m in Sources */ = {isa = PBXBuildFile; fileRef = D03FAAF51A479BF3005A8244 /* CGLAlphabetizer.m */; };
@@ -219,6 +223,12 @@
 		D01A645A1A48635C0041A8C2 /* InfinitFileCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFileCollectionViewController.m; sourceTree = "<group>"; };
 		D01A645C1A48B38D0041A8C2 /* InfinitContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitContactViewController.h; sourceTree = "<group>"; };
 		D01A645D1A48B38D0041A8C2 /* InfinitContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitContactViewController.m; sourceTree = "<group>"; };
+		D02F432A1A5DA34E00447E84 /* WelcomeSignupFormView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeSignupFormView.h; sourceTree = "<group>"; };
+		D02F432B1A5DA34F00447E84 /* WelcomeSignupFormView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeSignupFormView.m; sourceTree = "<group>"; };
+		D02F432D1A5DA36A00447E84 /* WelcomeSignupFormView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeSignupFormView.xib; sourceTree = "<group>"; };
+		D02F432F1A5DA38200447E84 /* WelcomeLoginFormView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeLoginFormView.xib; sourceTree = "<group>"; };
+		D02F43311A5DA39900447E84 /* WelcomeLoginFormView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeLoginFormView.h; sourceTree = "<group>"; };
+		D02F43321A5DA39900447E84 /* WelcomeLoginFormView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeLoginFormView.m; sourceTree = "<group>"; };
 		D02FF5091A4DACA600A93DBD /* ContactOtherCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactOtherCell.h; sourceTree = "<group>"; };
 		D02FF50A1A4DACA600A93DBD /* ContactOtherCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactOtherCell.m; sourceTree = "<group>"; };
 		D03FAAF11A4798B9005A8244 /* InfinitContactsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitContactsTableViewController.h; sourceTree = "<group>"; };
@@ -410,6 +420,12 @@
 		83B32DF41A1365A9004AB945 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				D02F432F1A5DA38200447E84 /* WelcomeLoginFormView.xib */,
+				D02F43311A5DA39900447E84 /* WelcomeLoginFormView.h */,
+				D02F43321A5DA39900447E84 /* WelcomeLoginFormView.m */,
+				D02F432D1A5DA36A00447E84 /* WelcomeSignupFormView.xib */,
+				D02F432A1A5DA34E00447E84 /* WelcomeSignupFormView.h */,
+				D02F432B1A5DA34F00447E84 /* WelcomeSignupFormView.m */,
 				D0659F641A3E865A0001ACAE /* InfinitWelcomeController.h */,
 				D0659F651A3E865A0001ACAE /* InfinitWelcomeController.m */,
 			);
@@ -727,9 +743,6 @@
 						CreatedOnToolsVersion = 6.1;
 						TestTargetID = 83B32D5C1A136485004AB945;
 					};
-					D05D5D031A24BFAB005529E8 = {
-						CreatedOnToolsVersion = 6.1;
-					};
 				};
 			};
 			buildConfigurationList = 83B32D581A136485004AB945 /* Build configuration list for PBXProject "Infinit" */;
@@ -785,12 +798,14 @@
 				83B32E0A1A136614004AB945 /* Main.storyboard in Resources */,
 				83B32E081A13660D004AB945 /* LaunchScreen.xib in Resources */,
 				D098481E1A43391B002D26AC /* SourceSansPro-SemiboldIt.otf in Resources */,
+				D02F432E1A5DA36A00447E84 /* WelcomeSignupFormView.xib in Resources */,
 				D098481C1A43391B002D26AC /* SourceSansPro-Regular.otf in Resources */,
 				D09848161A43391B002D26AC /* SourceSansPro-BoldIt.otf in Resources */,
 				D09848181A43391B002D26AC /* SourceSansPro-ExtraLightIt.otf in Resources */,
 				D09848171A43391B002D26AC /* SourceSansPro-ExtraLight.otf in Resources */,
 				83B32D6E1A136485004AB945 /* Images.xcassets in Resources */,
 				D09848201A43391B002D26AC /* Montserrat-Bold.ttf in Resources */,
+				D02F43301A5DA38200447E84 /* WelcomeLoginFormView.xib in Resources */,
 				D09848131A43391B002D26AC /* SourceSansPro-Black.otf in Resources */,
 				D098481A1A43391B002D26AC /* SourceSansPro-Light.otf in Resources */,
 				D098481F1A43391B002D26AC /* LucidaGrande.ttc in Resources */,
@@ -835,6 +850,7 @@
 				83F4D0A61A14B48D0068BEB2 /* InfinitPeerSendController.m in Sources */,
 				83F72CA41A15131A0088106E /* InfinitLinkTransactionCell.m in Sources */,
 				83F4D0A21A13BC490068BEB2 /* InfinitPeerTransactionCell.m in Sources */,
+				D02F432C1A5DA34F00447E84 /* WelcomeSignupFormView.m in Sources */,
 				D03FAAF91A479D2C005A8244 /* CGLContact.m in Sources */,
 				83B32D631A136485004AB945 /* main.m in Sources */,
 				D00045BD1A499A20008DB448 /* ImportContactsCell.m in Sources */,
@@ -842,6 +858,7 @@
 				D05D5D1A1A24C4B1005529E8 /* InfCollectionViewCell.m in Sources */,
 				D05726B31A50BA880097083C /* SendCell.m in Sources */,
 				D01A645B1A48635C0041A8C2 /* InfinitFileCollectionViewController.m in Sources */,
+				D02F43331A5DA39900447E84 /* WelcomeLoginFormView.m in Sources */,
 				D0BC70431A41B4B7006923F2 /* InfTabBarController.m in Sources */,
 				D0BD351F1A42202300AB8EF9 /* InfinitFileViewController.m in Sources */,
 				83F72CA11A15123F0088106E /* InfinitLinkTransactionsController.m in Sources */,
@@ -958,6 +975,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -997,6 +1015,7 @@
 				LINKER_DISPLAYS_MANGLED_NAMES = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "8295163b-b944-418c-b820-7ed1b472dd48";
 				USER_HEADER_SEARCH_PATHS = "";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "\"$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts/include\"";
 				VALID_ARCHS = armv7;
@@ -1009,6 +1028,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1046,6 +1066,7 @@
 				);
 				LINKER_DISPLAYS_MANGLED_NAMES = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "8295163b-b944-418c-b820-7ed1b472dd48";
 				USER_HEADER_SEARCH_PATHS = "";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "\"$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts/include\"";
 				VALID_ARCHS = armv7;

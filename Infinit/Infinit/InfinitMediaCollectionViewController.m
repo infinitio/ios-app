@@ -9,6 +9,7 @@
 #import "InfinitMediaCollectionViewController.h"
 
 #import "InfCollectionViewCell.h"
+#import "InfinitSelectPeopleViewController.h"
 
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AVFoundation/AVFoundation.h>
@@ -163,7 +164,7 @@ static NSString* const reuseIdentifier = @"mediaCell";
                   layout:(UICollectionViewLayout*)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath*)indexPath
 {
-  return CGSizeMake(104, 104);
+  return CGSizeMake(self.view.frame.size.width/3 - 4, self.view.frame.size.width/3 - 4);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView*)collectionView
@@ -198,23 +199,23 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
   [self.collectionView bringSubviewToFront:cell];
 
   [UIView animateWithDuration:0.12 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-    cell.contentView.transform = CGAffineTransformMakeScale(.75, .75);
+    cell.transform = CGAffineTransformMakeScale(.75, .75);
   } completion:^(BOOL finished){
     // do something once the animation finishes, put it here
     [UIView animateWithDuration:0.12 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-      cell.contentView.transform = CGAffineTransformMakeScale(1.25, 1.25);
+      cell.transform = CGAffineTransformMakeScale(1.25, 1.25);
     } completion:^(BOOL finished){
       // do something once the animation finishes, put it here
       [UIView animateWithDuration:0.12 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        cell.contentView.transform = CGAffineTransformMakeScale(.9, .9);
+        cell.transform = CGAffineTransformMakeScale(.9, .9);
       } completion:^(BOOL finished){
         // do something once the animation finishes, put it here
         [UIView animateWithDuration:0.12 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-          cell.contentView.transform = CGAffineTransformMakeScale(1.1, 1.1);
+          cell.transform = CGAffineTransformMakeScale(1.1, 1.1);
         } completion:^(BOOL finished) {
           
           [UIView animateWithDuration:0.12 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            cell.contentView.transform = CGAffineTransformIdentity;
+            cell.transform = CGAffineTransformIdentity;
           } completion:nil];
         }];
       }];
@@ -268,7 +269,15 @@ minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
   if([segue.identifier isEqualToString:@"send2Segue"])
   {
+    _assetURL_array = [[NSMutableArray alloc] init];
+    for(NSIndexPath *indexPath in _selected_media.allKeys)
+    {
+      ALAsset* asset = self.assets[self.assets.count - 1 - indexPath.row];
+      [_assetURL_array addObject:asset.defaultRepresentation.url];
+    }
     
+    InfinitSelectPeopleViewController *view_controller = (InfinitSelectPeopleViewController*)segue.destinationViewController;
+    view_controller.assetURL_array = _assetURL_array;
   }
 }
 
