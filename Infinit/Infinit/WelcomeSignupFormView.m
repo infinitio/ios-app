@@ -8,28 +8,36 @@
 
 #import "WelcomeSignupFormView.h"
 
+#import "InfinitColor.h"
+
 @implementation WelcomeSignupFormView
 
 -(void)awakeFromNib
 {
-  self.avatar_button.layer.cornerRadius = self.avatar_button.frame.size.height/2;
-  self.avatar_button.layer.borderWidth = 1.0;
-  self.avatar_button.layer.borderColor = [[UIColor colorWithRed:194/255.0 green:211/255.0 blue:211/255.0 alpha:1] CGColor];
+  self.avatar_button.layer.cornerRadius = self.avatar_button.frame.size.height / 2.0f;
+  self.avatar_button.layer.borderWidth = 1.0f;
+  self.avatar_button.layer.borderColor = [InfinitColor colorWithRed:194 green:211 blue:211].CGColor;
   self.avatar_button.clipsToBounds = YES;
-  
+
   CGFloat spacing = 6.0;
-  CGSize titleSize = [self.avatar_button.titleLabel.text sizeWithAttributes:@{NSFontAttributeName: self.avatar_button.titleLabel.font}];
-  self.avatar_button.imageEdgeInsets = UIEdgeInsetsMake(-(titleSize.height + spacing),
-                                                                       0.0,
-                                                                       0.0,
-                                                                       -titleSize.width);
+  NSDictionary* attrs = @{NSFontAttributeName: self.avatar_button.titleLabel.font};
+  CGSize title_size = [self.avatar_button.titleLabel.text sizeWithAttributes:attrs];
+  self.avatar_button.imageEdgeInsets = UIEdgeInsetsMake(-(title_size.height + spacing),
+                                                        0.0f,
+                                                        0.0f,
+                                                        -title_size.width);
   
-  CGSize imageSize = self.avatar_button.imageView.image.size;
-  self.avatar_button.titleEdgeInsets = UIEdgeInsetsMake(0.0,
-                                                        -imageSize.width,
-                                                        -(imageSize.height + spacing),
-                                                        0.0);
+  CGSize image_size = self.avatar_button.imageView.image.size;
+  self.avatar_button.titleEdgeInsets = UIEdgeInsetsMake(0.0f,
+                                                        -image_size.width,
+                                                        -(image_size.height + spacing),
+                                                        0.0f);
   
+}
+
+- (CGFloat)height
+{
+  return 310.0f;
 }
 
 @end
