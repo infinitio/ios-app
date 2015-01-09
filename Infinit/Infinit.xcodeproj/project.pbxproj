@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		831237281A602C6900D5C41C /* InfinitSendTabIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 831237271A602C6900D5C41C /* InfinitSendTabIcon.m */; };
 		833DFCBC1A2F837400B0D213 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 833DFCBB1A2F837400B0D213 /* AssetsLibrary.framework */; };
 		83612F8E1A5D7FDB00BDF7CE /* NSData+Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = 83612F8D1A5D7FDB00BDF7CE /* NSData+Conversion.m */; };
 		8365DE881A5E8694003527DE /* InfinitColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8365DE871A5E8694003527DE /* InfinitColor.m */; };
@@ -93,9 +94,7 @@
 		D098481F1A43391B002D26AC /* LucidaGrande.ttc in Resources */ = {isa = PBXBuildFile; fileRef = D09848101A43391B002D26AC /* LucidaGrande.ttc */; };
 		D09848201A43391B002D26AC /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D09848111A43391B002D26AC /* Montserrat-Bold.ttf */; };
 		D09848211A43391B002D26AC /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D09848121A43391B002D26AC /* Montserrat-Regular.ttf */; };
-		D0AFCBBA1A2758F8003AC152 /* TabBarBadgeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AFCBB91A2758F8003AC152 /* TabBarBadgeLabel.m */; };
-		D0AFCBBE1A275B51003AC152 /* InfinitTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AFCBBD1A275B51003AC152 /* InfinitTabBarController.m */; };
-		D0BC70431A41B4B7006923F2 /* InfTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BC70421A41B4B7006923F2 /* InfTabBarController.m */; };
+		D0BC70431A41B4B7006923F2 /* InfinitTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BC70421A41B4B7006923F2 /* InfinitTabBarController.m */; };
 		D0BC70471A41C04C006923F2 /* InfinitMediaCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BC70461A41C04C006923F2 /* InfinitMediaCollectionViewController.m */; };
 		D0BD351F1A42202300AB8EF9 /* InfinitFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BD351E1A42202300AB8EF9 /* InfinitFileViewController.m */; };
 		D0BD35231A4245AF00AB8EF9 /* InfinitSelectPeopleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BD35221A4245AF00AB8EF9 /* InfinitSelectPeopleViewController.m */; };
@@ -149,6 +148,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		831237261A602C6900D5C41C /* InfinitSendTabIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendTabIcon.h; sourceTree = "<group>"; };
+		831237271A602C6900D5C41C /* InfinitSendTabIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendTabIcon.m; sourceTree = "<group>"; };
 		833DFCBB1A2F837400B0D213 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		83612F8C1A5D7FDB00BDF7CE /* NSData+Conversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Conversion.h"; sourceTree = "<group>"; };
 		83612F8D1A5D7FDB00BDF7CE /* NSData+Conversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Conversion.m"; sourceTree = "<group>"; };
@@ -266,12 +267,8 @@
 		D09848101A43391B002D26AC /* LucidaGrande.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = LucidaGrande.ttc; sourceTree = "<group>"; };
 		D09848111A43391B002D26AC /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		D09848121A43391B002D26AC /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
-		D0AFCBB81A2758F8003AC152 /* TabBarBadgeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarBadgeLabel.h; sourceTree = "<group>"; };
-		D0AFCBB91A2758F8003AC152 /* TabBarBadgeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarBadgeLabel.m; sourceTree = "<group>"; };
-		D0AFCBBC1A275B51003AC152 /* InfinitTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitTabBarController.h; sourceTree = "<group>"; };
-		D0AFCBBD1A275B51003AC152 /* InfinitTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitTabBarController.m; sourceTree = "<group>"; };
-		D0BC70411A41B4B7006923F2 /* InfTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfTabBarController.h; sourceTree = "<group>"; };
-		D0BC70421A41B4B7006923F2 /* InfTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfTabBarController.m; sourceTree = "<group>"; };
+		D0BC70411A41B4B7006923F2 /* InfinitTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitTabBarController.h; sourceTree = "<group>"; };
+		D0BC70421A41B4B7006923F2 /* InfinitTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitTabBarController.m; sourceTree = "<group>"; };
 		D0BC70451A41C04B006923F2 /* InfinitMediaCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitMediaCollectionViewController.h; sourceTree = "<group>"; };
 		D0BC70461A41C04C006923F2 /* InfinitMediaCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitMediaCollectionViewController.m; sourceTree = "<group>"; };
 		D0BD351D1A42202300AB8EF9 /* InfinitFileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFileViewController.h; sourceTree = "<group>"; };
@@ -405,7 +402,6 @@
 				D09848021A43390D002D26AC /* Fonts */,
 				83B32D6D1A136485004AB945 /* Images.xcassets */,
 				83B32D601A136485004AB945 /* Supporting Files */,
-				D0AFCBBB1A275904003AC152 /* Custom Views/VCs */,
 			);
 			path = Infinit;
 			sourceTree = "<group>";
@@ -614,8 +610,10 @@
 		D04988161A59F61B008B1C24 /* Cutom TabBarController */ = {
 			isa = PBXGroup;
 			children = (
-				D0BC70411A41B4B7006923F2 /* InfTabBarController.h */,
-				D0BC70421A41B4B7006923F2 /* InfTabBarController.m */,
+				D0BC70411A41B4B7006923F2 /* InfinitTabBarController.h */,
+				D0BC70421A41B4B7006923F2 /* InfinitTabBarController.m */,
+				831237261A602C6900D5C41C /* InfinitSendTabIcon.h */,
+				831237271A602C6900D5C41C /* InfinitSendTabIcon.m */,
 			);
 			name = "Cutom TabBarController";
 			sourceTree = "<group>";
@@ -665,17 +663,6 @@
 				D0BD35221A4245AF00AB8EF9 /* InfinitSelectPeopleViewController.m */,
 			);
 			name = Send;
-			sourceTree = "<group>";
-		};
-		D0AFCBBB1A275904003AC152 /* Custom Views/VCs */ = {
-			isa = PBXGroup;
-			children = (
-				D0AFCBBC1A275B51003AC152 /* InfinitTabBarController.h */,
-				D0AFCBBD1A275B51003AC152 /* InfinitTabBarController.m */,
-				D0AFCBB81A2758F8003AC152 /* TabBarBadgeLabel.h */,
-				D0AFCBB91A2758F8003AC152 /* TabBarBadgeLabel.m */,
-			);
-			name = "Custom Views/VCs";
 			sourceTree = "<group>";
 		};
 		D0BC704B1A41CAF1006923F2 /* Files */ = {
@@ -849,7 +836,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				83B32E061A1365E9004AB945 /* AppDelegate.m in Sources */,
-				D0AFCBBA1A2758F8003AC152 /* TabBarBadgeLabel.m in Sources */,
 				D0BD35231A4245AF00AB8EF9 /* InfinitSelectPeopleViewController.m in Sources */,
 				83FE9C8B1A161F6D00FC1CFD /* InfinitLinkSendController.m in Sources */,
 				D01A64581A4861930041A8C2 /* FileListCell.m in Sources */,
@@ -862,6 +848,7 @@
 				D00045C11A49AD55008DB448 /* inviteView.m in Sources */,
 				D0659F661A3E865A0001ACAE /* InfinitWelcomeController.m in Sources */,
 				D0BC70471A41C04C006923F2 /* InfinitMediaCollectionViewController.m in Sources */,
+				831237281A602C6900D5C41C /* InfinitSendTabIcon.m in Sources */,
 				83B32D691A136485004AB945 /* ViewController.m in Sources */,
 				83F72C9C1A1502940088106E /* InfinitPeerSendFileCell.m in Sources */,
 				D03FAAF61A479BF3005A8244 /* CGLAlphabetizer.m in Sources */,
@@ -880,11 +867,10 @@
 				D05726B31A50BA880097083C /* SendCell.m in Sources */,
 				D01A645B1A48635C0041A8C2 /* InfinitFileCollectionViewController.m in Sources */,
 				D02F43331A5DA39900447E84 /* WelcomeLoginFormView.m in Sources */,
-				D0BC70431A41B4B7006923F2 /* InfTabBarController.m in Sources */,
+				D0BC70431A41B4B7006923F2 /* InfinitTabBarController.m in Sources */,
 				D0BD351F1A42202300AB8EF9 /* InfinitFileViewController.m in Sources */,
 				83F72CA11A15123F0088106E /* InfinitLinkTransactionsController.m in Sources */,
 				D0D613C81A52E51600D454B6 /* InfinitHomeCollectionViewController.m in Sources */,
-				D0AFCBBE1A275B51003AC152 /* InfinitTabBarController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
