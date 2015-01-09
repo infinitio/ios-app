@@ -11,8 +11,8 @@
 
 typedef NS_ENUM(NSUInteger, InfinitPaletteColor)
 {
-  ColorBurntSienna, // 242, 94, 90
-  ColorShamRock,    // 43, 190, 189
+  ColorBurntSienna, // 242, 94,  90
+  ColorShamRock,    // 43,  190, 189
   ColorChicago,     // 100, 100, 90
 };
 
