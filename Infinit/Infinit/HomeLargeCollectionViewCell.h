@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+#import <Gap/InfinitPeerTransactionManager.h>
+#import <Gap/InfinitPeerTransactionManager.h>
+
 @interface HomeLargeCollectionViewCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UIButton* accept_button;
@@ -16,5 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView* blur_image_view;
 @property (weak, nonatomic) IBOutlet UILabel* files_label;
 @property (weak, nonatomic) IBOutlet UILabel* notification_label;
+
+- (void)setUpWithTransaction:(InfinitPeerTransaction*)transaction;
 
 @end

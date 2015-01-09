@@ -42,4 +42,20 @@
   return endImage;
 }
 
+- (void)setUpWithTransaction:(InfinitPeerTransaction*)transaction
+{
+  NSString *files_text = [[NSString alloc] init];
+  if(transaction.files.count == 1)
+  {
+    files_text = [NSString stringWithFormat:@"%lu file", (unsigned long)transaction.files.count];
+  }
+  else
+  {
+    files_text = [NSString stringWithFormat:@"%lu files", (unsigned long)transaction.files.count];
+  }
+  
+  self.files_label.text = files_text;
+  self.notification_label.text = [NSString stringWithFormat:@"%@ wants to send you %@.",transaction.sender.fullname, files_text];
+}
+
 @end

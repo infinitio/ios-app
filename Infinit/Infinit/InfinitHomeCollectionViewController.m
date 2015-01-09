@@ -65,37 +65,54 @@
 
 - (void)transactionUpdated:(NSNotification*)notification
 {
-  InfinitPeerTransaction* updatedTransaction =
-  [[InfinitPeerTransactionManager sharedInstance] transactionWithId:_peer_transactions];
+  NSNumber* id_ = notification.userInfo[@"id"];
+  InfinitPeerTransaction* new_transaction =
+    [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
   
   //Handling for peer for now.
   NSInteger index = 0;
+  
   @synchronized(_peer_transactions)
   {
     for (InfinitPeerTransaction* transaction in _peer_transactions)
     {
       if ([transaction.id_ isEqual:notification.userInfo[@"id"]])
       {
-        //Reload the cell. Does this work?
         
-//        [self.collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
         break;
       }
       index++;
     }
-    _peer_transactions[index] = updatedTransaction;
     
+    InfinitPeerTransaction* old_transaction = _peer_transactions[index];
+    
+    
+    if(old_transaction.status != new_transaction.status)
+    {
+      [_peer_transactions replaceObjectAtIndex:index withObject:new_transaction];
+      [self.collectionView reloadData];
+      [self.collectionViewLayout invalidateLayout];
+    }
+    else
+    {
+      [_peer_transactions replaceObjectAtIndex:index withObject:new_transaction];
+    }
   }
 }
 
 -(void)transactionAdded:(NSNotification*)notification
 {
+  
   NSNumber* id_ = notification.userInfo[@"id"];
   InfinitPeerTransaction* transaction =
   [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
-  [_peer_transactions insertObject:transaction atIndex:0];
-  [self.collectionView reloadData];
   
+  
+  [_peer_transactions insertObject:transaction atIndex:0];
+
+  
+  [self.collectionView reloadData];
+  [self.collectionViewLayout invalidateLayout];
   
 //  [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]];
   
@@ -151,19 +168,8 @@
     HomeLargeCollectionViewCell* cell =
     [collectionView dequeueReusableCellWithReuseIdentifier:@"largeCell"
                                               forIndexPath:indexPath];
-    
-    NSString *files_text = [[NSString alloc] init];
-    if(peer_transaction.files.count == 1)
-    {
-      files_text = [NSString stringWithFormat:@"%lu file", (unsigned long)peer_transaction.files.count];
-    }
-    else
-    {
-      files_text = [NSString stringWithFormat:@"%lu files", (unsigned long)peer_transaction.files.count];
-    }
-    
-    cell.files_label.text = files_text;
-    cell.notification_label.text = [NSString stringWithFormat:@"%@ wants to send you %@.",peer_transaction.sender.fullname, files_text];
+
+    [cell setUpWithTransaction:peer_transaction];
 
     cell.accept_button.tag = indexPath.row;
     [cell.accept_button addTarget:self action:@selector(acceptTransaction:)
@@ -181,8 +187,8 @@
     HomeSmallCollectionViewCell* cell =
       [collectionView dequeueReusableCellWithReuseIdentifier:@"smallCell"
                                                 forIndexPath:indexPath];
-    cell.notification_label.text = [self statusText:peer_transaction.status];
-    
+
+    [cell setUpWithTransaction:peer_transaction];
     
     return cell;
   }
@@ -202,41 +208,6 @@
   InfinitPeerTransaction* peer_transaction = _peer_transactions[sender.tag];
   [[InfinitPeerTransactionManager sharedInstance] cancelTransaction:peer_transaction];
   
-}
-
-- (NSString*)statusText:(gap_TransactionStatus)status
-{
-  switch (status)
-  {
-    case gap_transaction_new:
-      return @"new";
-    case gap_transaction_on_other_device:
-      return @"on_other_device";
-    case gap_transaction_waiting_accept:
-      return @"waiting_accept";
-    case gap_transaction_waiting_data:
-      return @"waiting_data";
-    case gap_transaction_connecting:
-      return @"connecting";
-    case gap_transaction_transferring:
-      return @"transferring";
-    case gap_transaction_cloud_buffered:
-      return @"cloud_buffered";
-    case gap_transaction_finished:
-      return @"finished";
-    case gap_transaction_failed:
-      return @"failed";
-    case gap_transaction_canceled:
-      return @"canceled";
-    case gap_transaction_rejected:
-      return @"rejected";
-    case gap_transaction_deleted:
-      return @"deleted";
-    case gap_transaction_paused:
-      return @"paused";
-    default:
-      return @"unknown";
-  }
 }
 
 #pragma mark – UICollectionViewDelegateFlowLayout

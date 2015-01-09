@@ -8,9 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+#import <Gap/InfinitPeerTransactionManager.h>
+#import <Gap/InfinitPeerTransactionManager.h>
+
 @interface HomeSmallCollectionViewCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView* image_view;
 @property (weak, nonatomic) IBOutlet UILabel* notification_label;
+
+- (void)setUpWithTransaction:(InfinitPeerTransaction*)transaction;
+
 
 @end
