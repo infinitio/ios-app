@@ -47,7 +47,7 @@
 
 @property BOOL showingLoginForm;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *balloonContainerTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint* balloonContainerTopConstraint;
 
 @end
 
@@ -77,7 +77,7 @@
       NSLog(@"  %@", name);
     }
   }
-   */
+  */
   
   self.loginFormView = [[[UINib nibWithNibName:@"WelcomeLoginFormView" bundle:nil] instantiateWithOwner:self options:nil] objectAtIndex:0];
   self.loginFormView.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 600);
@@ -96,6 +96,14 @@
    [self.loginFormView.back_button addTarget:self
                                       action:@selector(loginBackButtonSelected)
                             forControlEvents:UIControlEventTouchUpInside];
+  
+  [self.loginFormView.next_button addTarget:self
+                                     action:@selector(loginNextButtonSelected:)
+                           forControlEvents:UIControlEventTouchUpInside];
+  
+  [self.signupFormView.next_button addTarget:self
+                                     action:@selector(signupNextButtonSelected:)
+                           forControlEvents:UIControlEventTouchUpInside];
   
   [self.signupFormView.avatar_button addTarget:self
                                       action:@selector(addAvatarButtonClicked:)
@@ -185,10 +193,10 @@
   [FBSession openActiveSessionWithReadPermissions:@[@"public_profile", @"email", @"user_friends", @"user_birthday"]
                                      allowLoginUI:YES
                                 completionHandler:
-   ^(FBSession *session, FBSessionState state, NSError *error) {
+   ^(FBSession* session, FBSessionState state, NSError* error) {
      
      // Retrieve the app delegate
-     AppDelegate *appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+     AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
      // Call the app delegate's sessionStateChanged:state:error method to handle session state changes
      [appDelegate sessionStateChanged:session state:state error:error];
    }];
@@ -505,12 +513,13 @@
   
 }
 
-- (IBAction)signupNextButtonSelected:(id)sender
+- (void)signupNextButtonSelected:(id)sender
 {
+  
   //Put error if need be.
   NSString* fullname = self.signupFormView.signup_fullname_textifeld.text;
-  NSString* email = self.loginFormView.login_email_textfield.text;
-  NSString* password = self.loginFormView.login_password_textfield.text;
+  NSString* email = self.signupFormView.signup_email_textfield.text;
+  NSString* password = self.signupFormView.signup_password_textfield.text;
    [[InfinitStateManager sharedInstance] registerFullname:fullname
                                                     email:email
                                                  password:password
@@ -520,7 +529,7 @@
 }
 
 //Isn't connected yet.
-- (IBAction)loginnextbuttonSelected:(id)sender
+- (void)loginNextButtonSelected:(id)sender
 {
   //Try to log in to infinit.
   [[InfinitStateManager sharedInstance] login:self.loginFormView.login_email_textfield.text
@@ -554,7 +563,7 @@
   }
   else
   {
-    NSString *resultStatusString = [[NSString alloc] init];
+    NSString* resultStatusString = [[NSString alloc] init];
     switch (result.status)
     {
       case gap_email_password_dont_match:
@@ -600,7 +609,7 @@
   verticalMotionEffect.maximumRelativeValue = @(25);
   
   // Set horizontal effect
-  UIInterpolatingMotionEffect *horizontalMotionEffect =
+  UIInterpolatingMotionEffect* horizontalMotionEffect =
     [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x"
                                                     type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
   horizontalMotionEffect.minimumRelativeValue = @(-25);
@@ -660,13 +669,13 @@
   [self presentViewController:self.picker animated:YES completion:nil];
 }
 
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+- (void)imagePickerControllerDidCancel:(UIImagePickerController*)picker
 {
   [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 //Add a photo to the  Parse Object
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+- (void)imagePickerController:(UIImagePickerController*)picker didFinishPickingMediaWithInfo:(NSDictionary*)info
 {
   self.avatar_image = info[UIImagePickerControllerEditedImage];
   

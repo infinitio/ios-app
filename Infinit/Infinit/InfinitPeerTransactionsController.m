@@ -60,6 +60,7 @@
 
 - (void)transactionUpdated:(NSNotification*)notification
 {
+  
   NSInteger index = 0;
   @synchronized(_transactions)
   {
@@ -67,6 +68,8 @@
     {
       if ([transaction.id_ isEqual:notification.userInfo[@"id"]])
       {
+        
+        
         InfinitPeerTransactionCell* cell =
           (InfinitPeerTransactionCell*)[self.table_view cellForRowAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
         [cell setupCellWithTransaction:transaction];

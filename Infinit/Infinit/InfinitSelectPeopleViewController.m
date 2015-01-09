@@ -14,6 +14,7 @@
 #import "ImportContactsCell.h"
 
 #import "Gap/InfinitUser.h"
+#import "Gap/InfinitUserManager.h"
 #import <Gap/InfinitUtilities.h>
 #import <Gap/InfinitTemporaryFileManager.h>
 #import <Gap/InfinitPeerTransactionManager.h>
@@ -23,18 +24,24 @@
 @interface InfinitSelectPeopleViewController () <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField* searchTextField;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UITextView *optionNoteTextView;
-@property (weak, nonatomic) IBOutlet UIButton *sendButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *inviteBarButton;
-@property (strong, nonatomic) UIView *inviteBarButtonView;
-@property (strong, nonatomic) UIView *myComputerView;
+@property (weak, nonatomic) IBOutlet UITableView* tableView;
+//@property (weak, nonatomic) IBOutlet UITextView* optionNoteTextView;
+@property (weak, nonatomic) IBOutlet UIButton* sendButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem* inviteBarButton;
+@property (strong, nonatomic) UIView* inviteBarButtonView;
+@property (strong, nonatomic) UIView* myComputerView;
 
-@property (strong, nonatomic) NSMutableArray *people;
+@property (strong, nonatomic) NSArray* swaggerList;
+@property (strong, nonatomic) NSMutableArray* recipients;
+
+//This is from pulling address book people.
+@property (strong, nonatomic) NSMutableArray* addressbook_people;
 
 
 
-@property (strong, nonatomic) NSMutableDictionary *selectedRecipients;
+
+
+@property (strong, nonatomic) NSMutableDictionary* selectedRecipients;
 
 @end
 
@@ -52,9 +59,10 @@
   // Do any additional setup after loading the view.
   
   _managed_files_id = [[InfinitTemporaryFileManager sharedInstance] createManagedFiles];
+  _swaggerList = [[InfinitUserManager sharedInstance] swaggers];
 
   
-  NSDictionary * attributes = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold" size:18]};
+  NSDictionary* attributes = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold" size:18]};
   [_inviteBarButton setTitleTextAttributes:attributes forState:UIControlStateNormal];
   
   _sendButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14];
@@ -69,7 +77,7 @@
 
 -(void)fetchContacts
 {
-  CFErrorRef *error = nil;
+  CFErrorRef* error = nil;
   ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, error);
   
   __block BOOL accessGranted = NO;
@@ -93,17 +101,20 @@
     ABRecordRef source = ABAddressBookCopyDefaultSource(addressBook);
     CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook, source, kABPersonSortByFirstName);
     
-    _people = [[NSMutableArray alloc] init];
+    _addressbook_people = [[NSMutableArray alloc] init];
 
     for (int i = 0; i < CFArrayGetCount(allPeople); i++)
     {
       ABRecordRef person = CFArrayGetValueAtIndex(allPeople, i);
       if(person)
       {
-        NSString *firstName = (__bridge NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
-        NSString *lastName = (__bridge NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);
+        NSString* firstName =
+          (__bridge NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
+        NSString* lastName =
+          (__bridge NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
         
-        NSMutableDictionary *userDict = [[NSMutableDictionary alloc] init];
+        NSMutableDictionary* userDict =
+          [[NSMutableDictionary alloc] init];
         if(firstName && lastName)
         {
           [userDict setObject:[NSString stringWithFormat:@"%@ %@", firstName, lastName] forKey:@"fullname"];
@@ -117,14 +128,16 @@
           [userDict setObject:lastName forKey:@"fullname"];
         }
         
-        NSData  *imgData = (__bridge NSData *)ABPersonCopyImageData(person);
-        UIImage *image = [UIImage imageWithData:imgData];
+        NSData* imgData =
+          (__bridge NSData* )ABPersonCopyImageData(person);
+        UIImage* image =
+          [UIImage imageWithData:imgData];
         if(image)
         {
           [userDict setObject:image forKey:@"avatar"];
         }
         
-        [_people addObject:userDict];
+        [_addressbook_people addObject:userDict];
       }
     }
   }
@@ -143,18 +156,32 @@
 
 - (IBAction)sendButtonSelected:(id)sender
 {
+  //Create the array
+  _recipients = [NSMutableArray arrayWithCapacity:_selectedRecipients.allKeys.count];
+  for(NSIndexPath *indexPath in _selectedRecipients.allKeys)
+  {
+    [_recipients addObject:_swaggerList[indexPath.row -1]];
+  }
+  
   [[InfinitTemporaryFileManager sharedInstance] addAssetsLibraryURLList:self.assetURL_array toManagedFiles:_managed_files_id performSelector:@selector(addAssetsLibraryCallback:) onObject:self];
+  
+}
+
+- (void)addAssetsLibraryCallback:(id)sender
+{
   
   NSArray* files =
   [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:_managed_files_id];
   
   //Recipients are infinit users.
   NSArray* ids = [[InfinitPeerTransactionManager sharedInstance] sendFiles:files
-                                                              toRecipients:nil
+                                                              toRecipients:_recipients
                                                                withMessage:@"from iOS"];
+  
   [[InfinitTemporaryFileManager sharedInstance] setTransactionIds:ids
                                                   forManagedFiles:_managed_files_id];
   
+  [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Table view data source
@@ -169,8 +196,9 @@
 {
   if(section == 0)
   {
-    return 1;
-  } else
+    return 1 + _swaggerList.count;
+  }
+  else
   {
     //Return 1 if its not right
     return 1;
@@ -186,21 +214,28 @@
   {
     SendCell* cell = (SendCell*)[tableView dequeueReusableCellWithIdentifier:@"sendCell"
                                                                 forIndexPath:indexPath];
-    
-    cell.nameLabel.text = @"My Computer";
-    /*
-    NSString *name = [_people[indexPath.row] objectForKey:@"fullname"];
-    if(name)
+    if(indexPath.row == 0)
     {
-      cell.nameLabel.text = name;
+      cell.nameLabel.text = @"My Computer";
     }
-    
-    UIImage *image = [_people[indexPath.row] objectForKey:@"avatar"];
-    if(image)
+    else
     {
-      cell.avatarImageView.image = image;
+      //We have a swagger list.  Objects are either InfinitUser or EmailString
+      if([_swaggerList[indexPath.row - 1] isKindOfClass:[InfinitUser class]])
+      {
+        InfinitUser *user = _swaggerList[indexPath.row - 1];
+        cell.nameLabel.text = user.fullname;
+        if(user.avatar)
+        {
+          cell.avatarImageView.image = user.avatar;
+        }
+      }
+      else if ([_swaggerList[indexPath.row - 1] isKindOfClass:[NSString class]])
+      {
+        cell.nameLabel.text = _swaggerList[indexPath.row - 1];
+      }
     }
-     */
+
     
     if([_selectedRecipients objectForKey:indexPath])
     {
@@ -241,7 +276,7 @@ heightForHeaderInSection:(NSInteger)section
   
 }
 
-- (CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
   if (indexPath.section == 0)
   {
@@ -297,44 +332,40 @@ viewForHeaderInSection:(NSInteger)section
 - (void)tableView:(UITableView*)tableView
 didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
-  //IF the cell is my computer show the popover view :-).
-  /*
-  [self showMyComputerView];
-   */
-  
-  //Let's put the checkmark on here.  Put it into the dictionary too.
-  //Redraw The Image as blurry, and put a check mark on it.
-  SendCell* cell = (SendCell*)[tableView cellForRowAtIndexPath:indexPath];
-  
-  if(_selectedRecipients == nil)
+  if(indexPath.section == 0)
   {
-    _selectedRecipients = [[NSMutableDictionary alloc] init];
-  }
-  
-  if([_selectedRecipients objectForKey:indexPath])
-  {
-    cell.checkMark.image = [UIImage imageNamed:@"icon-contact-check"];
-    [_selectedRecipients removeObjectForKey:indexPath];
+    SendCell* cell = (SendCell*)[tableView cellForRowAtIndexPath:indexPath];
     
-    NSString* buttonString = [NSString stringWithFormat:@"SEND (%lu)", (unsigned long)_selectedRecipients.allKeys.count];
-    
-    [_sendButton setTitle:buttonString
-                 forState:UIControlStateNormal];
-    
-    if(_selectedRecipients.allKeys.count == 0)
+    if(_selectedRecipients == nil)
     {
-      self.sendButton.hidden = YES;
+      _selectedRecipients = [[NSMutableDictionary alloc] init];
     }
-  }
-  else
-  {
-    self.sendButton.hidden = NO;
-    cell.checkMark.image = [UIImage imageNamed:@"icon-contact-checked"];
-    [_selectedRecipients setObject:indexPath forKey:indexPath];
-  
-    NSString* buttonString = [NSString stringWithFormat:@"SEND (%lu)", (unsigned long)_selectedRecipients.allKeys.count];
-    [_sendButton setTitle:buttonString
-                 forState:UIControlStateNormal];
+    
+    if([_selectedRecipients objectForKey:indexPath])
+    {
+      cell.checkMark.image = [UIImage imageNamed:@"icon-contact-check"];
+      [_selectedRecipients removeObjectForKey:indexPath];
+      
+      NSString* buttonString = [NSString stringWithFormat:@"SEND (%lu)", (unsigned long)_selectedRecipients.allKeys.count];
+      
+      [_sendButton setTitle:buttonString
+                   forState:UIControlStateNormal];
+      
+      if(_selectedRecipients.allKeys.count == 0)
+      {
+        self.sendButton.hidden = YES;
+      }
+    }
+    else
+    {
+      self.sendButton.hidden = NO;
+      cell.checkMark.image = [UIImage imageNamed:@"icon-contact-checked"];
+      [_selectedRecipients setObject:indexPath forKey:indexPath];
+      
+      NSString* buttonString = [NSString stringWithFormat:@"SEND (%lu)", (unsigned long)_selectedRecipients.allKeys.count];
+      [_sendButton setTitle:buttonString
+                   forState:UIControlStateNormal];
+    }
   }
   [tableView deselectRowAtIndexPath:indexPath
                            animated:NO];
@@ -357,7 +388,8 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   _inviteBarButtonView = [[UIView alloc] initWithFrame:  CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height + 44)];
   _inviteBarButtonView.backgroundColor = [UIColor colorWithRed:81/255.0 green:81/255.0 blue:73/255.0 alpha:1];
   
-  UIButton *importPhoneButton = [[UIButton alloc] initWithFrame:CGRectMake(27, self.view.frame.size.height - 267, self.view.frame.size.width - 54, 55)];
+  UIButton* importPhoneButton =
+    [[UIButton alloc] initWithFrame:CGRectMake(27, self.view.frame.size.height - 267, self.view.frame.size.width - 54, 55)];
   [importPhoneButton setTitle:@"IMPORT PHONE CONTACTS" forState:UIControlStateNormal];
   [importPhoneButton setTitleColor:[UIColor colorWithRed:137/255.0 green:137/255.0 blue:137/255.0 alpha:1]
                           forState:UIControlStateNormal];
@@ -368,7 +400,8 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   importPhoneButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14];
   [_inviteBarButtonView addSubview:importPhoneButton];
   
-  UIButton *findFacebookFriendsButton = [[UIButton alloc] initWithFrame:CGRectMake(27, self.view.frame.size.height - 199, self.view.frame.size.width - 54, 55)];
+  UIButton* findFacebookFriendsButton =
+    [[UIButton alloc] initWithFrame:CGRectMake(27, self.view.frame.size.height - 199, self.view.frame.size.width - 54, 55)];
   [findFacebookFriendsButton setTitle:@"FIND FACEBOOK FRIENDS" forState:UIControlStateNormal];
   [findFacebookFriendsButton setTitleColor:[UIColor colorWithRed:42/255.0 green:108/255.0 blue:181/255.0 alpha:1]
                                   forState:UIControlStateNormal];
@@ -381,7 +414,8 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   findFacebookFriendsButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14];
   [_inviteBarButtonView addSubview:findFacebookFriendsButton];
   
-  UIButton *findPeopleButton = [[UIButton alloc] initWithFrame:CGRectMake(27, self.view.frame.size.height - 131, self.view.frame.size.width - 54, 55)];
+  UIButton* findPeopleButton =
+    [[UIButton alloc] initWithFrame:CGRectMake(27, self.view.frame.size.height - 131, self.view.frame.size.width - 54, 55)];
   [findPeopleButton setTitle:@"FIND PEOPLE ON INFINIT" forState:UIControlStateNormal];
   [findPeopleButton setTitleColor:[UIColor colorWithRed:242/255.0 green:94/255.0 blue:90/255.0 alpha:1]
                          forState:UIControlStateNormal];
@@ -394,7 +428,8 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   findPeopleButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14];
   [_inviteBarButtonView addSubview:findPeopleButton];
   
-  UIButton *cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(27, self.view.frame.size.height - 63, self.view.frame.size.width - 54, 55)];
+  UIButton* cancelButton =
+    [[UIButton alloc] initWithFrame:CGRectMake(27, self.view.frame.size.height - 63, self.view.frame.size.width - 54, 55)];
   [cancelButton setTitle:@"CANCEL" forState:UIControlStateNormal];
   [cancelButton setTitleColor:[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1]
                      forState:UIControlStateNormal];
@@ -408,8 +443,8 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   [cancelButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [_inviteBarButtonView addSubview:cancelButton];
   
-  UITapGestureRecognizer *dismissInviteButtonView =
-  [[UITapGestureRecognizer alloc] initWithTarget:self
+  UITapGestureRecognizer* dismissInviteButtonView =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
                                           action:@selector(cancelInviteBarButtonView)];
   [_inviteBarButtonView addGestureRecognizer:dismissInviteButtonView];
   
@@ -428,7 +463,8 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   
   _myComputerView.backgroundColor = [UIColor colorWithRed:81/255.0 green:81/255.0 blue:73/255.0 alpha:1];
   
-  UILabel *boldLabel = [[UILabel alloc] initWithFrame:CGRectMake(35, 142, 250, 70)];
+  UILabel* boldLabel =
+    [[UILabel alloc] initWithFrame:CGRectMake(35, 142, 250, 70)];
   boldLabel.text = @"You have Infinit installed on \n 2 other devices.";
   boldLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:20];
   boldLabel.numberOfLines = 2;
@@ -436,7 +472,8 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   boldLabel.textColor = [UIColor whiteColor];
   [_myComputerView addSubview:boldLabel];
   
-  UILabel *lightLabel = [[UILabel alloc] initWithFrame:CGRectMake(35, 249, 250, 77)];
+  UILabel* lightLabel =
+    [[UILabel alloc] initWithFrame:CGRectMake(35, 249, 250, 77)];
   lightLabel.text = @"A notification will be sent to \n your 2 devices. Accept the files \n on the device you want!";
   lightLabel.numberOfLines = 3;
   lightLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17];
@@ -444,7 +481,8 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   lightLabel.textColor = [UIColor whiteColor];
   [_myComputerView addSubview:lightLabel];
   
-  UIButton *cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(27, 475, 266, 55)];
+  UIButton* cancelButton =
+    [[UIButton alloc] initWithFrame:CGRectMake(27, 475, 266, 55)];
   [cancelButton setTitle:@"GOT IT" forState:UIControlStateNormal];
   [cancelButton setTitleColor:[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1]
                      forState:UIControlStateNormal];
