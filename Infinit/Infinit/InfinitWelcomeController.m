@@ -234,6 +234,7 @@
   }
   if (overlay_view == nil)
     return;
+  [self.view bringSubviewToFront:overlay_view];
   CGRect new_frame = CGRectMake(0.0f, self.view.frame.size.height - height,
                                 self.view.frame.size.width, overlay_view.frame.size.height);
   [UIView animateWithDuration:0.5f
@@ -528,13 +529,23 @@
 
 - (void)keyboardWillShow:(NSNotification*)notification
 {
-  // Get the size of the keyboard.
   CGSize keyboard_size =
-    [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
 
-  [UIView animateWithDuration:0.5f animations:^{
+  [UIView animateWithDuration:0.5f
+                        delay:0.0f
+                      options:UIViewAnimationOptionCurveEaseInOut
+                   animations:^
+  {
     self.view.frame = CGRectMake(0.0f, -keyboard_size.height,
                                  self.view.frame.size.width, self.view.frame.size.height);
+  } completion:^(BOOL finished)
+  {
+    if (!finished)
+    {
+      self.view.frame = CGRectMake(0.0f, -keyboard_size.height,
+                                   self.view.frame.size.width, self.view.frame.size.height);
+    }
   }];
 }
 
@@ -550,7 +561,6 @@
   }
   else if (textField == self.signup_form_view.password_field)
   {
-    [self keyboardEntryDone];
     [self tryRegister];
   }
   else if (textField == self.login_form_view.email_field)
@@ -559,7 +569,6 @@
   }
   else if (textField == self.login_form_view.password_field)
   {
-    [self keyboardEntryDone];
     [self tryLogin];
   }
   return YES;
@@ -573,6 +582,7 @@
   if ([self loginInputsGood])
   {
     [self.view endEditing:YES];
+    [self keyboardEntryDone];
     [self.login_form_view.activity startAnimating];
     self.login_form_view.email_field.enabled = NO;
     self.login_form_view.password_field.enabled = NO;
@@ -659,6 +669,7 @@
   if ([self registerInputsGood])
   {
     [self.view endEditing:YES];
+    [self keyboardEntryDone];
     [self.signup_form_view.activity startAnimating];
     self.signup_form_view.email_field.enabled = NO;
     self.signup_form_view.fullname_field.enabled = NO;
