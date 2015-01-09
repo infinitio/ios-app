@@ -7,10 +7,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="Montserrat-Regular.ttf">
-            <string>Montserrat-Regular</string>
-            <string>Montserrat-Regular</string>
-            <string>Montserrat-Regular</string>
+        <mutableArray key="SourceSansPro-Bold.otf">
+            <string>SourceSansPro-Bold</string>
+            <string>SourceSansPro-Bold</string>
+            <string>SourceSansPro-Bold</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -77,7 +77,7 @@
                                     <constraint firstAttribute="width" constant="280" id="EkD-CP-ux3"/>
                                     <constraint firstAttribute="height" constant="60" id="Lxn-hA-Huq"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
                                 <state key="normal" title="LOG IN">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -88,7 +88,7 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <action selector="loginButtonTapped:" destination="z8c-Mh-SQ1" eventType="touchUpInside" id="6AI-8i-qoo"/>
+                                    <action selector="loginOrRegisterTapped:" destination="z8c-Mh-SQ1" eventType="touchUpInside" id="Wpq-i8-LSQ"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cUm-Pm-ow2">
@@ -99,7 +99,7 @@
                                     <constraint firstAttribute="height" constant="60" id="In5-ab-Phm"/>
                                     <constraint firstAttribute="height" constant="60" id="Mbx-dt-To1"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
                                 <state key="normal" title="SIGN UP WITH EMAIL">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -111,7 +111,7 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <action selector="signupWithEmailSelected:" destination="z8c-Mh-SQ1" eventType="touchUpInside" id="coG-tE-bFd"/>
+                                    <action selector="loginOrRegisterTapped:" destination="z8c-Mh-SQ1" eventType="touchUpInside" id="K9W-vg-wgU"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Ll-4d-pK2">
@@ -122,7 +122,7 @@
                                     <constraint firstAttribute="height" constant="60" id="LP1-fA-VQc"/>
                                     <constraint firstAttribute="height" constant="60" id="YQD-AD-HLd"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="14"/>
+                                <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
                                 <inset key="imageEdgeInsets" minX="-15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <state key="normal" title="SIGN UP WITH FACEBOOK" image="icon-facebook-white">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -135,7 +135,7 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <action selector="facebookButtonSelected:" destination="z8c-Mh-SQ1" eventType="touchUpInside" id="XUK-lb-YS4"/>
+                                    <action selector="facebookButtonTapped:" destination="z8c-Mh-SQ1" eventType="touchUpInside" id="MYl-bi-UJD"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rux-55-a1T">
