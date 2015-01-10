@@ -61,7 +61,6 @@
 		83FE9C8B1A161F6D00FC1CFD /* InfinitLinkSendController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FE9C8A1A161F6D00FC1CFD /* InfinitLinkSendController.m */; };
 		D00045BD1A499A20008DB448 /* ImportContactsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D00045BC1A499A20008DB448 /* ImportContactsCell.m */; };
 		D00045C11A49AD55008DB448 /* inviteView.m in Sources */ = {isa = PBXBuildFile; fileRef = D00045C01A49AD55008DB448 /* inviteView.m */; };
-		D01208BF1A5C0E2D000E92CB /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D01208BD1A5C0E2D000E92CB /* Bolts.framework */; };
 		D01208C01A5C0E2E000E92CB /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D01208BE1A5C0E2D000E92CB /* FacebookSDK.framework */; };
 		D01A64541A4861800041A8C2 /* FileGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D01A64531A4861800041A8C2 /* FileGridCell.m */; };
 		D01A64581A4861930041A8C2 /* FileListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D01A64571A4861930041A8C2 /* FileListCell.m */; };
@@ -220,7 +219,6 @@
 		D00045BC1A499A20008DB448 /* ImportContactsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImportContactsCell.m; sourceTree = "<group>"; };
 		D00045BF1A49AD55008DB448 /* inviteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inviteView.h; sourceTree = "<group>"; };
 		D00045C01A49AD55008DB448 /* inviteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = inviteView.m; sourceTree = "<group>"; };
-		D01208BD1A5C0E2D000E92CB /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		D01208BE1A5C0E2D000E92CB /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		D01A64521A4861800041A8C2 /* FileGridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileGridCell.h; sourceTree = "<group>"; };
 		D01A64531A4861800041A8C2 /* FileGridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileGridCell.m; sourceTree = "<group>"; };
@@ -303,7 +301,6 @@
 				83F4D0791A1388760068BEB2 /* libgap.a in Frameworks */,
 				83F4D06F1A13885B0068BEB2 /* libreactor.a in Frameworks */,
 				83F4D07B1A1388760068BEB2 /* libstation.a in Frameworks */,
-				D01208BF1A5C0E2D000E92CB /* Bolts.framework in Frameworks */,
 				83F4D0821A1388F40068BEB2 /* libbackend_boost_context.a in Frameworks */,
 				83F4D0631A1388170068BEB2 /* libcurl.a in Frameworks */,
 				83F4D0251A1374660068BEB2 /* libc++.dylib in Frameworks */,
@@ -353,7 +350,6 @@
 		836F5C8A1A16670F007C9C4E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D01208BD1A5C0E2D000E92CB /* Bolts.framework */,
 				D01208BE1A5C0E2D000E92CB /* FacebookSDK.framework */,
 				833DFCBB1A2F837400B0D213 /* AssetsLibrary.framework */,
 				836F5C8B1A166720007C9C4E /* SystemConfiguration.framework */,
