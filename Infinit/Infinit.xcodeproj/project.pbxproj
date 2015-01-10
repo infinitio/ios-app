@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		831237281A602C6900D5C41C /* InfinitSendTabIcon.m in Sources */ = {isa = PBXBuildFile; fileRef = 831237271A602C6900D5C41C /* InfinitSendTabIcon.m */; };
+		8312372B1A613A3800D5C41C /* InfinitAccessGalleryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8312372A1A613A3800D5C41C /* InfinitAccessGalleryView.xib */; };
+		8312372F1A613A8900D5C41C /* InfinitAccessGalleryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8312372E1A613A8900D5C41C /* InfinitAccessGalleryView.m */; };
 		833DFCBC1A2F837400B0D213 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 833DFCBB1A2F837400B0D213 /* AssetsLibrary.framework */; };
 		83612F8E1A5D7FDB00BDF7CE /* NSData+Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = 83612F8D1A5D7FDB00BDF7CE /* NSData+Conversion.m */; };
 		8365DE881A5E8694003527DE /* InfinitColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8365DE871A5E8694003527DE /* InfinitColor.m */; };
@@ -149,6 +151,9 @@
 /* Begin PBXFileReference section */
 		831237261A602C6900D5C41C /* InfinitSendTabIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendTabIcon.h; sourceTree = "<group>"; };
 		831237271A602C6900D5C41C /* InfinitSendTabIcon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendTabIcon.m; sourceTree = "<group>"; };
+		8312372A1A613A3800D5C41C /* InfinitAccessGalleryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitAccessGalleryView.xib; sourceTree = "<group>"; };
+		8312372D1A613A8900D5C41C /* InfinitAccessGalleryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitAccessGalleryView.h; sourceTree = "<group>"; };
+		8312372E1A613A8900D5C41C /* InfinitAccessGalleryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitAccessGalleryView.m; sourceTree = "<group>"; };
 		833DFCBB1A2F837400B0D213 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		83612F8C1A5D7FDB00BDF7CE /* NSData+Conversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Conversion.h"; sourceTree = "<group>"; };
 		83612F8D1A5D7FDB00BDF7CE /* NSData+Conversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Conversion.m"; sourceTree = "<group>"; };
@@ -335,6 +340,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		831237291A613A1C00D5C41C /* Access Gallery */ = {
+			isa = PBXGroup;
+			children = (
+				8312372A1A613A3800D5C41C /* InfinitAccessGalleryView.xib */,
+				8312372D1A613A8900D5C41C /* InfinitAccessGalleryView.h */,
+				8312372E1A613A8900D5C41C /* InfinitAccessGalleryView.m */,
+			);
+			name = "Access Gallery";
+			sourceTree = "<group>";
+		};
 		83612F881A5D7F9500BDF7CE /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -650,6 +665,7 @@
 		D0AFCBB41A254699003AC152 /* Send */ = {
 			isa = PBXGroup;
 			children = (
+				831237291A613A1C00D5C41C /* Access Gallery */,
 				D04988141A59EFC8008B1C24 /* Cells */,
 				D00045BF1A49AD55008DB448 /* inviteView.h */,
 				D00045C01A49AD55008DB448 /* inviteView.m */,
@@ -795,6 +811,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D09848211A43391B002D26AC /* Montserrat-Regular.ttf in Resources */,
+				8312372B1A613A3800D5C41C /* InfinitAccessGalleryView.xib in Resources */,
 				D098481D1A43391B002D26AC /* SourceSansPro-Semibold.otf in Resources */,
 				D09848191A43391B002D26AC /* SourceSansPro-It.otf in Resources */,
 				83B32E0A1A136614004AB945 /* Main.storyboard in Resources */,
@@ -862,6 +879,7 @@
 				D05D5D1A1A24C4B1005529E8 /* InfCollectionViewCell.m in Sources */,
 				D05726B31A50BA880097083C /* SendCell.m in Sources */,
 				D01A645B1A48635C0041A8C2 /* InfinitFileCollectionViewController.m in Sources */,
+				8312372F1A613A8900D5C41C /* InfinitAccessGalleryView.m in Sources */,
 				D02F43331A5DA39900447E84 /* WelcomeLoginFormView.m in Sources */,
 				D0BC70431A41B4B7006923F2 /* InfinitTabBarController.m in Sources */,
 				D0BD351F1A42202300AB8EF9 /* InfinitFileViewController.m in Sources */,
