@@ -47,9 +47,6 @@
 
 @implementation InfinitWelcomeController
 
-- (void)awakeFromNib
-{}
-
 - (void)viewDidLoad
 {
   [super viewDidLoad];
@@ -274,7 +271,7 @@
     [self.view endEditing:YES];
     CGRect main_frame = CGRectMake(0.0f, 0.0f,
                                    self.view.frame.size.width, self.view.frame.size.height);
-    [UIView animateWithDuration:0.5f
+    [UIView animateWithDuration:0.25f
                           delay:0.0f
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^
@@ -284,7 +281,7 @@
     {
       if (finished)
       {
-        [UIView animateWithDuration:0.5f
+        [UIView animateWithDuration:0.25f
                               delay:0.0f
                             options:UIViewAnimationOptionCurveEaseInOut animations:^
         {
