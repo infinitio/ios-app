@@ -123,41 +123,51 @@ shouldSelectViewController:(UIViewController*)viewController
   self.permission_view.image_view.hidden = YES;
   self.permission_view.message_label.text =
     NSLocalizedString(@"Tap \"OK\" to start sending\nyour photos and videos", nil);
-  sleep(1.0f);
+  UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
+                                                  message:@"Give me permission!"
+                                                 delegate:nil
+                                        cancelButtonTitle:nil
+                                        otherButtonTitles:@"OK", nil];
+  alert.delegate = self;
+  [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
   ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
   [library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos
                          usingBlock:^(ALAssetsGroup* group, BOOL* stop)
-  {
-    *stop = YES;
-    CGPoint center = CGPointMake(self.view.frame.size.width / 2.0f, self.view.frame.size.height -
-                                 self.send_tab_icon.frame.size.height / 3.0f);
-    CGFloat radius = hypotf(self.view.frame.size.width, self.view.frame.size.height);
-    CGRect start_rect = CGRectMake(center.x - radius, center.y - radius,
-                                   2.0f * radius, 2.0f * radius);
-    CGRect final_rect = CGRectMake(center.x, center.y, 0.0f, 0.0f);
-    self.permission_view.layer.mask = [self animatedMaskLayerFrom:start_rect
-                                                               to:final_rect
-                                                     withDuration:0.5f
-                                               andCompletionBlock:^
-    {
-      [self.permission_view performSelector:@selector(removeFromSuperview)
-                                 withObject:nil
-                                 afterDelay:0.51f];
-      self.permission_view = nil;
-    }];
-    self.selectedIndex = 2;
-    [self selectorToPosition:2];
-  } failureBlock:^(NSError* error)
-  {
-    if (error.code == ALAssetsLibraryAccessUserDeniedError)
-    {
-      NSLog(@"user denied access, code: %i",error.code);
-    }
-    else
-    {
-      NSLog(@"Other error code: %i",error.code);
-    }
-  }];
+   {
+     *stop = YES;
+     CGPoint center = CGPointMake(self.view.frame.size.width / 2.0f, self.view.frame.size.height -
+                                  self.send_tab_icon.frame.size.height / 3.0f);
+     CGFloat radius = hypotf(self.view.frame.size.width, self.view.frame.size.height);
+     CGRect start_rect = CGRectMake(center.x - radius, center.y - radius,
+                                    2.0f * radius, 2.0f * radius);
+     CGRect final_rect = CGRectMake(center.x, center.y, 0.0f, 0.0f);
+     self.permission_view.layer.mask = [self animatedMaskLayerFrom:start_rect
+                                                                to:final_rect
+                                                      withDuration:0.5f
+                                                andCompletionBlock:^
+     {
+       [self.permission_view performSelector:@selector(removeFromSuperview)
+                                  withObject:nil
+                                  afterDelay:0.51f];
+       self.permission_view = nil;
+     }];
+     self.selectedIndex = 2;
+     [self selectorToPosition:2];
+   } failureBlock:^(NSError* error)
+   {
+     if (error.code == ALAssetsLibraryAccessUserDeniedError)
+     {
+       NSLog(@"user denied access, code: %i",error.code);
+     }
+     else
+     {
+       NSLog(@"Other error code: %i",error.code);
+     }
+   }];
 }
 
 - (void)selectorToPosition:(NSInteger)position
