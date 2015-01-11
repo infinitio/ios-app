@@ -79,7 +79,7 @@
 		D03FAAF91A479D2C005A8244 /* CGLContact.m in Sources */ = {isa = PBXBuildFile; fileRef = D03FAAF81A479D2C005A8244 /* CGLContact.m */; };
 		D03FAAFC1A47A3B1005A8244 /* ContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D03FAAFB1A47A3B1005A8244 /* ContactCell.m */; };
 		D05726B31A50BA880097083C /* SendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D05726B11A50BA880097083C /* SendCell.m */; };
-		D05D5D1A1A24C4B1005529E8 /* InfCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D05D5D191A24C4B1005529E8 /* InfCollectionViewCell.m */; };
+		D05D5D1A1A24C4B1005529E8 /* InfinitGalleryViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D05D5D191A24C4B1005529E8 /* InfinitGalleryViewCell.m */; };
 		D0659F661A3E865A0001ACAE /* InfinitWelcomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0659F651A3E865A0001ACAE /* InfinitWelcomeController.m */; };
 		D09848131A43391B002D26AC /* SourceSansPro-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = D09848041A43391B002D26AC /* SourceSansPro-Black.otf */; };
 		D09848141A43391B002D26AC /* SourceSansPro-BlackIt.otf in Resources */ = {isa = PBXBuildFile; fileRef = D09848051A43391B002D26AC /* SourceSansPro-BlackIt.otf */; };
@@ -254,8 +254,8 @@
 		D03FAAFB1A47A3B1005A8244 /* ContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactCell.m; sourceTree = "<group>"; };
 		D05726B11A50BA880097083C /* SendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendCell.m; sourceTree = "<group>"; };
 		D05726B21A50BA880097083C /* SendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendCell.h; sourceTree = "<group>"; };
-		D05D5D181A24C4B1005529E8 /* InfCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfCollectionViewCell.h; sourceTree = "<group>"; };
-		D05D5D191A24C4B1005529E8 /* InfCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfCollectionViewCell.m; sourceTree = "<group>"; };
+		D05D5D181A24C4B1005529E8 /* InfinitGalleryViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitGalleryViewCell.h; sourceTree = "<group>"; };
+		D05D5D191A24C4B1005529E8 /* InfinitGalleryViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitGalleryViewCell.m; sourceTree = "<group>"; };
 		D0659F641A3E865A0001ACAE /* InfinitWelcomeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitWelcomeController.h; sourceTree = "<group>"; };
 		D0659F651A3E865A0001ACAE /* InfinitWelcomeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitWelcomeController.m; sourceTree = "<group>"; };
 		D09848041A43391B002D26AC /* SourceSansPro-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSansPro-Black.otf"; sourceTree = "<group>"; };
@@ -604,8 +604,8 @@
 				D05726B11A50BA880097083C /* SendCell.m */,
 				D00045BB1A499A20008DB448 /* ImportContactsCell.h */,
 				D00045BC1A499A20008DB448 /* ImportContactsCell.m */,
-				D05D5D181A24C4B1005529E8 /* InfCollectionViewCell.h */,
-				D05D5D191A24C4B1005529E8 /* InfCollectionViewCell.m */,
+				D05D5D181A24C4B1005529E8 /* InfinitGalleryViewCell.h */,
+				D05D5D191A24C4B1005529E8 /* InfinitGalleryViewCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -882,7 +882,7 @@
 				83B32D631A136485004AB945 /* main.m in Sources */,
 				D00045BD1A499A20008DB448 /* ImportContactsCell.m in Sources */,
 				D02FF50B1A4DACA600A93DBD /* ContactOtherCell.m in Sources */,
-				D05D5D1A1A24C4B1005529E8 /* InfCollectionViewCell.m in Sources */,
+				D05D5D1A1A24C4B1005529E8 /* InfinitGalleryViewCell.m in Sources */,
 				D05726B31A50BA880097083C /* SendCell.m in Sources */,
 				D01A645B1A48635C0041A8C2 /* InfinitFileCollectionViewController.m in Sources */,
 				8312372F1A613A8900D5C41C /* InfinitAccessGalleryView.m in Sources */,
