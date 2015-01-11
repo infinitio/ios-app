@@ -17,7 +17,8 @@
 @implementation AppDelegate
 
 
-- (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
+- (BOOL)application:(UIApplication*)application
+didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
   [InfinitConnectionManager sharedInstance];
   [InfinitStateManager startState];
@@ -63,7 +64,9 @@
 }
 
 // This method will handle ALL the session state changes in the app
-- (void)sessionStateChanged:(FBSession*)session state:(FBSessionState) state error:(NSError*)error
+- (void)sessionStateChanged:(FBSession*)session
+                      state:(FBSessionState)state
+                      error:(NSError*)error
 {
   
   // If the session was opened successfully
