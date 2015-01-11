@@ -10,16 +10,16 @@
 
 @interface WelcomeLoginFormView : UIView
 
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView* activity;
-@property (weak, nonatomic) IBOutlet UIButton* back_button;
-@property (weak, nonatomic) IBOutlet UIButton* avatar_button;
-@property (weak, nonatomic) IBOutlet UITextField* email_field;
-@property (weak, nonatomic) IBOutlet UITextField* password_field;
-@property (weak, nonatomic) IBOutlet UIButton* facebook_button;
-@property (weak, nonatomic) IBOutlet UIImageView* email_image;
-@property (weak, nonatomic) IBOutlet UIImageView* password_image;
-@property (weak, nonatomic) IBOutlet UIButton* next_button;
-@property (weak, nonatomic) IBOutlet UILabel* error_label;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView* activity;
+@property (nonatomic, weak) IBOutlet UIButton* back_button;
+@property (nonatomic, weak) IBOutlet UIButton* avatar_button;
+@property (nonatomic, weak) IBOutlet UITextField* email_field;
+@property (nonatomic, weak) IBOutlet UITextField* password_field;
+@property (nonatomic, weak) IBOutlet UIButton* facebook_button;
+@property (nonatomic, weak) IBOutlet UIImageView* email_image;
+@property (nonatomic, weak) IBOutlet UIImageView* password_image;
+@property (nonatomic, weak) IBOutlet UIButton* next_button;
+@property (nonatomic, weak) IBOutlet UILabel* error_label;
 
 @property (nonatomic, readonly) CGFloat height;
 

@@ -29,19 +29,19 @@
                                         UIImagePickerControllerDelegate,
                                         UINavigationControllerDelegate>
 
-@property (strong, nonatomic) WelcomeLoginFormView* login_form_view;
-@property (strong, nonatomic) WelcomeSignupFormView* signup_form_view;
+@property (nonatomic, strong) WelcomeLoginFormView* login_form_view;
+@property (nonatomic, strong) WelcomeSignupFormView* signup_form_view;
 
-@property (weak, nonatomic) IBOutlet UIImageView* logo_image_view;
-@property (weak, nonatomic) IBOutlet UIImageView* balloon_image_view;
+@property (nonatomic, weak) IBOutlet UIImageView* logo_image_view;
+@property (nonatomic, weak) IBOutlet UIImageView* balloon_image_view;
 
-@property (weak, nonatomic) IBOutlet UIButton* signup_with_facebook_button;
-@property (weak, nonatomic) IBOutlet UIButton* signup_with_email_button;
-@property (weak, nonatomic) IBOutlet UIButton* login_button;
-@property (weak, nonatomic) IBOutlet UILabel* tagline;
+@property (nonatomic, weak) IBOutlet UIButton* signup_with_facebook_button;
+@property (nonatomic, weak) IBOutlet UIButton* signup_with_email_button;
+@property (nonatomic, weak) IBOutlet UIButton* login_button;
+@property (nonatomic, weak) IBOutlet UILabel* tagline;
 
-@property (strong, nonatomic) UIImage* avatar_image;
-@property (strong, nonatomic) UIImagePickerController* picker;
+@property (nonatomic, strong) UIImage* avatar_image;
+@property (nonatomic, strong) UIImagePickerController* picker;
 
 @end
 
