@@ -8,8 +8,9 @@
 
 #import "InfinitMediaCollectionViewController.h"
 
-#import "InfCollectionViewCell.h"
+#import "InfinitGalleryViewCell.h"
 #import "InfinitSelectPeopleViewController.h"
+#import "InfinitTabBarController.h"
 
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AVFoundation/AVFoundation.h>
@@ -18,73 +19,79 @@
 
 @interface InfinitMediaCollectionViewController ()
 
-@property(nonatomic, strong) NSArray* assets;
-@property (nonatomic, strong) NSMutableDictionary* selected_media;
-@property(nonatomic, strong) NSMutableArray* assetURL_array;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem* next_button;
+@property (nonatomic, strong) NSArray* assets;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem* next_button;
 
 @end
 
 @implementation InfinitMediaCollectionViewController
+{
+@private
+  NSString* _cell_identifier;
+}
 
-static NSString* const reuseIdentifier = @"mediaCell";
+- (id)initWithCoder:(NSCoder*)aDecoder
+{
+  if (self = [super initWithCoder:aDecoder])
+  {
+    _cell_identifier = @"gallery_cell";
+  }
+  return self;
+}
 
 - (void)viewDidLoad
 {
+  self.collectionView.allowsMultipleSelection = YES;
   [super viewDidLoad];
+  [self.collectionView registerClass:[InfinitGalleryViewCell class]
+          forCellWithReuseIdentifier:_cell_identifier];
   self.navigationController.navigationBar.clipsToBounds = YES;
-  // Uncomment the following line to preserve selection between presentations
-  // self.clearsSelectionOnViewWillAppear = NO;
-  
-  // Register cell classes
-  [self.collectionView registerClass:[InfCollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
-  
-  
-  NSDictionary* lightAttributes =
-    @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:17],
-      NSForegroundColorAttributeName: [UIColor whiteColor]};
-  [self.navigationController.navigationBar setTitleTextAttributes:lightAttributes];
-  
-  NSDictionary* attributes =
-    @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold" size:18]};
-  [_next_button setTitleTextAttributes:attributes forState:UIControlStateNormal];
-  
+
+  NSDictionary* nav_bar_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
+                                                                       size:17.0f],
+                                  NSForegroundColorAttributeName: [UIColor whiteColor]};
+  [self.navigationController.navigationBar setTitleTextAttributes:nav_bar_attrs];
+  [self.next_button setTitleTextAttributes:nav_bar_attrs forState:UIControlStateNormal];
+  [self loadAssets];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+  if (self.assets == nil)
+    [self loadAssets];
+  [self setNextButtonTitle];
   [super viewWillAppear:animated];
-  
-  //Makes sure we get the most recent ones even when view has been loaded before.
-  [self loadAssets];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+  [super viewDidAppear:animated];
+  [self.collectionViewLayout invalidateLayout];
 }
 
 - (void)loadAssets
 {
-  _assets = [@[] mutableCopy];
-  __block NSMutableArray* tmpAssets = [@[] mutableCopy];
-  ALAssetsLibrary* assetsLibrary = [self defaultAssetsLibrary];
-  
-  [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:^(ALAssetsGroup* group, BOOL* stop) {
-    [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
-      if(result)
+  __block NSMutableArray* temp_assets = [NSMutableArray array];
+
+  [[self defaultAssetsLibrary] enumerateGroupsWithTypes:ALAssetsGroupAll
+                                             usingBlock:^(ALAssetsGroup* group, BOOL* stop)
+  {
+    [group enumerateAssetsUsingBlock:^(ALAsset* result, NSUInteger index, BOOL* stop)
+    {
+      if (result)
       {
-        [tmpAssets addObject:result];
+        [temp_assets addObject:result];
       }
     }];
-    
-    // Can sort these things.  DO THIS. *****
-    //NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO];
-    //self.assets = [tmpAssets sortedArrayUsingDescriptors:@[sort]];
-    self.assets = tmpAssets;
-    
+    self.assets = temp_assets;
     [self.collectionView reloadData];
-  } failureBlock:^(NSError* error) {
+  } failureBlock:^(NSError* error)
+  {
     NSLog(@"Error loading images %@", error);
   }];
 }
 
-#pragma mark AssetsLirbary Call
+#pragma mark AssetsLibrary Call
 
 - (ALAssetsLibrary*)defaultAssetsLibrary
 {
@@ -101,60 +108,40 @@ static NSString* const reuseIdentifier = @"mediaCell";
 - (NSInteger)collectionView:(UICollectionView*)collectionView
      numberOfItemsInSection:(NSInteger)section
 {
-  return _assets.count;
+  return self.assets.count;
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView
                  cellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
-  InfCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-  
+  InfinitGalleryViewCell* cell =
+    [collectionView dequeueReusableCellWithReuseIdentifier:_cell_identifier
+                                              forIndexPath:indexPath];
+
   ALAsset* asset = self.assets[self.assets.count - 1 - indexPath.row];
-  UIImage* image = [[UIImage alloc] init];
-  CGFloat scale  = 1;
-  
+  cell.asset_url = asset.defaultRepresentation.url;
+
   if ([asset valueForProperty:ALAssetPropertyType] == ALAssetTypeVideo)
   {
-    
-    if ([asset valueForProperty:ALAssetPropertyDuration] != ALErrorInvalidProperty) {
+    if ([asset valueForProperty:ALAssetPropertyDuration] != ALErrorInvalidProperty)
+    {
       NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-      [formatter setDateFormat:@"mm:ss"];
-      
-      cell.durationLabel.text = [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:[[asset valueForProperty:ALAssetPropertyDuration] doubleValue]]];
-      [cell.contentView addSubview:cell.durationLabel];
-      
+      formatter.dateFormat = @"mm:ss";
+      NSTimeInterval duration = [[asset valueForProperty:ALAssetPropertyDuration] doubleValue];
+      cell.duration_label.text =
+        [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:duration]];
+      [cell.contentView addSubview:cell.duration_label];
     }
-    
-    
-    UIImage* thumbnail = [UIImage imageWithCGImage:[asset thumbnail]
-                                             scale:scale
-                                       orientation:UIImageOrientationUp];
-    
-    image = thumbnail;
-    
+    cell.image_view.image = [UIImage imageWithCGImage:asset.thumbnail
+                                                scale:1.0f
+                                          orientation:UIImageOrientationUp];
   }
-  
-  if ([asset valueForProperty:ALAssetPropertyType] == ALAssetTypePhoto)
+  else if ([asset valueForProperty:ALAssetPropertyType] == ALAssetTypePhoto)
   {
-    image = [UIImage imageWithCGImage:[asset thumbnail]
-                                scale:scale
-                          orientation:UIImageOrientationUp];
+    cell.image_view.image = [UIImage imageWithCGImage:asset.thumbnail
+                                                scale:1.0f
+                                          orientation:UIImageOrientationUp];
   }
-  
-  cell.imageView.image = image;
-  
-
-  if([_selected_media objectForKey:indexPath])
-  {
-    cell.checkMark.hidden = NO;
-    cell.blackLayer.hidden = NO;
-  } else {
-    cell.checkMark.hidden = YES;
-    cell.blackLayer.hidden = YES;
-  }
- 
-  
-  
   return cell;
 }
 
@@ -164,127 +151,100 @@ static NSString* const reuseIdentifier = @"mediaCell";
                   layout:(UICollectionViewLayout*)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath*)indexPath
 {
-  return CGSizeMake(self.view.frame.size.width/3 - 4, self.view.frame.size.width/3 - 4);
-}
-
-- (UIEdgeInsets)collectionView:(UICollectionView*)collectionView
-                        layout:(UICollectionViewLayout*)collectionViewLayout
-        insetForSectionAtIndex:(NSInteger)section
-{
-  return UIEdgeInsetsMake(0, 0, 0, 0);
-  
-}
-
-- (CGFloat)collectionView:(UICollectionView*)collectionView
-                   layout:(UICollectionViewLayout*)collectionViewLayout
-minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
-{
-  return 4.0;
-}
-
-- (CGFloat)collectionView:(UICollectionView*)collectionView
-                   layout:(UICollectionViewLayout*)collectionViewLayout
-minimumLineSpacingForSectionAtIndex:(NSInteger)section
-{
-  return 4.0;
+  return CGSizeMake(self.view.frame.size.width / 3.0f - 4.0f,
+                    self.view.frame.size.width / 3.0f - 4.0f);
 }
 
 # pragma mark - UICollectionViewDelegate
 
-- (void)collectionView:(UICollectionView*)collectionView didSelectItemAtIndexPath:(NSIndexPath*)indexPath
+- (void)collectionView:(UICollectionView*)collectionView
+didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
-  //Redraw The Image as blurry, and put a check mark on it.
-  InfCollectionViewCell* cell = (InfCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
-  
-  [self.collectionView bringSubviewToFront:cell];
+  [self collectionView:collectionView setSelected:YES atIndexPath:indexPath withAnimation:YES];
+}
 
-  [UIView animateWithDuration:0.12 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-    cell.transform = CGAffineTransformMakeScale(.75, .75);
-  } completion:^(BOOL finished){
-    // do something once the animation finishes, put it here
-    [UIView animateWithDuration:0.12 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-      cell.transform = CGAffineTransformMakeScale(1.25, 1.25);
-    } completion:^(BOOL finished){
-      // do something once the animation finishes, put it here
-      [UIView animateWithDuration:0.12 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        cell.transform = CGAffineTransformMakeScale(.9, .9);
-      } completion:^(BOOL finished){
-        // do something once the animation finishes, put it here
-        [UIView animateWithDuration:0.12 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-          cell.transform = CGAffineTransformMakeScale(1.1, 1.1);
-        } completion:^(BOOL finished) {
-          
-          [UIView animateWithDuration:0.12 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+- (void)collectionView:(UICollectionView*)collectionView
+didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
+{
+  [self collectionView:collectionView setSelected:NO atIndexPath:indexPath withAnimation:YES];
+}
+
+- (void)collectionView:(UICollectionView*)collectionView
+           setSelected:(BOOL)selected
+           atIndexPath:(NSIndexPath*)indexPath
+         withAnimation:(BOOL)animate
+{
+  InfinitGalleryViewCell* cell =
+    (InfinitGalleryViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
+  if (animate)
+  {
+    [UIView animateWithDuration:0.1f
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^
+     {
+       cell.transform = CGAffineTransformMakeScale(0.75f, 0.75f);
+     } completion:^(BOOL finished)
+     {
+       [UIView animateWithDuration:0.75f
+                             delay:0.0f
+            usingSpringWithDamping:0.3f
+             initialSpringVelocity:25.0f
+                           options:UIViewAnimationOptionCurveEaseInOut
+                        animations:^
+        {
+          cell.transform = CGAffineTransformIdentity;
+        } completion:^(BOOL finished)
+        {
+          if (!finished)
+          {
             cell.transform = CGAffineTransformIdentity;
-          } completion:nil];
+          }
         }];
-      }];
-    }];
-  }];
-    
-
-  
-  
-  if(_selected_media == nil)
-  {
-    _selected_media = [[NSMutableDictionary alloc] init];
+     }];
   }
-  
-  
-  if([_selected_media objectForKey:indexPath])
-  {
-    cell.checkMark.hidden = YES;
-    cell.blackLayer.hidden = YES;
-    
-    [_selected_media removeObjectForKey:indexPath];
-    
-    NSString* buttonString = [NSString stringWithFormat:@"Next (%lu)", (unsigned long)_selected_media.allKeys.count];
-    [UIView performWithoutAnimation:^ {
-      [self.next_button setTitle:buttonString];
-    }];
-  }
-  else
-  {
-    cell.checkMark.hidden = NO;
-    cell.blackLayer.hidden = NO;
-
-    [_selected_media setObject:indexPath forKey:indexPath];
-    
-    NSString* buttonString = [NSString stringWithFormat:@"Next (%lu)", (unsigned long)_selected_media.allKeys.count];
-    
-    [UIView performWithoutAnimation:^ {
-      [self.next_button setTitle:buttonString];
-    }];
-  }
-  
-  [collectionView deselectItemAtIndexPath:indexPath animated:NO];
+  [self setNextButtonTitle];
 }
 
-- (IBAction)backButtonClicked:(id)sender
+- (IBAction)backButtonTapped:(id)sender
 {
-  [self dismissViewControllerAnimated:YES completion:nil];
+  for (NSIndexPath* path in self.collectionView.indexPathsForSelectedItems)
+    [self.collectionView deselectItemAtIndexPath:path animated:NO];
+  self.assets = nil;
+  [(InfinitTabBarController*)self.tabBarController lastSelectedIndex];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)prepareForSegue:(UIStoryboardSegue*)segue sender:(id)sender
 {
   if([segue.identifier isEqualToString:@"send2Segue"])
   {
-    _assetURL_array = [[NSMutableArray alloc] init];
-    for(NSIndexPath *indexPath in _selected_media.allKeys)
+    NSMutableArray* asset_urls = [NSMutableArray array];
+    for (NSIndexPath* path in self.collectionView.indexPathsForSelectedItems)
     {
-      ALAsset* asset = self.assets[self.assets.count - 1 - indexPath.row];
-      [_assetURL_array addObject:asset.defaultRepresentation.url];
+      InfinitGalleryViewCell* cell =
+        (InfinitGalleryViewCell*)[self.collectionView cellForItemAtIndexPath:path];
+      [asset_urls addObject:cell.asset_url];
     }
-    
-    InfinitSelectPeopleViewController *view_controller = (InfinitSelectPeopleViewController*)segue.destinationViewController;
-    view_controller.assetURL_array = _assetURL_array;
+    InfinitSelectPeopleViewController* view_controller =
+      (InfinitSelectPeopleViewController*)segue.destinationViewController;
+    view_controller.asset_urls = asset_urls;
   }
 }
 
--(BOOL)prefersStatusBarHidden
+- (BOOL)prefersStatusBarHidden
 {
   return YES;
 }
 
+- (void)setNextButtonTitle
+{
+  NSNumber* count = @(self.collectionView.indexPathsForSelectedItems.count);
+  NSMutableString* next_str = [NSMutableString stringWithString:NSLocalizedString(@"Next", nil)];
+  if (count.unsignedIntegerValue > 0)
+    [next_str appendFormat:@" (%@)", count];
+  [UIView performWithoutAnimation:^{
+    self.next_button.title = next_str;
+  }];
+}
 
 @end
