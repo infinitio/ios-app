@@ -11,18 +11,30 @@
 #import "InfinitAccessGalleryView.h"
 #import "InfinitColor.h"
 #import "InfinitSendTabIcon.h"
+#import "InfinitTabAnimator.h"
 
 #import <AssetsLibrary/AssetsLibrary.h>
 
 @interface InfinitTabBarController ()
 
-@property (strong, nonatomic) InfinitAccessGalleryView* permission_view;
-@property (strong, nonatomic) UIView* selection_indicator;
-@property (strong, nonatomic) InfinitSendTabIcon* send_tab_icon;
+@property (nonatomic) NSUInteger last_index;
+@property (nonatomic, strong) InfinitAccessGalleryView* permission_view;
+@property (nonatomic, strong) UIView* selection_indicator;
+@property (nonatomic, strong) InfinitSendTabIcon* send_tab_icon;
+@property (nonatomic, strong) InfinitTabAnimator* animator;
 
 @end
 
 @implementation InfinitTabBarController
+
+- (id)initWithCoder:(NSCoder*)aDecoder
+{
+  if (self = [super initWithCoder:aDecoder])
+  {
+    _animator = [[InfinitTabAnimator alloc] init];
+  }
+  return self;
+}
 
 - (void)viewDidLoad
 {
@@ -52,11 +64,25 @@
 
 }
 
+- (void)setSelectedIndex:(NSUInteger)selectedIndex
+{
+  [super setSelectedIndex:selectedIndex];
+  [self selectorToPosition:selectedIndex];
+}
+
+- (void)lastSelectedIndex
+{
+  self.selectedIndex = _last_index;
+}
+
+#pragma mark Delegate Functions
+
 static BOOL asked_permission = NO;
 
 - (BOOL)tabBarController:(UITabBarController*)tabBarController
 shouldSelectViewController:(UIViewController*)viewController
 {
+  _last_index = self.selectedIndex;
   if ([viewController.title isEqualToString:@"SETTINGS"])
   {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -70,27 +96,46 @@ shouldSelectViewController:(UIViewController*)viewController
   {
 //    if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusNotDetermined)
 //    {
-    if (!asked_permission)
-    {
-      asked_permission = YES;
-      [self loadPermissionView];
-      return NO;
-    }
+//    if (!asked_permission)
+//    {
+//      asked_permission = YES;
+//      [self loadPermissionView];
+//      return NO;
+//    }
 //    }
 //    else if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusDenied)
 //    {
 //      NSLog(@"xxx no permission for gallery");
 //    }
   }
-  for (NSInteger i = 0; i < self.viewControllers.count; i++)
-  {
-    if (viewController == self.viewControllers[i])
-    {
-      [self selectorToPosition:i];
-      break;
-    }
-  }
+  NSUInteger index = [self.viewControllers indexOfObject:viewController];
+  [self selectorToPosition:index];
   return YES;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)tabBarController:(UITabBarController*)tabBarController
+           animationControllerForTransitionFromViewController:(UIViewController*)fromVC
+                                             toViewController:(UIViewController*)toVC
+{
+  if ([toVC.title isEqualToString:@"SEND"])
+  {
+    self.animator.reverse = NO;
+    self.animator.up_animation = YES;
+  }
+  else if ([fromVC.title isEqualToString:@"SEND"])
+  {
+    self.animator.reverse = YES;
+    self.animator.up_animation = YES;
+  }
+  else
+  {
+    self.animator.up_animation = NO;
+    if ([self.viewControllers indexOfObject:toVC] > [self.viewControllers indexOfObject:fromVC])
+      self.animator.reverse = NO;
+    else
+      self.animator.reverse = YES;
+  }
+  return self.animator;
 }
 
 - (void)loadPermissionView
@@ -156,7 +201,6 @@ shouldSelectViewController:(UIViewController*)viewController
        self.permission_view = nil;
      }];
      self.selectedIndex = 2;
-     [self selectorToPosition:2];
    } failureBlock:^(NSError* error)
    {
      if (error.code == ALAssetsLibraryAccessUserDeniedError)

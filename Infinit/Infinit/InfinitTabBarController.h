@@ -11,4 +11,6 @@
 
 @interface InfinitTabBarController : UITabBarController <UITabBarControllerDelegate>
 
+- (void)lastSelectedIndex;
+
 @end
