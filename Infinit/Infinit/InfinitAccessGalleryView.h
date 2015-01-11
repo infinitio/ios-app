@@ -10,8 +10,8 @@
 
 @interface InfinitAccessGalleryView : UIView
 
-@property (weak, nonatomic) IBOutlet UIButton* access_button;
-@property (weak, nonatomic) IBOutlet UILabel* message_label;
-@property (weak, nonatomic) IBOutlet UIImageView* image_view;
+@property (nonatomic, weak) IBOutlet UIButton* access_button;
+@property (nonatomic, weak) IBOutlet UILabel* message_label;
+@property (nonatomic, weak) IBOutlet UIImageView* image_view;
 
 @end
