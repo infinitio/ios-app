@@ -1,12 +1,12 @@
 //
-//  InfinitMediaCollectionViewController.m
+//  InfinitSendMediaViewController.m
 //  Infinit
 //
 //  Created by Michael Dee on 12/17/14.
 //  Copyright (c) 2014 Infinit. All rights reserved.
 //
 
-#import "InfinitMediaCollectionViewController.h"
+#import "InfinitSendMediaViewController.h"
 
 #import "InfinitGalleryViewCell.h"
 #import "InfinitSelectPeopleViewController.h"
@@ -17,14 +17,14 @@
 
 #import <Gap/InfinitTemporaryFileManager.h>
 
-@interface InfinitMediaCollectionViewController ()
+@interface InfinitSendMediaViewController ()
 
 @property (nonatomic, strong) NSArray* assets;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem* next_button;
 
 @end
 
-@implementation InfinitMediaCollectionViewController
+@implementation InfinitSendMediaViewController
 {
 @private
   NSString* _cell_identifier;
@@ -43,7 +43,7 @@
 {
   self.collectionView.allowsMultipleSelection = YES;
   [super viewDidLoad];
-  [self.collectionView registerClass:[InfinitGalleryViewCell class]
+  [self.collectionView registerClass:InfinitGalleryViewCell.class
           forCellWithReuseIdentifier:_cell_identifier];
   self.navigationController.navigationBar.clipsToBounds = YES;
 
@@ -142,6 +142,10 @@
                                                 scale:1.0f
                                           orientation:UIImageOrientationUp];
   }
+  if ([self.collectionView.indexPathsForSelectedItems containsObject:indexPath])
+    cell.selected = YES;
+  else
+    cell.selected = NO;
   return cell;
 }
 
@@ -242,7 +246,8 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
   NSMutableString* next_str = [NSMutableString stringWithString:NSLocalizedString(@"Next", nil)];
   if (count.unsignedIntegerValue > 0)
     [next_str appendFormat:@" (%@)", count];
-  [UIView performWithoutAnimation:^{
+  [UIView performWithoutAnimation:^
+  {
     self.next_button.title = next_str;
   }];
 }

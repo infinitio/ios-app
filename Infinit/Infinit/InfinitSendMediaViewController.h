@@ -1,5 +1,5 @@
 //
-//  InfinitMediaCollectionViewController.h
+//  InfinitSendMediaViewController.h
 //  Infinit
 //
 //  Created by Michael Dee on 12/17/14.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InfinitMediaCollectionViewController : UICollectionViewController
+@interface InfinitSendMediaViewController : UICollectionViewController
 
 @end
