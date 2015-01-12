@@ -66,6 +66,8 @@
 
 - (void)setSelectedIndex:(NSUInteger)selectedIndex
 {
+  if (selectedIndex == self.selectedIndex)
+    return;
   [super setSelectedIndex:selectedIndex];
   [self selectorToPosition:selectedIndex];
 }
@@ -177,7 +179,8 @@ shouldSelectViewController:(UIViewController*)viewController
   [alert show];
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void)alertView:(UIAlertView*)alertView
+clickedButtonAtIndex:(NSInteger)buttonIndex
 {
   ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
   [library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos
@@ -239,7 +242,7 @@ shouldSelectViewController:(UIViewController*)viewController
   anim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
   anim.fromValue = (__bridge id)([UIBezierPath bezierPathWithOvalInRect:start_rect].CGPath);
   anim.toValue = (__bridge id)([UIBezierPath bezierPathWithOvalInRect:final_rect].CGPath);
-  CAShapeLayer* res = [[CAShapeLayer alloc] init];
+  CAShapeLayer* res = [CAShapeLayer layer];
   res.path = [UIBezierPath bezierPathWithOvalInRect:final_rect].CGPath;
   res.backgroundColor = [UIColor blackColor].CGColor;
   [CATransaction setCompletionBlock:block];
