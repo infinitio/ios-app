@@ -41,19 +41,19 @@
   NSMutableArray* peerTransactions =
     [[[InfinitPeerTransactionManager sharedInstance] transactions] mutableCopy];
   
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(transactionUpdated:)
-                                               name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION
-                                             object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(transactionAdded:)
-                                               name:INFINIT_NEW_PEER_TRANSACTION_NOTIFICATION
-                                             object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(newAvatar:)
-                                               name:INFINIT_USER_AVATAR_NOTIFICATION
-                                             object:nil];
-  
+//  [[NSNotificationCenter defaultCenter] addObserver:self
+//                                           selector:@selector(transactionUpdated:)
+//                                               name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION
+//                                             object:nil];
+//  [[NSNotificationCenter defaultCenter] addObserver:self
+//                                           selector:@selector(transactionAdded:)
+//                                               name:INFINIT_NEW_PEER_TRANSACTION_NOTIFICATION
+//                                             object:nil];
+//  [[NSNotificationCenter defaultCenter] addObserver:self
+//                                           selector:@selector(newAvatar:)
+//                                               name:INFINIT_USER_AVATAR_NOTIFICATION
+//                                             object:nil];
+
   
 }
 
