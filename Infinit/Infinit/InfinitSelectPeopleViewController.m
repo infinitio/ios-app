@@ -15,6 +15,7 @@
 #import "InfinitImportOverlayView.h"
 #import "InfinitSendUserCell.h"
 #import "InfinitSendImportCell.h"
+#import "InfinitSendContactCell.h"
 #import "InfinitSendContactsHeaderView.h"
 
 #import <Gap/InfinitPeerTransactionManager.h>
@@ -43,18 +44,27 @@
 @private
   NSString* _managed_files_id;
 
+  NSString* _contact_cell_id;
   NSString* _import_cell_id;
   NSString* _user_cell_id;
 }
+
+#pragma mark Init
 
 - (id)initWithCoder:(NSCoder*)aDecoder
 {
   if (self = [super initWithCoder:aDecoder])
   {
+    _contact_cell_id = @"send_contact_cell";
     _import_cell_id = @"send_import_cell";
     _user_cell_id = @"send_user_cell";
   }
   return self;
+}
+
+- (BOOL)prefersStatusBarHidden
+{
+  return YES;
 }
 
 - (void)viewDidLoad
@@ -74,6 +84,7 @@
   [self fetchSwaggers];
   if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
   {
+    [self fetchAddressBook];
   }
   if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined)
   {
@@ -89,7 +100,36 @@
     InfinitContact* contact = [[InfinitContact alloc] initWithInfinitUser:user];
     [self.swagger_results addObject:contact];
   }
-  [self.table_view reloadData];
+  [self.table_view reloadSections:[NSIndexSet indexSetWithIndex:0]
+                 withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+- (void)fetchAddressBook
+{
+  if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
+  {
+    CFErrorRef* error = nil;
+    ABAddressBookRef address_book = ABAddressBookCreateWithOptions(NULL, error);
+    ABRecordRef source = ABAddressBookCopyDefaultSource(address_book);
+    CFArrayRef contacts =
+      ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(address_book,
+                                                                source,
+                                                                kABPersonSortByFirstName);
+    _other_results = [NSMutableArray array];
+
+    for (int i = 0; i < CFArrayGetCount(contacts); i++)
+    {
+      ABRecordRef person = CFArrayGetValueAtIndex(contacts, i);
+      if (person)
+      {
+        InfinitContact* contact = [[InfinitContact alloc] initWithABRecord:person];
+        if (contact != nil)
+          [self.other_results addObject:contact];
+      }
+    }
+    [self.table_view reloadSections:[NSIndexSet indexSetWithIndex:1]
+                   withRowAnimation:UITableViewRowAnimationAutomatic];
+  }
 }
 
 #pragma mark Overlays
@@ -201,72 +241,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
   }];
 }
 
-- (void)fetchAddressBook
-{
-  CFErrorRef* error = nil;
-  ABAddressBookRef address_book = ABAddressBookCreateWithOptions(NULL, error);
-  __block BOOL access_granted = NO;
-
-  if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined)
-  {
-    if (ABAddressBookRequestAccessWithCompletion != NULL)
-    {
-      dispatch_semaphore_t sema = dispatch_semaphore_create(0);
-      ABAddressBookRequestAccessWithCompletion(address_book, ^(bool granted, CFErrorRef error)
-      {
-        access_granted = granted;
-        dispatch_semaphore_signal(sema);
-      });
-      dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
-    }
-  }
-  else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
-  {
-    access_granted = YES;
-  }
-
-  if (access_granted)
-  {
-    ABRecordRef source = ABAddressBookCopyDefaultSource(address_book);
-    CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(address_book, source, kABPersonSortByFirstName);
-    
-    _other_results = [NSMutableArray array];
-
-    for (int i = 0; i < CFArrayGetCount(allPeople); i++)
-    {
-      ABRecordRef person = CFArrayGetValueAtIndex(allPeople, i);
-      if(person)
-      {
-        NSString *firstName = (__bridge NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
-        NSString *lastName = (__bridge NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);
-        
-        NSMutableDictionary *userDict = [[NSMutableDictionary alloc] init];
-        if (firstName && lastName)
-        {
-          [userDict setObject:[NSString stringWithFormat:@"%@ %@", firstName, lastName] forKey:@"fullname"];
-        }
-        else if(firstName)
-        {
-          [userDict setObject:firstName forKey:@"fullname"];
-        }
-        else if(lastName)
-        {
-          [userDict setObject:lastName forKey:@"fullname"];
-        }
-        
-        NSData  *imgData = (__bridge NSData *)ABPersonCopyImageData(person);
-        UIImage *image = [UIImage imageWithData:imgData];
-        if(image)
-        {
-          [userDict setObject:image forKey:@"avatar"];
-        }
-        
-        [self.other_results addObject:userDict];
-      }
-    }
-  }
-}
-
 #pragma mark Button Handling
 
 - (IBAction)backButtonTapped:(id)sender
@@ -277,20 +251,37 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
 
 - (IBAction)sendButtonTapped:(id)sender
 {
+  [self setSendButtonHidden:YES];
   [[InfinitTemporaryFileManager sharedInstance] addAssetsLibraryURLList:self.asset_urls
                                                          toManagedFiles:_managed_files_id
                                                         performSelector:@selector(temporaryFileManagerCallback)
                                                                onObject:self];
 }
 
+- (IBAction)inviteBarButtonTapped:(id)sender
+{
+  
+}
+
 - (void)temporaryFileManagerCallback
 {
   NSArray* files =
     [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:_managed_files_id];
+  NSMutableArray* actual_recipients = [NSMutableArray array];
 
-  //Recipients are infinit users.
+  for (InfinitContact* contact in self.recipients)
+  {
+    if (contact.infinit_user != nil)
+    {
+      [actual_recipients addObject:contact.infinit_user];
+    }
+    else
+    {
+      NSLog(@"xxx only handle users for now");
+    }
+  }
   NSArray* ids = [[InfinitPeerTransactionManager sharedInstance] sendFiles:files
-                                                              toRecipients:nil
+                                                              toRecipients:actual_recipients
                                                                withMessage:@"from iOS"];
   [[InfinitTemporaryFileManager sharedInstance] setTransactionIds:ids
                                                   forManagedFiles:_managed_files_id];
@@ -312,7 +303,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
   }
   else
   {
-    return 1;
+    return (self.other_results.count > 0 ? self.other_results.count : 1);
   }
 }
 
@@ -320,25 +311,37 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
 - (UITableViewCell*)tableView:(UITableView*)tableView
         cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
+  UITableViewCell* res = nil;
   if (indexPath.section == 0)
   {
     InfinitSendUserCell* cell =
       (InfinitSendUserCell*)[tableView dequeueReusableCellWithIdentifier:_user_cell_id];
     cell.contact = self.swagger_results[indexPath.row];
-
-    if ([self.table_view.indexPathsForSelectedRows containsObject:indexPath])
-      cell.selected = YES;
-    else
-      cell.selected = NO;
-     
-    return cell;
+    res = cell;
   }
   else
   {
-    InfinitSendImportCell* cell =
-      (InfinitSendImportCell*)[tableView dequeueReusableCellWithIdentifier:_import_cell_id];
-    return cell;
+    if (self.other_results.count == 0)
+    {
+      InfinitSendImportCell* cell =
+        (InfinitSendImportCell*)[tableView dequeueReusableCellWithIdentifier:_import_cell_id];
+      res = cell;
+    }
+    else
+    {
+      InfinitSendContactCell* cell =
+        (InfinitSendContactCell*)[tableView dequeueReusableCellWithIdentifier:_contact_cell_id];
+      cell.contact = self.other_results[indexPath.row];
+      res = cell;
+    }
   }
+
+  if ([self.table_view.indexPathsForSelectedRows containsObject:indexPath])
+    res.selected = YES;
+  else
+    res.selected = NO;
+
+  return res;
 }
 
 - (CGFloat)tableView:(UITableView*)tableView
@@ -356,7 +359,7 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
   }
   else
   {
-    return 349.0f;
+    return (self.other_results.count == 0 ? 349.0f : 61.0f);
   }
 }
 
@@ -382,7 +385,15 @@ viewForHeaderInSection:(NSInteger)section
 }
 
 
-#pragma mark TableViewDelegate
+#pragma mark Table View Delegate
+
+- (BOOL)tableView:(UITableView*)tableView
+shouldHighlightRowAtIndexPath:(NSIndexPath*)indexPath
+{
+  if (self.other_results.count == 0 && indexPath.section == 1)
+    return NO;
+  return YES;
+}
 
 - (void)tableView:(UITableView*)tableView
 didSelectRowAtIndexPath:(NSIndexPath*)indexPath
@@ -392,6 +403,7 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   InfinitContact* contact =
     [(InfinitSendAbstractCell*)([self.table_view cellForRowAtIndexPath:indexPath]) contact];
   [_recipients addObject:contact];
+  [self updateSendButton];
 }
 
 - (void)tableView:(UITableView*)tableView
@@ -400,7 +412,10 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
   InfinitContact* contact =
     [(InfinitSendAbstractCell*)([self.table_view cellForRowAtIndexPath:indexPath]) contact];
   [_recipients removeObject:contact];
+  [self updateSendButton];
 }
+
+#pragma mark Text Input Handling
 
 - (BOOL)textFieldShouldReturn:(UITextField*)textField
 {
@@ -408,124 +423,50 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
   return YES;
 }
 
--(BOOL)prefersStatusBarHidden
+#pragma mark Helpers
+
+- (void)setSendButtonHidden:(BOOL)hidden
 {
+  CGFloat constraint_final;
+  if (hidden)
+  {
+    self.send_button.enabled = NO;
+    constraint_final = - self.send_button.frame.size.height;
+  }
+  else
+  {
+    self.send_button.enabled = YES;
+    constraint_final = 0.0f;
+  }
+  if (self.send_constraint.constant == constraint_final)
+    return;
+  [UIView animateWithDuration:0.3f
+                        delay:0.0f
+                      options:UIViewAnimationOptionCurveEaseInOut
+                   animations:^
+   {
+     self.send_constraint.constant = constraint_final;
+     [self.view layoutIfNeeded];
+   } completion:^(BOOL finished)
+   {
+     if (!finished)
+       self.send_constraint.constant = constraint_final;
+   }];
+}
+
+- (void)updateSendButton
+{
+  if ([self inputsGood])
+    [self setSendButtonHidden:NO];
+  else
+    [self setSendButtonHidden:YES];
+}
+
+- (BOOL)inputsGood
+{
+  if (self.asset_urls.count == 0 || self.recipients.count == 0)
+    return NO;
   return YES;
-}
-
-- (IBAction)inviteBarButtonSelected:(id)sender
-{
-//  _inviteBarButtonView = [[UIView alloc] initWithFrame:  CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height + 44)];
-//  _inviteBarButtonView.backgroundColor = [UIColor colorWithRed:81/255.0 green:81/255.0 blue:73/255.0 alpha:1];
-//  
-//  UIButton *importPhoneButton = [[UIButton alloc] initWithFrame:CGRectMake(27, self.view.frame.size.height - 267, self.view.frame.size.width - 54, 55)];
-//  [importPhoneButton setTitle:@"IMPORT PHONE CONTACTS" forState:UIControlStateNormal];
-//  [importPhoneButton setTitleColor:[UIColor colorWithRed:137/255.0 green:137/255.0 blue:137/255.0 alpha:1]
-//                          forState:UIControlStateNormal];
-//  importPhoneButton.backgroundColor = [UIColor whiteColor];
-//  importPhoneButton.layer.cornerRadius = 2.5f;
-//  importPhoneButton.layer.borderWidth = 1.0f;
-//  importPhoneButton.layer.borderColor = ([[[UIColor colorWithRed:137/255.0 green:137/255.0 blue:137/255.0 alpha:1] colorWithAlphaComponent:1] CGColor]);
-//  importPhoneButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14];
-//  [_inviteBarButtonView addSubview:importPhoneButton];
-//  
-//  UIButton *findFacebookFriendsButton = [[UIButton alloc] initWithFrame:CGRectMake(27, self.view.frame.size.height - 199, self.view.frame.size.width - 54, 55)];
-//  [findFacebookFriendsButton setTitle:@"FIND FACEBOOK FRIENDS" forState:UIControlStateNormal];
-//  [findFacebookFriendsButton setTitleColor:[UIColor colorWithRed:42/255.0 green:108/255.0 blue:181/255.0 alpha:1]
-//                                  forState:UIControlStateNormal];
-//  [findFacebookFriendsButton setImage:[UIImage imageNamed:@"icon-facebook-blue"]
-//                             forState:UIControlStateNormal];
-//  findFacebookFriendsButton.backgroundColor = [UIColor whiteColor];
-//  findFacebookFriendsButton.layer.cornerRadius = 2.5f;
-//  findFacebookFriendsButton.layer.borderWidth = 1.0f;
-//  findFacebookFriendsButton.layer.borderColor = ([[[UIColor colorWithRed:42/255.0 green:108/255.0 blue:181/255.0 alpha:1] colorWithAlphaComponent:1] CGColor]);
-//  findFacebookFriendsButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14];
-//  [_inviteBarButtonView addSubview:findFacebookFriendsButton];
-//  
-//  UIButton *findPeopleButton = [[UIButton alloc] initWithFrame:CGRectMake(27, self.view.frame.size.height - 131, self.view.frame.size.width - 54, 55)];
-//  [findPeopleButton setTitle:@"FIND PEOPLE ON INFINIT" forState:UIControlStateNormal];
-//  [findPeopleButton setTitleColor:[UIColor colorWithRed:242/255.0 green:94/255.0 blue:90/255.0 alpha:1]
-//                         forState:UIControlStateNormal];
-//  [findPeopleButton setImage:[UIImage imageNamed:@"icon-infinit-red"]
-//                    forState:UIControlStateNormal];
-//  findPeopleButton.backgroundColor = [UIColor whiteColor];
-//  findPeopleButton.layer.cornerRadius = 2.5f;
-//  findPeopleButton.layer.borderWidth = 1.0f;
-//  findPeopleButton.layer.borderColor = ([[[UIColor colorWithRed:242/255.0 green:94/255.0 blue:90/255.0 alpha:1] colorWithAlphaComponent:1] CGColor]);
-//  findPeopleButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14];
-//  [_inviteBarButtonView addSubview:findPeopleButton];
-//  
-//  UIButton *cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(27, self.view.frame.size.height - 63, self.view.frame.size.width - 54, 55)];
-//  [cancelButton setTitle:@"CANCEL" forState:UIControlStateNormal];
-//  [cancelButton setTitleColor:[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1]
-//                     forState:UIControlStateNormal];
-//  cancelButton.layer.cornerRadius = 2.5f;
-//  cancelButton.layer.borderWidth = 1.0f;
-//  cancelButton.layer.borderColor = ([[UIColor whiteColor] CGColor]);
-//  cancelButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14];
-//  [cancelButton addTarget:self
-//                   action:@selector(cancelInviteBarButtonView)
-//         forControlEvents:UIControlEventTouchUpInside];
-//  [cancelButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//  [_inviteBarButtonView addSubview:cancelButton];
-//  
-//  UITapGestureRecognizer *dismissInviteButtonView =
-//  [[UITapGestureRecognizer alloc] initWithTarget:self
-//                                          action:@selector(cancelInviteBarButtonView)];
-//  [_inviteBarButtonView addGestureRecognizer:dismissInviteButtonView];
-//  
-//  
-//  [[[[UIApplication sharedApplication] delegate] window] addSubview:_inviteBarButtonView];
-}
-
-- (void)cancelInviteBarButtonView
-{
-//  [_inviteBarButtonView removeFromSuperview];
-}
-
-- (void)showMyComputerView
-{
-//  _myself_view = [[UIView alloc] initWithFrame:  CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height + 44)];
-//  
-//  self.myself_view.backgroundColor = [UIColor colorWithRed:81/255.0 green:81/255.0 blue:73/255.0 alpha:1];
-//  
-//  UILabel *boldLabel = [[UILabel alloc] initWithFrame:CGRectMake(35, 142, 250, 70)];
-//  boldLabel.text = @"You have Infinit installed on \n 2 other devices.";
-//  boldLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:20];
-//  boldLabel.numberOfLines = 2;
-//  boldLabel.textAlignment = NSTextAlignmentCenter;
-//  boldLabel.textColor = [UIColor whiteColor];
-//  [self.myself_view addSubview:boldLabel];
-//  
-//  UILabel *lightLabel = [[UILabel alloc] initWithFrame:CGRectMake(35, 249, 250, 77)];
-//  lightLabel.text = @"A notification will be sent to \n your 2 devices. Accept the files \n on the device you want!";
-//  lightLabel.numberOfLines = 3;
-//  lightLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17];
-//  lightLabel.textAlignment = NSTextAlignmentCenter;
-//  lightLabel.textColor = [UIColor whiteColor];
-//  [self.myself_view addSubview:lightLabel];
-//  
-//  UIButton *cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(27, 475, 266, 55)];
-//  [cancelButton setTitle:@"GOT IT" forState:UIControlStateNormal];
-//  [cancelButton setTitleColor:[UIColor colorWithRed:0/255.0 green:0/255.0 blue:0/255.0 alpha:1]
-//                     forState:UIControlStateNormal];
-//  cancelButton.titleLabel.textColor = [UIColor whiteColor];
-//  cancelButton.layer.cornerRadius = 2.5f;
-//  cancelButton.layer.borderWidth = 1.0f;
-//  cancelButton.layer.borderColor = ([[UIColor whiteColor] CGColor]);
-//  cancelButton.titleLabel.font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14];
-//  [cancelButton addTarget:self
-//                   action:@selector(cancelMyComputerView)
-//         forControlEvents:UIControlEventTouchUpInside];
-//  [self.myself_view addSubview:cancelButton];
-//  
-//  
-//  [[[[UIApplication sharedApplication] delegate] window] addSubview:self.myself_view];
-}
-
-- (void)cancelMyComputerView
-{
-//  [self.myself_view removeFromSuperview];
 }
 
 @end
