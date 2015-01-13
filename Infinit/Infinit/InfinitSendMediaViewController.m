@@ -39,6 +39,16 @@
   return self;
 }
 
+- (BOOL)prefersStatusBarHidden
+{
+  return YES;
+}
+
+- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation
+{
+  return UIStatusBarAnimationSlide;
+}
+
 - (void)viewDidLoad
 {
   self.collectionView.allowsMultipleSelection = YES;
@@ -50,8 +60,10 @@
   NSDictionary* nav_bar_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
                                                                        size:17.0f],
                                   NSForegroundColorAttributeName: [UIColor whiteColor]};
+  NSDictionary* clear_attrs = @{NSForegroundColorAttributeName: [UIColor clearColor]};
   [self.navigationController.navigationBar setTitleTextAttributes:nav_bar_attrs];
   [self.next_button setTitleTextAttributes:nav_bar_attrs forState:UIControlStateNormal];
+  [self.next_button setTitleTextAttributes:clear_attrs forState:UIControlStateDisabled];
   [self loadAssets];
 }
 
@@ -60,6 +72,10 @@
   if (self.assets == nil)
     [self loadAssets];
   [self setNextButtonTitle];
+  if (self.collectionView.indexPathsForSelectedItems.count == 0)
+    self.next_button.enabled = NO;
+  else
+    self.next_button.enabled = YES;
   [super viewWillAppear:animated];
 }
 
@@ -207,6 +223,10 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
         }];
      }];
   }
+  if (self.collectionView.indexPathsForSelectedItems.count == 0)
+    self.next_button.enabled = NO;
+  else
+    self.next_button.enabled = YES;
   [self setNextButtonTitle];
 }
 
@@ -233,11 +253,6 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
       (InfinitSelectPeopleViewController*)segue.destinationViewController;
     view_controller.asset_urls = asset_urls;
   }
-}
-
-- (BOOL)prefersStatusBarHidden
-{
-  return YES;
 }
 
 - (void)setNextButtonTitle
