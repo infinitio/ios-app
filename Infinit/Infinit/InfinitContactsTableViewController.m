@@ -9,7 +9,6 @@
 #import "InfinitContactsTableViewController.h"
 
 #import "ContactCell.h"
-#import "ImportContactsCell.h"
 #import "ContactOtherCell.h"
 
 #import <AddressBook/AddressBook.h>
