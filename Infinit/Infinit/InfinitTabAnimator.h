@@ -9,10 +9,17 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSUInteger, InfinitAnimations) {
+  AnimateRightLeft,
+  AnimateDownUp,
+  AnimateCircleCover,
+};
+
 @interface InfinitTabAnimator : NSObject <UIViewControllerAnimatedTransitioning>
 
+@property (nonatomic, readwrite) InfinitAnimations animation;
+@property (nonatomic, readwrite) CGPoint animation_center;
 @property (nonatomic, readwrite) NSTimeInterval duration;
 @property (nonatomic, readwrite) BOOL reverse;
-@property (nonatomic, readwrite) BOOL up_animation;
 
 @end
