@@ -8,6 +8,8 @@
 
 #import "InfinitSendAbstractCell.h"
 
+#import "InfinitColor.h"
+
 @implementation InfinitSendAbstractCell
 
 - (void)prepareForReuse
@@ -27,6 +29,10 @@
 - (void)setSelected:(BOOL)selected
            animated:(BOOL)animated
 {
+  if (selected)
+    self.name_label.textColor = [InfinitColor colorFromPalette:ColorShamRock];
+  else
+    self.name_label.textColor = [InfinitColor colorWithGray:41];
   [self.check_view setChecked:selected animated:YES];
   [super setSelected:selected animated:animated];
 }
