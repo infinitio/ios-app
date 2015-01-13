@@ -20,6 +20,7 @@
 
 - (void)prepareForReuse
 {
+  [super prepareForReuse];
   self.user_type_view.image = nil;
 }
 
