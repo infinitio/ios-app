@@ -26,6 +26,10 @@
 @end
 
 @implementation InfinitTabBarController
+{
+@private
+  NSUInteger _send_index;
+}
 
 - (id)initWithCoder:(NSCoder*)aDecoder
 {
@@ -39,6 +43,7 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+  _send_index = 2;
 
   self.delegate = self;
   self.tabBar.tintColor = [InfinitColor colorFromPalette:ColorShamRock];
@@ -61,7 +66,6 @@
   [self.tabBar addSubview:self.send_tab_icon];
   self.send_tab_icon.center = CGPointMake(self.view.frame.size.width / 2.0f,
                                           self.send_tab_icon.frame.size.height / 3.0f);
-
 }
 
 - (void)setSelectedIndex:(NSUInteger)selectedIndex
@@ -69,6 +73,29 @@
   if (selectedIndex == self.selectedIndex)
     return;
   [super setSelectedIndex:selectedIndex];
+  if (selectedIndex != _send_index)
+  {
+    CGRect final_bar_rect = CGRectOffset(self.tabBar.frame, 0.0f, - self.tabBar.frame.size.height);
+    CGRect final_view_rect = [self growRect:self.view.frame
+                                    byWidth:0.0f
+                                  andHeight:-self.tabBar.frame.size.height];
+    [UIView animateWithDuration:self.animator.duration
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^
+    {
+      self.tabBar.frame = final_bar_rect;
+      self.view.frame = final_view_rect;
+      [self.view layoutIfNeeded];
+    } completion:^(BOOL finished)
+    {
+      if (!finished)
+      {
+        self.tabBar.frame = final_bar_rect;
+        self.view.frame = final_view_rect;
+      }
+    }];
+  }
   [self selectorToPosition:selectedIndex];
 }
 
@@ -84,6 +111,8 @@ static BOOL asked_permission = NO;
 - (BOOL)tabBarController:(UITabBarController*)tabBarController
 shouldSelectViewController:(UIViewController*)viewController
 {
+  if ([self.viewControllers indexOfObject:viewController] == self.selectedIndex)
+    return NO;
   _last_index = self.selectedIndex;
   if ([viewController.title isEqualToString:@"SETTINGS"])
   {
@@ -96,12 +125,32 @@ shouldSelectViewController:(UIViewController*)viewController
   }
   else if ([viewController.title isEqualToString:@"SEND"])
   {
+    CGRect final_bar_rect = CGRectOffset(self.tabBar.frame, 0.0f, self.tabBar.frame.size.height);
+    CGRect final_view_rect = [self growRect:self.view.frame
+                                    byWidth:0.0f
+                                  andHeight:self.tabBar.frame.size.height];
+    [UIView animateWithDuration:self.animator.duration
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^
+    {
+      self.tabBar.frame = final_bar_rect;
+      self.view.frame = final_view_rect;
+      [self.view layoutIfNeeded];
+    } completion:^(BOOL finished)
+    {
+      if (!finished)
+      {
+        self.tabBar.frame = final_bar_rect;
+        self.view.frame = final_view_rect;
+      }
+    }];
 //    if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusNotDetermined)
 //    {
 //    if (!asked_permission)
 //    {
 //      asked_permission = YES;
-//      [self loadPermissionView];
+//      [self loadGalleryPermissionView];
 //      return NO;
 //    }
 //    }
@@ -122,16 +171,22 @@ shouldSelectViewController:(UIViewController*)viewController
   if ([toVC.title isEqualToString:@"SEND"])
   {
     self.animator.reverse = NO;
-    self.animator.up_animation = YES;
+    self.animator.animation = AnimateCircleCover;
+    self.animator.animation_center =
+      CGPointMake(self.view.frame.size.width / 2.0f, self.view.frame.size.height -
+                  self.send_tab_icon.frame.size.height / 3.0f);
   }
   else if ([fromVC.title isEqualToString:@"SEND"])
   {
     self.animator.reverse = YES;
-    self.animator.up_animation = YES;
+    self.animator.animation = AnimateCircleCover;
+    self.animator.animation_center =
+      CGPointMake(self.view.frame.size.width / 2.0f, self.view.frame.size.height -
+                  self.send_tab_icon.frame.size.height / 3.0f);
   }
   else
   {
-    self.animator.up_animation = NO;
+    self.animator.animation = AnimateRightLeft;
     if ([self.viewControllers indexOfObject:toVC] > [self.viewControllers indexOfObject:fromVC])
       self.animator.reverse = NO;
     else
@@ -140,7 +195,7 @@ shouldSelectViewController:(UIViewController*)viewController
   return self.animator;
 }
 
-- (void)loadPermissionView
+- (void)loadGalleryPermissionView
 {
   UINib* permission_nib = [UINib nibWithNibName:@"InfinitAccessGalleryView" bundle:nil];
   self.permission_view = [[permission_nib instantiateWithOwner:self options:nil] firstObject];
@@ -203,7 +258,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
                                   afterDelay:0.51f];
        self.permission_view = nil;
      }];
-     self.selectedIndex = 2;
+     self.selectedIndex = _send_index;
    } failureBlock:^(NSError* error)
    {
      if (error.code == ALAssetsLibraryAccessUserDeniedError)
@@ -219,7 +274,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
 
 - (void)selectorToPosition:(NSInteger)position
 {
-  if (position == 2)
+  if (position == _send_index)
   {
     self.selection_indicator.frame = CGRectMake(0.0f, 0.0f, 0.0f, 0.0f);
     return;
@@ -249,6 +304,14 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
   [res addAnimation:anim forKey:anim.keyPath];
   [CATransaction commit];
   return res;
+}
+
+- (CGRect)growRect:(CGRect)old_rect
+           byWidth:(CGFloat)width
+         andHeight:(CGFloat)height
+{
+  return CGRectMake(old_rect.origin.x, old_rect.origin.y,
+                    old_rect.size.width + width, old_rect.size.height + height);
 }
 
 @end
