@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InfinitSendContactCell : UITableViewCell
+#import "InfinitSendAbstractCell.h"
+
+@interface InfinitSendContactCell : InfinitSendAbstractCell
+
+@property (nonatomic, weak) IBOutlet UILabel* details_label;
 
 @end

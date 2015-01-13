@@ -10,14 +10,36 @@
 
 @implementation InfinitSendContactCell
 
-- (void)awakeFromNib {
-    // Initialization code
+- (void)awakeFromNib
+{
+  self.avatar_view.layer.cornerRadius = self.avatar_view.frame.size.width / 2.0f;
+  self.avatar_view.clipsToBounds = YES;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
+- (void)prepareForReuse
+{
+  [super prepareForReuse];
+  self.details_label.text = nil;
+}
 
-    // Configure the view for the selected state
+- (void)setContact:(InfinitContact*)contact
+{
+  [super setContact:contact];
+  NSMutableString* res = [[NSMutableString alloc] init];
+  if (contact.emails.count > 0)
+  {
+    [res appendFormat:@"%@", contact.emails[0]];
+    if (contact.emails.count > 1)
+      [res appendFormat:@"..."];
+    [res appendFormat:@", "];
+  }
+  if (contact.phone_numbers.count > 0)
+  {
+    [res appendFormat:@"%@", contact.phone_numbers[0]];
+    if (contact.phone_numbers.count > 1)
+      [res appendFormat:@"..."];
+  }
+  self.details_label.text = res;
 }
 
 @end
