@@ -15,12 +15,14 @@
 @property (nonatomic, weak) IBOutlet UIButton* avatar_button;
 @property (nonatomic, weak) IBOutlet UITextField* email_field;
 @property (nonatomic, weak) IBOutlet UITextField* password_field;
+@property (nonatomic, weak) IBOutlet UIView* facebook_line;
 @property (nonatomic, weak) IBOutlet UIButton* facebook_button;
 @property (nonatomic, weak) IBOutlet UIImageView* email_image;
 @property (nonatomic, weak) IBOutlet UIImageView* password_image;
 @property (nonatomic, weak) IBOutlet UIButton* next_button;
 @property (nonatomic, weak) IBOutlet UILabel* error_label;
 
+@property (nonatomic, readwrite) BOOL facebook_hidden;
 @property (nonatomic, readonly) CGFloat height;
 
 @end
