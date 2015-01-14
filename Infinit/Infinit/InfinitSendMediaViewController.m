@@ -8,9 +8,11 @@
 
 #import "InfinitSendMediaViewController.h"
 
-#import "InfinitGalleryViewCell.h"
+#import "InfinitSendGalleryCell.h"
 #import "InfinitSelectPeopleViewController.h"
 #import "InfinitTabBarController.h"
+
+#import "ALAsset+Date.h"
 
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AVFoundation/AVFoundation.h>
@@ -51,12 +53,10 @@
 
 - (void)viewDidLoad
 {
-  self.collectionView.allowsMultipleSelection = YES;
   [super viewDidLoad];
-  [self.collectionView registerClass:InfinitGalleryViewCell.class
-          forCellWithReuseIdentifier:_cell_identifier];
-  self.navigationController.navigationBar.clipsToBounds = YES;
+  self.collectionView.allowsMultipleSelection = YES;
 
+  self.navigationController.navigationBar.clipsToBounds = YES;
   NSDictionary* nav_bar_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
                                                                        size:17.0f],
                                   NSForegroundColorAttributeName: [UIColor whiteColor]};
@@ -99,7 +99,8 @@
         [temp_assets addObject:result];
       }
     }];
-    self.assets = temp_assets;
+    NSSortDescriptor* sort = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES];
+    self.assets = [temp_assets sortedArrayUsingDescriptors:@[sort]];
     [self.collectionView reloadData];
   } failureBlock:^(NSError* error)
   {
@@ -130,19 +131,18 @@
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView
                  cellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
-  InfinitGalleryViewCell* cell =
+  InfinitSendGalleryCell* cell =
     [collectionView dequeueReusableCellWithReuseIdentifier:_cell_identifier
                                               forIndexPath:indexPath];
 
   ALAsset* asset = self.assets[self.assets.count - 1 - indexPath.row];
-  cell.asset_url = asset.defaultRepresentation.url;
 
   if ([asset valueForProperty:ALAssetPropertyType] == ALAssetTypeVideo)
   {
     if ([asset valueForProperty:ALAssetPropertyDuration] != ALErrorInvalidProperty)
     {
       NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-      formatter.dateFormat = @"mm:ss";
+      formatter.dateFormat = @"m:ss";
       NSTimeInterval duration = [[asset valueForProperty:ALAssetPropertyDuration] doubleValue];
       cell.duration_label.text =
         [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:duration]];
@@ -194,8 +194,8 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
            atIndexPath:(NSIndexPath*)indexPath
          withAnimation:(BOOL)animate
 {
-  InfinitGalleryViewCell* cell =
-    (InfinitGalleryViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
+  InfinitSendGalleryCell* cell =
+    (InfinitSendGalleryCell*)[collectionView cellForItemAtIndexPath:indexPath];
   if (animate)
   {
     [UIView animateWithDuration:0.1f
@@ -204,6 +204,7 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
                      animations:^
      {
        cell.transform = CGAffineTransformMakeScale(0.75f, 0.75f);
+       [cell.contentView layoutIfNeeded];
      } completion:^(BOOL finished)
      {
        [UIView animateWithDuration:0.75f
@@ -214,6 +215,7 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
                         animations:^
         {
           cell.transform = CGAffineTransformIdentity;
+          [cell.contentView layoutIfNeeded];
         } completion:^(BOOL finished)
         {
           if (!finished)
@@ -240,14 +242,12 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
 
 - (void)prepareForSegue:(UIStoryboardSegue*)segue sender:(id)sender
 {
-  if([segue.identifier isEqualToString:@"send2Segue"])
+  if([segue.identifier isEqualToString:@"send_to_segue"])
   {
     NSMutableArray* asset_urls = [NSMutableArray array];
     for (NSIndexPath* path in self.collectionView.indexPathsForSelectedItems)
     {
-      InfinitGalleryViewCell* cell =
-        (InfinitGalleryViewCell*)[self.collectionView cellForItemAtIndexPath:path];
-      [asset_urls addObject:cell.asset_url];
+      [asset_urls addObject:self.assets[self.assets.count - 1 - path.row]];
     }
     InfinitSelectPeopleViewController* view_controller =
       (InfinitSelectPeopleViewController*)segue.destinationViewController;
