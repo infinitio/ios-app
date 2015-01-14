@@ -20,7 +20,9 @@
 
 #import <MobileCoreServices/MobileCoreServices.h>
 
+#import "InfinitApplicationSettings.h"
 #import "InfinitColor.h"
+#import "InfinitKeychain.h"
 #import "WelcomeLoginFormView.h"
 #import "WelcomeSignupFormView.h"
 
@@ -46,6 +48,10 @@
 @end
 
 @implementation InfinitWelcomeController
+{
+@private
+  NSString* _password;
+}
 
 - (void)viewDidLoad
 {
@@ -79,6 +85,19 @@
                                            selector:@selector(keyboardWillShow:)
                                                name:UIKeyboardWillShowNotification
                                              object:nil];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+  if ([[InfinitApplicationSettings sharedInstance] username] != nil)
+  {
+    NSString* account = [[InfinitApplicationSettings sharedInstance] username];
+    NSString* password = [[InfinitKeychain sharedInstance] passwordForAccount:account];
+    self.login_form_view.email_field.text = account;
+    self.login_form_view.password_field.text = [password copy];
+    password = nil;
+  }
+  [super viewDidAppear:animated];
 }
 
 - (void)configureLoginView
@@ -576,6 +595,7 @@
 - (void)tryLogin
 {
   self.login_form_view.error_label.hidden = YES;
+  self.login_form_view.facebook_hidden = YES;
   if ([self loginInputsGood])
   {
     [self.view endEditing:YES];
@@ -603,6 +623,9 @@
   [self.login_form_view.activity stopAnimating];
   if (result.success)
   {
+    [[InfinitApplicationSettings sharedInstance] setUsername:self.login_form_view.email_field.text];
+    _password = [self.login_form_view.password_field.text copy];
+    self.login_form_view.password_field.text = nil;
     [self onSuccessfulLogin];
   }
   else
@@ -612,6 +635,7 @@
     self.login_form_view.back_button.enabled = YES;
     self.login_form_view.error_label.text = [self registerLoginErrorFromStatus:result.status];
     self.login_form_view.error_label.hidden = NO;
+    self.login_form_view.facebook_hidden = NO;
   }
 }
 
@@ -620,10 +644,22 @@
   [InfinitUserManager sharedInstance];
   [InfinitPeerTransactionManager sharedInstance];
 
+  NSString* account = [[InfinitApplicationSettings sharedInstance] username];
+
+  if ([[InfinitKeychain sharedInstance] credentialsForAccountInKeychain:account])
+  {
+    [[InfinitKeychain sharedInstance] updatePassword:_password forAccount:account];
+  }
+  else
+  {
+    [[InfinitKeychain sharedInstance] addPassword:_password forAccount:account];
+  }
+  _password = nil;
+
   UIStoryboard* storyboard =
     [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
   UIViewController* view_controller =
-    [storyboard instantiateViewControllerWithIdentifier:@"tabbarcontroller"];
+    [storyboard instantiateViewControllerWithIdentifier:@"tab_bar_controller"];
   [self presentViewController:view_controller animated:YES completion:nil];
 }
 
@@ -693,6 +729,9 @@
 {
   if (result.success)
   {
+    [[InfinitApplicationSettings sharedInstance] setUsername:self.signup_form_view.email_field.text];
+    _password = [self.signup_form_view.password_field.text copy];
+    self.signup_form_view.password_field.text = nil;
     [self onSuccessfulLogin];
     if (self.avatar_image != nil)
     {
