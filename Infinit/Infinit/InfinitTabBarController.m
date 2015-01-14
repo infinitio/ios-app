@@ -119,7 +119,7 @@ shouldSelectViewController:(UIViewController*)viewController
     [self dismissViewControllerAnimated:YES completion:nil];
     UIStoryboard* board = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
     UIViewController* login_controller =
-      [board instantiateViewControllerWithIdentifier:@"welcomeVC"];
+      [board instantiateViewControllerWithIdentifier:@"welcome_controller"];
     [self presentViewController:login_controller animated:YES completion:nil];
     return NO;
   }
