@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InfinitSelectPeopleViewController : UIViewController
+@interface InfinitSelectPeopleViewController : UIViewController <UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) NSMutableArray* asset_urls;
 

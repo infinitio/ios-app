@@ -69,6 +69,8 @@
 
 - (void)viewDidLoad
 {
+  self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+  self.navigationController.interactivePopGestureRecognizer.delegate = self;
   [super viewDidLoad];
   NSDictionary* nav_bar_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
                                                                        size:17.0f],
