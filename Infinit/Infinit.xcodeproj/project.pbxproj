@@ -1142,12 +1142,12 @@
 					../../../_build/ios/oracles/trophonius/client/lib,
 				);
 				LINKER_DISPLAYS_MANGLED_NAMES = YES;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "8295163b-b944-418c-b820-7ed1b472dd48";
 				USER_HEADER_SEARCH_PATHS = "";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "\"$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts/include\"";
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
 		};
