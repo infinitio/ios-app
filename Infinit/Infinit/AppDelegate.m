@@ -8,8 +8,12 @@
 
 #import "AppDelegate.h"
 
-#import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitConnectionManager.h>
+#import <Gap/InfinitStateManager.h>
+#import <Gap/InfinitStateResult.h>
+
+#import "InfinitApplicationSettings.h"
+#import "InfinitKeychain.h"
 
 @interface AppDelegate ()
 @end
@@ -22,8 +26,56 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
   [InfinitConnectionManager sharedInstance];
   [InfinitStateManager startState];
-  
+
+  [[InfinitKeychain sharedInstance] removeAccount:@"chris@infinit.io"];
+
+  self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+  UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+  NSString* identifier = nil;
+
+  NSString* account = [[InfinitApplicationSettings sharedInstance] username];
+  if ([[InfinitKeychain sharedInstance] credentialsForAccountInKeychain:account])
+  {
+    [self tryLogin];
+    identifier = @"logging_in_controller";
+  }
+  else
+  {
+    identifier = @"welcome_controller";
+  }
+  self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:identifier];
+  [self.window makeKeyAndVisible];
   return YES;
+}
+
+- (void)tryLogin
+{
+  NSString* username = [[InfinitApplicationSettings sharedInstance] username];
+  NSString* password = [[InfinitKeychain sharedInstance] passwordForAccount:username];
+  if (password == nil)
+    password = @"";
+  [[InfinitStateManager sharedInstance] login:username
+                                     password:password
+                              performSelector:@selector(loginCallback:)
+                                     onObject:self];
+  password = nil;
+}
+
+- (void)loginCallback:(InfinitStateResult*)result
+{
+  UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+  NSString* identifier = nil;
+  if (result.success)
+  {
+    NSLog(@"xxx successful login");
+    identifier = @"tab_bar_controller";
+  }
+  else
+  {
+    identifier = @"tab_bar_controller";
+  }
+  self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:identifier];
+  [self.window makeKeyAndVisible];
 }
 
 //Facebook SDK url handling
