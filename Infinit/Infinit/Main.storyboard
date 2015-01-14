@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C94b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Sta-NW-erU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C94b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -21,7 +21,7 @@
         <!--Infinit Welcome Controller-->
         <scene sceneID="8lo-rn-yxz">
             <objects>
-                <viewController storyboardIdentifier="welcomeVC" id="z8c-Mh-SQ1" customClass="InfinitWelcomeController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="welcome_controller" id="z8c-Mh-SQ1" customClass="InfinitWelcomeController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cvr-81-2Cd"/>
                         <viewControllerLayoutGuide type="bottom" id="e8d-Yh-XzY"/>
@@ -30,7 +30,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="QZk-N4-E1a">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logotype" translatesAutoresizingMaskIntoConstraints="NO" id="QZk-N4-E1a">
                                 <rect key="frame" x="115" y="98" width="184" height="102"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="148" id="D2Q-zS-S3x"/>
@@ -942,10 +942,37 @@
             </objects>
             <point key="canvasLocation" x="4364" y="-1351"/>
         </scene>
+        <!--Infinit Logging In Controller-->
+        <scene sceneID="iTH-Ww-Lvz">
+            <objects>
+                <viewController storyboardIdentifier="logging_in_controller" id="rAX-ev-gIQ" customClass="InfinitLoggingInController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="TBu-U8-Yol"/>
+                        <viewControllerLayoutGuide type="bottom" id="7Hh-kl-ikr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="z8h-7z-bDB">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="Fdu-P4-m2g">
+                                <rect key="frame" x="227" y="234" width="146" height="132"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerY" secondItem="Fdu-P4-m2g" secondAttribute="centerY" id="Dg8-G0-clr"/>
+                            <constraint firstAttribute="centerX" secondItem="Fdu-P4-m2g" secondAttribute="centerX" id="F6u-WP-xT9"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ziT-Kg-sFt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-484" y="-1594"/>
+        </scene>
         <!--Infinit Tab Bar Controller-->
         <scene sceneID="6Af-Rg-f4V">
             <objects>
-                <tabBarController storyboardIdentifier="tabbarcontroller" id="Sta-NW-erU" customClass="InfinitTabBarController" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tab_bar_controller" id="Sta-NW-erU" customClass="InfinitTabBarController" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="qtN-vB-yCR">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -1225,11 +1252,11 @@
                                                     <nil key="highlightedColor"/>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="cgn-Ad-rsc"/>
                                                             <exclude reference="7hf-UW-gMI"/>
-                                                            <exclude reference="Qsb-Hi-WUL"/>
-                                                            <exclude reference="eI5-Ve-vzu"/>
                                                             <exclude reference="9gx-VD-mFB"/>
+                                                            <exclude reference="Qsb-Hi-WUL"/>
+                                                            <exclude reference="cgn-Ad-rsc"/>
+                                                            <exclude reference="eI5-Ve-vzu"/>
                                                         </mask>
                                                     </variation>
                                                 </label>
@@ -1246,10 +1273,10 @@
                                                     </constraints>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="yK4-MI-nWm"/>
+                                                            <exclude reference="5eF-qs-Rf7"/>
                                                             <exclude reference="7qx-v4-40n"/>
                                                             <exclude reference="AdL-mr-aaR"/>
-                                                            <exclude reference="5eF-qs-Rf7"/>
+                                                            <exclude reference="yK4-MI-nWm"/>
                                                         </mask>
                                                     </variation>
                                                 </imageView>
@@ -1835,7 +1862,8 @@
         <image name="icon-tab-files" width="17" height="23"/>
         <image name="icon-tab-home" width="25" height="23"/>
         <image name="icon-tab-settings" width="24" height="24"/>
-        <image name="logo" width="184" height="102"/>
+        <image name="logo" width="146" height="132"/>
+        <image name="logotype" width="184" height="102"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Kxx-xK-6YF"/>
