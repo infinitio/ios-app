@@ -36,6 +36,7 @@
 		83B5D60C1A6661D80061931F /* InfinitKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B5D60B1A6661D80061931F /* InfinitKeychain.m */; };
 		83B5D60E1A6663430061931F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83B5D60D1A6663430061931F /* Security.framework */; };
 		83B5D6141A66AAB70061931F /* InfinitLoggingInController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B5D6131A66AAB70061931F /* InfinitLoggingInController.m */; };
+		83B5D6171A66BC4E0061931F /* ALAsset+Date.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B5D6161A66BC4E0061931F /* ALAsset+Date.m */; };
 		83F4D0251A1374660068BEB2 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D0241A1374660068BEB2 /* libc++.dylib */; };
 		83F4D04B1A1387EF0068BEB2 /* libaws.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D04A1A1387EF0068BEB2 /* libaws.a */; };
 		83F4D0541A1388050068BEB2 /* libboost_atomic-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D04C1A1388050068BEB2 /* libboost_atomic-mt-s.a */; };
@@ -213,6 +214,8 @@
 		83B5D60D1A6663430061931F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		83B5D6121A66AAB70061931F /* InfinitLoggingInController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitLoggingInController.h; sourceTree = "<group>"; };
 		83B5D6131A66AAB70061931F /* InfinitLoggingInController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitLoggingInController.m; sourceTree = "<group>"; };
+		83B5D6151A66BC4E0061931F /* ALAsset+Date.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAsset+Date.h"; sourceTree = "<group>"; };
+		83B5D6161A66BC4E0061931F /* ALAsset+Date.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAsset+Date.m"; sourceTree = "<group>"; };
 		83F4D0241A1374660068BEB2 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		83F4D04A1A1387EF0068BEB2 /* libaws.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libaws.a; path = ../../../_build/ios/elle/aws/lib/libaws.a; sourceTree = "<group>"; };
 		83F4D04C1A1388050068BEB2 /* libboost_atomic-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_atomic-mt-s.a"; path = "../../../_build/ios/elle/boost/lib/libboost_atomic-mt-s.a"; sourceTree = "<group>"; };
@@ -429,6 +432,8 @@
 				833E3AC51A63D16C0088D3FF /* InfinitApplicationSettings.m */,
 				83B5D60A1A6661D80061931F /* InfinitKeychain.h */,
 				83B5D60B1A6661D80061931F /* InfinitKeychain.m */,
+				83B5D6151A66BC4E0061931F /* ALAsset+Date.h */,
+				83B5D6161A66BC4E0061931F /* ALAsset+Date.m */,
 			);
 			name = Utilities;
 			path = Infinit;
@@ -535,10 +540,10 @@
 				D02F432D1A5DA36A00447E84 /* WelcomeSignupFormView.xib */,
 				D02F432A1A5DA34E00447E84 /* WelcomeSignupFormView.h */,
 				D02F432B1A5DA34F00447E84 /* WelcomeSignupFormView.m */,
-				D0659F641A3E865A0001ACAE /* InfinitWelcomeController.h */,
-				D0659F651A3E865A0001ACAE /* InfinitWelcomeController.m */,
 				83B5D6121A66AAB70061931F /* InfinitLoggingInController.h */,
 				83B5D6131A66AAB70061931F /* InfinitLoggingInController.m */,
+				D0659F641A3E865A0001ACAE /* InfinitWelcomeController.h */,
+				D0659F651A3E865A0001ACAE /* InfinitWelcomeController.m */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -977,6 +982,7 @@
 				D02F432C1A5DA34F00447E84 /* WelcomeSignupFormView.m in Sources */,
 				D03FAAF91A479D2C005A8244 /* CGLContact.m in Sources */,
 				83B32D631A136485004AB945 /* main.m in Sources */,
+				83B5D6171A66BC4E0061931F /* ALAsset+Date.m in Sources */,
 				D00045BD1A499A20008DB448 /* InfinitSendImportCell.m in Sources */,
 				D02FF50B1A4DACA600A93DBD /* ContactOtherCell.m in Sources */,
 				D05D5D1A1A24C4B1005529E8 /* InfinitGalleryViewCell.m in Sources */,
@@ -1147,7 +1153,7 @@
 				PROVISIONING_PROFILE = "8295163b-b944-418c-b820-7ed1b472dd48";
 				USER_HEADER_SEARCH_PATHS = "";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "\"$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts/include\"";
-				VALID_ARCHS = "arm64 armv7";
+				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Debug;
 		};
