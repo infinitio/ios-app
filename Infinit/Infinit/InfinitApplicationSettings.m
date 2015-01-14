@@ -44,7 +44,7 @@ static InfinitApplicationSettings* _instance = nil;
 
 - (void)setUsername:(NSString*)username
 {
-  [_defaults setValue:username forKey:[self keyForSetting:InfinitSettingUsername]];
+  [_defaults setValue:username.lowercaseString forKey:[self keyForSetting:InfinitSettingUsername]];
 }
 
 #pragma mark Enum
