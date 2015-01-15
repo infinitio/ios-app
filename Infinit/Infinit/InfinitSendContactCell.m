@@ -8,6 +8,8 @@
 
 #import "InfinitSendContactCell.h"
 
+static BOOL _show_numbers = NO;
+
 @implementation InfinitSendContactCell
 
 - (void)awakeFromNib
@@ -31,10 +33,11 @@
     [res appendFormat:@"%@", contact.emails[0]];
     if (contact.emails.count > 1)
       [res appendFormat:@"..."];
-    [res appendFormat:@", "];
   }
-  if (contact.phone_numbers.count > 0)
+  if (_show_numbers && contact.phone_numbers.count > 0)
   {
+    if (contact.emails.count > 0)
+      [res appendFormat:@", "];
     [res appendFormat:@"%@", contact.phone_numbers[0]];
     if (contact.phone_numbers.count > 1)
       [res appendFormat:@"..."];
