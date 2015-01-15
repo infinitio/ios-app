@@ -29,8 +29,8 @@
                                 </mask>
                             </variation>
                         </view>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter email address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kPi-Jj-3OY">
-                            <rect key="frame" x="62" y="58" width="300" height="22"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter email address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kPi-Jj-3OY">
+                            <rect key="frame" x="59" y="58" width="303" height="22"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="260" id="sHb-jt-I9C"/>
                                 <constraint firstAttribute="height" constant="30" id="wtG-Nr-ev7"/>
@@ -44,8 +44,8 @@
                                 </mask>
                             </variation>
                         </textField>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-email" translatesAutoresizingMaskIntoConstraints="NO" id="KYF-ZA-lb5">
-                            <rect key="frame" x="26" y="62" width="21" height="14"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="icon-email" translatesAutoresizingMaskIntoConstraints="NO" id="KYF-ZA-lb5">
+                            <rect key="frame" x="26" y="62" width="18" height="14"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="21" id="5oa-3o-GiI"/>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="14" id="E8g-5B-MtE"/>
@@ -67,8 +67,8 @@
                                 <constraint firstAttribute="height" constant="1" id="bFz-QB-PRl"/>
                             </constraints>
                         </view>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-password" translatesAutoresizingMaskIntoConstraints="NO" id="HpW-TU-3rM">
-                            <rect key="frame" x="29" y="157" width="14" height="20"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="icon-password" translatesAutoresizingMaskIntoConstraints="NO" id="HpW-TU-3rM">
+                            <rect key="frame" x="29" y="158" width="15" height="18"/>
                             <constraints>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="19" id="1dQ-K6-W95"/>
                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="13" id="IZB-im-nfN"/>
@@ -82,15 +82,15 @@
                                 </mask>
                             </variation>
                         </imageView>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aJm-c6-Eba">
-                            <rect key="frame" x="22" y="140" width="370" height="1"/>
+                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aJm-c6-Eba">
+                            <rect key="frame" x="22" y="141" width="370" height="1"/>
                             <color key="backgroundColor" red="0.8862745098" green="0.8862745098" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="1" id="2dz-NZ-n2g"/>
                             </constraints>
                         </view>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter full name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qgQ-vu-s28">
-                            <rect key="frame" x="62" y="109" width="300" height="22"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter full name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qgQ-vu-s28">
+                            <rect key="frame" x="59" y="110" width="303" height="22"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="260" id="NJD-JL-e5T"/>
                                 <constraint firstAttribute="height" constant="30" id="PTh-KZ-NfF"/>
@@ -104,8 +104,8 @@
                                 </mask>
                             </variation>
                         </textField>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-fullname" translatesAutoresizingMaskIntoConstraints="NO" id="qjS-vf-f8X">
-                            <rect key="frame" x="26" y="112" width="21" height="16"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="icon-fullname" translatesAutoresizingMaskIntoConstraints="NO" id="qjS-vf-f8X">
+                            <rect key="frame" x="26" y="112" width="15" height="17"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="14" id="8xI-nE-WBb"/>
                                 <constraint firstAttribute="width" constant="21" id="OEY-13-Ls8"/>
@@ -121,8 +121,8 @@
                                 </mask>
                             </variation>
                         </imageView>
-                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X7W-p1-a0e">
-                            <rect key="frame" x="25" y="202" width="364" height="17"/>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X7W-p1-a0e">
+                            <rect key="frame" x="25" y="203" width="364" height="17"/>
                             <constraints>
                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="272" id="H7u-tT-x0l"/>
                             </constraints>
@@ -135,8 +135,8 @@
                                 </mask>
                             </variation>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Choose a password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pNk-2E-naZ">
-                            <rect key="frame" x="62" y="156" width="300" height="22"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Choose a password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pNk-2E-naZ">
+                            <rect key="frame" x="59" y="156" width="303" height="22"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="260" id="NAs-hw-fgt"/>
                                 <constraint firstAttribute="height" constant="30" id="fHQ-qA-sX4"/>
@@ -150,18 +150,18 @@
                                 </mask>
                             </variation>
                         </textField>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="peQ-L5-MUu">
-                            <rect key="frame" x="22" y="189" width="370" height="1"/>
+                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="peQ-L5-MUu">
+                            <rect key="frame" x="22" y="190" width="370" height="1"/>
                             <color key="backgroundColor" red="0.8862745098" green="0.8862745098" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="1" id="tEO-f9-Ce2"/>
                             </constraints>
                         </view>
-                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="eUe-jY-ELY">
-                            <rect key="frame" x="197" y="201" width="20" height="20"/>
+                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="eUe-jY-ELY">
+                            <rect key="frame" x="197" y="202" width="20" height="20"/>
                         </activityIndicatorView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By signing up you accept Infinit's terms and conditions." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bAr-eg-hsb">
-                            <rect key="frame" x="25" y="232" width="364" height="12"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="By signing up you accept Infinit's terms and conditions." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bAr-eg-hsb">
+                            <rect key="frame" x="25" y="233" width="364" height="12"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
                             <color key="textColor" red="0.13333333333333333" green="0.31764705882352939" blue="0.28627450980392155" alpha="0.34000000000000002" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -169,6 +169,7 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstItem="pNk-2E-naZ" firstAttribute="leading" secondItem="HpW-TU-3rM" secondAttribute="trailing" constant="15" id="0kK-OX-JOH"/>
                         <constraint firstItem="X7W-p1-a0e" firstAttribute="leading" secondItem="l19-LT-S12" secondAttribute="leading" constant="25" id="26r-Qi-WQr"/>
                         <constraint firstItem="bAr-eg-hsb" firstAttribute="top" secondItem="X7W-p1-a0e" secondAttribute="bottom" constant="13" id="3iZ-4m-3kC"/>
                         <constraint firstAttribute="height" constant="600" id="5k0-zS-Z9a"/>
@@ -178,7 +179,6 @@
                         <constraint firstItem="peQ-L5-MUu" firstAttribute="top" secondItem="HpW-TU-3rM" secondAttribute="bottom" constant="12" id="I77-9Y-Nqr"/>
                         <constraint firstItem="HpW-TU-3rM" firstAttribute="centerY" secondItem="pNk-2E-naZ" secondAttribute="centerY" id="LBs-Xm-BJq"/>
                         <constraint firstItem="LeY-3X-Aa4" firstAttribute="top" secondItem="l19-LT-S12" secondAttribute="top" id="LIh-bO-08C"/>
-                        <constraint firstItem="pNk-2E-naZ" firstAttribute="leading" secondItem="HpW-TU-3rM" secondAttribute="trailing" constant="19" id="MkF-5U-yyy"/>
                         <constraint firstAttribute="trailing" secondItem="peQ-L5-MUu" secondAttribute="trailing" constant="22" id="NTv-bm-Nj0"/>
                         <constraint firstItem="aJm-c6-Eba" firstAttribute="top" secondItem="qjS-vf-f8X" secondAttribute="bottom" constant="12" id="PEW-DA-zet"/>
                         <constraint firstAttribute="trailing" secondItem="kPi-Jj-3OY" secondAttribute="trailing" constant="52" id="PHL-7r-v3m"/>
@@ -193,12 +193,12 @@
                         <constraint firstItem="X7W-p1-a0e" firstAttribute="top" secondItem="peQ-L5-MUu" secondAttribute="bottom" constant="12" id="dSA-wy-TYd"/>
                         <constraint firstAttribute="centerX" secondItem="eUe-jY-ELY" secondAttribute="centerX" id="fJG-0l-a5D"/>
                         <constraint firstAttribute="trailing" secondItem="qgQ-vu-s28" secondAttribute="trailing" constant="52" id="fcX-7W-N7S"/>
+                        <constraint firstItem="qgQ-vu-s28" firstAttribute="leading" secondItem="qjS-vf-f8X" secondAttribute="trailing" constant="18" id="hjo-Fj-7R2"/>
                         <constraint firstItem="BVQ-8M-f8X" firstAttribute="top" secondItem="KYF-ZA-lb5" secondAttribute="bottom" constant="19" id="i5E-vb-fxU"/>
                         <constraint firstItem="qjS-vf-f8X" firstAttribute="top" secondItem="BVQ-8M-f8X" secondAttribute="bottom" constant="16" id="i6H-Up-0XP"/>
                         <constraint firstItem="KYF-ZA-lb5" firstAttribute="top" secondItem="LeY-3X-Aa4" secondAttribute="bottom" constant="61" id="ihb-wL-fq1"/>
                         <constraint firstItem="HpW-TU-3rM" firstAttribute="leading" secondItem="l19-LT-S12" secondAttribute="leading" constant="29" id="ma9-GG-tmx"/>
                         <constraint firstItem="peQ-L5-MUu" firstAttribute="leading" secondItem="l19-LT-S12" secondAttribute="leading" constant="22" id="rUG-ei-loP"/>
-                        <constraint firstItem="qgQ-vu-s28" firstAttribute="leading" secondItem="qjS-vf-f8X" secondAttribute="trailing" constant="15" id="shd-aK-Pp2"/>
                         <constraint firstItem="kPi-Jj-3OY" firstAttribute="leading" secondItem="KYF-ZA-lb5" secondAttribute="trailing" constant="15" id="swI-ro-1jV"/>
                         <constraint firstAttribute="trailing" secondItem="aJm-c6-Eba" secondAttribute="trailing" constant="22" id="tsR-G9-i5q"/>
                         <constraint firstItem="BVQ-8M-f8X" firstAttribute="leading" secondItem="l19-LT-S12" secondAttribute="leading" constant="22" id="u6a-5n-WCn"/>
@@ -295,11 +295,11 @@
         </view>
     </objects>
     <resources>
-        <image name="icon-arrow-down" width="21" height="13"/>
-        <image name="icon-arrow-right" width="13" height="21"/>
-        <image name="icon-email" width="21" height="14"/>
-        <image name="icon-fullname" width="21" height="16"/>
-        <image name="icon-password" width="14" height="20"/>
+        <image name="icon-arrow-down" width="15" height="9"/>
+        <image name="icon-arrow-right" width="9" height="15"/>
+        <image name="icon-email" width="18" height="14"/>
+        <image name="icon-fullname" width="15" height="17"/>
+        <image name="icon-password" width="15" height="18"/>
         <image name="icon-photo" width="33" height="26"/>
     </resources>
 </document>
