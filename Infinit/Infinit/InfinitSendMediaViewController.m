@@ -30,6 +30,7 @@
 {
 @private
   NSString* _cell_identifier;
+  UITapGestureRecognizer* _nav_bar_tap;
 }
 
 - (id)initWithCoder:(NSCoder*)aDecoder
@@ -37,6 +38,9 @@
   if (self = [super initWithCoder:aDecoder])
   {
     _cell_identifier = @"gallery_cell";
+    _assets = nil;
+    _nav_bar_tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                           action:@selector(navBarTapped)];
   }
   return self;
 }
@@ -64,7 +68,6 @@
   [self.navigationController.navigationBar setTitleTextAttributes:nav_bar_attrs];
   [self.next_button setTitleTextAttributes:nav_bar_attrs forState:UIControlStateNormal];
   [self.next_button setTitleTextAttributes:clear_attrs forState:UIControlStateDisabled];
-  [self loadAssets];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -76,6 +79,7 @@
     self.next_button.enabled = NO;
   else
     self.next_button.enabled = YES;
+  self.collectionView.contentOffset = CGPointMake(0.0f, 0.0f - self.collectionView.contentInset.top);
   [super viewWillAppear:animated];
 }
 
@@ -83,6 +87,19 @@
 {
   [super viewDidAppear:animated];
   [self.collectionViewLayout invalidateLayout];
+  [self.navigationController.navigationBar.subviews[0] setUserInteractionEnabled:YES];
+  [self.navigationController.navigationBar.subviews[0] addGestureRecognizer:_nav_bar_tap];
+}
+
+- (void)navBarTapped
+{
+  [self.collectionView scrollRectToVisible:CGRectMake(0.0f, 0.0f, 1.0f, 1.0f) animated:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+  [self.navigationController.navigationBar.subviews[0] removeGestureRecognizer:_nav_bar_tap];
+  [super viewWillDisappear:animated];
 }
 
 - (void)loadAssets
@@ -108,7 +125,7 @@
   }];
 }
 
-#pragma mark AssetsLibrary Call
+#pragma mark - AssetsLibrary Call
 
 - (ALAssetsLibrary*)defaultAssetsLibrary
 {
@@ -203,14 +220,14 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^
      {
-       cell.transform = CGAffineTransformMakeScale(0.75f, 0.75f);
+       cell.transform = CGAffineTransformMakeScale(0.9f, 0.9f);
        [cell.contentView layoutIfNeeded];
      } completion:^(BOOL finished)
      {
-       [UIView animateWithDuration:0.75f
+       [UIView animateWithDuration:0.5f
                              delay:0.0f
             usingSpringWithDamping:0.3f
-             initialSpringVelocity:25.0f
+             initialSpringVelocity:10.0f
                            options:UIViewAnimationOptionCurveEaseInOut
                         animations:^
         {
