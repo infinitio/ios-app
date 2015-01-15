@@ -18,7 +18,7 @@ static InfinitKeychain* _instance = nil;
   NSString* _service_name;
 }
 
-#pragma mark Init
+#pragma mark - Init
 
 - (id)init
 {
@@ -37,7 +37,7 @@ static InfinitKeychain* _instance = nil;
   return _instance;
 }
 
-#pragma mark Keychain Operations
+#pragma mark - Keychain Operations
 
 - (BOOL)addPassword:(NSString*)password
          forAccount:(NSString*)account
@@ -102,7 +102,7 @@ static InfinitKeychain* _instance = nil;
   return YES;
 }
 
-#pragma mark Helpers
+#pragma mark - Helpers
 
 - (NSString*)decodeString:(CFTypeRef)data
 {
