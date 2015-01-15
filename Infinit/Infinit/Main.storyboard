@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C94b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C99d" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Sta-NW-erU">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -1133,31 +1133,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="507"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NST-La-JUB">
-                                <rect key="frame" x="16" y="20" width="28" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="28" id="HRd-yB-ddU"/>
-                                    <constraint firstAttribute="height" constant="20" id="KdW-tV-z8z"/>
-                                    <constraint firstAttribute="height" constant="24" id="lRw-er-AzK"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="lRw-er-AzK"/>
-                                    </mask>
-                                </variation>
-                            </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="40" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Gnb-fF-2Af">
-                                <rect key="frame" x="0.0" y="60" width="600" height="447"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="40" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Gnb-fF-2Af">
+                                <rect key="frame" x="0.0" y="70" width="600" height="437"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="288" id="FK0-i4-Q5v"/>
                                     <constraint firstAttribute="height" constant="400" id="MW8-zC-bIP"/>
                                     <constraint firstAttribute="height" constant="278" id="c6e-Rz-8sG"/>
                                 </constraints>
-                                <color key="sectionIndexBackgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="send_user_cell" rowHeight="61" id="eqh-rJ-glX" customClass="InfinitSendUserCell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1271,6 +1253,7 @@
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="separatorInset" minX="60" minY="0.0" maxX="14" maxY="0.0"/>
                                         <connections>
                                             <outlet property="avatar_view" destination="695-GN-s1x" id="BPU-AU-bcU"/>
@@ -1393,6 +1376,7 @@
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="separatorInset" minX="60" minY="0.0" maxX="14" maxY="0.0"/>
                                         <connections>
                                             <outlet property="avatar_view" destination="zYV-ye-nPC" id="fs4-y2-BLu"/>
@@ -1425,6 +1409,9 @@
                                                             <exclude reference="dwA-1Y-QoV"/>
                                                         </mask>
                                                     </variation>
+                                                    <connections>
+                                                        <action selector="findFacebookFriendsTapped:" destination="9ZK-3B-PXo" eventType="touchUpInside" id="fIS-Eu-9F8"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Infinit is 2x faster and encrypted if your friends are on the app." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3PA-yr-naq">
                                                     <rect key="frame" x="172" y="30" width="255" height="58"/>
@@ -1454,6 +1441,9 @@
                                                             <exclude reference="1FG-IF-nps"/>
                                                         </mask>
                                                     </variation>
+                                                    <connections>
+                                                        <action selector="findPeopleOnInfinitTapped:" destination="9ZK-3B-PXo" eventType="touchUpInside" id="J44-xJ-28b"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7GO-ub-njO">
                                                     <rect key="frame" x="167" y="103" width="266" height="55"/>
@@ -1473,7 +1463,7 @@
                                                         </mask>
                                                     </variation>
                                                     <connections>
-                                                        <action selector="accessAddressBook:" destination="9ZK-3B-PXo" eventType="touchUpInside" id="gHg-h6-1sn"/>
+                                                        <action selector="importPhoneContactsTapped:" destination="9ZK-3B-PXo" eventType="touchUpInside" id="EFp-Xg-qlV"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -1488,6 +1478,7 @@
                                                 <constraint firstAttribute="centerX" secondItem="7GO-ub-njO" secondAttribute="centerX" id="v4k-Fn-nOJ"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <inset key="separatorInset" minX="1000" minY="0.0" maxX="1000" maxY="0.0"/>
                                         <connections>
                                             <outlet property="facebook_button" destination="wT3-gi-JEO" id="3ns-AV-oYa"/>
@@ -1517,7 +1508,7 @@
                                     <constraint firstAttribute="height" constant="50" id="uHt-lb-E44"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="17"/>
-                                <state key="normal" title="SEND">
+                                <state key="normal" title="SEND" image="icon-send-white">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -1530,63 +1521,30 @@
                                     <action selector="sendButtonTapped:" destination="9ZK-3B-PXo" eventType="touchUpInside" id="z7e-9S-xXV"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type an email address..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uol-vL-97j">
-                                <rect key="frame" x="51" y="20" width="504" height="20"/>
+                            <view contentMode="scaleToFill" verticalHuggingPriority="750" placeholderIntrinsicWidth="600" placeholderIntrinsicHeight="56" translatesAutoresizingMaskIntoConstraints="NO" id="KMb-F7-qcc" customClass="VENTokenField">
+                                <rect key="frame" x="0.0" y="7" width="600" height="56"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="254" id="aWd-FS-bcc"/>
-                                    <constraint firstAttribute="height" constant="24" id="uju-eI-ZIJ"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="98" id="x0f-2y-LXD"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="aWd-FS-bcc"/>
-                                        <exclude reference="uju-eI-ZIJ"/>
-                                    </mask>
-                                </variation>
-                                <connections>
-                                    <outlet property="delegate" destination="9ZK-3B-PXo" id="BMB-wD-Hdm"/>
-                                </connections>
-                            </textField>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="NST-La-JUB" firstAttribute="leading" secondItem="nF7-gs-IAg" secondAttribute="leading" constant="16" id="1mY-4B-ZHz"/>
                             <constraint firstItem="z9O-hM-TV6" firstAttribute="leading" secondItem="nF7-gs-IAg" secondAttribute="leading" id="3H2-ew-Cz3"/>
-                            <constraint firstItem="NST-La-JUB" firstAttribute="top" secondItem="i8F-aD-XN0" secondAttribute="bottom" constant="17" id="59X-rC-c8a"/>
-                            <constraint firstItem="Gnb-fF-2Af" firstAttribute="top" secondItem="uol-vL-97j" secondAttribute="bottom" constant="9" id="974-oG-vO2"/>
-                            <constraint firstItem="uol-vL-97j" firstAttribute="top" secondItem="i8F-aD-XN0" secondAttribute="bottom" constant="17" id="Bq2-IQ-lpk"/>
-                            <constraint firstItem="uol-vL-97j" firstAttribute="top" secondItem="i8F-aD-XN0" secondAttribute="bottom" constant="8" id="C7q-gV-MFN"/>
-                            <constraint firstAttribute="centerX" secondItem="uol-vL-97j" secondAttribute="centerX" constant="-9" id="D5u-ES-TT0"/>
-                            <constraint firstItem="NST-La-JUB" firstAttribute="top" secondItem="i8F-aD-XN0" secondAttribute="bottom" constant="8" id="Dg1-5C-Z5h"/>
-                            <constraint firstItem="Gnb-fF-2Af" firstAttribute="top" secondItem="NST-La-JUB" secondAttribute="bottom" constant="20" id="Gjq-UJ-Gtx"/>
+                            <constraint firstItem="KMb-F7-qcc" firstAttribute="leading" secondItem="nF7-gs-IAg" secondAttribute="leading" id="Gac-ZM-792"/>
                             <constraint firstAttribute="trailing" secondItem="Gnb-fF-2Af" secondAttribute="trailing" id="Kvh-H6-PJa"/>
-                            <constraint firstItem="NST-La-JUB" firstAttribute="leading" secondItem="nF7-gs-IAg" secondAttribute="leadingMargin" id="O2y-tG-V02"/>
                             <constraint firstAttribute="trailing" secondItem="z9O-hM-TV6" secondAttribute="trailing" id="TIR-HG-crl"/>
-                            <constraint firstItem="uol-vL-97j" firstAttribute="centerY" secondItem="NST-La-JUB" secondAttribute="centerY" id="WIW-H8-G4z"/>
+                            <constraint firstItem="Gnb-fF-2Af" firstAttribute="top" secondItem="KMb-F7-qcc" secondAttribute="bottom" constant="7" id="UG7-AE-Xrq"/>
                             <constraint firstAttribute="bottom" secondItem="z9O-hM-TV6" secondAttribute="bottom" constant="-55" id="Yev-mx-4fl"/>
-                            <constraint firstItem="uol-vL-97j" firstAttribute="leading" secondItem="NST-La-JUB" secondAttribute="trailing" constant="7" id="aU5-GB-gJc"/>
                             <constraint firstItem="Gnb-fF-2Af" firstAttribute="top" secondItem="i8F-aD-XN0" secondAttribute="bottom" constant="50" id="dKg-p9-HGo"/>
-                            <constraint firstAttribute="trailing" secondItem="uol-vL-97j" secondAttribute="trailing" constant="45" id="fNJ-BU-hTt"/>
+                            <constraint firstAttribute="trailing" secondItem="KMb-F7-qcc" secondAttribute="trailing" id="eW0-I5-jmR"/>
                             <constraint firstItem="Gnb-fF-2Af" firstAttribute="leading" secondItem="nF7-gs-IAg" secondAttribute="leading" id="fZt-b8-gbU"/>
                             <constraint firstItem="z9O-hM-TV6" firstAttribute="top" secondItem="Gnb-fF-2Af" secondAttribute="bottom" id="id9-Eu-C0O"/>
-                            <constraint firstItem="NST-La-JUB" firstAttribute="top" secondItem="nF7-gs-IAg" secondAttribute="top" constant="20" id="kpC-nX-ms0"/>
-                            <constraint firstItem="uol-vL-97j" firstAttribute="centerY" secondItem="NST-La-JUB" secondAttribute="centerY" constant="2" id="ncd-6F-UpE"/>
-                            <constraint firstItem="NST-La-JUB" firstAttribute="centerY" secondItem="uol-vL-97j" secondAttribute="centerY" id="tSo-ZI-VcI"/>
-                            <constraint firstItem="uol-vL-97j" firstAttribute="top" secondItem="i8F-aD-XN0" secondAttribute="bottom" constant="18" id="zBF-zK-eQA"/>
+                            <constraint firstItem="KMb-F7-qcc" firstAttribute="top" secondItem="nF7-gs-IAg" secondAttribute="top" constant="7" id="yue-Od-Fqt"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="59X-rC-c8a"/>
-                                <exclude reference="Dg1-5C-Z5h"/>
-                                <exclude reference="O2y-tG-V02"/>
-                                <exclude reference="Bq2-IQ-lpk"/>
-                                <exclude reference="C7q-gV-MFN"/>
-                                <exclude reference="D5u-ES-TT0"/>
-                                <exclude reference="WIW-H8-G4z"/>
-                                <exclude reference="ncd-6F-UpE"/>
-                                <exclude reference="zBF-zK-eQA"/>
-                                <exclude reference="974-oG-vO2"/>
                                 <exclude reference="dKg-p9-HGo"/>
                             </mask>
                         </variation>
@@ -1606,7 +1564,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="invite_button" destination="GB2-xi-nbu" id="86a-8G-eWy"/>
-                        <outlet property="search_field" destination="uol-vL-97j" id="p79-io-8wp"/>
+                        <outlet property="search_field" destination="KMb-F7-qcc" id="Ssx-LX-JzV"/>
                         <outlet property="send_button" destination="z9O-hM-TV6" id="FSp-Su-98p"/>
                         <outlet property="send_constraint" destination="Yev-mx-4fl" id="hUT-Qw-6u8"/>
                         <outlet property="table_view" destination="Gnb-fF-2Af" id="uF6-Aq-5kW"/>
@@ -1906,11 +1864,12 @@
         <image name="icon-grid" width="24" height="24"/>
         <image name="icon-infinit-red" width="21" height="21"/>
         <image name="icon-more" width="30" height="9"/>
+        <image name="icon-send-white" width="18" height="15"/>
         <image name="icon-sort" width="28" height="24"/>
-        <image name="icon-tab-contacts" width="25" height="25"/>
-        <image name="icon-tab-files" width="17" height="23"/>
-        <image name="icon-tab-home" width="25" height="23"/>
-        <image name="icon-tab-settings" width="24" height="24"/>
+        <image name="icon-tab-contacts" width="18" height="21"/>
+        <image name="icon-tab-files" width="23" height="21"/>
+        <image name="icon-tab-home" width="26" height="21"/>
+        <image name="icon-tab-settings" width="22" height="22"/>
         <image name="logo" width="146" height="132"/>
         <image name="logotype" width="184" height="102"/>
     </resources>
