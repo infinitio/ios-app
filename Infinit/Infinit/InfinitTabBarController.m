@@ -15,6 +15,15 @@
 
 #import <AssetsLibrary/AssetsLibrary.h>
 
+typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
+{
+  TabBarIndexHome = 0,
+  TabBarIndexFiles,
+  TabBarIndexSend,
+  TabBarIndexContacts,
+  TabBarIndexSettings,
+};
+
 @interface InfinitTabBarController ()
 
 @property (nonatomic) NSUInteger last_index;
@@ -26,10 +35,6 @@
 @end
 
 @implementation InfinitTabBarController
-{
-@private
-  NSUInteger _send_index;
-}
 
 - (id)initWithCoder:(NSCoder*)aDecoder
 {
@@ -43,7 +48,6 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  _send_index = 2;
 
   self.delegate = self;
   self.tabBar.tintColor = [InfinitColor colorFromPalette:ColorShamRock];
@@ -53,12 +57,11 @@
 
   UIView* shadow_line =
     [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 1.0f)];
-  shadow_line.backgroundColor = [InfinitColor colorWithGray:186.0f];
+  shadow_line.backgroundColor = [InfinitColor colorWithGray:216.0f];
   [self.tabBar addSubview:shadow_line];
 
   _selection_indicator =
     [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width / 5.0f, 1.0f)];
-//  self.selection_indicator.backgroundColor = [InfinitColor colorFromPalette:ColorShamRock];
   self.selection_indicator.backgroundColor = [InfinitColor colorFromPalette:ColorBurntSienna];
   [self.tabBar addSubview:self.selection_indicator];
 
@@ -66,6 +69,40 @@
   [self.tabBar addSubview:self.send_tab_icon];
   self.send_tab_icon.center = CGPointMake(self.view.frame.size.width / 2.0f,
                                           self.send_tab_icon.frame.size.height / 3.0f);
+  for (NSUInteger index = 0; index < self.tabBar.items.count; index++)
+  {
+    [self.tabBar.items[index] setSelectedImage:[self imageForTabBarItem:index selected:NO]];
+    [self.tabBar.items[index] setSelectedImage:[self imageForTabBarItem:index selected:YES]];
+  }
+}
+
+- (UIImage*)imageForTabBarItem:(InfinitTabBarIndex)index
+                      selected:(BOOL)selected
+{
+  NSString* image_name = nil;
+  switch (index)
+  {
+    case TabBarIndexHome:
+      image_name = @"icon-tab-home";
+      break;
+    case TabBarIndexFiles:
+      image_name = @"icon-tab-files";
+      break;
+    case TabBarIndexSend:
+      return nil;
+    case TabBarIndexContacts:
+      image_name = @"icon-tab-contacts";
+      break;
+    case TabBarIndexSettings:
+      image_name = @"icon-tab-settings";
+      break;
+
+    default:
+      return nil;
+  }
+  if (selected)
+    image_name = [image_name stringByAppendingString:@"-active"];
+  return [[UIImage imageNamed:image_name]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 }
 
 - (void)setSelectedIndex:(NSUInteger)selectedIndex
@@ -73,13 +110,13 @@
   if (selectedIndex == self.selectedIndex)
     return;
   [super setSelectedIndex:selectedIndex];
-  if (selectedIndex != _send_index)
+  if (selectedIndex != TabBarIndexSend)
   {
     CGRect final_bar_rect = CGRectOffset(self.tabBar.frame, 0.0f, - self.tabBar.frame.size.height);
     CGRect final_view_rect = [self growRect:self.view.frame
                                     byWidth:0.0f
                                   andHeight:-self.tabBar.frame.size.height];
-    [UIView animateWithDuration:self.animator.duration
+    [UIView animateWithDuration:self.animator.linear_duration
                           delay:0.0f
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^
@@ -104,7 +141,7 @@
   self.selectedIndex = _last_index;
 }
 
-#pragma mark Delegate Functions
+#pragma mark - Delegate Functions
 
 static BOOL asked_permission = NO;
 
@@ -129,7 +166,7 @@ shouldSelectViewController:(UIViewController*)viewController
     CGRect final_view_rect = [self growRect:self.view.frame
                                     byWidth:0.0f
                                   andHeight:self.tabBar.frame.size.height];
-    [UIView animateWithDuration:self.animator.duration
+    [UIView animateWithDuration:self.animator.linear_duration
                           delay:0.0f
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^
@@ -186,11 +223,7 @@ shouldSelectViewController:(UIViewController*)viewController
   }
   else
   {
-    self.animator.animation = AnimateRightLeft;
-    if ([self.viewControllers indexOfObject:toVC] > [self.viewControllers indexOfObject:fromVC])
-      self.animator.reverse = NO;
-    else
-      self.animator.reverse = YES;
+    return nil;
   }
   return self.animator;
 }
@@ -258,23 +291,23 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
                                   afterDelay:0.51f];
        self.permission_view = nil;
      }];
-     self.selectedIndex = _send_index;
+     self.selectedIndex = TabBarIndexSend;
    } failureBlock:^(NSError* error)
    {
      if (error.code == ALAssetsLibraryAccessUserDeniedError)
      {
-       NSLog(@"user denied access, code: %i",error.code);
+       NSLog(@"user denied access, code: %li",(long)error.code);
      }
      else
      {
-       NSLog(@"Other error code: %i",error.code);
+       NSLog(@"Other error code: %li",(long)error.code);
      }
    }];
 }
 
 - (void)selectorToPosition:(NSInteger)position
 {
-  if (position == _send_index)
+  if (position == TabBarIndexSend)
   {
     self.selection_indicator.frame = CGRectMake(0.0f, 0.0f, 0.0f, 0.0f);
     return;
@@ -284,7 +317,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
                                               self.view.frame.size.width / count, 1.0f);
 }
 
-#pragma mark Helpers
+#pragma mark - Helpers
 
 - (CALayer*)animatedMaskLayerFrom:(CGRect)start_rect
                                to:(CGRect)final_rect
