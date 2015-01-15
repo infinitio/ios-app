@@ -76,6 +76,12 @@
 		83F72C9C1A1502940088106E /* InfinitPeerSendFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F72C9B1A1502940088106E /* InfinitPeerSendFileCell.m */; };
 		83F72CA11A15123F0088106E /* InfinitLinkTransactionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F72CA01A15123F0088106E /* InfinitLinkTransactionsController.m */; };
 		83F72CA41A15131A0088106E /* InfinitLinkTransactionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F72CA31A15131A0088106E /* InfinitLinkTransactionCell.m */; };
+		83FA72FC1A66FF1D0014B0E4 /* VENBackspaceTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FA72F61A66FF1D0014B0E4 /* VENBackspaceTextField.m */; };
+		83FA72FD1A66FF1D0014B0E4 /* VENToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FA72F81A66FF1D0014B0E4 /* VENToken.m */; };
+		83FA72FE1A66FF1D0014B0E4 /* VENToken.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83FA72F91A66FF1D0014B0E4 /* VENToken.xib */; };
+		83FA72FF1A66FF1D0014B0E4 /* VENTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FA72FB1A66FF1D0014B0E4 /* VENTokenField.m */; };
+		83FA73061A66FF260014B0E4 /* ScrollViewFrameAccessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FA73031A66FF260014B0E4 /* ScrollViewFrameAccessor.m */; };
+		83FA73071A66FF260014B0E4 /* ViewFrameAccessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FA73051A66FF260014B0E4 /* ViewFrameAccessor.m */; };
 		83FE9C8B1A161F6D00FC1CFD /* InfinitLinkSendController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FE9C8A1A161F6D00FC1CFD /* InfinitLinkSendController.m */; };
 		D00045BD1A499A20008DB448 /* InfinitSendImportCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D00045BC1A499A20008DB448 /* InfinitSendImportCell.m */; };
 		D01A64541A4861800041A8C2 /* FileGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D01A64531A4861800041A8C2 /* FileGridCell.m */; };
@@ -260,6 +266,18 @@
 		83F72CA01A15123F0088106E /* InfinitLinkTransactionsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitLinkTransactionsController.m; sourceTree = "<group>"; };
 		83F72CA21A15131A0088106E /* InfinitLinkTransactionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitLinkTransactionCell.h; sourceTree = "<group>"; };
 		83F72CA31A15131A0088106E /* InfinitLinkTransactionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitLinkTransactionCell.m; sourceTree = "<group>"; };
+		83FA72F51A66FF1D0014B0E4 /* VENBackspaceTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENBackspaceTextField.h; sourceTree = "<group>"; };
+		83FA72F61A66FF1D0014B0E4 /* VENBackspaceTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENBackspaceTextField.m; sourceTree = "<group>"; };
+		83FA72F71A66FF1D0014B0E4 /* VENToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENToken.h; sourceTree = "<group>"; };
+		83FA72F81A66FF1D0014B0E4 /* VENToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENToken.m; sourceTree = "<group>"; };
+		83FA72F91A66FF1D0014B0E4 /* VENToken.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VENToken.xib; sourceTree = "<group>"; };
+		83FA72FA1A66FF1D0014B0E4 /* VENTokenField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENTokenField.h; sourceTree = "<group>"; };
+		83FA72FB1A66FF1D0014B0E4 /* VENTokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENTokenField.m; sourceTree = "<group>"; };
+		83FA73011A66FF260014B0E4 /* FrameAccessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrameAccessor.h; sourceTree = "<group>"; };
+		83FA73021A66FF260014B0E4 /* ScrollViewFrameAccessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollViewFrameAccessor.h; sourceTree = "<group>"; };
+		83FA73031A66FF260014B0E4 /* ScrollViewFrameAccessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollViewFrameAccessor.m; sourceTree = "<group>"; };
+		83FA73041A66FF260014B0E4 /* ViewFrameAccessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewFrameAccessor.h; sourceTree = "<group>"; };
+		83FA73051A66FF260014B0E4 /* ViewFrameAccessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewFrameAccessor.m; sourceTree = "<group>"; };
 		83FE9C891A161F6D00FC1CFD /* InfinitLinkSendController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitLinkSendController.h; sourceTree = "<group>"; };
 		83FE9C8A1A161F6D00FC1CFD /* InfinitLinkSendController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitLinkSendController.m; sourceTree = "<group>"; };
 		D00045BB1A499A20008DB448 /* InfinitSendImportCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendImportCell.h; sourceTree = "<group>"; };
@@ -459,6 +477,7 @@
 		83B32D541A136485004AB945 = {
 			isa = PBXGroup;
 			children = (
+				83FA72591A66FEF90014B0E4 /* Third Party */,
 				836F5C8A1A16670F007C9C4E /* Frameworks */,
 				83F4D0211A13740F0068BEB2 /* Libraries */,
 				83B32D5F1A136485004AB945 /* Infinit */,
@@ -623,6 +642,43 @@
 				83F72CA31A15131A0088106E /* InfinitLinkTransactionCell.m */,
 			);
 			name = "Link Transactions";
+			sourceTree = "<group>";
+		};
+		83FA72591A66FEF90014B0E4 /* Third Party */ = {
+			isa = PBXGroup;
+			children = (
+				83FA73001A66FF260014B0E4 /* FrameAccessor */,
+				83FA72F41A66FF1D0014B0E4 /* VENTokenField */,
+			);
+			name = "Third Party";
+			sourceTree = "<group>";
+		};
+		83FA72F41A66FF1D0014B0E4 /* VENTokenField */ = {
+			isa = PBXGroup;
+			children = (
+				83FA72F51A66FF1D0014B0E4 /* VENBackspaceTextField.h */,
+				83FA72F61A66FF1D0014B0E4 /* VENBackspaceTextField.m */,
+				83FA72F71A66FF1D0014B0E4 /* VENToken.h */,
+				83FA72F81A66FF1D0014B0E4 /* VENToken.m */,
+				83FA72F91A66FF1D0014B0E4 /* VENToken.xib */,
+				83FA72FA1A66FF1D0014B0E4 /* VENTokenField.h */,
+				83FA72FB1A66FF1D0014B0E4 /* VENTokenField.m */,
+			);
+			name = VENTokenField;
+			path = ThirdParty/VENTokenField/VENTokenField;
+			sourceTree = "<group>";
+		};
+		83FA73001A66FF260014B0E4 /* FrameAccessor */ = {
+			isa = PBXGroup;
+			children = (
+				83FA73011A66FF260014B0E4 /* FrameAccessor.h */,
+				83FA73021A66FF260014B0E4 /* ScrollViewFrameAccessor.h */,
+				83FA73031A66FF260014B0E4 /* ScrollViewFrameAccessor.m */,
+				83FA73041A66FF260014B0E4 /* ViewFrameAccessor.h */,
+				83FA73051A66FF260014B0E4 /* ViewFrameAccessor.m */,
+			);
+			name = FrameAccessor;
+			path = ThirdParty/FrameAccessor/FrameAccessor;
 			sourceTree = "<group>";
 		};
 		83FE9C871A161F4D00FC1CFD /* Link Send */ = {
@@ -916,6 +972,7 @@
 				D02F432E1A5DA36A00447E84 /* WelcomeSignupFormView.xib in Resources */,
 				D098481C1A43391B002D26AC /* SourceSansPro-Regular.otf in Resources */,
 				D09848161A43391B002D26AC /* SourceSansPro-BoldIt.otf in Resources */,
+				83FA72FE1A66FF1D0014B0E4 /* VENToken.xib in Resources */,
 				833E3AC91A63D8880088D3FF /* InfinitImportOverlayView.xib in Resources */,
 				D09848181A43391B002D26AC /* SourceSansPro-ExtraLightIt.otf in Resources */,
 				D09848171A43391B002D26AC /* SourceSansPro-ExtraLight.otf in Resources */,
@@ -971,6 +1028,7 @@
 				8365DE881A5E8694003527DE /* InfinitColor.m in Sources */,
 				839B814B1A6443220057E92B /* InfinitSendAbstractCell.m in Sources */,
 				D01A64541A4861800041A8C2 /* FileGridCell.m in Sources */,
+				83FA73061A66FF260014B0E4 /* ScrollViewFrameAccessor.m in Sources */,
 				83612F8E1A5D7FDB00BDF7CE /* NSData+Conversion.m in Sources */,
 				83F4D0A61A14B48D0068BEB2 /* InfinitPeerSendController.m in Sources */,
 				83F72CA41A15131A0088106E /* InfinitLinkTransactionCell.m in Sources */,
@@ -984,8 +1042,11 @@
 				D05D5D1A1A24C4B1005529E8 /* InfinitSendGalleryCell.m in Sources */,
 				833E3AC31A63CF4D0088D3FF /* InfinitAccessContactsView.m in Sources */,
 				D05726B31A50BA880097083C /* InfinitSendUserCell.m in Sources */,
+				83FA72FF1A66FF1D0014B0E4 /* VENTokenField.m in Sources */,
+				83FA72FD1A66FF1D0014B0E4 /* VENToken.m in Sources */,
 				D01A645B1A48635C0041A8C2 /* InfinitFileCollectionViewController.m in Sources */,
 				839B813F1A6407990057E92B /* InfinitSendContactCell.m in Sources */,
+				83FA73071A66FF260014B0E4 /* ViewFrameAccessor.m in Sources */,
 				8312372F1A613A8900D5C41C /* InfinitAccessGalleryView.m in Sources */,
 				D02F43331A5DA39900447E84 /* WelcomeLoginFormView.m in Sources */,
 				D0BC70431A41B4B7006923F2 /* InfinitTabBarController.m in Sources */,
@@ -994,6 +1055,7 @@
 				839B81421A641CF00057E92B /* InfinitCheckView.m in Sources */,
 				83F72CA11A15123F0088106E /* InfinitLinkTransactionsController.m in Sources */,
 				83B5D6141A66AAB70061931F /* InfinitLoggingInController.m in Sources */,
+				83FA72FC1A66FF1D0014B0E4 /* VENBackspaceTextField.m in Sources */,
 				D0D613C81A52E51600D454B6 /* InfinitHomeCollectionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
