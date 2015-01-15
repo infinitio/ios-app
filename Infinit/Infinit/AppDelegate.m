@@ -27,8 +27,6 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   [InfinitConnectionManager sharedInstance];
   [InfinitStateManager startState];
 
-  [[InfinitKeychain sharedInstance] removeAccount:@"chris@infinit.io"];
-
   self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
   UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
   NSString* identifier = nil;
@@ -79,13 +77,13 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 }
 
 //Facebook SDK url handling
-- (BOOL)application:(UIApplication*)application
-            openURL:(NSURL*)url
-  sourceApplication:(NSString*)sourceApplication
-         annotation:(id)annotation {
-  // attempt to extract a token from the url
-  return [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
-}
+//- (BOOL)application:(UIApplication*)application
+//            openURL:(NSURL*)url
+//  sourceApplication:(NSString*)sourceApplication
+//         annotation:(id)annotation {
+//  // attempt to extract a token from the url
+//  return [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
+//}
 
 - (void)applicationWillResignActive:(UIApplication*)application
 {
@@ -116,39 +114,39 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 }
 
 // This method will handle ALL the session state changes in the app
-- (void)sessionStateChanged:(FBSession*)session
-                      state:(FBSessionState)state
-                      error:(NSError*)error
-{
-  
-  // If the session was opened successfully
-  if (!error && state == FBSessionStateOpen)
-  {
-    NSLog(@"Session opened");
-    // Take the information and add it to InfinitUserObject.
-    [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection* connection, NSDictionary<FBGraphUser>* FBuser, NSError* error)
-    {
-      if (error)
-      {
-        // Handle error
-      }
-      else
-      {
-        
-        NSString* userName =
-          [FBuser name];
-        NSString* userImageURL =
-          [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large", [FBuser objectID]];
-      }
-    }];
-    return;
-  }
-  if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed){
-    // If the session is closed
-    NSLog(@"Session closed");
-    
-  }
-}
+//- (void)sessionStateChanged:(FBSession*)session
+//                      state:(FBSessionState)state
+//                      error:(NSError*)error
+//{
+//  
+//  // If the session was opened successfully
+//  if (!error && state == FBSessionStateOpen)
+//  {
+//    NSLog(@"Session opened");
+//    // Take the information and add it to InfinitUserObject.
+//    [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection* connection, NSDictionary<FBGraphUser>* FBuser, NSError* error)
+//    {
+//      if (error)
+//      {
+//        // Handle error
+//      }
+//      else
+//      {
+//        
+//        NSString* userName =
+//          [FBuser name];
+//        NSString* userImageURL =
+//          [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large", [FBuser objectID]];
+//      }
+//    }];
+//    return;
+//  }
+//  if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed){
+//    // If the session is closed
+//    NSLog(@"Session closed");
+//    
+//  }
+//}
 
 
 @end
