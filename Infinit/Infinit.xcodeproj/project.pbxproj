@@ -20,6 +20,7 @@
 		8343F5D61A628011006E04C0 /* InfinitTabAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8343F5D51A628011006E04C0 /* InfinitTabAnimator.m */; };
 		83612F8E1A5D7FDB00BDF7CE /* NSData+Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = 83612F8D1A5D7FDB00BDF7CE /* NSData+Conversion.m */; };
 		8365DE881A5E8694003527DE /* InfinitColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8365DE871A5E8694003527DE /* InfinitColor.m */; };
+		836D394A1A67F0FB00892206 /* NSString+email.m in Sources */ = {isa = PBXBuildFile; fileRef = 836D39491A67F0FB00892206 /* NSString+email.m */; };
 		836F5C8C1A166720007C9C4E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836F5C8B1A166720007C9C4E /* SystemConfiguration.framework */; };
 		839B813F1A6407990057E92B /* InfinitSendContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 839B813E1A6407990057E92B /* InfinitSendContactCell.m */; };
 		839B81421A641CF00057E92B /* InfinitCheckView.m in Sources */ = {isa = PBXBuildFile; fileRef = 839B81411A641CF00057E92B /* InfinitCheckView.m */; };
@@ -191,6 +192,8 @@
 		83612F8D1A5D7FDB00BDF7CE /* NSData+Conversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Conversion.m"; sourceTree = "<group>"; };
 		8365DE861A5E8694003527DE /* InfinitColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitColor.h; sourceTree = "<group>"; };
 		8365DE871A5E8694003527DE /* InfinitColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitColor.m; sourceTree = "<group>"; };
+		836D39481A67F0FB00892206 /* NSString+email.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+email.h"; sourceTree = "<group>"; };
+		836D39491A67F0FB00892206 /* NSString+email.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+email.m"; sourceTree = "<group>"; };
 		836F5C8B1A166720007C9C4E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		839B813D1A6407990057E92B /* InfinitSendContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendContactCell.h; sourceTree = "<group>"; };
 		839B813E1A6407990057E92B /* InfinitSendContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendContactCell.m; sourceTree = "<group>"; };
@@ -449,6 +452,8 @@
 				83B5D60B1A6661D80061931F /* InfinitKeychain.m */,
 				83B5D6151A66BC4E0061931F /* ALAsset+Date.h */,
 				83B5D6161A66BC4E0061931F /* ALAsset+Date.m */,
+				836D39481A67F0FB00892206 /* NSString+email.h */,
+				836D39491A67F0FB00892206 /* NSString+email.m */,
 			);
 			name = Utilities;
 			path = Infinit;
@@ -1018,6 +1023,7 @@
 				D01A645E1A48B38D0041A8C2 /* InfinitContactViewController.m in Sources */,
 				D0D613CF1A52F77700D454B6 /* HomeLargeCollectionViewCell.m in Sources */,
 				D0D613CC1A52E6D500D454B6 /* HomeSmallCollectionViewCell.m in Sources */,
+				836D394A1A67F0FB00892206 /* NSString+email.m in Sources */,
 				D03FAAF31A4798B9005A8244 /* InfinitContactsTableViewController.m in Sources */,
 				D0659F661A3E865A0001ACAE /* InfinitWelcomeController.m in Sources */,
 				D0BC70471A41C04C006923F2 /* InfinitSendMediaViewController.m in Sources */,
