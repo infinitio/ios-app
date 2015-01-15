@@ -385,14 +385,12 @@ static const CGFloat VENTokenFieldDefaultMaxHeight          = 150.0;
         } else {
             [self setHeight:self.maxHeight];
         }
-        [self invalidateIntrinsicContentSize];
-    } else if (currentY + [self heightForToken] > CGRectGetHeight(self.frame)) { // needs to shrink
+    } else { // needs to shrink
         if (currentY + [self heightForToken] > self.originalHeight) {
             [self setHeight:currentY + [self heightForToken] + self.verticalInset * 2];
         } else {
             [self setHeight:self.originalHeight];
         }
-        [self invalidateIntrinsicContentSize];
     }
 }
 

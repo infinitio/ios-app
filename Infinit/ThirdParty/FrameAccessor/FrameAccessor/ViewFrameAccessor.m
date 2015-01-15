@@ -74,9 +74,14 @@
 
 - (void)setHeight:(CGFloat)newHeight
 {
+    BOOL height_changed = NO;
     CGRect newFrame = self.frame;
+    if (newHeight != newFrame.size.height)
+      height_changed = YES;
     newFrame.size.height = newHeight;
     self.frame = newFrame;
+    if (height_changed)
+      [self invalidateIntrinsicContentSize];
 }
 
 - (CGFloat)width
