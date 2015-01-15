@@ -10,13 +10,12 @@
 
 #import "AppDelegate.h"
 
-#import <Gap/InfinitUtilities.h>
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitStateResult.h>
 #import <Gap/InfinitUserManager.h>
 
-#import <FacebookSDK/FacebookSDK.h>
+//#import <FacebookSDK/FacebookSDK.h>
 
 #import <MobileCoreServices/MobileCoreServices.h>
 
@@ -25,6 +24,8 @@
 #import "InfinitKeychain.h"
 #import "WelcomeLoginFormView.h"
 #import "WelcomeSignupFormView.h"
+
+#import "NSString+email.h"
 
 @interface InfinitWelcomeController () <UITextFieldDelegate,
                                         UIActionSheetDelegate,
@@ -208,7 +209,7 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-#pragma mark Button Handling
+#pragma mark - Button Handling
 
 - (IBAction)facebookButtonTapped:(id)sender
 {
@@ -372,7 +373,7 @@
   [self tryRegister];
 }
 
-#pragma mark Input Checks
+#pragma mark - Input Checks
 
 - (void)checkLoginInputs
 {
@@ -381,7 +382,7 @@
 
 - (BOOL)loginInputsGood
 {
-  if ([InfinitUtilities stringIsEmail:self.login_form_view.email_field.text] &&
+  if (self.login_form_view.email_field.text.isEmail &&
       self.login_form_view.password_field.text.length > 0)
   {
     self.login_form_view.next_button.enabled = YES;
@@ -407,7 +408,7 @@
 
 - (void)loginEmailTextEditingEnded:(id)sender
 {
-  if ([InfinitUtilities stringIsEmail:self.login_form_view.email_field.text])
+  if (self.login_form_view.email_field.text.isEmail)
   {
     self.login_form_view.email_image.image = [UIImage imageNamed:@"icon-email-valid"];
     self.login_form_view.error_label.hidden = YES;
@@ -451,7 +452,7 @@
 
 - (BOOL)registerInputsGood
 {
-  if ([InfinitUtilities stringIsEmail:self.signup_form_view.email_field.text] &&
+  if (self.signup_form_view.email_field.text.isEmail &&
       self.signup_form_view.fullname_field.text.length > 3 &&
       self.signup_form_view.password_field.text.length > 3)
   {
@@ -478,7 +479,7 @@
 
 - (void)signupEmailTextEditingEnded:(id)sender
 {
-  if ([InfinitUtilities stringIsEmail:self.signup_form_view.email_field.text])
+  if (self.signup_form_view.email_field.text.isEmail)
   {
     self.signup_form_view.email_image.image = [UIImage imageNamed:@"icon-email-valid"];
     self.signup_form_view.error_label.hidden = YES;
@@ -541,7 +542,7 @@
   }
 }
 
-#pragma mark Keyboard
+#pragma mark - Keyboard
 
 - (void)keyboardWillShow:(NSNotification*)notification
 {
@@ -590,7 +591,7 @@
   return YES;
 }
 
-#pragma mark Login/Register
+#pragma mark - Login/Register
 
 - (void)tryLogin
 {
@@ -751,7 +752,7 @@
   }
 }
 
-#pragma mark Avatar Picker
+#pragma mark - Avatar Picker
 
 - (void)registerAvatarButtonTapped:(id)sender
 {
