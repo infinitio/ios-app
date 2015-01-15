@@ -27,7 +27,7 @@
 - (void)setContact:(InfinitContact*)contact
 {
   [super setContact:contact];
-  if (self.contact.infinit_user.favorite)
+  if (self.contact.infinit_user.favorite || self.contact.infinit_user.is_self)
     self.user_type_view.image = [UIImage imageNamed:@"icon-contact-favorite"];
   else
     self.user_type_view.image = [UIImage imageNamed:@"icon-contact-infinit"];
