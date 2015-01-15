@@ -13,10 +13,11 @@
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitTemporaryFileManager.h>
 #import <Gap/InfinitUserManager.h>
-#import <Gap/InfinitUtilities.h>
 
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <MobileCoreServices/UTCoreTypes.h>
+
+#import "NSString+email.h"
 
 @interface InfinitPeerSendController () <UIImagePickerControllerDelegate,
                                          UINavigationControllerDelegate,
@@ -136,7 +137,7 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
     [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:_managed_files_id];
   if (files.count == 0)
     return;
-  if ([InfinitUtilities stringIsEmail:self.recipient.text])
+  if (self.recipient.text.isEmail)
   {
     NSArray* ids = [[InfinitPeerTransactionManager sharedInstance] sendFiles:files
                                                                 toRecipients:@[self.recipient.text]
