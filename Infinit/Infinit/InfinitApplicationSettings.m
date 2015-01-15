@@ -16,7 +16,7 @@ static InfinitApplicationSettings* _instance = nil;
   NSUserDefaults* _defaults;
 }
 
-#pragma mark Init
+#pragma mark - Init
 
 - (id)init
 {
@@ -35,7 +35,7 @@ static InfinitApplicationSettings* _instance = nil;
   return _instance;
 }
 
-#pragma mark Settings
+#pragma mark - Settings
 
 - (NSString*)username
 {
@@ -47,7 +47,7 @@ static InfinitApplicationSettings* _instance = nil;
   [_defaults setValue:username.lowercaseString forKey:[self keyForSetting:InfinitSettingUsername]];
 }
 
-#pragma mark Enum
+#pragma mark - Enum
 
 - (NSString*)keyForSetting:(InfinitSettings)setting
 {
