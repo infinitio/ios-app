@@ -24,8 +24,6 @@
 		836F5C8C1A166720007C9C4E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836F5C8B1A166720007C9C4E /* SystemConfiguration.framework */; };
 		839B813F1A6407990057E92B /* InfinitSendContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 839B813E1A6407990057E92B /* InfinitSendContactCell.m */; };
 		839B81421A641CF00057E92B /* InfinitCheckView.m in Sources */ = {isa = PBXBuildFile; fileRef = 839B81411A641CF00057E92B /* InfinitCheckView.m */; };
-		839B81451A643DA80057E92B /* InfinitSendContactsHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 839B81441A643DA80057E92B /* InfinitSendContactsHeaderView.xib */; };
-		839B81481A643DE70057E92B /* InfinitSendContactsHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 839B81471A643DE70057E92B /* InfinitSendContactsHeaderView.m */; };
 		839B814B1A6443220057E92B /* InfinitSendAbstractCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 839B814A1A6443220057E92B /* InfinitSendAbstractCell.m */; };
 		83B32D631A136485004AB945 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B32D621A136485004AB945 /* main.m */; };
 		83B32D691A136485004AB945 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B32D681A136485004AB945 /* ViewController.m */; };
@@ -199,9 +197,6 @@
 		839B813E1A6407990057E92B /* InfinitSendContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendContactCell.m; sourceTree = "<group>"; };
 		839B81401A641CF00057E92B /* InfinitCheckView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitCheckView.h; sourceTree = "<group>"; };
 		839B81411A641CF00057E92B /* InfinitCheckView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitCheckView.m; sourceTree = "<group>"; };
-		839B81441A643DA80057E92B /* InfinitSendContactsHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitSendContactsHeaderView.xib; sourceTree = "<group>"; };
-		839B81461A643DE70057E92B /* InfinitSendContactsHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendContactsHeaderView.h; sourceTree = "<group>"; };
-		839B81471A643DE70057E92B /* InfinitSendContactsHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendContactsHeaderView.m; sourceTree = "<group>"; };
 		839B81491A6443220057E92B /* InfinitSendAbstractCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendAbstractCell.h; sourceTree = "<group>"; };
 		839B814A1A6443220057E92B /* InfinitSendAbstractCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendAbstractCell.m; sourceTree = "<group>"; };
 		83B32D5D1A136485004AB945 /* Infinit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Infinit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -467,16 +462,6 @@
 				836F5C8B1A166720007C9C4E /* SystemConfiguration.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		839B81431A643D430057E92B /* Table Header */ = {
-			isa = PBXGroup;
-			children = (
-				839B81441A643DA80057E92B /* InfinitSendContactsHeaderView.xib */,
-				839B81461A643DE70057E92B /* InfinitSendContactsHeaderView.h */,
-				839B81471A643DE70057E92B /* InfinitSendContactsHeaderView.m */,
-			);
-			name = "Table Header";
 			sourceTree = "<group>";
 		};
 		83B32D541A136485004AB945 = {
@@ -820,7 +805,6 @@
 		D0AFCBB41A254699003AC152 /* Send */ = {
 			isa = PBXGroup;
 			children = (
-				839B81431A643D430057E92B /* Table Header */,
 				833E3AD31A63EF260088D3FF /* Model */,
 				833E3AC71A63D86D0088D3FF /* Import Overlay */,
 				833E3ABD1A63C68D0088D3FF /* Access Contacts */,
@@ -981,7 +965,6 @@
 				833E3AC91A63D8880088D3FF /* InfinitImportOverlayView.xib in Resources */,
 				D09848181A43391B002D26AC /* SourceSansPro-ExtraLightIt.otf in Resources */,
 				D09848171A43391B002D26AC /* SourceSansPro-ExtraLight.otf in Resources */,
-				839B81451A643DA80057E92B /* InfinitSendContactsHeaderView.xib in Resources */,
 				833E3AC01A63C6A60088D3FF /* InfinitAccessContactsView.xib in Resources */,
 				83B32D6E1A136485004AB945 /* Images.xcassets in Resources */,
 				D09848201A43391B002D26AC /* Montserrat-Bold.ttf in Resources */,
@@ -1013,7 +996,6 @@
 				83B32E061A1365E9004AB945 /* AppDelegate.m in Sources */,
 				D0BD35231A4245AF00AB8EF9 /* InfinitSelectPeopleViewController.m in Sources */,
 				8343F5D61A628011006E04C0 /* InfinitTabAnimator.m in Sources */,
-				839B81481A643DE70057E92B /* InfinitSendContactsHeaderView.m in Sources */,
 				83FE9C8B1A161F6D00FC1CFD /* InfinitLinkSendController.m in Sources */,
 				833E3ACC1A63D89B0088D3FF /* InfinitImportOverlayView.m in Sources */,
 				D01A64581A4861930041A8C2 /* FileListCell.m in Sources */,
