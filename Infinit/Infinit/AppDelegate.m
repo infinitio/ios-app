@@ -70,7 +70,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   }
   else
   {
-    identifier = @"tab_bar_controller";
+    identifier = @"welcome_controller";
   }
   self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:identifier];
   [self.window makeKeyAndVisible];
