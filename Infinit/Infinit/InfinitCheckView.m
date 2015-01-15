@@ -64,17 +64,12 @@
   self.layer.backgroundColor = end_color.CGColor;
   if (animate)
   {
-    CABasicAnimation* color_anim = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
-    color_anim.fromValue = (__bridge id)(start_color.CGColor);
-    color_anim.toValue = (__bridge id)(end_color.CGColor);
-    color_anim.duration = 0.3f;
-    [self.layer addAnimation:color_anim forKey:@"backgroundColor"];
     if (checked)
     {
       CABasicAnimation* check_anim = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
       check_anim.fromValue = @(0.0f);
       check_anim.toValue = @(1.0f);
-      check_anim.duration = 0.3f;
+      check_anim.duration = 0.2f;
       [self.check_layer addAnimation:check_anim forKey:@"strokeEnd"];
     }
   }
