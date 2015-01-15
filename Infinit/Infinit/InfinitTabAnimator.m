@@ -14,16 +14,27 @@
 {
   if (self = [super init])
   {
-    self.duration = 0.3f;
+    self.linear_duration = 0.2f;
+    self.circular_duration = 0.4f;
   }
   return self;
 }
 
-#pragma mark Protocol
+#pragma mark - Protocol
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext
 {
-  return self.duration;
+  switch (self.animation)
+  {
+    case AnimateRightLeft:
+    case AnimateDownUp:
+      return self.linear_duration;
+    case AnimateCircleCover:
+      return self.circular_duration;
+
+    default:
+      return self.linear_duration;
+  }
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext
@@ -117,7 +128,7 @@
   }
 }
 
-#pragma mark Helpers
+#pragma mark - Helpers
 
 - (CALayer*)animatedMaskLayerFrom:(CGRect)start_rect
                                to:(CGRect)final_rect
@@ -126,7 +137,7 @@
 {
   [CATransaction begin];
   CABasicAnimation* anim = [CABasicAnimation animationWithKeyPath:@"path"];
-  anim.duration = 0.5f;
+  anim.duration = duration;
   anim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
   anim.fromValue = (__bridge id)([UIBezierPath bezierPathWithOvalInRect:start_rect].CGPath);
   anim.toValue = (__bridge id)([UIBezierPath bezierPathWithOvalInRect:final_rect].CGPath);

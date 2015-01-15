@@ -19,7 +19,8 @@ typedef NS_ENUM(NSUInteger, InfinitAnimations) {
 
 @property (nonatomic, readwrite) InfinitAnimations animation;
 @property (nonatomic, readwrite) CGPoint animation_center;
-@property (nonatomic, readwrite) NSTimeInterval duration;
+@property (nonatomic, readwrite) NSTimeInterval circular_duration;
+@property (nonatomic, readwrite) NSTimeInterval linear_duration;
 @property (nonatomic, readwrite) BOOL reverse;
 
 @end
