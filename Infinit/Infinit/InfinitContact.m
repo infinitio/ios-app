@@ -13,16 +13,16 @@
 @implementation InfinitContact
 {
 @private
-  BOOL _inited_with_addressbook;
+  BOOL _inited_with_infinit_user;
 }
 
-#pragma mark Init
+#pragma mark - Init
 
 - (id)initWithABRecord:(ABRecordRef)record
 {
   if (self = [super init])
   {
-    _inited_with_addressbook = YES;
+    _inited_with_infinit_user = NO;
     _infinit_user = nil;
 
     ABMultiValueRef email_property = ABRecordCopyValue(record, kABPersonEmailProperty);
@@ -58,6 +58,7 @@
       else
         [name_str appendString:NSLocalizedString(@"Unknown", nil)];
     }
+    _first_name = first_name;
     _fullname = [NSString stringWithString:name_str];
 
     NSData* image_data =
@@ -69,28 +70,47 @@
   return self;
 }
 
-- (id)initWithInfinitUser:(InfinitUser*)user
+- (id)initWithEmail:(NSString*)email_
 {
   if (self = [super init])
   {
-    _inited_with_addressbook = NO;
-    _infinit_user = user;
-    _avatar = user.avatar;
-    _emails = nil;
-    _fullname = user.fullname;
+    NSString* email =
+      [email_ stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]].lowercaseString;
+    _inited_with_infinit_user = NO;
+    _infinit_user = nil;
+    _avatar = nil;
+    _emails = @[email];
+    _selected_email_index = 0;
+    _fullname = email;
+    _first_name = email;
     _phone_numbers = nil;
   }
   return self;
 }
 
-#pragma mark General
-
-- (void)addInfinitUser:(InfinitUser*)user
+- (id)initWithInfinitUser:(InfinitUser*)user
 {
-  if (!_inited_with_addressbook)
-    return;
-  _infinit_user = user;
+  if (self = [super init])
+  {
+    _inited_with_infinit_user = YES;
+    _infinit_user = user;
+    _avatar = user.avatar;
+    _emails = nil;
+    if (user.is_self)
+      _fullname = NSLocalizedString(@"Me", nil);
+    else
+      _fullname = user.fullname;
+    NSArray* temp = [self.fullname componentsSeparatedByString:@" "];
+    if (temp.count > 0 && [temp[0] length] > 0)
+      _first_name = temp[0];
+    else
+      _first_name = self.fullname;
+    _phone_numbers = nil;
+  }
+  return self;
 }
+
+#pragma mark - General
 
 - (void)generateAvatarWithFirstName:(NSString*)first_name
                             surname:(NSString*)surname
@@ -127,12 +147,72 @@
   UIGraphicsEndImageContext();
 }
 
-#pragma mark Helpers
+#pragma mark - Helpers
 
 - (NSString*)description
 {
   return [NSString stringWithFormat:@"<%@> emails: %@\rnumbers: %@\rinfinit:%@",
           self.fullname, self.emails, self.phone_numbers, self.infinit_user];
+}
+
+#pragma mark - Comparison
+
+- (BOOL)isEqual:(id)object
+{
+  if (![object isKindOfClass:self.class])
+    return NO;
+  InfinitContact* other = (InfinitContact*)object;
+  if ([self.infinit_user isEqual:other.infinit_user])
+    return YES;
+  if ([self.emails isEqualToArray:other.emails])
+    return YES;
+  if ([self.fullname isEqualToString:other.fullname])
+    return YES;
+  return NO;
+}
+
+#pragma mark - Search
+
+- (BOOL)containsSearchString:(NSString*)search_string
+{
+  NSUInteger score = 0;
+  NSString* trimmed_string = search_string;
+    [search_string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+  NSArray* components = [trimmed_string componentsSeparatedByString:@" "];
+  for (NSString* component in components)
+  {
+    if ([self source:self.fullname containsString:component] ||
+        [self emails:self.emails containString:component] ||
+        (self.infinit_user != nil &&
+         [self source:self.infinit_user.handle containsString:component]))
+    {
+      score++;
+    }
+  }
+  if (score == components.count)
+    return YES;
+  return NO;
+}
+
+- (BOOL)source:(NSString*)source
+containsString:(NSString*)string
+{
+  if ([source rangeOfString:string options:NSCaseInsensitiveSearch].location == NSNotFound)
+    return NO;
+  return YES;
+}
+
+- (BOOL)emails:(NSArray*)emails
+ containString:(NSString*)string
+{
+  if (emails == nil)
+    return NO;
+  for (NSString* email in emails)
+  {
+    if ([self source:email containsString:string])
+      return YES;
+  }
+  return NO;
 }
 
 @end

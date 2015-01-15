@@ -15,14 +15,17 @@
 
 @property (nonatomic, strong) UIImage* avatar;
 @property (nonatomic, strong) NSArray* emails;
+@property (nonatomic, strong) NSString* first_name;
 @property (nonatomic, strong) NSString* fullname;
 @property (nonatomic, weak) InfinitUser* infinit_user;
 @property (nonatomic, strong) NSArray* phone_numbers;
+@property (nonatomic, readwrite) NSUInteger selected_email_index;
 
 
 - (id)initWithABRecord:(ABRecordRef)record;
+- (id)initWithEmail:(NSString*)email;
 - (id)initWithInfinitUser:(InfinitUser*)user;
 
-- (void)addInfinitUser:(InfinitUser*)user;
+- (BOOL)containsSearchString:(NSString*)search_string;
 
 @end
