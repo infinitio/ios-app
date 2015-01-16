@@ -12,12 +12,6 @@ static BOOL _show_numbers = NO;
 
 @implementation InfinitSendContactCell
 
-- (void)awakeFromNib
-{
-  self.avatar_view.layer.cornerRadius = self.avatar_view.frame.size.width / 2.0f;
-  self.avatar_view.clipsToBounds = YES;
-}
-
 - (void)prepareForReuse
 {
   [super prepareForReuse];
