@@ -116,7 +116,8 @@
                             surname:(NSString*)surname
 {
   UIColor* fill = [InfinitColor colorFromPalette:ColorShamRock];
-  CGRect rect = CGRectMake(0.0f, 0.0f, 80.0f, 80.0f);
+  CGFloat scale = [[UIScreen mainScreen] scale];
+  CGRect rect = CGRectMake(0.0f, 0.0f, 40.0f * scale, 40.0f * scale);
   UIGraphicsBeginImageContext(rect.size);
   CGContextRef context = UIGraphicsGetCurrentContext();
   [fill setFill];
@@ -138,7 +139,7 @@
     [text appendString:@" "];
   }
   NSDictionary* attrs = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light"
-                                                               size:34.0f],
+                                                               size:(17.0f * scale)],
                           NSForegroundColorAttributeName: [UIColor whiteColor]};
   NSAttributedString* str = [[NSAttributedString alloc] initWithString:text attributes:attrs];
   [str drawAtPoint:CGPointMake(round((rect.size.width - str.size.width) / 2.0f),
