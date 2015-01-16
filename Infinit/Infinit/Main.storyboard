@@ -1170,9 +1170,8 @@
                                                         </mask>
                                                     </variation>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="695-GN-s1x">
+                                                <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="695-GN-s1x">
                                                     <rect key="frame" x="11" y="9" width="40" height="40"/>
-                                                    <color key="backgroundColor" red="0.16862745100000001" green="0.74509803919999995" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="32" id="7Kg-Mq-eMz"/>
                                                         <constraint firstAttribute="height" constant="40" id="82Y-Ij-9iZ"/>
@@ -1190,9 +1189,8 @@
                                                         </mask>
                                                     </variation>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Qcz-Ec-0cT">
+                                                <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Qcz-Ec-0cT">
                                                     <rect key="frame" x="34" y="37" width="19" height="19"/>
-                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="19" id="6Ty-HX-fki"/>
                                                         <constraint firstAttribute="height" constant="19" id="fXA-v4-zVB"/>
@@ -1291,9 +1289,8 @@
                                                         </mask>
                                                     </variation>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zYV-ye-nPC">
+                                                <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zYV-ye-nPC">
                                                     <rect key="frame" x="11" y="10" width="40" height="40"/>
-                                                    <color key="backgroundColor" red="0.16862745100000001" green="0.74509803919999995" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="3o8-QB-9R2"/>
                                                         <constraint firstAttribute="width" constant="32" id="5eF-qs-Rf7"/>
@@ -1478,7 +1475,7 @@
                                                 <constraint firstAttribute="centerX" secondItem="7GO-ub-njO" secondAttribute="centerX" id="v4k-Fn-nOJ"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.84705882352941175" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="calibratedRGB"/>
                                         <inset key="separatorInset" minX="1000" minY="0.0" maxX="1000" maxY="0.0"/>
                                         <connections>
                                             <outlet property="facebook_button" destination="wT3-gi-JEO" id="3ns-AV-oYa"/>
