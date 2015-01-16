@@ -9,6 +9,7 @@
 #import "InfinitSendAbstractCell.h"
 
 #import "InfinitColor.h"
+#import "UIImage+circular.h"
 
 @implementation InfinitSendAbstractCell
 
@@ -22,7 +23,7 @@
 - (void)setContact:(InfinitContact*)contact
 {
   _contact = contact;
-  self.avatar_view.image = contact.avatar;
+  self.avatar_view.image = contact.avatar.circularMask;
   self.name_label.text = contact.fullname;
 }
 
