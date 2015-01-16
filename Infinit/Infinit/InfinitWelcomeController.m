@@ -97,6 +97,7 @@
     self.login_form_view.email_field.text = account;
     self.login_form_view.password_field.text = [password copy];
     password = nil;
+    [self checkLoginInputs];
   }
   [super viewDidAppear:animated];
 }
