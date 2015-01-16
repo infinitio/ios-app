@@ -22,7 +22,7 @@
     self.clipsToBounds = YES;
     _icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-tab-send"]];
     [self addSubview:self.icon];
-    self.icon.center = self.center;
+    self.icon.center = CGPointMake(self.center.x + 3.0f, self.center.y - 2.0f);
   }
   return self;
 }
