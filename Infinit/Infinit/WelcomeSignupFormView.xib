@@ -8,6 +8,7 @@
         <mutableArray key="SourceSansPro-Bold.otf">
             <string>SourceSansPro-Bold</string>
             <string>SourceSansPro-Bold</string>
+            <string>SourceSansPro-Bold</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -226,7 +227,7 @@
                         <constraint firstAttribute="width" constant="64" id="k9H-RD-VnW"/>
                         <constraint firstAttribute="height" constant="64" id="z5y-Cz-bEg"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="9"/>
                     <state key="normal" title="AVATAR" image="icon-photo">
                         <color key="titleColor" red="0.76078431369999999" green="0.82745098039999998" blue="0.82745098039999998" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
