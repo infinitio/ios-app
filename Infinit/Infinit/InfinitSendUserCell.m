@@ -8,15 +8,9 @@
 
 #import "InfinitSendUserCell.h"
 
-@implementation InfinitSendUserCell
+#import "UIImage+circular.h"
 
-- (void)awakeFromNib
-{
-  self.avatar_view.layer.cornerRadius = self.avatar_view.frame.size.width / 2.0f;
-  self.avatar_view.clipsToBounds = YES;
-  self.user_type_view.layer.cornerRadius = self.user_type_view.frame.size.width / 2.0f;
-  self.user_type_view.clipsToBounds = YES;
-}
+@implementation InfinitSendUserCell
 
 - (void)prepareForReuse
 {
@@ -28,9 +22,9 @@
 {
   [super setContact:contact];
   if (self.contact.infinit_user.favorite || self.contact.infinit_user.is_self)
-    self.user_type_view.image = [UIImage imageNamed:@"icon-contact-favorite"];
+    self.user_type_view.image = [UIImage imageNamed:@"icon-contact-favorite"].circularMask;
   else
-    self.user_type_view.image = [UIImage imageNamed:@"icon-contact-infinit"];
+    self.user_type_view.image = [UIImage imageNamed:@"icon-contact-infinit"].circularMask;
 }
 
 @end
