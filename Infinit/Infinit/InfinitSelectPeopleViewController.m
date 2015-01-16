@@ -324,26 +324,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
                                                                onObject:self];
 }
 
-- (IBAction)inviteBarButtonTapped:(id)sender
-{
-  [self showImportOverlay];
-}
-
-- (IBAction)importPhoneContactsTapped:(id)sender
-{
-  [self showAddressBookOverlay];
-}
-
-- (IBAction)findFacebookFriendsTapped:(id)sender
-{
-  
-}
-
-- (IBAction)findPeopleOnInfinitTapped:(id)sender
-{
-  
-}
-
 - (void)temporaryFileManagerCallback
 {
   NSArray* files =
@@ -366,6 +346,26 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
                                                                withMessage:@"from iOS"];
   [[InfinitTemporaryFileManager sharedInstance] setTransactionIds:ids
                                                   forManagedFiles:_managed_files_id];
+}
+
+- (IBAction)inviteBarButtonTapped:(id)sender
+{
+  [self showImportOverlay];
+}
+
+- (IBAction)importPhoneContactsTapped:(id)sender
+{
+  [self showAddressBookOverlay];
+}
+
+- (IBAction)findFacebookFriendsTapped:(id)sender
+{
+  
+}
+
+- (IBAction)findPeopleOnInfinitTapped:(id)sender
+{
+  
 }
 
 #pragma mark - Table View Data Source
