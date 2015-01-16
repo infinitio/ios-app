@@ -264,7 +264,8 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
     NSMutableArray* asset_urls = [NSMutableArray array];
     for (NSIndexPath* path in self.collectionView.indexPathsForSelectedItems)
     {
-      [asset_urls addObject:self.assets[self.assets.count - 1 - path.row]];
+      ALAsset* asset = self.assets[self.assets.count - 1 - path.row];
+      [asset_urls addObject:asset.defaultRepresentation.url];
     }
     InfinitSelectPeopleViewController* view_controller =
       (InfinitSelectPeopleViewController*)segue.destinationViewController;
