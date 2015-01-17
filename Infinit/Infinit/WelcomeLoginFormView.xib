@@ -54,18 +54,9 @@
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-email" translatesAutoresizingMaskIntoConstraints="NO" id="lyq-FI-lTp">
                             <rect key="frame" x="26" y="62" width="21" height="14"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="14" id="UIc-eA-yeX"/>
-                                <constraint firstAttribute="height" constant="14" id="V7d-CK-Tnf"/>
-                                <constraint firstAttribute="width" constant="21" id="WsE-Dv-wb1"/>
-                                <constraint firstAttribute="width" constant="21" id="fBt-sg-Xej"/>
-                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="14" id="pH3-Rk-POX"/>
+                                <constraint firstAttribute="height" constant="14" id="EmF-aV-yLf"/>
+                                <constraint firstAttribute="width" constant="21" id="oZi-tj-vfr"/>
                             </constraints>
-                            <variation key="default">
-                                <mask key="constraints">
-                                    <exclude reference="V7d-CK-Tnf"/>
-                                    <exclude reference="WsE-Dv-wb1"/>
-                                </mask>
-                            </variation>
                         </imageView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IMY-op-qQ2">
                             <rect key="frame" x="22" y="95" width="370" height="1"/>
@@ -77,17 +68,9 @@
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-password" translatesAutoresizingMaskIntoConstraints="NO" id="sfe-yU-93s">
                             <rect key="frame" x="29" y="109" width="14" height="20"/>
                             <constraints>
-                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="13" id="1FL-dk-jQV"/>
-                                <constraint firstAttribute="width" constant="14" id="CUd-ph-AMM"/>
-                                <constraint firstAttribute="height" constant="20" id="Ivc-CA-Kvf"/>
-                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="19" id="wPw-oi-YE6"/>
+                                <constraint firstAttribute="width" constant="14" id="07h-Ab-STe"/>
+                                <constraint firstAttribute="height" constant="20" id="vv2-32-MM5"/>
                             </constraints>
-                            <variation key="default">
-                                <mask key="constraints">
-                                    <exclude reference="1FL-dk-jQV"/>
-                                    <exclude reference="wPw-oi-YE6"/>
-                                </mask>
-                            </variation>
                         </imageView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SJr-8z-70K">
                             <rect key="frame" x="22" y="142" width="370" height="1"/>
