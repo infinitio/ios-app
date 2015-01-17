@@ -42,6 +42,8 @@ static InfinitKeychain* _instance = nil;
 - (BOOL)addPassword:(NSString*)password
          forAccount:(NSString*)account
 {
+  if (account == nil || account.length == 0)
+    return NO;
   NSMutableDictionary* dict = [self keychainDictionaryForAccount:account];
   dict[(__bridge id)kSecValueData] = [self encodeString:password];
   OSStatus status = SecItemAdd((__bridge CFDictionaryRef)dict, NULL);
@@ -55,6 +57,8 @@ static InfinitKeychain* _instance = nil;
 
 - (BOOL)credentialsForAccountInKeychain:(NSString*)account
 {
+  if (account == nil || account.length == 0)
+    return NO;
   if ([self passwordForAccount:account] == nil)
     return NO;
   return YES;
@@ -62,6 +66,8 @@ static InfinitKeychain* _instance = nil;
 
 - (NSString*)passwordForAccount:(NSString*)account
 {
+  if (account == nil || account.length == 0)
+    return nil;
   NSMutableDictionary* dict = [self keychainDictionaryForAccount:account];
   dict[(__bridge id)kSecMatchLimit] = (__bridge id)kSecMatchLimitOne;
   dict[(__bridge id)kSecReturnData] = (id)kCFBooleanTrue;
@@ -77,6 +83,8 @@ static InfinitKeychain* _instance = nil;
 
 - (BOOL)removeAccount:(NSString*)account
 {
+  if (account == nil || account.length == 0)
+    return NO;
   NSMutableDictionary* dict = [self keychainDictionaryForAccount:account];
   OSStatus status = SecItemDelete((__bridge CFDictionaryRef)dict);
   if (status != errSecSuccess)
@@ -90,6 +98,8 @@ static InfinitKeychain* _instance = nil;
 - (BOOL)updatePassword:(NSString*)password
             forAccount:(NSString*)account
 {
+  if (account == nil || account.length == 0)
+    return NO;
   NSMutableDictionary* dict = [self keychainDictionaryForAccount:account];
   NSDictionary* update_dict = @{(__bridge id)kSecValueData: [self encodeString:password]};
   OSStatus status = SecItemUpdate((__bridge CFDictionaryRef)dict,
