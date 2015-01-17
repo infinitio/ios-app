@@ -10,13 +10,14 @@
 
 #import <AddressBook/AddressBook.h>
 
+#import "InfinitAccessContactsView.h"
 #import "InfinitColor.h"
 #import "InfinitContact.h"
-#import "InfinitAccessContactsView.h"
 #import "InfinitImportOverlayView.h"
-#import "InfinitSendUserCell.h"
-#import "InfinitSendImportCell.h"
 #import "InfinitSendContactCell.h"
+#import "InfinitSendImportCell.h"
+#import "InfinitSendUserCell.h"
+#import "InfinitSendTableHeader.h"
 
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitTemporaryFileManager.h>
@@ -44,6 +45,8 @@
 @property (nonatomic, strong) NSMutableOrderedSet* recipients;
 @property (nonatomic, strong) NSMutableArray* all_swaggers;
 @property (nonatomic, strong) NSArray* swagger_results;
+@property (nonatomic, strong) InfinitSendTableHeader* swaggers_header;
+@property (nonatomic, strong) InfinitSendTableHeader* contacts_header;
 
 @end
 
@@ -134,6 +137,10 @@
   }
   [self configureSearchField];
   [super viewWillAppear:animated];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(userAvatarFetched:)
+                                               name:INFINIT_USER_AVATAR_NOTIFICATION
+                                             object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -157,6 +164,7 @@
 {
   [self.navigationController.navigationBar.subviews[0] removeGestureRecognizer:_nav_bar_tap];
   [super viewWillDisappear:animated];
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)fetchSwaggers
@@ -168,8 +176,10 @@
     [self.all_swaggers addObject:contact];
   }
   self.swagger_results = [self.all_swaggers copy];
+  [self.table_view beginUpdates];
   [self.table_view reloadSections:[NSIndexSet indexSetWithIndex:0]
                  withRowAnimation:UITableViewRowAnimationAutomatic];
+  [self.table_view endUpdates];
 }
 
 - (void)fetchAddressBook
@@ -196,8 +206,10 @@
       }
     }
     self.contact_results = [self.all_contacts copy];
+    [self.table_view beginUpdates];
     [self.table_view reloadSections:[NSIndexSet indexSetWithIndex:1]
                    withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.table_view endUpdates];
   }
 }
 
@@ -431,7 +443,28 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
 - (CGFloat)tableView:(UITableView*)tableView
 heightForHeaderInSection:(NSInteger)section
 {
-  return 25.0f;
+  return 35.0f;
+}
+
+- (UIView*)tableView:(UITableView*)tableView
+viewForHeaderInSection:(NSInteger)section
+{
+  if (section == 0 && self.swaggers_header == nil)
+  {
+    UINib* header_nib = [UINib nibWithNibName:@"InfinitSendTableHeader" bundle:nil];
+    self.swaggers_header = [[header_nib instantiateWithOwner:self options:nil] firstObject];
+    self.swaggers_header.title.text = NSLocalizedString(@"My contacts on Infinit", nil);
+  }
+  else if (section == 1 && self.contacts_header == nil)
+  {
+    UINib* header_nib = [UINib nibWithNibName:@"InfinitSendTableHeader" bundle:nil];
+    self.contacts_header = [[header_nib instantiateWithOwner:self options:nil] firstObject];
+    self.contacts_header.title.text = NSLocalizedString(@"Other contacts", nil);
+  }
+  if (section == 0)
+    return self.swaggers_header;
+  else
+    return self.contacts_header;
 }
 
 - (CGFloat)tableView:(UITableView*)tableView
@@ -444,24 +477,6 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
   else
   {
     return (self.contact_results.count == 0 ? 349.0f : 61.0f);
-  }
-}
-
-- (void)tableView:(UITableView*)tableView
-willDisplayHeaderView:(UIView*)view
-       forSection:(NSInteger)section
-{
-  if ([view isKindOfClass:UITableViewHeaderFooterView.class])
-  {
-    UITableViewHeaderFooterView* header = (UITableViewHeaderFooterView*)view;
-    header.layer.backgroundColor = [InfinitColor colorWithGray:243].CGColor;
-    header.layer.borderColor = [InfinitColor colorWithGray:216].CGColor;
-    header.layer.borderWidth = 1.0f;
-    header.textLabel.font = [UIFont fontWithName:@"SourceSansPro-Semibold" size:11.0f];
-    if (section == 0)
-      header.textLabel.text = NSLocalizedString(@"My contacts on Infinit", nil);
-    else
-      header.textLabel.text = NSLocalizedString(@"Other contacts", nil);
   }
 }
 
@@ -718,7 +733,9 @@ didDeleteTokenAtIndex:(NSUInteger)index
   }
   if (sections.count == 0)
     return;
+  [self.table_view beginUpdates];
   [self.table_view reloadSections:sections withRowAnimation:UITableViewRowAnimationAutomatic];
+  [self.table_view endUpdates];
 }
 
 - (void)updateSearchResultsWithSearchString:(NSString*)search_string
@@ -748,8 +765,29 @@ didDeleteTokenAtIndex:(NSUInteger)index
   }
   if (sections.count > 0)
   {
+    [self.table_view beginUpdates];
     [self.table_view reloadSections:sections
                    withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.table_view endUpdates];
+  }
+}
+
+#pragma mark - User Avatar
+
+- (void)userAvatarFetched:(NSNotification*)notification
+{
+  NSNumber* updated_id = notification.userInfo[@"id"];
+  NSUInteger row = 0;
+  for (InfinitContact* contact in self.swagger_results)
+  {
+    if ([contact.infinit_user.id_ isEqualToNumber:updated_id])
+    {
+      NSIndexPath* path = [NSIndexPath indexPathForRow:row inSection:0];
+      InfinitSendUserCell* cell = (InfinitSendUserCell*)[self.table_view cellForRowAtIndexPath:path];
+      [cell performSelectorOnMainThread:@selector(updateAvatar) withObject:nil waitUntilDone:NO];
+      return;
+    }
+    row++;
   }
 }
 
