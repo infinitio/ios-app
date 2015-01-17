@@ -148,6 +148,19 @@ static BOOL asked_permission = NO;
 - (BOOL)tabBarController:(UITabBarController*)tabBarController
 shouldSelectViewController:(UIViewController*)viewController
 {
+//    if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusNotDetermined)
+//    {
+//    if (!asked_permission)
+//    {
+//      asked_permission = YES;
+//      [self loadGalleryPermissionView];
+//      return NO;
+//    }
+//    }
+//    else if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusDenied)
+//    {
+//      NSLog(@"xxx no permission for gallery");
+//    }
   if ([self.viewControllers indexOfObject:viewController] == self.selectedIndex)
     return NO;
   _last_index = self.selectedIndex;
@@ -182,19 +195,6 @@ shouldSelectViewController:(UIViewController*)viewController
         self.view.frame = final_view_rect;
       }
     }];
-//    if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusNotDetermined)
-//    {
-//    if (!asked_permission)
-//    {
-//      asked_permission = YES;
-//      [self loadGalleryPermissionView];
-//      return NO;
-//    }
-//    }
-//    else if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusDenied)
-//    {
-//      NSLog(@"xxx no permission for gallery");
-//    }
   }
   NSUInteger index = [self.viewControllers indexOfObject:viewController];
   [self selectorToPosition:index];
