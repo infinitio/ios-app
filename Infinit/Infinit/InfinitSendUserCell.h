@@ -17,4 +17,6 @@
 
 @property (nonatomic, weak) IBOutlet UIImageView* user_type_view;
 
+- (void)updateAvatar;
+
 @end

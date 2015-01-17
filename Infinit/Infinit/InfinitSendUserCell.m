@@ -27,4 +27,11 @@
     self.user_type_view.image = [UIImage imageNamed:@"icon-contact-infinit"].circularMask;
 }
 
+- (void)updateAvatar
+{
+  [self.contact updateAvatar];
+  self.avatar_view.image = self.contact.avatar.circularMask;
+  [self setNeedsDisplay];
+}
+
 @end
