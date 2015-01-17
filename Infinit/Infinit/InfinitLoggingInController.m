@@ -14,4 +14,9 @@
 
 @implementation InfinitLoggingInController
 
+- (BOOL)prefersStatusBarHidden
+{
+  return YES;
+}
+
 @end
