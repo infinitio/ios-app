@@ -10,6 +10,8 @@
 
 #import "InfinitColor.h"
 
+#import "UIImage+circular.h"
+
 @implementation InfinitContact
 {
 @private
@@ -111,6 +113,13 @@
 }
 
 #pragma mark - General
+
+- (void)updateAvatar
+{
+  if (self.infinit_user == nil)
+    return;
+  self.avatar = self.infinit_user.avatar;
+}
 
 - (void)generateAvatarWithFirstName:(NSString*)first_name
                             surname:(NSString*)surname

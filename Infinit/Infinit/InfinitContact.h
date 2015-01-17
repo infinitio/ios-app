@@ -27,5 +27,6 @@
 - (id)initWithInfinitUser:(InfinitUser*)user;
 
 - (BOOL)containsSearchString:(NSString*)search_string;
+- (void)updateAvatar;
 
 @end
