@@ -12,6 +12,4 @@
 
 @property (nonatomic, strong) UIImageView* icon;
 
-- (id)initWithDiameter:(CGFloat)diameter;
-
 @end

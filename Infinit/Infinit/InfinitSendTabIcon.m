@@ -12,17 +12,14 @@
 
 @implementation InfinitSendTabIcon
 
-- (id)initWithDiameter:(CGFloat)diameter
+- (id)initWithFrame:(CGRect)frame
 {
-  CGRect frame = CGRectMake(0.0f, 0.0f, diameter, diameter);
   if (self = [super initWithFrame:frame])
   {
-    self.backgroundColor = [InfinitColor colorFromPalette:ColorBurntSienna];
-    self.layer.cornerRadius = diameter / 2.0f;
-    self.clipsToBounds = YES;
+    self.image = [UIImage imageNamed:@"icon-tab-send-bg"];
     _icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-tab-send"]];
     [self addSubview:self.icon];
-    self.icon.center = CGPointMake(self.center.x + 3.0f, self.center.y - 2.0f);
+    self.icon.center = CGPointMake(self.center.x + 3.0f, self.center.y + 6.0f);
   }
   return self;
 }
