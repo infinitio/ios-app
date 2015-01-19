@@ -47,6 +47,7 @@
     animation.duration = duration;
     animation.fromValue = @(last_progress);
     animation.toValue = @(progress);
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     [self.progress_layer addAnimation:animation forKey:@"strokeEnd"];
   }
   _progress = progress;
