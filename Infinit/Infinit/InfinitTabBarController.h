@@ -12,5 +12,7 @@
 @interface InfinitTabBarController : UITabBarController <UITabBarControllerDelegate>
 
 - (void)lastSelectedIndex;
+- (void)showMainScreen;
+- (void)showWelcomeScreen;
 
 @end

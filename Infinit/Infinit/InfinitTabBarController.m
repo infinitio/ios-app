@@ -12,15 +12,16 @@
 #import "InfinitColor.h"
 #import "InfinitSendTabIcon.h"
 #import "InfinitTabAnimator.h"
+#import "InfinitSendNavigationController.h"
 
 #import <AssetsLibrary/AssetsLibrary.h>
 
 typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 {
   TabBarIndexHome = 0,
-  TabBarIndexFiles,
+//  TabBarIndexFiles,
   TabBarIndexSend,
-  TabBarIndexContacts,
+//  TabBarIndexContacts,
   TabBarIndexSettings,
 };
 
@@ -61,14 +62,22 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   [self.tabBar addSubview:shadow_line];
 
   _selection_indicator =
-    [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width / 5.0f, 1.0f)];
+    [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                             0.0f,
+                                             self.view.frame.size.width / 2.0f,
+                                             1.0f)];
   self.selection_indicator.backgroundColor = [InfinitColor colorFromPalette:ColorBurntSienna];
   [self.tabBar addSubview:self.selection_indicator];
 
-  _send_tab_icon = [[InfinitSendTabIcon alloc] initWithDiameter:67.0f];
+  UIImage* send_icon_bg = [UIImage imageNamed:@"icon-tab-send-bg"];
+  _send_tab_icon = [[InfinitSendTabIcon alloc] initWithFrame:CGRectMake(0.0f,
+                                                                        0.0f,
+                                                                        send_icon_bg.size.width,
+                                                                        send_icon_bg.size.height)];
   [self.tabBar addSubview:self.send_tab_icon];
-  self.send_tab_icon.center = CGPointMake(self.view.frame.size.width / 2.0f,
-                                          self.send_tab_icon.frame.size.height / 3.0f);
+  CGFloat delta = (self.tabBar.bounds.size.height - send_icon_bg.size.height) / 2.0f;
+  self.send_tab_icon.center = CGPointMake(self.tabBar.bounds.size.width / 2.0f,
+                                          (self.tabBar.bounds.size.height / 2.0f) + delta);
   for (NSUInteger index = 0; index < self.tabBar.items.count; index++)
   {
     [self.tabBar.items[index] setSelectedImage:[self imageForTabBarItem:index selected:NO]];
@@ -79,20 +88,21 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 - (UIImage*)imageForTabBarItem:(InfinitTabBarIndex)index
                       selected:(BOOL)selected
 {
+  [self.tabBar.items[index] setImageInsets:UIEdgeInsetsMake(5.0f, 0.0f, -5.0f, 0.0f)];
   NSString* image_name = nil;
   switch (index)
   {
     case TabBarIndexHome:
       image_name = @"icon-tab-home";
       break;
-    case TabBarIndexFiles:
-      image_name = @"icon-tab-files";
-      break;
+//    case TabBarIndexFiles:
+//      image_name = @"icon-tab-files";
+//      break;
     case TabBarIndexSend:
       return nil;
-    case TabBarIndexContacts:
-      image_name = @"icon-tab-contacts";
-      break;
+//    case TabBarIndexContacts:
+//      image_name = @"icon-tab-contacts";
+//      break;
     case TabBarIndexSettings:
       image_name = @"icon-tab-settings";
       break;
@@ -117,7 +127,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
                                     byWidth:0.0f
                                   andHeight:-self.tabBar.frame.size.height];
     [UIView animateWithDuration:self.animator.linear_duration
-                          delay:0.0f
+                          delay:self.animator.circular_duration / 2.0f
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^
     {
@@ -136,44 +146,45 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   [self selectorToPosition:selectedIndex];
 }
 
+#pragma mark - General
+
 - (void)lastSelectedIndex
 {
   self.selectedIndex = _last_index;
 }
 
-#pragma mark - Delegate Functions
+- (void)showMainScreen
+{
+  self.selectedIndex = TabBarIndexHome;
+}
 
-static BOOL asked_permission = NO;
+- (void)showWelcomeScreen
+{
+  [self dismissViewControllerAnimated:YES completion:nil];
+  UIStoryboard* board = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+  UIViewController* login_controller =
+    [board instantiateViewControllerWithIdentifier:@"welcome_controller"];
+  [self presentViewController:login_controller animated:YES completion:nil];
+}
+
+#pragma mark - Delegate Functions
 
 - (BOOL)tabBarController:(UITabBarController*)tabBarController
 shouldSelectViewController:(UIViewController*)viewController
 {
-//    if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusNotDetermined)
-//    {
-//    if (!asked_permission)
-//    {
-//      asked_permission = YES;
-//      [self loadGalleryPermissionView];
-//      return NO;
-//    }
-//    }
-//    else if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusDenied)
-//    {
-//      NSLog(@"xxx no permission for gallery");
-//    }
   if ([self.viewControllers indexOfObject:viewController] == self.selectedIndex)
     return NO;
-  _last_index = self.selectedIndex;
-  if ([viewController.title isEqualToString:@"SETTINGS"])
+  if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusNotDetermined)
   {
-    [self dismissViewControllerAnimated:YES completion:nil];
-    UIStoryboard* board = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-    UIViewController* login_controller =
-      [board instantiateViewControllerWithIdentifier:@"welcome_controller"];
-    [self presentViewController:login_controller animated:YES completion:nil];
+    [self loadGalleryPermissionView];
     return NO;
   }
-  else if ([viewController.title isEqualToString:@"SEND"])
+  else if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusDenied)
+  {
+    NSLog(@"xxx no permission for gallery");
+  }
+  _last_index = self.selectedIndex;
+  if ([viewController.title isEqualToString:@"SEND"])
   {
     CGRect final_bar_rect = CGRectOffset(self.tabBar.frame, 0.0f, self.tabBar.frame.size.height);
     CGRect final_view_rect = [self growRect:self.view.frame
@@ -201,6 +212,17 @@ shouldSelectViewController:(UIViewController*)viewController
   return YES;
 }
 
+- (void)noGalleryAccessPopUp
+{
+  NSString* message = NSLocalizedString(@"Infinit requires access to your camera roll", nil);
+  UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
+                                                  message:message
+                                                 delegate:nil
+                                        cancelButtonTitle:nil
+                                        otherButtonTitles:@"OK", nil];
+  [alert show];
+}
+
 - (id<UIViewControllerAnimatedTransitioning>)tabBarController:(UITabBarController*)tabBarController
            animationControllerForTransitionFromViewController:(UIViewController*)fromVC
                                              toViewController:(UIViewController*)toVC
@@ -215,11 +237,19 @@ shouldSelectViewController:(UIViewController*)viewController
   }
   else if ([fromVC.title isEqualToString:@"SEND"])
   {
+    InfinitSendNavigationController* send_nav_controller = (InfinitSendNavigationController*)fromVC;
     self.animator.reverse = YES;
-    self.animator.animation = AnimateCircleCover;
-    self.animator.animation_center =
-      CGPointMake(self.view.frame.size.width / 2.0f, self.view.frame.size.height -
-                  self.send_tab_icon.frame.size.height / 3.0f);
+    if ([send_nav_controller.topViewController.title isEqualToString:@"SEND_GALLERY"])
+    {
+      self.animator.animation = AnimateCircleCover;
+      self.animator.animation_center =
+        CGPointMake(self.view.frame.size.width / 2.0f, self.view.frame.size.height -
+                    self.send_tab_icon.frame.size.height / 3.0f);
+    }
+    else if ([send_nav_controller.topViewController.title isEqualToString:@"SEND_RECIPIENTS"])
+    {
+      self.animator.animation = AnimateDownUp;
+    }
   }
   else
   {
@@ -258,18 +288,6 @@ shouldSelectViewController:(UIViewController*)viewController
   self.permission_view.image_view.hidden = YES;
   self.permission_view.message_label.text =
     NSLocalizedString(@"Tap \"OK\" to start sending\nyour photos and videos", nil);
-  UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
-                                                  message:@"Give me permission!"
-                                                 delegate:nil
-                                        cancelButtonTitle:nil
-                                        otherButtonTitles:@"OK", nil];
-  alert.delegate = self;
-  [alert show];
-}
-
-- (void)alertView:(UIAlertView*)alertView
-clickedButtonAtIndex:(NSInteger)buttonIndex
-{
   ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
   [library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos
                          usingBlock:^(ALAssetsGroup* group, BOOL* stop)
@@ -285,22 +303,22 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
                                                                 to:final_rect
                                                       withDuration:0.5f
                                                 andCompletionBlock:^
-     {
-       [self.permission_view performSelector:@selector(removeFromSuperview)
-                                  withObject:nil
-                                  afterDelay:0.51f];
-       self.permission_view = nil;
-     }];
+      {
+        [self.permission_view performSelector:@selector(removeFromSuperview)
+                                   withObject:nil
+                                   afterDelay:0.51f];
+        self.permission_view = nil;
+      }];
      self.selectedIndex = TabBarIndexSend;
    } failureBlock:^(NSError* error)
    {
      if (error.code == ALAssetsLibraryAccessUserDeniedError)
      {
-       NSLog(@"user denied access, code: %li",(long)error.code);
+       NSLog(@"user denied access, code: %li", (long)error.code);
      }
      else
      {
-       NSLog(@"Other error code: %li",(long)error.code);
+       NSLog(@"Other error code: %li", (long)error.code);
      }
    }];
 }
@@ -312,8 +330,9 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
     self.selection_indicator.frame = CGRectMake(0.0f, 0.0f, 0.0f, 0.0f);
     return;
   }
-  CGFloat count = self.viewControllers.count;
-  self.selection_indicator.frame = CGRectMake(self.view.frame.size.width / count * position, 0.0f,
+  NSUInteger count = 2;
+  NSUInteger pos = (position == 0) ? 0 : 1;
+  self.selection_indicator.frame = CGRectMake(self.view.frame.size.width / count * pos, 0.0f,
                                               self.view.frame.size.width / count, 1.0f);
 }
 
