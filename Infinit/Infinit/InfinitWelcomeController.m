@@ -52,6 +52,7 @@
 {
 @private
   NSString* _password;
+  NSString* _username;
 }
 
 - (void)viewDidLoad
@@ -597,7 +598,7 @@
 - (void)tryLogin
 {
   self.login_form_view.error_label.hidden = YES;
-  self.login_form_view.facebook_hidden = YES;
+//  self.login_form_view.facebook_hidden = YES;
   if ([self loginInputsGood])
   {
     [self.view endEditing:YES];
@@ -625,7 +626,7 @@
   [self.login_form_view.activity stopAnimating];
   if (result.success)
   {
-    [[InfinitApplicationSettings sharedInstance] setUsername:self.login_form_view.email_field.text];
+    _username = [self.login_form_view.email_field.text copy];
     _password = [self.login_form_view.password_field.text copy];
     self.login_form_view.password_field.text = nil;
     [self onSuccessfulLogin];
@@ -637,7 +638,7 @@
     self.login_form_view.back_button.enabled = YES;
     self.login_form_view.error_label.text = [self registerLoginErrorFromStatus:result.status];
     self.login_form_view.error_label.hidden = NO;
-    self.login_form_view.facebook_hidden = NO;
+//    self.login_form_view.facebook_hidden = NO;
   }
 }
 
@@ -646,15 +647,22 @@
   [InfinitUserManager sharedInstance];
   [InfinitPeerTransactionManager sharedInstance];
 
-  NSString* account = [[InfinitApplicationSettings sharedInstance] username];
-
-  if ([[InfinitKeychain sharedInstance] credentialsForAccountInKeychain:account])
+  NSString* old_account = [[InfinitApplicationSettings sharedInstance] username];
+  if (![old_account isEqualToString:_username])
   {
-    [[InfinitKeychain sharedInstance] updatePassword:_password forAccount:account];
+    if ([[InfinitKeychain sharedInstance] credentialsForAccountInKeychain:old_account])
+    {
+      [[InfinitKeychain sharedInstance] removeAccount:old_account];
+    }
+  }
+  [[InfinitApplicationSettings sharedInstance] setUsername:_username];
+  if ([[InfinitKeychain sharedInstance] credentialsForAccountInKeychain:_username])
+  {
+    [[InfinitKeychain sharedInstance] updatePassword:_password forAccount:_username];
   }
   else
   {
-    [[InfinitKeychain sharedInstance] addPassword:_password forAccount:account];
+    [[InfinitKeychain sharedInstance] addPassword:_password forAccount:_username];
   }
   _password = nil;
 
@@ -729,9 +737,10 @@
 
 - (void)registerCallback:(InfinitStateResult*)result
 {
+  [self.signup_form_view.activity stopAnimating];
   if (result.success)
   {
-    [[InfinitApplicationSettings sharedInstance] setUsername:self.signup_form_view.email_field.text];
+    _username = [self.signup_form_view.email_field.text copy];
     _password = [self.signup_form_view.password_field.text copy];
     self.signup_form_view.password_field.text = nil;
     [self onSuccessfulLogin];
