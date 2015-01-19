@@ -38,6 +38,7 @@
   [check addLineToPoint:CGPointMake(w * 3.0f / 8.0f, h * 2.0f / 3.0f)];
   [check addLineToPoint:CGPointMake(w * 3.0f / 4.0f, h * 3.0f / 8.0f)];
   self.check_layer.path = check.CGPath;
+  self.check_layer.lineCap = kCALineCapRound;
   [self.layer addSublayer:self.check_layer];
 }
 
