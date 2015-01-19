@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 
+#import <Gap/InfinitAvatarManager.h>
 #import <Gap/InfinitConnectionManager.h>
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitStateResult.h>
@@ -65,7 +66,6 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   NSString* identifier = nil;
   if (result.success)
   {
-    NSLog(@"xxx successful login");
     identifier = @"tab_bar_controller";
   }
   else
@@ -74,6 +74,11 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   }
   self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:identifier];
   [self.window makeKeyAndVisible];
+}
+
+- (void)applicationDidReceiveMemoryWarning:(UIApplication*)application
+{
+  [[InfinitAvatarManager sharedInstance] clearCachedAvatars];
 }
 
 //Facebook SDK url handling
