@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C99d" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="SourceSansPro-Bold.otf">
+            <string>SourceSansPro-Bold</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="195"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow-onboarding-send" translatesAutoresizingMaskIntoConstraints="NO" id="EUq-qA-suN">
+                    <rect key="frame" x="139" y="36" width="43" height="132"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="132" id="9eO-85-UQ4"/>
+                        <constraint firstAttribute="width" constant="43" id="SFi-ZD-Q5c"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send your first file!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DXe-Nt-Iab">
+                    <rect key="frame" x="158" y="9" width="119" height="18"/>
+                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="DXe-Nt-Iab" firstAttribute="leading" secondItem="EUq-qA-suN" secondAttribute="trailing" constant="-24" id="J8m-Cr-HJ7"/>
+                <constraint firstItem="EUq-qA-suN" firstAttribute="top" secondItem="DXe-Nt-Iab" secondAttribute="bottom" constant="9" id="WQT-a0-UQm"/>
+                <constraint firstAttribute="centerX" secondItem="EUq-qA-suN" secondAttribute="centerX" id="Yee-aD-fuZ"/>
+                <constraint firstAttribute="bottom" secondItem="EUq-qA-suN" secondAttribute="bottom" constant="27" id="qFw-nW-4Lc"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="560" y="723"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="arrow-onboarding-send" width="43" height="132"/>
+    </resources>
+</document>
