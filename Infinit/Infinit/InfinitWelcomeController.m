@@ -53,6 +53,9 @@
 @private
   NSString* _password;
   NSString* _username;
+
+  BOOL _logging_in;
+  BOOL _registering;
 }
 
 - (void)viewDidLoad
@@ -76,9 +79,11 @@
                       (id)[InfinitColor colorWithRed:255 green:255 blue:255].CGColor];
   [self.view.layer insertSublayer:gradient atIndex:0];
 
-  self.signup_with_facebook_button.layer.cornerRadius = 3.0f;
-  self.signup_with_email_button.layer.cornerRadius = 3.0f;
-  self.login_button.layer.cornerRadius = 3.0f;
+  self.signup_with_facebook_button.layer.cornerRadius =
+    self.signup_with_facebook_button.bounds.size.height / 2.0f;
+  self.signup_with_email_button.layer.cornerRadius =
+    self.signup_with_email_button.bounds.size.height / 2.0f;
+  self.login_button.layer.cornerRadius = self.login_button.bounds.size.height / 2.0f;
 
   [self configureLoginView];
   [self configureSignupView];
@@ -91,6 +96,8 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+  _logging_in = NO;
+  _registering = NO;
   if ([[InfinitApplicationSettings sharedInstance] username] != nil)
   {
     NSString* account = [[InfinitApplicationSettings sharedInstance] username];
@@ -455,7 +462,7 @@
 - (BOOL)registerInputsGood
 {
   if (self.signup_form_view.email_field.text.isEmail &&
-      self.signup_form_view.fullname_field.text.length > 3 &&
+      self.signup_form_view.fullname_field.text.length >= 3 &&
       self.signup_form_view.password_field.text.length > 3)
   {
     self.signup_form_view.next_button.enabled = YES;
@@ -597,6 +604,9 @@
 
 - (void)tryLogin
 {
+  if (_logging_in)
+    return;
+  _logging_in = YES;
   self.login_form_view.error_label.hidden = YES;
 //  self.login_form_view.facebook_hidden = YES;
   if ([self loginInputsGood])
@@ -623,6 +633,7 @@
 
 - (void)loginCallback:(InfinitStateResult*)result
 {
+  _logging_in = NO;
   [self.login_form_view.activity stopAnimating];
   if (result.success)
   {
@@ -708,6 +719,9 @@
 
 - (void)tryRegister
 {
+  if (_registering)
+    return;
+  _registering = YES;
   self.signup_form_view.error_label.hidden = YES;
   if ([self registerInputsGood])
   {
@@ -737,6 +751,7 @@
 
 - (void)registerCallback:(InfinitStateResult*)result
 {
+  _registering = NO;
   [self.signup_form_view.activity stopAnimating];
   if (result.success)
   {
