@@ -12,7 +12,7 @@
 
 - (void)awakeFromNib
 {
-  self.access_button.layer.cornerRadius = 3.0f;
+  self.access_button.layer.cornerRadius = self.access_button.bounds.size.height / 2.0f;
 }
 
 @end
