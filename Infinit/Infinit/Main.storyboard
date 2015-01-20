@@ -15,6 +15,7 @@
             <string>SourceSansPro-Bold</string>
             <string>SourceSansPro-Bold</string>
             <string>SourceSansPro-Bold</string>
+            <string>SourceSansPro-Bold</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -240,7 +241,7 @@
             </objects>
             <point key="canvasLocation" x="-44" y="-699"/>
         </scene>
-        <!--Settings-->
+        <!--SETTINGS-->
         <scene sceneID="kG6-8e-DtB">
             <objects>
                 <tableViewController id="4eC-1g-a2B" customClass="InfinitSettingsViewController" sceneMemberID="viewController">
@@ -249,19 +250,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95294117647058818" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
-                            <tableViewSection headerTitle="Account" id="dzg-ha-cHv">
+                            <tableViewSection id="dzg-ha-cHv">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="y3X-Eg-CWh" style="IBUITableViewCellStyleDefault" id="fC6-xf-y0E">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="y3X-Eg-CWh" imageView="A3G-iy-dLm" style="IBUITableViewCellStyleDefault" id="fC6-xf-y0E">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fC6-xf-y0E" id="8W6-et-Z16">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Logout" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="y3X-Eg-CWh">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                    <color key="textColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="icon-settings-logout" id="A3G-iy-dLm">
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -273,7 +277,7 @@
                             <outlet property="delegate" destination="4eC-1g-a2B" id="DDc-e6-cyp"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Settings" id="oCJ-Yb-t9R"/>
+                    <navigationItem key="navigationItem" title="SETTINGS" id="oCJ-Yb-t9R"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hy5-B8-PVt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1076,7 +1080,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-checked" translatesAutoresizingMaskIntoConstraints="NO" id="f7K-jP-LJ2">
-                                                    <rect key="frame" x="43" y="46" width="34" height="29"/>
+                                                    <rect key="frame" x="41" y="43" width="38" height="35"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.75" colorSpace="calibratedRGB"/>
@@ -1424,6 +1428,7 @@
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wT3-gi-JEO">
                                                     <rect key="frame" x="167" y="173" width="266" height="55"/>
+                                                    <color key="backgroundColor" red="0.1647058824" green="0.42352941179999998" blue="0.70980392160000005" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="55" id="1FX-Ed-GZv"/>
                                                         <constraint firstAttribute="width" constant="266" id="bJ7-u5-oyL"/>
@@ -1431,8 +1436,8 @@
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
                                                     <inset key="imageEdgeInsets" minX="-12" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                    <state key="normal" title="FIND FACEBOOK FRIENDS" image="icon-facebook-blue">
-                                                        <color key="titleColor" red="0.1647058824" green="0.42352941179999998" blue="0.70980392160000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <state key="normal" title="FIND FACEBOOK FRIENDS" image="icon-facebook-white">
+                                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <variation key="default">
@@ -1454,68 +1459,142 @@
                                                     <color key="textColor" red="0.68627450980000004" green="0.68627450980000004" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m8V-SW-6eS">
-                                                    <rect key="frame" x="167" y="243" width="266" height="55"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6A0-mf-YrI">
+                                                    <rect key="frame" x="167" y="102" width="266" height="55"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="266" id="1FG-IF-nps"/>
-                                                        <constraint firstAttribute="height" constant="55" id="PDH-kz-dCn"/>
-                                                        <constraint firstAttribute="width" constant="266" id="X33-L4-W60"/>
+                                                        <constraint firstAttribute="width" constant="266" id="ZZc-Ur-Dnm"/>
+                                                        <constraint firstAttribute="width" constant="266" id="ctb-Gj-1lW"/>
+                                                        <constraint firstAttribute="height" constant="55" id="pC7-VW-erl"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
-                                                    <inset key="imageEdgeInsets" minX="-14" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                    <state key="normal" title="FIND PEOPLE ON INFINIT" image="icon-infinit-red">
-                                                        <color key="titleColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <inset key="imageEdgeInsets" minX="-12" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                    <state key="normal" title="IMPORT PHONE CONTACTS" image="icon-contacts">
+                                                        <color key="titleColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <variation key="default">
                                                         <mask key="constraints">
-                                                            <exclude reference="1FG-IF-nps"/>
+                                                            <exclude reference="ctb-Gj-1lW"/>
                                                         </mask>
                                                     </variation>
                                                     <connections>
-                                                        <action selector="findPeopleOnInfinitTapped:" destination="9ZK-3B-PXo" eventType="touchUpInside" id="J44-xJ-28b"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7GO-ub-njO">
-                                                    <rect key="frame" x="167" y="103" width="266" height="55"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="55" id="L32-gm-r9D"/>
-                                                        <constraint firstAttribute="width" constant="266" id="VB0-0G-L0e"/>
-                                                        <constraint firstAttribute="width" constant="266" id="mNb-ij-c79"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
-                                                    <state key="normal" title="IMPORT PHONE CONTACTS">
-                                                        <color key="titleColor" red="0.31764705882352939" green="0.31764705882352939" blue="0.28627450980392155" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="mNb-ij-c79"/>
-                                                        </mask>
-                                                    </variation>
-                                                    <connections>
-                                                        <action selector="importPhoneContactsTapped:" destination="9ZK-3B-PXo" eventType="touchUpInside" id="EFp-Xg-qlV"/>
+                                                        <action selector="importPhoneContactsTapped:" destination="9ZK-3B-PXo" eventType="touchUpInside" id="uRG-zf-NU9"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="centerX" secondItem="6A0-mf-YrI" secondAttribute="centerX" id="7MY-Bd-aof"/>
                                                 <constraint firstAttribute="centerX" secondItem="3PA-yr-naq" secondAttribute="centerX" id="Hv6-Uj-Nrc"/>
-                                                <constraint firstItem="wT3-gi-JEO" firstAttribute="top" secondItem="7GO-ub-njO" secondAttribute="bottom" constant="15" id="KE3-Pi-FwG"/>
                                                 <constraint firstAttribute="centerX" secondItem="wT3-gi-JEO" secondAttribute="centerX" id="LFD-j8-6jt"/>
-                                                <constraint firstItem="m8V-SW-6eS" firstAttribute="top" secondItem="wT3-gi-JEO" secondAttribute="bottom" constant="15" id="Ooz-CF-J48"/>
+                                                <constraint firstItem="6A0-mf-YrI" firstAttribute="top" secondItem="3PA-yr-naq" secondAttribute="bottom" constant="14" id="XfJ-hh-9Kw"/>
                                                 <constraint firstItem="3PA-yr-naq" firstAttribute="top" secondItem="Nxu-FG-mMV" secondAttribute="top" constant="30" id="e1l-NP-Tkj"/>
-                                                <constraint firstAttribute="centerX" secondItem="m8V-SW-6eS" secondAttribute="centerX" id="nkl-fe-6FD"/>
-                                                <constraint firstItem="7GO-ub-njO" firstAttribute="top" secondItem="3PA-yr-naq" secondAttribute="bottom" constant="15" id="uIl-ku-Md3"/>
-                                                <constraint firstAttribute="centerX" secondItem="7GO-ub-njO" secondAttribute="centerX" id="v4k-Fn-nOJ"/>
+                                                <constraint firstItem="wT3-gi-JEO" firstAttribute="top" secondItem="6A0-mf-YrI" secondAttribute="bottom" constant="16" id="pYv-ZM-aPA"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.84705882352941175" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="calibratedRGB"/>
                                         <inset key="separatorInset" minX="1000" minY="0.0" maxX="1000" maxY="0.0"/>
                                         <connections>
                                             <outlet property="facebook_button" destination="wT3-gi-JEO" id="3ns-AV-oYa"/>
-                                            <outlet property="infinit_button" destination="m8V-SW-6eS" id="TAG-nz-a0q"/>
                                             <outlet property="message_label" destination="3PA-yr-naq" id="7Dc-88-pDB"/>
-                                            <outlet property="phone_contacts_button" destination="7GO-ub-njO" id="be2-nE-2Jo"/>
+                                            <outlet property="phone_contacts_button" destination="6A0-mf-YrI" id="78a-As-PfF"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="send_no_results_cell" rowHeight="464" id="imq-4s-tH6" customClass="InfinitSendNoResultsCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="imq-4s-tH6" id="aHw-qE-rXm">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YNY-lR-rkF">
+                                                    <rect key="frame" x="167" y="329" width="266" height="55"/>
+                                                    <color key="backgroundColor" red="0.1647058824" green="0.42352941179999998" blue="0.70980392160000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="266" id="TIX-qK-OoL"/>
+                                                        <constraint firstAttribute="height" constant="55" id="vb6-Bp-SgM"/>
+                                                        <constraint firstAttribute="width" constant="266" id="wsU-tD-eDf"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
+                                                    <inset key="imageEdgeInsets" minX="-12" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                    <state key="normal" title="FIND FACEBOOK FRIENDS" image="icon-facebook-white">
+                                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="wsU-tD-eDf"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <connections>
+                                                        <action selector="findFacebookFriendsTapped:" destination="9ZK-3B-PXo" eventType="touchUpInside" id="lW1-c7-Fm0"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send to an email address or import your contacts" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o7a-na-oAQ">
+                                                    <rect key="frame" x="172" y="165" width="255" height="58"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="58" id="9Eh-hw-l6N"/>
+                                                        <constraint firstAttribute="width" constant="255" id="Elw-2d-xCN"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                                    <color key="textColor" red="0.68627450980000004" green="0.68627450980000004" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CQ1-1P-kb6">
+                                                    <rect key="frame" x="167" y="258" width="266" height="55"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="266" id="2lT-q9-UpR"/>
+                                                        <constraint firstAttribute="width" constant="266" id="mU4-gs-2sO"/>
+                                                        <constraint firstAttribute="height" constant="55" id="uXJ-WZ-R5Y"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
+                                                    <inset key="imageEdgeInsets" minX="-12" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                    <state key="normal" title="IMPORT PHONE CONTACTS" image="icon-contacts">
+                                                        <color key="titleColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="2lT-q9-UpR"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <connections>
+                                                        <action selector="importPhoneContactsTapped:" destination="9ZK-3B-PXo" eventType="touchUpInside" id="3B0-45-ZeW"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No results." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eGc-7u-5hd">
+                                                    <rect key="frame" x="262" y="32" width="77" height="19"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                                    <color key="textColor" red="0.18431372549019609" green="0.18431372549019609" blue="0.18431372549019609" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="illustration-no-results" translatesAutoresizingMaskIntoConstraints="NO" id="03w-Ak-rD3">
+                                                    <rect key="frame" x="170" y="79" width="259" height="54"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="54" id="0FD-Nn-574"/>
+                                                        <constraint firstAttribute="width" constant="259" id="oV4-1L-BDF"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="YNY-lR-rkF" firstAttribute="top" secondItem="CQ1-1P-kb6" secondAttribute="bottom" constant="16" id="1CI-Um-gSV"/>
+                                                <constraint firstAttribute="centerX" secondItem="CQ1-1P-kb6" secondAttribute="centerX" id="IlM-qi-Dom"/>
+                                                <constraint firstAttribute="centerX" secondItem="eGc-7u-5hd" secondAttribute="centerX" id="LQe-EJ-Qnc"/>
+                                                <constraint firstAttribute="centerX" secondItem="YNY-lR-rkF" secondAttribute="centerX" id="NUC-a0-f7k"/>
+                                                <constraint firstItem="o7a-na-oAQ" firstAttribute="top" secondItem="03w-Ak-rD3" secondAttribute="bottom" constant="32" id="Ojh-mI-S0X"/>
+                                                <constraint firstItem="eGc-7u-5hd" firstAttribute="top" secondItem="aHw-qE-rXm" secondAttribute="top" constant="32" id="PFt-I6-qFs"/>
+                                                <constraint firstAttribute="centerX" secondItem="03w-Ak-rD3" secondAttribute="centerX" id="SfK-NN-Zks"/>
+                                                <constraint firstItem="CQ1-1P-kb6" firstAttribute="top" secondItem="o7a-na-oAQ" secondAttribute="bottom" constant="35" id="YPq-vg-ucw"/>
+                                                <constraint firstItem="03w-Ak-rD3" firstAttribute="top" secondItem="eGc-7u-5hd" secondAttribute="bottom" constant="28" id="bOP-U6-Jnp"/>
+                                                <constraint firstAttribute="centerX" secondItem="o7a-na-oAQ" secondAttribute="centerX" id="nBu-2A-lWq"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.94509803920000002" green="0.94509803920000002" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <inset key="separatorInset" minX="1000" minY="0.0" maxX="1000" maxY="0.0"/>
+                                        <connections>
+                                            <outlet property="contacts_button" destination="CQ1-1P-kb6" id="SM4-w4-hSj"/>
+                                            <outlet property="facebook_button" destination="YNY-lR-rkF" id="vLz-dB-VwZ"/>
+                                            <outlet property="message_label" destination="o7a-na-oAQ" id="aSj-6i-qyx"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1583,7 +1662,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="search_field" destination="KMb-F7-qcc" id="Ssx-LX-JzV"/>
-                        <outlet property="send_button" destination="z9O-hM-TV6" id="FSp-Su-98p"/>
+                        <outlet property="send_button" destination="z9O-hM-TV6" id="a7r-GR-tDV"/>
                         <outlet property="send_constraint" destination="Yev-mx-4fl" id="hUT-Qw-6u8"/>
                         <outlet property="table_view" destination="Gnb-fF-2Af" id="uF6-Aq-5kW"/>
                     </connections>
@@ -1728,19 +1807,22 @@
     <resources>
         <image name="bg_balloon" width="990" height="1099"/>
         <image name="icon-back" width="31" height="23"/>
-        <image name="icon-checked" width="34" height="29"/>
+        <image name="icon-checked" width="38" height="35"/>
         <image name="icon-close" width="19" height="20"/>
+        <image name="icon-contacts" width="17" height="20"/>
         <image name="icon-facebook-blue" width="20" height="20"/>
         <image name="icon-facebook-white" width="21" height="21"/>
         <image name="icon-grid" width="24" height="24"/>
         <image name="icon-infinit-red" width="21" height="21"/>
         <image name="icon-more" width="30" height="9"/>
         <image name="icon-send-white" width="18" height="15"/>
+        <image name="icon-settings-logout" width="19" height="21"/>
         <image name="icon-sort" width="28" height="24"/>
         <image name="icon-tab-contacts" width="18" height="21"/>
         <image name="icon-tab-files" width="23" height="21"/>
         <image name="icon-tab-home" width="26" height="21"/>
         <image name="icon-tab-settings" width="22" height="22"/>
+        <image name="illustration-no-results" width="259" height="54"/>
         <image name="logotype" width="184" height="102"/>
     </resources>
     <inferredMetricsTieBreakers>
