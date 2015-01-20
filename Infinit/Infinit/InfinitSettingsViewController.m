@@ -8,6 +8,7 @@
 
 #import "InfinitSettingsViewController.h"
 
+#import "InfinitColor.h"
 #import "InfinitTabBarController.h"
 
 #import <Gap/InfinitStateManager.h>
@@ -33,6 +34,14 @@ typedef NS_ENUM(NSUInteger, InfinitAccountSettings)
 {
   self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
   [super viewDidLoad];
+
+  self.navigationController.navigationBar.clipsToBounds = YES;
+  NSDictionary* nav_bar_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
+                                                                       size:17.0f],
+                                  NSForegroundColorAttributeName: [InfinitColor colorWithRed:81
+                                                                                       green:81
+                                                                                        blue:73]};
+  [self.navigationController.navigationBar setTitleTextAttributes:nav_bar_attrs];
 }
 
 #pragma mark - Table View Delegate
