@@ -32,6 +32,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 @property (nonatomic, strong) UIView* selection_indicator;
 @property (nonatomic, strong) InfinitSendTabIcon* send_tab_icon;
 @property (nonatomic, strong) InfinitTabAnimator* animator;
+@property (nonatomic) BOOL tab_bar_hidden;
 
 @end
 
@@ -42,6 +43,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   if (self = [super initWithCoder:aDecoder])
   {
     _animator = [[InfinitTabAnimator alloc] init];
+    _tab_bar_hidden = NO;
   }
   return self;
 }
@@ -122,28 +124,44 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   [super setSelectedIndex:selectedIndex];
   if (selectedIndex != TabBarIndexSend)
   {
-    CGRect final_bar_rect = CGRectOffset(self.tabBar.frame, 0.0f, - self.tabBar.frame.size.height);
-    CGRect final_view_rect = [self growRect:self.view.frame
-                                    byWidth:0.0f
-                                  andHeight:-self.tabBar.frame.size.height];
+    [self showTabBarWithAnimation:YES];
+  }
+  [self selectorToPosition:selectedIndex];
+}
+
+- (void)showTabBarWithAnimation:(BOOL)animate
+{
+  if (!self.tab_bar_hidden)
+    return;
+  _tab_bar_hidden = NO;
+  CGRect final_bar_rect = CGRectOffset(self.tabBar.frame, 0.0f, - self.tabBar.frame.size.height);
+  CGRect final_view_rect = [self growRect:self.view.frame
+                                  byWidth:0.0f
+                                andHeight:-self.tabBar.frame.size.height];
+  if (animate)
+  {
     [UIView animateWithDuration:self.animator.linear_duration
                           delay:self.animator.circular_duration / 2.0f
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^
-    {
-      self.tabBar.frame = final_bar_rect;
-      self.view.frame = final_view_rect;
-      [self.view layoutIfNeeded];
-    } completion:^(BOOL finished)
-    {
-      if (!finished)
-      {
-        self.tabBar.frame = final_bar_rect;
-        self.view.frame = final_view_rect;
-      }
-    }];
+     {
+       self.tabBar.frame = final_bar_rect;
+       self.view.frame = final_view_rect;
+       [self.view layoutIfNeeded];
+     } completion:^(BOOL finished)
+     {
+       if (!finished)
+       {
+         self.tabBar.frame = final_bar_rect;
+         self.view.frame = final_view_rect;
+       }
+     }];
   }
-  [self selectorToPosition:selectedIndex];
+  else
+  {
+    self.tabBar.frame = final_bar_rect;
+    self.view.frame = final_view_rect;
+  }
 }
 
 #pragma mark - General
@@ -160,7 +178,6 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 
 - (void)showWelcomeScreen
 {
-  [self dismissViewControllerAnimated:YES completion:nil];
   UIStoryboard* board = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
   UIViewController* login_controller =
     [board instantiateViewControllerWithIdentifier:@"welcome_controller"];
@@ -181,35 +198,52 @@ shouldSelectViewController:(UIViewController*)viewController
   }
   else if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusDenied)
   {
-    NSLog(@"xxx no permission for gallery");
+    [self noGalleryAccessPopUp];
+    return NO;
   }
   _last_index = self.selectedIndex;
   if ([viewController.title isEqualToString:@"SEND"])
   {
-    CGRect final_bar_rect = CGRectOffset(self.tabBar.frame, 0.0f, self.tabBar.frame.size.height);
-    CGRect final_view_rect = [self growRect:self.view.frame
-                                    byWidth:0.0f
-                                  andHeight:self.tabBar.frame.size.height];
-    [UIView animateWithDuration:self.animator.linear_duration
-                          delay:0.0f
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^
-    {
-      self.tabBar.frame = final_bar_rect;
-      self.view.frame = final_view_rect;
-      [self.view layoutIfNeeded];
-    } completion:^(BOOL finished)
-    {
-      if (!finished)
-      {
-        self.tabBar.frame = final_bar_rect;
-        self.view.frame = final_view_rect;
-      }
-    }];
+    [self hideTabBarWithAnimation:YES];
   }
   NSUInteger index = [self.viewControllers indexOfObject:viewController];
   [self selectorToPosition:index];
   return YES;
+}
+
+- (void)hideTabBarWithAnimation:(BOOL)animate
+{
+  if (self.tab_bar_hidden)
+    return;
+  _tab_bar_hidden = YES;
+  CGRect final_bar_rect = CGRectOffset(self.tabBar.frame, 0.0f, self.tabBar.frame.size.height);
+  CGRect final_view_rect = [self growRect:self.view.frame
+                                  byWidth:0.0f
+                                andHeight:self.tabBar.frame.size.height];
+  if (animate)
+  {
+    [UIView animateWithDuration:self.animator.linear_duration
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^
+     {
+       self.tabBar.frame = final_bar_rect;
+       self.view.frame = final_view_rect;
+       [self.view layoutIfNeeded];
+     } completion:^(BOOL finished)
+     {
+       if (!finished)
+       {
+         self.tabBar.frame = final_bar_rect;
+         self.view.frame = final_view_rect;
+       }
+     }];
+  }
+  else
+  {
+    self.tabBar.frame = final_bar_rect;
+    self.view.frame = final_view_rect;
+  }
 }
 
 - (void)noGalleryAccessPopUp
@@ -218,8 +252,8 @@ shouldSelectViewController:(UIViewController*)viewController
   UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
                                                   message:message
                                                  delegate:nil
-                                        cancelButtonTitle:nil
-                                        otherButtonTitles:@"OK", nil];
+                                        cancelButtonTitle:@"OK"
+                                        otherButtonTitles:nil];
   [alert show];
 }
 
@@ -227,7 +261,7 @@ shouldSelectViewController:(UIViewController*)viewController
            animationControllerForTransitionFromViewController:(UIViewController*)fromVC
                                              toViewController:(UIViewController*)toVC
 {
-  if ([toVC.title isEqualToString:@"SEND"])
+  if ([toVC.title isEqualToString:@"SEND"] && self.permission_view == nil)
   {
     self.animator.reverse = NO;
     self.animator.animation = AnimateCircleCover;
@@ -309,9 +343,12 @@ shouldSelectViewController:(UIViewController*)viewController
                                    afterDelay:0.51f];
         self.permission_view = nil;
       }];
+     [self hideTabBarWithAnimation:NO];
      self.selectedIndex = TabBarIndexSend;
    } failureBlock:^(NSError* error)
    {
+     [self noGalleryAccessPopUp];
+     [self.permission_view removeFromSuperview];
      if (error.code == ALAssetsLibraryAccessUserDeniedError)
      {
        NSLog(@"user denied access, code: %li", (long)error.code);
