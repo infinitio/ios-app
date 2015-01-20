@@ -49,6 +49,27 @@
     animation.toValue = @(progress);
     animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     [self.progress_layer addAnimation:animation forKey:@"strokeEnd"];
+    [UIView animateWithDuration:duration
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveLinear
+                     animations:^
+    {
+      self.progress_label.alpha = 0.0f;
+      self.progress_label.text = [NSString stringWithFormat:@"%f %%", progress];
+      self.progress_label.alpha = 1.0f;
+    } completion:^(BOOL finished)
+    {
+      if (!finished)
+      {
+        self.progress_label.text = [NSString stringWithFormat:@"%f %%", progress];
+        self.progress_label.alpha = 1.0f;
+      }
+    }];
+  }
+  else
+  {
+    self.progress_label.text = [NSString stringWithFormat:@"%f %%", progress];
+    self.progress_label.alpha = 1.0f;
   }
   _progress = progress;
   self.progress_layer.strokeEnd = progress;
@@ -59,6 +80,8 @@
   if (enable_progress == _enable_progress)
     return;
   _enable_progress = enable_progress;
+  self.progress_label.text = @"0 %%";
+  self.progress_label.hidden = !enable_progress;
   if (_enable_progress)
   {
     _circle_layer = [self circleLayer];

@@ -11,8 +11,9 @@
 @interface InfinitHomeAvatarView : UIView
 
 @property (nonatomic, readwrite) UIImage* image;
-@property (nonatomic, readwrite) IBOutlet UIImageView* image_view;
+@property (nonatomic, weak) IBOutlet UIImageView* image_view;
 @property (nonatomic, readwrite) CGFloat progress;
+@property (nonatomic, weak) IBOutlet UILabel* progress_label;
 @property (nonatomic, readwrite) BOOL enable_progress;
 
 - (void)setProgress:(CGFloat)progress
