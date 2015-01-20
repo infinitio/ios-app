@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 
 #import "InfinitHomeAvatarView.h"
+#import "InfinitHomeAbstractCell.h"
 
 #import <Gap/InfinitPeerTransaction.h>
 
 @protocol InfinitHomePeerTransactionCellProtocol;
 
-@interface InfinitHomePeerTransactionCell : UICollectionViewCell
+@interface InfinitHomePeerTransactionCell : InfinitHomeAbstractCell
 
 @property (nonatomic, weak) IBOutlet InfinitHomeAvatarView* avatar_view;
 @property (nonatomic, weak) IBOutlet UIImageView* background_view;
@@ -22,6 +23,7 @@
 @property (nonatomic, weak) IBOutlet UILabel* info_label;
 @property (nonatomic, weak) IBOutlet UILabel* size_label;
 @property (nonatomic, weak) IBOutlet UILabel* time_label;
+@property (nonatomic, weak) IBOutlet UIImageView* status_view;
 
 @property (nonatomic, weak) InfinitPeerTransaction* transaction;
 @property (nonatomic, readwrite) BOOL cancel_shown;

@@ -33,10 +33,12 @@ static UIImage* _mask_image = nil;
   self.avatar_view.enable_progress = NO;
   [self setCancelShown:NO withAnimation:NO];
   _delegate = nil;
+  self.status_view.hidden = YES;
 }
 
 - (void)awakeFromNib
 {
+  [super awakeFromNib];
   if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)])
   {
     self.background_view.layer.cornerRadius = 3.0f;
@@ -46,10 +48,6 @@ static UIImage* _mask_image = nil;
     blur_view.frame = self.bounds;
     [self.background_view addSubview:blur_view];
   }
-  self.layer.masksToBounds = NO;
-  self.layer.shadowOpacity = 0.75f;
-  self.layer.shadowColor = [InfinitColor colorWithGray:0 alpha:0.5f].CGColor;
-  self.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
   if (_norm_attrs == nil)
   {
     _norm_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:15.0f],
@@ -65,6 +63,7 @@ static UIImage* _mask_image = nil;
                                             action:@selector(avatarTapped:)];
   [self.avatar_view addGestureRecognizer:tap];
   self.cancel_button.center = self.avatar_view.center;
+  self.cancel_button.adjustsImageWhenDisabled = NO;
 }
 
 - (void)setUpWithDelegate:(id<InfinitHomePeerTransactionCellProtocol>)delegate
@@ -81,6 +80,7 @@ static UIImage* _mask_image = nil;
   [self updateTimeString];
   [self setInfoString];
   [self setProgress];
+  [self setStatusImage];
   self.size_label.text = [InfinitDataSize fileSizeStringFrom:transaction.size];
 }
 
@@ -95,6 +95,29 @@ static UIImage* _mask_image = nil;
   {
     self.avatar_view.enable_progress = NO;
   }
+}
+
+- (void)setStatusImage
+{
+  UIImage* res = nil;
+  switch (self.transaction.status)
+  {
+    case gap_transaction_canceled:
+    case gap_transaction_failed:
+    case gap_transaction_rejected:
+      res = [UIImage imageNamed:@"icon-rejected"];
+      break;
+
+    case gap_transaction_finished:
+      res = [UIImage imageNamed:@"icon-checked"];
+      break;
+
+    default:
+      self.status_view.hidden = YES;
+      return;
+  }
+  self.status_view.image = res;
+  self.status_view.hidden = NO;
 }
 
 - (void)setBackgroundImage

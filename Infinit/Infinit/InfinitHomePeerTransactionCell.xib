@@ -4,6 +4,11 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="SourceSansPro-Regular.otf">
+            <string>SourceSansPro-Regular</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -65,18 +70,34 @@
                                     <constraint firstAttribute="height" constant="110" id="b6I-u2-hW3"/>
                                 </constraints>
                             </imageView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o7o-Pj-FMi">
+                                <rect key="frame" x="39" y="50" width="42" height="21"/>
+                                <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="41"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="6Yr-XT-csf" secondAttribute="centerY" id="D0X-Ck-oc2"/>
+                            <constraint firstAttribute="centerX" secondItem="o7o-Pj-FMi" secondAttribute="centerX" id="V8G-IL-JsG"/>
                             <constraint firstAttribute="width" constant="120" id="fZ9-d9-Czs"/>
                             <constraint firstAttribute="centerX" secondItem="6Yr-XT-csf" secondAttribute="centerX" id="kdu-7R-dH1"/>
+                            <constraint firstAttribute="centerY" secondItem="o7o-Pj-FMi" secondAttribute="centerY" id="lgd-Dg-UlM"/>
                             <constraint firstAttribute="height" constant="120" id="nZR-Pg-MWM"/>
                         </constraints>
                         <connections>
                             <outlet property="image_view" destination="6Yr-XT-csf" id="Psa-hV-sWg"/>
+                            <outlet property="progress_label" destination="o7o-Pj-FMi" id="5Da-Ke-F3j"/>
                         </connections>
                     </view>
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-checked" translatesAutoresizingMaskIntoConstraints="NO" id="0HX-fy-Rgg">
+                        <rect key="frame" x="131" y="97" width="38" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="M0N-ei-xjb"/>
+                            <constraint firstAttribute="width" constant="38" id="xOO-HU-oJm"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -84,7 +105,7 @@
                 <constraint firstAttribute="trailing" secondItem="JID-vt-M8z" secondAttribute="trailing" id="ARj-an-5uy"/>
                 <constraint firstItem="0gq-3p-Q1L" firstAttribute="centerY" secondItem="1my-ZS-AJc" secondAttribute="centerY" id="Dar-Uh-wWn"/>
                 <constraint firstAttribute="bottom" secondItem="ZCT-pa-7Bx" secondAttribute="bottom" id="Doe-hd-1gE"/>
-                <constraint firstAttribute="centerX" secondItem="4D5-ft-iVq" secondAttribute="centerX" id="Eu7-kl-nOD"/>
+                <constraint firstItem="0HX-fy-Rgg" firstAttribute="centerY" secondItem="4D5-ft-iVq" secondAttribute="centerY" id="Jdj-sb-Dlo"/>
                 <constraint firstAttribute="centerX" secondItem="V0Y-8H-jig" secondAttribute="centerX" id="MpM-Nk-NwY"/>
                 <constraint firstItem="4D5-ft-iVq" firstAttribute="top" secondItem="EwY-b6-7yM" secondAttribute="top" constant="55" id="Pab-Zo-1xe"/>
                 <constraint firstAttribute="bottom" secondItem="1my-ZS-AJc" secondAttribute="bottom" constant="18" id="Qib-8d-aJQ"/>
@@ -94,6 +115,8 @@
                 <constraint firstAttribute="trailing" secondItem="ZCT-pa-7Bx" secondAttribute="trailing" id="dtu-pS-Io7"/>
                 <constraint firstItem="ZCT-pa-7Bx" firstAttribute="leading" secondItem="EwY-b6-7yM" secondAttribute="leading" id="fZS-Cp-dNS"/>
                 <constraint firstItem="1my-ZS-AJc" firstAttribute="leading" secondItem="EwY-b6-7yM" secondAttribute="leading" constant="15" id="faf-XU-Vg6"/>
+                <constraint firstItem="0HX-fy-Rgg" firstAttribute="centerX" secondItem="4D5-ft-iVq" secondAttribute="centerX" id="gUD-vt-sES"/>
+                <constraint firstAttribute="centerX" secondItem="0HX-fy-Rgg" secondAttribute="centerX" id="glj-lD-7CZ"/>
                 <constraint firstItem="ZCT-pa-7Bx" firstAttribute="top" secondItem="EwY-b6-7yM" secondAttribute="top" id="hX4-Fg-TSs"/>
                 <constraint firstItem="1my-ZS-AJc" firstAttribute="top" secondItem="JID-vt-M8z" secondAttribute="bottom" constant="18" id="pkL-OJ-CPw"/>
             </constraints>
@@ -103,6 +126,7 @@
                 <outlet property="cancel_button" destination="N8B-2h-xHC" id="yHm-cv-WxU"/>
                 <outlet property="info_label" destination="V0Y-8H-jig" id="sXj-T9-w3a"/>
                 <outlet property="size_label" destination="0gq-3p-Q1L" id="erK-kk-mHH"/>
+                <outlet property="status_view" destination="0HX-fy-Rgg" id="PGl-kx-iRV"/>
                 <outlet property="time_label" destination="1my-ZS-AJc" id="XYJ-9x-mhn"/>
             </connections>
             <point key="canvasLocation" x="337" y="218"/>
@@ -110,5 +134,6 @@
     </objects>
     <resources>
         <image name="icon-cancel" width="45" height="45"/>
+        <image name="icon-checked" width="38" height="35"/>
     </resources>
 </document>
