@@ -12,8 +12,8 @@
 
 - (void)awakeFromNib
 {
-  self.access_button.layer.cornerRadius = 3.0f;
-  self.back_button.layer.cornerRadius = 3.0f;
+  self.access_button.layer.cornerRadius = self.access_button.bounds.size.height / 2.0f;
+  self.back_button.layer.cornerRadius = self.back_button.bounds.size.height / 2.0f;
   self.back_button.layer.borderColor = [UIColor whiteColor].CGColor;
   self.back_button.layer.borderWidth = 1.0f;
 }
