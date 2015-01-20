@@ -12,7 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton* phone_contacts_button;
 @property (weak, nonatomic) IBOutlet UIButton* facebook_button;
-@property (weak, nonatomic) IBOutlet UIButton* infinit_button;
 @property (weak, nonatomic) IBOutlet UILabel* message_label;
 
 @end

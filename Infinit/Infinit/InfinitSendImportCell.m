@@ -17,17 +17,12 @@ static NSAttributedString* bold_str = nil;
 - (void)awakeFromNib
 {
   [self setMessageLabelBold];
-  self.phone_contacts_button.layer.borderColor = [InfinitColor colorWithGray:137].CGColor;
-  self.phone_contacts_button.layer.borderWidth = 1.0f;
-  self.phone_contacts_button.layer.cornerRadius = 3.0f;
+  [self setupButton:self.phone_contacts_button];
 
-  self.facebook_button.layer.borderColor = [InfinitColor colorWithRed:42 green:108 blue:181].CGColor;
-  self.facebook_button.layer.borderWidth = 1.0f;
-  self.facebook_button.layer.cornerRadius = 3.0f;
+  self.facebook_button.hidden = YES;
+  self.facebook_button.enabled = NO;
 
-  self.infinit_button.layer.borderColor = [InfinitColor colorFromPalette:ColorBurntSienna].CGColor;
-  self.infinit_button.layer.borderWidth = 1.0f;
-  self.infinit_button.layer.cornerRadius = 3.0f;
+  [self setupButton:self.facebook_button];
 }
 
 - (void)setMessageLabelBold
@@ -43,6 +38,16 @@ static NSAttributedString* bold_str = nil;
   [temp addAttribute:NSFontAttributeName value:bold_font range:range_enc];
   bold_str = [[NSAttributedString alloc] initWithAttributedString:temp];
   self.message_label.attributedText = temp;
+}
+
+- (void)setupButton:(UIButton*)button
+{
+  button.layer.masksToBounds = NO;
+  button.layer.shadowOpacity = 0.75f;
+  button.layer.shadowColor = [InfinitColor colorWithGray:0 alpha:0.3f].CGColor;
+  button.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+  button.layer.shadowRadius = 1.5f;
+  button.layer.cornerRadius = button.bounds.size.height / 2.0f;
 }
 
 @end
