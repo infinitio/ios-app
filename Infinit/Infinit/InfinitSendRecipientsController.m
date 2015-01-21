@@ -16,6 +16,7 @@
 #import "InfinitImportOverlayView.h"
 #import "InfinitSendContactCell.h"
 #import "InfinitSendImportCell.h"
+#import "InfinitSendNoResultsCell.h"
 #import "InfinitSendUserCell.h"
 #import "InfinitSendTableHeader.h"
 #import "InfinitTabBarController.h"
@@ -56,6 +57,7 @@
 
   NSString* _contact_cell_id;
   NSString* _import_cell_id;
+  NSString* _no_results_cell_id;
   NSString* _user_cell_id;
 
   NSString* _last_search;
@@ -70,6 +72,7 @@
   {
     _contact_cell_id = @"send_contact_cell";
     _import_cell_id = @"send_import_cell";
+    _no_results_cell_id = @"send_no_results_cell";
     _user_cell_id = @"send_user_cell";
     _nav_bar_tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                            action:@selector(navBarTapped)];
@@ -128,11 +131,11 @@
   if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
   {
     [self fetchAddressBook];
-    self.invite_button.enabled = YES;
+//    self.invite_button.enabled = YES;
   }
   else
   {
-    self.invite_button.enabled = NO;
+//    self.invite_button.enabled = NO;
   }
   [self configureSearchField];
   [super viewWillAppear:animated];
@@ -146,10 +149,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
   [super viewDidAppear:animated];
-  if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined)
-  {
-    [self showAddressBookOverlay];
-  }
   [self.navigationController.navigationBar.subviews[0] setUserInteractionEnabled:YES];
   [self.navigationController.navigationBar.subviews[0] addGestureRecognizer:_nav_bar_tap];
 }
@@ -185,8 +184,7 @@
     [self.all_swaggers addObject:contact];
   }
   self.swagger_results = [self.all_swaggers copy];
-  [self.table_view reloadSections:[NSIndexSet indexSetWithIndex:0]
-                 withRowAnimation:UITableViewRowAnimationAutomatic];
+  [self.table_view reloadData];
 }
 
 - (void)fetchAddressBook
@@ -213,8 +211,7 @@
       }
     }
     self.contact_results = [self.all_contacts copy];
-    [self.table_view reloadSections:[NSIndexSet indexSetWithIndex:1]
-                   withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.table_view reloadData];
   }
 }
 
@@ -222,17 +219,14 @@
 
 - (void)showAddressBookOverlay
 {
-  if (self.contacts_overlay == nil)
-  {
-    UINib* overlay_nib = [UINib nibWithNibName:@"InfinitAccessContactsView" bundle:nil];
-    self.contacts_overlay = [[overlay_nib instantiateWithOwner:self options:nil] firstObject];
-    [self.contacts_overlay.access_button addTarget:self
-                                            action:@selector(accessAddressBook:)
-                                  forControlEvents:UIControlEventTouchUpInside];
-    [self.contacts_overlay.back_button addTarget:self
-                                          action:@selector(cancelOverlayFromButton:)
+  UINib* overlay_nib = [UINib nibWithNibName:@"InfinitAccessContactsView" bundle:nil];
+  self.contacts_overlay = [[overlay_nib instantiateWithOwner:self options:nil] firstObject];
+  [self.contacts_overlay.access_button addTarget:self
+                                          action:@selector(accessAddressBook:)
                                 forControlEvents:UIControlEventTouchUpInside];
-  }
+  [self.contacts_overlay.back_button addTarget:self
+                                        action:@selector(cancelOverlayFromButton:)
+                              forControlEvents:UIControlEventTouchUpInside];
   [self showOverlayView:self.contacts_overlay];
 }
 
@@ -273,33 +267,28 @@
 
 - (void)accessAddressBook:(id)sender
 {
+  NSDictionary* bold_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Bold"
+                                                                    size:20.0f],
+                               NSForegroundColorAttributeName: [UIColor whiteColor]};
   self.contacts_overlay.message_label.text =
     NSLocalizedString(@"Tap \"OK\" so we can display\nyour contacts.", nil);
+  NSMutableAttributedString* res = [self.contacts_overlay.message_label.attributedText mutableCopy];
+  NSRange bold_range = [res.string rangeOfString:@"OK"];
+  [res setAttributes:bold_attrs range:bold_range];
+  self.contacts_overlay.message_label.attributedText = res;
   self.contacts_overlay.access_button.hidden = YES;
   self.contacts_overlay.back_button.hidden = YES;
-  CFErrorRef* error = nil;
-  ABAddressBookRef address_book = ABAddressBookCreateWithOptions(NULL, error);
-  UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
-                                                  message:@"Give me permission!"
-                                                 delegate:nil
-                                        cancelButtonTitle:nil
-                                        otherButtonTitles:@"OK", nil];
-  alert.delegate = self;
-  [alert show];
-  if (ABAddressBookRequestAccessWithCompletion != NULL)
+  ABAddressBookRef address_book = ABAddressBookCreateWithOptions(NULL, NULL);
+  ABAddressBookRequestAccessWithCompletion(address_book, ^(bool granted, CFErrorRef error)
   {
-    ABAddressBookRequestAccessWithCompletion(address_book, ^(bool granted, CFErrorRef error)
+    if (granted)
     {
-      [self cancelOverlay:[sender superview]];
-    });
-  }
-}
-
-- (void)alertView:(UIAlertView*)alertView
-clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-  [self cancelOverlay:self.contacts_overlay];
-  [self cancelOverlay:self.import_overlay];
+      [self performSelectorOnMainThread:@selector(fetchAddressBook) withObject:nil waitUntilDone:NO];
+    }
+    [self performSelectorOnMainThread:@selector(cancelOverlayFromButton:)
+                           withObject:sender
+                        waitUntilDone:NO];
+  });
 }
 
 - (void)cancelOverlayFromButton:(UIButton*)button
@@ -339,6 +328,9 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
                                                          toManagedFiles:_managed_files_id
                                                         performSelector:@selector(temporaryFileManagerCallback)
                                                                onObject:self];
+  [self.tabBarController performSelectorOnMainThread:@selector(showMainScreen)
+                                          withObject:nil
+                                       waitUntilDone:NO];
 }
 
 - (void)temporaryFileManagerCallback
@@ -363,9 +355,6 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
                                                                withMessage:@""];
   [[InfinitTemporaryFileManager sharedInstance] setTransactionIds:ids
                                                   forManagedFiles:_managed_files_id];
-  [self.tabBarController performSelectorOnMainThread:@selector(showMainScreen)
-                                          withObject:nil
-                                       waitUntilDone:NO];
 }
 
 - (IBAction)inviteBarButtonTapped:(id)sender
@@ -392,19 +381,27 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
 {
-  return 2;
+//  if ([self noResults])
+//    return 1;
+//  else
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView*)tableView
  numberOfRowsInSection:(NSInteger)section
 {
+//  if ([self noResults])
+//  {
+//    return 1;
+//  }
+//  else if (section == 0)
   if (section == 0)
   {
     return self.swagger_results.count;
   }
   else
   {
-    return (self.all_contacts.count > 0 ? self.contact_results.count : 1);
+    return ([self askedForAddressBookAccess] ? self.contact_results.count : 1);
   }
 }
 
@@ -414,6 +411,14 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
 {
   UITableViewCell* res = nil;
   InfinitContact* contact = nil;
+//  if ([self noResults])
+//  {
+//    InfinitSendNoResultsCell* cell =
+//      [tableView dequeueReusableCellWithIdentifier:_no_results_cell_id forIndexPath:indexPath];
+//    cell.show_buttons = ![self askedForAddressBookAccess];
+//    res = cell;
+//  }
+//  else if (indexPath.section == 0)
   if (indexPath.section == 0)
   {
     InfinitSendUserCell* cell = [tableView dequeueReusableCellWithIdentifier:_user_cell_id
@@ -451,6 +456,8 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
 - (CGFloat)tableView:(UITableView*)tableView
 heightForHeaderInSection:(NSInteger)section
 {
+  if (section == 1 && self.all_contacts.count == 0)
+    return 1.0f;
   return 35.0f;
 }
 
@@ -467,7 +474,10 @@ viewForHeaderInSection:(NSInteger)section
   }
   else if (section == 1)
   {
-    header_view.title.text = NSLocalizedString(@"Other contacts", nil);
+    if (self.all_contacts.count > 0)
+      header_view.title.text = NSLocalizedString(@"Other contacts", nil);
+    else
+      header_view.title.text = @"";
   }
   return header_view;
 }
@@ -481,7 +491,7 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
   }
   else
   {
-    return (self.contact_results.count == 0 ? 349.0f : 61.0f);
+    return ([self askedForAddressBookAccess] ? 61.0f : 349.0f);
   }
 }
 
@@ -490,7 +500,7 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
 - (BOOL)tableView:(UITableView*)tableView
 shouldHighlightRowAtIndexPath:(NSIndexPath*)indexPath
 {
-  if (self.contact_results.count == 0 && indexPath.section == 1)
+  if (![self askedForAddressBookAccess] && indexPath.section == 1)
     return NO;
   return YES;
 }
@@ -641,6 +651,7 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
   [self.recipients addObject:contact];
   [self.search_field reloadData];
   [self reloadSearchResults];
+  [self updateSendButton];
 }
 
 - (void)tokenField:(VENTokenField*)tokenField
@@ -651,6 +662,7 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
   if (trimmed_string.isEmail)
   {
     [self addContactFromEmailAddress:trimmed_string];
+    [self.search_field resignFirstResponder];
   }
 }
 
@@ -686,7 +698,10 @@ didDeleteTokenAtIndex:(NSUInteger)index
       [text rangeOfString:_last_search].location != NSNotFound &&
       [text rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@" "]].location != NSNotFound)
   {
-    [self addContactFromEmailAddress:_last_search];
+    NSString* email = [_last_search copy];
+    _last_search = @"";
+    [self addContactFromEmailAddress:email];
+    return;
   }
   _last_search = text;
   if (text.length == 0)
@@ -771,6 +786,10 @@ didDeleteTokenAtIndex:(NSUInteger)index
     [self.table_view reloadSections:sections
                    withRowAnimation:UITableViewRowAnimationAutomatic];
   }
+//  else if ([self noResults])
+//  {
+//    [self.table_view reloadData];
+//  }
 }
 
 #pragma mark - User Avatar
@@ -790,6 +809,20 @@ didDeleteTokenAtIndex:(NSUInteger)index
     }
     row++;
   }
+}
+
+#pragma mark - Helpers
+
+- (BOOL)noResults
+{
+  return (self.swagger_results.count == 0 && self.contact_results.count == 0);
+}
+
+- (BOOL)askedForAddressBookAccess
+{
+  if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined)
+    return NO;
+  return YES;
 }
 
 @end
