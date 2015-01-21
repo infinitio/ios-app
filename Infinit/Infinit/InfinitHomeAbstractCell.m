@@ -9,16 +9,20 @@
 #import "InfinitHomeAbstractCell.h"
 
 #import "InfinitColor.h"
+#import "InfinitHostDevice.h"
 
 @implementation InfinitHomeAbstractCell
 
 - (void)awakeFromNib
 {
-  self.layer.masksToBounds = NO;
-  self.layer.shadowOpacity = 0.75f;
-  self.layer.shadowRadius = 1.5f;
-  self.layer.shadowColor = [InfinitColor colorWithGray:0 alpha:0.3f].CGColor;
-  self.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
+  if ([InfinitHostDevice deviceCPU] >= InfinitCPUType_ARM64_v8)
+  {
+    self.layer.masksToBounds = NO;
+    self.layer.shadowOpacity = 0.75f;
+    self.layer.shadowRadius = 1.5f;
+    self.layer.shadowColor = [InfinitColor colorWithGray:0 alpha:0.3f].CGColor;
+    self.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
+  }
 }
 
 @end

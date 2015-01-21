@@ -44,7 +44,7 @@ static UIImage* _mask_image = nil;
   [super awakeFromNib];
   if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)])
   {
-    if ([InfinitHostDevice deviceCPU] >= InfinitCPUType_ARM64_v8)
+    if ([InfinitHostDevice deviceCPU] >= InfinitCPUType_ARM_v7s)
     {
       self.background_view.layer.cornerRadius = 3.0f;
       self.background_view.layer.masksToBounds = YES;
