@@ -40,4 +40,11 @@
   return 310.0f;
 }
 
+- (void)setAvatar:(UIImage*)image
+{
+  [self.avatar_button setTitle:@"" forState:UIControlStateNormal];
+  [self.avatar_button setImage:image forState:UIControlStateNormal];
+  self.avatar_button.layer.borderWidth = 0.0f;
+}
+
 @end

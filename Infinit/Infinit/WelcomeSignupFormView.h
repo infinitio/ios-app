@@ -24,4 +24,6 @@
 
 @property (nonatomic, readonly) CGFloat height;
 
+- (void)setAvatar:(UIImage*)image;
+
 @end
