@@ -43,36 +43,31 @@
   if (duration > 0.0f)
   {
     CGFloat last_progress = self.progress;
+    self.progress_layer.strokeEnd = progress;
     CABasicAnimation* animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
     animation.duration = duration;
     animation.fromValue = @(last_progress);
     animation.toValue = @(progress);
     animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     [self.progress_layer addAnimation:animation forKey:@"strokeEnd"];
-    [UIView animateWithDuration:duration
-                          delay:0.0f
-                        options:UIViewAnimationOptionCurveLinear
-                     animations:^
-    {
-      self.progress_label.alpha = 0.0f;
-      self.progress_label.text = [NSString stringWithFormat:@"%f %%", progress];
-      self.progress_label.alpha = 1.0f;
-    } completion:^(BOOL finished)
-    {
-      if (!finished)
-      {
-        self.progress_label.text = [NSString stringWithFormat:@"%f %%", progress];
-        self.progress_label.alpha = 1.0f;
-      }
-    }];
+    self.progress_label.text = [self progressString:progress];
   }
   else
   {
-    self.progress_label.text = [NSString stringWithFormat:@"%f %%", progress];
-    self.progress_label.alpha = 1.0f;
+    self.progress_label.text = [self progressString:progress];
+    self.progress_layer.strokeEnd = progress;
   }
   _progress = progress;
-  self.progress_layer.strokeEnd = progress;
+}
+
+- (NSString*)progressString:(CGFloat)progress
+{
+  return [NSString stringWithFormat:@"%.f%%", progress * 100.0f];
+}
+
+- (void)setDim_avatar:(BOOL)dim_avatar
+{
+  self.image_view.alpha = dim_avatar ? 0.5f : 1.0f;
 }
 
 - (void)setEnable_progress:(BOOL)enable_progress
@@ -80,7 +75,8 @@
   if (enable_progress == _enable_progress)
     return;
   _enable_progress = enable_progress;
-  self.progress_label.text = @"0 %%";
+  if (!_enable_progress)
+    self.progress_label.text = @"0 %";
   self.progress_label.hidden = !enable_progress;
   if (_enable_progress)
   {
