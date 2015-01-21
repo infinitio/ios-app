@@ -57,6 +57,7 @@
 
 - (void)viewDidLoad
 {
+  self.collectionView.alwaysBounceVertical = YES;
   [super viewDidLoad];
   self.collectionView.allowsMultipleSelection = YES;
 
@@ -197,8 +198,8 @@
                   layout:(UICollectionViewLayout*)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath*)indexPath
 {
-  return CGSizeMake(self.view.frame.size.width / 3.0f - 4.0f,
-                    self.view.frame.size.width / 3.0f - 4.0f);
+  return CGSizeMake(floor(self.view.bounds.size.width / 3.0f) - 4.0f,
+                    floor(self.view.bounds.size.width / 3.0f) - 4.0f);
 }
 
 # pragma mark - UICollectionViewDelegate
