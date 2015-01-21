@@ -267,7 +267,7 @@
     InfinitHomeItem* item = self.data[indexPath.row];
     if (item.transaction != nil && [item.transaction isKindOfClass:InfinitPeerTransaction.class])
     {
-      return CGSizeMake(300.0f, 300.0f);
+      return CGSizeMake(300.0f, 265.0f);
     }
   }
   else
