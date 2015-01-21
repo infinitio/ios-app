@@ -24,6 +24,8 @@ static UIImage* _mask_image = nil;
 
 @property (nonatomic, readonly) id<InfinitHomePeerTransactionCellProtocol> delegate;
 @property (nonatomic, readwrite) BOOL dim;
+@property (nonatomic, readonly) UIView* blur_view;
+@property (nonatomic, readonly) UIView* dark_view;
 
 @end
 
@@ -39,10 +41,25 @@ static UIImage* _mask_image = nil;
   self.status_view.hidden = YES;
 }
 
+- (void)layoutSubviews
+{
+  [super layoutSubviews];
+  if (self.blur_view != nil && !CGRectEqualToRect(self.blur_view.frame, self.bounds))
+  {
+    self.blur_view.frame = self.bounds;
+  }
+  if (self.dark_view.frame.size.width != self.bounds.size.width)
+  {
+    CGRect dark_rect = self.dark_view.frame;
+    dark_rect.size.width = self.bounds.size.width;
+    self.dark_view.frame = dark_rect;
+  }
+}
+
 - (void)awakeFromNib
 {
   [super awakeFromNib];
-  if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)])
+  if ([UIVisualEffectView class])
   {
     if ([InfinitHostDevice deviceCPU] >= InfinitCPUType_ARM_v7s)
     {
@@ -50,9 +67,9 @@ static UIImage* _mask_image = nil;
       self.background_view.layer.masksToBounds = YES;
     }
     UIBlurEffect* blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-    UIVisualEffectView* blur_view = [[UIVisualEffectView alloc] initWithEffect:blur];
-    blur_view.frame = self.bounds;
-    [self.background_view addSubview:blur_view];
+    _blur_view = [[UIVisualEffectView alloc] initWithEffect:blur];
+    self.blur_view.frame = self.bounds;
+    [self.background_view addSubview:self.blur_view];
   }
   if (_norm_attrs == nil)
   {
@@ -73,9 +90,9 @@ static UIImage* _mask_image = nil;
   self.cancel_button.hidden = YES;
   CGRect dark_frame = CGRectMake(0.0f, self.bounds.size.height - 58.0f,
                                  self.bounds.size.width, 58.0f);
-  UIView* dark_view = [[UIView alloc] initWithFrame:dark_frame];
-  dark_view.backgroundColor = [InfinitColor colorWithGray:0 alpha:0.19f];
-  [self.background_view addSubview:dark_view];
+  _dark_view = [[UIView alloc] initWithFrame:dark_frame];
+  self.dark_view.backgroundColor = [InfinitColor colorWithGray:0 alpha:0.19f];
+  [self.background_view addSubview:self.dark_view];
 }
 
 - (void)setUpWithDelegate:(id<InfinitHomePeerTransactionCellProtocol>)delegate
@@ -142,7 +159,7 @@ static UIImage* _mask_image = nil;
 
 - (void)setBackgroundImage
 {
-  if (![[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)])
+  if (![UIVisualEffectView class])
   {
       CGRect image_rect = self.background_view.bounds;
       UIGraphicsBeginImageContextWithOptions(image_rect.size, NO, 0.0f);
