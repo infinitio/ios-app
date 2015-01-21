@@ -110,6 +110,7 @@
 {
   [self.navigationController popViewControllerAnimated:YES];
   self.text_view.text = _report_problem_placeholder;
+  [((InfinitTabBarController*)self.tabBarController) setTabBarHidden:NO animated:NO];
 }
 
 - (void)alertView:(UIAlertView*)alertView
@@ -117,6 +118,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
 {
   [self.navigationController popViewControllerAnimated:YES];
   self.text_view.text = _report_problem_placeholder;
+  [((InfinitTabBarController*)self.tabBarController) setTabBarHidden:NO animated:NO];
 }
 
 @end
