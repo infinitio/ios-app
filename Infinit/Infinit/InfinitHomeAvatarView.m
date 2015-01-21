@@ -33,21 +33,24 @@ static NSDictionary* _small_attrs = nil;
     {
       NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
       para.alignment = NSTextAlignmentCenter;
-      NSShadow* shadow = [[NSShadow alloc] init];
-      shadow.shadowColor = [InfinitColor colorWithGray:0 alpha:0.63f];
-      shadow.shadowBlurRadius = 5.0f;
-      shadow.shadowOffset = CGSizeMake(0.0f, 0.0f);
       _norm_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold" size:52.0f],
                       NSForegroundColorAttributeName: [UIColor whiteColor],
-                      NSParagraphStyleAttributeName: para,
-                      NSShadowAttributeName: shadow};
+                      NSParagraphStyleAttributeName: para};
       _small_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold" size:16.0f],
                        NSForegroundColorAttributeName: [UIColor whiteColor],
-                       NSParagraphStyleAttributeName: para,
-                       NSShadowAttributeName: shadow};
+                       NSParagraphStyleAttributeName: para};
     }
   }
   return self;
+}
+
+- (void)awakeFromNib
+{
+  self.progress_label.layer.masksToBounds = NO;
+  self.progress_label.layer.shadowOpacity = 1.0f;
+  self.progress_label.layer.shadowColor = [InfinitColor colorWithGray:0 alpha:0.63f].CGColor;
+  self.progress_label.layer.shadowRadius = 5.0f;
+  self.progress_label.layer.shadowOffset = CGSizeZero;
 }
 
 - (void)setImage:(UIImage*)image
