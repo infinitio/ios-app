@@ -28,6 +28,9 @@
 #import "NSString+email.h"
 #import "VENTokenField.h"
 
+@import AssetsLibrary;
+@import Photos;
+
 @interface InfinitSendRecipientsController () <UIActionSheetDelegate,
                                                UITextFieldDelegate,
                                                UIGestureRecognizerDelegate,
@@ -169,7 +172,7 @@
 
 - (void)resetView
 {
-  [self.asset_urls removeAllObjects];
+  [self.assets removeAllObjects];
   [self.recipients removeAllObjects];
 }
 
@@ -324,10 +327,25 @@
 - (IBAction)sendButtonTapped:(id)sender
 {
   [self setSendButtonHidden:YES];
-  [[InfinitTemporaryFileManager sharedInstance] addAssetsLibraryURLList:self.asset_urls
-                                                         toManagedFiles:_managed_files_id
-                                                        performSelector:@selector(temporaryFileManagerCallback)
-                                                               onObject:self];
+  if ([PHAsset class])
+  {
+    [[InfinitTemporaryFileManager sharedInstance] addPHAssetsLibraryURLList:self.assets
+                                                             toManagedFiles:_managed_files_id
+                                                            performSelector:@selector(temporaryFileManagerCallback)
+                                                                   onObject:self];
+  }
+  else
+  {
+    NSMutableArray* asset_urls = [NSMutableArray array];
+    for (ALAsset* asset in self.assets)
+    {
+      [asset_urls addObject:asset.defaultRepresentation.url];
+    }
+    [[InfinitTemporaryFileManager sharedInstance] addALAssetsLibraryURLList:asset_urls
+                                                             toManagedFiles:_managed_files_id
+                                                            performSelector:@selector(temporaryFileManagerCallback)
+                                                                   onObject:self];
+  }
   [self.tabBarController performSelectorOnMainThread:@selector(showMainScreen)
                                           withObject:nil
                                        waitUntilDone:NO];
@@ -636,7 +654,7 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
 
 - (BOOL)inputsGood
 {
-  if (self.asset_urls.count == 0 || self.recipients.count == 0)
+  if (self.assets.count == 0 || self.recipients.count == 0)
     return NO;
   return YES;
 }

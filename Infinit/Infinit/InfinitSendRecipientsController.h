@@ -10,7 +10,7 @@
 
 @interface InfinitSendRecipientsController : UIViewController
 
-@property (nonatomic, strong) NSMutableArray* asset_urls;
+@property (nonatomic, strong) NSMutableArray* assets;
 
 - (void)resetView;
 
