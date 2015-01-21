@@ -171,6 +171,19 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   self.selectedIndex = _last_index;
 }
 
+- (void)setTabBarHidden:(BOOL)hidden
+               animated:(BOOL)animate
+{
+  if (hidden)
+  {
+    [self hideTabBarWithAnimation:animate];
+  }
+  else
+  {
+    [self showTabBarWithAnimation:animate];
+  }
+}
+
 - (void)showMainScreen
 {
   self.selectedIndex = TabBarIndexHome;
@@ -320,8 +333,14 @@ shouldSelectViewController:(UIViewController*)viewController
   self.permission_view.access_button.enabled = NO;
   self.permission_view.access_button.hidden = YES;
   self.permission_view.image_view.hidden = YES;
+  NSDictionary* bold_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Bold" size:20.0f],
+                               NSForegroundColorAttributeName: [UIColor whiteColor]};
   self.permission_view.message_label.text =
-    NSLocalizedString(@"Tap \"OK\" to start sending\nyour photos and videos", nil);
+    NSLocalizedString(@"Tap \"OK\" to start sending\nyour photos and videos.", nil);
+  NSMutableAttributedString* res = [self.permission_view.message_label.attributedText mutableCopy];
+  NSRange bold_range = [res.string rangeOfString:@"OK"];
+  [res setAttributes:bold_attrs range:bold_range];
+  self.permission_view.message_label.attributedText = res;
   ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
   [library enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos
                          usingBlock:^(ALAssetsGroup* group, BOOL* stop)
