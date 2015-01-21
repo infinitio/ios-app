@@ -24,7 +24,7 @@
 {
   self.layer.cornerRadius = self.frame.size.width / 2.0f;
   self.clipsToBounds = YES;
-  self.layer.borderColor = [InfinitColor colorFromPalette:ColorShamRock].CGColor;
+  self.layer.borderColor = [InfinitColor colorWithGray:211].CGColor;
   self.layer.borderWidth = 1.0f;
 
   _check_layer = [CAShapeLayer layer];
@@ -55,12 +55,14 @@
     start_color = [UIColor whiteColor];
     end_color = [InfinitColor colorFromPalette:ColorShamRock];
     self.check_layer.hidden = NO;
+    self.layer.borderColor = [InfinitColor colorFromPalette:ColorShamRock].CGColor;
   }
   else
   {
     start_color = [InfinitColor colorFromPalette:ColorShamRock];
     end_color = [UIColor whiteColor];
     self.check_layer.hidden = YES;
+    self.layer.borderColor = [InfinitColor colorWithGray:211].CGColor;
   }
   self.layer.backgroundColor = end_color.CGColor;
   if (animate)
