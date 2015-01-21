@@ -21,6 +21,7 @@
 
 #import "InfinitApplicationSettings.h"
 #import "InfinitColor.h"
+#import "InfinitHostDevice.h"
 #import "InfinitKeychain.h"
 #import "WelcomeLoginFormView.h"
 #import "WelcomeSignupFormView.h"
@@ -558,18 +559,23 @@
   CGSize keyboard_size =
     [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
 
+  CGFloat delta = -keyboard_size.height;
+  if ([InfinitHostDevice smallScreen])
+  {
+    delta += 70.0f;
+  }
   [UIView animateWithDuration:0.5f
                         delay:0.0f
                       options:UIViewAnimationOptionCurveEaseInOut
                    animations:^
   {
-    self.view.frame = CGRectMake(0.0f, -keyboard_size.height,
+    self.view.frame = CGRectMake(0.0f, delta,
                                  self.view.frame.size.width, self.view.frame.size.height);
   } completion:^(BOOL finished)
   {
     if (!finished)
     {
-      self.view.frame = CGRectMake(0.0f, -keyboard_size.height,
+      self.view.frame = CGRectMake(0.0f, delta,
                                    self.view.frame.size.width, self.view.frame.size.height);
     }
   }];
@@ -791,7 +797,8 @@
   [actionSheet showInView:self.view];
 }
 
-- (void)actionSheet:(UIActionSheet*)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+- (void)actionSheet:(UIActionSheet*)actionSheet
+didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
   NSString* choice = [actionSheet buttonTitleAtIndex:buttonIndex];
   if([choice isEqualToString:NSLocalizedString(@"Choose a photo...", nil)])
@@ -831,9 +838,8 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
   self.avatar_image = info[UIImagePickerControllerEditedImage];
   self.signup_form_view.avatar_button.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
   self.signup_form_view.avatar_button.imageEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
-  
-  [self.signup_form_view.avatar_button setTitle:@"" forState:UIControlStateNormal];
-  [self.signup_form_view.avatar_button setImage:self.avatar_image forState:UIControlStateNormal];
+
+  [self.signup_form_view setAvatar:self.avatar_image];
   
   [self.picker dismissViewControllerAnimated:YES completion:nil];
 }
