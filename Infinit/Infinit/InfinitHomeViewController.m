@@ -262,12 +262,13 @@
   sizeForItemAtIndexPath:(NSIndexPath*)indexPath
 {
   CGSize res = CGSizeZero;
+  CGFloat width = self.view.bounds.size.width - 26.0f;
   if (self.data.count > 0)
   {
     InfinitHomeItem* item = self.data[indexPath.row];
     if (item.transaction != nil && [item.transaction isKindOfClass:InfinitPeerTransaction.class])
     {
-      return CGSizeMake(300.0f, 265.0f);
+      return CGSizeMake(width, 265.0f);
     }
   }
   else
@@ -275,9 +276,9 @@
     switch (indexPath.row)
     {
       case 0:
-        return CGSizeMake(300.0f, 79.0f);
+        return CGSizeMake(width, 79.0f);
       case 1:
-        return CGSizeMake(300.0f, 63.0f);
+        return CGSizeMake(width, 63.0f);
 
       default:
         break;
