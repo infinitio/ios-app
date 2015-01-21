@@ -7,7 +7,6 @@
     <customFonts key="customFonts">
         <mutableArray key="SourceSansPro-Bold.otf">
             <string>SourceSansPro-Bold</string>
-            <string>SourceSansPro-Bold</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -21,12 +20,12 @@
                     <rect key="frame" x="164" y="236" width="272" height="127"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send any of your photos or videos, no matter the size!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xt0-AB-E6P">
-                    <rect key="frame" x="155" y="65" width="290" height="81"/>
+                    <rect key="frame" x="155" y="90" width="290" height="65"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="81" id="CZl-Hk-j5k"/>
+                        <constraint firstAttribute="height" constant="65" id="CZl-Hk-j5k"/>
                         <constraint firstAttribute="width" constant="290" id="U3Y-d9-V9Q"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="20"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -50,7 +49,7 @@
                 <constraint firstAttribute="centerY" secondItem="vfK-md-Jc5" secondAttribute="centerY" id="RG4-iw-mNX"/>
                 <constraint firstAttribute="bottom" secondItem="nK8-AH-e2U" secondAttribute="bottom" constant="30" id="XkI-1g-MPR"/>
                 <constraint firstAttribute="centerX" secondItem="Xt0-AB-E6P" secondAttribute="centerX" id="dVo-L6-1rA"/>
-                <constraint firstItem="vfK-md-Jc5" firstAttribute="top" secondItem="Xt0-AB-E6P" secondAttribute="bottom" constant="90" id="iaQ-QY-PTZ"/>
+                <constraint firstItem="vfK-md-Jc5" firstAttribute="top" secondItem="Xt0-AB-E6P" secondAttribute="bottom" constant="81" id="iaQ-QY-PTZ"/>
                 <constraint firstAttribute="centerX" secondItem="vfK-md-Jc5" secondAttribute="centerX" id="n0t-kD-RBr"/>
             </constraints>
             <connections>

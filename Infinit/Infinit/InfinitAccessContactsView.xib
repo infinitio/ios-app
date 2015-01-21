@@ -8,7 +8,6 @@
         <mutableArray key="SourceSansPro-Bold.otf">
             <string>SourceSansPro-Bold</string>
             <string>SourceSansPro-Bold</string>
-            <string>SourceSansPro-Bold</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -19,12 +18,12 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Import your contacts so sending gets even faster." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="de8-Xa-jKG">
-                    <rect key="frame" x="160" y="85" width="280" height="60"/>
+                    <rect key="frame" x="160" y="87" width="280" height="60"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="60" id="fgQ-wZ-zFk"/>
                         <constraint firstAttribute="width" constant="280" id="x3m-sM-arg"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="20"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -35,7 +34,7 @@
                         <constraint firstAttribute="width" constant="266" id="hO9-ZS-g9B"/>
                         <constraint firstAttribute="height" constant="55" id="nB1-nT-P73"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="20"/>
+                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
                     <state key="normal" title="ACCESS MY CONTACTS">
                         <color key="titleColor" red="0.23137254901960785" green="0.23137254901960785" blue="0.21568627450980393" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -47,7 +46,7 @@
                         <constraint firstAttribute="height" constant="55" id="SHV-RL-yMI"/>
                         <constraint firstAttribute="width" constant="266" id="jVd-3h-BVy"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="20"/>
+                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
                     <state key="normal" title="NO, THANKS.">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -58,7 +57,7 @@
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="exS-d4-4Gz" secondAttribute="bottom" constant="30" id="3M9-iy-wJV"/>
                 <constraint firstAttribute="centerX" secondItem="de8-Xa-jKG" secondAttribute="centerX" id="7zO-wn-IGR"/>
-                <constraint firstItem="de8-Xa-jKG" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="85" id="L5a-p1-zzs"/>
+                <constraint firstItem="de8-Xa-jKG" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="87" id="L5a-p1-zzs"/>
                 <constraint firstAttribute="centerX" secondItem="Ovu-SQ-Jc9" secondAttribute="centerX" id="haW-Ce-bdg"/>
                 <constraint firstItem="exS-d4-4Gz" firstAttribute="top" secondItem="Ovu-SQ-Jc9" secondAttribute="bottom" constant="15" id="hrl-dY-1yd"/>
                 <constraint firstAttribute="centerX" secondItem="exS-d4-4Gz" secondAttribute="centerX" id="oKk-Er-woR"/>
