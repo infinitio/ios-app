@@ -14,10 +14,11 @@
 
 #import "ALAsset+Date.h"
 
-#import <AssetsLibrary/AssetsLibrary.h>
-#import <AVFoundation/AVFoundation.h>
-
 #import <Gap/InfinitTemporaryFileManager.h>
+
+@import AssetsLibrary;
+@import AVFoundation;
+@import Photos;
 
 @interface InfinitSendGalleryController ()
 
@@ -105,25 +106,59 @@
 
 - (void)loadAssets
 {
-  __block NSMutableArray* temp_assets = [NSMutableArray array];
-
-  [[self defaultAssetsLibrary] enumerateGroupsWithTypes:ALAssetsGroupAll
-                                             usingBlock:^(ALAssetsGroup* group, BOOL* stop)
+  if ([PHAsset class])
   {
-    [group enumerateAssetsUsingBlock:^(ALAsset* result, NSUInteger index, BOOL* stop)
+    PHFetchOptions* options = [[PHFetchOptions alloc] init];
+    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate"
+                                                              ascending:NO]];
+    PHFetchResult* assets = [PHAsset fetchAssetsWithOptions:options];
+    __block NSMutableArray* temp_assets = [NSMutableArray array];
+    __block NSMutableArray* except_list = [NSMutableArray array];
+    [assets enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL* stop)
     {
-      if (result)
-      {
-        [temp_assets addObject:result];
-      }
+      [temp_assets addObject:obj];
     }];
-    NSSortDescriptor* sort = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES];
-    self.assets = [temp_assets sortedArrayUsingDescriptors:@[sort]];
-    [self.collectionView reloadData];
-  } failureBlock:^(NSError* error)
+    PHFetchResult* collections =
+      [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum
+                                               subtype:PHAssetCollectionSubtypeAlbumCloudShared
+                                               options:nil];
+    [collections enumerateObjectsUsingBlock:^(PHAssetCollection* collection,
+                                              NSUInteger idx,
+                                              BOOL*stop)
+    {
+      PHFetchResult* assets2 = [PHAsset fetchAssetsInAssetCollection:collection options:options];
+      [assets2 enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL* stop)
+      {
+        [except_list addObject:obj];
+      }];
+    }];
+    [temp_assets removeObjectsInArray:except_list];
+    self.assets = [temp_assets copy];
+  }
+  else
   {
-    NSLog(@"Error loading images %@", error);
-  }];
+    __block NSMutableArray* temp_assets = [NSMutableArray array];
+    [[self defaultAssetsLibrary] enumerateGroupsWithTypes:ALAssetsGroupAll
+                                               usingBlock:^(ALAssetsGroup* group, BOOL* stop)
+    {
+
+      [group enumerateAssetsUsingBlock:^(ALAsset* result, NSUInteger index, BOOL* stop)
+      {
+        if (result)
+        {
+          [temp_assets addObject:result];
+        }
+      }];
+      NSSortDescriptor* sort = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO];
+      self.assets = [temp_assets sortedArrayUsingDescriptors:@[sort]];
+      [self.collectionView performSelectorOnMainThread:@selector(reloadData)
+                                            withObject:nil
+                                         waitUntilDone:NO];
+    } failureBlock:^(NSError* error)
+    {
+      NSLog(@"Error loading images %@", error);
+    }];
+  }
 }
 
 #pragma mark - General
@@ -155,6 +190,16 @@
   return self.assets.count;
 }
 
+- (PHCachingImageManager*)cachingManager
+{
+  static dispatch_once_t pred = 0;
+  static PHCachingImageManager* res = nil;
+  dispatch_once(&pred, ^{
+    res = [[PHCachingImageManager alloc] init];
+  });
+  return res;
+}
+
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView
                  cellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
@@ -162,28 +207,55 @@
     [collectionView dequeueReusableCellWithReuseIdentifier:_cell_identifier
                                               forIndexPath:indexPath];
 
-  ALAsset* asset = self.assets[self.assets.count - 1 - indexPath.row];
-
-  if ([asset valueForProperty:ALAssetPropertyType] == ALAssetTypeVideo)
+  if ([PHAsset class])
   {
-    if ([asset valueForProperty:ALAssetPropertyDuration] != ALErrorInvalidProperty)
+    NSInteger current_tag = cell.tag + 1;
+    cell.tag = current_tag;
+    PHAsset* asset = self.assets[indexPath.row];
+    CGSize size = [self collectionView:self.collectionView
+                                layout:self.collectionViewLayout
+                sizeForItemAtIndexPath:indexPath];
+    [[self cachingManager] requestImageForAsset:asset
+                                     targetSize:size
+                                    contentMode:PHImageContentModeAspectFill
+                                        options:nil
+                                  resultHandler:^(UIImage* result, NSDictionary* info)
+     {
+       if (cell.tag == current_tag)
+         cell.image_view.image = result;
+     }];
+    if (asset.mediaType == PHAssetMediaTypeVideo)
     {
       NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
       formatter.dateFormat = @"m:ss";
-      NSTimeInterval duration = [[asset valueForProperty:ALAssetPropertyDuration] doubleValue];
       cell.duration_label.text =
-        [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:duration]];
-      [cell.contentView addSubview:cell.duration_label];
+        [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:asset.duration]];
     }
-    cell.image_view.image = [UIImage imageWithCGImage:asset.thumbnail
-                                                scale:1.0f
-                                          orientation:UIImageOrientationUp];
   }
-  else if ([asset valueForProperty:ALAssetPropertyType] == ALAssetTypePhoto)
+  else
   {
-    cell.image_view.image = [UIImage imageWithCGImage:asset.thumbnail
-                                                scale:1.0f
-                                          orientation:UIImageOrientationUp];
+    ALAsset* asset = self.assets[indexPath.row];
+
+    if ([asset valueForProperty:ALAssetPropertyType] == ALAssetTypeVideo)
+    {
+      if ([asset valueForProperty:ALAssetPropertyDuration] != ALErrorInvalidProperty)
+      {
+        NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"m:ss";
+        NSTimeInterval duration = [[asset valueForProperty:ALAssetPropertyDuration] doubleValue];
+        cell.duration_label.text =
+          [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:duration]];
+      }
+      cell.image_view.image = [UIImage imageWithCGImage:asset.thumbnail
+                                                  scale:1.0f
+                                            orientation:UIImageOrientationUp];
+    }
+    else if ([asset valueForProperty:ALAssetPropertyType] == ALAssetTypePhoto)
+    {
+      cell.image_view.image = [UIImage imageWithCGImage:asset.thumbnail
+                                                  scale:1.0f
+                                            orientation:UIImageOrientationUp];
+    }
   }
   if ([self.collectionView.indexPathsForSelectedItems containsObject:indexPath])
     cell.selected = YES;
@@ -268,15 +340,15 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
 {
   if([segue.identifier isEqualToString:@"send_to_segue"])
   {
-    NSMutableArray* asset_urls = [NSMutableArray array];
+    NSMutableArray* assets = [NSMutableArray array];
     for (NSIndexPath* path in self.collectionView.indexPathsForSelectedItems)
     {
-      ALAsset* asset = self.assets[self.assets.count - 1 - path.row];
-      [asset_urls addObject:asset.defaultRepresentation.url];
+      id asset = self.assets[path.row];
+      [assets addObject:asset];
     }
     InfinitSendRecipientsController* view_controller =
       (InfinitSendRecipientsController*)segue.destinationViewController;
-    view_controller.asset_urls = asset_urls;
+    view_controller.assets = assets;
   }
 }
 
