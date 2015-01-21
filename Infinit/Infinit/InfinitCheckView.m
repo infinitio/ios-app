@@ -13,6 +13,7 @@
 @interface InfinitCheckView ()
 
 @property (nonatomic, strong) CAShapeLayer* check_layer;
+@property (nonatomic, strong) CAShapeLayer* circle_layer;
 
 @end
 
@@ -22,10 +23,12 @@
 
 - (void)awakeFromNib
 {
-  self.layer.cornerRadius = self.frame.size.width / 2.0f;
-  self.clipsToBounds = YES;
-  self.layer.borderColor = [InfinitColor colorWithGray:211].CGColor;
-  self.layer.borderWidth = 1.0f;
+  _circle_layer = [CAShapeLayer layer];
+  self.circle_layer.fillColor = nil;
+  self.circle_layer.strokeColor = [InfinitColor colorWithGray:211].CGColor;
+  self.circle_layer.lineWidth = 1.0f;
+  self.circle_layer.path = [UIBezierPath bezierPathWithOvalInRect:self.bounds].CGPath;
+  [self.layer addSublayer:self.circle_layer];
 
   _check_layer = [CAShapeLayer layer];
   self.check_layer.fillColor = nil;
@@ -48,23 +51,18 @@
   if (checked == _checked)
     return;
   _checked = checked;
-  UIColor* start_color = nil;
-  UIColor* end_color = nil;
   if (checked)
   {
-    start_color = [UIColor whiteColor];
-    end_color = [InfinitColor colorFromPalette:ColorShamRock];
     self.check_layer.hidden = NO;
-    self.layer.borderColor = [InfinitColor colorFromPalette:ColorShamRock].CGColor;
+    self.circle_layer.strokeColor = [InfinitColor colorFromPalette:ColorShamRock].CGColor;
+    self.circle_layer.fillColor = [InfinitColor colorFromPalette:ColorShamRock].CGColor;
   }
   else
   {
-    start_color = [InfinitColor colorFromPalette:ColorShamRock];
-    end_color = [UIColor whiteColor];
     self.check_layer.hidden = YES;
-    self.layer.borderColor = [InfinitColor colorWithGray:211].CGColor;
+    self.circle_layer.strokeColor = [InfinitColor colorWithGray:211].CGColor;
+    self.circle_layer.fillColor = nil;
   }
-  self.layer.backgroundColor = end_color.CGColor;
   if (animate)
   {
     if (checked)
