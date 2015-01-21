@@ -23,6 +23,7 @@ static UIImage* _mask_image = nil;
 @interface InfinitHomePeerTransactionCell ()
 
 @property (nonatomic, readonly) id<InfinitHomePeerTransactionCellProtocol> delegate;
+@property (nonatomic, readwrite) BOOL dim;
 
 @end
 
@@ -31,7 +32,7 @@ static UIImage* _mask_image = nil;
 - (void)prepareForReuse
 {
   [super prepareForReuse];
-  self.avatar_view.dim_avatar = NO;
+  self.dim = NO;
   self.avatar_view.enable_progress = NO;
   [self setCancelShown:NO withAnimation:NO];
   _delegate = nil;
@@ -70,6 +71,11 @@ static UIImage* _mask_image = nil;
   self.cancel_button.center = self.avatar_view.center;
   self.cancel_button.adjustsImageWhenDisabled = NO;
   self.cancel_button.hidden = YES;
+  CGRect dark_frame = CGRectMake(0.0f, self.bounds.size.height - 58.0f,
+                                 self.bounds.size.width, 58.0f);
+  UIView* dark_view = [[UIView alloc] initWithFrame:dark_frame];
+  dark_view.backgroundColor = [InfinitColor colorWithGray:0 alpha:0.19f];
+  [self.background_view addSubview:dark_view];
 }
 
 - (void)setUpWithDelegate:(id<InfinitHomePeerTransactionCellProtocol>)delegate
@@ -120,12 +126,18 @@ static UIImage* _mask_image = nil;
 
     default:
       self.status_view.hidden = YES;
-      self.avatar_view.dim_avatar = NO;
+      self.dim = NO;
       return;
   }
-  self.avatar_view.dim_avatar = YES;
+  self.dim = YES;
   self.status_view.image = res;
   self.status_view.hidden = NO;
+}
+
+- (void)setDim:(BOOL)dim
+{
+  self.avatar_view.dim_avatar = dim;
+  self.info_label.alpha = dim ? 0.5f : 1.0f;
 }
 
 - (void)setBackgroundImage
@@ -164,7 +176,7 @@ static UIImage* _mask_image = nil;
   }
   NSString* other_name = self.transaction.other_user.fullname;
   if (self.transaction.other_user.is_self)
-    other_name = NSLocalizedString(@"yourself", nil);
+    other_name = NSLocalizedString(@"you", nil);
   switch (self.transaction.status)
   {
     case gap_transaction_new:
@@ -194,8 +206,11 @@ static UIImage* _mask_image = nil;
       }
       else
       {
+        NSString* want = NSLocalizedString(@"wants", nil);
+        if ([other_name rangeOfString:NSLocalizedString(@"you", nil)].location != NSNotFound)
+          want = NSLocalizedString(@"wants", nil);
         res = [NSString stringWithFormat:NSLocalizedString(@"%@ wants to share %@", nil),
-               other_name, file_count];
+               other_name.capitalizedString, file_count];
       }
       break;
     case gap_transaction_waiting_data:
@@ -225,15 +240,8 @@ static UIImage* _mask_image = nil;
       res = NSLocalizedString(@"Transfer canceled", nil);
       break;
     case gap_transaction_rejected:
-      if (self.transaction.other_user.is_self)
-      {
-        res = NSLocalizedString(@"You declined the transfer", nil);
-      }
-      else
-      {
         res = [NSString stringWithFormat:NSLocalizedString(@"%@ declined the transfer", nil),
-               other_name];
-      }
+               other_name.capitalizedString];
       break;
     case gap_transaction_paused:
       res = [NSString stringWithFormat:NSLocalizedString(@"Transfer of %@ with %@ paused", nil),
