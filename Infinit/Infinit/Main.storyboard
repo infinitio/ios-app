@@ -302,7 +302,7 @@
                             </tableViewSection>
                             <tableViewSection id="LDY-ok-emo">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="nSP-0Y-CQh" imageView="1Aj-8d-HiF" style="IBUITableViewCellStyleDefault" id="lit-av-CEn">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="nSP-0Y-CQh" imageView="1Aj-8d-HiF" rowHeight="52" style="IBUITableViewCellStyleDefault" id="lit-av-CEn">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lit-av-CEn" id="qF5-yk-8UL">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -326,7 +326,7 @@
                             </tableViewSection>
                             <tableViewSection id="9my-ZX-mCQ">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="t7K-G7-fM9" imageView="99b-js-To0" style="IBUITableViewCellStyleDefault" id="mug-17-02a">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="t7K-G7-fM9" imageView="99b-js-To0" rowHeight="52" style="IBUITableViewCellStyleDefault" id="mug-17-02a">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mug-17-02a" id="apd-g6-yRC">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -1241,7 +1241,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-checked" translatesAutoresizingMaskIntoConstraints="NO" id="f7K-jP-LJ2">
-                                                    <rect key="frame" x="41" y="43" width="38" height="35"/>
+                                                    <rect key="frame" x="45" y="45" width="30" height="31"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.75" colorSpace="calibratedRGB"/>
@@ -1974,7 +1974,7 @@
     <resources>
         <image name="bg_balloon" width="990" height="1099"/>
         <image name="icon-back" width="31" height="23"/>
-        <image name="icon-checked" width="38" height="35"/>
+        <image name="icon-checked" width="30" height="31"/>
         <image name="icon-close" width="19" height="20"/>
         <image name="icon-contacts" width="17" height="20"/>
         <image name="icon-facebook-blue" width="20" height="20"/>
