@@ -12,7 +12,7 @@
 
 - (CGSize)sizeThatFits:(CGSize)size
 {
-  return CGSizeMake(self.bounds.size.width, 54.0f);
+  return CGSizeMake(self.superview.bounds.size.width, 54.0f);
 }
 
 @end
