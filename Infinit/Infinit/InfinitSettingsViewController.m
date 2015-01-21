@@ -35,10 +35,15 @@ typedef NS_ENUM(NSUInteger, InfinitLogoutSettings)
 @end
 
 @implementation InfinitSettingsViewController
+{
+@private
+  BOOL _logging_out;
+}
 
 - (void)viewDidLoad
 {
   self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+  _logging_out = NO;
   [super viewDidLoad];
   NSDictionary* nav_bar_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
                                                                        size:17.0f],
@@ -59,13 +64,17 @@ typedef NS_ENUM(NSUInteger, InfinitLogoutSettings)
 - (void)tableView:(UITableView*)tableView
 didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
+  if (_logging_out)
+    return;
+
   if (indexPath.section == InfinitSettingsSectionLogout &&
       indexPath.row == InfinitLogoutSettingLogout)
   {
+    _logging_out = YES;
     [[InfinitStateManager sharedInstance] logoutPerformSelector:@selector(logoutCallback:)
                                                        onObject:self];
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
   }
+  [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView*)tableView
@@ -96,6 +105,7 @@ viewForFooterInSection:(NSInteger)section
 
 - (void)logoutCallback:(InfinitStateResult*)result
 {
+  _logging_out = NO;
   if (result.success)
   {
     [(InfinitTabBarController*)self.tabBarController showWelcomeScreen];
