@@ -125,7 +125,7 @@
 - (void)generateAvatarWithFirstName:(NSString*)first_name
                             surname:(NSString*)surname
 {
-  UIColor* fill = [InfinitColor colorFromPalette:ColorShamRock];
+  UIColor* fill = [InfinitColor colorWithRed:202 green:217 blue:223];
   CGFloat scale = [InfinitHostDevice screenScale];
   CGRect rect = CGRectMake(0.0f, 0.0f, 40.0f * scale, 40.0f * scale);
   UIGraphicsBeginImageContext(rect.size);
