@@ -9,6 +9,7 @@
 #import "InfinitHomePeerTransactionCell.h"
 
 #import "InfinitColor.h"
+#import "InfinitHostDevice.h"
 
 #import <Gap/InfinitTime.h>
 #import <Gap/InfinitDataSize.h>
@@ -30,6 +31,7 @@ static UIImage* _mask_image = nil;
 - (void)prepareForReuse
 {
   [super prepareForReuse];
+  self.avatar_view.dim_avatar = NO;
   self.avatar_view.enable_progress = NO;
   [self setCancelShown:NO withAnimation:NO];
   _delegate = nil;
@@ -41,8 +43,11 @@ static UIImage* _mask_image = nil;
   [super awakeFromNib];
   if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)])
   {
-    self.background_view.layer.cornerRadius = 3.0f;
-    self.background_view.layer.masksToBounds = YES;
+    if ([InfinitHostDevice deviceCPU] >= InfinitCPUType_ARM64_v8)
+    {
+      self.background_view.layer.cornerRadius = 3.0f;
+      self.background_view.layer.masksToBounds = YES;
+    }
     UIBlurEffect* blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
     UIVisualEffectView* blur_view = [[UIVisualEffectView alloc] initWithEffect:blur];
     blur_view.frame = self.bounds;
@@ -64,6 +69,7 @@ static UIImage* _mask_image = nil;
   [self.avatar_view addGestureRecognizer:tap];
   self.cancel_button.center = self.avatar_view.center;
   self.cancel_button.adjustsImageWhenDisabled = NO;
+  self.cancel_button.hidden = YES;
 }
 
 - (void)setUpWithDelegate:(id<InfinitHomePeerTransactionCellProtocol>)delegate
@@ -114,8 +120,10 @@ static UIImage* _mask_image = nil;
 
     default:
       self.status_view.hidden = YES;
+      self.avatar_view.dim_avatar = NO;
       return;
   }
+  self.avatar_view.dim_avatar = YES;
   self.status_view.image = res;
   self.status_view.hidden = NO;
 }
@@ -295,6 +303,8 @@ static UIImage* _mask_image = nil;
     return;
   _cancel_shown = shown;
   self.cancel_button.enabled = _cancel_shown;
+  if (_cancel_shown)
+    self.cancel_button.hidden = NO;
 
   CGAffineTransform transform;
 
@@ -323,6 +333,8 @@ static UIImage* _mask_image = nil;
      {
        if (!finished)
          self.cancel_button.transform = transform;
+       if (!_cancel_shown)
+         self.cancel_button.hidden = YES;
      }];
   }
   else
