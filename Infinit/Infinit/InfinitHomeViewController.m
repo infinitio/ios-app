@@ -10,6 +10,7 @@
 
 #import "InfinitHomeItem.h"
 #import "InfinitHomePeerTransactionCell.h"
+#import "InfinitHomeOnboardingCell.h"
 
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitUserManager.h>
@@ -18,12 +19,14 @@
                                          InfinitHomePeerTransactionCellProtocol>
 
 @property (nonatomic, readonly) NSMutableArray* data;
+@property (nonatomic, strong) UIView* onboarding_view;
 
 @end
 
 @implementation InfinitHomeViewController
 {
 @private
+  NSString* _onboarding_cell_id;
   NSString* _peer_transaction_cell_id;
 
   NSTimer* _progress_timer;
@@ -34,7 +37,9 @@
 - (void)viewDidLoad
 {
   _peer_transaction_cell_id = @"home_peer_transaction_cell";
-  _update_interval = 1.0f;
+  _onboarding_cell_id = @"home_onboarding_cell";
+  _update_interval = 0.5f;
+  self.collectionView.alwaysBounceVertical = YES;
   [super viewDidLoad];
   self.navigationItem.titleView =
     [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-logo-red"]];
@@ -42,6 +47,11 @@
     [UINib nibWithNibName:NSStringFromClass(InfinitHomePeerTransactionCell.class) bundle:nil];
   [self.collectionView registerNib:transaction_cell_nib
         forCellWithReuseIdentifier:_peer_transaction_cell_id];
+  UINib* onboarding_cell_nib =
+    [UINib nibWithNibName:NSStringFromClass(InfinitHomeOnboardingCell.class) bundle:nil];
+  [self.collectionView registerNib:onboarding_cell_nib
+        forCellWithReuseIdentifier:_onboarding_cell_id];
+
 //  UISwipeGestureRecognizer* left_swipe_recognizer =
 //    [[UISwipeGestureRecognizer alloc] initWithTarget:self
 //                                              action:@selector(leftSwipeGesture:)];
@@ -62,6 +72,15 @@
 {
   [self loadTransactions];
   [super viewWillAppear:animated];
+  if (self.data.count == 0)
+  {
+    [self showOnboardingArrow];
+  }
+  else if (self.onboarding_view != nil)
+  {
+    [self.onboarding_view removeFromSuperview];
+    self.onboarding_view = nil;
+  }
 }
 
 - (void)loadTransactions
@@ -78,6 +97,7 @@
       InfinitHomeItem* item = [[InfinitHomeItem alloc] initWithTransaction:transaction];
       [self.data addObject:item];
     }
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(peerTransactionUpdated:)
                                                  name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION
@@ -93,6 +113,18 @@
     [self updateRunningTransactions];
     [self.collectionView reloadData];
   }
+}
+
+- (void)showOnboardingArrow
+{
+  if (self.onboarding_view == nil)
+  {
+    UINib* onboarding_nib = [UINib nibWithNibName:@"InfinitHomeOnboardingView" bundle:nil];
+    self.onboarding_view = [[onboarding_nib instantiateWithOwner:self options:nil] firstObject];
+    [self.view addSubview:self.onboarding_view];
+  }
+  CGFloat height = self.onboarding_view.bounds.size.height;
+  self.onboarding_view.frame = CGRectMake(0.0f, [UIScreen mainScreen].bounds.size.height - height - self.tabBarController.tabBar.bounds.size.height, self.view.bounds.size.width, height);
 }
 
 - (void)updateRunningTransactions
@@ -137,7 +169,6 @@
     _progress_timer = nil;
     return;
   }
-  NSLog(@"xxx updating progress");
   for (NSIndexPath* path in _running_transactions)
   {
     InfinitHomePeerTransactionCell* cell =
@@ -158,9 +189,10 @@
 
 - (void)scrollViewWillBeginDragging:(UIScrollView*)scrollView
 {
-  for (InfinitHomePeerTransactionCell* cell in self.collectionView.visibleCells)
+  for (UICollectionViewCell* cell in self.collectionView.visibleCells)
   {
-    cell.cancel_shown = NO;
+    if ([cell isKindOfClass:InfinitHomePeerTransactionCell.class])
+      ((InfinitHomePeerTransactionCell*)cell).cancel_shown = NO;
   }
 }
 
@@ -175,20 +207,50 @@
 - (NSInteger)collectionView:(UICollectionView*)collectionView
      numberOfItemsInSection:(NSInteger)section
 {
-  return self.data.count;
+  return (self.data.count == 0) ? 2 : self.data.count;
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView
                  cellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
   UICollectionViewCell* cell = nil;
-  InfinitHomeItem* item = self.data[indexPath.row];
-  if (item.transaction != nil && [item.transaction isKindOfClass:InfinitPeerTransaction.class])
+  if (self.data.count > 0)
   {
-    InfinitPeerTransaction* peer_transaction = (InfinitPeerTransaction*)item.transaction;
-    cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:_peer_transaction_cell_id
+    InfinitHomeItem* item = self.data[indexPath.row];
+    if (item.transaction != nil && [item.transaction isKindOfClass:InfinitPeerTransaction.class])
+    {
+      InfinitPeerTransaction* peer_transaction = (InfinitPeerTransaction*)item.transaction;
+      cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:_peer_transaction_cell_id
+                                                            forIndexPath:indexPath];
+      [(InfinitHomePeerTransactionCell*)cell setUpWithDelegate:self transaction:peer_transaction];
+    }
+  }
+  else
+  {
+    cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:_onboarding_cell_id
                                                           forIndexPath:indexPath];
-    [(InfinitHomePeerTransactionCell*)cell setUpWithDelegate:self transaction:peer_transaction];
+    NSString* message = nil;
+    NSString* fullname = [[[InfinitUserManager sharedInstance] me] fullname];
+    NSUInteger lines = 0;
+    switch (indexPath.row)
+    {
+      case 0:
+        message =
+          NSLocalizedString(@"This is where all your current transfers\n"
+                            @"and notifications will be displayed.", nil);
+        lines = 2;
+        break;
+      case 1:
+        message = [NSString stringWithFormat:NSLocalizedString(@"Welcome to Infinit, %@!", nil),
+                   fullname];
+        lines = 1;
+        break;
+
+      default:
+        break;
+    }
+    ((InfinitHomeOnboardingCell*)cell).message.numberOfLines = lines;
+    ((InfinitHomeOnboardingCell*)cell).message.text = message;
   }
   return cell;
 }
@@ -200,10 +262,26 @@
   sizeForItemAtIndexPath:(NSIndexPath*)indexPath
 {
   CGSize res = CGSizeZero;
-  InfinitHomeItem* item = self.data[indexPath.row];
-  if (item.transaction != nil && [item.transaction isKindOfClass:InfinitPeerTransaction.class])
+  if (self.data.count > 0)
   {
-    return CGSizeMake(300.0f, 300.0f);
+    InfinitHomeItem* item = self.data[indexPath.row];
+    if (item.transaction != nil && [item.transaction isKindOfClass:InfinitPeerTransaction.class])
+    {
+      return CGSizeMake(300.0f, 300.0f);
+    }
+  }
+  else
+  {
+    switch (indexPath.row)
+    {
+      case 0:
+        return CGSizeMake(300.0f, 79.0f);
+      case 1:
+        return CGSizeMake(300.0f, 63.0f);
+
+      default:
+        break;
+    }
   }
   return res;
 }
@@ -219,6 +297,13 @@
 
 - (void)peerTransactionAdded:(NSNotification*)notification
 {
+  if (self.onboarding_view != nil)
+  {
+    [self performSelectorOnMainThread:@selector(removeOnboardingView)
+                           withObject:nil
+                        waitUntilDone:NO];
+    return;
+  }
   NSNumber* transaction_id = notification.userInfo[@"id"];
   InfinitPeerTransaction* peer_transaction =
     [[InfinitPeerTransactionManager sharedInstance] transactionWithId:transaction_id];
@@ -248,10 +333,24 @@
   {
     if (item.transaction != nil && [item.transaction.id_ isEqualToNumber:transaction_id])
     {
+      if (self.onboarding_view != nil)
+      {
+        [self performSelectorOnMainThread:@selector(removeOnboardingView)
+                               withObject:nil
+                            waitUntilDone:NO];
+        return;
+      }
       [self performSelectorOnMainThread:@selector(updateItem:) withObject:item waitUntilDone:NO];
       return;
     }
   }
+}
+
+- (void)removeOnboardingView
+{
+  [self.onboarding_view removeFromSuperview];
+  self.onboarding_view = nil;
+  [self loadTransactions];
 }
 
 - (void)updateItem:(InfinitHomeItem*)item
