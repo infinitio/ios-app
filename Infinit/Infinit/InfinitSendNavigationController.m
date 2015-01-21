@@ -17,9 +17,14 @@
 
 @implementation InfinitSendNavigationController
 
-- (void)viewDidDisappear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
   [self resetSendViews];
+  [super viewWillAppear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
   [self popToRootViewControllerAnimated:NO];
   [super viewDidDisappear:animated];
 }
