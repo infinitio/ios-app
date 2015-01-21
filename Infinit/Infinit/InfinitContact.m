@@ -9,6 +9,7 @@
 #import "InfinitContact.h"
 
 #import "InfinitColor.h"
+#import "InfinitHostDevice.h"
 
 #import "UIImage+circular.h"
 
@@ -125,7 +126,7 @@
                             surname:(NSString*)surname
 {
   UIColor* fill = [InfinitColor colorFromPalette:ColorShamRock];
-  CGFloat scale = [[UIScreen mainScreen] scale];
+  CGFloat scale = [InfinitHostDevice screenScale];
   CGRect rect = CGRectMake(0.0f, 0.0f, 40.0f * scale, 40.0f * scale);
   UIGraphicsBeginImageContext(rect.size);
   CGContextRef context = UIGraphicsGetCurrentContext();
