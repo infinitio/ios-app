@@ -32,6 +32,7 @@
 		836D394A1A67F0FB00892206 /* NSString+email.m in Sources */ = {isa = PBXBuildFile; fileRef = 836D39491A67F0FB00892206 /* NSString+email.m */; };
 		836D39A11A69409300892206 /* UIImage+circular.m in Sources */ = {isa = PBXBuildFile; fileRef = 836D39A01A69409300892206 /* UIImage+circular.m */; };
 		836F5C8C1A166720007C9C4E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836F5C8B1A166720007C9C4E /* SystemConfiguration.framework */; };
+		83825BE11A701FE900420F24 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83825BE01A701FE900420F24 /* Photos.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		839B813F1A6407990057E92B /* InfinitSendContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 839B813E1A6407990057E92B /* InfinitSendContactCell.m */; };
 		839B81421A641CF00057E92B /* InfinitCheckView.m in Sources */ = {isa = PBXBuildFile; fileRef = 839B81411A641CF00057E92B /* InfinitCheckView.m */; };
 		839B814B1A6443220057E92B /* InfinitSendAbstractCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 839B814A1A6443220057E92B /* InfinitSendAbstractCell.m */; };
@@ -222,6 +223,7 @@
 		836D399F1A69409300892206 /* UIImage+circular.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+circular.h"; sourceTree = "<group>"; };
 		836D39A01A69409300892206 /* UIImage+circular.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+circular.m"; sourceTree = "<group>"; };
 		836F5C8B1A166720007C9C4E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		83825BE01A701FE900420F24 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		839B813D1A6407990057E92B /* InfinitSendContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendContactCell.h; sourceTree = "<group>"; };
 		839B813E1A6407990057E92B /* InfinitSendContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendContactCell.m; sourceTree = "<group>"; };
 		839B81401A641CF00057E92B /* InfinitCheckView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitCheckView.h; sourceTree = "<group>"; };
@@ -374,6 +376,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83825BE11A701FE900420F24 /* Photos.framework in Frameworks */,
 				830AD1F51A6D172200E2B058 /* Accelerate.framework in Frameworks */,
 				83B5D60E1A6663430061931F /* Security.framework in Frameworks */,
 				833DFCBC1A2F837400B0D213 /* AssetsLibrary.framework in Frameworks */,
@@ -524,6 +527,7 @@
 		836F5C8A1A16670F007C9C4E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				83825BE01A701FE900420F24 /* Photos.framework */,
 				830AD1F41A6D172200E2B058 /* Accelerate.framework */,
 				83B5D60D1A6663430061931F /* Security.framework */,
 				833DFCBB1A2F837400B0D213 /* AssetsLibrary.framework */,
