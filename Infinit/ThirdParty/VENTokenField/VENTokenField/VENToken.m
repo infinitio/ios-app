@@ -66,7 +66,7 @@
 - (void)setHighlighted:(BOOL)highlighted
 {
     _highlighted = highlighted;
-    UIColor *backgroundColor = highlighted ? [InfinitColor colorFromPalette:ColorChicago] : [InfinitColor colorWithRed:35 green:168 blue:167];
+  UIColor *backgroundColor = highlighted ? [InfinitColor colorWithRed:35 green:168 blue:167] : [InfinitColor colorFromPalette:ColorShamRock];
     self.titleLabel.textColor = [UIColor whiteColor];
     self.backgroundColor = backgroundColor;
 }
