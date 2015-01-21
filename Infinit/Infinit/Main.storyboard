@@ -424,7 +424,7 @@
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="REPORT A PROBLEM" id="Q7Z-b7-sHF">
-                        <barButtonItem key="leftBarButtonItem" image="icon-close" id="mSL-Cm-2y4">
+                        <barButtonItem key="leftBarButtonItem" image="icon-back" id="mSL-Cm-2y4">
                             <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="backButtonTapped:" destination="n3a-58-YZv" id="Zzy-2u-T9N"/>
