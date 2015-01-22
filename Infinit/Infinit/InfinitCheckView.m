@@ -19,8 +19,6 @@
 
 @implementation InfinitCheckView
 
-
-
 - (void)awakeFromNib
 {
   _circle_layer = [CAShapeLayer layer];
