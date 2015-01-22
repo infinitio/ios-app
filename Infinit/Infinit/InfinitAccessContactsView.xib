@@ -52,21 +52,34 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-contacts-big" translatesAutoresizingMaskIntoConstraints="NO" id="vAn-VP-2P2">
+                    <rect key="frame" x="252" y="187" width="96" height="120"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="96" id="2cJ-WT-wxE"/>
+                        <constraint firstAttribute="height" constant="120" id="KpG-ZQ-PyA"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" red="0.19215686274509805" green="0.19215686274509805" blue="0.19215686274509805" alpha="0.95000000000000007" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="exS-d4-4Gz" secondAttribute="bottom" constant="30" id="3M9-iy-wJV"/>
                 <constraint firstAttribute="centerX" secondItem="de8-Xa-jKG" secondAttribute="centerX" id="7zO-wn-IGR"/>
                 <constraint firstItem="de8-Xa-jKG" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="87" id="L5a-p1-zzs"/>
+                <constraint firstItem="vAn-VP-2P2" firstAttribute="top" secondItem="de8-Xa-jKG" secondAttribute="bottom" constant="40" id="aLD-ca-tat"/>
                 <constraint firstAttribute="centerX" secondItem="Ovu-SQ-Jc9" secondAttribute="centerX" id="haW-Ce-bdg"/>
                 <constraint firstItem="exS-d4-4Gz" firstAttribute="top" secondItem="Ovu-SQ-Jc9" secondAttribute="bottom" constant="15" id="hrl-dY-1yd"/>
+                <constraint firstAttribute="centerX" secondItem="vAn-VP-2P2" secondAttribute="centerX" id="jmZ-XJ-f4D"/>
                 <constraint firstAttribute="centerX" secondItem="exS-d4-4Gz" secondAttribute="centerX" id="oKk-Er-woR"/>
             </constraints>
             <connections>
                 <outlet property="access_button" destination="Ovu-SQ-Jc9" id="Hwh-h4-G03"/>
                 <outlet property="back_button" destination="exS-d4-4Gz" id="6wt-ie-zZB"/>
+                <outlet property="contacts_image" destination="vAn-VP-2P2" id="vT5-CV-Amz"/>
                 <outlet property="message_label" destination="de8-Xa-jKG" id="Oi1-5G-WyV"/>
             </connections>
         </view>
     </objects>
+    <resources>
+        <image name="icon-contacts-big" width="96" height="120"/>
+    </resources>
 </document>

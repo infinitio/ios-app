@@ -13,5 +13,6 @@
 @property (nonatomic, weak) IBOutlet UIButton* access_button;
 @property (nonatomic, weak) IBOutlet UIButton* back_button;
 @property (nonatomic, weak) IBOutlet UILabel* message_label;
+@property (nonatomic, weak) IBOutlet UIImageView* contacts_image;
 
 @end
