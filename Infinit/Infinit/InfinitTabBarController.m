@@ -204,19 +204,19 @@ shouldSelectViewController:(UIViewController*)viewController
 {
   if ([self.viewControllers indexOfObject:viewController] == self.selectedIndex)
     return NO;
-  if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusNotDetermined)
-  {
-    [self loadGalleryPermissionView];
-    return NO;
-  }
-  else if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusDenied)
-  {
-    [self noGalleryAccessPopUp];
-    return NO;
-  }
   _last_index = self.selectedIndex;
   if ([viewController.title isEqualToString:@"SEND"])
   {
+    if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusNotDetermined)
+    {
+      [self loadGalleryPermissionView];
+      return NO;
+    }
+    else if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusDenied)
+    {
+      [self noGalleryAccessPopUp];
+      return NO;
+    }
     [self hideTabBarWithAnimation:YES];
   }
   NSUInteger index = [self.viewControllers indexOfObject:viewController];
