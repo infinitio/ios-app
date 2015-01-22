@@ -244,6 +244,11 @@ static UIImage* _mask_image = nil;
         res = [NSString stringWithFormat:NSLocalizedString(@"Sent %@ to %@", nil),
                file_count, other_name];
       }
+      else if (self.transaction.sender.is_self)
+      {
+        res = [NSString stringWithFormat:NSLocalizedString(@"Sent %@ to %@", nil),
+               file_count, other_name];
+      }
       else
       {
         res = [NSString stringWithFormat:NSLocalizedString(@"Received %@ from %@", nil),
