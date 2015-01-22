@@ -12,14 +12,10 @@
 
 @implementation InfinitSendUserCell
 
-- (void)prepareForReuse
-{
-  [super prepareForReuse];
-  self.user_type_view.image = nil;
-}
-
 - (void)setContact:(InfinitContact*)contact
 {
+  if ([self.contact isEqual:contact])
+    return;
   [super setContact:contact];
   if (self.contact.infinit_user.favorite || self.contact.infinit_user.is_self)
     self.user_type_view.image = [UIImage imageNamed:@"icon-contact-favorite"].circularMask;

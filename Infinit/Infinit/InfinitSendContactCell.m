@@ -14,14 +14,10 @@ static BOOL _show_numbers = NO;
 
 @implementation InfinitSendContactCell
 
-- (void)prepareForReuse
-{
-  [super prepareForReuse];
-  self.details_label.text = nil;
-}
-
 - (void)setContact:(InfinitContact*)contact
 {
+  if ([self.contact isEqual:contact])
+    return;
   [super setContact:contact];
   NSMutableString* res = [[NSMutableString alloc] init];
   if (contact.emails.count > 0)

@@ -16,8 +16,6 @@
 - (void)prepareForReuse
 {
   self.check_view.checked = NO;
-  self.avatar_view.image = nil;
-  self.name_label.text = nil;
 }
 
 - (void)setContact:(InfinitContact*)contact
