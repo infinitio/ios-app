@@ -51,6 +51,7 @@ static NSDictionary* _small_attrs = nil;
   self.progress_label.layer.shadowColor = [InfinitColor colorWithGray:0 alpha:0.63f].CGColor;
   self.progress_label.layer.shadowRadius = 5.0f;
   self.progress_label.layer.shadowOffset = CGSizeZero;
+  self.progress_label.attributedText = [self progressString:0.0f];
 }
 
 - (void)setImage:(UIImage*)image
