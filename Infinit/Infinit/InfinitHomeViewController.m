@@ -123,8 +123,13 @@
     self.onboarding_view = [[onboarding_nib instantiateWithOwner:self options:nil] firstObject];
     [self.view addSubview:self.onboarding_view];
   }
-  CGFloat height = self.onboarding_view.bounds.size.height;
-  self.onboarding_view.frame = CGRectMake(0.0f, [UIScreen mainScreen].bounds.size.height - height - self.tabBarController.tabBar.bounds.size.height, self.view.bounds.size.width, height);
+  CGFloat height = self.onboarding_view.bounds.size.height + 30.0f;
+  CGRect frame =
+    CGRectMake(0.0f,
+               [UIScreen mainScreen].bounds.size.height - height - self.tabBarController.tabBar.bounds.size.height,
+               self.view.bounds.size.width,
+               height);
+  self.onboarding_view.frame = [self.view convertRect:frame fromView:self.view.superview];
 }
 
 - (void)updateRunningTransactions
