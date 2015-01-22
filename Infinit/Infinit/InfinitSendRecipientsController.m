@@ -230,6 +230,7 @@
   [self.contacts_overlay.back_button addTarget:self
                                         action:@selector(cancelOverlayFromButton:)
                               forControlEvents:UIControlEventTouchUpInside];
+  self.contacts_overlay.contacts_image.hidden = NO;
   [self showOverlayView:self.contacts_overlay];
 }
 
@@ -281,6 +282,7 @@
   self.contacts_overlay.message_label.attributedText = res;
   self.contacts_overlay.access_button.hidden = YES;
   self.contacts_overlay.back_button.hidden = YES;
+  self.contacts_overlay.contacts_image.hidden = YES;
   ABAddressBookRef address_book = ABAddressBookCreateWithOptions(NULL, NULL);
   ABAddressBookRequestAccessWithCompletion(address_book, ^(bool granted, CFErrorRef error)
   {
