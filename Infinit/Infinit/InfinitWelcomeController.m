@@ -418,6 +418,9 @@
 
 - (void)loginEmailTextEditingEnded:(id)sender
 {
+  NSCharacterSet* white_space = [NSCharacterSet whitespaceCharacterSet];
+  self.login_form_view.email_field.text =
+    [self.login_form_view.email_field.text stringByTrimmingCharactersInSet:white_space];
   if (self.login_form_view.email_field.text.isEmail)
   {
     self.login_form_view.email_image.image = [UIImage imageNamed:@"icon-email-valid"];
@@ -489,6 +492,9 @@
 
 - (void)signupEmailTextEditingEnded:(id)sender
 {
+  NSCharacterSet* white_space = [NSCharacterSet whitespaceCharacterSet];
+  self.signup_form_view.email_field.text =
+    [self.signup_form_view.email_field.text stringByTrimmingCharactersInSet:white_space];
   if (self.signup_form_view.email_field.text.isEmail)
   {
     self.signup_form_view.email_image.image = [UIImage imageNamed:@"icon-email-valid"];
@@ -514,6 +520,9 @@
 
 - (void)signupFullnameTextEditingEnded:(id)sender
 {
+  NSCharacterSet* white_space = [NSCharacterSet whitespaceCharacterSet];
+  self.signup_form_view.fullname_field.text =
+    [self.signup_form_view.fullname_field.text stringByTrimmingCharactersInSet:white_space];
   if (self.signup_form_view.fullname_field.text.length < 3)
   {
     self.signup_form_view.fullname_image.image = [UIImage imageNamed:@"icon-fullname-error"];
