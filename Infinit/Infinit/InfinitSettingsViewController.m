@@ -56,7 +56,28 @@ typedef NS_ENUM(NSUInteger, InfinitLogoutSettings)
 - (void)viewWillAppear:(BOOL)animated
 {
   [self.user_cell configureWithUser:[[InfinitUserManager sharedInstance] me]];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(avatarUpdated:)
+                                               name:INFINIT_USER_AVATAR_NOTIFICATION
+                                             object:nil];
   [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [super viewWillDisappear:animated];
+}
+
+#pragma mark - User Avatar
+
+- (void)avatarUpdated:(NSNotification*)notification
+{
+  InfinitUser* self_user = [[InfinitUserManager sharedInstance] me];
+  if ([notification.userInfo[@"id"] isEqualToNumber:self_user.id_])
+  {
+    [self.user_cell configureWithUser:self_user];
+  }
 }
 
 #pragma mark - Table View Delegate
