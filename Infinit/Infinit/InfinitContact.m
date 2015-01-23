@@ -100,7 +100,7 @@
     _avatar = user.avatar;
     _emails = nil;
     if (user.is_self)
-      _fullname = NSLocalizedString(@"Me", nil);
+      _fullname = NSLocalizedString(@"Me (other devices)", nil);
     else
       _fullname = user.fullname;
     NSArray* temp = [self.fullname componentsSeparatedByString:@" "];
