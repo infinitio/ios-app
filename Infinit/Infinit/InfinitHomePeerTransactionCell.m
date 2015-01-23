@@ -155,6 +155,7 @@ static UIImage* _mask_image = nil;
 {
   self.avatar_view.dim_avatar = dim;
   self.info_label.alpha = dim ? 0.5f : 1.0f;
+  self.cancel_button.hidden = dim;
 }
 
 - (void)setBackgroundImage
