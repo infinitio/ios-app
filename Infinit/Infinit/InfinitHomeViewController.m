@@ -190,6 +190,13 @@
   _progress_timer = nil;
 }
 
+#pragma mark - General
+
+- (void)scrollToTop
+{
+  [self.collectionView scrollRectToVisible:CGRectMake(0.0f, 0.0f, 1.0f, 1.0f) animated:YES];
+}
+
 #pragma mark - Collection View Protocol
 
 - (void)scrollViewWillBeginDragging:(UIScrollView*)scrollView

@@ -10,4 +10,6 @@
 
 @interface InfinitHomeViewController : UICollectionViewController
 
+- (void)scrollToTop;
+
 @end

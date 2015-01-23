@@ -10,11 +10,12 @@
 
 #import "InfinitAccessGalleryView.h"
 #import "InfinitColor.h"
+#import "InfinitHomeViewController.h"
 #import "InfinitSendTabIcon.h"
-#import "InfinitTabAnimator.h"
 #import "InfinitSendNavigationController.h"
+#import "InfinitTabAnimator.h"
 
-#import <AssetsLibrary/AssetsLibrary.h>
+@import AssetsLibrary;
 
 typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 {
@@ -203,7 +204,14 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 shouldSelectViewController:(UIViewController*)viewController
 {
   if ([self.viewControllers indexOfObject:viewController] == self.selectedIndex)
+  {
+    if ([viewController.title isEqualToString:@"HOME"])
+    {
+      UINavigationController* home_nav_controller = (UINavigationController*)viewController;
+      [home_nav_controller.viewControllers.firstObject scrollToTop];
+    }
     return NO;
+  }
   _last_index = self.selectedIndex;
   if ([viewController.title isEqualToString:@"SEND"])
   {
