@@ -17,7 +17,7 @@
 @interface InfinitSettingsReportProblemController () <UITextViewDelegate,
                                                       UIAlertViewDelegate>
 
-@property (nonatomic, weak) IBOutlet UIButton* send_button;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem* send_button;
 @property (nonatomic, weak) IBOutlet UITextView* text_view;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* text_view_height;
 
@@ -37,21 +37,12 @@
     self.text_view_height.constant = 150.0f;
   }
   self.text_view.textContainerInset = UIEdgeInsetsMake(15.0f, 15.0f, 15.0f, 15.0f);
-  self.send_button.titleEdgeInsets =
-    UIEdgeInsetsMake(0.0f,
-                     - self.send_button.imageView.frame.size.width,
-                     0.0f,
-                     self.send_button.imageView.frame.size.width);
-  self.send_button.imageEdgeInsets =
-    UIEdgeInsetsMake(0.0f,
-                     self.send_button.titleLabel.frame.size.width + 10.0f,
-                     0.0f,
-                     - (self.send_button.titleLabel.frame.size.width + 10.0f));
   _report_problem_placeholder = NSLocalizedString(@"Explain your problem here...", nil);
   self.text_view.text = _report_problem_placeholder;
   UITapGestureRecognizer* tap =
     [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
+  self.send_button.enabled = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -84,6 +75,24 @@
   {
     textView.text = _report_problem_placeholder;
     textView.textColor = [InfinitColor colorWithGray:177];
+    self.send_button.enabled = NO;
+  }
+  else
+  {
+    self.send_button.enabled = YES;
+  }
+}
+
+- (void)textViewDidChange:(UITextView*)textView
+{
+  if (textView.text.length > 0 &&
+      [textView.text rangeOfString:_report_problem_placeholder].location == NSNotFound)
+  {
+    self.send_button.enabled = YES;
+  }
+  else
+  {
+    self.send_button.enabled = NO;
   }
 }
 
