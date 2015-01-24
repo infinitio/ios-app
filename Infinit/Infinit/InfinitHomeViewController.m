@@ -184,6 +184,15 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+  for (UICollectionViewCell* cell in self.collectionView.visibleCells)
+  {
+    if ([cell isKindOfClass:InfinitHomePeerTransactionCell.class])
+    {
+      InfinitHomePeerTransactionCell* peer_cell = (InfinitHomePeerTransactionCell*)cell;
+      peer_cell.cancel_shown = NO;
+      peer_cell.accept_shown = NO;
+    }
+  }
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   [super viewWillDisappear:animated];
   [_progress_timer invalidate];
@@ -204,7 +213,11 @@
   for (UICollectionViewCell* cell in self.collectionView.visibleCells)
   {
     if ([cell isKindOfClass:InfinitHomePeerTransactionCell.class])
-      ((InfinitHomePeerTransactionCell*)cell).cancel_shown = NO;
+    {
+      InfinitHomePeerTransactionCell* peer_cell = (InfinitHomePeerTransactionCell*)cell;
+      if (!peer_cell.transaction.receivable)
+        peer_cell.cancel_shown = NO;
+    }
   }
 }
 
@@ -274,7 +287,7 @@
   sizeForItemAtIndexPath:(NSIndexPath*)indexPath
 {
   CGSize res = CGSizeZero;
-  CGFloat width = self.view.bounds.size.width - 26.0f;
+  CGFloat width = [UIScreen mainScreen].bounds.size.width - 26.0f;
   if (self.data.count > 0)
   {
     InfinitHomeItem* item = self.data[indexPath.row];
@@ -446,12 +459,24 @@
 
 #pragma mark - Cell Protocol
 
+- (void)cellHadAcceptTappedForTransaction:(InfinitTransaction*)transaction
+{
+  if ([transaction isKindOfClass:InfinitPeerTransaction.class])
+  {
+    InfinitPeerTransaction* peer_transaction = (InfinitPeerTransaction*)transaction;
+    [[InfinitPeerTransactionManager sharedInstance] acceptTransaction:peer_transaction];
+  }
+}
+
 - (void)cellHadCancelTappedForTransaction:(InfinitTransaction*)transaction
 {
   if ([transaction isKindOfClass:InfinitPeerTransaction.class])
   {
     InfinitPeerTransaction* peer_transaction = (InfinitPeerTransaction*)transaction;
-    [[InfinitPeerTransactionManager sharedInstance] cancelTransaction:peer_transaction];
+    if (peer_transaction.receivable)
+      [[InfinitPeerTransactionManager sharedInstance] rejectTransaction:peer_transaction];
+    else
+      [[InfinitPeerTransactionManager sharedInstance] cancelTransaction:peer_transaction];
   }
 }
 
