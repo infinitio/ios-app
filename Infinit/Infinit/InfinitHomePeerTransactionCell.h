@@ -17,15 +17,22 @@
 
 @interface InfinitHomePeerTransactionCell : InfinitHomeAbstractCell
 
+@property (nonatomic, weak) IBOutlet UIView* accept_container;
+@property (nonatomic, weak) IBOutlet UIButton* accept_button;
 @property (nonatomic, weak) IBOutlet InfinitHomeAvatarView* avatar_view;
 @property (nonatomic, weak) IBOutlet UIImageView* background_view;
+@property (nonatomic, weak) IBOutlet UIView* cancel_container;
 @property (nonatomic, weak) IBOutlet UIButton* cancel_button;
 @property (nonatomic, weak) IBOutlet UILabel* info_label;
 @property (nonatomic, weak) IBOutlet UILabel* size_label;
 @property (nonatomic, weak) IBOutlet UILabel* time_label;
 @property (nonatomic, weak) IBOutlet UIImageView* status_view;
 
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* accept_constraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* cancel_constraint;
+
 @property (nonatomic, weak) InfinitPeerTransaction* transaction;
+@property (nonatomic, readwrite) BOOL accept_shown;
 @property (nonatomic, readwrite) BOOL cancel_shown;
 
 - (void)setUpWithDelegate:(id<InfinitHomePeerTransactionCellProtocol>)delegate
@@ -39,6 +46,7 @@
 
 @protocol InfinitHomePeerTransactionCellProtocol <NSObject>
 
+- (void)cellHadAcceptTappedForTransaction:(InfinitTransaction*)transaction;
 - (void)cellHadCancelTappedForTransaction:(InfinitTransaction*)transaction;
 
 @end

@@ -31,19 +31,38 @@ static UIImage* _mask_image = nil;
 
 @implementation InfinitHomePeerTransactionCell
 
+- (id)initWithCoder:(NSCoder*)aDecoder
+{
+  if (self = [super initWithCoder:aDecoder])
+  {
+    [self configureButtons];
+    if (_norm_attrs == nil)
+    {
+      _norm_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:15.0f],
+                      NSForegroundColorAttributeName: [UIColor whiteColor]};
+    }
+    if (_bold_attrs == nil)
+    {
+      _bold_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Bold" size:15.0f],
+                      NSForegroundColorAttributeName: [UIColor whiteColor]};
+    }
+  }
+  return self;
+}
+
 - (void)prepareForReuse
 {
   [super prepareForReuse];
   self.dim = NO;
   self.avatar_view.enable_progress = NO;
-  [self setCancelShown:NO withAnimation:NO];
+  self.accept_shown = NO;
+  self.cancel_shown = NO;
   _delegate = nil;
   self.status_view.hidden = YES;
 }
 
 - (void)layoutSubviews
 {
-  [super layoutSubviews];
   if (self.blur_view != nil && !CGRectEqualToRect(self.blur_view.frame, self.bounds))
   {
     self.blur_view.frame = self.bounds;
@@ -54,11 +73,11 @@ static UIImage* _mask_image = nil;
     dark_rect.size.width = self.bounds.size.width;
     self.dark_view.frame = dark_rect;
   }
+  [super layoutSubviews];
 }
 
 - (void)awakeFromNib
 {
-  [super awakeFromNib];
   if ([UIVisualEffectView class])
   {
     if ([InfinitHostDevice deviceCPU] >= InfinitCPUType_ARM64_v8)
@@ -71,28 +90,24 @@ static UIImage* _mask_image = nil;
     self.blur_view.frame = self.bounds;
     [self.background_view addSubview:self.blur_view];
   }
-  if (_norm_attrs == nil)
-  {
-    _norm_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:15.0f],
-                    NSForegroundColorAttributeName: [UIColor whiteColor]};
-  }
-  if (_bold_attrs == nil)
-  {
-    _bold_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Bold" size:15.0f],
-                    NSForegroundColorAttributeName: [UIColor whiteColor]};
-  }
   UITapGestureRecognizer* tap =
     [[UITapGestureRecognizer alloc] initWithTarget:self
                                             action:@selector(avatarTapped:)];
   [self.avatar_view addGestureRecognizer:tap];
-  self.cancel_button.center = self.avatar_view.center;
-  self.cancel_button.adjustsImageWhenDisabled = NO;
-  self.cancel_button.hidden = YES;
   CGRect dark_frame = CGRectMake(0.0f, self.bounds.size.height - 58.0f,
                                  self.bounds.size.width, 58.0f);
   _dark_view = [[UIView alloc] initWithFrame:dark_frame];
   self.dark_view.backgroundColor = [InfinitColor colorWithGray:0 alpha:0.19f];
   [self.background_view addSubview:self.dark_view];
+}
+
+- (void)configureButtons
+{
+  self.accept_button.transform = CGAffineTransformMakeRotation(M_PI);
+  self.accept_button.adjustsImageWhenDisabled = NO;
+  self.accept_container.hidden = YES;
+  self.cancel_button.adjustsImageWhenDisabled = NO;
+  self.cancel_container.hidden = YES;
 }
 
 - (void)setUpWithDelegate:(id<InfinitHomePeerTransactionCellProtocol>)delegate
@@ -111,6 +126,11 @@ static UIImage* _mask_image = nil;
   [self setProgress];
   [self setStatusImage];
   self.size_label.text = [InfinitDataSize fileSizeStringFrom:transaction.size];
+  if (transaction.receivable)
+  {
+    [self setAcceptShown:YES withAnimation:YES];
+    [self setCancelShown:YES withAnimation:YES];
+  }
 }
 
 - (void)setProgress
@@ -155,21 +175,22 @@ static UIImage* _mask_image = nil;
 {
   self.avatar_view.dim_avatar = dim;
   self.info_label.alpha = dim ? 0.5f : 1.0f;
-  self.cancel_button.hidden = dim;
+  self.cancel_container.hidden = dim;
+  self.accept_container.hidden = dim;
 }
 
 - (void)setBackgroundImage
 {
   if (![UIVisualEffectView class])
   {
-      CGRect image_rect = self.background_view.bounds;
-      UIGraphicsBeginImageContextWithOptions(image_rect.size, NO, 0.0f);
-      [[UIColor blackColor] set];
-      [[UIBezierPath bezierPathWithRoundedRect:image_rect cornerRadius:3.0f] addClip];
-      [[self.transaction.other_user.avatar applyDarkEffect] drawInRect:image_rect];
-      UIImage* background_image = UIGraphicsGetImageFromCurrentImageContext();
-      UIGraphicsEndImageContext();
-      self.background_view.image = background_image;
+    CGRect image_rect = self.background_view.bounds;
+    UIGraphicsBeginImageContextWithOptions(image_rect.size, NO, 0.0f);
+    [[UIColor blackColor] set];
+    [[UIBezierPath bezierPathWithRoundedRect:image_rect cornerRadius:3.0f] addClip];
+    [[self.transaction.other_user.avatar applyDarkEffect] drawInRect:image_rect];
+    UIImage* background_image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    self.background_view.image = background_image;
   }
   else
   {
@@ -226,9 +247,9 @@ static UIImage* _mask_image = nil;
       {
         NSString* want = NSLocalizedString(@"wants", nil);
         if ([other_name rangeOfString:NSLocalizedString(@"you", nil)].location != NSNotFound)
-          want = NSLocalizedString(@"wants", nil);
-        res = [NSString stringWithFormat:NSLocalizedString(@"%@ wants to share %@", nil),
-               other_name.capitalizedString, file_count];
+          want = NSLocalizedString(@"want", nil);
+        res = [NSString stringWithFormat:NSLocalizedString(@"%@ %@ to share %@", nil),
+               other_name.capitalizedString, want, file_count];
       }
       break;
     case gap_transaction_waiting_data:
@@ -317,7 +338,7 @@ static UIImage* _mask_image = nil;
 
 - (void)avatarTapped:(id)sender
 {
-  if (self.transaction.done)
+  if (self.transaction.done || self.transaction.receivable)
     return;
   [self setCancelShown:!self.cancel_shown withAnimation:YES];
 }
@@ -335,20 +356,19 @@ static UIImage* _mask_image = nil;
   _cancel_shown = shown;
   self.cancel_button.enabled = _cancel_shown;
   if (_cancel_shown)
-    self.cancel_button.hidden = NO;
+    self.cancel_container.hidden = NO;
 
+  CGFloat dx;
   CGAffineTransform transform;
 
   if (_cancel_shown)
   {
-    CGFloat dx = (self.avatar_view.center.x + self.cancel_button.bounds.size.width) / 2.0f;
-
-    CGAffineTransform translate = CGAffineTransformMakeTranslation(dx, 0.0f);
-    CGAffineTransform roll = CGAffineTransformMakeRotation(M_PI);
-    transform = CGAffineTransformConcat(translate, roll);
+    dx = -(self.avatar_view.center.x + self.cancel_container.bounds.size.width) / 2.0f;
+    transform = CGAffineTransformMakeRotation(M_PI);
   }
   else
   {
+    dx = 0.0f;
     transform = CGAffineTransformIdentity;
   }
   if (animate)
@@ -359,19 +379,88 @@ static UIImage* _mask_image = nil;
                      animations:^
      {
        self.cancel_button.transform = transform;
+       self.cancel_constraint.constant = dx;
        [self layoutIfNeeded];
      } completion:^(BOOL finished)
      {
        if (!finished)
+       {
          self.cancel_button.transform = transform;
+         self.cancel_constraint.constant = dx;
+       }
        if (!_cancel_shown)
-         self.cancel_button.hidden = YES;
+         self.cancel_container.hidden = YES;
      }];
   }
   else
   {
     self.cancel_button.transform = transform;
+    self.cancel_constraint.constant = dx;
+    [self layoutIfNeeded];
   }
+}
+
+- (void)setAccept_shown:(BOOL)accept_shown
+{
+  [self setAcceptShown:accept_shown withAnimation:YES];
+}
+
+- (void)setAcceptShown:(BOOL)shown
+         withAnimation:(BOOL)animate
+{
+  if (shown == _accept_shown)
+    return;
+  _accept_shown = shown;
+  self.accept_button.enabled = _accept_shown;
+  if (_accept_shown)
+    self.accept_container.hidden = NO;
+
+  CGFloat dx;
+  CGAffineTransform transform;
+
+  if (_accept_shown)
+  {
+    dx = -(self.avatar_view.center.x + self.accept_container.bounds.size.width) / 2.0f;
+    transform = CGAffineTransformMakeRotation(2.0f * M_PI);
+  }
+  else
+  {
+    dx = 0.0f;
+    transform = CGAffineTransformIdentity;
+  }
+  if (animate)
+  {
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^
+     {
+       self.accept_button.transform = transform;
+       self.accept_constraint.constant = dx;
+       [self layoutIfNeeded];
+     } completion:^(BOOL finished)
+     {
+       if (!finished)
+       {
+         self.accept_button.transform = transform;
+         self.accept_constraint.constant = dx;
+       }
+       if (!_accept_shown)
+         self.accept_container.hidden = YES;
+     }];
+  }
+  else
+  {
+    self.accept_button.transform = transform;
+    self.accept_constraint.constant = dx;
+    [self layoutIfNeeded];
+  }
+}
+
+- (IBAction)acceptTapped:(id)sender
+{
+  if (self.transaction.receivable)
+    [_delegate cellHadAcceptTappedForTransaction:self.transaction];
 }
 
 - (IBAction)cancelTapped:(id)sender
