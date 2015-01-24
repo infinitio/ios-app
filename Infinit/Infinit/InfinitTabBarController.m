@@ -20,9 +20,9 @@
 typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 {
   TabBarIndexHome = 0,
-//  TabBarIndexFiles,
+  TabBarIndexFiles,
   TabBarIndexSend,
-//  TabBarIndexContacts,
+  TabBarIndexContacts,
   TabBarIndexSettings,
 };
 
@@ -67,7 +67,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   _selection_indicator =
     [[UIView alloc] initWithFrame:CGRectMake(0.0f,
                                              0.0f,
-                                             self.view.frame.size.width / 2.0f,
+                                             self.view.frame.size.width / self.viewControllers.count,
                                              1.0f)];
   self.selection_indicator.backgroundColor = [InfinitColor colorFromPalette:ColorBurntSienna];
   [self.tabBar addSubview:self.selection_indicator];
@@ -394,9 +394,8 @@ shouldSelectViewController:(UIViewController*)viewController
     self.selection_indicator.frame = CGRectMake(0.0f, 0.0f, 0.0f, 0.0f);
     return;
   }
-  NSUInteger count = 2;
-  NSUInteger pos = (position == 0) ? 0 : 1;
-  self.selection_indicator.frame = CGRectMake(self.view.frame.size.width / count * pos, 0.0f,
+  NSUInteger count = self.viewControllers.count;
+  self.selection_indicator.frame = CGRectMake(self.view.frame.size.width / count * position, 0.0f,
                                               self.view.frame.size.width / count, 1.0f);
 }
 
