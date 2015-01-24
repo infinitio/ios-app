@@ -682,8 +682,8 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
   if (trimmed_string.isEmail)
   {
     [self addContactFromEmailAddress:trimmed_string];
-    [self.search_field resignFirstResponder];
   }
+  [self.search_field resignFirstResponder];
 }
 
 - (void)tokenField:(VENTokenField*)tokenField
