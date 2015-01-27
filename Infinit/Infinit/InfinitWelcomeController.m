@@ -59,6 +59,11 @@
   BOOL _registering;
 }
 
+- (BOOL)shouldAutorotate
+{
+  return NO;
+}
+
 - (void)viewDidLoad
 {
   [super viewDidLoad];
