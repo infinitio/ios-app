@@ -1,5 +1,5 @@
 //
-//  UIImage+circular.h
+//  UIImage+Rounded.h
 //  Infinit
 //
 //  Created by Christopher Crone on 16/01/15.
@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIImage (circular)
+@interface UIImage (Rounded)
 
 - (UIImage*)circularMask;
+- (UIImage*)roundedMaskWithCornerRadius:(CGFloat)radius;
 
 @end
