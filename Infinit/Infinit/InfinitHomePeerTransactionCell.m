@@ -54,7 +54,6 @@ static UIImage* _mask_image = nil;
 {
   [super prepareForReuse];
   self.dim = NO;
-  self.avatar_view.enable_progress = NO;
   self.accept_shown = NO;
   self.cancel_shown = NO;
   _delegate = nil;
@@ -315,6 +314,7 @@ static UIImage* _mask_image = nil;
 
 - (void)updateProgressOverDuration:(NSTimeInterval)duration
 {
+  [self updateTimeString];
   [self.avatar_view setProgress:self.transaction.progress withAnimationTime:duration];
 }
 
