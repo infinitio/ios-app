@@ -8,12 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+#import "InfinitFileModel.h"
+#import "InfinitFolderModel.h"
+
 @interface InfinitFilesTableCell : UITableViewCell
 
 @property (nonatomic, weak) IBOutlet UILabel* name_label;
 @property (nonatomic, weak) IBOutlet UILabel* info_label;
 @property (nonatomic, weak) IBOutlet UIImageView* icon_view;
 
-- (void)configureCellForPath:(NSString*)path;
+- (void)configureCellWithFile:(InfinitFileModel*)file;
+- (void)configureCellWithFolder:(InfinitFolderModel*)folder;
 
 @end
