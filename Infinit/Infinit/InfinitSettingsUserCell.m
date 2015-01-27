@@ -8,7 +8,7 @@
 
 #import "InfinitSettingsUserCell.h"
 
-#import "UIImage+circular.h"
+#import "UIImage+Rounded.h"
 #import "UIImage+ImageEffects.h"
 
 @implementation InfinitSettingsUserCell
