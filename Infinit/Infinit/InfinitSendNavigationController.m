@@ -10,6 +10,7 @@
 
 #import "InfinitSendGalleryController.h"
 #import "InfinitSendRecipientsController.h"
+#import "InfinitTabBarController.h"
 
 @interface InfinitSendNavigationController ()
 
@@ -21,6 +22,12 @@
 {
   [self resetSendViews];
   [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+  [(InfinitTabBarController*)self.tabBarController setTabBarHidden:NO animated:animated];
+  [super viewWillDisappear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated

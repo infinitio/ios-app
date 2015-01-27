@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InfinitSendNavigationController : UINavigationController
+#import "InfinitPortraitNavigationController.h"
+
+@interface InfinitSendNavigationController : InfinitPortraitNavigationController
 
 - (void)resetSendViews;
 
