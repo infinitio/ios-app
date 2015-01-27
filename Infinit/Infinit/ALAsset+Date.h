@@ -10,6 +10,6 @@
 
 @interface ALAsset (Date)
 
-@property (nonatomic) NSDate* date;
+@property (nonatomic, readonly) NSDate* date;
 
 @end
