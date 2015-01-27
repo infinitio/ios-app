@@ -9,7 +9,7 @@
 #import "InfinitSendAbstractCell.h"
 
 #import "InfinitColor.h"
-#import "UIImage+circular.h"
+#import "UIImage+Rounded.h"
 
 @implementation InfinitSendAbstractCell
 
