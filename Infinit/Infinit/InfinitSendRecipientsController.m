@@ -8,8 +8,6 @@
 
 #import "InfinitSendRecipientsController.h"
 
-#import <AddressBook/AddressBook.h>
-
 #import "InfinitAccessContactsView.h"
 #import "InfinitColor.h"
 #import "InfinitContact.h"
@@ -28,6 +26,7 @@
 #import "NSString+email.h"
 #import "VENTokenField.h"
 
+@import AddressBook;
 @import AssetsLibrary;
 @import Photos;
 
@@ -594,6 +593,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
     InfinitContact* contact = self.recipients.lastObject;
     contact.selected_email_index = email_index;
   }
+  [self updateSendButton];
 }
 
 - (void)tableView:(UITableView*)tableView
