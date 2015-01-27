@@ -10,7 +10,7 @@
 
 #import "InfinitColor.h"
 
-#import "UIImage+circular.h"
+#import "UIImage+Rounded.h"
 
 static NSDictionary* _me_attrs = nil;
 
