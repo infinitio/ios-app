@@ -34,6 +34,8 @@
   NSMutableArray* _running_transactions;
 }
 
+#pragma mark - Init
+
 - (void)viewDidLoad
 {
   _peer_transaction_cell_id = @"home_peer_transaction_cell";
