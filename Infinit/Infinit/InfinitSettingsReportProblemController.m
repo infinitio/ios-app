@@ -10,7 +10,6 @@
 
 #import "InfinitColor.h"
 #import "InfinitHostDevice.h"
-#import "InfinitTabBarController.h"
 
 #import <Gap/InfinitCrashReporter.h>
 
@@ -19,7 +18,6 @@
 
 @property (nonatomic, weak) IBOutlet UIBarButtonItem* send_button;
 @property (nonatomic, weak) IBOutlet UITextView* text_view;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint* text_view_height;
 
 @end
 
@@ -29,13 +27,17 @@
   NSString* _report_problem_placeholder;
 }
 
+#pragma mark - Init
+
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  if ([InfinitHostDevice smallScreen])
-  {
-    self.text_view_height.constant = 150.0f;
-  }
+  NSDictionary* nav_bar_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
+                                                                       size:17.0f],
+                                  NSForegroundColorAttributeName: [InfinitColor colorWithRed:81
+                                                                                       green:81
+                                                                                        blue:73]};
+  [self.navigationController.navigationBar setTitleTextAttributes:nav_bar_attrs];
   self.text_view.textContainerInset = UIEdgeInsetsMake(15.0f, 15.0f, 15.0f, 15.0f);
   _report_problem_placeholder = NSLocalizedString(@"Explain your problem here...", nil);
   self.text_view.text = _report_problem_placeholder;
@@ -43,12 +45,6 @@
     [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
   self.send_button.enabled = NO;
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-  [((InfinitTabBarController*)self.tabBarController) setTabBarHidden:YES animated:YES];
-  [super viewWillAppear:animated];
 }
 
 - (void)dismissKeyboard
@@ -100,8 +96,8 @@
 
 - (IBAction)backButtonTapped:(id)sender
 {
-  [self.navigationController popViewControllerAnimated:YES];
-  [((InfinitTabBarController*)self.tabBarController) setTabBarHidden:NO animated:NO];
+  [self dismissKeyboard];
+  [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)sendButtonTapped:(id)sender
@@ -117,17 +113,17 @@
 
 - (void)alertViewCancel:(UIAlertView*)alertView
 {
-  [self.navigationController popViewControllerAnimated:YES];
+  [self dismissKeyboard];
+  [self dismissViewControllerAnimated:YES completion:nil];
   self.text_view.text = _report_problem_placeholder;
-  [((InfinitTabBarController*)self.tabBarController) setTabBarHidden:NO animated:NO];
 }
 
 - (void)alertView:(UIAlertView*)alertView
 clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-  [self.navigationController popViewControllerAnimated:YES];
+  [self dismissKeyboard];
+  [self dismissViewControllerAnimated:YES completion:nil];
   self.text_view.text = _report_problem_placeholder;
-  [((InfinitTabBarController*)self.tabBarController) setTabBarHidden:NO animated:NO];
 }
 
 @end
