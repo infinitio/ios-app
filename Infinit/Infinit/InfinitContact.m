@@ -11,7 +11,7 @@
 #import "InfinitColor.h"
 #import "InfinitHostDevice.h"
 
-#import "UIImage+circular.h"
+#import "UIImage+Rounded.h"
 
 @implementation InfinitContact
 {
