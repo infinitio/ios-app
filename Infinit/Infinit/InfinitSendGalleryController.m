@@ -134,6 +134,7 @@
     }];
     [temp_assets removeObjectsInArray:except_list];
     self.assets = [temp_assets copy];
+    [self.collectionView reloadData];
   }
   else
   {
@@ -190,16 +191,6 @@
   return self.assets.count;
 }
 
-- (PHCachingImageManager*)cachingManager
-{
-  static dispatch_once_t pred = 0;
-  static PHCachingImageManager* res = nil;
-  dispatch_once(&pred, ^{
-    res = [[PHCachingImageManager alloc] init];
-  });
-  return res;
-}
-
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView
                  cellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
@@ -215,11 +206,12 @@
     CGSize size = [self collectionView:self.collectionView
                                 layout:self.collectionViewLayout
                 sizeForItemAtIndexPath:indexPath];
-    [[self cachingManager] requestImageForAsset:asset
-                                     targetSize:size
-                                    contentMode:PHImageContentModeAspectFill
-                                        options:nil
-                                  resultHandler:^(UIImage* result, NSDictionary* info)
+    [[PHImageManager defaultManager] requestImageForAsset:asset
+                                               targetSize:size
+                                              contentMode:PHImageContentModeAspectFill
+                                                  options:nil
+                                            resultHandler:^(UIImage* result,
+                                                                   NSDictionary* info)
      {
        if (cell.tag == current_tag)
          cell.image_view.image = result;
