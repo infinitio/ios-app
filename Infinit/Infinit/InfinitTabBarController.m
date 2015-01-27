@@ -15,6 +15,8 @@
 #import "InfinitSendNavigationController.h"
 #import "InfinitTabAnimator.h"
 
+#import <Gap/InfinitPeerTransactionManager.h>
+
 @import AssetsLibrary;
 
 typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
@@ -39,14 +41,41 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 
 @implementation InfinitTabBarController
 
+#pragma mark - Rotation
+
+- (BOOL)shouldAutorotate
+{
+  return self.selectedViewController.shouldAutorotate;
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+  return self.selectedViewController.supportedInterfaceOrientations;
+}
+
+#pragma mark - Init
+
 - (id)initWithCoder:(NSCoder*)aDecoder
 {
   if (self = [super initWithCoder:aDecoder])
   {
     _animator = [[InfinitTabAnimator alloc] init];
     _tab_bar_hidden = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(newPeerTransaction:) 
+                                                 name:INFINIT_NEW_PEER_TRANSACTION_NOTIFICATION
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(peerTransactionUpdated:)
+                                                 name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION
+                                               object:nil];
   }
   return self;
+}
+
+- (void)dealloc
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidLoad
@@ -86,6 +115,26 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
     [self.tabBar.items[index] setSelectedImage:[self imageForTabBarItem:index selected:NO]];
     [self.tabBar.items[index] setSelectedImage:[self imageForTabBarItem:index selected:YES]];
   }
+  [self updateHomeBadge];
+}
+
+- (void)updateHomeBadge
+{
+  NSArray* transactions = [[InfinitPeerTransactionManager sharedInstance] transactions];
+  NSUInteger count = 0;
+  for (InfinitPeerTransaction* transaction in transactions)
+  {
+    if (transaction.receivable)
+      count++;
+  }
+  NSString* badge;
+  if (count == 0)
+    badge = nil;
+  else if (count < 100)
+    badge = [NSString stringWithFormat:@"%lu", count];
+  else
+    badge = @"+";
+  [self.tabBar.items[0] setBadgeValue:badge];
 }
 
 - (UIImage*)imageForTabBarItem:(InfinitTabBarIndex)index
@@ -98,14 +147,14 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
     case TabBarIndexHome:
       image_name = @"icon-tab-home";
       break;
-//    case TabBarIndexFiles:
-//      image_name = @"icon-tab-files";
-//      break;
+    case TabBarIndexFiles:
+      image_name = @"icon-tab-files";
+      break;
     case TabBarIndexSend:
       return nil;
-//    case TabBarIndexContacts:
-//      image_name = @"icon-tab-contacts";
-//      break;
+    case TabBarIndexContacts:
+      image_name = @"icon-tab-contacts";
+      break;
     case TabBarIndexSettings:
       image_name = @"icon-tab-settings";
       break;
@@ -123,10 +172,6 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   if (selectedIndex == self.selectedIndex)
     return;
   [super setSelectedIndex:selectedIndex];
-  if (selectedIndex != TabBarIndexSend)
-  {
-    [self showTabBarWithAnimation:YES];
-  }
   [self selectorToPosition:selectedIndex];
 }
 
@@ -397,6 +442,18 @@ shouldSelectViewController:(UIViewController*)viewController
   NSUInteger count = self.viewControllers.count;
   self.selection_indicator.frame = CGRectMake(self.view.frame.size.width / count * position, 0.0f,
                                               self.view.frame.size.width / count, 1.0f);
+}
+
+#pragma mark - Peer Transaction Notifications
+
+- (void)newPeerTransaction:(NSNotification*)notification
+{
+  [self performSelectorOnMainThread:@selector(updateHomeBadge) withObject:nil waitUntilDone:NO];
+}
+
+- (void)peerTransactionUpdated:(NSNotification*)notification
+{
+  [self performSelectorOnMainThread:@selector(updateHomeBadge) withObject:nil waitUntilDone:NO];
 }
 
 #pragma mark - Helpers
