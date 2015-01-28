@@ -60,8 +60,14 @@ static NSDictionary* _small_attrs = nil;
 }
 
 - (void)setProgress:(CGFloat)progress
+{
+  [self setProgress:progress withAnimationTime:0.0f];
+}
+
+- (void)setProgress:(CGFloat)progress
   withAnimationTime:(NSTimeInterval)duration
 {
+  self.progress_label.attributedText = [self progressString:progress];
   if (_progress == progress)
     return;
   if (duration > 0.0f)
@@ -74,11 +80,9 @@ static NSDictionary* _small_attrs = nil;
     animation.toValue = @(progress);
     animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     [self.progress_layer addAnimation:animation forKey:@"strokeEnd"];
-    self.progress_label.attributedText = [self progressString:progress];
   }
   else
   {
-    self.progress_label.attributedText = [self progressString:progress];
     self.progress_layer.strokeEnd = progress;
   }
   _progress = progress;
