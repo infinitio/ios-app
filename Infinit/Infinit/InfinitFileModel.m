@@ -8,7 +8,7 @@
 
 #import "InfinitFileModel.h"
 
-#import "InfinitHostDevice.h"
+@import AVFoundation;
 
 @implementation InfinitFileModel
 
@@ -22,9 +22,16 @@
     _path = path;
     _size = size;
     _type = [InfinitFilePreview fileTypeForPath:self.path];
-    _thumbnail = [InfinitFilePreview previewForPath:self.path
-                                             ofSize:CGSizeMake(50.0f, 50.0f)
-                                               crop:YES];
+    if (self.type == InfinitFileTypeVideo)
+    {
+      NSURL* url = [NSURL fileURLWithPath:self.path];
+      AVURLAsset* asset = [AVURLAsset URLAssetWithURL:url options:nil];
+      _duration = CMTimeGetSeconds(asset.duration);
+    }
+    else
+    {
+      _duration = 0.0f;
+    }
   }
   return self;
 }
