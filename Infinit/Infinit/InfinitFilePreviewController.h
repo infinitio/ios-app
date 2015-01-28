@@ -7,14 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <QuickLook/QuickLook.h>
 
-#import "InfinitFileModel.h"
+#import "InfinitFolderModel.h"
+
+#import <QuickLook/QuickLook.h>
 
 @interface InfinitFilePreviewController : QLPreviewController
 
-@property (nonatomic, weak, readwrite) InfinitFileModel* file;
++ (instancetype)controllerWithFolder:(InfinitFolderModel*)folder
+                            andIndex:(NSInteger)index;
 
-+ (instancetype)controllerWithFile:(InfinitFileModel*)file;
+- (void)configureWithFolder:(InfinitFolderModel*)folder
+                   andIndex:(NSInteger)index;
 
 @end

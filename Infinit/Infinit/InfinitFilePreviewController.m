@@ -9,12 +9,13 @@
 #import "InfinitFilePreviewController.h"
 
 #import "InfinitColor.h"
+#import "InfinitFileModel.h"
 #import "InfinitFilePreview.h"
-
-@import QuickLook;
 
 @interface InfinitFilePreviewController () <QLPreviewControllerDataSource,
                                             QLPreviewControllerDelegate>
+
+@property (nonatomic, weak, readwrite) InfinitFolderModel* folder;
 
 @end
 
@@ -27,44 +28,47 @@
 
 #pragma mark - Init
 
-+ (instancetype)controllerWithFile:(InfinitFileModel*)file
++ (instancetype)controllerWithFolder:(InfinitFolderModel*)folder
+                            andIndex:(NSInteger)index
 {
   InfinitFilePreviewController* res = [[InfinitFilePreviewController alloc] init];
-  res.file = file;
+  [res configureWithFolder:folder andIndex:index];
   return res;
+}
+
+- (void)configureWithFolder:(InfinitFolderModel*)folder
+                   andIndex:(NSInteger)index
+{
+  self.folder = folder;
+  self.currentPreviewItemIndex = index;
+  self.delegate = self;
+  self.dataSource = self;
 }
 
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  self.navigationItem.title = self.file.name;
-  UINavigationBar* nav_bar = self.navigationController.navigationBar;
-  nav_bar.tintColor = [InfinitColor colorFromPalette:ColorBurntSienna];
-  UIBarButtonItem* back_button = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon-back-white"] style:UIBarButtonItemStylePlain target:self action:@selector(backTapped:)];
-  
+  self.navigationItem.title = self.folder.name;
+  UIImage* back_image = [UIImage imageNamed:@"icon-back-white"];
+  UIBarButtonItem* back_button = [[UIBarButtonItem alloc] initWithImage:back_image
+                                                                  style:UIBarButtonItemStylePlain
+                                                                 target:self 
+                                                                 action:@selector(backTapped:)];
   self.navigationItem.leftBarButtonItem = back_button;
-//  nav_bar.backIndicatorImage = [UIImage imageNamed:@"icon-back-white"];
-//  nav_bar.backIndicatorTransitionMaskImage = [UIImage imageNamed:@"icon-back-white"];
   NSDictionary* nav_bar_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
                                                                        size:17.0f],
                                   NSForegroundColorAttributeName: [InfinitColor colorWithRed:81
                                                                                        green:81
                                                                                         blue:73]};
   [self.navigationController.navigationBar setTitleTextAttributes:nav_bar_attrs];
+  self.navigationController.navigationBar.tintColor =
+    [InfinitColor colorFromPalette:ColorBurntSienna];
   self.navigationController.toolbar.tintColor = [InfinitColor colorFromPalette:ColorBurntSienna];
-  self.delegate = self;
-  self.dataSource = self;
 }
 
 - (void)backTapped:(id)sender
 {
   [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)setFile:(InfinitFileModel*)file
-{
-  _file = file;
-  [self reloadData];
 }
 
 #pragma mark - Navigation Controller Delegate
@@ -78,13 +82,14 @@
 
 - (NSInteger)numberOfPreviewItemsInPreviewController:(QLPreviewController*)controller
 {
-  return 1;
+  return self.folder.files.count;
 }
 
 - (id <QLPreviewItem>)previewController:(QLPreviewController*)controller
                      previewItemAtIndex:(NSInteger)index
 {
-  return [NSURL fileURLWithPath:self.file.path];
+  InfinitFileModel* file = self.folder.files[index];
+  return [NSURL fileURLWithPath:file.path];
 }
 
 @end
