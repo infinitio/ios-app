@@ -13,6 +13,7 @@
 
 @interface InfinitFilesTableCell : UITableViewCell
 
+@property (nonatomic, weak) IBOutlet UILabel* duration_label;
 @property (nonatomic, weak) IBOutlet UILabel* name_label;
 @property (nonatomic, weak) IBOutlet UILabel* info_label;
 @property (nonatomic, weak) IBOutlet UIImageView* icon_view;
