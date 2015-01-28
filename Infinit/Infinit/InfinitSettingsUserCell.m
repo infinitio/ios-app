@@ -13,6 +13,14 @@
 
 @implementation InfinitSettingsUserCell
 
+- (void)setFrame:(CGRect)frame
+{
+  CGFloat inset = 9.0f;
+  frame.origin.x -= inset;
+  frame.size.width += 2 * inset;
+  [super setFrame:frame];
+}
+
 - (void)configureWithUser:(InfinitUser*)user
 {
   self.avatar_view.image = user.avatar.circularMask;
