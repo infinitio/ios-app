@@ -83,7 +83,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   [super viewDidLoad];
 
   self.delegate = self;
-  self.tabBar.tintColor = [InfinitColor colorFromPalette:ColorShamRock];
+  self.tabBar.tintColor = [UIColor clearColor];
 
   [[UITabBar appearance] setBackgroundImage:[[UIImage alloc] init]];
   [[UITabBar appearance] setShadowImage:[[UIImage alloc] init]];
@@ -112,7 +112,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
                                           (self.tabBar.bounds.size.height / 2.0f) + delta);
   for (NSUInteger index = 0; index < self.tabBar.items.count; index++)
   {
-    [self.tabBar.items[index] setSelectedImage:[self imageForTabBarItem:index selected:NO]];
+    [self.tabBar.items[index] setImage:[self imageForTabBarItem:index selected:NO]];
     [self.tabBar.items[index] setSelectedImage:[self imageForTabBarItem:index selected:YES]];
   }
   [self updateHomeBadge];
