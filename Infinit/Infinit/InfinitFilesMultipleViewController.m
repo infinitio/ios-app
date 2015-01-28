@@ -107,7 +107,7 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
 didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
   InfinitFilePreviewController* preview_controller =
-    [InfinitFilePreviewController controllerWithFile:self.folder.files[indexPath.row]];
+    [InfinitFilePreviewController controllerWithFolder:self.folder andIndex:indexPath.row];
   UINavigationController* nav_controller =
     [[UINavigationController alloc] initWithRootViewController:preview_controller];
   [self presentViewController:nav_controller animated:YES completion:nil];
