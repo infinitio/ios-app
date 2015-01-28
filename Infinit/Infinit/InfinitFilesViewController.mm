@@ -12,7 +12,7 @@
 #import "InfinitFilesMultipleViewController.h"
 #import "InfinitFilePreviewController.h"
 #import "InfinitFilesTableCell.h"
-#import "InfinitFolderModel.h"
+#import "InfinitDownloadFolderManager.h"
 
 #import <Gap/InfinitDirectoryManager.h>
 
@@ -21,11 +21,14 @@
 
 ELLE_LOG_COMPONENT("iOS.FilesViewController");
 
-@interface InfinitFilesViewController () <UISearchBarDelegate,
+@interface InfinitFilesViewController () <InfinitDownloadFolderManagerProtocol,
+                                          UISearchBarDelegate,
                                           UITableViewDataSource,
                                           UITableViewDelegate>
 
-@property (nonatomic, readonly) NSMutableArray* folders;
+@property (nonatomic, readonly) NSArray* all_folders;
+@property (nonatomic, weak, readonly) InfinitDownloadFolderManager* download_manager;
+@property (nonatomic, readonly) NSMutableArray* folder_results;
 @property (nonatomic) UIView* no_files_view;
 @property (nonatomic, weak) IBOutlet UITableView* table_view;
 @property (nonatomic, weak) IBOutlet UISearchBar* search_bar;
@@ -36,6 +39,8 @@ ELLE_LOG_COMPONENT("iOS.FilesViewController");
 {
 @private
   NSString* _file_cell_id;
+  NSString* _last_search_text;
+  NSArray* _last_contents;
 }
 
 #pragma mark - Init
@@ -66,31 +71,23 @@ ELLE_LOG_COMPONENT("iOS.FilesViewController");
                                      style:UIBarButtonItemStylePlain
                                     target:nil
                                     action:nil];
+  UIGraphicsBeginImageContextWithOptions(self.search_bar.bounds.size, NO, 0.0f);
+  [[InfinitColor colorWithGray:240] set];
+  CGContextFillRect(UIGraphicsGetCurrentContext(), self.search_bar.bounds);
+  UIImage* search_bar_bg = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  self.search_bar.backgroundImage = search_bar_bg;
+  _download_manager = [InfinitDownloadFolderManager sharedInstance];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-  NSMutableArray* res = [NSMutableArray array];
-  NSError* error = nil;
-  NSString* dir = [InfinitDirectoryManager sharedInstance].download_directory;
-  NSArray* contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:dir error:&error];
-  if (error)
-  {
-    ELLE_ERR("%s: unable to access downloads directory", self.description.UTF8String);
-    [super viewWillAppear:animated];
-    return;
-  }
-  InfinitDirectoryManager* manager = [InfinitDirectoryManager sharedInstance];
-  NSString* path;
-  for (NSString* folder_name in contents)
-  {
-    path = [manager.download_directory stringByAppendingPathComponent:folder_name];
-    InfinitFolderModel* folder = [[InfinitFolderModel alloc] initWithPath:path];
-    [res addObject:folder];
-  }
-  NSSortDescriptor* sort = [NSSortDescriptor sortDescriptorWithKey:@"ctime" ascending:NO];
-  _folders = [[res sortedArrayUsingDescriptors:@[sort]] mutableCopy];
-  if (self.folders.count == 0)
+  if (self.table_view.indexPathForSelectedRow != nil)
+    [self.table_view deselectRowAtIndexPath:self.table_view.indexPathForSelectedRow animated:YES];
+  _all_folders = [InfinitDownloadFolderManager sharedInstance].completed_folders;
+  _folder_results = [self.all_folders mutableCopy];
+  self.download_manager.delegate = self;
+  if (self.all_folders.count == 0)
   {
     [self showNoFilesOverlay];
   }
@@ -102,11 +99,12 @@ ELLE_LOG_COMPONENT("iOS.FilesViewController");
       _no_files_view = nil;
     }
     self.search_bar.hidden = NO;
-    [self.table_view reloadData];
+    if (_last_search_text.length == 0)
+      [self.table_view reloadData];
+    else
+      [self delayedSearch:_last_search_text];
   }
   [super viewWillAppear:animated];
-  if (self.table_view.indexPathForSelectedRow != nil)
-    [self.table_view deselectRowAtIndexPath:self.table_view.indexPathForSelectedRow animated:YES];
 }
 
 - (void)showNoFilesOverlay
@@ -121,7 +119,47 @@ ELLE_LOG_COMPONENT("iOS.FilesViewController");
   self.no_files_view.frame = self.view.frame;
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+  [NSObject cancelPreviousPerformRequestsWithTarget:self];
+  self.download_manager.delegate = nil;
+  [super viewWillDisappear:animated];
+}
+
 #pragma mark - Search Bar Delegate
+
+- (void)searchBar:(UISearchBar*)searchBar
+    textDidChange:(NSString*)searchText
+{
+  [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                           selector:@selector(delayedSearch:)
+                                             object:_last_search_text];
+  if (searchText.length == 0)
+  {
+    _folder_results = [self.all_folders mutableCopy];
+    [self.table_view reloadData];
+  }
+  [self performSelector:@selector(delayedSearch:) withObject:searchText afterDelay:0.2f];
+  _last_search_text = searchText;
+}
+
+- (void)delayedSearch:(NSString*)search_text
+{
+  if (search_text.length == 0)
+    return;
+  [self.folder_results removeAllObjects];
+  for (InfinitFolderModel* folder in self.all_folders)
+  {
+    if ([folder containsString:search_text])
+      [self.folder_results addObject:folder];
+  }
+  [self.table_view reloadData];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar*)searchBar
+{
+  [searchBar resignFirstResponder];
+}
 
 #pragma mark - Table View Data Source
 
@@ -134,7 +172,7 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
 - (NSInteger)tableView:(UITableView*)tableView
  numberOfRowsInSection:(NSInteger)section
 {
-  return self.folders.count;
+  return self.folder_results.count;
 }
 
 - (UITableViewCell*)tableView:(UITableView*)tableView
@@ -142,7 +180,7 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
   InfinitFilesTableCell* cell = [tableView dequeueReusableCellWithIdentifier:_file_cell_id
                                                                 forIndexPath:indexPath];
-  [cell configureCellWithFolder:self.folders[indexPath.row]];
+  [cell configureCellWithFolder:self.folder_results[indexPath.row]];
   return cell;
 }
 
@@ -173,36 +211,58 @@ forRowAtIndexPath:(NSIndexPath*)indexPath
 - (void)tableView:(UITableView*)tableView
 didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
-  InfinitFolderModel* folder = self.folders[indexPath.row];
+  InfinitFolderModel* folder = self.folder_results[indexPath.row];
   if (folder.files.count > 1)
   {
     [self performSegueWithIdentifier:@"files_multiple_segue" sender:self];
   }
   else
   {
-    InfinitFolderModel* folder = self.folders[self.table_view.indexPathForSelectedRow.row];
+    InfinitFolderModel* folder = self.folder_results[self.table_view.indexPathForSelectedRow.row];
     InfinitFilePreviewController* preview_controller =
-      [InfinitFilePreviewController controllerWithFile:folder.files.firstObject];
+      [InfinitFilePreviewController controllerWithFolder:folder andIndex:0];
     UINavigationController* nav_controller =
       [[UINavigationController alloc] initWithRootViewController:preview_controller];
     [self presentViewController:nav_controller animated:YES completion:nil];
   }
 }
 
-#pragma mark - Helpers
+#pragma mark - Download Folder Manager Protocol
 
-- (NSString*)pathForItem:(NSString*)item
+- (void)downloadFolderManager:(InfinitDownloadFolderManager*)sender
+                  addedFolder:(InfinitFolderModel*)folder
+{}
+
+- (void)downloadFolderManager:(InfinitDownloadFolderManager*)sender
+               folderFinished:(InfinitFolderModel*)folder
 {
-  NSString* download_dir = [InfinitDirectoryManager sharedInstance].download_directory;
-  return [download_dir stringByAppendingPathComponent:item];
+  _all_folders = self.download_manager.completed_folders;
+  if (self.search_bar.text.length == 0)
+    [self.table_view reloadData];
 }
+
+- (void)downloadFolderManager:(InfinitDownloadFolderManager*)sender
+                deletedFolder:(InfinitFolderModel*)folder
+{
+  _all_folders = self.download_manager.completed_folders;
+  if ([self.folder_results containsObject:folder])
+  {
+    NSIndexPath* index = [NSIndexPath indexPathForRow:[self.folder_results indexOfObject:folder] 
+                                            inSection:0];
+    [self.folder_results removeObject:folder];
+    [self.table_view deleteRowsAtIndexPaths:@[index]
+                           withRowAnimation:UITableViewRowAnimationAutomatic];
+  }
+}
+
+#pragma mark - Helpers
 
 - (void)deleteFilesAtRow:(NSInteger)row
 {
-  InfinitFolderModel* folder = self.folders[row];
-  [self.folders removeObjectAtIndex:row];
+  InfinitFolderModel* folder = self.folder_results[row];
+  [self.folder_results removeObjectAtIndex:row];
   [folder deleteFolder];
-  if (self.folders.count == 0)
+  if (self.folder_results.count == 0)
     [self showNoFilesOverlay];
 }
 
@@ -215,7 +275,7 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   {
     InfinitFilesMultipleViewController* view_controller =
       (InfinitFilesMultipleViewController*)segue.destinationViewController;
-    view_controller.folder = self.folders[self.table_view.indexPathForSelectedRow.row];
+    view_controller.folder = self.folder_results[self.table_view.indexPathForSelectedRow.row];
   }
 }
 
