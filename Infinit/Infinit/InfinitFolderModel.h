@@ -12,10 +12,12 @@
 @interface InfinitFolderModel : NSObject
 
 @property (nonatomic, readonly) NSNumber* ctime;
+@property (nonatomic, readwrite) BOOL done;
 @property (nonatomic, readonly) NSArray* files;
+@property (nonatomic, readonly) NSString* id_;
 @property (nonatomic, readonly) UIImage* thumbnail;
 @property (nonatomic, readonly) NSNumber* size;
-@property (nonatomic, readonly) NSString* name;
+@property (nonatomic, readwrite) NSString* name;
 @property (nonatomic, readonly) NSString* sender_meta_id;
 @property (nonatomic, readwrite) NSString* sender_name;
 
@@ -23,5 +25,7 @@
 
 - (void)deleteFileAtIndex:(NSInteger)index;
 - (void)deleteFolder;
+
+- (BOOL)containsString:(NSString*)string;
 
 @end

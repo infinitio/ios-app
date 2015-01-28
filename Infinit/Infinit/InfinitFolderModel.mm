@@ -9,6 +9,9 @@
 #import "InfinitFolderModel.h"
 
 #import "InfinitFileModel.h"
+#import "InfinitHostDevice.h"
+
+#import <Gap/InfinitDirectoryManager.h>
 
 #undef check
 #import <elle/log.hh>
@@ -18,6 +21,9 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
 @interface InfinitFolderModel ()
 
 @property (nonatomic, readonly) NSString* path;
+@property (nonatomic, readonly) NSMutableDictionary* meta_data;
+@property (nonatomic, readonly) NSString* meta_data_path;
+@property (nonatomic, readonly) NSString* thumbnail_folder;
 
 @end
 
@@ -30,21 +36,25 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
   if (self = [super init])
   {
     _path = path;
+    _id_ = path.lastPathComponent;
     [self fetchMetaData];
-    [self fetchFiles];
+    if (self.done)
+      [self fetchFiles];
   }
   return self;
 }
 
 - (void)fetchMetaData
 {
-  NSString* meta_path = [self.path stringByAppendingPathComponent:@".meta"];
-  NSDictionary* dict = [NSDictionary dictionaryWithContentsOfFile:meta_path];
-  if (dict == nil)
+  _meta_data = [NSMutableDictionary dictionaryWithContentsOfFile:self.meta_data_path];
+  if (self.meta_data == nil)
     return;
-  _sender_meta_id = dict[@"sender_meta_id"];
-  _sender_name = dict[@"sender_fullname"];
-  _ctime = dict[@"ctime"];
+  _ctime = self.meta_data[@"ctime"];
+  NSNumber* done_ = self.meta_data[@"done"];
+  _done = done_.boolValue;
+  _name = self.meta_data[@"name"];
+  _sender_name = self.meta_data[@"sender_fullname"];
+  _sender_meta_id = self.meta_data[@"sender_meta_id"];
 }
 
 - (void)fetchFiles
@@ -84,20 +94,177 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
     total_size += file_size.unsignedIntegerValue;
     NSString* file_path = url.path;
     InfinitFileModel* file = [[InfinitFileModel alloc] initWithPath:file_path andSize:file_size];
+    UIImage* thumbnail;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:[self thumbnailPathForObject:file]])
+    {
+      thumbnail = [UIImage imageWithContentsOfFile:[self thumbnailPathForObject:file]];
+    }
+    else
+    {
+      thumbnail = [InfinitFilePreview previewForPath:file.path
+                                              ofSize:CGSizeMake(50.0f, 50.0f)
+                                                crop:YES];
+      [self writeImage:thumbnail toPath:[self thumbnailPathForObject:file]];
+    }
+    file.thumbnail = thumbnail;
     [res addObject:file];
   }
   _size = @(total_size);
   _files = [res copy];
   if (self.files.count == 1)
   {
-    _name = [self.files.firstObject name];
+    if (self.name == nil)
+      _name = [self.files.firstObject name];
+  }
+  else
+  {
+    if (self.name == nil)
+      _name = [NSString stringWithFormat:NSLocalizedString(@"%lu files", nil), self.files.count];
+  }
+  [self generateThumbnail];
+}
+
+- (void)generateThumbnail
+{
+  if ([[NSFileManager defaultManager] fileExistsAtPath:[self thumbnailPathForObject:self]])
+  {
+    _thumbnail = [UIImage imageWithContentsOfFile:[self thumbnailPathForObject:self]];
+    return;
+  }
+
+  if (self.files.count == 1)
+  {
     _thumbnail = [self.files.firstObject thumbnail];
   }
   else
   {
-    _name = [NSString stringWithFormat:NSLocalizedString(@"%lu files", nil), self.files.count];
+    NSMutableArray* thumbs = [NSMutableArray array];
+    for (InfinitFileModel* file in self.files)
+    {
+      if (file.type == InfinitFileTypeImage || file.type == InfinitFileTypeVideo)
+        [thumbs addObject:file.thumbnail];
+      if (thumbs.count > 3)
+        break;
+    }
+    if (thumbs.count == 0)
+    {
+      _thumbnail = [UIImage imageNamed:@"icon-mimetype-folder"];
+    }
+    else
+    {
+      CGSize thumb_size = CGSizeMake(50.0f * [InfinitHostDevice screenScale],
+                                     50.0f * [InfinitHostDevice screenScale]);
+      CGRect output_rect = CGRectMake(0.0f, 0.0f, thumb_size.width, thumb_size.height);
+      UIGraphicsBeginImageContextWithOptions(thumb_size, NO, 0.0f);
+      if (thumbs.count == 1)
+      {
+        UIImage* image = thumbs[0];
+        [image drawInRect:output_rect];
+      }
+      else if (thumbs.count == 2)
+      {
+        NSUInteger count = 0;
+        for (UIImage* image in thumbs)
+        {
+          CGRect rect = CGRectMake((thumb_size.width / 2.0f) * count,
+                                   0.0f,
+                                   thumb_size.width / 2.0f,
+                                   thumb_size.height);
+          UIImage* draw_image =
+          [UIImage imageWithCGImage:CGImageCreateWithImageInRect(image.CGImage, rect)];
+          [draw_image drawInRect:rect];
+          count++;
+        }
+        UIBezierPath* line = [UIBezierPath bezierPath];
+        [line moveToPoint:CGPointMake(thumb_size.width / 2.0f, 0.0f)];
+        [line addLineToPoint:CGPointMake(thumb_size.width / 2.0f, thumb_size.height)];
+        [[UIColor whiteColor] set];
+        [line stroke];
+      }
+      else if (thumbs.count == 3)
+      {
+        for (NSInteger i = 0; i < (thumbs.count - 1); i++)
+        {
+          UIImage* image = thumbs[i];
+          CGRect rect = CGRectMake(0.0f,
+                                   (thumb_size.height / 2.0f) * i,
+                                   thumb_size.width / 2.0f,
+                                   thumb_size.height / 2.0f);
+          [image drawInRect:rect];
+        }
+        UIImage* image = thumbs[2];
+        CGRect rect = CGRectMake(thumb_size.width / 2.0f,
+                                 0.0f,
+                                 thumb_size.width / 2.0f,
+                                 thumb_size.height);
+        image = [UIImage imageWithCGImage:CGImageCreateWithImageInRect(image.CGImage, rect)];
+        [image drawInRect:rect];
+
+        [[UIColor whiteColor] set];
+        UIBezierPath* v_line = [UIBezierPath bezierPath];
+        [v_line moveToPoint:CGPointMake(thumb_size.width / 2.0f, 0.0f)];
+        [v_line addLineToPoint:CGPointMake(thumb_size.width / 2.0f, thumb_size.height)];
+        [v_line stroke];
+        UIBezierPath* h_line = [UIBezierPath bezierPath];
+        [h_line moveToPoint:CGPointMake(0.0f, thumb_size.height / 2.0f)];
+        [h_line addLineToPoint:CGPointMake(thumb_size.width / 2.0f, thumb_size.height / 2.0f)];
+        [h_line stroke];
+      }
+      else if (thumbs.count == 4)
+      {
+        for (NSInteger i = 0; i < thumbs.count; i++)
+        {
+          UIImage* image = thumbs[i];
+          CGRect rect = CGRectMake((thumb_size.width / 2.0f) * (i % 2),
+                                   (thumb_size.height / 2.0f) * (i > 1 ? 1 : 0),
+                                   thumb_size.width / 2.0f,
+                                   thumb_size.height / 2.0f);
+          [image drawInRect:rect];
+        }
+        [[UIColor whiteColor] set];
+        UIBezierPath* v_line = [UIBezierPath bezierPath];
+        [v_line moveToPoint:CGPointMake(thumb_size.width / 2.0f, 0.0f)];
+        [v_line addLineToPoint:CGPointMake(thumb_size.width / 2.0f, thumb_size.height)];
+        [v_line stroke];
+        UIBezierPath* h_line = [UIBezierPath bezierPath];
+        [h_line moveToPoint:CGPointMake(0.0f, thumb_size.height / 2.0f)];
+        [h_line addLineToPoint:CGPointMake(thumb_size.width, thumb_size.height / 2.0f)];
+        [h_line stroke];
+      }
+      _thumbnail = UIGraphicsGetImageFromCurrentImageContext();
+      UIGraphicsEndImageContext();
+    }
+  }
+  [self writeImage:self.thumbnail toPath:[self thumbnailPathForObject:self]];
+}
+
+#pragma mark - Properties
+
+- (void)setDone:(BOOL)done
+{
+  _done = done;
+  if (done)
+    [self fetchFiles];
+  [self updateMetaDataObject:@(done) forKey:@"done"];
+}
+
+- (void)setName:(NSString*)name
+{
+  _name = name;
+  [self updateMetaDataObject:name forKey:@"name"];
+}
+
+- (void)updateMetaDataObject:(id)object
+                      forKey:(NSString*)key
+{
+  @synchronized(self.meta_data)
+  {
+    self.meta_data[key] = object;
+    [self.meta_data writeToFile:self.meta_data_path atomically:YES];
   }
 }
+
+#pragma mark - Delete
 
 - (void)deleteFileAtIndex:(NSInteger)index
 {
@@ -121,6 +288,85 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
   if (error)
   {
     ELLE_ERR("%s: unable to remove folder: %s",
+             self.description.UTF8String, error.description.UTF8String);
+  }
+  [[NSFileManager defaultManager] removeItemAtPath:self.thumbnail_folder error:&error];
+  if (error)
+  {
+    ELLE_ERR("%s: unable to remove thumbnail folder: %s",
+             self.description.UTF8String, error.description.UTF8String);
+  }
+}
+
+#pragma mark - Search
+
+- (BOOL)string:(NSString*)string contains:(NSString*)search
+{
+  if ([string rangeOfString:search options:NSCaseInsensitiveSearch].location != NSNotFound)
+    return YES;
+  return NO;
+}
+
+- (BOOL)containsString:(NSString*)string
+{
+  if ([self string:self.name contains:string])
+    return YES;
+  if ([self string:self.sender_name contains:string])
+    return YES;
+  for (InfinitFileModel* file in self.files)
+  {
+    if ([self string:file.name contains:string])
+      return YES;
+  }
+  return NO;
+}
+
+#pragma mark - Helpers
+
+- (NSString*)meta_data_path
+{
+  return [self.path stringByAppendingPathComponent:@".meta"];
+}
+
+- (NSString*)thumbnail_folder
+{
+  NSString* res = [InfinitDirectoryManager sharedInstance].thumbnail_cache_directory;
+  return [res stringByAppendingPathComponent:self.id_];
+}
+
+- (NSString*)thumbnailPathForObject:(id)object
+{
+  NSString* res = self.thumbnail_folder;
+  if (![[NSFileManager defaultManager] fileExistsAtPath:res])
+  {
+    [[NSFileManager defaultManager] createDirectoryAtPath:res
+                              withIntermediateDirectories:NO 
+                                               attributes:@{NSURLIsExcludedFromBackupKey: @YES}
+                                                    error:nil];
+  }
+  if ([object isKindOfClass:InfinitFileModel.class])
+  {
+    InfinitFileModel* file = (InfinitFileModel*)object;
+    res = [res stringByAppendingPathComponent:file.name];
+    res = [res stringByAppendingPathExtension:@"jpg"];
+  }
+  else if ([object isKindOfClass:InfinitFolderModel.class])
+  {
+    res = [res stringByAppendingPathComponent:@"infinit_folder_thumbnail.jpg"];
+  }
+  return res;
+}
+
+- (void)writeImage:(UIImage*)image
+            toPath:(NSString*)path
+{
+  NSError* error = nil;
+  [UIImageJPEGRepresentation(image, 1.0f) writeToFile:path
+                                              options:NSDataWritingAtomic
+                                                error:&error];
+  if (error)
+  {
+    ELLE_ERR("%s: unable to write thumbnail to disk: %s",
              self.description.UTF8String, error.description.UTF8String);
   }
 }
