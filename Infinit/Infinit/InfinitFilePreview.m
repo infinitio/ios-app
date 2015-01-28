@@ -26,13 +26,14 @@
   {
     res = InfinitFileTypeAudio;
   }
+  else if (UTTypeConformsTo(file_uti, kUTTypePDF) ||
+           UTTypeConformsTo(file_uti, kUTTypeText))
+  {
+    res = InfinitFileTypeDocument;
+  }
   else if (UTTypeConformsTo(file_uti, kUTTypeImage))
   {
     res = InfinitFileTypeImage;
-  }
-  else if (UTTypeConformsTo(file_uti, kUTTypePDF))
-  {
-    res = InfinitFileTypePDF;
   }
   else if (UTTypeConformsTo(file_uti, kUTTypeMovie))
   {
@@ -50,7 +51,15 @@
   CGSize scaled_size = CGSizeMake(size.width * [InfinitHostDevice screenScale],
                                   size.height * [InfinitHostDevice screenScale]);
   InfinitFileTypes type = [InfinitFilePreview fileTypeForPath:path];
-  if (type == InfinitFileTypeImage)
+  if (type == InfinitFileTypeAudio)
+  {
+    res = [UIImage imageNamed:@"icon-mimetype-audio"];
+  }
+  else if (type == InfinitFileTypeDocument)
+  {
+    res = [UIImage imageNamed:@"icon-mimetype-doc"];
+  }
+  else if (type == InfinitFileTypeImage)
   {
     res = [UIImage imageWithContentsOfFile:path];
   }
@@ -60,7 +69,9 @@
     AVURLAsset* asset = [[AVURLAsset alloc] initWithURL:url options:nil];
     AVAssetImageGenerator* generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
     generator.appliesPreferredTrackTransform = YES;
-    generator.maximumSize = scaled_size;
+    CGFloat max_dim = MAX(size.width, size.height);
+    generator.maximumSize = CGSizeMake(max_dim * [InfinitHostDevice screenScale],
+                                       max_dim * [InfinitHostDevice screenScale]);
     CMTime time = CMTimeMake(1, 1);
     dispatch_semaphore_t thumb_sema = dispatch_semaphore_create(0);
     [generator generateCGImagesAsynchronouslyForTimes:@[[NSValue valueWithCMTime:time]]
@@ -80,6 +91,10 @@
        dispatch_semaphore_signal(thumb_sema);
      }];
     dispatch_semaphore_wait(thumb_sema, DISPATCH_TIME_FOREVER);
+  }
+  else
+  {
+    res = [UIImage imageNamed:@"icon-mimetype-doc"];
   }
   CGFloat scale;
   if (crop)
