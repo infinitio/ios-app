@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C106a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Sta-NW-erU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Sta-NW-erU">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -298,11 +298,29 @@
                                             <outlet property="name_label" destination="yGX-fZ-FJP" id="2jl-8Q-Y1f"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="jmi-wQ-XNI" imageView="i1k-uz-MzQ" rowHeight="52" style="IBUITableViewCellStyleDefault" id="zeq-Nd-PAn">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zeq-Nd-PAn" id="XX6-Qr-JRk">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Edit profile" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jmi-wQ-XNI">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                    <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="icon-settings-flag" id="i1k-uz-MzQ">
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="LDY-ok-emo">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="nSP-0Y-CQh" imageView="1Aj-8d-HiF" rowHeight="52" style="IBUITableViewCellStyleDefault" id="lit-av-CEn">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="nSP-0Y-CQh" imageView="1Aj-8d-HiF" rowHeight="52" style="IBUITableViewCellStyleDefault" id="lit-av-CEn">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lit-av-CEn" id="qF5-yk-8UL">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -359,7 +377,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hy5-B8-PVt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-13" y="379"/>
+            <point key="canvasLocation" x="-25" y="-219"/>
         </scene>
         <!--REPORT A PROBLEM-->
         <scene sceneID="KwS-O7-QZI">
@@ -414,7 +432,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BOz-90-V2D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1529" y="379"/>
+            <point key="canvasLocation" x="1433" y="-216"/>
         </scene>
         <!--SETTINGS-->
         <scene sceneID="BgV-Sc-ZSQ">
@@ -434,7 +452,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AiB-IR-WbQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-761" y="379"/>
+            <point key="canvasLocation" x="-755" y="-216"/>
         </scene>
         <!--Infinit Tab Bar Controller-->
         <scene sceneID="6Af-Rg-f4V">
@@ -1175,7 +1193,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vfi-NY-kjZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1495" y="-1724"/>
+            <point key="canvasLocation" x="1723" y="-1724"/>
         </scene>
         <!--FILES-->
         <scene sceneID="3Qo-yF-SIK">
@@ -1189,9 +1207,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="ijA-4P-WMS">
+                            <searchBar contentMode="redraw" placeholder="Search" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ijA-4P-WMS">
                                 <rect key="frame" x="0.0" y="64" width="600" height="44"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="barTintColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                 <connections>
                                     <outlet property="delegate" destination="SKR-5b-K6J" id="rCk-5J-Di7"/>
                                 </connections>
@@ -1225,7 +1245,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dmh-ZX-r0y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2222" y="-1724"/>
+            <point key="canvasLocation" x="2543" y="-1724"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="0Ri-tM-cEO">
@@ -1359,7 +1379,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Aq-za-j4F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2978" y="-1724"/>
+            <point key="canvasLocation" x="3338" y="-1724"/>
         </scene>
         <!--Infinit Portrait Navigation Controller-->
         <scene sceneID="i5N-eB-nPV">
@@ -1378,7 +1398,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EKj-vh-mgy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="717" y="379"/>
+            <point key="canvasLocation" x="695" y="-219"/>
         </scene>
     </scenes>
     <resources>
