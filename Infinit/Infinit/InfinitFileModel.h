@@ -13,7 +13,7 @@
 
 @interface InfinitFileModel : NSObject
 
-@property (nonatomic, readonly) CGFloat duration;
+@property (nonatomic, readonly) NSTimeInterval duration;
 @property (nonatomic, readonly) NSString* name;
 @property (nonatomic, readonly) NSString* path;
 @property (nonatomic, readonly) NSNumber* size;

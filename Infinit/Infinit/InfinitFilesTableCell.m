@@ -35,10 +35,7 @@
   self.duration_label.hidden = YES;
   if (file.duration > 0)
   {
-    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"m:ss";
-    self.duration_label.text =
-      [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:file.duration]];
+    self.duration_label.text = [self stringFromDuration:file.duration];
     self.duration_label.hidden = NO;
   }
   self.icon_view.image = [file.thumbnail roundedMaskWithCornerRadius:3.0f];
@@ -58,13 +55,24 @@
     InfinitFileModel* file = folder.files[0];
     if (file.duration > 0)
     {
-      NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-      formatter.dateFormat = @"m:ss";
-      self.duration_label.text =
-        [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:file.duration]];
+      self.duration_label.text = [self stringFromDuration:file.duration];
       self.duration_label.hidden = NO;
     }
   }
+}
+
+#pragma mark - Helpers
+
+- (NSString*)stringFromDuration:(NSTimeInterval)duration
+{
+  NSInteger ti = (NSInteger)duration;
+  NSInteger seconds = ti % 60;
+  NSInteger minutes = (ti / 60) % 60;
+  NSInteger hours = (ti / 3600);
+  if (ti < 60 * 60)
+    return [NSString stringWithFormat:@"%ld:%02ld", (long)minutes, (long)seconds];
+  else
+    return [NSString stringWithFormat:@"%ld:%02ld:%02ld", (long)hours, (long)minutes, (long)seconds];
 }
 
 @end
