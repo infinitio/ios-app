@@ -8,13 +8,17 @@
 
 #import "AppDelegate.h"
 
+#import "InfinitApplicationSettings.h"
+#import "InfinitDownloadFolderManager.h"
+#import "InfinitKeychain.h"
+#import "InfinitLocalNotificationManager.h"
+
 #import <Gap/InfinitAvatarManager.h>
 #import <Gap/InfinitConnectionManager.h>
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitStateResult.h>
 
-#import "InfinitApplicationSettings.h"
-#import "InfinitKeychain.h"
+#import "NSData+Conversion.h"
 
 @interface AppDelegate ()
 @end
@@ -27,15 +31,17 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
   [InfinitConnectionManager sharedInstance];
   [InfinitStateManager startState];
+  [InfinitDownloadFolderManager sharedInstance];
+
+  [self registerForNotifications];
 
   self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
   UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
   NSString* identifier = nil;
 
-  NSString* account = [[InfinitApplicationSettings sharedInstance] username];
-  if ([[InfinitKeychain sharedInstance] credentialsForAccountInKeychain:account])
+  if ([self canAutoLogin])
   {
-    [self tryLogin];
+//    [self tryLogin];
     identifier = @"logging_in_controller";
   }
   else
@@ -44,7 +50,16 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   }
   self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:identifier];
   [self.window makeKeyAndVisible];
+
   return YES;
+}
+
+- (BOOL)canAutoLogin
+{
+  NSString* account = [[InfinitApplicationSettings sharedInstance] username];
+  if ([[InfinitKeychain sharedInstance] credentialsForAccountInKeychain:account])
+    return YES;
+  return NO;
 }
 
 - (void)tryLogin
@@ -110,6 +125,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 - (void)applicationDidBecomeActive:(UIApplication*)application
 {
   // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+  [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 }
 
 - (void)applicationWillTerminate:(UIApplication*)application
@@ -152,6 +168,86 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 //    
 //  }
 //}
+
+#pragma mark - Notification Handling
+
+- (void)registerForNotifications
+{
+  if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)])
+  {
+    UIUserNotificationType types = UIUserNotificationTypeBadge |
+    UIUserNotificationTypeSound |
+    UIUserNotificationTypeAlert;
+    UIUserNotificationSettings* settings = [UIUserNotificationSettings settingsForTypes:types
+                                                                             categories:nil];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
+  }
+}
+
+- (void)application:(UIApplication*)applocatopm
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+{
+  [[InfinitStateManager sharedInstance] setPush_token:deviceToken.hexadecimalString];
+  NSLog(@"xxx registered with token: %@", deviceToken.hexadecimalString);
+  if ([self canAutoLogin])
+    [self tryLogin];
+}
+
+- (void)application:(UIApplication*)application
+didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
+{
+  NSLog(@"xxx unable to register for notifications: %@", error);
+  if ([self canAutoLogin])
+    [self tryLogin];
+}
+
+- (void)application:(UIApplication*)application
+handleActionWithIdentifier:(NSString*)identifier
+forRemoteNotification:(NSDictionary*)userInfo
+  completionHandler:(void(^)())completionHandler
+{
+  NSLog(@"xxx handleActionWithIdentifier:forRemoteNotification: %@", userInfo);
+  completionHandler();
+}
+
+- (void)application:(UIApplication*)application
+handleActionWithIdentifier:(NSString*)identifier
+forLocalNotification:(UILocalNotification*)notification
+  completionHandler:(void(^)())completionHandler
+{
+  NSLog(@"xxx handleActionWithIdentifier:forLocalNotification: %@", notification);
+  completionHandler();
+}
+
+- (void)application:(UIApplication*)application
+didReceiveRemoteNotification:(NSDictionary*)userInfo
+fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+  if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive)
+  {
+    completionHandler(UIBackgroundFetchResultNoData);
+    return;
+  }
+  NSDictionary* dict = userInfo[@"i"];
+  UIBackgroundFetchResult res =
+    [[InfinitLocalNotificationManager sharedInstance] localNotificationForRemoteNotification:dict];
+  if (res == UIBackgroundFetchResultNewData)
+  {
+    [self performSelector:@selector(delayedCompletionHandlerWithNewData:)
+               withObject:completionHandler
+               afterDelay:10.0f];
+  }
+  else
+  {
+    completionHandler(res);
+  }
+}
+
+- (void)delayedCompletionHandlerWithNewData:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+  completionHandler(UIBackgroundFetchResultNewData);
+}
 
 
 @end
