@@ -460,13 +460,19 @@ static UIImage* _mask_image = nil;
 - (IBAction)acceptTapped:(id)sender
 {
   if (self.transaction.receivable)
+  {
     [_delegate cellHadAcceptTappedForTransaction:self.transaction];
+    [self setCancelShown:NO withAnimation:YES];
+    [self setAcceptShown:NO withAnimation:YES];
+  }
 }
 
 - (IBAction)cancelTapped:(id)sender
 {
   self.cancel_shown = NO;
   [_delegate cellHadCancelTappedForTransaction:self.transaction];
+  [self setCancelShown:NO withAnimation:YES];
+  [self setAcceptShown:NO withAnimation:YES];
 }
 
 @end
