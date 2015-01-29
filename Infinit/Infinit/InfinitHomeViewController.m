@@ -387,9 +387,9 @@
   {
     [self.collectionView performBatchUpdates:^
     {
+      NSUInteger index = [self.data indexOfObject:item];
       [self.data removeObject:item];
       [self.data insertObject:item atIndex:0];
-      NSUInteger index = [self.data indexOfObject:item];
       [self.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index
                                                                         inSection:0]]];
       [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0
