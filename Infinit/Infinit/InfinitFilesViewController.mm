@@ -58,7 +58,8 @@ ELLE_LOG_COMPONENT("iOS.FilesViewController");
 {
   UINib* cell_nib = [UINib nibWithNibName:NSStringFromClass(InfinitFilesTableCell.class) bundle:nil];
   [self.table_view registerNib:cell_nib forCellReuseIdentifier:_file_cell_id];
-  self.table_view.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+  CGRect footer_rect = CGRectMake(0.0f, 0.0f, self.table_view.bounds.size.width, 60.0f);
+  self.table_view.tableFooterView = [[UIView alloc] initWithFrame:footer_rect];
   [super viewDidLoad];
   NSDictionary* nav_bar_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
                                                                        size:17.0f],
@@ -261,7 +262,7 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
   InfinitFolderModel* folder = self.folder_results[row];
   [self.folder_results removeObjectAtIndex:row];
-  [folder deleteFolder];
+  [[InfinitDownloadFolderManager sharedInstance] deleteFolder:folder];
   if (self.folder_results.count == 0)
     [self showNoFilesOverlay];
 }
