@@ -218,10 +218,7 @@
      }];
     if (asset.mediaType == PHAssetMediaTypeVideo)
     {
-      NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-      formatter.dateFormat = @"m:ss";
-      cell.duration_label.text =
-        [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:asset.duration]];
+      cell.duration_label.text = [self stringFromDuration:asset.duration];
     }
   }
   else
@@ -232,11 +229,8 @@
     {
       if ([asset valueForProperty:ALAssetPropertyDuration] != ALErrorInvalidProperty)
       {
-        NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"m:ss";
         NSTimeInterval duration = [[asset valueForProperty:ALAssetPropertyDuration] doubleValue];
-        cell.duration_label.text =
-          [formatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:duration]];
+        cell.duration_label.text = [self stringFromDuration:duration];
       }
       cell.image_view.image = [UIImage imageWithCGImage:asset.thumbnail
                                                   scale:1.0f
@@ -354,6 +348,20 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
   {
     self.next_button.title = next_str;
   }];
+}
+
+#pragma mark - Helpers
+
+- (NSString*)stringFromDuration:(NSTimeInterval)duration
+{
+  NSInteger ti = (NSInteger)duration;
+  NSInteger seconds = ti % 60;
+  NSInteger minutes = (ti / 60) % 60;
+  NSInteger hours = (ti / 3600);
+  if (ti >= 60 * 60)
+    return [NSString stringWithFormat:@"%ld:%02ld:%02ld", (long)hours, (long)minutes, (long)seconds];
+  else
+    return [NSString stringWithFormat:@"%ld:%02ld", (long)minutes, (long)seconds];
 }
 
 @end
