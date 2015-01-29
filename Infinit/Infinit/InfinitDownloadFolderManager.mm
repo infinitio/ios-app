@@ -99,6 +99,13 @@ static InfinitDownloadFolderManager* _instance = nil;
   return [res sortedArrayUsingDescriptors:@[sort]];
 }
 
+- (void)deleteFolder:(InfinitFolderModel*)folder
+{
+  [self.folder_map removeObjectForKey:folder.id_];
+  [_delegate downloadFolderManager:self deletedFolder:folder];
+  [folder deleteFolder];
+}
+
 #pragma mark - Transaction Updates
 
 - (void)transactionUpdated:(NSNotification*)notification

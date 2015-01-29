@@ -19,6 +19,8 @@
 
 + (instancetype)sharedInstance;
 
+- (void)deleteFolder:(InfinitFolderModel*)folder;
+
 @end
 
 @protocol InfinitDownloadFolderManagerProtocol <NSObject>
