@@ -20,7 +20,9 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 
 #import "InfinitApplicationSettings.h"
+#import "InfinitBackgroundManager.h"
 #import "InfinitColor.h"
+#import "InfinitDownloadFolderManager.h"
 #import "InfinitHostDevice.h"
 #import "InfinitKeychain.h"
 #import "WelcomeLoginFormView.h"
@@ -677,6 +679,8 @@
 {
   [InfinitUserManager sharedInstance];
   [InfinitPeerTransactionManager sharedInstance];
+  [InfinitDownloadFolderManager sharedInstance];
+  [InfinitBackgroundManager sharedInstance];
 
   NSString* old_account = [[InfinitApplicationSettings sharedInstance] username];
   if (![old_account isEqualToString:_username])
