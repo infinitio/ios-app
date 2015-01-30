@@ -134,9 +134,10 @@ static UIImage* _mask_image = nil;
 
 - (void)setProgress
 {
-  if (self.transaction.status == gap_transaction_transferring)
+  float progress = self.transaction.progress;
+  if (!self.transaction.done && (progress > 0.0f || self.transaction.status == gap_transaction_transferring))
   {
-    self.avatar_view.progress = self.transaction.progress;
+    self.avatar_view.progress = progress;
     self.avatar_view.enable_progress = YES;
   }
   else
@@ -213,8 +214,6 @@ static UIImage* _mask_image = nil;
                   @(self.transaction.files.count)];
   }
   NSString* other_name = self.transaction.other_user.fullname;
-  if (self.transaction.other_user.is_self)
-    other_name = NSLocalizedString(@"you", nil);
   switch (self.transaction.status)
   {
     case gap_transaction_new:
@@ -223,8 +222,16 @@ static UIImage* _mask_image = nil;
     {
       if (self.transaction.from_device)
       {
-        res = [NSString stringWithFormat:NSLocalizedString(@"Sending %@ to %@...", nil),
-               file_count, other_name];
+        if (self.transaction.other_user.is_self)
+        {
+          res = [NSString stringWithFormat:NSLocalizedString(@"Sending %@ to yourself...", nil),
+                 file_count, other_name];
+        }
+        else
+        {
+          res = [NSString stringWithFormat:NSLocalizedString(@"Sending %@ to %@...", nil),
+                 file_count, other_name];
+        }
       }
       else
       {
@@ -239,31 +246,63 @@ static UIImage* _mask_image = nil;
     case gap_transaction_waiting_accept:
       if (self.transaction.from_device)
       {
-        res = [NSString stringWithFormat:NSLocalizedString(@"Waiting for %@ to accept %@", nil),
-               other_name, file_count];
+        if (self.transaction.other_user.is_self)
+        {
+          res = [NSString stringWithFormat:NSLocalizedString(@"Waiting for you to accept on another device", nil)];
+        }
+        else
+        {
+          res = [NSString stringWithFormat:NSLocalizedString(@"Waiting for %@ to accept %@", nil),
+                 other_name, file_count];
+        }
       }
       else
       {
-        NSString* want = NSLocalizedString(@"wants", nil);
-        if ([other_name rangeOfString:NSLocalizedString(@"you", nil)].location != NSNotFound)
-          want = NSLocalizedString(@"want", nil);
-        res = [NSString stringWithFormat:NSLocalizedString(@"%@ %@ to share %@", nil),
-               other_name.capitalizedString, want, file_count];
+        if (self.transaction.other_user.is_self)
+        {
+          res = [NSString stringWithFormat:NSLocalizedString(@"Accept to receive your %@", nil),
+                 file_count];
+        }
+        else
+        {
+          res = [NSString stringWithFormat:NSLocalizedString(@"%@ would like to share %@", nil),
+                 other_name.capitalizedString, file_count];
+        }
       }
       break;
     case gap_transaction_waiting_data:
-      res = [NSString stringWithFormat:NSLocalizedString(@"Waiting for %@ to be online", nil),
-             other_name];
+      if (self.transaction.other_user.is_self)
+      {
+        res = [NSString stringWithFormat:NSLocalizedString(@"Waiting for your other device to be online", nil)];
+      }
+      else
+      {
+        res = [NSString stringWithFormat:NSLocalizedString(@"Waiting for %@ to be online", nil),
+               other_name];
+      }
       break;
     case gap_transaction_cloud_buffered:
-      res = [NSString stringWithFormat:NSLocalizedString(@"Uploaded %@, waiting for %@ to download", nil),
-             file_count, other_name];
+      if (self.transaction.other_user.is_self)
+      {
+        res = [NSString stringWithFormat:NSLocalizedString(@"Uploaded %@, waiting for you to download on another device", nil),
+               file_count];
+      }
+      else
+      {
+        res = [NSString stringWithFormat:NSLocalizedString(@"Uploaded %@, waiting for %@ to download", nil),
+               file_count, other_name];
+      }
       break;
     case gap_transaction_finished:
       if (self.transaction.from_device)
       {
-        res = [NSString stringWithFormat:NSLocalizedString(@"Sent %@ to %@", nil),
-               file_count, other_name];
+        res = [NSString stringWithFormat:NSLocalizedString(@"Sent %@ to another device", nil),
+               file_count];
+      }
+      else if (self.transaction.other_user.is_self)
+      {
+        res = [NSString stringWithFormat:NSLocalizedString(@"Received %@ from another device", nil),
+               file_count];
       }
       else if (self.transaction.sender.is_self)
       {
@@ -283,8 +322,15 @@ static UIImage* _mask_image = nil;
       res = NSLocalizedString(@"Transfer canceled", nil);
       break;
     case gap_transaction_rejected:
+      if (self.transaction.sender.is_self)
+      {
         res = [NSString stringWithFormat:NSLocalizedString(@"%@ declined the transfer", nil),
                other_name.capitalizedString];
+      }
+      else
+      {
+        res = [NSString stringWithFormat:NSLocalizedString(@"You declined the transfer", nil)];
+      }
       break;
     case gap_transaction_paused:
       res = [NSString stringWithFormat:NSLocalizedString(@"Transfer of %@ with %@ paused", nil),
