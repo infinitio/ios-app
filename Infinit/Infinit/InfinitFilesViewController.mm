@@ -85,7 +85,7 @@ ELLE_LOG_COMPONENT("iOS.FilesViewController");
 {
   if (self.table_view.indexPathForSelectedRow != nil)
     [self.table_view deselectRowAtIndexPath:self.table_view.indexPathForSelectedRow animated:YES];
-  _all_folders = [InfinitDownloadFolderManager sharedInstance].completed_folders;
+  _all_folders = self.download_manager.completed_folders;
   _folder_results = [self.all_folders mutableCopy];
   self.download_manager.delegate = self;
   if (self.all_folders.count == 0)
@@ -240,6 +240,11 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   _all_folders = self.download_manager.completed_folders;
   if (self.search_bar.text.length == 0)
     [self.table_view reloadData];
+  if (self.no_files_view != nil)
+  {
+    [self.no_files_view removeFromSuperview];
+    self.no_files_view = nil;
+  }
 }
 
 - (void)downloadFolderManager:(InfinitDownloadFolderManager*)sender
