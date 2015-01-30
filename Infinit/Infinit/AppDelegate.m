@@ -9,12 +9,14 @@
 #import "AppDelegate.h"
 
 #import "InfinitApplicationSettings.h"
+#import "InfinitBackgroundManager.h"
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitKeychain.h"
 #import "InfinitLocalNotificationManager.h"
 
 #import <Gap/InfinitAvatarManager.h>
 #import <Gap/InfinitConnectionManager.h>
+#import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitStateResult.h>
 
@@ -31,7 +33,6 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
   [InfinitConnectionManager sharedInstance];
   [InfinitStateManager startState];
-  [InfinitDownloadFolderManager sharedInstance];
 
   [self registerForNotifications];
 
@@ -81,6 +82,8 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   NSString* identifier = nil;
   if (result.success)
   {
+    [InfinitDownloadFolderManager sharedInstance];
+    [InfinitBackgroundManager sharedInstance];
     identifier = @"tab_bar_controller";
   }
   else
@@ -188,8 +191,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 - (void)application:(UIApplication*)applocatopm
 didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
-  [[InfinitStateManager sharedInstance] setPush_token:deviceToken.hexadecimalString];
-  NSLog(@"xxx registered with token: %@", deviceToken.hexadecimalString);
+  [InfinitStateManager sharedInstance].push_token = deviceToken.hexadecimalString;
   if ([self canAutoLogin])
     [self tryLogin];
 }
