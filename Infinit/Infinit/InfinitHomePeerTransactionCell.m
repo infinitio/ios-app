@@ -77,8 +77,11 @@ static UIImage* _mask_image = nil;
 
 - (void)awakeFromNib
 {
+  [super awakeFromNib];
   if ([UIVisualEffectView class])
   {
+    self.background_view.layer.rasterizationScale = [InfinitHostDevice screenScale];
+    self.background_view.layer.shouldRasterize = YES;
     if ([InfinitHostDevice deviceCPU] >= InfinitCPUType_ARM64_v8)
     {
       self.background_view.layer.cornerRadius = 3.0f;
