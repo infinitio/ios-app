@@ -73,7 +73,7 @@ ELLE_LOG_COMPONENT("iOS.FilesViewController");
                                     target:nil
                                     action:nil];
   UIGraphicsBeginImageContextWithOptions(self.search_bar.bounds.size, NO, 0.0f);
-  [[InfinitColor colorWithGray:240] set];
+  [[InfinitColor colorWithGray:243] set];
   CGContextFillRect(UIGraphicsGetCurrentContext(), self.search_bar.bounds);
   UIImage* search_bar_bg = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
@@ -283,6 +283,14 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
       (InfinitFilesMultipleViewController*)segue.destinationViewController;
     view_controller.folder = self.folder_results[self.table_view.indexPathForSelectedRow.row];
   }
+}
+
+- (void)tabIconTap
+{
+  if ([self.navigationController.visibleViewController isEqual:self])
+    [self.table_view scrollRectToVisible:CGRectMake(0.0f, 0.0f, 1.0f, 1.0f) animated:YES];
+  else
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 @end

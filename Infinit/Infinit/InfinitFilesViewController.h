@@ -10,4 +10,6 @@
 
 @interface InfinitFilesViewController : UIViewController
 
+- (void)tabIconTap;
+
 @end
