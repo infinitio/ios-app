@@ -21,11 +21,15 @@
 - (void)viewWillAppear:(BOOL)animated
 {
   [self resetSendViews];
+  [[UIApplication sharedApplication] setStatusBarHidden:YES
+                                          withAnimation:UIStatusBarAnimationFade];
   [super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+  [[UIApplication sharedApplication] setStatusBarHidden:NO
+                                          withAnimation:UIStatusBarAnimationSlide];
   [(InfinitTabBarController*)self.tabBarController setTabBarHidden:NO animated:animated];
   [super viewWillDisappear:animated];
 }
