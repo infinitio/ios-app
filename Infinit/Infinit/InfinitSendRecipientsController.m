@@ -13,10 +13,10 @@
 #import "InfinitContact.h"
 #import "InfinitImportOverlayView.h"
 #import "InfinitSendContactCell.h"
-#import "InfinitSendImportCell.h"
+#import "InfinitContactImportCell.h"
 #import "InfinitSendNoResultsCell.h"
 #import "InfinitSendUserCell.h"
-#import "InfinitSendTableHeader.h"
+#import "InfinitContactsTableHeader.h"
 #import "InfinitTabBarController.h"
 
 #import <Gap/InfinitPeerTransactionManager.h>
@@ -73,7 +73,7 @@
   if (self = [super initWithCoder:aDecoder])
   {
     _contact_cell_id = @"send_contact_cell";
-    _import_cell_id = @"send_import_cell";
+    _import_cell_id = @"contact_import_cell";
     _no_results_cell_id = @"send_no_results_cell";
     _user_cell_id = @"send_user_cell";
     _nav_bar_tap = [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -107,6 +107,10 @@
   self.search_field.autocorrectionType = UITextAutocorrectionTypeNo;
 
   [super viewDidLoad];
+
+  UINib* import_cell_nib = [UINib nibWithNibName:NSStringFromClass(InfinitContactImportCell.class)
+                                          bundle:nil];
+  [self.table_view registerNib:import_cell_nib forCellReuseIdentifier:_import_cell_id];
 
   NSDictionary* nav_bar_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
                                                                        size:17.0f],
@@ -450,8 +454,11 @@
   {
     if (self.contact_results.count == 0)
     {
-      InfinitSendImportCell* cell = [tableView dequeueReusableCellWithIdentifier:_import_cell_id
+      InfinitContactImportCell* cell = [tableView dequeueReusableCellWithIdentifier:_import_cell_id
                                                                     forIndexPath:indexPath];
+      [cell.phone_contacts_button addTarget:self
+                                     action:@selector(importPhoneContactsTapped:)
+                           forControlEvents:UIControlEventTouchUpInside];
       res = cell;
     }
     else
@@ -483,9 +490,12 @@ heightForHeaderInSection:(NSInteger)section
 - (UIView*)tableView:(UITableView*)tableView
 viewForHeaderInSection:(NSInteger)section
 {
-  UINib* header_nib = [UINib nibWithNibName:@"InfinitSendTableHeader" bundle:nil];
-  InfinitSendTableHeader* header_view =
+  UINib* header_nib = [UINib nibWithNibName:@"InfinitContactsTableHeader" bundle:nil];
+  InfinitContactsTableHeader* header_view =
     [[header_nib instantiateWithOwner:self options:nil] firstObject];
+  header_view.line.hidden = YES;
+  header_view.layer.borderColor = [InfinitColor colorWithGray:216].CGColor;
+  header_view.layer.borderWidth = 1.0f;
 
   if (section == 0)
   {
@@ -506,11 +516,11 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
   if (indexPath.section == 0)
   {
-    return 61.0f;
+    return 62.0f;
   }
   else
   {
-    return ([self askedForAddressBookAccess] ? 61.0f : 349.0f);
+    return ([self askedForAddressBookAccess] ? 62.0f : 349.0f);
   }
 }
 
@@ -560,6 +570,7 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   [self updateSendButton];
   [self.search_field reloadData];
   [self reloadSearchResults];
+  [self.search_field resignFirstResponder];
 }
 
 - (void)actionSheetCancel:(UIActionSheet*)actionSheet
