@@ -120,4 +120,16 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer*)gestureRecognizer
+shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer*)otherGestureRecognizer
+{
+  return YES;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer*)gestureRecognizer
+shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer*)otherGestureRecognizer
+{
+  return [gestureRecognizer isKindOfClass:UIScreenEdgePanGestureRecognizer.class];
+}
+
 @end
