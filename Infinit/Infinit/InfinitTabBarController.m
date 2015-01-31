@@ -10,6 +10,8 @@
 
 #import "InfinitAccessGalleryView.h"
 #import "InfinitColor.h"
+#import "InfinitContactsViewController.h"
+#import "InfinitFilesViewController.h"
 #import "InfinitHomeViewController.h"
 #import "InfinitSendTabIcon.h"
 #import "InfinitSendNavigationController.h"
@@ -131,7 +133,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   if (count == 0)
     badge = nil;
   else if (count < 100)
-    badge = [NSString stringWithFormat:@"%lu", count];
+    badge = [NSString stringWithFormat:@"%lu", (unsigned long)count];
   else
     badge = @"+";
   [self.tabBar.items[0] setBadgeValue:badge];
@@ -254,6 +256,16 @@ shouldSelectViewController:(UIViewController*)viewController
     {
       UINavigationController* home_nav_controller = (UINavigationController*)viewController;
       [home_nav_controller.viewControllers.firstObject scrollToTop];
+    }
+    else if ([viewController.title isEqualToString:@"FILES"])
+    {
+      UINavigationController* files_nav_controller = (UINavigationController*)viewController;
+      [files_nav_controller.viewControllers.firstObject tabIconTap];
+    }
+    else if ([viewController.title isEqualToString:@"CONTACTS"])
+    {
+      UINavigationController* contacts_nav_controller = (UINavigationController*)viewController;
+      [contacts_nav_controller.viewControllers.firstObject scrollToTop];
     }
     return NO;
   }
