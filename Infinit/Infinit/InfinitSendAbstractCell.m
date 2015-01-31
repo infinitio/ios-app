@@ -9,6 +9,7 @@
 #import "InfinitSendAbstractCell.h"
 
 #import "InfinitColor.h"
+
 #import "UIImage+Rounded.h"
 
 @implementation InfinitSendAbstractCell
@@ -21,8 +22,11 @@
 - (void)setContact:(InfinitContact*)contact
 {
   _contact = contact;
-  self.avatar_view.image = contact.avatar.circularMask;
-  self.name_label.text = contact.fullname;
+  self.avatar_view.image = self.contact.avatar.circularMask;
+  if (self.contact.infinit_user != nil && self.contact.infinit_user.is_self)
+    self.name_label.text = NSLocalizedString(@"Me (other devices)", nil);
+  else
+    self.name_label.text = self.contact.fullname;
 }
 
 - (void)setSelected:(BOOL)selected
