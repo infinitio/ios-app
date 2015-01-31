@@ -102,6 +102,13 @@
                                              object:nil];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+  [[UIApplication sharedApplication] setStatusBarHidden:YES
+                                          withAnimation:UIStatusBarAnimationFade];
+  [super viewWillAppear:animated];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
   _logging_in = NO;
@@ -116,6 +123,13 @@
     [self checkLoginInputs];
   }
   [super viewDidAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+  [[UIApplication sharedApplication] setStatusBarHidden:NO
+                                          withAnimation:UIStatusBarAnimationFade];
+  [super viewWillDisappear:animated];
 }
 
 - (void)configureLoginView
