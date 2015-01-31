@@ -1,5 +1,5 @@
 //
-//  InfinitSendTableHeader.h
+//  InfinitContactsTableHeader.h
 //  Infinit
 //
 //  Created by Christopher Crone on 16/01/15.
@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InfinitSendTableHeader : UIView
+@interface InfinitContactsTableHeader : UIView
 
+@property (nonatomic, weak) IBOutlet UIView* line;
 @property (nonatomic, weak) IBOutlet UILabel* title;
 
 @end
