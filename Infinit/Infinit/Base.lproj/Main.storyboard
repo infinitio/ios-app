@@ -298,24 +298,6 @@
                                             <outlet property="name_label" destination="yGX-fZ-FJP" id="2jl-8Q-Y1f"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="jmi-wQ-XNI" imageView="i1k-uz-MzQ" rowHeight="52" style="IBUITableViewCellStyleDefault" id="zeq-Nd-PAn">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zeq-Nd-PAn" id="XX6-Qr-JRk">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Edit profile" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jmi-wQ-XNI">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                                    <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="icon-settings-flag" id="i1k-uz-MzQ">
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                </imageView>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="LDY-ok-emo">
@@ -877,86 +859,6 @@
                                                     <outlet property="name_label" destination="Dz8-88-hEf" id="PUQ-3B-eyo"/>
                                                 </connections>
                                             </tableViewCell>
-                                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="send_import_cell" rowHeight="330" id="ROE-FG-bHS" customClass="InfinitSendImportCell">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ROE-FG-bHS" id="Nxu-FG-mMV">
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wT3-gi-JEO">
-                                                            <rect key="frame" x="167" y="173" width="266" height="55"/>
-                                                            <color key="backgroundColor" red="0.1647058824" green="0.42352941179999998" blue="0.70980392160000005" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="55" id="1FX-Ed-GZv"/>
-                                                                <constraint firstAttribute="width" constant="266" id="bJ7-u5-oyL"/>
-                                                                <constraint firstAttribute="width" constant="266" id="dwA-1Y-QoV"/>
-                                                            </constraints>
-                                                            <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
-                                                            <inset key="imageEdgeInsets" minX="-12" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                            <state key="normal" title="FIND FACEBOOK FRIENDS" image="icon-facebook-white">
-                                                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                            <variation key="default">
-                                                                <mask key="constraints">
-                                                                    <exclude reference="dwA-1Y-QoV"/>
-                                                                </mask>
-                                                            </variation>
-                                                            <connections>
-                                                                <action selector="findFacebookFriendsTapped:" destination="9ZK-3B-PXo" eventType="touchUpInside" id="fIS-Eu-9F8"/>
-                                                            </connections>
-                                                        </button>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Infinit is 2x faster and encrypted if your friends are on the app." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3PA-yr-naq">
-                                                            <rect key="frame" x="172" y="30" width="255" height="58"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="255" id="D9k-cE-0qW"/>
-                                                                <constraint firstAttribute="height" constant="58" id="jh6-ci-ILD"/>
-                                                            </constraints>
-                                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
-                                                            <color key="textColor" red="0.68627450980000004" green="0.68627450980000004" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6A0-mf-YrI">
-                                                            <rect key="frame" x="167" y="102" width="266" height="55"/>
-                                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="266" id="ZZc-Ur-Dnm"/>
-                                                                <constraint firstAttribute="width" constant="266" id="ctb-Gj-1lW"/>
-                                                                <constraint firstAttribute="height" constant="55" id="pC7-VW-erl"/>
-                                                            </constraints>
-                                                            <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
-                                                            <inset key="imageEdgeInsets" minX="-12" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                            <state key="normal" title="IMPORT PHONE CONTACTS" image="icon-contacts">
-                                                                <color key="titleColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                            <variation key="default">
-                                                                <mask key="constraints">
-                                                                    <exclude reference="ctb-Gj-1lW"/>
-                                                                </mask>
-                                                            </variation>
-                                                            <connections>
-                                                                <action selector="importPhoneContactsTapped:" destination="9ZK-3B-PXo" eventType="touchUpInside" id="uRG-zf-NU9"/>
-                                                            </connections>
-                                                        </button>
-                                                    </subviews>
-                                                    <constraints>
-                                                        <constraint firstAttribute="centerX" secondItem="6A0-mf-YrI" secondAttribute="centerX" id="7MY-Bd-aof"/>
-                                                        <constraint firstAttribute="centerX" secondItem="3PA-yr-naq" secondAttribute="centerX" id="Hv6-Uj-Nrc"/>
-                                                        <constraint firstAttribute="centerX" secondItem="wT3-gi-JEO" secondAttribute="centerX" id="LFD-j8-6jt"/>
-                                                        <constraint firstItem="6A0-mf-YrI" firstAttribute="top" secondItem="3PA-yr-naq" secondAttribute="bottom" constant="14" id="XfJ-hh-9Kw"/>
-                                                        <constraint firstItem="3PA-yr-naq" firstAttribute="top" secondItem="Nxu-FG-mMV" secondAttribute="top" constant="30" id="e1l-NP-Tkj"/>
-                                                        <constraint firstItem="wT3-gi-JEO" firstAttribute="top" secondItem="6A0-mf-YrI" secondAttribute="bottom" constant="16" id="pYv-ZM-aPA"/>
-                                                    </constraints>
-                                                </tableViewCellContentView>
-                                                <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95294117647058818" alpha="1" colorSpace="calibratedRGB"/>
-                                                <inset key="separatorInset" minX="1000" minY="0.0" maxX="1000" maxY="0.0"/>
-                                                <connections>
-                                                    <outlet property="facebook_button" destination="wT3-gi-JEO" id="3ns-AV-oYa"/>
-                                                    <outlet property="message_label" destination="3PA-yr-naq" id="7Dc-88-pDB"/>
-                                                    <outlet property="phone_contacts_button" destination="6A0-mf-YrI" id="78a-As-PfF"/>
-                                                </connections>
-                                            </tableViewCell>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="send_no_results_cell" rowHeight="464" id="imq-4s-tH6" customClass="InfinitSendNoResultsCell">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
@@ -1181,9 +1083,9 @@
         <!--FILES-->
         <scene sceneID="5o8-cN-a4g">
             <objects>
-                <navigationController title="FILES" extendedLayoutIncludesOpaqueBars="YES" id="E3A-FT-LpY" customClass="InfinitPortraitNavigationController" sceneMemberID="viewController">
+                <navigationController title="FILES" extendedLayoutIncludesOpaqueBars="YES" id="E3A-FT-LpY" customClass="InfinitFilesNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="icon-tab-files" id="2li-2o-HFp"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="kfa-vf-1Zs">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="kfa-vf-1Zs">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1204,20 +1106,19 @@
                         <viewControllerLayoutGuide type="bottom" id="qUa-Me-Bf1"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="H2k-Qi-iPx">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" placeholder="Search" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ijA-4P-WMS">
-                                <rect key="frame" x="0.0" y="64" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="barTintColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                 <connections>
                                     <outlet property="delegate" destination="SKR-5b-K6J" id="rCk-5J-Di7"/>
                                 </connections>
                             </searchBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="cMN-l7-2GD">
-                                <rect key="frame" x="0.0" y="108" width="600" height="443"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="cMN-l7-2GD">
+                                <rect key="frame" x="0.0" y="44" width="600" height="492"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="SKR-5b-K6J" id="4vU-JB-NDs"/>
@@ -1233,9 +1134,10 @@
                             <constraint firstItem="ijA-4P-WMS" firstAttribute="leading" secondItem="H2k-Qi-iPx" secondAttribute="leading" id="dIA-Y2-GSd"/>
                             <constraint firstItem="cMN-l7-2GD" firstAttribute="top" secondItem="ijA-4P-WMS" secondAttribute="bottom" id="iBX-Xh-ciZ"/>
                             <constraint firstAttribute="bottom" secondItem="cMN-l7-2GD" secondAttribute="bottom" id="wKl-nw-2bl"/>
-                            <constraint firstItem="ijA-4P-WMS" firstAttribute="top" secondItem="H2k-Qi-iPx" secondAttribute="top" constant="64" id="z3a-Cf-rm4"/>
+                            <constraint firstItem="ijA-4P-WMS" firstAttribute="top" secondItem="H2k-Qi-iPx" secondAttribute="top" id="z3a-Cf-rm4"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="FILES" id="ZoT-BP-9BH"/>
                     <connections>
                         <outlet property="search_bar" destination="ijA-4P-WMS" id="gow-bf-Zei"/>
@@ -1247,44 +1149,68 @@
             </objects>
             <point key="canvasLocation" x="2543" y="-1724"/>
         </scene>
-        <!--Root View Controller-->
-        <scene sceneID="0Ri-tM-cEO">
+        <!--CONTACTS-->
+        <scene sceneID="50R-fa-0UL">
             <objects>
-                <tableViewController id="RK1-al-kbO" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Jtk-lj-c5Z">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                <viewController title="CONTACTS" id="cyR-zH-YxB" customClass="InfinitContactsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="kKi-6k-w7y"/>
+                        <viewControllerLayoutGuide type="bottom" id="981-Yf-G3y"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Lbe-Gg-2eK">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="UIT-gc-l6k">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                <connections>
+                                    <outlet property="delegate" destination="cyR-zH-YxB" id="mxO-xB-jVC"/>
+                                </connections>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="hYA-CQ-ZA3">
+                                <rect key="frame" x="0.0" y="44" width="600" height="443"/>
+                                <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95294117647058818" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="cyR-zH-YxB" id="88d-l2-9ph"/>
+                                    <outlet property="delegate" destination="cyR-zH-YxB" id="qSg-Ox-nEA"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="L4J-YA-aMk">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="L4J-YA-aMk" id="SJe-FV-pm8">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="RK1-al-kbO" id="6nt-P7-ZHL"/>
-                            <outlet property="delegate" destination="RK1-al-kbO" id="rvB-Br-EPF"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="CFo-i2-Zzq"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4hA-ja-1N8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <constraints>
+                            <constraint firstItem="UIT-gc-l6k" firstAttribute="leading" secondItem="Lbe-Gg-2eK" secondAttribute="leading" id="HFX-bz-ama"/>
+                            <constraint firstItem="hYA-CQ-ZA3" firstAttribute="leading" secondItem="Lbe-Gg-2eK" secondAttribute="leading" id="JBL-Hl-ihe"/>
+                            <constraint firstAttribute="trailing" secondItem="hYA-CQ-ZA3" secondAttribute="trailing" id="Row-Ca-tpa"/>
+                            <constraint firstAttribute="trailing" secondItem="UIT-gc-l6k" secondAttribute="trailing" id="UwG-Sj-RIq"/>
+                            <constraint firstItem="UIT-gc-l6k" firstAttribute="top" secondItem="Lbe-Gg-2eK" secondAttribute="top" id="ZSf-GP-Hjk"/>
+                            <constraint firstItem="hYA-CQ-ZA3" firstAttribute="top" secondItem="UIT-gc-l6k" secondAttribute="bottom" id="d70-bB-8wc"/>
+                            <constraint firstAttribute="bottom" secondItem="hYA-CQ-ZA3" secondAttribute="bottom" id="o2X-KS-KpD"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" title="CONTACTS" id="Diz-0I-QjG"/>
+                    <connections>
+                        <outlet property="search_bar" destination="UIT-gc-l6k" id="OPJ-rK-0Ok"/>
+                        <outlet property="table_view" destination="hYA-CQ-ZA3" id="baM-Gn-sx3"/>
+                        <segue destination="pu1-dB-tPe" kind="show" identifier="contacts_to_contact_segue" id="D5C-DP-kPD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nMU-sF-bRl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2543" y="-1013"/>
         </scene>
-        <!--Infinit Portrait Navigation Controller-->
+        <!--CONTACTS-->
         <scene sceneID="RtZ-me-ofj">
             <objects>
-                <navigationController id="1XU-dC-dIe" customClass="InfinitPortraitNavigationController" sceneMemberID="viewController">
+                <navigationController title="CONTACTS" id="1XU-dC-dIe" customClass="InfinitPortraitNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="icon-tab-contacts" id="Gaj-cO-oSn"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="c6b-Kk-UxE">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="c6b-Kk-UxE">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="RK1-al-kbO" kind="relationship" relationship="rootViewController" id="UcU-ZQ-jN0"/>
+                        <segue destination="cyR-zH-YxB" kind="relationship" relationship="rootViewController" id="HDy-pb-z8U"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MEf-q6-XhA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1349,11 +1275,11 @@
                         <viewControllerLayoutGuide type="bottom" id="xuC-ju-so6"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="XuL-nQ-tpW">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="kr4-Ee-MVL">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="kr4-Ee-MVL">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="jvf-eB-UiL" id="sD6-bT-79a"/>
@@ -1369,6 +1295,7 @@
                             <constraint firstItem="kr4-Ee-MVL" firstAttribute="top" secondItem="XuL-nQ-tpW" secondAttribute="top" id="Poi-rA-h1o"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="FILES" id="qGT-HW-jdc">
                         <barButtonItem key="leftBarButtonItem" image="icon-back-white" id="9pR-EW-353">
                             <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -1384,6 +1311,117 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Aq-za-j4F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3338" y="-1724"/>
+        </scene>
+        <!--CONTACT-->
+        <scene sceneID="nYF-gd-gap">
+            <objects>
+                <viewController title="CONTACT" id="pu1-dB-tPe" customClass="InfinitContactViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vOx-5H-6j5"/>
+                        <viewControllerLayoutGuide type="bottom" id="jHU-wq-Jrm"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="z4J-xO-e5w">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SXc-4G-LTM">
+                                <rect key="frame" x="259" y="92" width="83" height="83"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="83" id="LI4-9c-geO"/>
+                                    <constraint firstAttribute="width" constant="83" id="tp9-Q1-X5c"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9aQ-yQ-UJE">
+                                <rect key="frame" x="308" y="154" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Bgf-PC-k29"/>
+                                    <constraint firstAttribute="width" constant="40" id="aBz-Za-aKP"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fb4-h2-ykq">
+                                <rect key="frame" x="279" y="197" width="42" height="20"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="22f-OX-yjp">
+                                <rect key="frame" x="45" y="247" width="510" height="1"/>
+                                <color key="backgroundColor" red="0.89411764705882346" green="0.89411764705882346" blue="0.89411764705882346" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="gFk-lR-wQl"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cAz-dS-fQ5">
+                                <rect key="frame" x="202" y="280" width="82" height="31"/>
+                                <color key="backgroundColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="uOk-Fk-N7j"/>
+                                    <constraint firstAttribute="width" constant="82" id="xUU-rq-uuf"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
+                                <state key="normal" title="SEND" image="icon-send-white">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="sendButtonTapped:" destination="pu1-dB-tPe" eventType="touchUpInside" id="Qam-Vg-LEK"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1LK-Mw-637">
+                                <rect key="frame" x="291" y="280" width="108" height="31"/>
+                                <color key="backgroundColor" red="0.8901960784313725" green="0.88627450980392153" blue="0.078431372549019607" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="108" id="jsN-Sg-XHZ"/>
+                                    <constraint firstAttribute="height" constant="31" id="zP4-35-pca"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
+                                <state key="normal" title="FAVORITE" image="icon-favorite-white">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" red="0.49803921568627452" green="0.49803921568627452" blue="0.49803921568627452" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="favoriteButtonTapped:" destination="pu1-dB-tPe" eventType="touchUpInside" id="128-A1-zBQ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="cAz-dS-fQ5" firstAttribute="top" secondItem="22f-OX-yjp" secondAttribute="bottom" constant="32" id="05n-5P-gRn"/>
+                            <constraint firstItem="22f-OX-yjp" firstAttribute="top" secondItem="Fb4-h2-ykq" secondAttribute="bottom" constant="30" id="5Lx-Lw-vEG"/>
+                            <constraint firstAttribute="centerX" secondItem="SXc-4G-LTM" secondAttribute="centerX" id="B20-9V-5jG"/>
+                            <constraint firstItem="Fb4-h2-ykq" firstAttribute="top" secondItem="SXc-4G-LTM" secondAttribute="bottom" constant="22" id="Ddc-Jm-Thb"/>
+                            <constraint firstItem="9aQ-yQ-UJE" firstAttribute="top" secondItem="SXc-4G-LTM" secondAttribute="bottom" constant="-21" id="E15-kw-WGY"/>
+                            <constraint firstItem="SXc-4G-LTM" firstAttribute="centerX" secondItem="cAz-dS-fQ5" secondAttribute="centerX" constant="57" id="Oza-gT-2PD"/>
+                            <constraint firstItem="1LK-Mw-637" firstAttribute="leading" secondItem="cAz-dS-fQ5" secondAttribute="trailing" constant="7" id="Ozv-uz-qxx"/>
+                            <constraint firstAttribute="trailing" secondItem="22f-OX-yjp" secondAttribute="trailing" constant="45" id="W0X-l2-1il"/>
+                            <constraint firstItem="Fb4-h2-ykq" firstAttribute="centerX" secondItem="SXc-4G-LTM" secondAttribute="centerX" id="b4E-Mw-W5m"/>
+                            <constraint firstItem="cAz-dS-fQ5" firstAttribute="centerY" secondItem="1LK-Mw-637" secondAttribute="centerY" id="eEE-Fw-kE8"/>
+                            <constraint firstItem="9aQ-yQ-UJE" firstAttribute="leading" secondItem="SXc-4G-LTM" secondAttribute="trailing" constant="-34" id="hVr-PR-Tun"/>
+                            <constraint firstItem="SXc-4G-LTM" firstAttribute="top" secondItem="z4J-xO-e5w" secondAttribute="top" constant="92" id="i00-I8-oL6"/>
+                            <constraint firstItem="22f-OX-yjp" firstAttribute="leading" secondItem="z4J-xO-e5w" secondAttribute="leading" constant="45" id="oTk-kt-4qd"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="CONTACT" id="wAF-uM-uRe">
+                        <barButtonItem key="leftBarButtonItem" image="icon-back-white" id="cGr-Jj-Ilw">
+                            <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="backButtonTapped:" destination="pu1-dB-tPe" id="0ij-XP-HwV"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="avatar_view" destination="SXc-4G-LTM" id="gUt-eb-YXf"/>
+                        <outlet property="favorite_button" destination="1LK-Mw-637" id="17u-hr-Y0A"/>
+                        <outlet property="icon_view" destination="9aQ-yQ-UJE" id="16s-5u-CaJ"/>
+                        <outlet property="name_label" destination="Fb4-h2-ykq" id="TK1-PV-CxI"/>
+                        <outlet property="send_button" destination="cAz-dS-fQ5" id="hpo-8L-jX4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oFN-nO-BVh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3338" y="-1013"/>
         </scene>
         <!--Infinit Portrait Navigation Controller-->
         <scene sceneID="i5N-eB-nPV">
@@ -1412,6 +1450,7 @@
         <image name="icon-close" width="16" height="17"/>
         <image name="icon-contacts" width="17" height="20"/>
         <image name="icon-facebook-white" width="21" height="21"/>
+        <image name="icon-favorite-white" width="16" height="15"/>
         <image name="icon-send-red" width="25" height="21"/>
         <image name="icon-send-white" width="18" height="15"/>
         <image name="icon-settings-flag" width="17" height="18"/>
