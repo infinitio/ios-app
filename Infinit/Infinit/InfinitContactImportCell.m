@@ -1,18 +1,18 @@
 //
-//  InfinitSendImportCell.m
+//  InfinitContactImportCell.m
 //  Infinit
 //
 //  Created by Michael Dee on 12/23/14.
 //  Copyright (c) 2014 Infinit. All rights reserved.
 //
 
-#import "InfinitSendImportCell.h"
+#import "InfinitContactImportCell.h"
 
 #import "InfinitColor.h"
 
 static NSAttributedString* bold_str = nil;
 
-@implementation InfinitSendImportCell
+@implementation InfinitContactImportCell
 
 - (void)awakeFromNib
 {
@@ -23,6 +23,12 @@ static NSAttributedString* bold_str = nil;
   self.facebook_button.enabled = NO;
 
   [self setupButton:self.facebook_button];
+}
+
+- (void)prepareForReuse
+{
+  [self.phone_contacts_button removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+  [self.facebook_button removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
 }
 
 - (void)setMessageLabelBold

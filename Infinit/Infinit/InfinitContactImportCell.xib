@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="SourceSansPro-Bold.otf">
+            <string>SourceSansPro-Bold</string>
+            <string>SourceSansPro-Bold</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="contact_import_cell" rowHeight="330" id="VCH-pR-qFj" customClass="InfinitContactImportCell">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="330"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VCH-pR-qFj" id="IW9-Al-rGo">
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JJ0-ax-QO6">
+                        <rect key="frame" x="167" y="173" width="266" height="55"/>
+                        <color key="backgroundColor" red="0.1647058824" green="0.42352941179999998" blue="0.70980392160000005" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="266" id="7mV-aP-58N"/>
+                            <constraint firstAttribute="width" constant="266" id="iao-CM-aBz"/>
+                            <constraint firstAttribute="height" constant="55" id="k2M-TR-SwU"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
+                        <inset key="imageEdgeInsets" minX="-12" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <state key="normal" title="FIND FACEBOOK FRIENDS" image="icon-facebook-white">
+                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="7mV-aP-58N"/>
+                            </mask>
+                        </variation>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Infinit is 2x faster and encrypted if your friends are on the app." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t2U-eE-XfF">
+                        <rect key="frame" x="172" y="30" width="255" height="58"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="58" id="XTN-ek-YLO"/>
+                            <constraint firstAttribute="width" constant="255" id="cRh-Ht-fd7"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                        <color key="textColor" red="0.68627450980000004" green="0.68627450980000004" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z52-CB-aDr">
+                        <rect key="frame" x="167" y="102" width="266" height="55"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="266" id="DFa-yl-JX4"/>
+                            <constraint firstAttribute="width" constant="266" id="LO9-VT-b33"/>
+                            <constraint firstAttribute="height" constant="55" id="tYX-y6-IyG"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
+                        <inset key="imageEdgeInsets" minX="-12" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <state key="normal" title="IMPORT PHONE CONTACTS" image="icon-contacts">
+                            <color key="titleColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="DFa-yl-JX4"/>
+                            </mask>
+                        </variation>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="centerX" secondItem="JJ0-ax-QO6" secondAttribute="centerX" id="2K3-XH-DfX"/>
+                    <constraint firstItem="JJ0-ax-QO6" firstAttribute="top" secondItem="z52-CB-aDr" secondAttribute="bottom" constant="16" id="K3U-YX-AEK"/>
+                    <constraint firstItem="t2U-eE-XfF" firstAttribute="top" secondItem="IW9-Al-rGo" secondAttribute="top" constant="30" id="L0F-0O-RlP"/>
+                    <constraint firstAttribute="centerX" secondItem="t2U-eE-XfF" secondAttribute="centerX" id="NvV-YD-nVi"/>
+                    <constraint firstItem="z52-CB-aDr" firstAttribute="top" secondItem="t2U-eE-XfF" secondAttribute="bottom" constant="14" id="VIy-rT-bwA"/>
+                    <constraint firstAttribute="centerX" secondItem="z52-CB-aDr" secondAttribute="centerX" id="Wkj-gb-htf"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
+            <inset key="separatorInset" minX="1000" minY="0.0" maxX="1000" maxY="0.0"/>
+            <connections>
+                <outlet property="facebook_button" destination="JJ0-ax-QO6" id="YjI-nc-STP"/>
+                <outlet property="message_label" destination="t2U-eE-XfF" id="fx7-C6-6sM"/>
+                <outlet property="phone_contacts_button" destination="z52-CB-aDr" id="jBg-nx-fL2"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="icon-contacts" width="17" height="20"/>
+        <image name="icon-facebook-white" width="21" height="21"/>
+    </resources>
+</document>

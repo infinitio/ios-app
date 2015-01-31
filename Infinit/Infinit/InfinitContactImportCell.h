@@ -1,5 +1,5 @@
 //
-//  InfinitSendImportCell.h
+//  InfinitContactImportCell.h
 //  Infinit
 //
 //  Created by Michael Dee on 12/23/14.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InfinitSendImportCell : UITableViewCell
+@interface InfinitContactImportCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIButton* phone_contacts_button;
 @property (weak, nonatomic) IBOutlet UIButton* facebook_button;
