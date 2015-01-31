@@ -12,9 +12,20 @@
 
 #import "UIImage+Rounded.h"
 
+static UIImage* _favorite_icon = nil;
+static UIImage* _infinit_icon = nil;
 static NSDictionary* _me_attrs = nil;
 
 @implementation InfinitSendUserCell
+
+- (void)awakeFromNib
+{
+  [super awakeFromNib];
+  if (_favorite_icon == nil)
+    _favorite_icon = [UIImage imageNamed:@"icon-contact-favorite"].circularMask;
+  if (_infinit_icon == nil)
+    _infinit_icon = [UIImage imageNamed:@"icon-contact-infinit"].circularMask;
+}
 
 - (void)setContact:(InfinitContact*)contact
 {
@@ -22,9 +33,9 @@ static NSDictionary* _me_attrs = nil;
     return;
   [super setContact:contact];
   if (self.contact.infinit_user.favorite || self.contact.infinit_user.is_self)
-    self.user_type_view.image = [UIImage imageNamed:@"icon-contact-favorite"].circularMask;
+    self.user_type_view.image = _favorite_icon;
   else
-    self.user_type_view.image = [UIImage imageNamed:@"icon-contact-infinit"].circularMask;
+    self.user_type_view.image = _infinit_icon;
   if (self.contact.infinit_user.is_self)
     [self setSelfTextColor];
 }
