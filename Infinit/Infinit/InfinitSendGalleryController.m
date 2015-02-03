@@ -62,7 +62,9 @@
   [super viewDidLoad];
   self.collectionView.allowsMultipleSelection = YES;
 
-  self.navigationController.navigationBar.clipsToBounds = YES;
+  [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init]
+                                                forBarMetrics:UIBarMetricsDefault];
+  self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
   NSDictionary* nav_bar_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
                                                                        size:17.0f],
                                   NSForegroundColorAttributeName: [UIColor whiteColor]};
