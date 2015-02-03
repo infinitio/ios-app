@@ -121,8 +121,6 @@ static InfinitDownloadFolderManager* _instance = nil;
       NSString* path = [self.download_dir stringByAppendingPathComponent:transaction.meta_id];
       if (![[NSFileManager defaultManager] fileExistsAtPath:path])
       {
-        ELLE_WARN("%s: no folder for transaction: %s",
-                  self.description.UTF8String, transaction.meta_id.UTF8String);
         return;
       }
       if ([self.folder_map objectForKey:transaction.meta_id] == nil)
