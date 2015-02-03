@@ -18,16 +18,16 @@ static UIImage* _favorite_icon = nil;
 - (void)awakeFromNib
 {
   if (_infinit_icon == nil)
-    _infinit_icon = [UIImage imageNamed:@"icon-contact-infinit"].circularMask;
+    _infinit_icon = [UIImage imageNamed:@"icon-contact-infinit"];
   if (_favorite_icon == nil)
-    _favorite_icon = [UIImage imageNamed:@"icon-contact-favorite"].circularMask;
+    _favorite_icon = [UIImage imageNamed:@"icon-contact-favorite"];
 }
 
 - (void)setContact:(InfinitContact*)contact
 {
   if (contact.infinit_user != nil) // User could've been favorited
   {
-    if (contact.infinit_user.favorite)
+    if (contact.infinit_user.favorite || contact.infinit_user.is_self)
       self.icon_view.image = _favorite_icon;
     else
       self.icon_view.image = _infinit_icon;
@@ -39,9 +39,7 @@ static UIImage* _favorite_icon = nil;
   self.name_label.text = contact.fullname;
   self.avatar_view.image = contact.avatar.circularMask;
   if (contact.infinit_user == nil)
-  {
     self.icon_view.hidden = YES;
-  }
 }
 
 - (void)updateAvatar
