@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+#import "InfinitContact.h"
 
-@interface InfinitTabBarController : UITabBarController <UITabBarControllerDelegate>
+@interface InfinitTabBarController : UITabBarController
 
 - (void)lastSelectedIndex;
 - (void)setTabBarHidden:(BOOL)hidden animated:(BOOL)animate;
 - (void)showMainScreen;
+- (void)showSendScreenWithContact:(InfinitContact*)contact;
 - (void)showWelcomeScreen;
 
 @end

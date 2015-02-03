@@ -30,7 +30,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   TabBarIndexSettings,
 };
 
-@interface InfinitTabBarController ()
+@interface InfinitTabBarController () <UITabBarControllerDelegate>
 
 @property (nonatomic) NSUInteger last_index;
 @property (nonatomic, strong) InfinitAccessGalleryView* permission_view;
@@ -237,6 +237,16 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   self.selectedIndex = TabBarIndexHome;
 }
 
+- (void)showSendScreenWithContact:(InfinitContact*)contact
+{
+  [self hideTabBarWithAnimation:YES];
+  _last_index = TabBarIndexContacts;
+  self.selectedIndex = TabBarIndexSend;
+  InfinitSendNavigationController* nav_controller =
+    (InfinitSendNavigationController*)self.selectedViewController;
+  nav_controller.recipient = contact;
+}
+
 - (void)showWelcomeScreen
 {
   UIStoryboard* board = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
@@ -265,7 +275,7 @@ shouldSelectViewController:(UIViewController*)viewController
     else if ([viewController.title isEqualToString:@"CONTACTS"])
     {
       UINavigationController* contacts_nav_controller = (UINavigationController*)viewController;
-      [contacts_nav_controller.viewControllers.firstObject scrollToTop];
+      [contacts_nav_controller.viewControllers.firstObject tabIconTap];
     }
     return NO;
   }
