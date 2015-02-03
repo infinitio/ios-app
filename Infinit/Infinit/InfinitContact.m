@@ -226,4 +226,26 @@ containsString:(NSString*)string
   return NO;
 }
 
+#pragma mark - NSObject
+
+- (id)initCopy:(InfinitContact*)original
+{
+  if (self = [super init])
+  {
+    _avatar = [original.avatar copy];
+    _emails = [original.emails copy];
+    _first_name = [original.first_name copy];
+    _fullname = [original.fullname copy];
+    _infinit_user = original.infinit_user;
+    _phone_numbers = [original.phone_numbers copy];
+    _selected_email_index = original.selected_email_index;
+  }
+  return self;
+}
+
+- (id)copyWithZone:(NSZone*)zone
+{
+  return [[InfinitContact allocWithZone:zone] initCopy:self];
+}
+
 @end
