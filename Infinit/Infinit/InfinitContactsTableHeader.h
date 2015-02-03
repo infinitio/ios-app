@@ -10,7 +10,6 @@
 
 @interface InfinitContactsTableHeader : UIView
 
-@property (nonatomic, weak) IBOutlet UIView* line;
 @property (nonatomic, weak) IBOutlet UILabel* title;
 
 @end

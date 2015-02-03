@@ -22,7 +22,7 @@
                     <color key="textColor" red="0.16078431372549018" green="0.16078431372549018" blue="0.16078431372549018" alpha="0.46000000000000002" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W6i-5j-Rwy">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W6i-5j-Rwy">
                     <rect key="frame" x="0.0" y="60" width="600" height="1"/>
                     <color key="backgroundColor" red="0.84313725490196079" green="0.84313725490196079" blue="0.84313725490196079" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -40,7 +40,6 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="line" destination="W6i-5j-Rwy" id="kvd-Np-Qoa"/>
                 <outlet property="title" destination="vMO-SF-RNG" id="BgR-JC-yHt"/>
             </connections>
             <point key="canvasLocation" x="426" y="433.5"/>
