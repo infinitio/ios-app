@@ -60,6 +60,12 @@
   [self.table_view deselectRowAtIndexPath:self.table_view.indexPathForSelectedRow animated:animated];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+  self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+  [super viewWillDisappear:animated];
+}
+
 #pragma mark - Table View Data Source
 
 - (NSInteger)tableView:(UITableView*)tableView
