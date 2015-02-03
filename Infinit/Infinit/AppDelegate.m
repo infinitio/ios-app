@@ -208,7 +208,6 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 - (void)application:(UIApplication*)application
 didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
-  NSLog(@"xxx unable to register for notifications: %@", error);
   if ([self canAutoLogin])
     [self tryLogin];
 }
@@ -218,7 +217,6 @@ handleActionWithIdentifier:(NSString*)identifier
 forRemoteNotification:(NSDictionary*)userInfo
   completionHandler:(void(^)())completionHandler
 {
-  NSLog(@"xxx handleActionWithIdentifier:forRemoteNotification: %@", userInfo);
   completionHandler();
 }
 
@@ -227,7 +225,6 @@ handleActionWithIdentifier:(NSString*)identifier
 forLocalNotification:(UILocalNotification*)notification
   completionHandler:(void(^)())completionHandler
 {
-  NSLog(@"xxx handleActionWithIdentifier:forLocalNotification: %@", notification);
   completionHandler();
 }
 
@@ -240,19 +237,24 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
     completionHandler(UIBackgroundFetchResultNoData);
     return;
   }
-  NSDictionary* dict = userInfo[@"i"];
-  UIBackgroundFetchResult res =
-    [[InfinitLocalNotificationManager sharedInstance] localNotificationForRemoteNotification:dict];
-  if (res == UIBackgroundFetchResultNewData)
-  {
-    [self performSelector:@selector(delayedCompletionHandlerWithNewData:)
-               withObject:completionHandler
-               afterDelay:10.0f];
-  }
-  else
-  {
-    completionHandler(res);
-  }
+
+  [self performSelector:@selector(delayedCompletionHandlerWithNewData:)
+             withObject:completionHandler
+             afterDelay:10.0f];
+
+//  NSDictionary* dict = userInfo[@"i"];
+//  UIBackgroundFetchResult res =
+//    [[InfinitLocalNotificationManager sharedInstance] localNotificationForRemoteNotification:dict];
+//  if (res == UIBackgroundFetchResultNewData)
+//  {
+//    [self performSelector:@selector(delayedCompletionHandlerWithNewData:)
+//               withObject:completionHandler
+//               afterDelay:10.0f];
+//  }
+//  else
+//  {
+//      completionHandler(res);
+//  }
 }
 
 - (void)delayedCompletionHandlerWithNewData:(void (^)(UIBackgroundFetchResult))completionHandler
