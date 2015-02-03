@@ -10,6 +10,6 @@
 
 @interface InfinitContactsViewController : UIViewController
 
-- (void)scrollToTop;
+- (void)tabIconTap;
 
 @end

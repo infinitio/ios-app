@@ -271,9 +271,17 @@
 
 #pragma mark - General
 
-- (void)scrollToTop
+- (void)tabIconTap
 {
-  [self.table_view scrollRectToVisible:CGRectMake(0.0f, 0.0f, 1.0f, 1.0f) animated:YES];
+  if (![self.navigationController.visibleViewController isEqual:self])
+  {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.table_view scrollRectToVisible:CGRectMake(0.0f, 0.0f, 1.0f, 1.0f) animated:NO];
+  }
+  else
+  {
+    [self.table_view scrollRectToVisible:CGRectMake(0.0f, 0.0f, 1.0f, 1.0f) animated:YES];
+  }
 }
 
 #pragma mark - Search Bar Delegate
@@ -367,7 +375,6 @@ viewForHeaderInSection:(NSInteger)section
   UINib* header_nib = [UINib nibWithNibName:@"InfinitContactsTableHeader" bundle:nil];
   InfinitContactsTableHeader* header_view =
     [[header_nib instantiateWithOwner:self options:nil] firstObject];
-  header_view.line.hidden = NO;
 
   if (section == 0)
   {
@@ -432,11 +439,11 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
   if (indexPath.section == 0)
   {
-    return 62.0f;
+    return 52.0f;
   }
   else
   {
-    return ([self askedForAddressBookAccess] ? 62.0f : 349.0f);
+    return ([self askedForAddressBookAccess] ? 52.0f : 349.0f);
   }
 }
 
