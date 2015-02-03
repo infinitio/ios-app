@@ -53,6 +53,9 @@
     [UINib nibWithNibName:NSStringFromClass(InfinitHomeOnboardingCell.class) bundle:nil];
   [self.collectionView registerNib:onboarding_cell_nib
         forCellWithReuseIdentifier:_onboarding_cell_id];
+  [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init]
+                                                forBarMetrics:UIBarMetricsDefault];
+  self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
 
 //  UISwipeGestureRecognizer* left_swipe_recognizer =
 //    [[UISwipeGestureRecognizer alloc] initWithTarget:self
@@ -83,6 +86,7 @@
     [self.onboarding_view removeFromSuperview];
     self.onboarding_view = nil;
   }
+  [self.collectionView scrollRectToVisible:CGRectMake(0.0f, 0.0f, 1.0f, 1.0f) animated:NO];
 }
 
 - (void)loadTransactions
