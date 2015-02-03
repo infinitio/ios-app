@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+#import "InfinitContact.h"
+
 @interface InfinitSendRecipientsController : UIViewController
 
 @property (nonatomic, strong) NSMutableArray* assets;
+@property (nonatomic, weak, readwrite) InfinitContact* recipient;
 
 - (void)resetView;
 

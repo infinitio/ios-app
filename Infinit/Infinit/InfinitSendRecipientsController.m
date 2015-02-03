@@ -157,6 +157,28 @@
   [super viewDidAppear:animated];
   [self.navigationController.navigationBar.subviews[0] setUserInteractionEnabled:YES];
   [self.navigationController.navigationBar.subviews[0] addGestureRecognizer:_nav_bar_tap];
+  if (self.recipient != nil)
+  {
+    NSIndexPath* path = nil;
+    if (self.recipient.infinit_user != nil)
+    {
+      NSUInteger index = [self.swagger_results indexOfObject:self.recipient];
+      path = [NSIndexPath indexPathForRow:index inSection:0];
+      [self.table_view selectRowAtIndexPath:path
+                                   animated:NO
+                             scrollPosition:UITableViewScrollPositionNone];
+    }
+    else
+    {
+      NSUInteger index = [self.contact_results indexOfObject:self.recipient];
+      path = [NSIndexPath indexPathForRow:index inSection:1];
+      [self.table_view selectRowAtIndexPath:path
+                                   animated:NO
+                             scrollPosition:UITableViewScrollPositionNone];
+    }
+    if (path != nil)
+      [self tableView:self.table_view didSelectRowAtIndexPath:path];
+  }
 }
 
 - (void)navBarTapped
@@ -166,6 +188,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+  _recipient = nil;
   [self.navigationController.navigationBar.subviews[0] removeGestureRecognizer:_nav_bar_tap];
   [super viewWillDisappear:animated];
   [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -493,9 +516,6 @@ viewForHeaderInSection:(NSInteger)section
   UINib* header_nib = [UINib nibWithNibName:@"InfinitContactsTableHeader" bundle:nil];
   InfinitContactsTableHeader* header_view =
     [[header_nib instantiateWithOwner:self options:nil] firstObject];
-  header_view.line.hidden = YES;
-  header_view.layer.borderColor = [InfinitColor colorWithGray:216].CGColor;
-  header_view.layer.borderWidth = 1.0f;
 
   if (section == 0)
   {
@@ -516,11 +536,11 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
   if (indexPath.section == 0)
   {
-    return 62.0f;
+    return 52.0f;
   }
   else
   {
-    return ([self askedForAddressBookAccess] ? 62.0f : 349.0f);
+    return ([self askedForAddressBookAccess] ? 52.0f : 349.0f);
   }
 }
 
