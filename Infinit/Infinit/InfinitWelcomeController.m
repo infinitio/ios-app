@@ -488,7 +488,7 @@
 {
   if (self.signup_form_view.email_field.text.isEmail &&
       self.signup_form_view.fullname_field.text.length >= 3 &&
-      self.signup_form_view.password_field.text.length > 3)
+      self.signup_form_view.password_field.text.length >= 3)
   {
     self.signup_form_view.next_button.enabled = YES;
     self.signup_form_view.next_button.hidden = NO;
