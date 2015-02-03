@@ -21,6 +21,9 @@
   [super viewDidLoad];
   self.navigationItem.titleView =
     [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-logo-red"]];
+  [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init]
+                                                forBarMetrics:UIBarMetricsDefault];
+  self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
