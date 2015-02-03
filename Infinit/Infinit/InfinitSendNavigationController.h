@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+#import "InfinitContact.h"
 #import "InfinitPortraitNavigationController.h"
 
 @interface InfinitSendNavigationController : InfinitPortraitNavigationController
+
+@property (nonatomic, copy, readwrite) InfinitContact* recipient;
 
 - (void)resetSendViews;
 

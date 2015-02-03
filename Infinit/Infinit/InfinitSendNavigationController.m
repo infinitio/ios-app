@@ -12,7 +12,7 @@
 #import "InfinitSendRecipientsController.h"
 #import "InfinitTabBarController.h"
 
-@interface InfinitSendNavigationController ()
+@interface InfinitSendNavigationController () <UINavigationControllerDelegate>
 
 @end
 
@@ -20,16 +20,23 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+  self.delegate = self;
   [self resetSendViews];
-  [[UIApplication sharedApplication] setStatusBarHidden:YES
-                                          withAnimation:UIStatusBarAnimationFade];
   [super viewWillAppear:animated];
+  [[UIApplication sharedApplication] setStatusBarHidden:YES
+                                          withAnimation:UIStatusBarAnimationSlide];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+  [super viewDidAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+  self.delegate = nil;
   [[UIApplication sharedApplication] setStatusBarHidden:NO
-                                          withAnimation:UIStatusBarAnimationSlide];
+                                          withAnimation:UIStatusBarAnimationFade];
   [(InfinitTabBarController*)self.tabBarController setTabBarHidden:NO animated:animated];
   [super viewWillDisappear:animated];
 }
@@ -38,6 +45,7 @@
 {
   [self popToRootViewControllerAnimated:NO];
   [super viewDidDisappear:animated];
+  _recipient = nil;
 }
 
 - (void)resetSendViews
@@ -52,6 +60,17 @@
     {
       [(InfinitSendRecipientsController*)controller resetView];
     }
+  }
+}
+
+- (void)navigationController:(UINavigationController*)navigationController
+      willShowViewController:(UIViewController*)viewController
+                    animated:(BOOL)animated;
+{
+  if (self.recipient != nil && [viewController isKindOfClass:InfinitSendRecipientsController.class])
+  {
+    InfinitSendRecipientsController* controller = (InfinitSendRecipientsController*)viewController;
+    controller.recipient = self.recipient;
   }
 }
 
