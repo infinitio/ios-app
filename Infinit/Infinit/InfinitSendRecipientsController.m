@@ -9,14 +9,15 @@
 #import "InfinitSendRecipientsController.h"
 
 #import "InfinitAccessContactsView.h"
+#import "InfinitApplicationSettings.h"
 #import "InfinitColor.h"
 #import "InfinitContact.h"
 #import "InfinitImportOverlayView.h"
 #import "InfinitSendContactCell.h"
 #import "InfinitContactImportCell.h"
 #import "InfinitSendNoResultsCell.h"
+#import "InfinitSendToSelfOverlayView.h"
 #import "InfinitSendUserCell.h"
-#import "InfinitContactsTableHeader.h"
 #import "InfinitTabBarController.h"
 
 #import <Gap/InfinitPeerTransactionManager.h>
@@ -44,11 +45,17 @@
 
 @property (nonatomic, strong) InfinitAccessContactsView* contacts_overlay;
 @property (nonatomic, strong) InfinitImportOverlayView* import_overlay;
-@property (nonatomic, strong) NSMutableArray* all_contacts;
-@property (nonatomic, strong) NSArray* contact_results;
-@property (nonatomic, strong) NSMutableOrderedSet* recipients;
+@property (nonatomic, strong) InfinitSendToSelfOverlayView* send_to_self_overlay;
+
+@property (nonatomic, strong) InfinitContact* me_contact;
+@property (nonatomic) BOOL me_match;
+@property (nonatomic, strong) NSMutableArray* all_favorites;
+@property (nonatomic, strong) NSMutableArray* favorite_results;
 @property (nonatomic, strong) NSMutableArray* all_swaggers;
-@property (nonatomic, strong) NSArray* swagger_results;
+@property (nonatomic, strong) NSMutableArray* swagger_results;
+@property (nonatomic, strong) NSMutableArray* all_contacts;
+@property (nonatomic, strong) NSMutableArray* contact_results;
+@property (nonatomic, strong) NSMutableOrderedSet* recipients;
 
 @end
 
@@ -57,10 +64,12 @@
 @private
   NSString* _managed_files_id;
 
+  NSString* _me_cell_id;
+  NSString* _favorite_cell_id;
+  NSString* _infinit_user_cell_id;
   NSString* _contact_cell_id;
   NSString* _import_cell_id;
   NSString* _no_results_cell_id;
-  NSString* _user_cell_id;
 
   NSString* _last_search;
   UITapGestureRecognizer* _nav_bar_tap;
@@ -72,10 +81,12 @@
 {
   if (self = [super initWithCoder:aDecoder])
   {
+    _me_cell_id = @"send_user_me_cell";
+    _favorite_cell_id = @"send_user_favorite_cell";
+    _infinit_user_cell_id = @"send_user_infinit_cell";
     _contact_cell_id = @"send_contact_cell";
     _import_cell_id = @"contact_import_cell";
     _no_results_cell_id = @"send_no_results_cell";
-    _user_cell_id = @"send_user_cell";
     _nav_bar_tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                            action:@selector(navBarTapped)];
   }
@@ -117,14 +128,16 @@
                                   NSForegroundColorAttributeName: [UIColor whiteColor]};
   [self.navigationController.navigationBar setTitleTextAttributes:nav_bar_attrs];
   [self.invite_button setTitleTextAttributes:nav_bar_attrs forState:UIControlStateNormal];
+  self.table_view.separatorStyle = UITableViewCellSeparatorStyleNone;
+  self.table_view.contentInset = UIEdgeInsetsMake(-1.0f, 0.0f, 0.0f, 0.0);
 }
 
 - (void)configureSearchField
 {
-  if (self.swagger_results.count > 1 && self.contact_results.count > 0)
-    self.search_field.placeholderText = NSLocalizedString(@"Send by email or search...", nil);
+  if ((self.favorite_results.count +  self.swagger_results.count) > 1)
+    self.search_field.placeholderText = NSLocalizedString(@"Type email or search...", nil);
   else
-    self.search_field.placeholderText = NSLocalizedString(@"Send by email...", nil);
+    self.search_field.placeholderText = NSLocalizedString(@"Type email or send to yourself...", nil);
   self.search_field.toLabelTextColor = [UIColor blackColor];
   self.search_field.maxHeight = 112.0f;
   self.search_field.delegate = self;
@@ -133,6 +146,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+  _me_match = YES;
   [self fetchSwaggers];
   if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
   {
@@ -159,25 +173,38 @@
   [self.navigationController.navigationBar.subviews[0] addGestureRecognizer:_nav_bar_tap];
   if (self.recipient != nil)
   {
-    NSIndexPath* path = nil;
-    if (self.recipient.infinit_user != nil)
+    NSUInteger section = NSNotFound;
+    NSUInteger row = NSNotFound;
+    if ([self.recipient isEqual:self.me_contact])
     {
-      NSUInteger index = [self.swagger_results indexOfObject:self.recipient];
-      path = [NSIndexPath indexPathForRow:index inSection:0];
-      [self.table_view selectRowAtIndexPath:path
-                                   animated:NO
-                             scrollPosition:UITableViewScrollPositionNone];
+      section = 0;
+    }
+    else if (self.recipient.infinit_user != nil)
+    {
+      if (self.recipient.infinit_user.favorite)
+      {
+        section = 1;
+        row = [self.favorite_results indexOfObject:self.recipient];
+      }
+      else
+      {
+        section = 2;
+        row = [self.swagger_results indexOfObject:self.recipient];
+      }
     }
     else
     {
-      NSUInteger index = [self.contact_results indexOfObject:self.recipient];
-      path = [NSIndexPath indexPathForRow:index inSection:1];
+      section = 3;
+      row = [self.contact_results indexOfObject:self.recipient];
+    }
+    if (section != NSNotFound && row != NSNotFound)
+    {
+      NSIndexPath* path = [NSIndexPath indexPathForRow:0 inSection:0];
       [self.table_view selectRowAtIndexPath:path
                                    animated:NO
                              scrollPosition:UITableViewScrollPositionNone];
-    }
-    if (path != nil)
       [self tableView:self.table_view didSelectRowAtIndexPath:path];
+    }
   }
 }
 
@@ -204,14 +231,21 @@
 
 - (void)fetchSwaggers
 {
-  self.all_swaggers = [NSMutableArray array];
-  for (InfinitUser* user in [[InfinitUserManager sharedInstance] swaggers])
+  InfinitUserManager* manager = [InfinitUserManager sharedInstance];
+  self.me_contact = [[InfinitContact alloc] initWithInfinitUser:[manager me]];
+  self.all_favorites = [NSMutableArray array];
+  for (InfinitUser* user in [manager favorites])
   {
-    if (user.ghost)
-      continue;
-    InfinitContact* contact = [[InfinitContact alloc] initWithInfinitUser:user];
-    [self.all_swaggers addObject:contact];
+    if (!user.ghost && !user.deleted)
+      [self.all_favorites addObject:[[InfinitContact alloc] initWithInfinitUser:user]];
   }
+  self.all_swaggers = [NSMutableArray array];
+  for (InfinitUser* user in [manager time_ordered_swaggers])
+  {
+    if (!user.ghost && !user.deleted)
+      [self.all_swaggers addObject:[[InfinitContact alloc] initWithInfinitUser:user]];
+  }
+  self.favorite_results = [self.all_favorites copy];
   self.swagger_results = [self.all_swaggers copy];
   [self.table_view reloadData];
 }
@@ -248,7 +282,8 @@
 
 - (void)showAddressBookOverlay
 {
-  UINib* overlay_nib = [UINib nibWithNibName:@"InfinitAccessContactsView" bundle:nil];
+  UINib* overlay_nib = [UINib nibWithNibName:NSStringFromClass(InfinitAccessContactsView.class)
+                                      bundle:nil];
   self.contacts_overlay = [[overlay_nib instantiateWithOwner:self options:nil] firstObject];
   [self.contacts_overlay.access_button addTarget:self
                                           action:@selector(accessAddressBook:)
@@ -264,7 +299,8 @@
 {
   if (self.import_overlay == nil)
   {
-    UINib* overlay_nib = [UINib nibWithNibName:@"InfinitImportOverlayView" bundle:nil];
+    UINib* overlay_nib = [UINib nibWithNibName:NSStringFromClass(InfinitImportOverlayView.class)
+                                        bundle:nil];
     self.import_overlay = [[overlay_nib instantiateWithOwner:self options:nil] firstObject];
     [self.import_overlay.phone_contacts_button addTarget:self
                                                   action:@selector(accessAddressBook:)
@@ -274,6 +310,23 @@
                               forControlEvents:UIControlEventTouchUpInside];
   }
   [self showOverlayView:self.import_overlay];
+}
+
+- (void)showSendToSelfOverlay
+{
+  if (self.send_to_self_overlay == nil)
+  {
+    UINib* overlay_nib = [UINib nibWithNibName:NSStringFromClass(InfinitSendToSelfOverlayView.class)
+                                        bundle:nil];
+    self.send_to_self_overlay = [[overlay_nib instantiateWithOwner:self options:nil] firstObject];
+    [self.send_to_self_overlay.already_infinit_button addTarget:self
+                                                         action:@selector(cancelOverlayFromButton:)
+                                    forControlEvents:UIControlEventTouchUpInside];
+    [self.send_to_self_overlay.send_email_button addTarget:self
+                                                    action:@selector(cancelOverlayFromButton:)
+                                          forControlEvents:UIControlEventTouchUpInside];
+  }
+  [self showOverlayView:self.send_to_self_overlay];
 }
 
 - (void)showOverlayView:(UIView*)view
@@ -430,7 +483,7 @@
 //  if ([self noResults])
 //    return 1;
 //  else
-    return 2;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView*)tableView
@@ -441,13 +494,19 @@
 //    return 1;
 //  }
 //  else if (section == 0)
-  if (section == 0)
+  switch (section)
   {
-    return self.swagger_results.count;
-  }
-  else
-  {
-    return ([self askedForAddressBookAccess] ? self.contact_results.count : 1);
+    case 0:
+      return self.me_match ? 1 : 0;
+    case 1:
+      return self.favorite_results.count;
+    case 2:
+      return self.swagger_results.count;
+    case 3:
+      return ([self askedForAddressBookAccess] ? self.contact_results.count : 1);
+
+    default:
+      return 0;
   }
 }
 
@@ -467,10 +526,26 @@
 //  else if (indexPath.section == 0)
   if (indexPath.section == 0)
   {
-    InfinitSendUserCell* cell = [tableView dequeueReusableCellWithIdentifier:_user_cell_id
+    InfinitSendUserCell* cell = [tableView dequeueReusableCellWithIdentifier:_me_cell_id
                                                                 forIndexPath:indexPath];
-    contact = self.swagger_results[indexPath.row];
-    cell.contact = contact;
+    cell.contact = self.me_contact;
+    cell.user_type_view.hidden = NO;
+    res = cell;
+  }
+  else if (indexPath.section == 1)
+  {
+    InfinitSendUserCell* cell = [tableView dequeueReusableCellWithIdentifier:_favorite_cell_id 
+                                                                forIndexPath:indexPath];
+    cell.contact = self.favorite_results[indexPath.row];
+    cell.user_type_view.hidden = !(indexPath.row == 0);
+    res = cell;
+  }
+  else if (indexPath.section == 2)
+  {
+    InfinitSendUserCell* cell = [tableView dequeueReusableCellWithIdentifier:_infinit_user_cell_id
+                                                                forIndexPath:indexPath];
+    cell.contact = self.swagger_results[indexPath.row];
+    cell.user_type_view.hidden = !(indexPath.row == 0);
     res = cell;
   }
   else
@@ -490,6 +565,13 @@
                                                                      forIndexPath:indexPath];
       contact = self.contact_results[indexPath.row];
       cell.contact = contact;
+      if (indexPath.row == 0)
+        cell.letter_label.hidden = NO;
+      else if (![[[self.contact_results[indexPath.row - 1] fullname] substringToIndex:1].lowercaseString isEqualToString:
+                 [[self.contact_results[indexPath.row] fullname] substringToIndex:1].lowercaseString])
+        cell.letter_label.hidden = NO;
+      else
+        cell.letter_label.hidden = YES;
       res = cell;
     }
   }
@@ -505,43 +587,58 @@
 - (CGFloat)tableView:(UITableView*)tableView
 heightForHeaderInSection:(NSInteger)section
 {
-  if (section == 1 && self.all_contacts.count == 0)
-    return 1.0f;
-  return 35.0f;
+  switch (section)
+  {
+    case 0:
+      if (_me_match)
+        break;
+      else
+        return 0.0f;
+    case 1:
+      if (self.favorite_results.count > 0)
+        break;
+      else
+        return 0.0f;
+    case 2:
+      if (self.swagger_results.count > 0)
+        break;
+      else
+        return 0.0f;
+    case 3:
+      if (self.contact_results.count > 0)
+        break;
+      else
+        return 0.0f;
+
+    default:
+      break;
+  }
+  return 1.0f;
 }
 
 - (UIView*)tableView:(UITableView*)tableView
 viewForHeaderInSection:(NSInteger)section
 {
-  UINib* header_nib = [UINib nibWithNibName:@"InfinitContactsTableHeader" bundle:nil];
-  InfinitContactsTableHeader* header_view =
-    [[header_nib instantiateWithOwner:self options:nil] firstObject];
-
-  if (section == 0)
-  {
-    header_view.title.text = NSLocalizedString(@"My contacts on Infinit", nil);
-  }
-  else if (section == 1)
-  {
-    if (self.all_contacts.count > 0)
-      header_view.title.text = NSLocalizedString(@"Other contacts", nil);
-    else
-      header_view.title.text = @"";
-  }
-  return header_view;
+  UIView* header = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f,
+                                                            tableView.bounds.size.width, 1.0f)];
+  CGFloat right = 22.0f;
+  CGFloat left = 15.0f;
+  UIView* line = [[UIView alloc] initWithFrame:CGRectMake(left,
+                                                          0.0f,
+                                                          tableView.bounds.size.width - left - right,
+                                                          1.0f)];
+  line.backgroundColor = [InfinitColor colorWithGray:227];
+  [header addSubview:line];
+  return header;
 }
 
 - (CGFloat)tableView:(UITableView*)tableView
 heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-  if (indexPath.section == 0)
-  {
-    return 52.0f;
-  }
+  if (indexPath.section == 3 && ![self askedForAddressBookAccess])
+    return 349.0f;
   else
-  {
-    return ([self askedForAddressBookAccess] ? 52.0f : 349.0f);
-  }
+    return 62.0f;
 }
 
 #pragma mark - Table View Delegate
@@ -549,7 +646,7 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
 - (BOOL)tableView:(UITableView*)tableView
 shouldHighlightRowAtIndexPath:(NSIndexPath*)indexPath
 {
-  if (![self askedForAddressBookAccess] && indexPath.section == 1)
+  if (![self askedForAddressBookAccess] && indexPath.section == 3)
     return NO;
   return YES;
 }
@@ -562,9 +659,23 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   InfinitContact* contact = nil;
   if (indexPath.section == 0)
   {
-    contact = self.swagger_results[indexPath.row];
+    InfinitApplicationSettings* settings = [InfinitApplicationSettings sharedInstance];
+    if (![[settings send_to_self_onboarded] isEqualToNumber:@1])
+    {
+      [settings setSend_to_self_onboarded:@1];
+      [self showSendToSelfOverlay];
+    }
+    contact = self.me_contact;
   }
   else if (indexPath.section == 1)
+  {
+    contact = self.favorite_results[indexPath.row];
+  }
+  else if (indexPath.section == 2)
+  {
+    contact = self.swagger_results[indexPath.row];
+  }
+  else if (indexPath.section == 3)
   {
     contact = self.contact_results[indexPath.row];
     if (contact.emails.count == 1)
@@ -599,7 +710,7 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   [self.recipients removeObject:contact];
   [self.table_view deselectRowAtIndexPath:[NSIndexPath indexPathForRow:[self.contact_results
                                                                         indexOfObject:contact]
-                                                             inSection:1]
+                                                             inSection:3]
                                  animated:NO];
   [self.search_field reloadData];
   [self updateSendButton];
@@ -614,7 +725,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
     [self.recipients removeObject:contact];
     [self.table_view deselectRowAtIndexPath:[NSIndexPath indexPathForRow:[self.contact_results
                                                                           indexOfObject:contact]
-                                                               inSection:1]
+                                                               inSection:3]
                                    animated:YES];
     [self.search_field reloadData];
   }
@@ -721,16 +832,27 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
 didDeleteTokenAtIndex:(NSUInteger)index
 {
   InfinitContact* contact = self.recipients[index];
-  if ([self.swagger_results containsObject:contact])
+  if ([contact isEqual:self.me_contact])
+  {
+    [self.table_view deselectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
+                                   animated:YES];
+  }
+  else if ([self.favorite_results containsObject:contact])
+  {
+    NSUInteger table_index = [self.favorite_results indexOfObject:contact];
+    [self.table_view deselectRowAtIndexPath:[NSIndexPath indexPathForRow:table_index inSection:1]
+                                   animated:YES];
+  }
+  else if ([self.swagger_results containsObject:contact])
   {
     NSUInteger table_index = [self.swagger_results indexOfObject:contact];
-    [self.table_view deselectRowAtIndexPath:[NSIndexPath indexPathForRow:table_index inSection:0]
+    [self.table_view deselectRowAtIndexPath:[NSIndexPath indexPathForRow:table_index inSection:2]
                                    animated:YES];
   }
   else if ([self.contact_results containsObject:contact])
   {
     NSUInteger table_index = [self.contact_results indexOfObject:contact];
-    [self.table_view deselectRowAtIndexPath:[NSIndexPath indexPathForRow:table_index inSection:1]
+    [self.table_view deselectRowAtIndexPath:[NSIndexPath indexPathForRow:table_index inSection:3]
                                    animated:YES];
   }
   [self.recipients removeObjectAtIndex:index];
@@ -792,23 +914,42 @@ didDeleteTokenAtIndex:(NSUInteger)index
 - (void)reloadSearchResults
 {
   NSMutableIndexSet* sections = [NSMutableIndexSet indexSet];
+  if (!_me_match)
+  {
+    _me_match = YES;
+    [sections addIndex:0];
+  }
+  if (![self.favorite_results isEqualToArray:self.all_favorites])
+  {
+    self.favorite_results = [self.all_favorites copy];
+    [sections addIndex:1];
+  }
   if (![self.swagger_results isEqualToArray:self.all_swaggers])
   {
     self.swagger_results = [self.all_swaggers copy];
-    [sections addIndex:0];
+    [sections addIndex:2];
   }
   if (![self.contact_results isEqualToArray:self.all_contacts])
   {
     self.contact_results = [self.all_contacts copy];
-    [sections addIndex:1];
+    [sections addIndex:3];
   }
-  if (sections.count == 0)
-    return;
-  [self.table_view reloadSections:sections withRowAnimation:UITableViewRowAnimationAutomatic];
+  if (sections.count > 0)
+    [self.table_view reloadSections:sections withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 - (void)updateSearchResultsWithSearchString:(NSString*)search_string
 {
+  if ([self.me_contact containsSearchString:search_string])
+    _me_match = YES;
+  else
+    _me_match = NO;
+  NSMutableArray* favorites_temp = [NSMutableArray array];
+  for (InfinitContact* contact in self.all_favorites)
+  {
+    if ([contact containsSearchString:search_string])
+      [favorites_temp addObject:contact];
+  }
   NSMutableArray* swaggers_temp = [NSMutableArray array];
   for (InfinitContact* contact in self.all_swaggers)
   {
@@ -822,15 +963,21 @@ didDeleteTokenAtIndex:(NSUInteger)index
       [contacts_temp addObject:contact];
   }
   NSMutableIndexSet* sections = [NSMutableIndexSet indexSet];
+  [sections addIndex:0];
+  if (![self.favorite_results isEqualToArray:favorites_temp])
+  {
+    self.favorite_results = favorites_temp;
+    [sections addIndex:1];
+  }
   if (![self.swagger_results isEqualToArray:swaggers_temp])
   {
     self.swagger_results = swaggers_temp;
-    [sections addIndex:0];
+    [sections addIndex:2];
   }
   if (![self.contact_results isEqualToArray:contacts_temp])
   {
     self.contact_results = contacts_temp;
-    [sections addIndex:1];
+    [sections addIndex:3];
   }
   if (sections.count > 0)
   {
@@ -848,12 +995,31 @@ didDeleteTokenAtIndex:(NSUInteger)index
 - (void)userAvatarFetched:(NSNotification*)notification
 {
   NSNumber* updated_id = notification.userInfo[@"id"];
+  if ([self.me_contact.infinit_user.id_ isEqual:updated_id])
+  {
+    NSIndexPath* path = [NSIndexPath indexPathForRow:0 inSection:0];
+    InfinitSendUserCell* cell = (InfinitSendUserCell*)[self.table_view cellForRowAtIndexPath:path];
+    [cell performSelectorOnMainThread:@selector(updateAvatar) withObject:nil waitUntilDone:NO];
+    return;
+  }
   NSUInteger row = 0;
+  for (InfinitContact* contact in self.favorite_results)
+  {
+    if ([contact.infinit_user.id_ isEqualToNumber:updated_id])
+    {
+      NSIndexPath* path = [NSIndexPath indexPathForRow:row inSection:1];
+      InfinitSendUserCell* cell = (InfinitSendUserCell*)[self.table_view cellForRowAtIndexPath:path];
+      [cell performSelectorOnMainThread:@selector(updateAvatar) withObject:nil waitUntilDone:NO];
+      return;
+    }
+    row++;
+  }
+  row = 0;
   for (InfinitContact* contact in self.swagger_results)
   {
     if ([contact.infinit_user.id_ isEqualToNumber:updated_id])
     {
-      NSIndexPath* path = [NSIndexPath indexPathForRow:row inSection:0];
+      NSIndexPath* path = [NSIndexPath indexPathForRow:row inSection:2];
       InfinitSendUserCell* cell = (InfinitSendUserCell*)[self.table_view cellForRowAtIndexPath:path];
       [cell performSelectorOnMainThread:@selector(updateAvatar) withObject:nil waitUntilDone:NO];
       return;
@@ -866,7 +1032,9 @@ didDeleteTokenAtIndex:(NSUInteger)index
 
 - (BOOL)noResults
 {
-  return (self.swagger_results.count == 0 && self.contact_results.count == 0);
+  return (self.favorite_results.count == 0 &&
+          self.swagger_results.count == 0 &&
+          self.contact_results.count == 0);
 }
 
 - (BOOL)askedForAddressBookAccess
