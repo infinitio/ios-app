@@ -148,15 +148,6 @@
 {
   _me_match = YES;
   [self fetchSwaggers];
-  if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
-  {
-    [self fetchAddressBook];
-//    self.invite_button.enabled = YES;
-  }
-  else
-  {
-//    self.invite_button.enabled = NO;
-  }
   [self configureSearchField];
   [super viewWillAppear:animated];
   [[NSNotificationCenter defaultCenter] addObserver:self
@@ -171,6 +162,10 @@
   [super viewDidAppear:animated];
   [self.navigationController.navigationBar.subviews[0] setUserInteractionEnabled:YES];
   [self.navigationController.navigationBar.subviews[0] addGestureRecognizer:_nav_bar_tap];
+  if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
+  {
+    [self fetchAddressBook];
+  }
   if (self.recipient != nil)
   {
     NSUInteger section = NSNotFound;
@@ -257,27 +252,35 @@
   {
     CFErrorRef* error = nil;
     ABAddressBookRef address_book = ABAddressBookCreateWithOptions(NULL, error);
-    ABRecordRef source = ABAddressBookCopyDefaultSource(address_book);
-    CFArrayRef contacts =
+    self.all_contacts = [NSMutableArray array];
+    CFArrayRef sources = ABAddressBookCopyArrayOfAllSources(address_book);
+    for (int i = 0; i < CFArrayGetCount(sources); i++)
+    {
+      ABRecordRef source = CFArrayGetValueAtIndex(sources, i);
+      CFArrayRef contacts =
       ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(address_book,
                                                                 source,
                                                                 kABPersonSortByFirstName);
-    self.all_contacts = [NSMutableArray array];
-
-    for (int i = 0; i < CFArrayGetCount(contacts); i++)
-    {
-      ABRecordRef person = CFArrayGetValueAtIndex(contacts, i);
-      if (person)
+      for (int i = 0; i < CFArrayGetCount(contacts); i++)
       {
-        InfinitContact* contact = [[InfinitContact alloc] initWithABRecord:person];
-        if (contact != nil && contact.emails.count > 0)
-          [self.all_contacts addObject:contact];
+        ABRecordRef person = CFArrayGetValueAtIndex(contacts, i);
+        if (person)
+        {
+          InfinitContact* contact = [[InfinitContact alloc] initWithABRecord:CFAutorelease(person)];
+          if (contact != nil && contact.emails.count > 0)
+            [self.all_contacts addObject:contact];
+        }
       }
+      CFRelease(contacts);
     }
-    self.contact_results = [self.all_contacts copy];
+    CFRelease(sources);
+    NSSortDescriptor* sort = [NSSortDescriptor sortDescriptorWithKey:@"fullname" ascending:YES];
+    [self.all_contacts sortUsingDescriptors:@[sort]];
+    self.contact_results = [self.all_contacts mutableCopy];
     [self.table_view reloadData];
   }
 }
+
 
 #pragma mark - Overlays
 
