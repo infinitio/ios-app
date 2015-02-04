@@ -80,7 +80,6 @@ static UIImage* _infinit_icon = nil;
   {
     self.icon_view.hidden = YES;
     [self setFavoriteButtonHidden:YES];
-    [self setSendButtonToInvite:YES];
     self.email_title_label.hidden = NO;
     self.email_address_label.hidden = NO;
     NSMutableString* email_str = [[NSMutableString alloc] init];
@@ -109,18 +108,8 @@ static UIImage* _infinit_icon = nil;
     }
     self.icon_view.hidden = NO;
     [self setFavoriteButtonHidden:self.contact.infinit_user.is_self];
-    [self setSendButtonToInvite:NO];
   }
   self.name_label.text = self.contact.fullname;
-}
-
-- (void)setSendButtonToInvite:(BOOL)invite
-{
-  NSString* text = invite ? NSLocalizedString(@"INVITE TO INFINIT", nil)
-                          : NSLocalizedString(@"SEND", nil);
-  self.send_size_constraint.constant = invite ? 160.0f : 82.0f;
-  [self.send_invite_button setTitle:text
-                           forState:UIControlStateNormal];
 }
 
 - (void)setFavoriteButtonHidden:(BOOL)hidden
