@@ -42,10 +42,12 @@
 
 - (void)setUpInit
 {
+    self.layer.borderColor = [InfinitColor colorWithRed:78 green:75 blue:75].CGColor;
+    self.layer.borderWidth = 1.0f;
     self.layer.cornerRadius = self.frame.size.height / 2.0f;
     self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapToken:)];
-    self.colorScheme = [UIColor blueColor];
-    self.textColor = [UIColor whiteColor];
+    self.colorScheme = [UIColor clearColor];
+    self.textColor = [InfinitColor colorWithRed:78 green:75 blue:75];
     self.titleLabel.textColor = self.textColor;
     [self addGestureRecognizer:self.tapGestureRecognizer];
 }
@@ -66,8 +68,8 @@
 - (void)setHighlighted:(BOOL)highlighted
 {
     _highlighted = highlighted;
-  UIColor *backgroundColor = highlighted ? [InfinitColor colorWithRed:35 green:168 blue:167] : [InfinitColor colorFromPalette:ColorShamRock];
-    self.titleLabel.textColor = [UIColor whiteColor];
+  UIColor *backgroundColor = highlighted ? [InfinitColor colorWithRed:78 green:75 blue:75] : [UIColor clearColor];
+  self.titleLabel.textColor = highlighted ? [UIColor whiteColor] : [InfinitColor colorWithRed:78 green:75 blue:75];
     self.backgroundColor = backgroundColor;
 }
 
