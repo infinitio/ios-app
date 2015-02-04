@@ -109,7 +109,10 @@
     {
 //      
     }
+    self.search_bar.text = @"";
+    [self reloadSearchResults];
   }
+  [self.table_view scrollRectToVisible:CGRectMake(0.0f, 0.0f, 1.0f, 2.0f) animated:NO];
   [super viewWillAppear:animated];
 }
 
