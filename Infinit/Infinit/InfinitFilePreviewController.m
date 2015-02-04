@@ -49,7 +49,7 @@
 {
   [super viewDidLoad];
   self.navigationItem.title = self.folder.name;
-  UIImage* back_image = [UIImage imageNamed:@"icon-back-white"];
+  UIImage* back_image = [UIImage imageNamed:@"icon-arrow-down-red"];
   UIBarButtonItem* back_button = [[UIBarButtonItem alloc] initWithImage:back_image
                                                                   style:UIBarButtonItemStylePlain
                                                                  target:self 
