@@ -175,13 +175,14 @@
   {
     NSUInteger section = NSNotFound;
     NSUInteger row = NSNotFound;
-    if ([self.recipient isEqual:self.me_contact])
+    if (self.recipient.infinit_user != nil)
     {
-      section = 0;
-    }
-    else if (self.recipient.infinit_user != nil)
-    {
-      if (self.recipient.infinit_user.favorite)
+      if (self.recipient.infinit_user.is_self)
+      {
+        section = 0;
+        row = 0;
+      }
+      else if (self.recipient.infinit_user.favorite)
       {
         section = 1;
         row = [self.favorite_results indexOfObject:self.recipient];
@@ -199,7 +200,7 @@
     }
     if (section != NSNotFound && row != NSNotFound)
     {
-      NSIndexPath* path = [NSIndexPath indexPathForRow:0 inSection:0];
+      NSIndexPath* path = [NSIndexPath indexPathForRow:row inSection:section];
       [self.table_view selectRowAtIndexPath:path
                                    animated:NO
                              scrollPosition:UITableViewScrollPositionNone];
