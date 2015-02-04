@@ -38,12 +38,12 @@
                     </constraints>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
                     <state key="normal" title="ACCESS MY CAMERA GALLERY">
-                        <color key="titleColor" red="0.94901960784313721" green="0.36862745098039218" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleColor" red="0.2196078431372549" green="0.2196078431372549" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
             </subviews>
-            <color key="backgroundColor" red="0.94901960784313721" green="0.36862745098039218" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.2196078431372549" green="0.2196078431372549" blue="0.19607843137254902" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="nK8-AH-e2U" secondAttribute="centerX" id="6SD-6i-Yus"/>
                 <constraint firstAttribute="centerY" secondItem="vfK-md-Jc5" secondAttribute="centerY" id="RG4-iw-mNX"/>
