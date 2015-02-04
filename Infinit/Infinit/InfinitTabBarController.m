@@ -120,6 +120,12 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   [self updateHomeBadge];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+  [[UIApplication sharedApplication] setStatusBarHidden:NO];
+  [super viewWillAppear:animated];
+}
+
 - (void)updateHomeBadge
 {
   NSArray* transactions = [[InfinitPeerTransactionManager sharedInstance] transactions];
