@@ -13,6 +13,7 @@
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitKeychain.h"
 #import "InfinitLocalNotificationManager.h"
+#import "InfinitWelcomeOnboardingNavigationController.h"
 
 #import <Gap/InfinitAvatarManager.h>
 #import <Gap/InfinitConnectionManager.h>
@@ -22,7 +23,11 @@
 
 #import "NSData+Conversion.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () <InfinitWelcomeOnboardingProtocol>
+
+@property (nonatomic, weak) InfinitWelcomeOnboardingNavigationController* onboarding_controller;
+@property (nonatomic, readonly) BOOL onboarding;
+
 @end
 
 @implementation AppDelegate
@@ -34,23 +39,35 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   [InfinitConnectionManager sharedInstance];
   [InfinitStateManager startState];
 
-  [self registerForNotifications];
-
   self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
   UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-  NSString* identifier = nil;
 
-  if ([self canAutoLogin])
+  if (![[[InfinitApplicationSettings sharedInstance] welcome_onboarded] isEqualToNumber:@1])
   {
-//    [self tryLogin];
-    identifier = @"logging_in_controller";
+    _onboarding = YES;
+    [[InfinitApplicationSettings sharedInstance] setWelcome_onboarded:@1];
+    self.onboarding_controller =
+      [storyboard instantiateViewControllerWithIdentifier:@"welcome_onboarding"];
+    self.onboarding_controller.delegate = self;
+    self.window.rootViewController = self.onboarding_controller;
   }
   else
   {
-    identifier = @"welcome_controller";
+    _onboarding = NO;
+    if ([self canAutoLogin])
+    {
+      self.window.rootViewController =
+        [storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
+    }
+    else
+    {
+      self.window.rootViewController =
+        [storyboard instantiateViewControllerWithIdentifier:@"welcome_controller"];
+    }
   }
-  self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:identifier];
   [self.window makeKeyAndVisible];
+
+  [self registerForNotifications];
 
   return YES;
 }
@@ -201,14 +218,14 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
   [InfinitStateManager sharedInstance].push_token = deviceToken.hexadecimalString;
-  if ([self canAutoLogin])
+  if ([self canAutoLogin] && !self.onboarding)
     [self tryLogin];
 }
 
 - (void)application:(UIApplication*)application
 didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
-  if ([self canAutoLogin])
+  if ([self canAutoLogin] && !self.onboarding)
     [self tryLogin];
 }
 
@@ -260,6 +277,26 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 - (void)delayedCompletionHandlerWithNewData:(void (^)(UIBackgroundFetchResult))completionHandler
 {
   completionHandler(UIBackgroundFetchResultNewData);
+}
+
+#pragma mark - Welcome Onboarding Protocol
+
+- (void)welcomeOnboardingDone
+{
+  UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+  if ([self canAutoLogin])
+  {
+    [self tryLogin];
+    self.window.rootViewController =
+      [storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
+  }
+  else
+  {
+    self.window.rootViewController =
+      [storyboard instantiateViewControllerWithIdentifier:@"welcome_controller"];
+  }
+  [self.window makeKeyAndVisible];
+  self.onboarding_controller = nil;
 }
 
 
