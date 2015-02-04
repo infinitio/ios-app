@@ -8,6 +8,18 @@
 
 #import "InfinitPortraitNavigationController.h"
 
+@protocol InfinitWelcomeOnboardingProtocol;
+
 @interface InfinitWelcomeOnboardingNavigationController : InfinitPortraitNavigationController
+
+@property (nonatomic, readwrite) id<InfinitWelcomeOnboardingProtocol> delegate;
+
+- (void)onboardingDone;
+
+@end
+
+@protocol InfinitWelcomeOnboardingProtocol <NSObject>
+
+- (void)welcomeOnboardingDone;
 
 @end

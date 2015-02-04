@@ -8,30 +8,57 @@
 
 #import "InfinitWelcomeOnboardingController.h"
 
+#import "InfinitHostDevice.h"
+#import "InfinitWelcomeOnboardingNavigationController.h"
+
 @interface InfinitWelcomeOnboardingController ()
+
+@property (nonatomic, weak) IBOutlet UIButton* next_button;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* bottom_constraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* image_constraint;
 
 @end
 
 @implementation InfinitWelcomeOnboardingController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+- (void)viewDidLoad
+{
+  [[UIApplication sharedApplication] setStatusBarHidden:YES];
+  self.next_button.layer.cornerRadius = self.next_button.bounds.size.height / 2.0f;
+  self.next_button.titleEdgeInsets =
+    UIEdgeInsetsMake(0.0f,
+                     - self.next_button.imageView.frame.size.width,
+                     0.0f,
+                     self.next_button.imageView.frame.size.width);
+  self.next_button.imageEdgeInsets =
+    UIEdgeInsetsMake(0.0f,
+                     self.next_button.titleLabel.frame.size.width + 10.0f,
+                     0.0f,
+                     - (self.next_button.titleLabel.frame.size.width + 10.0f));
+  if ([InfinitHostDevice smallScreen])
+  {
+    if (self.bottom_constraint != nil)
+      self.bottom_constraint.constant -= 10.0f;
+    else
+      self.image_constraint.constant -= 10.0f;
+    self.image_constraint.constant -= 40.0f;
+
+  }
+  [super viewDidLoad];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark - Button Handling
+
+- (IBAction)backTapped:(id)sender
+{
+  [self.navigationController popViewControllerAnimated:YES];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (IBAction)nextTapped:(id)sender
+{
+  InfinitWelcomeOnboardingNavigationController* nav_controller =
+    (InfinitWelcomeOnboardingNavigationController*)self.navigationController;
+  [nav_controller onboardingDone];
 }
-*/
 
 @end
