@@ -37,6 +37,17 @@ static InfinitApplicationSettings* _instance = nil;
 
 #pragma mark - Settings
 
+- (NSNumber*)send_to_self_onboarded
+{
+  return [_defaults valueForKey:[self keyForSetting:InfinitSendToSelfOnboarded]];
+}
+
+- (void)setSend_to_self_onboarded:(NSNumber*)send_to_self_onboarded
+{
+  [_defaults setValue:send_to_self_onboarded
+               forKey:[self keyForSetting:InfinitSendToSelfOnboarded]];
+}
+
 - (NSString*)username
 {
   return [_defaults valueForKey:[self keyForSetting:InfinitSettingUsername]];
@@ -53,6 +64,8 @@ static InfinitApplicationSettings* _instance = nil;
 {
   switch (setting)
   {
+    case InfinitSendToSelfOnboarded:
+      return @"send_to_self_onboarded";
     case InfinitSettingUsername:
       return @"username";
 

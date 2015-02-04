@@ -10,6 +10,7 @@
 
 typedef NS_ENUM(NSUInteger, InfinitSettings)
 {
+  InfinitSendToSelfOnboarded,
   InfinitSettingUsername,
 };
 
@@ -17,6 +18,7 @@ typedef NS_ENUM(NSUInteger, InfinitSettings)
 
 + (instancetype)sharedInstance;
 
+@property (nonatomic, readwrite) NSNumber* send_to_self_onboarded;
 @property (nonatomic, readwrite) NSString* username;
 
 @end
