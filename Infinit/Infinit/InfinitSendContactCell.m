@@ -35,6 +35,7 @@ static BOOL _show_numbers = NO;
       [res appendFormat:@"..."];
   }
   self.details_label.text = res;
+  self.letter_label.text = [self.contact.fullname substringToIndex:1].uppercaseString;
 }
 
 - (void)setSelected:(BOOL)selected

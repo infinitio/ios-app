@@ -13,5 +13,6 @@
 @interface InfinitSendContactCell : InfinitSendAbstractCell
 
 @property (nonatomic, weak) IBOutlet UILabel* details_label;
+@property (nonatomic, weak) IBOutlet UILabel* letter_label;
 
 @end
