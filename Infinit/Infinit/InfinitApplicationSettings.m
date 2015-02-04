@@ -58,6 +58,16 @@ static InfinitApplicationSettings* _instance = nil;
   [_defaults setValue:username.lowercaseString forKey:[self keyForSetting:InfinitSettingUsername]];
 }
 
+- (NSNumber*)welcome_onboarded
+{
+  return [_defaults valueForKey:[self keyForSetting:InfinitWelcomeOnboarded]];
+}
+
+- (void)setWelcome_onboarded:(NSNumber*)welcome_onboarded
+{
+  [_defaults setValue:welcome_onboarded forKey:[self keyForSetting:InfinitWelcomeOnboarded]];
+}
+
 #pragma mark - Enum
 
 - (NSString*)keyForSetting:(InfinitSettings)setting
@@ -68,6 +78,8 @@ static InfinitApplicationSettings* _instance = nil;
       return @"send_to_self_onboarded";
     case InfinitSettingUsername:
       return @"username";
+    case InfinitWelcomeOnboarded:
+      return @"welcome_onboarded";
 
     default:
       return nil;
