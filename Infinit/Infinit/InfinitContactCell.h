@@ -15,6 +15,7 @@
 @property (nonatomic, weak) IBOutlet UIImageView* avatar_view;
 @property (nonatomic, weak) IBOutlet UIImageView* icon_view;
 @property (nonatomic, weak) IBOutlet UILabel* name_label;
+@property (nonatomic, weak) IBOutlet UILabel* letter_label;
 
 @property (nonatomic, weak, readwrite) InfinitContact* contact;
 
