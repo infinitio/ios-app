@@ -71,6 +71,9 @@
 		83B5D60E1A6663430061931F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83B5D60D1A6663430061931F /* Security.framework */; };
 		83B5D6171A66BC4E0061931F /* ALAsset+Date.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B5D6161A66BC4E0061931F /* ALAsset+Date.m */; };
 		83E0AC0A1A6A608B003F60C6 /* InfinitHomeItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E0AC091A6A608B003F60C6 /* InfinitHomeItem.m */; };
+		83E112D91A8266090072DAE0 /* InfinitWelcomeOnboardingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E112D71A8266090072DAE0 /* InfinitWelcomeOnboardingController.m */; };
+		83E112DD1A8266D60072DAE0 /* InfinitOnboardingProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E112DC1A8266D60072DAE0 /* InfinitOnboardingProgressView.m */; };
+		83E112E31A827EAD0072DAE0 /* InfinitWelcomeOnboardingNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E112E21A827EAD0072DAE0 /* InfinitWelcomeOnboardingNavigationController.m */; };
 		83F4D0251A1374660068BEB2 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D0241A1374660068BEB2 /* libc++.dylib */; };
 		83F4D04B1A1387EF0068BEB2 /* libaws.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D04A1A1387EF0068BEB2 /* libaws.a */; };
 		83F4D0541A1388050068BEB2 /* libboost_atomic-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D04C1A1388050068BEB2 /* libboost_atomic-mt-s.a */; };
@@ -300,6 +303,12 @@
 		83B5D6161A66BC4E0061931F /* ALAsset+Date.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAsset+Date.m"; sourceTree = "<group>"; };
 		83E0AC081A6A608B003F60C6 /* InfinitHomeItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitHomeItem.h; sourceTree = "<group>"; };
 		83E0AC091A6A608B003F60C6 /* InfinitHomeItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitHomeItem.m; sourceTree = "<group>"; };
+		83E112D61A8266090072DAE0 /* InfinitWelcomeOnboardingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitWelcomeOnboardingController.h; sourceTree = "<group>"; };
+		83E112D71A8266090072DAE0 /* InfinitWelcomeOnboardingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitWelcomeOnboardingController.m; sourceTree = "<group>"; };
+		83E112DB1A8266D60072DAE0 /* InfinitOnboardingProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitOnboardingProgressView.h; sourceTree = "<group>"; };
+		83E112DC1A8266D60072DAE0 /* InfinitOnboardingProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitOnboardingProgressView.m; sourceTree = "<group>"; };
+		83E112E11A827EAD0072DAE0 /* InfinitWelcomeOnboardingNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitWelcomeOnboardingNavigationController.h; sourceTree = "<group>"; };
+		83E112E21A827EAD0072DAE0 /* InfinitWelcomeOnboardingNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitWelcomeOnboardingNavigationController.m; sourceTree = "<group>"; };
 		83F4D0241A1374660068BEB2 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		83F4D04A1A1387EF0068BEB2 /* libaws.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libaws.a; path = ../../../_build/ios/elle/aws/lib/libaws.a; sourceTree = "<group>"; };
 		83F4D04C1A1388050068BEB2 /* libboost_atomic-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_atomic-mt-s.a"; path = "../../../_build/ios/elle/boost/lib/libboost_atomic-mt-s.a"; sourceTree = "<group>"; };
@@ -666,6 +675,7 @@
 		83B32D5F1A136485004AB945 /* Infinit */ = {
 			isa = PBXGroup;
 			children = (
+				83E112CC1A824C3E0072DAE0 /* Welcome Onboarding */,
 				834FCFC11A7B93B900930BD8 /* Background Manager */,
 				832285111A795884000893A1 /* User Notifications */,
 				D0BD35281A43307A00AB8EF9 /* Home */,
@@ -731,6 +741,19 @@
 				D0659F651A3E865A0001ACAE /* InfinitWelcomeController.m */,
 			);
 			name = Login;
+			sourceTree = "<group>";
+		};
+		83E112CC1A824C3E0072DAE0 /* Welcome Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				83E112DB1A8266D60072DAE0 /* InfinitOnboardingProgressView.h */,
+				83E112DC1A8266D60072DAE0 /* InfinitOnboardingProgressView.m */,
+				83E112D61A8266090072DAE0 /* InfinitWelcomeOnboardingController.h */,
+				83E112D71A8266090072DAE0 /* InfinitWelcomeOnboardingController.m */,
+				83E112E11A827EAD0072DAE0 /* InfinitWelcomeOnboardingNavigationController.h */,
+				83E112E21A827EAD0072DAE0 /* InfinitWelcomeOnboardingNavigationController.m */,
+			);
+			name = "Welcome Onboarding";
 			sourceTree = "<group>";
 		};
 		83F4D0211A13740F0068BEB2 /* Libraries */ = {
@@ -1095,6 +1118,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83E112E31A827EAD0072DAE0 /* InfinitWelcomeOnboardingNavigationController.m in Sources */,
 				8311B5B31A7CE15700832FDE /* InfinitContactsViewController.m in Sources */,
 				833E3ACF1A63E8B80088D3FF /* InfinitContact.m in Sources */,
 				83B32E061A1365E9004AB945 /* AppDelegate.m in Sources */,
@@ -1103,10 +1127,12 @@
 				833E3ACC1A63D89B0088D3FF /* InfinitImportOverlayView.m in Sources */,
 				8311B5C61A7FAB2800832FDE /* InfinitContactsNavigationController.m in Sources */,
 				83876AF31A78CCC900F79905 /* InfinitDownloadFolderManager.mm in Sources */,
+				83E112D91A8266090072DAE0 /* InfinitWelcomeOnboardingController.m in Sources */,
 				830AD20E1A6D57C900E2B058 /* InfinitSendNavigationController.m in Sources */,
 				8311B5C01A7D18E500832FDE /* InfinitContactViewController.m in Sources */,
 				8311B5C31A7D407900832FDE /* InfinitFilesNavigationController.m in Sources */,
 				83B5D60C1A6661D80061931F /* InfinitKeychain.m in Sources */,
+				83E112DD1A8266D60072DAE0 /* InfinitOnboardingProgressView.m in Sources */,
 				830AD1F01A6CF48000E2B058 /* InfinitSettingsViewController.m in Sources */,
 				83E0AC0A1A6A608B003F60C6 /* InfinitHomeItem.m in Sources */,
 				836024EF1A6FAC00002889DB /* InfinitHostDevice.m in Sources */,
