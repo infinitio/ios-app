@@ -11,7 +11,6 @@
 #import "InfinitSendAbstractCell.h"
 
 #import "InfinitContact.h"
-#import "InfinitCheckView.h"
 
 @interface InfinitSendUserCell : InfinitSendAbstractCell
 
