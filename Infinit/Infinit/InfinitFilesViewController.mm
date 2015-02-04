@@ -105,6 +105,7 @@ ELLE_LOG_COMPONENT("iOS.FilesViewController");
     else
       [self delayedSearch:_last_search_text];
   }
+  [self.table_view scrollRectToVisible:CGRectMake(0.0f, 0.0f, 1.0f, 1.0f) animated:NO];
   [super viewWillAppear:animated];
 }
 
