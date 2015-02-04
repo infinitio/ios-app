@@ -26,6 +26,12 @@
   self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+  [[UIApplication sharedApplication] setStatusBarHidden:NO];
+  [super viewWillAppear:animated];
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
   [self.activity stopAnimating];
