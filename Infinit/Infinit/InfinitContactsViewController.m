@@ -100,15 +100,6 @@
   {
     _me_match = YES;
     [self fetchSwaggers];
-    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
-    {
-      [self fetchAddressBook];
-//      self.invite_button.enabled = YES;
-    }
-    else
-    {
-//      
-    }
     self.search_bar.text = @"";
     [self reloadSearchResults];
   }
@@ -145,6 +136,10 @@
       [self reloadSearchResults];
     }
   }
+  else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
+  {
+    [self fetchAddressBook];
+  }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -180,23 +175,30 @@
   {
     CFErrorRef* error = nil;
     ABAddressBookRef address_book = ABAddressBookCreateWithOptions(NULL, error);
-    ABRecordRef source = ABAddressBookCopyDefaultSource(address_book);
-    CFArrayRef contacts =
-    ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(address_book,
-                                                              source,
-                                                              kABPersonSortByFirstName);
     self.all_contacts = [NSMutableArray array];
-
-    for (int i = 0; i < CFArrayGetCount(contacts); i++)
+    CFArrayRef sources = ABAddressBookCopyArrayOfAllSources(address_book);
+    for (int i = 0; i < CFArrayGetCount(sources); i++)
     {
-      ABRecordRef person = CFArrayGetValueAtIndex(contacts, i);
-      if (person)
+      ABRecordRef source = CFArrayGetValueAtIndex(sources, i);
+      CFArrayRef contacts =
+        ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(address_book,
+                                                                  source,
+                                                                  kABPersonSortByFirstName);
+      for (int i = 0; i < CFArrayGetCount(contacts); i++)
       {
-        InfinitContact* contact = [[InfinitContact alloc] initWithABRecord:person];
-        if (contact != nil && contact.emails.count > 0)
-          [self.all_contacts addObject:contact];
+        ABRecordRef person = CFArrayGetValueAtIndex(contacts, i);
+        if (person)
+        {
+          InfinitContact* contact = [[InfinitContact alloc] initWithABRecord:CFAutorelease(person)];
+          if (contact != nil && contact.emails.count > 0)
+            [self.all_contacts addObject:contact];
+        }
       }
+      CFRelease(contacts);
     }
+    CFRelease(sources);
+    NSSortDescriptor* sort = [NSSortDescriptor sortDescriptorWithKey:@"fullname" ascending:YES];
+    [self.all_contacts sortUsingDescriptors:@[sort]];
     self.contact_results = [self.all_contacts mutableCopy];
     [self.table_view reloadData];
   }
@@ -341,7 +343,7 @@
     self.swagger_results = [self.all_swaggers mutableCopy];
     [sections addIndex:2];
   }
-  if (![self.contact_results isEqualToArray:self.all_contacts])
+  if (![self.contact_results isEqualToArray:self.all_contacts] && [self gotAccessToAddressBook])
   {
     self.contact_results = [self.all_contacts mutableCopy];
     [sections addIndex:3];
@@ -403,7 +405,7 @@
     self.swagger_results = swaggers_temp;
     [sections addIndex:2];
   }
-  if (![self.contact_results isEqualToArray:contacts_temp])
+  if (![self.contact_results isEqualToArray:contacts_temp] && [self gotAccessToAddressBook])
   {
     self.contact_results = contacts_temp;
     [sections addIndex:3];
@@ -627,6 +629,13 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 - (BOOL)noResults
 {
   return (self.swagger_results.count == 0 && self.contact_results.count == 0);
+}
+
+- (BOOL)gotAccessToAddressBook
+{
+  if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
+    return YES;
+  return NO;
 }
 
 - (BOOL)askedForAddressBookAccess
