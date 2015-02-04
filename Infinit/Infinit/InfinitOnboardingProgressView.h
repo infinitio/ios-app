@@ -1,5 +1,5 @@
 //
-//  InfinitViewOnboardingProgressView.h
+//  InfinitOnboardingProgressView.h
 //  Infinit
 //
 //  Created by Christopher Crone on 04/02/15.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InfinitViewOnboardingProgressView : UIView
+@interface InfinitOnboardingProgressView : UIView
 
 @end
