@@ -23,8 +23,6 @@
   self.delegate = self;
   [self resetSendViews];
   [super viewWillAppear:animated];
-  [[UIApplication sharedApplication] setStatusBarHidden:YES
-                                          withAnimation:UIStatusBarAnimationSlide];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -35,8 +33,6 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
   self.delegate = nil;
-  [[UIApplication sharedApplication] setStatusBarHidden:NO
-                                          withAnimation:UIStatusBarAnimationFade];
   [(InfinitTabBarController*)self.tabBarController setTabBarHidden:NO animated:animated];
   [super viewWillDisappear:animated];
 }
