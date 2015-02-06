@@ -39,9 +39,9 @@ static UIImage* _infinit_icon = nil;
 - (void)viewDidLoad
 {
   if (_favorite_icon == nil)
-    _favorite_icon = [UIImage imageNamed:@"icon-badge-favorite-big"].circularMask;
+    _favorite_icon = [UIImage imageNamed:@"icon-badge-favorite-big"];
   if (_infinit_icon == nil)
-    _infinit_icon = [UIImage imageNamed:@"icon-badge-infinit-big"].circularMask;
+    _infinit_icon = [UIImage imageNamed:@"icon-badge-infinit-big"];
   [super viewDidLoad];
 
   self.send_invite_button.layer.cornerRadius = self.send_invite_button.bounds.size.height / 2.0f;
@@ -75,7 +75,7 @@ static UIImage* _infinit_icon = nil;
 - (void)configureView;
 {
   self.navigationItem.title = self.contact.fullname;
-  self.avatar_view.image = self.contact.avatar.circularMask;
+  self.avatar_view.image = [self.contact.avatar circularMaskOfSize:self.avatar_view.bounds.size];
   if (self.contact.infinit_user == nil)
   {
     self.icon_view.hidden = YES;
