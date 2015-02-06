@@ -194,9 +194,9 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
 
 - (void)keyboardWillShow:(NSNotification*)notification
 {
+  CGFloat delta = -30.0f;
   if (![InfinitHostDevice smallScreen])
-    return;
-  CGFloat delta = -50.0f;
+    delta -= 30.0f;
   [UIView animateWithDuration:0.2f
                         delay:0.0f
                       options:UIViewAnimationOptionCurveEaseInOut
@@ -214,8 +214,6 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
 
 - (void)keyboardEntryDone
 {
-  if (![InfinitHostDevice smallScreen])
-    return;
   [UIView animateWithDuration:0.2f
                         delay:0.0f
                       options:UIViewAnimationOptionCurveEaseInOut
