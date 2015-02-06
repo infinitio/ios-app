@@ -66,7 +66,8 @@
 
 - (void)viewDidLoad
 {
-  self.table_view.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+  CGRect footer_rect = CGRectMake(0.0f, 0.0f, self.table_view.bounds.size.width, 60.0f);
+  self.table_view.tableFooterView = [[UIView alloc] initWithFrame:footer_rect];
   UINib* cell_nib = [UINib nibWithNibName:NSStringFromClass(InfinitContactCell.class) bundle:nil];
   [self.table_view registerNib:cell_nib forCellReuseIdentifier:_contact_cell_id];
   UINib* import_cell_nib = [UINib nibWithNibName:NSStringFromClass(InfinitContactImportCell.class)
@@ -197,7 +198,9 @@
       CFRelease(contacts);
     }
     CFRelease(sources);
-    NSSortDescriptor* sort = [NSSortDescriptor sortDescriptorWithKey:@"fullname" ascending:YES];
+    NSSortDescriptor* sort = [[NSSortDescriptor alloc] initWithKey:@"fullname"
+                                                         ascending:YES
+                                                          selector:@selector(caseInsensitiveCompare:)];
     [self.all_contacts sortUsingDescriptors:@[sort]];
     self.contact_results = [self.all_contacts mutableCopy];
     [self.table_view reloadData];
