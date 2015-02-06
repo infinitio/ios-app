@@ -10,11 +10,10 @@
 
 @implementation UIImage (Rounded)
 
-- (UIImage*)circularMask
+- (UIImage*)circularMaskOfSize:(CGSize)size
 {
-  CGRect image_rect = CGRectMake(0.0f, 0.0f, self.size.width, self.size.height);
+  CGRect image_rect = CGRectMake(0.0f, 0.0f, size.width, size.height);
   UIGraphicsBeginImageContextWithOptions(image_rect.size, NO, 0.0f);
-
   UIBezierPath* circle_path = [UIBezierPath bezierPathWithOvalInRect:image_rect];
   [circle_path addClip];
   [self drawInRect:image_rect];
@@ -25,9 +24,15 @@
   return masked_image;
 }
 
-- (UIImage*)roundedMaskWithCornerRadius:(CGFloat)radius
+- (UIImage*)circularMask
 {
-  CGRect image_rect = CGRectMake(0.0f, 0.0f, self.size.width, self.size.height);
+  return [self circularMaskOfSize:self.size];
+}
+
+- (UIImage*)roundedMaskOfSize:(CGSize)size
+                 cornerRadius:(CGFloat)radius
+{
+  CGRect image_rect = CGRectMake(0.0f, 0.0f, size.width, size.height);
   UIGraphicsBeginImageContextWithOptions(image_rect.size, NO, 0.0f);
 
   UIBezierPath* circle_path = [UIBezierPath bezierPathWithRoundedRect:image_rect

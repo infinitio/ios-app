@@ -10,7 +10,9 @@
 
 @interface UIImage (Rounded)
 
+- (UIImage*)circularMaskOfSize:(CGSize)size;
 - (UIImage*)circularMask;
-- (UIImage*)roundedMaskWithCornerRadius:(CGFloat)radius;
+- (UIImage*)roundedMaskOfSize:(CGSize)size
+                 cornerRadius:(CGFloat)radius;
 
 @end
