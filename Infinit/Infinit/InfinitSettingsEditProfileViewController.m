@@ -20,7 +20,8 @@
 @interface InfinitSettingsEditProfileViewController () <UIActionSheetDelegate,
                                                         UIGestureRecognizerDelegate,
                                                         UIImagePickerControllerDelegate,
-                                                        UINavigationControllerDelegate>
+                                                        UINavigationControllerDelegate,
+                                                        UITextFieldDelegate>
 
 @property (nonatomic, weak) IBOutlet UIBarButtonItem* ok_button;
 @property (nonatomic, weak) IBOutlet UIButton* avatar_button;
@@ -96,7 +97,8 @@
   {
     [[InfinitAvatarManager sharedInstance] setSelfAvatar:self.avatar_image];
   }
-  if (![self.name_field.text isEqualToString:self.user.fullname])
+  if (![self.name_field.text isEqualToString:self.user.fullname] &&
+      self.name_field.text.length >= 3)
   {
     [[InfinitStateManager sharedInstance] setSelfFullname:self.name_field.text
                                           performSelector:nil
@@ -104,6 +106,11 @@
     self.user.fullname = [self.name_field.text copy];
   }
   [self.navigationController.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)screenTap:(id)sender
+{
+  [self.name_field resignFirstResponder];
 }
 
 #pragma mark - Avatar Picker
@@ -150,6 +157,14 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
   [self dismissViewControllerAnimated:YES completion:nil];
   self.avatar_view.image = [self.avatar_image circularMaskOfSize:self.avatar_view.bounds.size];
   [self.avatar_view setNeedsDisplay];
+}
+
+#pragma mark - Text Field Delegate
+
+- (BOOL)textFieldShouldReturn:(UITextField*)textField
+{
+  [self.name_field resignFirstResponder];
+  return YES;
 }
 
 @end
