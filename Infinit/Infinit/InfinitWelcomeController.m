@@ -10,14 +10,7 @@
 
 #import "AppDelegate.h"
 
-#import <Gap/InfinitPeerTransactionManager.h>
-#import <Gap/InfinitStateManager.h>
-#import <Gap/InfinitStateResult.h>
-#import <Gap/InfinitUserManager.h>
-
 //#import <FacebookSDK/FacebookSDK.h>
-
-#import <MobileCoreServices/MobileCoreServices.h>
 
 #import "InfinitApplicationSettings.h"
 #import "InfinitBackgroundManager.h"
@@ -25,10 +18,21 @@
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitHostDevice.h"
 #import "InfinitKeychain.h"
+#import "InfinitRatingManager.h"
 #import "WelcomeLoginFormView.h"
 #import "WelcomeSignupFormView.h"
 
 #import "NSString+email.h"
+
+
+#import <Gap/InfinitPeerTransactionManager.h>
+#import <Gap/InfinitStateManager.h>
+#import <Gap/InfinitStateResult.h>
+#import <Gap/InfinitUserManager.h>
+
+#define INFINIT_FORGOT_PASSWORD_URL @"https://infinit.io/forgot_password?utm_source=app&utm_medium=ios&utm_campaign=forgot_password"
+
+@import MobileCoreServices;
 
 @interface InfinitWelcomeController () <UITextFieldDelegate,
                                         UIActionSheetDelegate,
@@ -95,11 +99,6 @@
 
   [self configureLoginView];
   [self configureSignupView];
-
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(keyboardWillShow:)
-                                               name:UIKeyboardWillShowNotification
-                                             object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -107,6 +106,14 @@
   [[UIApplication sharedApplication] setStatusBarHidden:YES
                                           withAnimation:UIStatusBarAnimationFade];
   [super viewWillAppear:animated];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(keyboardWillShow:)
+                                               name:UIKeyboardWillShowNotification
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(textDidChange:)
+                                               name:UITextFieldTextDidChangeNotification
+                                             object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -119,6 +126,7 @@
     NSString* password = [[InfinitKeychain sharedInstance] passwordForAccount:account];
     self.login_form_view.email_field.text = account;
     self.login_form_view.password_field.text = [password copy];
+    self.login_form_view.forgot_button.hidden = (password.length > 0);
     password = nil;
     [self checkLoginInputs];
   }
@@ -129,6 +137,7 @@
 {
   [[UIApplication sharedApplication] setStatusBarHidden:NO
                                           withAnimation:UIStatusBarAnimationFade];
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
   [super viewWillDisappear:animated];
 }
 
@@ -166,6 +175,9 @@
   [self.login_form_view.facebook_button addTarget:self
                                            action:@selector(facebookButtonTapped:)
                                  forControlEvents:UIControlEventTouchUpInside];
+  [self.login_form_view.forgot_button addTarget:self
+                                         action:@selector(forgotPasswordTapped:)
+                               forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)configureSignupView
@@ -582,6 +594,12 @@
   }
 }
 
+- (void)forgotPasswordTapped:(id)sender
+{
+  NSURL* url = [NSURL URLWithString:INFINIT_FORGOT_PASSWORD_URL];
+  [[UIApplication sharedApplication] openURL:url];
+}
+
 #pragma mark - Keyboard
 
 - (void)keyboardWillShow:(NSNotification*)notification
@@ -609,6 +627,13 @@
                                    self.view.frame.size.width, self.view.frame.size.height);
     }
   }];
+}
+
+- (void)textDidChange:(NSNotification*)notification
+{
+  UITextField* text_field = notification.object;
+  if (text_field == self.login_form_view.password_field)
+    self.login_form_view.forgot_button.hidden = (text_field.text.length > 0);
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField*)textField
@@ -695,6 +720,7 @@
   [InfinitPeerTransactionManager sharedInstance];
   [InfinitDownloadFolderManager sharedInstance];
   [InfinitBackgroundManager sharedInstance];
+  [InfinitRatingManager sharedInstance];
 
   NSString* old_account = [[InfinitApplicationSettings sharedInstance] username];
   if (![old_account isEqualToString:_username])
