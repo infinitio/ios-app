@@ -1,0 +1,153 @@
+
+/* Class = "IBUILabel"; text = "Any number, size, or format!"; ObjectID = "0G6-1i-g1R"; */
+"0G6-1i-g1R.text" = "Any number, size, or format!";
+
+/* Class = "IBUILabel"; text = "Mike Dee"; ObjectID = "0RN-Xm-k4b"; */
+"0RN-Xm-k4b.text" = "Mike Dee";
+
+/* Class = "IBUINavigationController"; title = "SEND"; ObjectID = "18v-p7-fft"; */
+"18v-p7-fft.title" = "SEND";
+
+/* Class = "IBUIButton"; normalTitle = "FAVORITE"; ObjectID = "1LK-Mw-637"; */
+"1LK-Mw-637.normalTitle" = "FAVORITE";
+
+/* Class = "IBUINavigationController"; title = "CONTACTS"; ObjectID = "1XU-dC-dIe"; */
+"1XU-dC-dIe.title" = "CONTACTS";
+
+/* Class = "IBUICollectionViewController"; title = "SEND_GALLERY"; ObjectID = "1d4-ue-OM3"; */
+"1d4-ue-OM3.title" = "SEND_GALLERY";
+
+/* Class = "IBUIButton"; normalTitle = "SIGN UP WITH FACEBOOK"; ObjectID = "3Ll-4d-pK2"; */
+"3Ll-4d-pK2.normalTitle" = "SIGN UP WITH FACEBOOK";
+
+/* Class = "IBUILabel"; text = "Mike Dee"; ObjectID = "6G8-BA-BUD"; */
+"6G8-BA-BUD.text" = "Mike Dee";
+
+/* Class = "IBUINavigationItem"; title = "SELECT..."; ObjectID = "7Lh-aL-Vok"; */
+"7Lh-aL-Vok.title" = "SELECT...";
+
+/* Class = "IBUIButton"; normalTitle = "GET STARTED"; ObjectID = "97m-pM-Fe4"; */
+"97m-pM-Fe4.normalTitle" = "GET STARTED";
+
+/* Class = "IBUIViewController"; title = "SEND_RECIPIENTS"; ObjectID = "9ZK-3B-PXo"; */
+"9ZK-3B-PXo.title" = "SEND_RECIPIENTS";
+
+/* Class = "IBUILabel"; text = "Send files to your friends without limits"; ObjectID = "Bbd-IZ-yiZ"; */
+"Bbd-IZ-yiZ.text" = "Send files to your friends without limits";
+
+/* Class = "IBUIButton"; normalTitle = "IMPORT PHONE CONTACTS"; ObjectID = "CQ1-1P-kb6"; */
+"CQ1-1P-kb6.normalTitle" = "IMPORT PHONE CONTACTS";
+
+/* Class = "IBUINavigationItem"; title = "CONTACTS"; ObjectID = "Diz-0I-QjG"; */
+"Diz-0I-QjG.title" = "CONTACTS";
+
+/* Class = "IBUILabel"; text = "Mike Dee"; ObjectID = "Dz8-88-hEf"; */
+"Dz8-88-hEf.text" = "Mike Dee";
+
+/* Class = "IBUINavigationController"; title = "FILES"; ObjectID = "E3A-FT-LpY"; */
+"E3A-FT-LpY.title" = "FILES";
+
+/* Class = "IBUILabel"; text = "email"; ObjectID = "ED8-ta-EAO"; */
+"ED8-ta-EAO.text" = "email";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "Fb4-h2-ykq"; */
+"Fb4-h2-ykq.text" = "Label";
+
+/* Class = "IBUILabel"; text = "Finally a simple file manager for iPhone"; ObjectID = "J59-YW-qzz"; */
+"J59-YW-qzz.text" = "Finally a simple file manager for iPhone";
+
+/* Class = "IBUILabel"; text = "Access your photos, videos, music, zip, pdf..."; ObjectID = "Kjb-PN-Gxr"; */
+"Kjb-PN-Gxr.text" = "Access your photos, videos, music, zip, pdf...";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "M8v-h9-tSJ"; */
+"M8v-h9-tSJ.text" = "Label";
+
+/* Class = "IBUILabel"; text = "Send your files between your devices"; ObjectID = "N40-3y-JCe"; */
+"N40-3y-JCe.text" = "Send your files between your devices";
+
+/* Class = "IBUINavigationItem"; title = "REPORT A PROBLEM"; ObjectID = "Q7Z-b7-sHF"; */
+"Q7Z-b7-sHF.title" = "REPORT A PROBLEM";
+
+/* Class = "IBUISearchBar"; placeholder = "Search"; ObjectID = "UIT-gc-l6k"; */
+"UIT-gc-l6k.placeholder" = "Search";
+
+/* Class = "IBUIButton"; normalTitle = "FIND FACEBOOK FRIENDS"; ObjectID = "YNY-lR-rkF"; */
+"YNY-lR-rkF.normalTitle" = "FIND FACEBOOK FRIENDS";
+
+/* Class = "IBUILabel"; text = "Mike Dee"; ObjectID = "ZSQ-Ec-TtZ"; */
+"ZSQ-Ec-TtZ.text" = "Mike Dee";
+
+/* Class = "IBUILabel"; text = "The smartest way to send files"; ObjectID = "Zfi-ZH-cuk"; */
+"Zfi-ZH-cuk.text" = "The smartest way to send files";
+
+/* Class = "IBUINavigationItem"; title = "FILES"; ObjectID = "ZoT-BP-9BH"; */
+"ZoT-BP-9BH.title" = "FILES";
+
+/* Class = "IBUINavigationController"; title = "HOME"; ObjectID = "aTr-06-n7W"; */
+"aTr-06-n7W.title" = "HOME";
+
+/* Class = "IBUIButton"; normalTitle = "SEND FILES"; ObjectID = "cAz-dS-fQ5"; */
+"cAz-dS-fQ5.normalTitle" = "SEND FILES";
+
+/* Class = "IBUIButton"; normalTitle = "SIGN UP WITH EMAIL"; ObjectID = "cUm-Pm-ow2"; */
+"cUm-Pm-ow2.normalTitle" = "SIGN UP WITH EMAIL";
+
+/* Class = "IBUIViewController"; title = "CONTACTS"; ObjectID = "cyR-zH-YxB"; */
+"cyR-zH-YxB.title" = "CONTACTS";
+
+/* Class = "IBUILabel"; text = "Available for Mac, Windows, Android & iOS"; ObjectID = "eE6-sR-faf"; */
+"eE6-sR-faf.text" = "Available for Mac, Windows, Android & iOS";
+
+/* Class = "IBUILabel"; text = "No results."; ObjectID = "eGc-7u-5hd"; */
+"eGc-7u-5hd.text" = "No results.";
+
+/* Class = "IBUILabel"; text = "M"; ObjectID = "fjd-ZY-K2z"; */
+"fjd-ZY-K2z.text" = "M";
+
+/* Class = "IBUISearchBar"; placeholder = "Search"; ObjectID = "ijA-4P-WMS"; */
+"ijA-4P-WMS.placeholder" = "Search";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "mGE-WJ-uld"; */
+"mGE-WJ-uld.text" = "Label";
+
+/* Class = "IBUILabel"; text = "Report a problem..."; ObjectID = "nSP-0Y-CQh"; */
+"nSP-0Y-CQh.text" = "Report a problem...";
+
+/* Class = "IBUILabel"; text = "Send to an email address or import your contacts"; ObjectID = "o7a-na-oAQ"; */
+"o7a-na-oAQ.text" = "Send to an email address or import your contacts";
+
+/* Class = "IBUINavigationItem"; title = "SETTINGS"; ObjectID = "oCJ-Yb-t9R"; */
+"oCJ-Yb-t9R.title" = "SETTINGS";
+
+/* Class = "IBUIViewController"; title = "CONTACT"; ObjectID = "pu1-dB-tPe"; */
+"pu1-dB-tPe.title" = "CONTACT";
+
+/* Class = "IBUINavigationItem"; title = "FILES"; ObjectID = "qGT-HW-jdc"; */
+"qGT-HW-jdc.title" = "FILES";
+
+/* Class = "IBUINavigationController"; title = "SETTINGS"; ObjectID = "rsj-6b-IS1"; */
+"rsj-6b-IS1.title" = "SETTINGS";
+
+/* Class = "IBUILabel"; text = "or"; ObjectID = "rux-55-a1T"; */
+"rux-55-a1T.text" = "or";
+
+/* Class = "IBUILabel"; text = "Logout"; ObjectID = "t7K-G7-fM9"; */
+"t7K-G7-fM9.text" = "Logout";
+
+/* Class = "IBUIButton"; normalTitle = "LOG IN"; ObjectID = "uxW-Ck-QDb"; */
+"uxW-Ck-QDb.normalTitle" = "LOG IN";
+
+/* Class = "IBUINavigationItem"; title = "CONTACT"; ObjectID = "wAF-uM-uRe"; */
+"wAF-uM-uRe.title" = "CONTACT";
+
+/* Class = "IBUIBarButtonItem"; title = "Next"; ObjectID = "wjV-oF-oq1"; */
+"wjV-oF-oq1.title" = "Next";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "yGX-fZ-FJP"; */
+"yGX-fZ-FJP.text" = "Label";
+
+/* Class = "IBUIButton"; normalTitle = "SEND"; ObjectID = "z9O-hM-TV6"; */
+"z9O-hM-TV6.normalTitle" = "SEND";
+
+/* Class = "IBUINavigationItem"; title = "SEND TO..."; ObjectID = "zuc-EM-7Qy"; */
+"zuc-EM-7Qy.title" = "SEND TO...";
