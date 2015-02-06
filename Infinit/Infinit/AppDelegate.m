@@ -13,6 +13,7 @@
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitKeychain.h"
 #import "InfinitLocalNotificationManager.h"
+#import "InfinitRatingManager.h"
 #import "InfinitWelcomeOnboardingNavigationController.h"
 
 #import <Gap/InfinitAvatarManager.h>
@@ -101,6 +102,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   {
     [InfinitDownloadFolderManager sharedInstance];
     [InfinitBackgroundManager sharedInstance];
+    [InfinitRatingManager sharedInstance];
     identifier = @"tab_bar_controller";
   }
   else
