@@ -13,18 +13,20 @@
 
 @implementation InfinitHomeAbstractCell
 
+- (void)layoutSubviews
+{
+  [super layoutSubviews];
+  if ([InfinitHostDevice deviceCPU] >= InfinitCPUType_ARM64_v8 && self.layer.shadowPath == nil)
+  {
+    self.layer.shadowPath =
+      [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:3.0f].CGPath;
+  }
+}
+
 - (void)awakeFromNib
 {
   self.layer.rasterizationScale = [InfinitHostDevice screenScale];
   self.layer.shouldRasterize = YES;
-  if ([InfinitHostDevice deviceCPU] >= InfinitCPUType_ARM64_v8)
-  {
-    self.layer.masksToBounds = NO;
-    self.layer.shadowOpacity = 0.75f;
-    self.layer.shadowRadius = 1.5f;
-    self.layer.shadowColor = [InfinitColor colorWithGray:0 alpha:0.3f].CGColor;
-    self.layer.shadowOffset = CGSizeMake(1.0f, 1.0f);
-  }
 }
 
 @end
