@@ -15,6 +15,7 @@
 #import <Gap/InfinitDataSize.h>
 
 #import "UIImage+ImageEffects.h"
+#import "UIImage+Rounded.h"
 
 static NSDictionary* _norm_attrs = nil;
 static NSDictionary* _bold_attrs = nil;
@@ -80,17 +81,22 @@ static UIImage* _mask_image = nil;
   [super awakeFromNib];
   if ([UIVisualEffectView class])
   {
-    self.background_view.layer.rasterizationScale = [InfinitHostDevice screenScale];
-    self.background_view.layer.shouldRasterize = YES;
     if ([InfinitHostDevice deviceCPU] >= InfinitCPUType_ARM64_v8)
     {
-      self.background_view.layer.cornerRadius = 3.0f;
       self.background_view.layer.masksToBounds = YES;
+      self.background_view.layer.cornerRadius = 3.0f;
+      self.layer.masksToBounds = NO;
+      self.layer.shadowOpacity = 0.67f;
+      self.layer.shadowRadius = 2.0f;
+      self.layer.shadowColor = [InfinitColor colorWithGray:0].CGColor;
+      self.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
     }
     UIBlurEffect* blur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
     _blur_view = [[UIVisualEffectView alloc] initWithEffect:blur];
     self.blur_view.frame = self.bounds;
     [self.background_view addSubview:self.blur_view];
+    self.background_view.layer.rasterizationScale = [InfinitHostDevice screenScale];
+    self.background_view.layer.shouldRasterize = YES;
   }
   UITapGestureRecognizer* tap =
     [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -138,7 +144,8 @@ static UIImage* _mask_image = nil;
 - (void)setProgress
 {
   float progress = self.transaction.progress;
-  if (!self.transaction.done && (progress > 0.0f || self.transaction.status == gap_transaction_transferring))
+  if (!self.transaction.done &&
+      (progress > 0.0f || self.transaction.status == gap_transaction_transferring))
   {
     self.avatar_view.progress = progress;
     self.avatar_view.enable_progress = YES;
@@ -188,8 +195,6 @@ static UIImage* _mask_image = nil;
   {
     CGRect image_rect = self.background_view.bounds;
     UIGraphicsBeginImageContextWithOptions(image_rect.size, NO, 0.0f);
-    [[UIColor blackColor] set];
-    [[UIBezierPath bezierPathWithRoundedRect:image_rect cornerRadius:3.0f] addClip];
     [[self.transaction.other_user.avatar applyDarkEffect] drawInRect:image_rect];
     UIImage* background_image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -197,7 +202,12 @@ static UIImage* _mask_image = nil;
   }
   else
   {
-    self.background_view.image = self.transaction.other_user.avatar;
+    CGRect image_rect = self.background_view.bounds;
+    UIGraphicsBeginImageContextWithOptions(image_rect.size, NO, 0.0f);
+    [self.transaction.other_user.avatar drawInRect:image_rect];
+    UIImage* background_image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    self.background_view.image = background_image;
   }
 }
 
