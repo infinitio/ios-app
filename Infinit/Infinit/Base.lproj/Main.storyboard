@@ -371,11 +371,14 @@
                                         </constraints>
                                     </imageView>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6rL-6g-NgG">
-                                        <rect key="frame" x="66" y="17" width="509" height="17"/>
+                                        <rect key="frame" x="66" y="16" width="509" height="20"/>
                                         <color key="tintColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="UIZ-TQ-cnt" id="3Q9-6b-Mas"/>
+                                        </connections>
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -400,6 +403,9 @@
                             <constraint firstItem="itA-bR-YoP" firstAttribute="leading" secondItem="9dH-lM-NKS" secondAttribute="leading" id="cga-eE-KS3"/>
                             <constraint firstItem="BZD-yg-q6z" firstAttribute="centerY" secondItem="r3F-ek-gH8" secondAttribute="centerY" id="spD-lZ-TaA"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="JjG-yq-Rq5" appends="YES" id="Wfe-Fu-uaq"/>
+                        </connections>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="EDIT PROFILE" id="OWZ-ZK-qG3">
@@ -425,6 +431,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9LB-mq-E5U" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="JjG-yq-Rq5">
+                    <connections>
+                        <action selector="screenTap:" destination="UIZ-TQ-cnt" id="Nwx-FF-VTp"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1433" y="479"/>
         </scene>
