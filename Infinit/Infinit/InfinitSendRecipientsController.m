@@ -274,7 +274,9 @@
       CFRelease(contacts);
     }
     CFRelease(sources);
-    NSSortDescriptor* sort = [NSSortDescriptor sortDescriptorWithKey:@"fullname" ascending:YES];
+    NSSortDescriptor* sort = [[NSSortDescriptor alloc] initWithKey:@"fullname"
+                                                         ascending:YES
+                                                          selector:@selector(caseInsensitiveCompare:)];
     [self.all_contacts sortUsingDescriptors:@[sort]];
     self.contact_results = [self.all_contacts mutableCopy];
     [self.table_view reloadData];
