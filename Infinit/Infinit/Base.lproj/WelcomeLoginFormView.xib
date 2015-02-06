@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14D72i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -175,6 +175,18 @@
                                 </mask>
                             </variation>
                         </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ppl-x2-d0V">
+                            <rect key="frame" x="338" y="106" width="48" height="28"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="28" id="g6d-jU-GZc"/>
+                                <constraint firstAttribute="width" constant="48" id="xuQ-Ue-weI"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="13"/>
+                            <state key="normal" title="Forgot?">
+                                <color key="titleColor" red="0.16862745098039217" green="0.74509803921568629" blue="0.74117647058823533" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -187,6 +199,7 @@
                         <constraint firstAttribute="trailing" secondItem="wla-LU-4y5" secondAttribute="trailing" constant="25" id="GRY-Vz-bA8"/>
                         <constraint firstItem="wla-LU-4y5" firstAttribute="leading" secondItem="O2z-n8-vnX" secondAttribute="leading" constant="25" id="Jsj-gI-FJz"/>
                         <constraint firstItem="IMY-op-qQ2" firstAttribute="top" secondItem="lyq-FI-lTp" secondAttribute="bottom" constant="13" id="JxO-F2-hsB"/>
+                        <constraint firstAttribute="trailing" secondItem="Ppl-x2-d0V" secondAttribute="trailing" constant="28" id="OFX-5S-SC1"/>
                         <constraint firstAttribute="trailing" secondItem="J3m-T7-X5u" secondAttribute="trailing" constant="30" id="QOb-vE-wWQ"/>
                         <constraint firstItem="SJr-8z-70K" firstAttribute="top" secondItem="sfe-yU-93s" secondAttribute="bottom" constant="13" id="R4f-O4-pQr"/>
                         <constraint firstAttribute="centerX" secondItem="sRm-AA-Y4f" secondAttribute="centerX" id="RjE-Un-rGN"/>
@@ -204,6 +217,7 @@
                         <constraint firstItem="G24-Jk-wT7" firstAttribute="top" secondItem="wla-LU-4y5" secondAttribute="bottom" constant="6" id="cfR-au-Uw7"/>
                         <constraint firstItem="sfe-yU-93s" firstAttribute="leading" secondItem="O2z-n8-vnX" secondAttribute="leading" constant="30" id="cpo-7G-XTq"/>
                         <constraint firstItem="wla-LU-4y5" firstAttribute="centerY" secondItem="sRm-AA-Y4f" secondAttribute="centerY" id="hPU-8R-Amm"/>
+                        <constraint firstItem="Ppl-x2-d0V" firstAttribute="centerY" secondItem="J3m-T7-X5u" secondAttribute="centerY" id="k6R-6c-2Hn"/>
                         <constraint firstItem="sfe-yU-93s" firstAttribute="top" secondItem="IMY-op-qQ2" secondAttribute="bottom" constant="20" id="mSq-ip-4lg"/>
                         <constraint firstItem="IMY-op-qQ2" firstAttribute="leading" secondItem="O2z-n8-vnX" secondAttribute="leading" constant="22" id="tBg-7t-EYg"/>
                         <constraint firstItem="8JF-I8-9ug" firstAttribute="top" secondItem="O2z-n8-vnX" secondAttribute="top" id="uiV-0X-st2"/>
@@ -289,11 +303,12 @@
                 <outlet property="error_label" destination="wla-LU-4y5" id="tyl-zq-pV5"/>
                 <outlet property="facebook_button" destination="PL4-i1-9BJ" id="N4c-Jz-T6I"/>
                 <outlet property="facebook_line" destination="G24-Jk-wT7" id="cHd-W5-BYR"/>
+                <outlet property="forgot_button" destination="Ppl-x2-d0V" id="hh0-dG-FgA"/>
                 <outlet property="next_button" destination="koF-DF-R72" id="9k1-WQ-85R"/>
                 <outlet property="password_field" destination="J3m-T7-X5u" id="Yhe-e7-7Fg"/>
                 <outlet property="password_image" destination="sfe-yU-93s" id="oqq-nJ-d79"/>
             </connections>
-            <point key="canvasLocation" x="256" y="134.5"/>
+            <point key="canvasLocation" x="246" y="134.5"/>
         </view>
     </objects>
     <resources>
