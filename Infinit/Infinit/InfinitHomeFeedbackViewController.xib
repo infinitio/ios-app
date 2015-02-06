@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InfinitHomeFeedbackViewController"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <navigationController id="F5Z-XC-Vu8" customClass="InfinitHomeFeedbackViewController">
+            <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="dXo-Rl-9dD">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <textAttributes key="titleTextAttributes">
+                    <offsetWrapper key="textShadowOffset" horizontal="0.0" vertical="0.0"/>
+                </textAttributes>
+            </navigationBar>
+            <viewControllers>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="dHX-Va-nxp" userLabel="Root View Controller">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="AjH-Xg-acW"/>
+                        <viewControllerLayoutGuide type="bottom" id="bRz-bH-VJM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Kap-qa-Q1k">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1ON-aD-Xvs">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.69411764710000001" green="0.69411764710000001" blue="0.69411764710000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="F5Z-XC-Vu8" id="8Y4-Pj-2I4"/>
+                                </connections>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="1ON-aD-Xvs" firstAttribute="top" secondItem="Kap-qa-Q1k" secondAttribute="top" id="LnG-tB-X3j"/>
+                            <constraint firstAttribute="trailing" secondItem="1ON-aD-Xvs" secondAttribute="trailing" id="WJE-xE-cMC"/>
+                            <constraint firstAttribute="bottom" secondItem="1ON-aD-Xvs" secondAttribute="bottom" id="dMx-xR-9gq"/>
+                            <constraint firstItem="1ON-aD-Xvs" firstAttribute="leading" secondItem="Kap-qa-Q1k" secondAttribute="leading" id="f48-my-aOP"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" title="FEEDBACK" id="zOZ-Vh-Smj">
+                        <barButtonItem key="leftBarButtonItem" image="icon-arrow-down-red" id="WBm-jy-Z2Z">
+                            <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="backButtonTapped:" destination="F5Z-XC-Vu8" id="5cm-3b-4S1"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="icon-send-red" id="ljW-Ux-Een">
+                            <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="sendButtonTapped:" destination="F5Z-XC-Vu8" id="WWB-A9-B09"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+            </viewControllers>
+            <connections>
+                <outlet property="send_button" destination="ljW-Ux-Een" id="Jcy-Zf-xlU"/>
+                <outlet property="text_view" destination="1ON-aD-Xvs" id="YNP-kC-ZNY"/>
+            </connections>
+            <point key="canvasLocation" x="1330" y="-926"/>
+        </navigationController>
+    </objects>
+    <resources>
+        <image name="icon-arrow-down-red" width="17" height="10"/>
+        <image name="icon-send-red" width="25" height="21"/>
+    </resources>
+</document>
