@@ -56,7 +56,7 @@ static NSDictionary* _small_attrs = nil;
 
 - (void)setImage:(UIImage*)image
 {
-  self.image_view.image = image.circularMask;
+  self.image_view.image = [image circularMaskOfSize:self.image_view.bounds.size];
 }
 
 - (void)setProgress:(CGFloat)progress
