@@ -23,10 +23,4 @@
   }
 }
 
-- (void)awakeFromNib
-{
-  self.layer.rasterizationScale = [InfinitHostDevice screenScale];
-  self.layer.shouldRasterize = YES;
-}
-
 @end
