@@ -37,15 +37,39 @@ static InfinitApplicationSettings* _instance = nil;
 
 #pragma mark - Settings
 
+- (BOOL)rated_app
+{
+  NSNumber* res = [_defaults valueForKey:[self keyForSetting:InfinitSettingRatedApp]];
+  if (res != nil && res.boolValue)
+    return YES;
+  return NO;
+}
+
+- (void)setRated_app:(BOOL)rated_app
+{
+  [_defaults setValue:@(rated_app) forKey:[self keyForSetting:InfinitSettingRatedApp]];
+}
+
+- (NSNumber*)rating_transactions
+{
+  return [_defaults valueForKey:[self keyForSetting:InfinitSettingRatingTransactions]];
+}
+
+- (void)setRating_transactions:(NSNumber*)rating_transactions
+{
+  [_defaults setValue:rating_transactions
+               forKey:[self keyForSetting:InfinitSettingRatingTransactions]];
+}
+
 - (NSNumber*)send_to_self_onboarded
 {
-  return [_defaults valueForKey:[self keyForSetting:InfinitSendToSelfOnboarded]];
+  return [_defaults valueForKey:[self keyForSetting:InfinitSettingSendToSelfOnboarded]];
 }
 
 - (void)setSend_to_self_onboarded:(NSNumber*)send_to_self_onboarded
 {
   [_defaults setValue:send_to_self_onboarded
-               forKey:[self keyForSetting:InfinitSendToSelfOnboarded]];
+               forKey:[self keyForSetting:InfinitSettingSendToSelfOnboarded]];
 }
 
 - (NSString*)username
@@ -60,12 +84,12 @@ static InfinitApplicationSettings* _instance = nil;
 
 - (NSNumber*)welcome_onboarded
 {
-  return [_defaults valueForKey:[self keyForSetting:InfinitWelcomeOnboarded]];
+  return [_defaults valueForKey:[self keyForSetting:InfinitSettingWelcomeOnboarded]];
 }
 
 - (void)setWelcome_onboarded:(NSNumber*)welcome_onboarded
 {
-  [_defaults setValue:welcome_onboarded forKey:[self keyForSetting:InfinitWelcomeOnboarded]];
+  [_defaults setValue:welcome_onboarded forKey:[self keyForSetting:InfinitSettingWelcomeOnboarded]];
 }
 
 #pragma mark - Enum
@@ -74,15 +98,19 @@ static InfinitApplicationSettings* _instance = nil;
 {
   switch (setting)
   {
-    case InfinitSendToSelfOnboarded:
+    case InfinitSettingRatedApp:
+      return @"rated_app";
+    case InfinitSettingRatingTransactions:
+      return @"rating_transactions";
+    case InfinitSettingSendToSelfOnboarded:
       return @"send_to_self_onboarded";
     case InfinitSettingUsername:
       return @"username";
-    case InfinitWelcomeOnboarded:
+    case InfinitSettingWelcomeOnboarded:
       return @"welcome_onboarded";
 
     default:
-      return nil;
+      return @"";
   }
 }
 
