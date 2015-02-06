@@ -8,9 +8,12 @@
 
 #import "InfinitHomeViewController.h"
 
+#import "InfinitRatingManager.h"
 #import "InfinitHomeItem.h"
 #import "InfinitHomePeerTransactionCell.h"
+#import "InfinitHomeFeedbackViewController.h"
 #import "InfinitHomeOnboardingCell.h"
+#import "InfinitHomeRatingCell.h"
 
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitUserManager.h>
@@ -20,6 +23,8 @@
 
 @property (nonatomic, readonly) NSMutableArray* data;
 @property (nonatomic, strong) UIView* onboarding_view;
+@property (nonatomic, weak) InfinitHomeRatingCell* rating_cell;
+@property (nonatomic, readonly) BOOL show_rate_us;
 
 @end
 
@@ -28,6 +33,7 @@
 @private
   NSString* _onboarding_cell_id;
   NSString* _peer_transaction_cell_id;
+  NSString* _rating_cell_id;
 
   NSTimer* _progress_timer;
   NSTimeInterval _update_interval;
@@ -40,6 +46,7 @@
 {
   _peer_transaction_cell_id = @"home_peer_transaction_cell";
   _onboarding_cell_id = @"home_onboarding_cell";
+  _rating_cell_id = @"home_rating_cell";
   _update_interval = 0.5f;
   self.collectionView.alwaysBounceVertical = YES;
   [super viewDidLoad];
@@ -53,28 +60,17 @@
     [UINib nibWithNibName:NSStringFromClass(InfinitHomeOnboardingCell.class) bundle:nil];
   [self.collectionView registerNib:onboarding_cell_nib
         forCellWithReuseIdentifier:_onboarding_cell_id];
+  UINib* rating_cell_nib = [UINib nibWithNibName:NSStringFromClass(InfinitHomeRatingCell.class)
+                                          bundle:nil];
+  [self.collectionView registerNib:rating_cell_nib forCellWithReuseIdentifier:_rating_cell_id];
   [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init]
                                                 forBarMetrics:UIBarMetricsDefault];
   self.navigationController.navigationBar.shadowImage = [[UIImage alloc] init];
-
-//  UISwipeGestureRecognizer* left_swipe_recognizer =
-//    [[UISwipeGestureRecognizer alloc] initWithTarget:self
-//                                              action:@selector(leftSwipeGesture:)];
-//  left_swipe_recognizer.direction = UISwipeGestureRecognizerDirectionLeft;
-//  left_swipe_recognizer.delegate = self;
-//  left_swipe_recognizer.numberOfTouchesRequired = 1;
-//  UISwipeGestureRecognizer* right_swipe_recognizer =
-//    [[UISwipeGestureRecognizer alloc] initWithTarget:self
-//                                              action:@selector(rightSwipeGesture:)];
-//  right_swipe_recognizer.direction = UISwipeGestureRecognizerDirectionRight;
-//  right_swipe_recognizer.delegate = self;
-//  right_swipe_recognizer.numberOfTouchesRequired = 1;
-//  [self.collectionView addGestureRecognizer:left_swipe_recognizer];
-//  [self.collectionView addGestureRecognizer:right_swipe_recognizer];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+  _show_rate_us = [InfinitRatingManager sharedInstance].show_transaction_rating;
   [self loadTransactions];
   [super viewWillAppear:animated];
   if (self.data.count == 0)
@@ -151,7 +147,7 @@
     {
       if (item.transaction != nil && item.transaction.status == gap_transaction_transferring)
       {
-        NSIndexPath* path = [NSIndexPath indexPathForRow:row inSection:0];
+        NSIndexPath* path = [NSIndexPath indexPathForRow:row inSection:self.show_rate_us ? 1 : 0];
         [_running_transactions addObject:path];
       }
     }
@@ -231,35 +227,55 @@
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView*)collectionView
 {
-  return 1;
+  return self.show_rate_us ? 2 : 1;
 }
 
 
 - (NSInteger)collectionView:(UICollectionView*)collectionView
      numberOfItemsInSection:(NSInteger)section
 {
-  return (self.data.count == 0) ? 2 : self.data.count;
+  if (self.show_rate_us && section == 0)
+    return 1;
+  else
+    return (self.data.count == 0) ? 2 : self.data.count;
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView
                  cellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
-  UICollectionViewCell* cell = nil;
-  if (self.data.count > 0)
+  UICollectionViewCell* res = nil;
+  if (self.show_rate_us && indexPath.section == 0)
+  {
+    InfinitHomeRatingCell* cell =
+      [self.collectionView dequeueReusableCellWithReuseIdentifier:_rating_cell_id
+                                                     forIndexPath:indexPath];
+    [cell.positive_button addTarget:self
+                             action:@selector(positiveButtonTapped:)
+                   forControlEvents:UIControlEventTouchUpInside];
+    [cell.negative_button addTarget:self
+                             action:@selector(negativeButtonTapped:)
+                   forControlEvents:UIControlEventTouchUpInside];
+    self.rating_cell = cell;
+    res = cell;
+  }
+  else if (self.data.count > 0)
   {
     InfinitHomeItem* item = self.data[indexPath.row];
     if (item.transaction != nil && [item.transaction isKindOfClass:InfinitPeerTransaction.class])
     {
       InfinitPeerTransaction* peer_transaction = (InfinitPeerTransaction*)item.transaction;
-      cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:_peer_transaction_cell_id
-                                                            forIndexPath:indexPath];
-      [(InfinitHomePeerTransactionCell*)cell setUpWithDelegate:self transaction:peer_transaction];
+      InfinitHomePeerTransactionCell* cell =
+        [self.collectionView dequeueReusableCellWithReuseIdentifier:_peer_transaction_cell_id
+                                                       forIndexPath:indexPath];
+      [cell setUpWithDelegate:self transaction:peer_transaction];
+      res = cell;
     }
   }
   else
   {
-    cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:_onboarding_cell_id
-                                                          forIndexPath:indexPath];
+    InfinitHomeOnboardingCell* cell =
+      [self.collectionView dequeueReusableCellWithReuseIdentifier:_onboarding_cell_id
+                                                     forIndexPath:indexPath];
     NSString* message = nil;
     NSString* fullname = [[[InfinitUserManager sharedInstance] me] fullname];
     NSUInteger lines = 0;
@@ -280,10 +296,11 @@
       default:
         break;
     }
-    ((InfinitHomeOnboardingCell*)cell).message.numberOfLines = lines;
-    ((InfinitHomeOnboardingCell*)cell).message.text = message;
+    cell.message.numberOfLines = lines;
+    cell.message.text = message;
+    res = cell;
   }
-  return cell;
+  return res;
 }
 
 #pragma mark – UICollectionViewDelegateFlowLayout
@@ -294,7 +311,11 @@
 {
   CGSize res = CGSizeZero;
   CGFloat width = [UIScreen mainScreen].bounds.size.width - 26.0f;
-  if (self.data.count > 0)
+  if (self.show_rate_us && indexPath.section == 0)
+  {
+    res = CGSizeMake(width, 100.0f);
+  }
+  else if (self.data.count > 0)
   {
     InfinitHomeItem* item = self.data[indexPath.row];
     if (item.transaction != nil && [item.transaction isKindOfClass:InfinitPeerTransaction.class])
@@ -350,7 +371,8 @@
     [self.collectionView performBatchUpdates:^
     {
       [self.data insertObject:item atIndex:0];
-      [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]];
+      NSIndexPath* index = [NSIndexPath indexPathForRow:0 inSection:self.show_rate_us ? 1 : 0];
+      [self.collectionView insertItemsAtIndexPaths:@[index]];
     } completion:^(BOOL finished)
     {
       [self updateRunningTransactions];
@@ -394,10 +416,11 @@
       NSUInteger index = [self.data indexOfObject:item];
       [self.data removeObject:item];
       [self.data insertObject:item atIndex:0];
+      NSUInteger section = self.show_rate_us ? 1 : 0;
       [self.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index
-                                                                        inSection:0]]];
+                                                                         inSection:section]]];
       [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0
-                                                                        inSection:0]]];
+                                                                        inSection:section]]];
     } completion:^(BOOL finished)
     {
       [self updateRunningTransactions];
@@ -418,7 +441,7 @@
       InfinitPeerTransaction* peer_transaction = (InfinitPeerTransaction*)item.transaction;
       if ([peer_transaction.other_user.id_ isEqualToNumber:user_id])
       {
-        NSIndexPath* path = [NSIndexPath indexPathForRow:row inSection:0];
+        NSIndexPath* path = [NSIndexPath indexPathForRow:row inSection:self.show_rate_us ? 1 : 0];
         if (![self.collectionView.indexPathsForVisibleItems containsObject:path])
           return;
         InfinitHomePeerTransactionCell* cell =
@@ -483,6 +506,66 @@
       [[InfinitPeerTransactionManager sharedInstance] rejectTransaction:peer_transaction];
     else
       [[InfinitPeerTransactionManager sharedInstance] cancelTransaction:peer_transaction];
+  }
+}
+
+#pragma mark - Rating Cell Handling
+
+- (void)doneRating
+{
+  [[InfinitRatingManager sharedInstance] doneRating];
+  [self.collectionView performBatchUpdates:^
+  {
+    _show_rate_us = NO;
+    [self.collectionView deleteSections:[NSIndexSet indexSetWithIndex:0]];
+  } completion:nil];
+}
+
+- (void)positiveButtonTapped:(id)sender
+{
+  if (self.rating_cell == nil)
+    return;
+  switch (self.rating_cell.state)
+  {
+    case InfinitRatingCellStateFirst:
+      self.rating_cell.state = InfinitRatingCellStateRate;
+      break;
+    case InfinitRatingCellStateRate:
+    {
+      [self doneRating];
+      NSString* itunes_link = @"https://itunes.apple.com/us/app/apple-store/id955849852";
+      [[UIApplication sharedApplication] openURL:[NSURL URLWithString:itunes_link]];
+      break;
+    }
+    case InfinitRatingCellStateFeedback:
+    {
+      [self doneRating];
+      UINib* nib = [UINib nibWithNibName:NSStringFromClass(InfinitHomeFeedbackViewController.class)
+                                  bundle:nil];
+      InfinitHomeFeedbackViewController* feedback_controller =
+        [[nib instantiateWithOwner:self options:nil] firstObject];
+      [self presentViewController:feedback_controller animated:YES completion:nil];
+      break;
+    }
+
+    default:
+      break;
+  }
+}
+
+- (void)negativeButtonTapped:(id)sender
+{
+  if (self.rating_cell == nil)
+    return;
+  switch (self.rating_cell.state)
+  {
+    case InfinitRatingCellStateFirst:
+      self.rating_cell.state = InfinitRatingCellStateFeedback;
+      break;
+
+    default:
+      [self doneRating];
+      break;
   }
 }
 
