@@ -188,33 +188,35 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   if (!self.tab_bar_hidden)
     return;
   _tab_bar_hidden = NO;
-  CGRect final_bar_rect = CGRectOffset(self.tabBar.frame, 0.0f, - self.tabBar.frame.size.height);
-  CGRect final_view_rect = [self growRect:self.view.frame
+  CGFloat d_h = self.tabBar.frame.size.height + 10.0f;
+  CGRect final_bar_rect = CGRectOffset(self.tabBar.frame, 0.0f, - d_h);
+  UIView* resize_view = self.selectedViewController.view;
+  CGRect final_view_rect = [self growRect:resize_view.frame
                                   byWidth:0.0f
-                                andHeight:-self.tabBar.frame.size.height];
+                                andHeight:-d_h];
+  self.tabBar.hidden = NO;
   if (animate)
   {
     [UIView animateWithDuration:self.animator.linear_duration
-                          delay:self.animator.circular_duration / 2.0f
+                          delay:self.animator.linear_duration
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^
      {
        self.tabBar.frame = final_bar_rect;
-       self.view.frame = final_view_rect;
-       [self.view layoutIfNeeded];
+       resize_view.frame = final_view_rect;
      } completion:^(BOOL finished)
      {
        if (!finished)
        {
          self.tabBar.frame = final_bar_rect;
-         self.view.frame = final_view_rect;
+         resize_view.frame = final_view_rect;
        }
      }];
   }
   else
   {
     self.tabBar.frame = final_bar_rect;
-    self.view.frame = final_view_rect;
+    resize_view.frame = final_view_rect;
   }
 }
 
@@ -310,33 +312,36 @@ shouldSelectViewController:(UIViewController*)viewController
   if (self.tab_bar_hidden)
     return;
   _tab_bar_hidden = YES;
-  CGRect final_bar_rect = CGRectOffset(self.tabBar.frame, 0.0f, self.tabBar.frame.size.height);
-  CGRect final_view_rect = [self growRect:self.view.frame
+  CGFloat d_h = self.tabBar.frame.size.height + 10.0f;
+  CGRect final_bar_rect = CGRectOffset(self.tabBar.frame, 0.0f, d_h);
+  UIView* resize_view = self.selectedViewController.view;
+  CGRect final_view_rect = [self growRect:resize_view.frame
                                   byWidth:0.0f
-                                andHeight:self.tabBar.frame.size.height];
+                                andHeight:d_h];
   if (animate)
   {
     [UIView animateWithDuration:self.animator.linear_duration
-                          delay:0.0f
+                          delay:self.animator.linear_duration
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^
      {
        self.tabBar.frame = final_bar_rect;
-       self.view.frame = final_view_rect;
-       [self.view layoutIfNeeded];
+       resize_view.frame = final_view_rect;
      } completion:^(BOOL finished)
      {
        if (!finished)
        {
          self.tabBar.frame = final_bar_rect;
-         self.view.frame = final_view_rect;
+         resize_view.frame = final_view_rect;
        }
+       self.tabBar.hidden = YES;
      }];
   }
   else
   {
     self.tabBar.frame = final_bar_rect;
-    self.view.frame = final_view_rect;
+    resize_view.frame = final_view_rect;
+    self.tabBar.hidden = YES;
   }
 }
 
