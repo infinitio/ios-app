@@ -9,6 +9,7 @@
 #import "InfinitSettingsEditProfileViewController.h"
 
 #import "InfinitColor.h"
+#import "InfinitHostDevice.h"
 #import "UIImage+Rounded.h"
 
 #import <Gap/InfinitAvatarManager.h>
@@ -63,6 +64,16 @@
   if (self.avatar_image == nil)
     self.avatar_view.image = [self.user.avatar circularMaskOfSize:self.avatar_view.bounds.size];
   [super viewWillAppear:animated];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(keyboardWillShow:)
+                                               name:UIKeyboardWillShowNotification
+                                             object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [super viewWillDisappear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -76,23 +87,26 @@
 
 - (IBAction)changeAvatarTapped:(id)sender
 {
+  [self dismissKeyboard];
   UIActionSheet* actionSheet =
-  [[UIActionSheet alloc] initWithTitle:nil
-                              delegate:self
-                     cancelButtonTitle:NSLocalizedString(@"Back", nil)
-                destructiveButtonTitle:nil
-                     otherButtonTitles:NSLocalizedString(@"Take new photo", nil),
-   NSLocalizedString(@"Choose a photo...", nil), nil];
+    [[UIActionSheet alloc] initWithTitle:nil
+                                delegate:self
+                       cancelButtonTitle:NSLocalizedString(@"Back", nil)
+                  destructiveButtonTitle:nil
+                       otherButtonTitles:NSLocalizedString(@"Take new photo", nil),
+                                         NSLocalizedString(@"Choose a photo...", nil), nil];
   [actionSheet showInView:self.view];
 }
 
 - (IBAction)backTapped:(id)sender
 {
+  [self dismissKeyboard];
   [self.navigationController.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)okTapped:(id)sender
 {
+  [self dismissKeyboard];
   if (self.avatar_image != nil)
   {
     [[InfinitAvatarManager sharedInstance] setSelfAvatar:self.avatar_image];
@@ -110,7 +124,7 @@
 
 - (IBAction)screenTap:(id)sender
 {
-  [self.name_field resignFirstResponder];
+  [self dismissKeyboard];
 }
 
 #pragma mark - Avatar Picker
@@ -163,8 +177,58 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
 
 - (BOOL)textFieldShouldReturn:(UITextField*)textField
 {
-  [self.name_field resignFirstResponder];
+  [self dismissKeyboard];
   return YES;
+}
+
+#pragma mark - Keyboard
+
+- (void)dismissKeyboard
+{
+  if (self.name_field.isFirstResponder)
+  {
+    [self.name_field endEditing:YES];
+    [self keyboardEntryDone];
+  }
+}
+
+- (void)keyboardWillShow:(NSNotification*)notification
+{
+  if (![InfinitHostDevice smallScreen])
+    return;
+  CGFloat delta = -50.0f;
+  [UIView animateWithDuration:0.2f
+                        delay:0.0f
+                      options:UIViewAnimationOptionCurveEaseInOut
+                   animations:^
+   {
+     self.view.transform = CGAffineTransformMakeTranslation(0.0f, delta);
+   } completion:^(BOOL finished)
+   {
+     if (!finished)
+     {
+       self.view.transform = CGAffineTransformMakeTranslation(0.0f, delta);
+     }
+   }];
+}
+
+- (void)keyboardEntryDone
+{
+  if (![InfinitHostDevice smallScreen])
+    return;
+  [UIView animateWithDuration:0.2f
+                        delay:0.0f
+                      options:UIViewAnimationOptionCurveEaseInOut
+                   animations:^
+   {
+     self.view.transform = CGAffineTransformIdentity;
+   } completion:^(BOOL finished)
+   {
+     if (!finished)
+     {
+       self.view.transform = CGAffineTransformIdentity;
+     }
+   }];
 }
 
 @end
