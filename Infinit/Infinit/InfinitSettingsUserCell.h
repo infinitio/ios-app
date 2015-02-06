@@ -12,10 +12,6 @@
 
 @interface InfinitSettingsUserCell : UITableViewCell
 
-@property (nonatomic, weak) IBOutlet UIImageView* background_view;
-@property (nonatomic, weak) IBOutlet UIImageView* avatar_view;
-@property (nonatomic, weak) IBOutlet UILabel* name_label;
-
 - (void)configureWithUser:(InfinitUser*)user;
 
 @end
