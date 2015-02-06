@@ -24,7 +24,7 @@
 @implementation InfinitSettingsReportProblemController
 {
 @private
-  NSString* _report_problem_placeholder;
+  NSString* _place_holder_text;
 }
 
 #pragma mark - Init
@@ -39,8 +39,17 @@
                                                                                         blue:73]};
   [self.navigationController.navigationBar setTitleTextAttributes:nav_bar_attrs];
   self.text_view.textContainerInset = UIEdgeInsetsMake(15.0f, 15.0f, 15.0f, 15.0f);
-  _report_problem_placeholder = NSLocalizedString(@"Explain your problem here...", nil);
-  self.text_view.text = _report_problem_placeholder;
+  if (self.feedback_mode)
+  {
+    self.navigationItem.title = NSLocalizedString(@"FEEDBACK", nil);
+    _place_holder_text = NSLocalizedString(@"Write your feedback here...", nil);
+  }
+  else
+  {
+    self.navigationItem.title = NSLocalizedString(@"REPORT A PROBLEM", nil);
+    _place_holder_text = NSLocalizedString(@"Explain your problem here...", nil);
+  }
+  self.text_view.text = _place_holder_text;
   UITapGestureRecognizer* tap =
     [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
   [self.view addGestureRecognizer:tap];
@@ -57,7 +66,7 @@
 - (BOOL)textViewShouldBeginEditing:(UITextView*)textView
 {
   NSMutableString* res = [NSMutableString stringWithString:textView.text];
-  NSRange range = [res rangeOfString:_report_problem_placeholder];
+  NSRange range = [res rangeOfString:_place_holder_text];
   if (range.location != NSNotFound)
     [res deleteCharactersInRange:range];
   textView.text = res;
@@ -69,7 +78,7 @@
 {
   if (textView.text.length == 0)
   {
-    textView.text = _report_problem_placeholder;
+    textView.text = _place_holder_text;
     textView.textColor = [InfinitColor colorWithGray:177];
     self.send_button.enabled = NO;
   }
@@ -82,7 +91,7 @@
 - (void)textViewDidChange:(UITextView*)textView
 {
   if (textView.text.length > 0 &&
-      [textView.text rangeOfString:_report_problem_placeholder].location == NSNotFound)
+      [textView.text rangeOfString:_place_holder_text].location == NSNotFound)
   {
     self.send_button.enabled = YES;
   }
@@ -102,11 +111,23 @@
 
 - (IBAction)sendButtonTapped:(id)sender
 {
-  UIAlertView* alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Thanks!", nil)
-                                                  message:NSLocalizedString(@"Thanks for reporting the problem, we'll get back to you as soon as we can.", nil)
-                                                 delegate:self
-                                        cancelButtonTitle:NSLocalizedString(@"OK", nil)
-                                        otherButtonTitles:nil];
+  UIAlertView* alert = nil;
+  if (self.feedback_mode)
+  {
+    alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Thanks!", nil)
+                                       message:NSLocalizedString(@"Thanks for taking the time to give us feedback.", nil)
+                                      delegate:self
+                             cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                             otherButtonTitles:nil];
+  }
+  else
+  {
+    alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Thanks!", nil)
+                                       message:NSLocalizedString(@"Thanks for reporting the problem, we'll get back to you as soon as we can.", nil)
+                                      delegate:self
+                             cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                             otherButtonTitles:nil];
+  }
   [alert show];
   [[InfinitCrashReporter sharedInstance] reportAProblem:self.text_view.text file:@""];
 }
@@ -115,7 +136,7 @@
 {
   [self dismissKeyboard];
   [self dismissViewControllerAnimated:YES completion:nil];
-  self.text_view.text = _report_problem_placeholder;
+  self.text_view.text = _place_holder_text;
 }
 
 - (void)alertView:(UIAlertView*)alertView
@@ -123,7 +144,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
 {
   [self dismissKeyboard];
   [self dismissViewControllerAnimated:YES completion:nil];
-  self.text_view.text = _report_problem_placeholder;
+  self.text_view.text = _place_holder_text;
 }
 
 @end

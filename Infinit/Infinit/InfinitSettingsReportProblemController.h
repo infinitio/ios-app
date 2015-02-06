@@ -10,4 +10,6 @@
 
 @interface InfinitSettingsReportProblemController : UIViewController
 
+@property (nonatomic, readwrite) BOOL feedback_mode;
+
 @end
