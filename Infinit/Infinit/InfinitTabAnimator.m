@@ -8,14 +8,16 @@
 
 #import "InfinitTabAnimator.h"
 
+#import "InfinitColor.h"
+
 @implementation InfinitTabAnimator
 
 - (id)init
 {
   if (self = [super init])
   {
-    self.linear_duration = 0.2f;
-    self.circular_duration = 0.4f;
+    self.circular_duration = 0.5f;
+    self.linear_duration = self.circular_duration / 2.0f;
   }
   return self;
 }
@@ -99,53 +101,154 @@
   else if (self.animation == AnimateCircleCover)
   {
     CGFloat radius = hypotf(new_vc.view.frame.size.width, new_vc.view.frame.size.height);
+    CGSize button_size = CGSizeMake(68.0f, 73.0f);
     CGRect start_rect;
     CGRect final_rect;
-    UIView* animate_view;
+    UIColor* from_color;
+    UIColor* to_color;
+    NSTimeInterval color_duration = [self transitionDuration:transitionContext] / 2.0f;
+    NSTimeInterval color_offset;
+    UIView* animate_view = [[UIView alloc] initWithFrame:[transitionContext containerView].frame];
+    animate_view.backgroundColor = [UIColor clearColor];
+    [[UIApplication sharedApplication].keyWindow addSubview:animate_view];
+
     if (self.reverse)
     {
-      animate_view = old_vc.view;
+      from_color = [InfinitColor colorWithGray:46];
+      to_color = [InfinitColor colorFromPalette:ColorBurntSienna];
+      color_offset = 1.0f / 2.0f * [self transitionDuration:transitionContext];
       start_rect = CGRectMake(self.animation_center.x - radius, self.animation_center.y - radius,
                               2.0f * radius, 2.0f * radius);
-      final_rect = CGRectMake(self.animation_center.x, self.animation_center.y, 0.0f, 0.0f);
+      CGPoint animation_origin = CGPointMake(self.animation_center.x - (button_size.width / 2.0f),
+                                             self.animation_center.y - (button_size.height / 2.0f));
+      final_rect = CGRectMake(animation_origin.x, animation_origin.y,
+                              button_size.width, button_size.height);
+      [[transitionContext containerView] bringSubviewToFront:old_vc.view];
+      animate_view.alpha = 0.0f;
+      animate_view.backgroundColor = from_color;
+      [[UIApplication sharedApplication].keyWindow bringSubviewToFront:animate_view];
+      [UIView animateWithDuration:self.linear_duration
+                            delay:0.0f
+                          options:UIViewAnimationOptionCurveLinear
+                       animations:^
+      {
+        animate_view.alpha = 1.0f;
+      } completion:^(BOOL finished)
+      {
+        animate_view.backgroundColor = [UIColor clearColor];
+        if (!finished)
+          animate_view.alpha = 1.0f;
+        [[transitionContext containerView] sendSubviewToBack:old_vc.view];
+        [[UIApplication sharedApplication] setStatusBarHidden:NO
+                                                withAnimation:UIStatusBarAnimationNone];
+        CAShapeLayer* color_layer = [self animatedMaskLayerFrom:start_rect
+                                                             to:final_rect
+                                               withPathDuration:[self transitionDuration:transitionContext]
+                                                      fromColor:from_color
+                                                        toColor:to_color
+                                              withColorDuration:color_duration
+                                                 andBeginOffset:color_offset
+                                             andCompletionBlock:^
+         {
+           [animate_view removeFromSuperview];
+           [transitionContext completeTransition:YES];
+           [old_vc.view removeFromSuperview];
+         }];
+        [animate_view.layer addSublayer:color_layer];
+      }];
     }
     else
     {
-      animate_view = new_vc.view;
-      start_rect = CGRectMake(self.animation_center.x, self.animation_center.y, 0.0f, 0.0f);
+      from_color = [InfinitColor colorFromPalette:ColorBurntSienna];
+      to_color = [InfinitColor colorWithGray:46];
+      color_offset = 0.0f;
+      CGPoint animation_origin = CGPointMake(self.animation_center.x - (button_size.width / 2.0f),
+                                             self.animation_center.y - (button_size.height / 2.0f));
+      start_rect = CGRectMake(animation_origin.x, animation_origin.y,
+                              button_size.width, button_size.height);
       final_rect = CGRectMake(self.animation_center.x - radius, self.animation_center.y - radius,
                               2.0f * radius, 2.0f * radius);
+      [[transitionContext containerView] bringSubviewToFront:old_vc.view];
+      animate_view.alpha = 1.0f;
+      [[UIApplication sharedApplication].keyWindow bringSubviewToFront:animate_view];
+      [[UIApplication sharedApplication] setStatusBarHidden:YES
+                                              withAnimation:UIStatusBarAnimationFade];
+      CAShapeLayer* color_layer = [self animatedMaskLayerFrom:start_rect
+                                                           to:final_rect
+                                             withPathDuration:[self transitionDuration:transitionContext]
+                                                    fromColor:from_color
+                                                      toColor:to_color
+                                            withColorDuration:color_duration
+                                               andBeginOffset:color_offset
+                                           andCompletionBlock:^
+       {
+         [UIView animateWithDuration:self.linear_duration
+                               delay:0.0f
+                             options:UIViewAnimationOptionCurveLinear
+                          animations:^
+          {
+            [[transitionContext containerView] sendSubviewToBack:old_vc.view];
+            animate_view.alpha = 0.0f;
+          } completion:^(BOOL finished)
+          {
+            [animate_view removeFromSuperview];
+            [transitionContext completeTransition:YES];
+            [old_vc.view removeFromSuperview];
+          }];
+       }];
+      [animate_view.layer addSublayer:color_layer];
     }
-    [[transitionContext containerView] bringSubviewToFront:animate_view];
-    animate_view.layer.mask = [self animatedMaskLayerFrom:start_rect
-                                                       to:final_rect
-                                             withDuration:[self transitionDuration:transitionContext]
-                                       andCompletionBlock:^
-    {
-      [transitionContext completeTransition:YES];
-      [old_vc.view removeFromSuperview];
-    }];
   }
 }
 
 #pragma mark - Helpers
 
-- (CALayer*)animatedMaskLayerFrom:(CGRect)start_rect
-                               to:(CGRect)final_rect
-                     withDuration:(CGFloat)duration
-               andCompletionBlock:(void (^)(void))block
+- (CAShapeLayer*)animatedMaskLayerFrom:(CGRect)start_rect
+                                    to:(CGRect)final_rect
+                      withPathDuration:(NSTimeInterval)path_duration
+                             fromColor:(UIColor*)from_color
+                               toColor:(UIColor*)to_color
+                     withColorDuration:(NSTimeInterval)color_duration
+                        andBeginOffset:(NSTimeInterval)color_begin_offset
+                    andCompletionBlock:(void (^)(void))block
 {
-  [CATransaction begin];
-  CABasicAnimation* anim = [CABasicAnimation animationWithKeyPath:@"path"];
-  anim.duration = duration;
-  anim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-  anim.fromValue = (__bridge id)([UIBezierPath bezierPathWithOvalInRect:start_rect].CGPath);
-  anim.toValue = (__bridge id)([UIBezierPath bezierPathWithOvalInRect:final_rect].CGPath);
   CAShapeLayer* res = [CAShapeLayer layer];
-  res.path = [UIBezierPath bezierPathWithOvalInRect:final_rect].CGPath;
-  res.backgroundColor = [UIColor blackColor].CGColor;
+  res.path = [UIBezierPath bezierPathWithOvalInRect:start_rect].CGPath;
+  res.fillColor = from_color.CGColor;
+
+  [CATransaction begin];
+  CABasicAnimation* path_anim = [CABasicAnimation animationWithKeyPath:@"path"];
+  NSString* timing_func = kCAMediaTimingFunctionEaseInEaseOut;
+  path_anim.duration = path_duration;
+  path_anim.timingFunction = [CAMediaTimingFunction functionWithName:timing_func];
+  path_anim.fromValue = (__bridge id)([UIBezierPath bezierPathWithOvalInRect:start_rect].CGPath);
+  path_anim.toValue = (__bridge id)([UIBezierPath bezierPathWithOvalInRect:final_rect].CGPath);
+  path_anim.fillMode = kCAFillModeForwards;
+  path_anim.removedOnCompletion = NO;
+
+  CABasicAnimation* color_anim = [CABasicAnimation animationWithKeyPath:@"fillColor"];
+  color_anim.duration = color_duration;
+  color_anim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+  color_anim.fromValue = (__bridge id)from_color.CGColor;
+  color_anim.toValue = (__bridge id)to_color.CGColor;
+  color_anim.fillMode = kCAFillModeForwards;
+  color_anim.removedOnCompletion = NO;
+
+  if (self.reverse)
+  {
+    path_anim.beginTime = CACurrentMediaTime();
+    color_anim.beginTime = path_anim.beginTime + color_begin_offset;
+  }
+  else
+  {
+    path_anim.beginTime = CACurrentMediaTime();
+    color_anim.beginTime = path_anim.beginTime;
+  }
+
   [CATransaction setCompletionBlock:block];
-  [res addAnimation:anim forKey:anim.keyPath];
+
+  [res addAnimation:path_anim forKey:path_anim.keyPath];
+  [res addAnimation:color_anim forKey:color_anim.keyPath];
   [CATransaction commit];
   return res;
 }
