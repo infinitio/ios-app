@@ -53,7 +53,7 @@ static NSDictionary* _me_attrs = nil;
 - (void)updateAvatar
 {
   [self.contact updateAvatar];
-  self.avatar_view.image = self.contact.avatar.circularMask;
+  self.avatar_view.image = [self.contact.avatar circularMaskOfSize:self.avatar_view.bounds.size];
   [self setNeedsDisplay];
 }
 
