@@ -17,6 +17,7 @@
 #import "InfinitSendNavigationController.h"
 #import "InfinitTabAnimator.h"
 
+#import <Gap/InfinitConnectionManager.h>
 #import <Gap/InfinitPeerTransactionManager.h>
 
 @import AssetsLibrary;
@@ -70,6 +71,10 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(peerTransactionUpdated:)
                                                  name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(connectionStatusChanged:)
+                                                 name:INFINIT_CONNECTION_STATUS_CHANGE
                                                object:nil];
   }
   return self;
@@ -242,6 +247,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 
 - (void)showMainScreen
 {
+  [[UIApplication sharedApplication] setStatusBarHidden:NO];
   self.selectedIndex = TabBarIndexHome;
 }
 
@@ -249,6 +255,16 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 {
   [self hideTabBarWithAnimation:YES];
   _last_index = TabBarIndexContacts;
+  if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusNotDetermined)
+  {
+    [self loadGalleryPermissionView];
+    return;
+  }
+  else if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusDenied)
+  {
+    [self noGalleryAccessPopUp];
+    return;
+  }
   self.selectedIndex = TabBarIndexSend;
   InfinitSendNavigationController* nav_controller =
     (InfinitSendNavigationController*)self.selectedViewController;
@@ -302,8 +318,7 @@ shouldSelectViewController:(UIViewController*)viewController
     }
     [self hideTabBarWithAnimation:YES];
   }
-  NSUInteger index = [self.viewControllers indexOfObject:viewController];
-  [self selectorToPosition:index];
+  [self selectorToPosition:[self.viewControllers indexOfObject:viewController]];
   return YES;
 }
 
@@ -393,6 +408,7 @@ shouldSelectViewController:(UIViewController*)viewController
 
 - (void)loadGalleryPermissionView
 {
+  [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
   UINib* permission_nib = [UINib nibWithNibName:@"InfinitAccessGalleryView" bundle:nil];
   self.permission_view = [[permission_nib instantiateWithOwner:self options:nil] firstObject];
   self.permission_view.frame = CGRectMake(0.0f, 0.0f,
@@ -487,6 +503,16 @@ shouldSelectViewController:(UIViewController*)viewController
 - (void)peerTransactionUpdated:(NSNotification*)notification
 {
   [self performSelectorOnMainThread:@selector(updateHomeBadge) withObject:nil waitUntilDone:NO];
+}
+
+#pragma mark - Connection Status Changed
+
+- (void)connectionStatusChanged:(NSNotification*)notification
+{
+  BOOL connected = [notification.userInfo[@"status"] boolValue];
+  BOOL still_trying = [notification.userInfo[@"still_trying"] boolValue];
+  if (!connected && !still_trying)
+    [self performSelectorOnMainThread:@selector(showWelcomeScreen) withObject:nil waitUntilDone:NO];
 }
 
 #pragma mark - Helpers
