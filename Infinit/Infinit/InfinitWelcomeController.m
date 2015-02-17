@@ -70,6 +70,11 @@
   return NO;
 }
 
+- (NSUInteger)supportedInterfaceOrientations
+{
+  return UIInterfaceOrientationMaskPortrait;
+}
+
 - (void)viewDidLoad
 {
   [super viewDidLoad];
@@ -710,6 +715,8 @@
     self.login_form_view.back_button.enabled = YES;
     self.login_form_view.error_label.text = [self registerLoginErrorFromStatus:result.status];
     self.login_form_view.error_label.hidden = NO;
+    if (result.status == gap_email_password_dont_match)
+      self.login_form_view.forgot_button.hidden = NO;
 //    self.login_form_view.facebook_hidden = NO;
   }
 }
