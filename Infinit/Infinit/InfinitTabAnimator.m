@@ -16,7 +16,7 @@
 {
   if (self = [super init])
   {
-    self.circular_duration = 0.5f;
+    self.circular_duration = 0.4f;
     self.linear_duration = self.circular_duration / 2.0f;
   }
   return self;
