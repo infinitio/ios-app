@@ -122,6 +122,7 @@
                                   scaled_size.height);
     CGImageRef cropped_image = CGImageCreateWithImageInRect(res.CGImage, crop_rect);
     res = [UIImage imageWithCGImage:cropped_image];
+    CGImageRelease(cropped_image);
   }
   return res;
 }
