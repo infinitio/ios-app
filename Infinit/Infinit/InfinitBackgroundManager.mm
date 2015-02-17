@@ -8,6 +8,8 @@
 
 #import "InfinitBackgroundManager.h"
 
+#import "InfinitBackgroundTask.h"
+
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitStateManager.h>
 
@@ -18,7 +20,7 @@
 
 ELLE_LOG_COMPONENT("iOS.BackgroundManager");
 
-@interface InfinitBackgroundManager ()
+@interface InfinitBackgroundManager () <InfinitBackgroundTaskProtocol>
 
 @property (nonatomic, readonly) NSMutableDictionary* task_map;
 
@@ -35,6 +37,10 @@ static InfinitBackgroundManager* _instance = nil;
   NSCAssert(_instance == nil, @"Use sharedInstance");
   if (self = [super init])
   {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(transactionAdded:)
+                                                 name:INFINIT_NEW_PEER_TRANSACTION_NOTIFICATION
+                                               object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(transactionUpdated:)
                                                  name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION 
@@ -70,8 +76,15 @@ static InfinitBackgroundManager* _instance = nil;
   NSArray* transactions = [InfinitPeerTransactionManager sharedInstance].transactions;
   for (InfinitPeerTransaction* transaction in transactions)
   {
-    if (transaction.status == gap_transaction_transferring)
-      [self addTaskForTransaction:transaction];
+    if (transaction.from_device && transaction.status == gap_transaction_waiting_accept)
+    {
+      [self addWaitTaskForTransaction:transaction];
+    }
+    else if (transaction.status == gap_transaction_connecting ||
+             transaction.status == gap_transaction_transferring)
+    {
+      [self addTransferTaskForTransaction:transaction];
+    }
   }
 }
 
@@ -87,55 +100,95 @@ static InfinitBackgroundManager* _instance = nil;
 
 #pragma mark - Transaction Updated
 
+- (void)transactionAdded:(NSNotification*)notification
+{
+  NSNumber* id_ = notification.userInfo[@"id"];
+  InfinitPeerTransaction* transaction =
+    [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
+  if (transaction.from_device && transaction.status == gap_transaction_new)
+    [self addWaitTaskForTransaction:transaction];
+}
+
 - (void)transactionUpdated:(NSNotification*)notification
 {
   NSNumber* id_ = notification.userInfo[@"id"];
   InfinitPeerTransaction* transaction =
     [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
-  if (transaction.status == gap_transaction_transferring)
+  if (transaction.from_device && transaction.status == gap_transaction_waiting_accept)
   {
-    [self addTaskForTransaction:transaction];
+    [self addWaitTaskForTransaction:transaction];
   }
-  else // transaction not transferring
+  else if ([self shouldRunTransactionInBackground:transaction])
   {
-    NSNumber* task_num = [self.task_map objectForKey:transaction.meta_id];
-    if (task_num != nil)
-    {
-      ELLE_TRACE("%s: background task done for transaction: %s",
-                 self.description.UTF8String, transaction.meta_id.UTF8String);
-      [[UIApplication sharedApplication] endBackgroundTask:task_num.unsignedIntegerValue];
-      [self.task_map removeObjectForKey:transaction.meta_id];
-    }
+    [self addTransferTaskForTransaction:transaction];
+  }
+  else
+  {
+    InfinitBackgroundTask* task = [self.task_map objectForKey:transaction.id_];
+    if (task)
+      [task endTask];
   }
 }
 
 #pragma mark - Helpers
 
-- (void)addTaskForTransaction:(InfinitPeerTransaction*)transaction
+- (BOOL)shouldRunTransactionInBackground:(InfinitPeerTransaction*)transaction
+{
+  if (transaction.done)
+    return NO;
+  switch (transaction.status)
+  {
+    case gap_transaction_connecting:
+    case gap_transaction_transferring:
+      return YES;
+
+    default:
+      return NO;
+  }
+}
+
+- (void)addWaitTaskForTransaction:(InfinitPeerTransaction*)transaction
 {
   if (self.task_map == nil)
     _task_map = [NSMutableDictionary dictionary];
-  NSString* task_name =
-    [NSString stringWithFormat:@"transfer transaction(%@)", transaction.meta_id];
-  UIBackgroundTaskIdentifier task =
-  [[UIApplication sharedApplication] beginBackgroundTaskWithName:task_name
-                                               expirationHandler:^
-   {
-     ELLE_LOG("%s: background task killed: %s",
-              self.description.UTF8String, task_name.description.UTF8String);
-     if (task != UIBackgroundTaskInvalid)
-     {
-       [self.task_map removeObjectForKey:@(task)];
-       [[UIApplication sharedApplication] endBackgroundTask:task];
-     }
-     else
-     {
-       [self.task_map removeObjectForKey:@(task)];
-     }
-   }];
-  ELLE_TRACE("%s: background task started for transaction: %s",
-             self.description.UTF8String, transaction.meta_id.UTF8String);
-  [self.task_map setObject:@(task) forKey:transaction.meta_id];
+  if ([self.task_map objectForKey:transaction.id_])
+    return;
+  InfinitBackgroundTask* task = [InfinitBackgroundTask waitTaskforTransactionId:transaction.id_
+                                                               forTimeInSeconds:120.0f
+                                                                   withDelegate:self];
+  [self.task_map setObject:task forKey:transaction.id_];
+}
+
+- (void)addTransferTaskForTransaction:(InfinitPeerTransaction*)transaction
+{
+  if (self.task_map == nil)
+    _task_map = [NSMutableDictionary dictionary];
+  if ([self.task_map objectForKey:transaction.id_])
+  {
+    InfinitBackgroundTask* existing = [self.task_map objectForKey:transaction.id_];
+    if (existing.type == InfinitBackgroundTaskWait)
+    {
+      ELLE_TRACE("%s: change existing task for transaction to transferring: %s",
+                 self.description.UTF8String, transaction.id_.stringValue.UTF8String);
+      [existing changeWaitingToTransferring];
+    }
+    else if (existing.type == InfinitBackgroundTaskTransferring)
+    {
+      return;
+    }
+  }
+  InfinitBackgroundTask* task =
+    [InfinitBackgroundTask transferTaskforTransactionId:transaction.id_ withDelegate:self];
+  [self.task_map setObject:task forKey:transaction.id_];
+}
+
+#pragma mark - Background Task Delegate
+
+- (void)backgroundTaskEnded:(InfinitBackgroundTask*)sender
+{
+  ELLE_DEBUG("%s: remove task for transaction (%s)",
+             self.description.UTF8String, sender.transaction_id.stringValue.UTF8String);
+  [self.task_map removeObjectForKey:sender.transaction_id];
 }
 
 @end
