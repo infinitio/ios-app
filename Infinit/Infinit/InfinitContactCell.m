@@ -10,7 +10,6 @@
 
 #import "UIImage+Rounded.h"
 
-static UIImage* _infinit_icon = nil;
 static UIImage* _favorite_icon = nil;
 static UIImage* _me_icon = nil;
 
@@ -18,8 +17,6 @@ static UIImage* _me_icon = nil;
 
 - (void)awakeFromNib
 {
-  if (_infinit_icon == nil)
-    _infinit_icon = [UIImage imageNamed:@"icon-contact-infinit"];
   if (_favorite_icon == nil)
     _favorite_icon = [UIImage imageNamed:@"icon-contact-favorite"];
   if (_me_icon == nil)
@@ -36,8 +33,6 @@ static UIImage* _me_icon = nil;
       self.icon_view.image = _me_icon;
     else if (contact.infinit_user.favorite)
       self.icon_view.image = _favorite_icon;
-    else
-      self.icon_view.image = _infinit_icon;
   }
   if ([self.contact isEqual:contact])
     return;
