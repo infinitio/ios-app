@@ -85,6 +85,7 @@
 		83E112D91A8266090072DAE0 /* InfinitWelcomeOnboardingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E112D71A8266090072DAE0 /* InfinitWelcomeOnboardingController.m */; };
 		83E112DD1A8266D60072DAE0 /* InfinitOnboardingProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E112DC1A8266D60072DAE0 /* InfinitOnboardingProgressView.m */; };
 		83E112E31A827EAD0072DAE0 /* InfinitWelcomeOnboardingNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E112E21A827EAD0072DAE0 /* InfinitWelcomeOnboardingNavigationController.m */; };
+		83EBB0721A934B4400144BC6 /* InfinitBackgroundTask.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB0711A934B4400144BC6 /* InfinitBackgroundTask.mm */; };
 		83F4D0251A1374660068BEB2 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D0241A1374660068BEB2 /* libc++.dylib */; };
 		83F4D04B1A1387EF0068BEB2 /* libaws.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D04A1A1387EF0068BEB2 /* libaws.a */; };
 		83F4D0541A1388050068BEB2 /* libboost_atomic-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D04C1A1388050068BEB2 /* libboost_atomic-mt-s.a */; };
@@ -127,6 +128,7 @@
 		83FA72FF1A66FF1D0014B0E4 /* VENTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FA72FB1A66FF1D0014B0E4 /* VENTokenField.m */; };
 		83FA73061A66FF260014B0E4 /* ScrollViewFrameAccessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FA73031A66FF260014B0E4 /* ScrollViewFrameAccessor.m */; };
 		83FA73071A66FF260014B0E4 /* ViewFrameAccessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FA73051A66FF260014B0E4 /* ViewFrameAccessor.m */; };
+		83FB1C771A920C9D00D4C2F8 /* InfinitSendGalleryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83FB1C761A920C9D00D4C2F8 /* InfinitSendGalleryCell.xib */; };
 		83FE65911A6E571600D3CA9A /* InfinitHomeOnboardingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FE65901A6E571600D3CA9A /* InfinitHomeOnboardingCell.m */; };
 		83FE65941A6E597500D3CA9A /* InfinitHomeAbstractCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FE65931A6E597500D3CA9A /* InfinitHomeAbstractCell.m */; };
 		D00045BD1A499A20008DB448 /* InfinitContactImportCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D00045BC1A499A20008DB448 /* InfinitContactImportCell.m */; };
@@ -335,6 +337,8 @@
 		83E112DC1A8266D60072DAE0 /* InfinitOnboardingProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitOnboardingProgressView.m; sourceTree = "<group>"; };
 		83E112E11A827EAD0072DAE0 /* InfinitWelcomeOnboardingNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitWelcomeOnboardingNavigationController.h; sourceTree = "<group>"; };
 		83E112E21A827EAD0072DAE0 /* InfinitWelcomeOnboardingNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitWelcomeOnboardingNavigationController.m; sourceTree = "<group>"; };
+		83EBB0701A934B4400144BC6 /* InfinitBackgroundTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitBackgroundTask.h; sourceTree = "<group>"; };
+		83EBB0711A934B4400144BC6 /* InfinitBackgroundTask.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitBackgroundTask.mm; sourceTree = "<group>"; };
 		83F4D0241A1374660068BEB2 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		83F4D04A1A1387EF0068BEB2 /* libaws.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libaws.a; path = ../../../_build/ios/elle/aws/lib/libaws.a; sourceTree = "<group>"; };
 		83F4D04C1A1388050068BEB2 /* libboost_atomic-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_atomic-mt-s.a"; path = "../../../_build/ios/elle/boost/lib/libboost_atomic-mt-s.a"; sourceTree = "<group>"; };
@@ -386,6 +390,7 @@
 		83FA73031A66FF260014B0E4 /* ScrollViewFrameAccessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollViewFrameAccessor.m; sourceTree = "<group>"; };
 		83FA73041A66FF260014B0E4 /* ViewFrameAccessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewFrameAccessor.h; sourceTree = "<group>"; };
 		83FA73051A66FF260014B0E4 /* ViewFrameAccessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewFrameAccessor.m; sourceTree = "<group>"; };
+		83FB1C761A920C9D00D4C2F8 /* InfinitSendGalleryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitSendGalleryCell.xib; sourceTree = "<group>"; };
 		83FE658F1A6E571600D3CA9A /* InfinitHomeOnboardingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitHomeOnboardingCell.h; sourceTree = "<group>"; };
 		83FE65901A6E571600D3CA9A /* InfinitHomeOnboardingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitHomeOnboardingCell.m; sourceTree = "<group>"; };
 		83FE65921A6E597500D3CA9A /* InfinitHomeAbstractCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitHomeAbstractCell.h; sourceTree = "<group>"; };
@@ -626,6 +631,8 @@
 			children = (
 				834FCFC21A7B93CA00930BD8 /* InfinitBackgroundManager.h */,
 				834FCFC31A7B93CA00930BD8 /* InfinitBackgroundManager.mm */,
+				83EBB0701A934B4400144BC6 /* InfinitBackgroundTask.h */,
+				83EBB0711A934B4400144BC6 /* InfinitBackgroundTask.mm */,
 			);
 			name = "Background Manager";
 			sourceTree = "<group>";
@@ -922,6 +929,7 @@
 				83F7C3B41A6E96C600FA283C /* InfinitSendNoResultsCell.m */,
 				D05D5D181A24C4B1005529E8 /* InfinitSendGalleryCell.h */,
 				D05D5D191A24C4B1005529E8 /* InfinitSendGalleryCell.m */,
+				83FB1C761A920C9D00D4C2F8 /* InfinitSendGalleryCell.xib */,
 			);
 			name = "Table Cells";
 			sourceTree = "<group>";
@@ -1131,6 +1139,7 @@
 				83B32E131A850C9B004088DD /* InfinitSettingsUserCell.xib in Resources */,
 				83B32DEA1A84DF1E004088DD /* InfinitHomePeerTransactionCell.xib in Resources */,
 				83B32E001A84DF7C004088DD /* LaunchScreen.xib in Resources */,
+				83FB1C771A920C9D00D4C2F8 /* InfinitSendGalleryCell.xib in Resources */,
 				D098481E1A43391B002D26AC /* SourceSansPro-SemiboldIt.otf in Resources */,
 				83157ED81A73D29100F8E87F /* InfinitFilesTableCell.xib in Resources */,
 				832285021A794D2B000893A1 /* WelcomeSignupFormView.xib in Resources */,
@@ -1210,6 +1219,7 @@
 				836D39A11A69409300892206 /* UIImage+Rounded.m in Sources */,
 				83157EFA1A76422D00F8E87F /* InfinitFileModel.m in Sources */,
 				83FA73061A66FF260014B0E4 /* ScrollViewFrameAccessor.m in Sources */,
+				83EBB0721A934B4400144BC6 /* InfinitBackgroundTask.mm in Sources */,
 				83612F8E1A5D7FDB00BDF7CE /* NSData+Conversion.m in Sources */,
 				D02F432C1A5DA34F00447E84 /* WelcomeSignupFormView.m in Sources */,
 				83B32D631A136485004AB945 /* main.m in Sources */,
