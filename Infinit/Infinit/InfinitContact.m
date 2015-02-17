@@ -29,18 +29,18 @@
     _infinit_user = nil;
 
     ABMultiValueRef email_property = ABRecordCopyValue(record, kABPersonEmailProperty);
-    _emails = (__bridge NSArray*)ABMultiValueCopyArrayOfAllValues(email_property);
+    _emails = (__bridge_transfer NSArray*)ABMultiValueCopyArrayOfAllValues(email_property);
     CFRelease(email_property);
 
     ABMultiValueRef phone_property = ABRecordCopyValue(record, kABPersonPhoneProperty);
-    _phone_numbers = (__bridge NSArray*)ABMultiValueCopyArrayOfAllValues(phone_property);
+    _phone_numbers = (__bridge_transfer NSArray*)ABMultiValueCopyArrayOfAllValues(phone_property);
     CFRelease(phone_property);
 
     if (self.emails.count == 0 && self.phone_numbers.count == 0)
       return nil;
 
-    NSString* first_name = (__bridge NSString*)ABRecordCopyValue(record, kABPersonFirstNameProperty);
-    NSString* surname = (__bridge NSString*)ABRecordCopyValue(record, kABPersonLastNameProperty);
+    NSString* first_name = (__bridge_transfer NSString*)ABRecordCopyValue(record, kABPersonFirstNameProperty);
+    NSString* surname = (__bridge_transfer NSString*)ABRecordCopyValue(record, kABPersonLastNameProperty);
     NSMutableString* name_str = [[NSMutableString alloc] init];
     if (first_name.length > 0)
     {
@@ -65,7 +65,7 @@
     _fullname = [NSString stringWithString:name_str];
 
     NSData* image_data =
-      (__bridge NSData*)(ABPersonCopyImageDataWithFormat(record, kABPersonImageFormatThumbnail));
+      (__bridge_transfer NSData*)(ABPersonCopyImageDataWithFormat(record, kABPersonImageFormatThumbnail));
     _avatar = [UIImage imageWithData:image_data scale:1.0f];
     if (self.avatar == nil)
       [self generateAvatarWithFirstName:first_name surname:surname];
