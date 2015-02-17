@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "icon-contact-infinit.png"
+      "filename" : "icon-send-camera.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "icon-contact-infinit@2x.png"
+      "filename" : "icon-send-camera@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "icon-contact-infinit@3x.png"
+      "filename" : "icon-send-camera@3x.png"
     }
   ],
   "info" : {
