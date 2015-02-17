@@ -10,9 +10,13 @@
 
 @interface InfinitSendGalleryCell : UICollectionViewCell
 
-@property (nonatomic, strong) IBOutlet UIImageView* image_view;
-@property (nonatomic, strong) IBOutlet UIImageView* check_mark;
-@property (nonatomic, strong) IBOutlet UIView* black_layer;
-@property (nonatomic, strong) IBOutlet UILabel* duration_label;
+@property (nonatomic, weak) IBOutlet UIImageView* thumbnail_view;
+@property (nonatomic, weak) IBOutlet UIImageView* check_mark;
+@property (nonatomic, weak) IBOutlet UIView* black_layer;
+
+@property (nonatomic, weak) IBOutlet UIView* details_view;
+@property (nonatomic, weak) IBOutlet UILabel* duration_label;
+
+@property (nonatomic, readwrite) double video_duration;
 
 @end
