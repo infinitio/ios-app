@@ -46,7 +46,9 @@
 
 @protocol InfinitHomePeerTransactionCellProtocol <NSObject>
 
-- (void)cellHadAcceptTappedForTransaction:(InfinitTransaction*)transaction;
-- (void)cellHadCancelTappedForTransaction:(InfinitTransaction*)transaction;
+- (void)cell:(InfinitHomePeerTransactionCell*)sender
+hadAcceptTappedForTransaction:(InfinitTransaction*)transaction;
+- (void)cell:(InfinitHomePeerTransactionCell*)sender
+hadCancelTappedForTransaction:(InfinitTransaction*)transaction;
 
 @end

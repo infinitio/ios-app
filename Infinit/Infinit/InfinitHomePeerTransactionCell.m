@@ -214,7 +214,6 @@ static UIImage* _mask_image = nil;
 - (void)setInfoString
 {
   NSString* res = nil;
-  NSRange bold_range = NSMakeRange(0, 0);
   NSString* file_count;
   if (self.transaction.files.count == 1)
   {
@@ -307,7 +306,7 @@ static UIImage* _mask_image = nil;
       }
       break;
     case gap_transaction_finished:
-      if (self.transaction.from_device)
+      if (self.transaction.from_device && self.transaction.other_user.is_self)
       {
         res = [NSString stringWithFormat:NSLocalizedString(@"Sent %@ to another device", nil),
                file_count];
@@ -359,7 +358,7 @@ static UIImage* _mask_image = nil;
   NSMutableAttributedString* attributed_res =
     [[NSMutableAttributedString alloc] initWithString:res
                                            attributes:_norm_attrs];
-  bold_range = [res rangeOfString:file_count];
+  NSRange bold_range = [res rangeOfString:file_count];
   if (bold_range.location != NSNotFound)
     [attributed_res setAttributes:_bold_attrs range:bold_range];
   self.info_label.attributedText = attributed_res;
@@ -520,7 +519,7 @@ static UIImage* _mask_image = nil;
 {
   if (self.transaction.receivable)
   {
-    [_delegate cellHadAcceptTappedForTransaction:self.transaction];
+    [_delegate cell:self hadAcceptTappedForTransaction:self.transaction];
     [self setCancelShown:NO withAnimation:YES];
     [self setAcceptShown:NO withAnimation:YES];
   }
@@ -529,7 +528,7 @@ static UIImage* _mask_image = nil;
 - (IBAction)cancelTapped:(id)sender
 {
   self.cancel_shown = NO;
-  [_delegate cellHadCancelTappedForTransaction:self.transaction];
+  [_delegate cell:self hadCancelTappedForTransaction:self.transaction];
   [self setCancelShown:NO withAnimation:YES];
   [self setAcceptShown:NO withAnimation:YES];
 }
