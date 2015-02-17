@@ -33,7 +33,7 @@ static NSDictionary* _me_attrs = nil;
                   NSForegroundColorAttributeName: [InfinitColor colorWithGray:175]};
   }
   NSRange color_range =
-    [self.name_label.text rangeOfString:NSLocalizedString(@"(other devices)", nil)];
+    [self.name_label.text rangeOfString:NSLocalizedString(@"(my other devices)", nil)];
   if (color_range.location != NSNotFound)
   {
     NSMutableAttributedString* res = [self.name_label.attributedText mutableCopy];
