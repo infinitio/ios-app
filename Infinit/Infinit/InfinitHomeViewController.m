@@ -15,11 +15,12 @@
 #import "InfinitHomeOnboardingCell.h"
 #import "InfinitHomeRatingCell.h"
 
+#import <Gap/InfinitDataSize.h>
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitUserManager.h>
 
-@interface InfinitHomeViewController () <UIGestureRecognizerDelegate,
-                                         InfinitHomePeerTransactionCellProtocol>
+@interface InfinitHomeViewController () <InfinitHomePeerTransactionCellProtocol,
+                                         UIGestureRecognizerDelegate>
 
 @property (nonatomic, readonly) NSMutableArray* data;
 @property (nonatomic, strong) UIView* onboarding_view;
@@ -488,16 +489,45 @@
 
 #pragma mark - Cell Protocol
 
-- (void)cellHadAcceptTappedForTransaction:(InfinitTransaction*)transaction
+- (void)cell:(InfinitHomePeerTransactionCell*)sender
+hadAcceptTappedForTransaction:(InfinitTransaction*)transaction
 {
   if ([transaction isKindOfClass:InfinitPeerTransaction.class])
   {
     InfinitPeerTransaction* peer_transaction = (InfinitPeerTransaction*)transaction;
-    [[InfinitPeerTransactionManager sharedInstance] acceptTransaction:peer_transaction];
+    NSError* error = nil;
+    [[InfinitPeerTransactionManager sharedInstance] acceptTransaction:peer_transaction
+                                                            withError:&error];
+    if (error && [error.domain isEqualToString:INFINIT_FILE_SYSTEM_ERROR_DOMAIN])
+    {
+      UIAlertView* alert = nil;
+      NSString* message = nil;
+      NSString* title = nil;
+      if (error.code == InfinitFileSystemErrorNoFreeSpace)
+      {
+        title = NSLocalizedString(@"Not enough free space!", nil);
+        message =
+          [NSString stringWithFormat:NSLocalizedString(@"You need %@ of space to accept this transfer.", nil),
+           [InfinitDataSize fileSizeStringFrom:transaction.size]];
+      }
+      else
+      {
+        title = NSLocalizedString(@"Unable to accept!", nil);
+      }
+      alert = [[UIAlertView alloc] initWithTitle:title
+                                         message:message
+                                        delegate:nil
+                               cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                               otherButtonTitles:nil];
+      [alert show];
+      sender.cancel_shown = YES;
+      sender.accept_shown = YES;
+    }
   }
 }
 
-- (void)cellHadCancelTappedForTransaction:(InfinitTransaction*)transaction
+- (void)cell:(InfinitHomePeerTransactionCell*)sender
+hadCancelTappedForTransaction:(InfinitTransaction*)transaction
 {
   if ([transaction isKindOfClass:InfinitPeerTransaction.class])
   {
