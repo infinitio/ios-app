@@ -170,8 +170,9 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
                                    0.0f,
                                    thumb_size.width / 2.0f,
                                    thumb_size.height);
-          UIImage* draw_image =
-          [UIImage imageWithCGImage:CGImageCreateWithImageInRect(image.CGImage, rect)];
+          CGImageRef image_ref = CGImageCreateWithImageInRect(image.CGImage, rect);
+          UIImage* draw_image = [UIImage imageWithCGImage:image_ref];
+          CGImageRelease(image_ref);
           [draw_image drawInRect:rect];
           count++;
         }
@@ -197,7 +198,9 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
                                  0.0f,
                                  thumb_size.width / 2.0f,
                                  thumb_size.height);
-        image = [UIImage imageWithCGImage:CGImageCreateWithImageInRect(image.CGImage, rect)];
+        CGImageRef image_ref = CGImageCreateWithImageInRect(image.CGImage, rect);
+        image = [UIImage imageWithCGImage:image_ref];
+        CGImageRelease(image_ref);
         [image drawInRect:rect];
 
         [[UIColor whiteColor] set];
