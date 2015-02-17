@@ -20,10 +20,14 @@
 @import AVFoundation;
 @import Photos;
 
-@interface InfinitSendGalleryController ()
+@interface InfinitSendGalleryController () <UICollectionViewDataSource,
+                                            UICollectionViewDelegate,
+                                            UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) NSArray* assets;
-@property (nonatomic, weak) IBOutlet UIBarButtonItem* next_button;
+@property (nonatomic, weak) IBOutlet UICollectionView* collection_view;
+@property (nonatomic, weak) IBOutlet UIButton* next_button;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* next_constraint;
 
 @end
 
@@ -58,9 +62,13 @@
 
 - (void)viewDidLoad
 {
-  self.collectionView.alwaysBounceVertical = YES;
+  self.collection_view.alwaysBounceVertical = YES;
   [super viewDidLoad];
-  self.collectionView.allowsMultipleSelection = YES;
+  self.collection_view.allowsMultipleSelection = YES;
+
+  UINib* cell_nib = [UINib nibWithNibName:NSStringFromClass(InfinitSendGalleryCell.class)
+                                   bundle:nil];
+  [self.collection_view registerNib:cell_nib forCellWithReuseIdentifier:_cell_identifier];
 
   [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc] init]
                                                 forBarMetrics:UIBarMetricsDefault];
@@ -68,36 +76,40 @@
   NSDictionary* nav_bar_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
                                                                        size:17.0f],
                                   NSForegroundColorAttributeName: [UIColor whiteColor]};
-  NSDictionary* clear_attrs = @{NSForegroundColorAttributeName: [UIColor clearColor]};
   [self.navigationController.navigationBar setTitleTextAttributes:nav_bar_attrs];
-  [self.next_button setTitleTextAttributes:nav_bar_attrs forState:UIControlStateNormal];
-  [self.next_button setTitleTextAttributes:clear_attrs forState:UIControlStateDisabled];
+  self.next_button.titleEdgeInsets =
+    UIEdgeInsetsMake(0.0f,
+                     - self.next_button.imageView.frame.size.width,
+                     0.0f,
+                     self.next_button.imageView.frame.size.width);
+  self.next_button.imageEdgeInsets =
+    UIEdgeInsetsMake(0.0f,
+                     self.next_button.titleLabel.frame.size.width + 10.0f,
+                     0.0f,
+                     - (self.next_button.titleLabel.frame.size.width + 10.0f));
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
   if (self.assets == nil)
     [self loadAssets];
-  [self setNextButtonTitle];
-  if (self.collectionView.indexPathsForSelectedItems.count == 0)
-    self.next_button.enabled = NO;
-  else
-    self.next_button.enabled = YES;
-  self.collectionView.contentOffset = CGPointMake(0.0f, 0.0f - self.collectionView.contentInset.top);
+  [self configureNextButton];
+  self.collection_view.contentOffset =
+    CGPointMake(0.0f, 0.0f - self.collection_view.contentInset.top);
   [super viewWillAppear:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
   [super viewDidAppear:animated];
-  [self.collectionViewLayout invalidateLayout];
+  [self.collection_view.collectionViewLayout invalidateLayout];
   [self.navigationController.navigationBar.subviews[0] setUserInteractionEnabled:YES];
   [self.navigationController.navigationBar.subviews[0] addGestureRecognizer:_nav_bar_tap];
 }
 
 - (void)navBarTapped
 {
-  [self.collectionView scrollRectToVisible:CGRectMake(0.0f, 0.0f, 1.0f, 1.0f) animated:YES];
+  [self.collection_view scrollRectToVisible:CGRectMake(0.0f, 0.0f, 1.0f, 1.0f) animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -136,7 +148,7 @@
     }];
     [temp_assets removeObjectsInArray:except_list];
     self.assets = [temp_assets copy];
-    [self.collectionView reloadData];
+    [self.collection_view reloadData];
   }
   else
   {
@@ -154,9 +166,9 @@
       }];
       NSSortDescriptor* sort = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO];
       self.assets = [temp_assets sortedArrayUsingDescriptors:@[sort]];
-      [self.collectionView performSelectorOnMainThread:@selector(reloadData)
-                                            withObject:nil
-                                         waitUntilDone:NO];
+      [self.collection_view performSelectorOnMainThread:@selector(reloadData)
+                                             withObject:nil
+                                          waitUntilDone:NO];
     } failureBlock:^(NSError* error)
     {
       NSLog(@"Error loading images %@", error);
@@ -169,8 +181,8 @@
 - (void)resetView
 {
   self.assets = nil;
-  for (NSIndexPath* path in self.collectionView.indexPathsForSelectedItems)
-    [self.collectionView deselectItemAtIndexPath:path animated:NO];
+  for (NSIndexPath* path in self.collection_view.indexPathsForSelectedItems)
+    [self.collection_view deselectItemAtIndexPath:path animated:NO];
 }
 
 #pragma mark - AssetsLibrary Call
@@ -205,8 +217,8 @@
     NSInteger current_tag = cell.tag + 1;
     cell.tag = current_tag;
     PHAsset* asset = self.assets[indexPath.row];
-    CGSize size = [self collectionView:self.collectionView
-                                layout:self.collectionViewLayout
+    CGSize size = [self collectionView:self.collection_view
+                                layout:self.collection_view.collectionViewLayout
                 sizeForItemAtIndexPath:indexPath];
     [[PHImageManager defaultManager] requestImageForAsset:asset
                                                targetSize:size
@@ -216,11 +228,11 @@
                                                                    NSDictionary* info)
      {
        if (cell.tag == current_tag)
-         cell.image_view.image = result;
+         cell.thumbnail_view.image = result;
      }];
     if (asset.mediaType == PHAssetMediaTypeVideo)
     {
-      cell.duration_label.text = [self stringFromDuration:asset.duration];
+      cell.video_duration = asset.duration;
     }
   }
   else
@@ -232,20 +244,20 @@
       if ([asset valueForProperty:ALAssetPropertyDuration] != ALErrorInvalidProperty)
       {
         NSTimeInterval duration = [[asset valueForProperty:ALAssetPropertyDuration] doubleValue];
-        cell.duration_label.text = [self stringFromDuration:duration];
+        cell.video_duration = duration;
       }
-      cell.image_view.image = [UIImage imageWithCGImage:asset.thumbnail
+      cell.thumbnail_view.image = [UIImage imageWithCGImage:asset.thumbnail
                                                   scale:1.0f
                                             orientation:UIImageOrientationUp];
     }
     else if ([asset valueForProperty:ALAssetPropertyType] == ALAssetTypePhoto)
     {
-      cell.image_view.image = [UIImage imageWithCGImage:asset.thumbnail
-                                                  scale:1.0f
-                                            orientation:UIImageOrientationUp];
+      cell.thumbnail_view.image = [UIImage imageWithCGImage:asset.thumbnail
+                                                      scale:1.0f
+                                                orientation:UIImageOrientationUp];
     }
   }
-  if ([self.collectionView.indexPathsForSelectedItems containsObject:indexPath])
+  if ([self.collection_view.indexPathsForSelectedItems containsObject:indexPath])
     cell.selected = YES;
   else
     cell.selected = NO;
@@ -312,24 +324,23 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
         }];
      }];
   }
-  if (self.collectionView.indexPathsForSelectedItems.count == 0)
-    self.next_button.enabled = NO;
-  else
-    self.next_button.enabled = YES;
-  [self setNextButtonTitle];
+  [self configureNextButton];
 }
 
 - (IBAction)backButtonTapped:(id)sender
 {
+  // WORKAROUND: For some reason the view is resized when transitioning back which makes the next
+  // button show.
+  self.next_constraint.constant = - 3.0f * self.next_button.bounds.size.height;
   [(InfinitTabBarController*)self.tabBarController lastSelectedIndex];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue*)segue sender:(id)sender
 {
-  if([segue.identifier isEqualToString:@"send_to_segue"])
+  if ([segue.identifier isEqualToString:@"send_to_segue"])
   {
     NSMutableArray* assets = [NSMutableArray array];
-    for (NSIndexPath* path in self.collectionView.indexPathsForSelectedItems)
+    for (NSIndexPath* path in self.collection_view.indexPathsForSelectedItems)
     {
       id asset = self.assets[path.row];
       [assets addObject:asset];
@@ -340,30 +351,33 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
   }
 }
 
-- (void)setNextButtonTitle
+- (void)configureNextButton
 {
-  NSNumber* count = @(self.collectionView.indexPathsForSelectedItems.count);
-  NSMutableString* next_str = [NSMutableString stringWithString:NSLocalizedString(@"Next", nil)];
-  if (count.unsignedIntegerValue > 0)
-    [next_str appendFormat:@" (%@)", count];
-  [UIView performWithoutAnimation:^
+  CGFloat v_constraint = 0.0f;
+  if (self.collection_view.indexPathsForSelectedItems.count == 0)
   {
-    self.next_button.title = next_str;
-  }];
-}
-
-#pragma mark - Helpers
-
-- (NSString*)stringFromDuration:(NSTimeInterval)duration
-{
-  NSInteger ti = (NSInteger)duration;
-  NSInteger seconds = ti % 60;
-  NSInteger minutes = (ti / 60) % 60;
-  NSInteger hours = (ti / 3600);
-  if (ti >= 60 * 60)
-    return [NSString stringWithFormat:@"%ld:%02ld:%02ld", (long)hours, (long)minutes, (long)seconds];
+    self.next_button.enabled = NO;
+    v_constraint = -self.next_button.bounds.size.height;
+  }
   else
-    return [NSString stringWithFormat:@"%ld:%02ld", (long)minutes, (long)seconds];
+  {
+    self.next_button.enabled = YES;
+    v_constraint = 0.0f;
+  }
+  if (self.next_constraint.constant == v_constraint)
+    return;
+  [UIView animateWithDuration:0.3f
+                        delay:0.0f
+                      options:UIViewAnimationOptionCurveEaseInOut
+                   animations:^
+   {
+     self.next_constraint.constant = v_constraint;
+     [self.view layoutIfNeeded];
+   } completion:^(BOOL finished)
+   {
+     if (!finished)
+       self.next_constraint.constant = v_constraint;
+   }];
 }
 
 @end

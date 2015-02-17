@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InfinitSendGalleryController : UICollectionViewController
+@interface InfinitSendGalleryController : UIViewController
 
 - (void)resetView;
 
