@@ -116,9 +116,22 @@ ELLE_LOG_COMPONENT("iOS.FilesViewController");
     UINib* no_files_nib = [UINib nibWithNibName:@"InfinitFilesNoFilesView" bundle:nil];
     _no_files_view = [[no_files_nib instantiateWithOwner:self options:nil] firstObject];
     [self.view addSubview:self.no_files_view];
+    NSDictionary* views = @{@"view": self.no_files_view};
+    self.no_files_view.translatesAutoresizingMaskIntoConstraints = NO;
+    NSArray* v_contraints =
+      [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|"
+                                              options:0
+                                              metrics:nil
+                                                views:views];
+    NSArray* h_constraints =
+      [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|"
+                                              options:0
+                                              metrics:nil
+                                                views:views];
+    [self.view addConstraints:v_contraints];
+    [self.view addConstraints:h_constraints];
   }
   self.search_bar.hidden = YES;
-  self.no_files_view.frame = self.view.frame;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
