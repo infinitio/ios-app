@@ -86,6 +86,12 @@
 		83E112DD1A8266D60072DAE0 /* InfinitOnboardingProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E112DC1A8266D60072DAE0 /* InfinitOnboardingProgressView.m */; };
 		83E112E31A827EAD0072DAE0 /* InfinitWelcomeOnboardingNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E112E21A827EAD0072DAE0 /* InfinitWelcomeOnboardingNavigationController.m */; };
 		83EBB0721A934B4400144BC6 /* InfinitBackgroundTask.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB0711A934B4400144BC6 /* InfinitBackgroundTask.mm */; };
+		83EBB07B1A93943C00144BC6 /* JDStatusBarNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB0761A93943C00144BC6 /* JDStatusBarNotification.m */; };
+		83EBB07C1A93943C00144BC6 /* JDStatusBarStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB0781A93943C00144BC6 /* JDStatusBarStyle.m */; };
+		83EBB07D1A93943C00144BC6 /* JDStatusBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB07A1A93943C00144BC6 /* JDStatusBarView.m */; };
+		83EBB0841A93951600144BC6 /* InfinitOfflineOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB0831A93951600144BC6 /* InfinitOfflineOverlay.m */; };
+		83EBB0871A9397F000144BC6 /* InfinitOfflineOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83EBB0891A9397F000144BC6 /* InfinitOfflineOverlay.xib */; };
+		83EBB0A01A9479D800144BC6 /* InfinitOfflineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB09F1A9479D800144BC6 /* InfinitOfflineViewController.m */; };
 		83F4D0251A1374660068BEB2 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D0241A1374660068BEB2 /* libc++.dylib */; };
 		83F4D04B1A1387EF0068BEB2 /* libaws.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D04A1A1387EF0068BEB2 /* libaws.a */; };
 		83F4D0541A1388050068BEB2 /* libboost_atomic-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D04C1A1388050068BEB2 /* libboost_atomic-mt-s.a */; };
@@ -339,6 +345,17 @@
 		83E112E21A827EAD0072DAE0 /* InfinitWelcomeOnboardingNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitWelcomeOnboardingNavigationController.m; sourceTree = "<group>"; };
 		83EBB0701A934B4400144BC6 /* InfinitBackgroundTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitBackgroundTask.h; sourceTree = "<group>"; };
 		83EBB0711A934B4400144BC6 /* InfinitBackgroundTask.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitBackgroundTask.mm; sourceTree = "<group>"; };
+		83EBB0751A93943C00144BC6 /* JDStatusBarNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDStatusBarNotification.h; sourceTree = "<group>"; };
+		83EBB0761A93943C00144BC6 /* JDStatusBarNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JDStatusBarNotification.m; sourceTree = "<group>"; };
+		83EBB0771A93943C00144BC6 /* JDStatusBarStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDStatusBarStyle.h; sourceTree = "<group>"; };
+		83EBB0781A93943C00144BC6 /* JDStatusBarStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JDStatusBarStyle.m; sourceTree = "<group>"; };
+		83EBB0791A93943C00144BC6 /* JDStatusBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDStatusBarView.h; sourceTree = "<group>"; };
+		83EBB07A1A93943C00144BC6 /* JDStatusBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JDStatusBarView.m; sourceTree = "<group>"; };
+		83EBB0821A93951600144BC6 /* InfinitOfflineOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitOfflineOverlay.h; sourceTree = "<group>"; };
+		83EBB0831A93951600144BC6 /* InfinitOfflineOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitOfflineOverlay.m; sourceTree = "<group>"; };
+		83EBB0881A9397F000144BC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfinitOfflineOverlay.xib; sourceTree = "<group>"; };
+		83EBB09E1A9479D800144BC6 /* InfinitOfflineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitOfflineViewController.h; sourceTree = "<group>"; };
+		83EBB09F1A9479D800144BC6 /* InfinitOfflineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitOfflineViewController.m; sourceTree = "<group>"; };
 		83F4D0241A1374660068BEB2 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		83F4D04A1A1387EF0068BEB2 /* libaws.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libaws.a; path = ../../../_build/ios/elle/aws/lib/libaws.a; sourceTree = "<group>"; };
 		83F4D04C1A1388050068BEB2 /* libboost_atomic-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_atomic-mt-s.a"; path = "../../../_build/ios/elle/boost/lib/libboost_atomic-mt-s.a"; sourceTree = "<group>"; };
@@ -731,6 +748,7 @@
 		83B32D5F1A136485004AB945 /* Infinit */ = {
 			isa = PBXGroup;
 			children = (
+				83EBB0A11A947AF900144BC6 /* Customised Classes */,
 				8369E87B1A8377F400ECD519 /* Rating Manager */,
 				83E112CC1A824C3E0072DAE0 /* Welcome Onboarding */,
 				834FCFC11A7B93B900930BD8 /* Background Manager */,
@@ -744,8 +762,6 @@
 				D04988161A59F61B008B1C24 /* Tab Bar */,
 				83B32D641A136485004AB945 /* AppDelegate.h */,
 				83B32E051A1365E9004AB945 /* AppDelegate.m */,
-				83876AEB1A77965400F79905 /* InfinitPortraitNavigationController.h */,
-				83876AEC1A77965400F79905 /* InfinitPortraitNavigationController.m */,
 				83B32D671A136485004AB945 /* ViewController.h */,
 				83B32D681A136485004AB945 /* ViewController.m */,
 				83B32E021A84DF7C004088DD /* LaunchScreen.xib */,
@@ -813,6 +829,41 @@
 			name = "Welcome Onboarding";
 			sourceTree = "<group>";
 		};
+		83EBB0741A93943C00144BC6 /* JDStatusBarNotification */ = {
+			isa = PBXGroup;
+			children = (
+				83EBB0751A93943C00144BC6 /* JDStatusBarNotification.h */,
+				83EBB0761A93943C00144BC6 /* JDStatusBarNotification.m */,
+				83EBB0771A93943C00144BC6 /* JDStatusBarStyle.h */,
+				83EBB0781A93943C00144BC6 /* JDStatusBarStyle.m */,
+				83EBB0791A93943C00144BC6 /* JDStatusBarView.h */,
+				83EBB07A1A93943C00144BC6 /* JDStatusBarView.m */,
+			);
+			path = JDStatusBarNotification;
+			sourceTree = "<group>";
+		};
+		83EBB07E1A9394D700144BC6 /* Offline Overlay */ = {
+			isa = PBXGroup;
+			children = (
+				83EBB0821A93951600144BC6 /* InfinitOfflineOverlay.h */,
+				83EBB0831A93951600144BC6 /* InfinitOfflineOverlay.m */,
+				83EBB0891A9397F000144BC6 /* InfinitOfflineOverlay.xib */,
+			);
+			name = "Offline Overlay";
+			sourceTree = "<group>";
+		};
+		83EBB0A11A947AF900144BC6 /* Customised Classes */ = {
+			isa = PBXGroup;
+			children = (
+				83EBB07E1A9394D700144BC6 /* Offline Overlay */,
+				83876AEB1A77965400F79905 /* InfinitPortraitNavigationController.h */,
+				83876AEC1A77965400F79905 /* InfinitPortraitNavigationController.m */,
+				83EBB09E1A9479D800144BC6 /* InfinitOfflineViewController.h */,
+				83EBB09F1A9479D800144BC6 /* InfinitOfflineViewController.m */,
+			);
+			name = "Customised Classes";
+			sourceTree = "<group>";
+		};
 		83F4D0211A13740F0068BEB2 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -875,6 +926,7 @@
 			isa = PBXGroup;
 			children = (
 				83FA73001A66FF260014B0E4 /* FrameAccessor */,
+				83EBB0741A93943C00144BC6 /* JDStatusBarNotification */,
 				83FA72F41A66FF1D0014B0E4 /* VENTokenField */,
 			);
 			name = "Third Party";
@@ -1135,6 +1187,7 @@
 				832285051A794D47000893A1 /* InfinitAccessGalleryView.xib in Resources */,
 				D098481D1A43391B002D26AC /* SourceSansPro-Semibold.otf in Resources */,
 				D09848191A43391B002D26AC /* SourceSansPro-It.otf in Resources */,
+				83EBB0871A9397F000144BC6 /* InfinitOfflineOverlay.xib in Resources */,
 				832284FC1A794C97000893A1 /* Main.storyboard in Resources */,
 				83B32E131A850C9B004088DD /* InfinitSettingsUserCell.xib in Resources */,
 				83B32DEA1A84DF1E004088DD /* InfinitHomePeerTransactionCell.xib in Resources */,
@@ -1207,16 +1260,19 @@
 				83157F071A76702C00F8E87F /* InfinitFilesMultipleViewController.m in Sources */,
 				836D394A1A67F0FB00892206 /* NSString+email.m in Sources */,
 				83A95FD21A6A78A0000B75C8 /* InfinitHomeAvatarView.m in Sources */,
+				83EBB0A01A9479D800144BC6 /* InfinitOfflineViewController.m in Sources */,
 				D0659F661A3E865A0001ACAE /* InfinitWelcomeController.m in Sources */,
 				838490981A767F6E00969CF7 /* InfinitFilePreviewController.m in Sources */,
 				83F7C3B51A6E96C600FA283C /* InfinitSendNoResultsCell.m in Sources */,
 				D0BC70471A41C04C006923F2 /* InfinitSendGalleryController.m in Sources */,
+				83EBB07D1A93943C00144BC6 /* JDStatusBarView.m in Sources */,
 				831237281A602C6900D5C41C /* InfinitSendTabIcon.m in Sources */,
 				83B32D691A136485004AB945 /* ViewController.m in Sources */,
 				83FE65941A6E597500D3CA9A /* InfinitHomeAbstractCell.m in Sources */,
 				8365DE881A5E8694003527DE /* InfinitColor.m in Sources */,
 				839B814B1A6443220057E92B /* InfinitSendAbstractCell.m in Sources */,
 				836D39A11A69409300892206 /* UIImage+Rounded.m in Sources */,
+				83EBB07B1A93943C00144BC6 /* JDStatusBarNotification.m in Sources */,
 				83157EFA1A76422D00F8E87F /* InfinitFileModel.m in Sources */,
 				83FA73061A66FF260014B0E4 /* ScrollViewFrameAccessor.m in Sources */,
 				83EBB0721A934B4400144BC6 /* InfinitBackgroundTask.mm in Sources */,
@@ -1242,11 +1298,13 @@
 				83B32E161A851623004088DD /* InfinitSettingsEditProfileViewController.m in Sources */,
 				83A5E4CA1A6EFCC000FB8578 /* InfinitSendNavigationBar.m in Sources */,
 				83FE65911A6E571600D3CA9A /* InfinitHomeOnboardingCell.m in Sources */,
+				83EBB0841A93951600144BC6 /* InfinitOfflineOverlay.m in Sources */,
 				83157ED71A73D29100F8E87F /* InfinitFilesTableCell.m in Sources */,
 				83F5C3B11A814C8900E751CD /* InfinitSendToSelfOverlayView.m in Sources */,
 				839B813F1A6407990057E92B /* InfinitSendContactCell.m in Sources */,
 				8311B5B91A7CE7F600832FDE /* InfinitContactCell.m in Sources */,
 				83FA73071A66FF260014B0E4 /* ViewFrameAccessor.m in Sources */,
+				83EBB07C1A93943C00144BC6 /* JDStatusBarStyle.m in Sources */,
 				8312372F1A613A8900D5C41C /* InfinitAccessGalleryView.m in Sources */,
 				D02F43331A5DA39900447E84 /* WelcomeLoginFormView.m in Sources */,
 				83A95FCD1A6A746B000B75C8 /* InfinitHomePeerTransactionCell.m in Sources */,
@@ -1404,6 +1462,14 @@
 				83B32E011A84DF7C004088DD /* Base */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		83EBB0891A9397F000144BC6 /* InfinitOfflineOverlay.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				83EBB0881A9397F000144BC6 /* Base */,
+			);
+			name = InfinitOfflineOverlay.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
