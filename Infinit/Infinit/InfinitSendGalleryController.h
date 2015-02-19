@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InfinitSendGalleryController : UIViewController
+#import "InfinitOfflineViewController.h"
+
+@interface InfinitSendGalleryController : InfinitOfflineViewController
 
 - (void)resetView;
 

@@ -46,6 +46,7 @@
     _assets = nil;
     _nav_bar_tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                            action:@selector(navBarTapped)];
+    self.dark = YES;
   }
   return self;
 }
@@ -378,6 +379,25 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
      if (!finished)
        self.next_constraint.constant = v_constraint;
    }];
+}
+
+#pragma mark - Offline Overlay
+
+- (NSArray*)verticalConstraints
+{
+  NSDictionary* views = @{@"overlay": self.offline_overlay,
+                          @"button": self.next_button};
+  return [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[overlay][button]"
+                                                 options:0 
+                                                 metrics:nil
+                                                   views:views];
+}
+
+- (void)filesButtonTapped
+{
+  // WORKAROUND: For some reason the view is resized when transitioning back which makes the next
+  // button show.
+  self.next_constraint.constant = - 3.0f * self.next_button.bounds.size.height;
 }
 
 @end
