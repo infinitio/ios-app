@@ -9,6 +9,7 @@
 #import "InfinitBackgroundManager.h"
 
 #import "InfinitBackgroundTask.h"
+#import "InfinitLocalNotificationManager.h"
 
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitStateManager.h>
@@ -189,6 +190,16 @@ static InfinitBackgroundManager* _instance = nil;
   ELLE_DEBUG("%s: remove task for transaction (%s)",
              self.description.UTF8String, sender.transaction_id.stringValue.UTF8String);
   [self.task_map removeObjectForKey:sender.transaction_id];
+}
+
+- (void)backgroundTaskAboutToBeKilled:(InfinitBackgroundTask*)sender
+{
+  ELLE_DEBUG("%s: background task for transaction (%s) about to be killed",
+             self.description.UTF8String, sender.transaction_id);
+  InfinitPeerTransaction* transaction =
+    [[InfinitPeerTransactionManager sharedInstance] transactionWithId:sender.transaction_id];
+  InfinitLocalNotificationManager* notifier = [InfinitLocalNotificationManager sharedInstance];
+  [notifier backgroundTaskAboutToBeKilledForTransaction:transaction];
 }
 
 @end
