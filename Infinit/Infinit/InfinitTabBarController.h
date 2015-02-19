@@ -14,6 +14,7 @@
 
 - (void)lastSelectedIndex;
 - (void)setTabBarHidden:(BOOL)hidden animated:(BOOL)animate;
+- (void)showFilesScreen;
 - (void)showMainScreen;
 - (void)showSendScreenWithContact:(InfinitContact*)contact;
 - (void)showWelcomeScreen;

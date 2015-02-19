@@ -13,9 +13,12 @@
 #import "InfinitContactsViewController.h"
 #import "InfinitFilesViewController.h"
 #import "InfinitHomeViewController.h"
+#import "InfinitOfflineOverlay.h"
 #import "InfinitSendTabIcon.h"
 #import "InfinitSendNavigationController.h"
 #import "InfinitTabAnimator.h"
+
+#import "JDStatusBarNotification.h"
 
 #import <Gap/InfinitConnectionManager.h>
 #import <Gap/InfinitPeerTransactionManager.h>
@@ -24,25 +27,32 @@
 
 typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 {
-  TabBarIndexHome = 0,
-  TabBarIndexFiles,
-  TabBarIndexSend,
-  TabBarIndexContacts,
-  TabBarIndexSettings,
+  InfinitTabBarIndexHome = 0,
+  InfinitTabBarIndexFiles,
+  InfinitTabBarIndexSend,
+  InfinitTabBarIndexContacts,
+  InfinitTabBarIndexSettings,
 };
 
 @interface InfinitTabBarController () <UITabBarControllerDelegate>
 
+@property (nonatomic, strong) InfinitTabAnimator* animator;
 @property (nonatomic) NSUInteger last_index;
 @property (nonatomic, strong) InfinitAccessGalleryView* permission_view;
 @property (nonatomic, strong) UIView* selection_indicator;
 @property (nonatomic, strong) InfinitSendTabIcon* send_tab_icon;
-@property (nonatomic, strong) InfinitTabAnimator* animator;
+@property (nonatomic, strong) InfinitOfflineOverlay* offline_overlay;
 @property (nonatomic) BOOL tab_bar_hidden;
 
 @end
 
 @implementation InfinitTabBarController
+{
+@private
+  NSString* _status_bar_error_style_id;
+  NSString* _status_bar_good_style_id;
+  NSString* _status_bar_warning_style_id;
+}
 
 #pragma mark - Rotation
 
@@ -58,28 +68,6 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 
 #pragma mark - Init
 
-- (id)initWithCoder:(NSCoder*)aDecoder
-{
-  if (self = [super initWithCoder:aDecoder])
-  {
-    _animator = [[InfinitTabAnimator alloc] init];
-    _tab_bar_hidden = NO;
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(newPeerTransaction:) 
-                                                 name:INFINIT_NEW_PEER_TRANSACTION_NOTIFICATION
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(peerTransactionUpdated:)
-                                                 name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(connectionStatusChanged:)
-                                                 name:INFINIT_CONNECTION_STATUS_CHANGE
-                                               object:nil];
-  }
-  return self;
-}
-
 - (void)dealloc
 {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -87,6 +75,23 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 
 - (void)viewDidLoad
 {
+  _animator = [[InfinitTabAnimator alloc] init];
+  _status_bar_error_style_id = @"InfinitErrorStyle";
+  _status_bar_good_style_id = @"InfinitGoodStyle";
+  _status_bar_warning_style_id = @"InfinitWarningStyle";
+  _tab_bar_hidden = NO;
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(newPeerTransaction:)
+                                               name:INFINIT_NEW_PEER_TRANSACTION_NOTIFICATION
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(peerTransactionUpdated:)
+                                               name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(connectionStatusChanged:)
+                                               name:INFINIT_CONNECTION_STATUS_CHANGE
+                                             object:nil];
   [super viewDidLoad];
 
   self.delegate = self;
@@ -105,7 +110,8 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
                                              0.0f,
                                              self.view.frame.size.width / self.viewControllers.count,
                                              1.0f)];
-  self.selection_indicator.backgroundColor = [InfinitColor colorFromPalette:ColorBurntSienna];
+  self.selection_indicator.backgroundColor =
+    [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
   [self.tabBar addSubview:self.selection_indicator];
 
   UIImage* send_icon_bg = [UIImage imageNamed:@"icon-tab-send-bg"];
@@ -122,12 +128,47 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
     [self.tabBar.items[index] setImage:[self imageForTabBarItem:index selected:NO]];
     [self.tabBar.items[index] setSelectedImage:[self imageForTabBarItem:index selected:YES]];
   }
+
+  [JDStatusBarNotification addStyleNamed:_status_bar_error_style_id
+                                 prepare:^JDStatusBarStyle* (JDStatusBarStyle* style)
+   {
+     style.barColor = [InfinitColor colorWithRed:255 green:63 blue:58];
+     style.textColor = [UIColor whiteColor];
+     style.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:11.0f];
+     style.animationType = JDStatusBarAnimationTypeMove;
+     return style;
+   }];
+
+  [JDStatusBarNotification addStyleNamed:_status_bar_good_style_id
+                                 prepare:^JDStatusBarStyle* (JDStatusBarStyle* style)
+   {
+     style.barColor = [InfinitColor colorWithRed:43 green:190 blue:189];
+     style.textColor = [UIColor whiteColor];
+     style.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:11.0f];
+     style.animationType = JDStatusBarAnimationTypeMove;
+     return style;
+   }];
+
+  [JDStatusBarNotification addStyleNamed:_status_bar_warning_style_id
+                                 prepare:^JDStatusBarStyle* (JDStatusBarStyle* style)
+   {
+     style.barColor = [InfinitColor colorWithRed:245 green:166 blue:35];
+     style.textColor = [UIColor whiteColor];
+     style.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:11.0f];
+     style.animationType = JDStatusBarAnimationTypeMove;
+     return style;
+   }];
+
   [self updateHomeBadge];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
   [[UIApplication sharedApplication] setStatusBarHidden:NO];
+  if (![InfinitConnectionManager sharedInstance].connected)
+    [self handleOffline];
+  else
+    [self handleOnline];
   [super viewWillAppear:animated];
 }
 
@@ -157,18 +198,18 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   NSString* image_name = nil;
   switch (index)
   {
-    case TabBarIndexHome:
+    case InfinitTabBarIndexHome:
       image_name = @"icon-tab-home";
       break;
-    case TabBarIndexFiles:
+    case InfinitTabBarIndexFiles:
       image_name = @"icon-tab-files";
       break;
-    case TabBarIndexSend:
+    case InfinitTabBarIndexSend:
       return nil;
-    case TabBarIndexContacts:
+    case InfinitTabBarIndexContacts:
       image_name = @"icon-tab-contacts";
       break;
-    case TabBarIndexSettings:
+    case InfinitTabBarIndexSettings:
       image_name = @"icon-tab-settings";
       break;
 
@@ -248,13 +289,19 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 - (void)showMainScreen
 {
   [[UIApplication sharedApplication] setStatusBarHidden:NO];
-  self.selectedIndex = TabBarIndexHome;
+  self.selectedIndex = InfinitTabBarIndexHome;
+}
+
+- (void)showFilesScreen
+{
+  [[UIApplication sharedApplication] setStatusBarHidden:NO];
+  self.selectedIndex = InfinitTabBarIndexFiles;
 }
 
 - (void)showSendScreenWithContact:(InfinitContact*)contact
 {
   [self hideTabBarWithAnimation:YES];
-  _last_index = TabBarIndexContacts;
+  _last_index = InfinitTabBarIndexContacts;
   if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusNotDetermined)
   {
     [self loadGalleryPermissionView];
@@ -265,7 +312,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
     [self noGalleryAccessPopUp];
     return;
   }
-  self.selectedIndex = TabBarIndexSend;
+  self.selectedIndex = InfinitTabBarIndexSend;
   InfinitSendNavigationController* nav_controller =
     (InfinitSendNavigationController*)self.selectedViewController;
   nav_controller.recipient = contact;
@@ -435,7 +482,8 @@ shouldSelectViewController:(UIViewController*)viewController
   self.permission_view.access_button.enabled = NO;
   self.permission_view.access_button.hidden = YES;
   self.permission_view.image_view.hidden = YES;
-  NSDictionary* bold_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Bold" size:20.0f],
+  NSDictionary* bold_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Bold"
+                                                                    size:20.0f],
                                NSForegroundColorAttributeName: [UIColor whiteColor]};
   self.permission_view.message_label.text =
     NSLocalizedString(@"Tap \"OK\" to start sending\nyour photos and videos.", nil);
@@ -465,7 +513,7 @@ shouldSelectViewController:(UIViewController*)viewController
         self.permission_view = nil;
       }];
      [self hideTabBarWithAnimation:NO];
-     self.selectedIndex = TabBarIndexSend;
+     self.selectedIndex = InfinitTabBarIndexSend;
    } failureBlock:^(NSError* error)
    {
      [self noGalleryAccessPopUp];
@@ -483,7 +531,7 @@ shouldSelectViewController:(UIViewController*)viewController
 
 - (void)selectorToPosition:(NSInteger)position
 {
-  if (position == TabBarIndexSend)
+  if (position == InfinitTabBarIndexSend)
   {
     self.selection_indicator.frame = CGRectMake(0.0f, 0.0f, 0.0f, 0.0f);
     return;
@@ -491,6 +539,33 @@ shouldSelectViewController:(UIViewController*)viewController
   NSUInteger count = self.viewControllers.count;
   self.selection_indicator.frame = CGRectMake(self.view.frame.size.width / count * position, 0.0f,
                                               self.view.frame.size.width / count, 1.0f);
+}
+
+#pragma mark - Offline Warning
+
+- (void)handleOffline
+{
+  InfinitConnectionManager* manager = [InfinitConnectionManager sharedInstance];
+  if (manager.network_status == InfinitNetworkStatusNotReachable)
+  {
+    [JDStatusBarNotification showWithStatus:@"You're currently offline..."
+                                  styleName:_status_bar_warning_style_id];
+  }
+  else
+  {
+    [JDStatusBarNotification showWithStatus:@"Reconnecting..."
+                                  styleName:_status_bar_warning_style_id];
+    [JDStatusBarNotification showActivityIndicator:YES
+                                    indicatorStyle:UIActivityIndicatorViewStyleWhite];
+  }
+}
+
+- (void)handleOnline
+{
+  [JDStatusBarNotification showWithStatus:@"Connected!"
+                             dismissAfter:3.0f
+                                styleName:_status_bar_good_style_id];
+  [self.offline_overlay removeFromSuperview];
 }
 
 #pragma mark - Peer Transaction Notifications
@@ -505,14 +580,27 @@ shouldSelectViewController:(UIViewController*)viewController
   [self performSelectorOnMainThread:@selector(updateHomeBadge) withObject:nil waitUntilDone:NO];
 }
 
-#pragma mark - Connection Status Changed
+#pragma mark - Connection Handling
 
 - (void)connectionStatusChanged:(NSNotification*)notification
 {
-  BOOL connected = [notification.userInfo[@"status"] boolValue];
-  BOOL still_trying = [notification.userInfo[@"still_trying"] boolValue];
-  if (!connected && !still_trying)
+  InfinitConnectionStatus* connection_status = notification.object;
+  if (!connection_status.status && !connection_status.still_trying)
+  {
     [self performSelectorOnMainThread:@selector(showWelcomeScreen) withObject:nil waitUntilDone:NO];
+  }
+  else if (!connection_status.status)
+  {
+    [self performSelectorOnMainThread:@selector(handleOffline)
+                           withObject:nil
+                        waitUntilDone:NO];
+  }
+  else if (connection_status.status)
+  {
+    [self performSelectorOnMainThread:@selector(handleOnline)
+                           withObject:nil
+                        waitUntilDone:NO];
+  }
 }
 
 #pragma mark - Helpers
