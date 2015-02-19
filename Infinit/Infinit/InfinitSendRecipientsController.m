@@ -15,6 +15,7 @@
 #import "InfinitImportOverlayView.h"
 #import "InfinitSendContactCell.h"
 #import "InfinitContactImportCell.h"
+#import "InfinitMetricsManager.h"
 #import "InfinitSendNoResultsCell.h"
 #import "InfinitSendToSelfOverlayView.h"
 #import "InfinitSendUserCell.h"
@@ -364,6 +365,11 @@
     if (granted)
     {
       [self performSelectorOnMainThread:@selector(fetchAddressBook) withObject:nil waitUntilDone:NO];
+      [InfinitMetricsManager sendMetric:InfinitUIEventAccessContacts method:InfinitUIMethodYes];
+    }
+    else
+    {
+      [InfinitMetricsManager sendMetric:InfinitUIEventAccessContacts method:InfinitUIMethodNo];
     }
     [self performSelectorOnMainThread:@selector(cancelOverlayFromButton:)
                            withObject:sender
@@ -426,6 +432,7 @@
   [self.tabBarController performSelectorOnMainThread:@selector(showMainScreen)
                                           withObject:nil
                                        waitUntilDone:NO];
+  [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewSend method:InfinitUIMethodTap];
 }
 
 - (void)temporaryFileManagerCallback
@@ -651,10 +658,22 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   else if (indexPath.section == 1)
   {
     contact = self.swagger_results[indexPath.row];
+    if (contact.infinit_user.favorite)
+    {
+      [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewSelectFavorite
+                                 method:InfinitUIMethodTap];
+    }
+    else
+    {
+      [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewSelectSwagger
+                                 method:InfinitUIMethodTap];
+    }
   }
   else if (indexPath.section == 2)
   {
     contact = self.contact_results[indexPath.row];
+    [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewSelectAddressBookContact
+                               method:InfinitUIMethodTap];
     if (contact.emails.count == 1)
     {
       contact.selected_email_index = 0;
@@ -687,7 +706,7 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   [self.recipients removeObject:contact];
   [self.table_view deselectRowAtIndexPath:[NSIndexPath indexPathForRow:[self.contact_results
                                                                         indexOfObject:contact]
-                                                             inSection:3]
+                                                             inSection:2]
                                  animated:NO];
   [self.search_field reloadData];
   [self updateSendButton];
@@ -791,6 +810,8 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
   [self.search_field reloadData];
   [self reloadSearchResults];
   [self updateSendButton];
+  [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewEmailAddress 
+                             method:InfinitUIMethodType];
 }
 
 - (void)tokenField:(VENTokenField*)tokenField
@@ -860,6 +881,8 @@ didDeleteTokenAtIndex:(NSUInteger)index
 
 - (void)tokenFieldDidBeginEditing:(VENTokenField*)tokenField
 {
+  [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewToField
+                             method:InfinitUIMethodTap];
 }
 
 #pragma mark - Search field datasource
