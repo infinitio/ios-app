@@ -30,7 +30,6 @@
 
 @property (nonatomic, readonly) NSMutableArray* data;
 @property (nonatomic, strong) UIView* onboarding_view;
-@property (nonatomic, strong) InfinitOfflineOverlay* offline_overlay;
 @property (nonatomic, weak) InfinitHomeRatingCell* rating_cell;
 @property (nonatomic, readonly) BOOL show_rate_us;
 
@@ -201,9 +200,9 @@
     }
   }
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  [super viewWillDisappear:animated];
   [_progress_timer invalidate];
   _progress_timer = nil;
+  [super viewWillDisappear:animated];
 }
 
 #pragma mark - General
