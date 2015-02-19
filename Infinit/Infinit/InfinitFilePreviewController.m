@@ -73,8 +73,8 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-  [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:YES];
-  [JDStatusBarNotification dismiss];
+  if ([JDStatusBarNotification isVisible])
+    [JDStatusBarNotification dismiss];
   [super viewDidAppear:animated];
 }
 
@@ -97,8 +97,8 @@
   return self.folder.files.count;
 }
 
-- (id <QLPreviewItem>)previewController:(QLPreviewController*)controller
-                     previewItemAtIndex:(NSInteger)index
+- (id<QLPreviewItem>)previewController:(QLPreviewController*)controller
+                    previewItemAtIndex:(NSInteger)index
 {
   InfinitFileModel* file = self.folder.files[index];
   return [NSURL fileURLWithPath:file.path];
