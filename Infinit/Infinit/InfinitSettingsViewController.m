@@ -14,6 +14,7 @@
 #import "InfinitSettingsUserCell.h"
 #import "InfinitTabBarController.h"
 
+#import <Gap/InfinitConnectionManager.h>
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitStateResult.h>
 #import <Gap/InfinitUserManager.h>
@@ -51,7 +52,11 @@ typedef NS_ENUM(NSUInteger, InfinitLogoutSettings)
   InfinitLogoutSettingsCount,
 };
 
-@interface InfinitSettingsViewController ()
+@interface InfinitSettingsViewController () <UIAlertViewDelegate,
+                                             UITableViewDataSource,
+                                             UITableViewDelegate>
+
+@property (nonatomic, weak) IBOutlet UITableView* table_view;
 
 @end
 
@@ -67,7 +72,7 @@ typedef NS_ENUM(NSUInteger, InfinitLogoutSettings)
 {
   _norm_cell_id = @"settings_cell";
   _user_cell_id = @"settings_user_cell";
-  self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+  self.table_view.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
   _logging_out = NO;
   [super viewDidLoad];
   NSDictionary* nav_bar_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
@@ -78,10 +83,10 @@ typedef NS_ENUM(NSUInteger, InfinitLogoutSettings)
   [self.navigationController.navigationBar setTitleTextAttributes:nav_bar_attrs];
   UINib* norm_cell_nib = [UINib nibWithNibName:NSStringFromClass(InfinitSettingsCell.class)
                                         bundle:nil];
-  [self.tableView registerNib:norm_cell_nib forCellReuseIdentifier:_norm_cell_id];
+  [self.table_view registerNib:norm_cell_nib forCellReuseIdentifier:_norm_cell_id];
   UINib* user_cell_nib = [UINib nibWithNibName:NSStringFromClass(InfinitSettingsUserCell.class)
                                         bundle:nil];
-  [self.tableView registerNib:user_cell_nib forCellReuseIdentifier:_user_cell_id];
+  [self.table_view registerNib:user_cell_nib forCellReuseIdentifier:_user_cell_id];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -92,7 +97,7 @@ typedef NS_ENUM(NSUInteger, InfinitLogoutSettings)
                                              object:nil];
   [super viewWillAppear:animated];
   InfinitSettingsUserCell* cell =
-    (InfinitSettingsUserCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0
+    (InfinitSettingsUserCell*)[self.table_view cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0
                                                                                        inSection:0]];
   [cell configureWithUser:[InfinitUserManager sharedInstance].me];
 }
@@ -110,7 +115,7 @@ typedef NS_ENUM(NSUInteger, InfinitLogoutSettings)
   InfinitUser* self_user = [[InfinitUserManager sharedInstance] me];
   if ([notification.userInfo[@"id"] isEqualToNumber:self_user.id_])
   {
-    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
+    [self.table_view reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
                           withRowAnimation:UITableViewRowAnimationAutomatic];
   }
 }
@@ -151,14 +156,14 @@ typedef NS_ENUM(NSUInteger, InfinitLogoutSettings)
       case InfinitAccountSettingUser:
       {
        InfinitSettingsUserCell* cell =
-          [self.tableView dequeueReusableCellWithIdentifier:_user_cell_id forIndexPath:indexPath];
+          [self.table_view dequeueReusableCellWithIdentifier:_user_cell_id forIndexPath:indexPath];
         [cell configureWithUser:[InfinitUserManager sharedInstance].me];
         res = cell;
         break;
       }
       case InfinitAccountSettingEdit:
       {
-        InfinitSettingsCell* cell = [self.tableView dequeueReusableCellWithIdentifier:_norm_cell_id
+        InfinitSettingsCell* cell = [self.table_view dequeueReusableCellWithIdentifier:_norm_cell_id
                                                                          forIndexPath:indexPath];
         cell.icon_view.image = [UIImage imageNamed:@"icon-settings-fullname"];
         cell.title_label.text = NSLocalizedString(@"Edit profile", nil);
@@ -170,7 +175,7 @@ typedef NS_ENUM(NSUInteger, InfinitLogoutSettings)
   }
   else if (indexPath.section == InfinitSettingsSectionFeedback)
   {
-    InfinitSettingsCell* cell = [self.tableView dequeueReusableCellWithIdentifier:_norm_cell_id
+    InfinitSettingsCell* cell = [self.table_view dequeueReusableCellWithIdentifier:_norm_cell_id
                                                                      forIndexPath:indexPath];
     switch (indexPath.row)
     {
@@ -197,9 +202,9 @@ typedef NS_ENUM(NSUInteger, InfinitLogoutSettings)
   }
   else if (indexPath.section == InfinitSettingsSectionLogout)
   {
-    InfinitSettingsCell* cell = [self.tableView dequeueReusableCellWithIdentifier:_norm_cell_id
+    InfinitSettingsCell* cell = [self.table_view dequeueReusableCellWithIdentifier:_norm_cell_id
                                                                      forIndexPath:indexPath];
-    cell.title_label.textColor = [InfinitColor colorFromPalette:ColorBurntSienna];
+    cell.title_label.textColor = [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
     cell.title_label.text = NSLocalizedString(@"Logout", nil);
     cell.icon_view.image = [UIImage imageNamed:@"icon-settings-logout"];
     res = cell;
@@ -245,7 +250,24 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
     switch (indexPath.row)
     {
       case InfinitAccountSettingEdit:
-        [self performSegueWithIdentifier:@"settings_edit_profile" sender:self];
+      {
+        if ([InfinitConnectionManager sharedInstance].connected == NO)
+        {
+          NSString* title = NSLocalizedString(@"Need a connection!", nil);
+          NSString* message =
+            NSLocalizedString(@"Unable to edit your profile without an Internet connection.", nil);
+          UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
+                                                          message:message
+                                                         delegate:self
+                                                cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                                otherButtonTitles:nil];
+          [alert show];
+        }
+        else
+        {
+          [self performSegueWithIdentifier:@"settings_edit_profile" sender:self];
+        }
+      }
         break;
 
       default:
@@ -280,7 +302,7 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
     [[InfinitStateManager sharedInstance] logoutPerformSelector:@selector(logoutCallback:)
                                                        onObject:self];
   }
-  [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+  [self.table_view deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView*)tableView

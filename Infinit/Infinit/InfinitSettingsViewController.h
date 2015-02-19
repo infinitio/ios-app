@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InfinitSettingsViewController : UITableViewController
+#import "InfinitOfflineViewController.h"
+
+@interface InfinitSettingsViewController : InfinitOfflineViewController
 
 @end
