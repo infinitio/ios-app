@@ -114,8 +114,8 @@
 
     if (self.reverse)
     {
-      from_color = [InfinitColor colorWithGray:46];
-      to_color = [InfinitColor colorFromPalette:ColorBurntSienna];
+      from_color = [InfinitColor colorFromPalette:InfinitPaletteColorSendBlack];
+      to_color = [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
       color_offset = 1.0f / 2.0f * [self transitionDuration:transitionContext];
       start_rect = CGRectMake(self.animation_center.x - radius, self.animation_center.y - radius,
                               2.0f * radius, 2.0f * radius);
@@ -159,8 +159,8 @@
     }
     else
     {
-      from_color = [InfinitColor colorFromPalette:ColorBurntSienna];
-      to_color = [InfinitColor colorWithGray:46];
+      from_color = [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
+      to_color = [InfinitColor colorFromPalette:InfinitPaletteColorSendBlack];
       color_offset = 0.0f;
       CGPoint animation_origin = CGPointMake(self.animation_center.x - (button_size.width / 2.0f),
                                              self.animation_center.y - (button_size.height / 2.0f));
