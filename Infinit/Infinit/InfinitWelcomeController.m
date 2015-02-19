@@ -24,7 +24,7 @@
 
 #import "NSString+email.h"
 
-
+#import <Gap/InfinitConnectionManager.h>
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitStateResult.h>
@@ -63,6 +63,11 @@
 
   BOOL _logging_in;
   BOOL _registering;
+}
+
+- (BOOL)prefersStatusBarHidden
+{
+  return YES;
 }
 
 - (BOOL)shouldAutorotate
@@ -118,6 +123,10 @@
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(textDidChange:)
                                                name:UITextFieldTextDidChangeNotification
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(connectionTypeChanged:)
+                                               name:INFINIT_CONNECTION_TYPE_CHANGE
                                              object:nil];
 }
 
@@ -672,6 +681,14 @@
 {
   if (_logging_in)
     return;
+  if ([InfinitConnectionManager sharedInstance].network_status == InfinitNetworkStatusNotReachable)
+  {
+    self.login_form_view.error_label.text =
+      NSLocalizedString(@"Ensure you're connected to the Internet.", nil);
+    self.login_form_view.error_label.hidden = NO;
+    self.login_form_view.next_button.enabled = YES;
+    return;
+  }
   _logging_in = YES;
   self.login_form_view.error_label.hidden = YES;
 //  self.login_form_view.facebook_hidden = YES;
@@ -679,6 +696,7 @@
   {
     [self.view endEditing:YES];
     [self keyboardEntryDone];
+    self.login_form_view.next_button.hidden = YES;
     [self.login_form_view.activity startAnimating];
     self.login_form_view.email_field.enabled = NO;
     self.login_form_view.password_field.enabled = NO;
@@ -700,6 +718,7 @@
 - (void)loginCallback:(InfinitStateResult*)result
 {
   _logging_in = NO;
+  self.login_form_view.next_button.hidden = NO;
   [self.login_form_view.activity stopAnimating];
   if (result.success)
   {
@@ -792,12 +811,21 @@
 {
   if (_registering)
     return;
+  if ([InfinitConnectionManager sharedInstance].network_status == InfinitNetworkStatusNotReachable)
+  {
+    self.signup_form_view.error_label.text =
+      NSLocalizedString(@"Ensure you're connected to the Internet.", nil);
+    self.signup_form_view.error_label.hidden = NO;
+    self.signup_form_view.next_button.enabled = YES;
+    return;
+  }
   _registering = YES;
   self.signup_form_view.error_label.hidden = YES;
   if ([self registerInputsGood])
   {
     [self.view endEditing:YES];
     [self keyboardEntryDone];
+    self.signup_form_view.next_button.hidden = YES;
     [self.signup_form_view.activity startAnimating];
     self.signup_form_view.email_field.enabled = NO;
     self.signup_form_view.fullname_field.enabled = NO;
@@ -823,6 +851,7 @@
 - (void)registerCallback:(InfinitStateResult*)result
 {
   _registering = NO;
+  self.signup_form_view.next_button.hidden = NO;
   [self.signup_form_view.activity stopAnimating];
   if (result.success)
   {
@@ -909,10 +938,23 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
   [self.picker dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark - Connection Status
 
-- (BOOL)prefersStatusBarHidden
+- (void)connectionTypeChanged:(NSNotification*)notification
 {
-  return YES;
+  InfinitNetworkStatuses network_status = [notification.userInfo[@"connection_type"] integerValue];
+  if (network_status == InfinitNetworkStatusNotReachable)
+  {
+    __weak UILabel* label = nil;
+    if (_logging_in)
+      label = self.login_form_view.error_label;
+    else if (_registering)
+      label = self.signup_form_view.error_label;
+    else
+      return;
+    label.text = NSLocalizedString(@"Ensure you're connected to the Internet.", nil);
+    label.hidden = NO;
+  }
 }
 
 @end
