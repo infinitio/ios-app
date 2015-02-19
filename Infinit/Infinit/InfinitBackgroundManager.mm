@@ -39,10 +39,6 @@ static InfinitBackgroundManager* _instance = nil;
   if (self = [super init])
   {
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(transactionAdded:)
-                                                 name:INFINIT_NEW_PEER_TRANSACTION_NOTIFICATION
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(transactionUpdated:)
                                                  name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION 
                                                object:nil];
@@ -50,7 +46,14 @@ static InfinitBackgroundManager* _instance = nil;
                                              selector:@selector(clearModel:)
                                                  name:INFINIT_CLEAR_MODEL_NOTIFICATION
                                                object:nil];
-    [self fillMap];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(stopBackgroundTasks)
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:[UIApplication sharedApplication]];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(refreshBackgroundTasks)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:[UIApplication sharedApplication]];
   }
   return self;
 }
@@ -72,12 +75,24 @@ static InfinitBackgroundManager* _instance = nil;
   return _instance;
 }
 
-- (void)fillMap
+- (void)stopBackgroundTasks
 {
+  if (self.task_map != nil)
+  {
+    for (InfinitBackgroundTask* task in self.task_map.allValues)
+      [task endTask];
+  }
+}
+
+- (void)refreshBackgroundTasks
+{
+  [self stopBackgroundTasks];
   NSArray* transactions = [InfinitPeerTransactionManager sharedInstance].transactions;
   for (InfinitPeerTransaction* transaction in transactions)
   {
-    if (transaction.from_device && transaction.status == gap_transaction_waiting_accept)
+    if (transaction.from_device &&
+        (transaction.status == gap_transaction_waiting_accept ||
+         transaction.status == gap_transaction_new))
     {
       [self addWaitTaskForTransaction:transaction];
     }
@@ -101,42 +116,55 @@ static InfinitBackgroundManager* _instance = nil;
 
 #pragma mark - Transaction Updated
 
-- (void)transactionAdded:(NSNotification*)notification
-{
-  NSNumber* id_ = notification.userInfo[@"id"];
-  InfinitPeerTransaction* transaction =
-    [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
-  if (transaction.from_device && transaction.status == gap_transaction_new)
-    [self addWaitTaskForTransaction:transaction];
-}
-
 - (void)transactionUpdated:(NSNotification*)notification
 {
   NSNumber* id_ = notification.userInfo[@"id"];
   InfinitPeerTransaction* transaction =
     [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
-  if (transaction.from_device && transaction.status == gap_transaction_waiting_accept)
+  InfinitBackgroundTask* existing = [self.task_map objectForKey:transaction.id_];
+  if (!existing)
+    return;
+
+  if ([self shouldWaitTransactionInBackground:transaction])
   {
-    [self addWaitTaskForTransaction:transaction];
+    // We already have a task, do nothing.
   }
   else if ([self shouldRunTransactionInBackground:transaction])
   {
-    [self addTransferTaskForTransaction:transaction];
+    if (existing.type == InfinitBackgroundTaskWait)
+    {
+      ELLE_TRACE("%s: change existing task for transaction to transferring: %s",
+                 self.description.UTF8String, transaction.id_.stringValue.UTF8String);
+      [existing changeWaitingToTransferring];
+    }
+    else if (existing.type == InfinitBackgroundTaskTransferring)
+    {
+      // We already have a task, do nothing.
+    }
   }
   else
   {
-    InfinitBackgroundTask* task = [self.task_map objectForKey:transaction.id_];
-    if (task)
-      [task endTask];
+    [existing endTask];
   }
 }
 
 #pragma mark - Helpers
 
+- (BOOL)shouldWaitTransactionInBackground:(InfinitPeerTransaction*)transaction
+{
+  switch (transaction.status)
+  {
+    case gap_transaction_new:
+    case gap_transaction_waiting_accept:
+      return YES;
+
+    default:
+      return NO;
+  }
+}
+
 - (BOOL)shouldRunTransactionInBackground:(InfinitPeerTransaction*)transaction
 {
-  if (transaction.done)
-    return NO;
   switch (transaction.status)
   {
     case gap_transaction_connecting:
@@ -165,25 +193,23 @@ static InfinitBackgroundManager* _instance = nil;
   if (self.task_map == nil)
     _task_map = [NSMutableDictionary dictionary];
   if ([self.task_map objectForKey:transaction.id_])
-  {
-    InfinitBackgroundTask* existing = [self.task_map objectForKey:transaction.id_];
-    if (existing.type == InfinitBackgroundTaskWait)
-    {
-      ELLE_TRACE("%s: change existing task for transaction to transferring: %s",
-                 self.description.UTF8String, transaction.id_.stringValue.UTF8String);
-      [existing changeWaitingToTransferring];
-    }
-    else if (existing.type == InfinitBackgroundTaskTransferring)
-    {
-      return;
-    }
-  }
+    return;
   InfinitBackgroundTask* task =
     [InfinitBackgroundTask transferTaskforTransactionId:transaction.id_ withDelegate:self];
   [self.task_map setObject:task forKey:transaction.id_];
 }
 
 #pragma mark - Background Task Delegate
+
+- (void)backgroundTaskAboutToBeKilled:(InfinitBackgroundTask*)sender
+{
+  ELLE_DEBUG("%s: background task for transaction (%s) about to be killed",
+             self.description.UTF8String, sender.transaction_id);
+  InfinitPeerTransaction* transaction =
+    [[InfinitPeerTransactionManager sharedInstance] transactionWithId:sender.transaction_id];
+  InfinitLocalNotificationManager* notifier = [InfinitLocalNotificationManager sharedInstance];
+  [notifier backgroundTaskAboutToBeKilledForTransaction:transaction];
+}
 
 - (void)backgroundTaskEnded:(InfinitBackgroundTask*)sender
 {
@@ -192,10 +218,10 @@ static InfinitBackgroundManager* _instance = nil;
   [self.task_map removeObjectForKey:sender.transaction_id];
 }
 
-- (void)backgroundTaskAboutToBeKilled:(InfinitBackgroundTask*)sender
+- (void)backgroundTaskTimedOut:(InfinitBackgroundTask*)sender
 {
-  ELLE_DEBUG("%s: background task for transaction (%s) about to be killed",
-             self.description.UTF8String, sender.transaction_id);
+  if ([UIApplication sharedApplication].applicationState != UIApplicationStateBackground)
+    return;
   InfinitPeerTransaction* transaction =
     [[InfinitPeerTransactionManager sharedInstance] transactionWithId:sender.transaction_id];
   InfinitLocalNotificationManager* notifier = [InfinitLocalNotificationManager sharedInstance];
