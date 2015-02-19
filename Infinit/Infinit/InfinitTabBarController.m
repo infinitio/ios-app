@@ -13,6 +13,7 @@
 #import "InfinitContactsViewController.h"
 #import "InfinitFilesViewController.h"
 #import "InfinitHomeViewController.h"
+#import "InfinitMetricsManager.h"
 #import "InfinitOfflineOverlay.h"
 #import "InfinitSendTabIcon.h"
 #import "InfinitSendNavigationController.h"
@@ -316,6 +317,8 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   InfinitSendNavigationController* nav_controller =
     (InfinitSendNavigationController*)self.selectedViewController;
   nav_controller.recipient = contact;
+  [InfinitMetricsManager sendMetric:InfinitUIEventSendGalleryViewOpen
+                             method:InfinitUIMethodContact];
 }
 
 - (void)showWelcomeScreen
@@ -362,6 +365,11 @@ shouldSelectViewController:(UIViewController*)viewController
     {
       [self noGalleryAccessPopUp];
       return NO;
+    }
+    else
+    {
+      [InfinitMetricsManager sendMetric:InfinitUIEventSendGalleryViewOpen
+                                 method:InfinitUIMethodTabBar];
     }
     [self hideTabBarWithAnimation:YES];
   }
@@ -514,9 +522,15 @@ shouldSelectViewController:(UIViewController*)viewController
       }];
      [self hideTabBarWithAnimation:NO];
      self.selectedIndex = InfinitTabBarIndexSend;
+     [InfinitMetricsManager sendMetric:InfinitUIEventAccessGallery
+                                method:InfinitUIMethodYes];
+     [InfinitMetricsManager sendMetric:InfinitUIEventSendGalleryViewOpen
+                                method:InfinitUIMethodTabBar];
    } failureBlock:^(NSError* error)
    {
      [self noGalleryAccessPopUp];
+     [InfinitMetricsManager sendMetric:InfinitUIEventAccessGallery
+                                method:InfinitUIMethodNo];
      [self.permission_view removeFromSuperview];
      if (error.code == ALAssetsLibraryAccessUserDeniedError)
      {
