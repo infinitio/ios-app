@@ -13,6 +13,7 @@
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitKeychain.h"
 #import "InfinitLocalNotificationManager.h"
+#import "InfinitMetricsManager.h"
 #import "InfinitRatingManager.h"
 #import "InfinitWelcomeOnboardingNavigationController.h"
 
@@ -78,6 +79,8 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   [self.window makeKeyAndVisible];
 
   [self registerForNotifications];
+
+  [InfinitMetricsManager sendMetric:InfinitUIEventAppOpen method:InfinitUIMethodNew];
 
   return YES;
 }
@@ -161,6 +164,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 - (void)applicationWillEnterForeground:(UIApplication*)application
 {
   // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+  [InfinitMetricsManager sendMetric:InfinitUIEventAppOpen method:InfinitUIMethodRepeat];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication*)application
@@ -236,12 +240,17 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   }
 }
 
-- (void)application:(UIApplication*)applocatopm
+- (void)application:(UIApplication*)application
 didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
   [InfinitStateManager sharedInstance].push_token = deviceToken.hexadecimalString;
   if ([self canAutoLogin] && !self.onboarding)
     [self tryLogin];
+  if (![InfinitApplicationSettings sharedInstance].asked_notifications)
+  {
+    [InfinitApplicationSettings sharedInstance].asked_notifications = YES;
+    [InfinitMetricsManager sendMetric:InfinitUIEventAccessNotifications method:InfinitUIMethodYes];
+  }
 }
 
 - (void)application:(UIApplication*)application
@@ -249,6 +258,11 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
   if ([self canAutoLogin] && !self.onboarding)
     [self tryLogin];
+  if (![InfinitApplicationSettings sharedInstance].asked_notifications)
+  {
+    [InfinitApplicationSettings sharedInstance].asked_notifications = YES;
+    [InfinitMetricsManager sendMetric:InfinitUIEventAccessNotifications method:InfinitUIMethodNo];
+  }
 }
 
 - (void)application:(UIApplication*)application
