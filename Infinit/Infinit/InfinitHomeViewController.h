@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InfinitHomeViewController : UICollectionViewController
+#import "InfinitOfflineViewController.h"
+
+@interface InfinitHomeViewController : InfinitOfflineViewController
 
 - (void)scrollToTop;
 
