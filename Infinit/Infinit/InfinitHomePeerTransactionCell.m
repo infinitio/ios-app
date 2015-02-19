@@ -228,7 +228,19 @@ static UIImage* _mask_image = nil;
   NSString* other_name = self.transaction.other_user.fullname;
   switch (self.transaction.status)
   {
-    case gap_transaction_new:
+    case gap_transaction_new: // Will always be from this device.
+    {
+      if (self.transaction.other_user.is_self)
+      {
+        res = NSLocalizedString(@"Preparing your transfer to yourself", nil);
+      }
+      else
+      {
+        res = [NSString stringWithFormat:NSLocalizedString(@"Preparing your transfer to %@", nil),
+               other_name];
+      }
+      break;
+    }
     case gap_transaction_connecting:
     case gap_transaction_transferring:
     {
