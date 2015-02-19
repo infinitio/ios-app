@@ -8,11 +8,18 @@
 
 #import "InfinitSendNavigationBar.h"
 
+#import "JDStatusBarNotification.h"
+
+#import <Gap/InfinitConnectionManager.h>
+
 @implementation InfinitSendNavigationBar
 
 - (CGSize)sizeThatFits:(CGSize)size
 {
-  return CGSizeMake(self.superview.bounds.size.width, 54.0f);
+  CGFloat height = 54.0f;
+  if ([JDStatusBarNotification isVisible])
+    height += [JDStatusBarNotification currentBar].bounds.size.height;
+  return CGSizeMake(self.superview.bounds.size.width, height);
 }
 
 @end
