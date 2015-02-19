@@ -92,6 +92,7 @@
 		83EBB0841A93951600144BC6 /* InfinitOfflineOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB0831A93951600144BC6 /* InfinitOfflineOverlay.m */; };
 		83EBB0871A9397F000144BC6 /* InfinitOfflineOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83EBB0891A9397F000144BC6 /* InfinitOfflineOverlay.xib */; };
 		83EBB0A01A9479D800144BC6 /* InfinitOfflineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB09F1A9479D800144BC6 /* InfinitOfflineViewController.m */; };
+		83EBB0A51A96344D00144BC6 /* InfinitMetricsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB0A41A96344D00144BC6 /* InfinitMetricsManager.m */; };
 		83F4D0251A1374660068BEB2 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D0241A1374660068BEB2 /* libc++.dylib */; };
 		83F4D04B1A1387EF0068BEB2 /* libaws.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D04A1A1387EF0068BEB2 /* libaws.a */; };
 		83F4D0541A1388050068BEB2 /* libboost_atomic-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D04C1A1388050068BEB2 /* libboost_atomic-mt-s.a */; };
@@ -356,6 +357,9 @@
 		83EBB0881A9397F000144BC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfinitOfflineOverlay.xib; sourceTree = "<group>"; };
 		83EBB09E1A9479D800144BC6 /* InfinitOfflineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitOfflineViewController.h; sourceTree = "<group>"; };
 		83EBB09F1A9479D800144BC6 /* InfinitOfflineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitOfflineViewController.m; sourceTree = "<group>"; };
+		83EBB0A31A96344D00144BC6 /* InfinitMetricsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitMetricsManager.h; sourceTree = "<group>"; };
+		83EBB0A41A96344D00144BC6 /* InfinitMetricsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitMetricsManager.m; sourceTree = "<group>"; };
+		83EBB0A61A96351E00144BC6 /* InfinitUIMetrics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfinitUIMetrics.h; sourceTree = "<group>"; };
 		83F4D0241A1374660068BEB2 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		83F4D04A1A1387EF0068BEB2 /* libaws.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libaws.a; path = ../../../_build/ios/elle/aws/lib/libaws.a; sourceTree = "<group>"; };
 		83F4D04C1A1388050068BEB2 /* libboost_atomic-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_atomic-mt-s.a"; path = "../../../_build/ios/elle/boost/lib/libboost_atomic-mt-s.a"; sourceTree = "<group>"; };
@@ -748,27 +752,26 @@
 		83B32D5F1A136485004AB945 /* Infinit */ = {
 			isa = PBXGroup;
 			children = (
-				83EBB0A11A947AF900144BC6 /* Customised Classes */,
-				8369E87B1A8377F400ECD519 /* Rating Manager */,
-				83E112CC1A824C3E0072DAE0 /* Welcome Onboarding */,
 				834FCFC11A7B93B900930BD8 /* Background Manager */,
-				832285111A795884000893A1 /* User Notifications */,
-				D0BD35281A43307A00AB8EF9 /* Home */,
-				83157ED31A73D25A00F8E87F /* Files */,
-				D0AFCBB41A254699003AC152 /* Send */,
 				8311B5AF1A7CE0CB00832FDE /* Contacts */,
-				830AD1EB1A6CF33400E2B058 /* Settings */,
+				83EBB0A11A947AF900144BC6 /* Customised Classes */,
+				83157ED31A73D25A00F8E87F /* Files */,
+				D09848021A43390D002D26AC /* Fonts */,
+				D0BD35281A43307A00AB8EF9 /* Home */,
 				83B32DF41A1365A9004AB945 /* Login */,
+				83EBB0A21A9633EC00144BC6 /* Metrics Manager */,
+				8369E87B1A8377F400ECD519 /* Rating Manager */,
+				D0AFCBB41A254699003AC152 /* Send */,
+				830AD1EB1A6CF33400E2B058 /* Settings */,
 				D04988161A59F61B008B1C24 /* Tab Bar */,
-				83B32D641A136485004AB945 /* AppDelegate.h */,
-				83B32E051A1365E9004AB945 /* AppDelegate.m */,
-				83B32D671A136485004AB945 /* ViewController.h */,
-				83B32D681A136485004AB945 /* ViewController.m */,
+				832285111A795884000893A1 /* User Notifications */,
+				83E112CC1A824C3E0072DAE0 /* Welcome Onboarding */,
+				83B32D601A136485004AB945 /* Supporting Files */,
+				83B32D6D1A136485004AB945 /* Images.xcassets */,
 				83B32E021A84DF7C004088DD /* LaunchScreen.xib */,
 				832284FE1A794C97000893A1 /* Main.storyboard */,
-				D09848021A43390D002D26AC /* Fonts */,
-				83B32D6D1A136485004AB945 /* Images.xcassets */,
-				83B32D601A136485004AB945 /* Supporting Files */,
+				83B32D641A136485004AB945 /* AppDelegate.h */,
+				83B32E051A1365E9004AB945 /* AppDelegate.m */,
 			);
 			path = Infinit;
 			sourceTree = "<group>";
@@ -860,8 +863,20 @@
 				83876AEC1A77965400F79905 /* InfinitPortraitNavigationController.m */,
 				83EBB09E1A9479D800144BC6 /* InfinitOfflineViewController.h */,
 				83EBB09F1A9479D800144BC6 /* InfinitOfflineViewController.m */,
+				83B32D671A136485004AB945 /* ViewController.h */,
+				83B32D681A136485004AB945 /* ViewController.m */,
 			);
 			name = "Customised Classes";
+			sourceTree = "<group>";
+		};
+		83EBB0A21A9633EC00144BC6 /* Metrics Manager */ = {
+			isa = PBXGroup;
+			children = (
+				83EBB0A31A96344D00144BC6 /* InfinitMetricsManager.h */,
+				83EBB0A41A96344D00144BC6 /* InfinitMetricsManager.m */,
+				83EBB0A61A96351E00144BC6 /* InfinitUIMetrics.h */,
+			);
+			name = "Metrics Manager";
 			sourceTree = "<group>";
 		};
 		83F4D0211A13740F0068BEB2 /* Libraries */ = {
@@ -1274,6 +1289,7 @@
 				836D39A11A69409300892206 /* UIImage+Rounded.m in Sources */,
 				83EBB07B1A93943C00144BC6 /* JDStatusBarNotification.m in Sources */,
 				83157EFA1A76422D00F8E87F /* InfinitFileModel.m in Sources */,
+				83EBB0A51A96344D00144BC6 /* InfinitMetricsManager.m in Sources */,
 				83FA73061A66FF260014B0E4 /* ScrollViewFrameAccessor.m in Sources */,
 				83EBB0721A934B4400144BC6 /* InfinitBackgroundTask.mm in Sources */,
 				83612F8E1A5D7FDB00BDF7CE /* NSData+Conversion.m in Sources */,
