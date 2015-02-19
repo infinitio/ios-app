@@ -90,7 +90,7 @@ static const CGFloat VENTokenFieldDefaultMaxHeight          = 150.0;
     self.horizontalInset = VENTokenFieldDefaultHorizontalInset;
     self.tokenPadding = VENTokenFieldDefaultTokenPadding;
     self.minInputWidth = VENTokenFieldDefaultMinInputWidth;
-    self.colorScheme = [InfinitColor colorFromPalette:ColorShamRock];
+    self.colorScheme = [InfinitColor colorFromPalette:InfinitPaletteColorShamRock];
     self.toLabelTextColor = [InfinitColor colorWithGray:0];
     self.inputTextFieldTextColor = [InfinitColor colorWithGray:41];
 
