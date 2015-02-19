@@ -8,6 +8,7 @@
 
 #import "InfinitSendGalleryController.h"
 
+#import "InfinitMetricsManager.h"
 #import "InfinitSendGalleryCell.h"
 #import "InfinitSendRecipientsController.h"
 #import "InfinitTabBarController.h"
@@ -37,6 +38,8 @@
 @private
   NSString* _cell_identifier;
   UITapGestureRecognizer* _nav_bar_tap;
+
+  BOOL _selected_something;
 }
 
 - (id)initWithCoder:(NSCoder*)aDecoder
@@ -94,6 +97,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+  if (self.collection_view.indexPathsForSelectedItems.count == 0)
+    _selected_something = NO;
   if (self.assets == nil)
     [self loadAssets];
   [self configureNextButton];
@@ -329,6 +334,12 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
      }];
   }
   [self configureNextButton];
+  if (!_selected_something)
+  {
+    _selected_something = YES;
+    [InfinitMetricsManager sendMetric:InfinitUIEventSendGallerySelectedElement
+                               method:InfinitUIMethodTap];
+  }
 }
 
 - (IBAction)backButtonTapped:(id)sender
@@ -352,6 +363,8 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
     InfinitSendRecipientsController* view_controller =
       (InfinitSendRecipientsController*)segue.destinationViewController;
     view_controller.assets = assets;
+    [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewOpen
+                               method:InfinitUIMethodSendGalleryNext];
   }
 }
 
