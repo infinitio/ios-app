@@ -36,7 +36,8 @@ ELLE_LOG_COMPONENT("iOS.BackgroundTask");
     _task_id = [[UIApplication sharedApplication] beginBackgroundTaskWithName:self.description
                                                    expirationHandler:^
     {
-      ELLE_LOG("%s: killed", self.description.UTF8String);
+      [self.delegate backgroundTaskAboutToBeKilled:self];
+      ELLE_LOG("%s: killed by the OS", self.description.UTF8String);
       [self.delegate backgroundTaskEnded:self];
     }];
     ELLE_TRACE("%s: started", self.description.UTF8String);
