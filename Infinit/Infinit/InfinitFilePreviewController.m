@@ -12,6 +12,10 @@
 #import "InfinitFileModel.h"
 #import "InfinitFilePreview.h"
 
+#import "JDStatusBarNotification.h"
+
+#import <Gap/InfinitConnectionManager.h>
+
 @interface InfinitFilePreviewController () <QLPreviewControllerDataSource,
                                             QLPreviewControllerDelegate>
 
@@ -62,8 +66,16 @@
                                                                                         blue:73]};
   [self.navigationController.navigationBar setTitleTextAttributes:nav_bar_attrs];
   self.navigationController.navigationBar.tintColor =
-    [InfinitColor colorFromPalette:ColorBurntSienna];
-  self.navigationController.toolbar.tintColor = [InfinitColor colorFromPalette:ColorBurntSienna];
+    [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
+  self.navigationController.toolbar.tintColor =
+    [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+  [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:YES];
+  [JDStatusBarNotification dismiss];
+  [super viewDidAppear:animated];
 }
 
 - (void)backTapped:(id)sender
