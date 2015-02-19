@@ -91,19 +91,24 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+  [super viewWillAppear:animated];
+  if (_should_refresh && self.current_status)
+  {
+    [self refreshContents];
+  }
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(userAvatarFetched:)
                                                name:INFINIT_USER_AVATAR_NOTIFICATION
                                              object:nil];
-  if (_should_refresh)
-  {
-    _me_match = YES;
-    [self fetchSwaggers];
-    self.search_bar.text = @"";
-    [self reloadSearchResults];
-  }
   [self.table_view scrollRectToVisible:CGRectMake(0.0f, 0.0f, 1.0f, 2.0f) animated:NO];
-  [super viewWillAppear:animated];
+}
+
+- (void)refreshContents
+{
+  _me_match = YES;
+  [self fetchSwaggers];
+  self.search_bar.text = @"";
+  [self reloadSearchResults];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -614,6 +619,15 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
       view_controller.contact = self.contact_results[index.row];
     _should_refresh = NO;
   }
+}
+
+#pragma mark - Status Changed
+
+- (void)statusChangedTo:(BOOL)status
+{
+  if (status)
+    [self refreshContents];
+  [super statusChangedTo:status];
 }
 
 @end

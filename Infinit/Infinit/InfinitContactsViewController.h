@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InfinitContactsViewController : UIViewController
+#import "InfinitOfflineViewController.h"
+
+@interface InfinitContactsViewController : InfinitOfflineViewController
 
 - (void)tabIconTap;
 
