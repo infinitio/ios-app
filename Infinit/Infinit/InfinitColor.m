@@ -31,22 +31,26 @@
   return [UIColor colorWithRed:red/255.0f green:green/255.0f blue:blue/255.0f alpha:alpha];
 }
 
-+ (UIColor*)colorFromPalette:(InfinitPaletteColor)color
++ (UIColor*)colorFromPalette:(InfinitPaletteColors)color
 {
   return [InfinitColor colorFromPalette:color alpha:1.0];
 }
 
-+ (UIColor*)colorFromPalette:(InfinitPaletteColor)color
++ (UIColor*)colorFromPalette:(InfinitPaletteColors)color
                        alpha:(CGFloat)alpha
 {
   switch (color)
   {
-    case ColorBurntSienna:
+    case InfinitPaletteColorBurntSienna:
       return [InfinitColor colorWithRed:242 green:94 blue:90 alpha:alpha];
-    case ColorShamRock:
+    case InfinitPaletteColorShamRock:
       return [InfinitColor colorWithRed:43 green:190 blue:189 alpha:alpha];
-    case ColorChicago:
+    case InfinitPaletteColorChicago:
       return [InfinitColor colorWithRed:100 green:100 blue:90 alpha:alpha];
+    case InfinitPaletteColorLightGray:
+      return [InfinitColor colorWithGray:243 alpha:alpha];
+    case InfinitPaletteColorSendBlack:
+      return [InfinitColor colorWithGray:46 alpha:alpha];
 
     default:
       return [InfinitColor colorWithRed:0 green:0 blue:0 alpha:alpha];

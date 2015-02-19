@@ -9,11 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSUInteger, InfinitPaletteColor)
+typedef NS_ENUM(NSUInteger, InfinitPaletteColors)
 {
-  ColorBurntSienna, // 242, 94,  90
-  ColorShamRock,    // 43,  190, 189
-  ColorChicago,     // 100, 100, 90
+  InfinitPaletteColorBurntSienna, // 242, 94,  90
+  InfinitPaletteColorShamRock,    // 43,  190, 189
+  InfinitPaletteColorChicago,     // 100, 100, 90
+  InfinitPaletteColorLightGray,   // 243, 243, 243
+  InfinitPaletteColorSendBlack,   // 46,  46,  46
 };
 
 @interface InfinitColor : NSObject
@@ -25,8 +27,8 @@ typedef NS_ENUM(NSUInteger, InfinitPaletteColor)
 + (UIColor*)colorWithRed:(NSUInteger)red green:(NSUInteger)green blue:(NSUInteger)blue
                    alpha:(CGFloat)alpha;
 
-+ (UIColor*)colorFromPalette:(InfinitPaletteColor)color;
-+ (UIColor*)colorFromPalette:(InfinitPaletteColor)color
++ (UIColor*)colorFromPalette:(InfinitPaletteColors)color;
++ (UIColor*)colorFromPalette:(InfinitPaletteColors)color
                        alpha:(CGFloat)alpha;
 
 @end
