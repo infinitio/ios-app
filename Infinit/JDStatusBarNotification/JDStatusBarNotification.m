@@ -130,6 +130,11 @@
     return [[JDStatusBarNotification sharedInstance] isVisible];
 }
 
++ (JDStatusBarView*)currentBar
+{
+  return [[JDStatusBarNotification sharedInstance] topBar];
+}
+
 #pragma mark Implementation
 
 - (id)init

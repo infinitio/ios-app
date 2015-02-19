@@ -164,6 +164,8 @@ typedef JDStatusBarStyle*(^JDPrepareStyleBlock)(JDStatusBarStyle *style);
  */
 + (BOOL)isVisible;
 
++ (JDStatusBarView*)currentBar;
+
 @end
 
 
