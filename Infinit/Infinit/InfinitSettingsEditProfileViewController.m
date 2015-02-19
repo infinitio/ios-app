@@ -13,6 +13,7 @@
 #import "UIImage+Rounded.h"
 
 #import <Gap/InfinitAvatarManager.h>
+#import <Gap/InfinitConnectionManager.h>
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitUserManager.h>
 
@@ -50,7 +51,7 @@
   [self.navigationController.navigationBar setTitleTextAttributes:nav_title_attrs];
   NSDictionary* nav_but_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
                                                                        size:18.0f],
-                                  NSForegroundColorAttributeName: [InfinitColor colorFromPalette:ColorBurntSienna]};
+                                  NSForegroundColorAttributeName: [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna]};
   [self.ok_button setTitleTextAttributes:nav_but_attrs forState:UIControlStateNormal];
   self.name_view.layer.borderColor = [InfinitColor colorWithGray:216].CGColor;
   self.name_view.layer.borderWidth = 1.0f;
@@ -107,6 +108,19 @@
 - (IBAction)okTapped:(id)sender
 {
   [self dismissKeyboard];
+  if ([InfinitConnectionManager sharedInstance].connected == NO)
+  {
+    NSString* title = NSLocalizedString(@"Need a connection!", nil);
+    NSString* message =
+      NSLocalizedString(@"Unable to edit your profile without an Internet connection.", nil);
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
+                                                    message:message
+                                                   delegate:self
+                                          cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                          otherButtonTitles:nil];
+    [alert show];
+    return;
+  }
   if (self.avatar_image != nil)
   {
     [[InfinitAvatarManager sharedInstance] setSelfAvatar:self.avatar_image];
