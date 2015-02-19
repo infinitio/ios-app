@@ -33,7 +33,6 @@
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication*)application
 didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
@@ -57,8 +56,18 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
     _onboarding = NO;
     if ([self canAutoLogin])
     {
-      self.window.rootViewController =
-        [storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
+      InfinitConnectionManager* manager = [InfinitConnectionManager sharedInstance];
+      if (manager.network_status != InfinitNetworkStatusNotReachable)
+      {
+        self.window.rootViewController =
+          [storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
+        [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:15.0f];
+      }
+      else
+      {
+        self.window.rootViewController =
+          [storyboard instantiateViewControllerWithIdentifier:@"tab_bar_controller"];
+      }
     }
     else
     {
@@ -81,6 +90,13 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   return NO;
 }
 
+- (void)tooLongToLogin
+{
+  UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+  self.window.rootViewController =
+    [storyboard instantiateViewControllerWithIdentifier:@"tab_bar_controller"];
+}
+
 - (void)tryLogin
 {
   NSString* username = [[InfinitApplicationSettings sharedInstance] username];
@@ -96,6 +112,9 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 
 - (void)loginCallback:(InfinitStateResult*)result
 {
+  [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                           selector:@selector(tooLongToLogin)
+                                             object:nil];
   UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
   NSString* identifier = nil;
   if (result.success)
