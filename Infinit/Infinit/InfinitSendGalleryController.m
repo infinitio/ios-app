@@ -28,6 +28,7 @@
 @property (nonatomic, weak) IBOutlet UICollectionView* collection_view;
 @property (nonatomic, weak) IBOutlet UIButton* next_button;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* next_constraint;
+@property (nonatomic, strong) PHCachingImageManager* image_caching_manager;
 
 @end
 
@@ -63,6 +64,7 @@
 
 - (void)viewDidLoad
 {
+  _image_caching_manager = [[PHCachingImageManager alloc] init];
   self.collection_view.alwaysBounceVertical = YES;
   [super viewDidLoad];
   self.collection_view.allowsMultipleSelection = YES;
@@ -106,6 +108,7 @@
   [self.collection_view.collectionViewLayout invalidateLayout];
   [self.navigationController.navigationBar.subviews[0] setUserInteractionEnabled:YES];
   [self.navigationController.navigationBar.subviews[0] addGestureRecognizer:_nav_bar_tap];
+  [self.image_caching_manager stopCachingImagesForAllAssets];
 }
 
 - (void)navBarTapped
@@ -221,12 +224,12 @@
     CGSize size = [self collectionView:self.collection_view
                                 layout:self.collection_view.collectionViewLayout
                 sizeForItemAtIndexPath:indexPath];
-    [[PHImageManager defaultManager] requestImageForAsset:asset
-                                               targetSize:size
-                                              contentMode:PHImageContentModeAspectFill
-                                                  options:nil
-                                            resultHandler:^(UIImage* result,
-                                                                   NSDictionary* info)
+    [self.image_caching_manager requestImageForAsset:asset
+                                          targetSize:size
+                                         contentMode:PHImageContentModeAspectFill
+                                             options:nil
+                                       resultHandler:^(UIImage* result,
+                                                       NSDictionary* info)
      {
        if (cell.tag == current_tag)
          cell.thumbnail_view.image = result;
