@@ -55,7 +55,7 @@ ELLE_LOG_COMPONENT("iOS.BackgroundTask");
                                              withDelegate:delegate];
   res.wait_timer = [NSTimer timerWithTimeInterval:duration
                                            target:res
-                                         selector:@selector(endTask)
+                                         selector:@selector(timedOut)
                                          userInfo:nil
                                           repeats:NO];
   [[NSRunLoop mainRunLoop] addTimer:res.wait_timer forMode:NSDefaultRunLoopMode];
@@ -93,6 +93,12 @@ ELLE_LOG_COMPONENT("iOS.BackgroundTask");
 }
 
 #pragma mark - End
+
+- (void)timedOut
+{
+  [self.delegate backgroundTaskTimedOut:self];
+  [self endTask];
+}
 
 - (void)endTask
 {

@@ -51,7 +51,8 @@ typedef NS_ENUM(NSUInteger, InfinitBackgroundTaskTypes)
 
 @protocol InfinitBackgroundTaskProtocol <NSObject>
 
-- (void)backgroundTaskEnded:(InfinitBackgroundTask*)sender;
 - (void)backgroundTaskAboutToBeKilled:(InfinitBackgroundTask*)sender;
+- (void)backgroundTaskEnded:(InfinitBackgroundTask*)sender;
+- (void)backgroundTaskTimedOut:(InfinitBackgroundTask*)sender;
 
 @end
