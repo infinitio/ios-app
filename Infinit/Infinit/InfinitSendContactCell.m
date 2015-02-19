@@ -42,7 +42,7 @@ static BOOL _show_numbers = NO;
            animated:(BOOL)animated
 {
   if (selected)
-    self.details_label.textColor = [InfinitColor colorFromPalette:ColorShamRock];
+    self.details_label.textColor = [InfinitColor colorFromPalette:InfinitPaletteColorShamRock];
   else
     self.details_label.textColor = [InfinitColor colorWithGray:175];
   [super setSelected:selected animated:animated];
