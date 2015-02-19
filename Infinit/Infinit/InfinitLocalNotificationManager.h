@@ -9,10 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#import <Gap/InfinitPeerTransaction.h>
+
 @interface InfinitLocalNotificationManager : NSObject
 
 + (instancetype)sharedInstance;
 
 - (UIBackgroundFetchResult)localNotificationForRemoteNotification:(NSDictionary*)dictionary;
+
+- (void)backgroundTaskAboutToBeKilledForTransaction:(InfinitPeerTransaction*)transaction;
 
 @end

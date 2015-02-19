@@ -182,6 +182,27 @@ static InfinitLocalNotificationManager* _instance = nil;
   return res;
 }
 
+- (void)backgroundTaskAboutToBeKilledForTransaction:(InfinitPeerTransaction*)transaction
+{
+  UILocalNotification* user_notification = [[UILocalNotification alloc] init];
+  user_notification.fireDate = [NSDate date];
+  switch (transaction.status)
+  {
+    case gap_transaction_new:
+      user_notification.alertBody =
+        NSLocalizedString(@"Can't start your transfer right now, check your signal", nil);
+    case gap_transaction_connecting:
+    case gap_transaction_transferring:
+      user_notification.alertBody =
+        NSLocalizedString(@"Open Infinit to ensure your transfer continues", nil);
+      break;
+
+    default:
+      return;
+  }
+  [[UIApplication sharedApplication] scheduleLocalNotification:user_notification];
+}
+
 #pragma mark - Helpers
 
 - (NSString*)recipientBodyForNotification:(InfinitRemotePeerTransactionNotification*)notification
