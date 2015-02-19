@@ -9,6 +9,7 @@
 #import "InfinitContactViewController.h"
 
 #import "InfinitColor.h"
+#import "InfinitMetricsManager.h"
 #import "InfinitTabBarController.h"
 
 #import <Gap/InfinitUserManager.h>
@@ -144,11 +145,15 @@ static UIImage* _infinit_icon = nil;
   {
     new_icon = _infinit_icon;
     [self setFavoriteButtonFavorite:NO];
+    [InfinitMetricsManager sendMetric:InfinitUIEventContactViewFavorite
+                               method:InfinitUIMethodRemove];
   }
   else
   {
     new_icon = _favorite_icon;
     [self setFavoriteButtonFavorite:YES];
+    [InfinitMetricsManager sendMetric:InfinitUIEventContactViewFavorite
+                               method:InfinitUIMethodAdd];
   }
 
   [UIView transitionWithView:self.icon_view
