@@ -8,6 +8,16 @@
 
 #import "InfinitApplicationSettings.h"
 
+typedef NS_ENUM(NSUInteger, InfinitSettings)
+{
+  InfinitSettingAskedNotifications,
+  InfinitSettingRatedApp,
+  InfinitSettingRatingTransactions,
+  InfinitSettingSendToSelfOnboarded,
+  InfinitSettingUsername,
+  InfinitSettingWelcomeOnboarded,
+};
+
 static InfinitApplicationSettings* _instance = nil;
 
 @implementation InfinitApplicationSettings
@@ -36,6 +46,20 @@ static InfinitApplicationSettings* _instance = nil;
 }
 
 #pragma mark - Settings
+
+- (BOOL)asked_notifications
+{
+  NSNumber* res = [_defaults valueForKey:[self keyForSetting:InfinitSettingAskedNotifications]];
+  if (res != nil && res.boolValue)
+    return YES;
+  return NO;
+}
+
+- (void)setAsked_notifications:(BOOL)asked_notifications
+{
+  [_defaults setValue:@(asked_notifications)
+               forKey:[self keyForSetting:InfinitSettingAskedNotifications]];
+}
 
 - (BOOL)rated_app
 {
@@ -98,6 +122,8 @@ static InfinitApplicationSettings* _instance = nil;
 {
   switch (setting)
   {
+    case InfinitSettingAskedNotifications:
+      return @"asked_notifications";
     case InfinitSettingRatedApp:
       return @"rated_app";
     case InfinitSettingRatingTransactions:
