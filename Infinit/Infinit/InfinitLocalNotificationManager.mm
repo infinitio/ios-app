@@ -190,7 +190,8 @@ static InfinitLocalNotificationManager* _instance = nil;
   {
     case gap_transaction_new:
       user_notification.alertBody =
-        NSLocalizedString(@"Can't start your transfer right now, check your signal", nil);
+        NSLocalizedString(@"Oh no! Infinit can't connect. Retry?", nil);
+      break;
     case gap_transaction_connecting:
     case gap_transaction_transferring:
       user_notification.alertBody =
