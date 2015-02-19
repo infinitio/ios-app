@@ -14,6 +14,7 @@
 #import "InfinitContactViewController.h"
 #import "InfinitContactImportCell.h"
 #import "InfinitImportOverlayView.h"
+#import "InfinitMetricsManager.h"
 
 #import <Gap/InfinitUserManager.h>
 
@@ -265,6 +266,11 @@
      if (granted)
      {
        [self performSelectorOnMainThread:@selector(fetchAddressBook) withObject:nil waitUntilDone:NO];
+       [InfinitMetricsManager sendMetric:InfinitUIEventAccessContacts method:InfinitUIMethodYes];
+     }
+     else
+     {
+       [InfinitMetricsManager sendMetric:InfinitUIEventAccessContacts method:InfinitUIMethodNo];
      }
      [self performSelectorOnMainThread:@selector(cancelOverlayFromButton:)
                             withObject:sender
