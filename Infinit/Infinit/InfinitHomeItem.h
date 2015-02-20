@@ -13,6 +13,7 @@
 @interface InfinitHomeItem : NSObject
 
 @property (nonatomic, readonly) InfinitTransaction* transaction;
+@property (nonatomic, readwrite) BOOL expanded;
 
 - (id)initWithTransaction:(InfinitTransaction*)transaction;
 

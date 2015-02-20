@@ -15,8 +15,15 @@
   if (self = [super init])
   {
     _transaction = transaction;
+    _expanded = NO;
   }
   return self;
+}
+
+- (NSString*)description
+{
+  return [NSString stringWithFormat:@"HomeItem: transaction (%@), %@",
+          self.transaction.id_, self.expanded ? @"expanded" : @"collapsed"];
 }
 
 @end
