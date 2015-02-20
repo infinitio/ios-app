@@ -374,4 +374,21 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
   }
 }
 
+#pragma mark - NSObject
+
+- (BOOL)isEqual:(id)object
+{
+  if (![object isKindOfClass:self.class])
+    return NO;
+  InfinitFolderModel* other = (InfinitFolderModel*)object;
+  if ([self.id_ isEqualToString:other.id_])
+    return YES;
+  return NO;
+}
+
+- (NSString*)description
+{
+  return [NSString stringWithFormat:@"FolderModel (%@): %@", self.id_, self.files];
+}
+
 @end
