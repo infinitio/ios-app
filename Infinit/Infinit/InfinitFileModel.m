@@ -8,6 +8,8 @@
 
 #import "InfinitFileModel.h"
 
+#import <Gap/InfinitDataSize.h>
+
 @import AVFoundation;
 
 @implementation InfinitFileModel
@@ -39,6 +41,14 @@
 - (NSString*)name
 {
   return self.path.lastPathComponent;
+}
+
+#pragma mark - NSObject
+
+- (NSString*)description
+{
+  return [NSString stringWithFormat:@"FileModel (%@): %@",
+          self.name, [InfinitDataSize fileSizeStringFrom:self.size]];
 }
 
 @end
