@@ -21,37 +21,13 @@
 
 @implementation InfinitHomeAvatarView
 
-static NSDictionary* _norm_attrs = nil;
-static NSDictionary* _small_attrs = nil;
-
 - (id)initWithCoder:(NSCoder*)aDecoder
 {
   if (self = [super initWithCoder:aDecoder])
   {
     _enable_progress = NO;
-    if (_norm_attrs == nil || _small_attrs == nil)
-    {
-      NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-      para.alignment = NSTextAlignmentCenter;
-      _norm_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold" size:52.0f],
-                      NSForegroundColorAttributeName: [UIColor whiteColor],
-                      NSParagraphStyleAttributeName: para};
-      _small_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold" size:16.0f],
-                       NSForegroundColorAttributeName: [UIColor whiteColor],
-                       NSParagraphStyleAttributeName: para};
-    }
   }
   return self;
-}
-
-- (void)awakeFromNib
-{
-  self.progress_label.layer.masksToBounds = NO;
-  self.progress_label.layer.shadowOpacity = 1.0f;
-  self.progress_label.layer.shadowColor = [InfinitColor colorWithGray:0 alpha:0.63f].CGColor;
-  self.progress_label.layer.shadowRadius = 5.0f;
-  self.progress_label.layer.shadowOffset = CGSizeZero;
-  self.progress_label.attributedText = [self progressString:0.0f];
 }
 
 - (void)setImage:(UIImage*)image
@@ -67,7 +43,6 @@ static NSDictionary* _small_attrs = nil;
 - (void)setProgress:(CGFloat)progress
   withAnimationTime:(NSTimeInterval)duration
 {
-  self.progress_label.attributedText = [self progressString:progress];
   if (_progress == progress)
     return;
   if (duration > 0.0f)
@@ -88,37 +63,18 @@ static NSDictionary* _small_attrs = nil;
   _progress = progress;
 }
 
-- (NSAttributedString*)progressString:(CGFloat)progress
-{
-  NSString* str = [NSString stringWithFormat:@"%.f%%", progress * 100.0f];
-  NSMutableAttributedString* res = [[NSMutableAttributedString alloc] initWithString:str
-                                                                          attributes:_norm_attrs];
-  NSRange small_range = [res.string rangeOfString:@"%"];
-  if (small_range.location != NSNotFound)
-    [res setAttributes:_small_attrs range:small_range];
-  return res;
-}
-
-- (void)setDim_avatar:(BOOL)dim_avatar
-{
-  self.image_view.alpha = dim_avatar ? 0.5f : 1.0f;
-}
-
 - (void)setEnable_progress:(BOOL)enable_progress
 {
   if (enable_progress == _enable_progress)
     return;
   _enable_progress = enable_progress;
-  if (!_enable_progress)
-    self.progress_label.attributedText = [self progressString:0.0f];
-  self.progress_label.hidden = !enable_progress;
   if (_enable_progress)
   {
     _circle_layer = [self circleLayer];
-    self.circle_layer.strokeColor = [InfinitColor colorWithGray:255 alpha:0.5f].CGColor;
+    self.circle_layer.strokeColor = [InfinitColor colorWithGray:224].CGColor;
     [self.layer addSublayer:self.circle_layer];
     _progress_layer = [self circleLayer];
-    self.progress_layer.strokeColor = [InfinitColor colorWithGray:255].CGColor;
+    self.progress_layer.strokeColor = [InfinitColor colorWithRed:43 green:190 blue:189].CGColor;
     self.progress_layer.strokeEnd = self.progress;
     [self.layer addSublayer:self.progress_layer];
   }
