@@ -26,15 +26,6 @@
 - (void)awakeFromNib
 {
   [super awakeFromNib];
-  if ([InfinitHostDevice deviceCPU] >= InfinitCPUType_ARM64_v8)
-  {
-    self.layer.cornerRadius = 3.0f;
-    self.layer.masksToBounds = NO;
-    self.layer.shadowOpacity = 0.15f;
-    self.layer.shadowRadius = 2.0f;
-    self.layer.shadowColor = [InfinitColor colorWithGray:0].CGColor;
-    self.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
-  }
   self.positive_button.layer.cornerRadius = self.positive_button.bounds.size.height / 2.0f;
   self.negative_button.layer.cornerRadius = self.negative_button.bounds.size.height / 2.0f;
   self.negative_button.layer.borderColor = [InfinitColor colorWithGray:175].CGColor;
