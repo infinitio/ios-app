@@ -17,38 +17,28 @@
 
 @interface InfinitHomePeerTransactionCell : InfinitHomeAbstractCell
 
-@property (nonatomic, weak) IBOutlet UIView* accept_container;
-@property (nonatomic, weak) IBOutlet UIButton* accept_button;
-@property (nonatomic, weak) IBOutlet InfinitHomeAvatarView* avatar_view;
-@property (nonatomic, weak) IBOutlet UIImageView* background_view;
-@property (nonatomic, weak) IBOutlet UIView* cancel_container;
-@property (nonatomic, weak) IBOutlet UIButton* cancel_button;
-@property (nonatomic, weak) IBOutlet UILabel* info_label;
-@property (nonatomic, weak) IBOutlet UILabel* size_label;
-@property (nonatomic, weak) IBOutlet UILabel* time_label;
-@property (nonatomic, weak) IBOutlet UIImageView* status_view;
-
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint* accept_constraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint* cancel_constraint;
-
 @property (nonatomic, weak) InfinitPeerTransaction* transaction;
-@property (nonatomic, readwrite) BOOL accept_shown;
-@property (nonatomic, readwrite) BOOL cancel_shown;
+@property (nonatomic, readwrite) BOOL expanded;
 
 - (void)setUpWithDelegate:(id<InfinitHomePeerTransactionCellProtocol>)delegate
-              transaction:(InfinitPeerTransaction*)transaction;
+              transaction:(InfinitPeerTransaction*)transaction
+                 expanded:(BOOL)expanded;
 
 - (void)updateAvatar;
 - (void)updateProgressOverDuration:(NSTimeInterval)duration;
-- (void)updateTimeString;
 
 @end
 
 @protocol InfinitHomePeerTransactionCellProtocol <NSObject>
 
-- (void)cell:(InfinitHomePeerTransactionCell*)sender
-hadAcceptTappedForTransaction:(InfinitTransaction*)transaction;
-- (void)cell:(InfinitHomePeerTransactionCell*)sender
-hadCancelTappedForTransaction:(InfinitTransaction*)transaction;
+- (void)cellAcceptTapped:(InfinitHomePeerTransactionCell*)sender;
+- (void)cellRejectTapped:(InfinitHomePeerTransactionCell*)sender;
+
+- (void)cellPauseTapped:(InfinitHomePeerTransactionCell*)sender;
+
+- (void)cellCancelTapped:(InfinitHomePeerTransactionCell*)sender;
+
+- (void)cellOpenTapped:(InfinitHomePeerTransactionCell*)sender;
+- (void)cellSendTapped:(InfinitHomePeerTransactionCell*)sender;
 
 @end
