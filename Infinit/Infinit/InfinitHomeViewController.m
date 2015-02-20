@@ -8,13 +8,15 @@
 
 #import "InfinitHomeViewController.h"
 
-#import "InfinitRatingManager.h"
+#import "InfinitColor.h"
+#import "InfinitDownloadFolderManager.h"
 #import "InfinitHomeItem.h"
 #import "InfinitHomePeerTransactionCell.h"
 #import "InfinitHomeFeedbackViewController.h"
 #import "InfinitHomeOnboardingCell.h"
 #import "InfinitHomeRatingCell.h"
 #import "InfinitOfflineOverlay.h"
+#import "InfinitRatingManager.h"
 #import "InfinitTabBarController.h"
 
 #import <Gap/InfinitDataSize.h>
@@ -24,6 +26,7 @@
 @interface InfinitHomeViewController () <InfinitHomePeerTransactionCellProtocol,
                                          UICollectionViewDataSource,
                                          UICollectionViewDelegate,
+                                         UICollectionViewDelegateFlowLayout,
                                          UIGestureRecognizerDelegate>
 
 @property (nonatomic, weak) IBOutlet UICollectionView* collection_view;
@@ -56,6 +59,7 @@
   _rating_cell_id = @"home_rating_cell";
   _update_interval = 0.5f;
   self.collection_view.alwaysBounceVertical = YES;
+  self.collection_view.allowsMultipleSelection = NO;
   [super viewDidLoad];
   self.navigationItem.titleView =
     [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon-logo-red"]];
@@ -190,15 +194,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-  for (UICollectionViewCell* cell in self.collection_view.visibleCells)
-  {
-    if ([cell isKindOfClass:InfinitHomePeerTransactionCell.class])
-    {
-      InfinitHomePeerTransactionCell* peer_cell = (InfinitHomePeerTransactionCell*)cell;
-      peer_cell.cancel_shown = NO;
-      peer_cell.accept_shown = NO;
-    }
-  }
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   [_progress_timer invalidate];
   _progress_timer = nil;
@@ -214,17 +209,47 @@
 
 #pragma mark - Collection View Protocol
 
-- (void)scrollViewWillBeginDragging:(UIScrollView*)scrollView
+- (void)collectionView:(UICollectionView*)collectionView
+didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
-  for (UICollectionViewCell* cell in self.collection_view.visibleCells)
+  UICollectionViewCell* cell = [self.collection_view cellForItemAtIndexPath:indexPath];
+  if ([cell isKindOfClass:InfinitHomePeerTransactionCell.class])
   {
-    if ([cell isKindOfClass:InfinitHomePeerTransactionCell.class])
-    {
-      InfinitHomePeerTransactionCell* peer_cell = (InfinitHomePeerTransactionCell*)cell;
-      if (!peer_cell.transaction.receivable)
-        peer_cell.cancel_shown = NO;
-    }
+    InfinitHomeItem* item = self.data[indexPath.row];
+    [self setExpanded:!item.expanded forIndexPath:indexPath];
   }
+}
+
+- (void)setExpanded:(BOOL)expanded forIndexPath:(NSIndexPath*)index_path
+{
+  InfinitHomeItem* item = self.data[index_path.row];
+  item.expanded = expanded;
+  InfinitHomePeerTransactionCell* peer_cell =
+    (InfinitHomePeerTransactionCell*)[self.collection_view cellForItemAtIndexPath:index_path];
+  peer_cell.expanded = item.expanded;
+  [self.collection_view.collectionViewLayout invalidateLayout];
+  if (![self.collection_view.indexPathsForVisibleItems containsObject:index_path])
+    return;
+  CGSize new_size = [self collectionView:self.collection_view
+                                  layout:self.collection_view.collectionViewLayout
+                  sizeForItemAtIndexPath:index_path];
+  [UIView animateWithDuration:0.5f
+                        delay:0.0f
+       usingSpringWithDamping:0.8f
+        initialSpringVelocity:20.0f
+                      options:0
+                   animations:^
+   {
+     peer_cell.frame = CGRectMake(peer_cell.frame.origin.x,
+                                  peer_cell.frame.origin.y,
+                                  new_size.width,
+                                  new_size.height);
+     [peer_cell layoutIfNeeded];
+     peer_cell.expanded = item.expanded;
+   } completion:^(BOOL finished)
+   {
+     peer_cell.expanded = item.expanded;
+   }];
 }
 
 #pragma mark - Data Source
@@ -271,7 +296,7 @@
       InfinitHomePeerTransactionCell* cell =
         [self.collection_view dequeueReusableCellWithReuseIdentifier:_peer_transaction_cell_id
                                                        forIndexPath:indexPath];
-      [cell setUpWithDelegate:self transaction:peer_transaction];
+      [cell setUpWithDelegate:self transaction:peer_transaction expanded:item.expanded];
       res = cell;
     }
   }
@@ -313,21 +338,74 @@
                   layout:(UICollectionViewLayout*)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath*)indexPath
 {
-  CGSize res = CGSizeZero;
   CGFloat width = [UIScreen mainScreen].bounds.size.width - 26.0f;
-  if (self.show_rate_us && indexPath.section == 0)
+  CGFloat height = 101.0f;
+  CGFloat file_h = 70.0f + 10.0f;
+  CGFloat status_h = 45.0f;
+  CGFloat button_h = 46.0f; // Includes line above buttons.
+  if (self.show_rate_us && indexPath.section == 0) // Rating
   {
-    res = CGSizeMake(width, 100.0f);
+    height = 100.0f;
   }
-  else if (self.data.count > 0)
+  else if (self.data.count > 0) // Peer transaction
   {
     InfinitHomeItem* item = self.data[indexPath.row];
+    InfinitPeerTransaction* transaction = nil;
     if (item.transaction != nil && [item.transaction isKindOfClass:InfinitPeerTransaction.class])
+      transaction = (InfinitPeerTransaction*)item.transaction;
+    BOOL expanded = item.expanded;
+    switch (transaction.status)
     {
-      return CGSizeMake(width, 265.0f);
+      case gap_transaction_new:
+        // Can only be this device who is sender.
+      case gap_transaction_on_other_device:
+        if (expanded)
+          height += status_h + button_h;
+        break;
+      case gap_transaction_waiting_accept:
+        if (transaction.receivable && expanded)
+          height += (transaction.files.count > 3 ? 2 * file_h : file_h) + status_h + button_h;
+        else if (transaction.receivable)
+          height += button_h;
+        else if (transaction.sender.is_self && expanded)
+          height += status_h + button_h;
+        break;
+
+      case gap_transaction_waiting_data:
+      case gap_transaction_connecting:
+      case gap_transaction_transferring:
+      case gap_transaction_paused:
+        if (transaction.to_device && expanded)
+          height += (transaction.files.count > 3 ? 2 * file_h : file_h) + status_h + button_h;
+        break;
+
+      case gap_transaction_cloud_buffered:
+      case gap_transaction_rejected:
+      case gap_transaction_finished:
+      case gap_transaction_failed:
+      case gap_transaction_canceled:
+        if (expanded)
+          height += status_h;
+        if (transaction.status == gap_transaction_finished && transaction.to_device && expanded)
+        {
+          InfinitDownloadFolderManager* manager = [InfinitDownloadFolderManager sharedInstance];
+          InfinitFolderModel* folder =
+            [manager completedFolderForTransactionMetaId:transaction.meta_id];
+          NSUInteger file_count = transaction.files.count;
+          if (folder)
+          {
+            file_count = folder.files.count;
+            height += button_h;
+          }
+          height += (file_count > 3 ? 2 * file_h : file_h);
+        }
+        break;
+
+      default:
+        break;
     }
   }
-  else
+  else // Onboarding
   {
     switch (indexPath.row)
     {
@@ -340,7 +418,7 @@
         break;
     }
   }
-  return res;
+  return CGSizeMake(width, height);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView*)collectionView
@@ -372,15 +450,16 @@
 {
   @synchronized(self.data)
   {
+    [self.collection_view.collectionViewLayout invalidateLayout];
     [self.collection_view performBatchUpdates:^
-    {
-      [self.data insertObject:item atIndex:0];
-      NSIndexPath* index = [NSIndexPath indexPathForRow:0 inSection:self.show_rate_us ? 1 : 0];
-      [self.collection_view insertItemsAtIndexPaths:@[index]];
-    } completion:^(BOOL finished)
-    {
-      [self updateRunningTransactions];
-    }];
+     {
+       [self.data insertObject:item atIndex:0];
+       NSIndexPath* index = [NSIndexPath indexPathForRow:0 inSection:self.show_rate_us ? 1 : 0];
+       [self.collection_view insertItemsAtIndexPaths:@[index]];
+     } completion:^(BOOL finished)
+     {
+       [self updateRunningTransactions];
+     }];
   }
 }
 
@@ -492,54 +571,62 @@
 
 #pragma mark - Cell Protocol
 
-- (void)cell:(InfinitHomePeerTransactionCell*)sender
-hadAcceptTappedForTransaction:(InfinitTransaction*)transaction
+- (void)cellAcceptTapped:(InfinitHomePeerTransactionCell*)sender
 {
-  if ([transaction isKindOfClass:InfinitPeerTransaction.class])
+  NSError* error = nil;
+  [[InfinitPeerTransactionManager sharedInstance] acceptTransaction:sender.transaction
+                                                          withError:&error];
+  if (error && [error.domain isEqualToString:INFINIT_FILE_SYSTEM_ERROR_DOMAIN])
   {
-    InfinitPeerTransaction* peer_transaction = (InfinitPeerTransaction*)transaction;
-    NSError* error = nil;
-    [[InfinitPeerTransactionManager sharedInstance] acceptTransaction:peer_transaction
-                                                            withError:&error];
-    if (error && [error.domain isEqualToString:INFINIT_FILE_SYSTEM_ERROR_DOMAIN])
+    UIAlertView* alert = nil;
+    NSString* message = nil;
+    NSString* title = nil;
+    if (error.code == InfinitFileSystemErrorNoFreeSpace)
     {
-      UIAlertView* alert = nil;
-      NSString* message = nil;
-      NSString* title = nil;
-      if (error.code == InfinitFileSystemErrorNoFreeSpace)
-      {
-        title = NSLocalizedString(@"Not enough free space!", nil);
-        message =
-          [NSString stringWithFormat:NSLocalizedString(@"You need %@ of space to accept this transfer.", nil),
-           [InfinitDataSize fileSizeStringFrom:transaction.size]];
-      }
-      else
-      {
-        title = NSLocalizedString(@"Unable to accept!", nil);
-      }
-      alert = [[UIAlertView alloc] initWithTitle:title
-                                         message:message
-                                        delegate:nil
-                               cancelButtonTitle:NSLocalizedString(@"OK", nil)
-                               otherButtonTitles:nil];
-      [alert show];
-      sender.cancel_shown = YES;
-      sender.accept_shown = YES;
+      title = NSLocalizedString(@"Not enough free space!", nil);
+      message =
+      [NSString stringWithFormat:NSLocalizedString(@"You need %@ of space to accept this transfer.", nil),
+       [InfinitDataSize fileSizeStringFrom:sender.transaction.size]];
     }
+    else
+    {
+      title = NSLocalizedString(@"Unable to accept!", nil);
+    }
+    alert = [[UIAlertView alloc] initWithTitle:title
+                                       message:message
+                                      delegate:nil
+                             cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                             otherButtonTitles:nil];
+    [alert show];
   }
 }
 
-- (void)cell:(InfinitHomePeerTransactionCell*)sender
-hadCancelTappedForTransaction:(InfinitTransaction*)transaction
+- (void)cellRejectTapped:(InfinitHomePeerTransactionCell*)sender
 {
-  if ([transaction isKindOfClass:InfinitPeerTransaction.class])
-  {
-    InfinitPeerTransaction* peer_transaction = (InfinitPeerTransaction*)transaction;
-    if (peer_transaction.receivable)
-      [[InfinitPeerTransactionManager sharedInstance] rejectTransaction:peer_transaction];
-    else
-      [[InfinitPeerTransactionManager sharedInstance] cancelTransaction:peer_transaction];
-  }
+  [[InfinitPeerTransactionManager sharedInstance] rejectTransaction:sender.transaction];
+}
+
+- (void)cellPauseTapped:(InfinitHomePeerTransactionCell*)sender
+{
+  // XXX pause/resume
+}
+
+- (void)cellCancelTapped:(InfinitHomePeerTransactionCell*)sender
+{
+  [[InfinitPeerTransactionManager sharedInstance] cancelTransaction:sender.transaction];
+}
+
+- (void)cellOpenTapped:(InfinitHomePeerTransactionCell*)sender
+{
+  InfinitTabBarController* tab_controller = (InfinitTabBarController*)self.tabBarController;
+  InfinitFolderModel* folder =
+    [[InfinitDownloadFolderManager sharedInstance] completedFolderForTransactionMetaId:sender.transaction.meta_id];
+  if (folder != nil)
+    [tab_controller showFilesScreenForFolder:folder];
+}
+
+- (void)cellSendTapped:(InfinitHomePeerTransactionCell*)sender
+{
 }
 
 #pragma mark - Rating Cell Handling
