@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "icon-rejected.png"
+      "filename" : "icon-send-home.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "icon-rejected@2x.png"
+      "filename" : "icon-send-home@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "icon-rejected@3x.png"
+      "filename" : "icon-send-home@3x.png"
     }
   ],
   "info" : {
