@@ -52,7 +52,6 @@ static InfinitMetricsManager* _instance = nil;
              method:(InfinitUIMethods)method
          additional:(NSDictionary*)additional
 {
-  NSLog(@"xxx sending metric: %@ with method %@", [self event:event], [self method:method]);
   [[InfinitStateManager sharedInstance] sendMetricEvent:[self event:event]
                                              withMethod:[self method:method]
                                       andAdditionalData:additional];
