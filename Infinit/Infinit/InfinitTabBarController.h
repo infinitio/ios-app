@@ -9,12 +9,16 @@
 #import <UIKit/UIKit.h>
 
 #import "InfinitContact.h"
+#import "InfinitFolderModel.h"
 
 @interface InfinitTabBarController : UITabBarController
 
 - (void)lastSelectedIndex;
 - (void)setTabBarHidden:(BOOL)hidden animated:(BOOL)animate;
 - (void)showFilesScreen;
+- (void)showFilesScreenForFolder:(InfinitFolderModel*)folder;
+- (void)showFilesScreenForFolder:(InfinitFolderModel*)folder
+                       fileIndex:(NSInteger)index;
 - (void)showMainScreen;
 - (void)showSendScreenWithContact:(InfinitContact*)contact;
 - (void)showWelcomeScreen;

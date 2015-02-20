@@ -11,6 +11,7 @@
 #import "InfinitAccessGalleryView.h"
 #import "InfinitColor.h"
 #import "InfinitContactsViewController.h"
+#import "InfinitFilesNavigationController.h"
 #import "InfinitFilesViewController.h"
 #import "InfinitHomeViewController.h"
 #import "InfinitMetricsManager.h"
@@ -53,6 +54,8 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   NSString* _status_bar_error_style_id;
   NSString* _status_bar_good_style_id;
   NSString* _status_bar_warning_style_id;
+
+  BOOL _first_appear;
 }
 
 #pragma mark - Rotation
@@ -76,6 +79,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 
 - (void)viewDidLoad
 {
+  _first_appear = NO;
   _animator = [[InfinitTabAnimator alloc] init];
   _status_bar_error_style_id = @"InfinitErrorStyle";
   _status_bar_good_style_id = @"InfinitGoodStyle";
@@ -166,10 +170,14 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 - (void)viewWillAppear:(BOOL)animated
 {
   [[UIApplication sharedApplication] setStatusBarHidden:NO];
-  if (![InfinitConnectionManager sharedInstance].connected)
-    [self handleOffline];
-  else
-    [self handleOnline];
+  if (!_first_appear)
+  {
+    _first_appear = YES;
+    if (![InfinitConnectionManager sharedInstance].connected)
+      [self handleOffline];
+    else
+      [self handleOnline];
+  }
   [super viewWillAppear:animated];
 }
 
@@ -299,6 +307,20 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   self.selectedIndex = InfinitTabBarIndexFiles;
 }
 
+- (void)showFilesScreenForFolder:(InfinitFolderModel*)folder
+{
+  [self showFilesScreenForFolder:folder fileIndex:-1];
+}
+
+- (void)showFilesScreenForFolder:(InfinitFolderModel*)folder
+                       fileIndex:(NSInteger)index
+{
+  InfinitFilesNavigationController* nav_controller = self.viewControllers[InfinitTabBarIndexFiles];
+  nav_controller.folder = folder;
+  nav_controller.file_index = index;
+  self.selectedIndex = InfinitTabBarIndexFiles;
+}
+
 - (void)showSendScreenWithContact:(InfinitContact*)contact
 {
   [self hideTabBarWithAnimation:YES];
@@ -313,10 +335,9 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
     [self noGalleryAccessPopUp];
     return;
   }
-  self.selectedIndex = InfinitTabBarIndexSend;
-  InfinitSendNavigationController* nav_controller =
-    (InfinitSendNavigationController*)self.selectedViewController;
+  InfinitSendNavigationController* nav_controller = self.viewControllers[InfinitTabBarIndexSend];
   nav_controller.recipient = contact;
+  self.selectedIndex = InfinitTabBarIndexSend;
   [InfinitMetricsManager sendMetric:InfinitUIEventSendGalleryViewOpen
                              method:InfinitUIMethodContact];
 }
@@ -577,7 +598,7 @@ shouldSelectViewController:(UIViewController*)viewController
 - (void)handleOnline
 {
   [JDStatusBarNotification showWithStatus:@"Connected!"
-                             dismissAfter:3.0f
+                             dismissAfter:2.0f
                                 styleName:_status_bar_good_style_id];
   [self.offline_overlay removeFromSuperview];
 }
