@@ -99,6 +99,14 @@ static InfinitDownloadFolderManager* _instance = nil;
   return [res sortedArrayUsingDescriptors:@[sort]];
 }
 
+- (InfinitFolderModel*)completedFolderForTransactionMetaId:(NSString*)meta_id
+{
+  InfinitFolderModel* res = [self.folder_map objectForKey:meta_id];
+  if (res && !res.done)
+    return nil;
+  return res;
+}
+
 - (void)deleteFolder:(InfinitFolderModel*)folder
 {
   [self.folder_map removeObjectForKey:folder.id_];

@@ -19,6 +19,8 @@
 
 + (instancetype)sharedInstance;
 
+- (InfinitFolderModel*)completedFolderForTransactionMetaId:(NSString*)meta_id;
+
 - (void)deleteFolder:(InfinitFolderModel*)folder;
 
 @end
