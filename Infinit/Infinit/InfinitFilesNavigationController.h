@@ -12,7 +12,4 @@
 
 @interface InfinitFilesNavigationController : InfinitPortraitNavigationController
 
-@property (nonatomic, weak, readwrite) InfinitFolderModel* folder;
-@property (nonatomic, readwrite) NSInteger file_index;
-
 @end
