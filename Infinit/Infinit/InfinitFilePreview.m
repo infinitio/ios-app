@@ -26,6 +26,10 @@
   {
     res = InfinitFileTypeAudio;
   }
+  else if (UTTypeConformsTo(file_uti, kUTTypeFolder))
+  {
+    res = InfinitFileTypeDirectory;
+  }
   else if (UTTypeConformsTo(file_uti, kUTTypePDF) ||
            UTTypeConformsTo(file_uti, kUTTypeText))
   {

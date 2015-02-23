@@ -12,6 +12,7 @@
 typedef NS_ENUM(NSUInteger, InfinitFileTypes)
 {
   InfinitFileTypeAudio,
+  InfinitFileTypeDirectory,
   InfinitFileTypeDocument,
   InfinitFileTypeImage,
   InfinitFileTypeVideo,
