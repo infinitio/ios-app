@@ -16,9 +16,6 @@
 - (void)lastSelectedIndex;
 - (void)setTabBarHidden:(BOOL)hidden animated:(BOOL)animate;
 - (void)showFilesScreen;
-- (void)showFilesScreenForFolder:(InfinitFolderModel*)folder;
-- (void)showFilesScreenForFolder:(InfinitFolderModel*)folder
-                       fileIndex:(NSInteger)index;
 - (void)showMainScreen;
 - (void)showSendScreenWithContact:(InfinitContact*)contact;
 - (void)showWelcomeScreen;

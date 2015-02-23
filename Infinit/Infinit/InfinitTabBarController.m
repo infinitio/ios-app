@@ -178,6 +178,11 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
     else
       [self handleOnline];
   }
+  else
+  {
+    if (![InfinitConnectionManager sharedInstance].connected)
+      [self handleOffline];
+  }
   [super viewWillAppear:animated];
 }
 
@@ -250,29 +255,21 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
                                   byWidth:0.0f
                                 andHeight:-d_h];
   self.tabBar.hidden = NO;
-  if (animate)
-  {
-    [UIView animateWithDuration:self.animator.linear_duration
-                          delay:self.animator.linear_duration
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^
+  [UIView animateWithDuration:animate ? self.animator.linear_duration : 0.0f
+                        delay:animate ? self.animator.linear_duration : 0.0f
+                      options:UIViewAnimationOptionCurveEaseInOut
+                   animations:^
+   {
+     self.tabBar.frame = final_bar_rect;
+     resize_view.frame = final_view_rect;
+   } completion:^(BOOL finished)
+   {
+     if (!finished)
      {
        self.tabBar.frame = final_bar_rect;
        resize_view.frame = final_view_rect;
-     } completion:^(BOOL finished)
-     {
-       if (!finished)
-       {
-         self.tabBar.frame = final_bar_rect;
-         resize_view.frame = final_view_rect;
-       }
-     }];
-  }
-  else
-  {
-    self.tabBar.frame = final_bar_rect;
-    resize_view.frame = final_view_rect;
-  }
+     }
+   }];
 }
 
 #pragma mark - General
@@ -304,20 +301,6 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 - (void)showFilesScreen
 {
   [[UIApplication sharedApplication] setStatusBarHidden:NO];
-  self.selectedIndex = InfinitTabBarIndexFiles;
-}
-
-- (void)showFilesScreenForFolder:(InfinitFolderModel*)folder
-{
-  [self showFilesScreenForFolder:folder fileIndex:-1];
-}
-
-- (void)showFilesScreenForFolder:(InfinitFolderModel*)folder
-                       fileIndex:(NSInteger)index
-{
-  InfinitFilesNavigationController* nav_controller = self.viewControllers[InfinitTabBarIndexFiles];
-  nav_controller.folder = folder;
-  nav_controller.file_index = index;
   self.selectedIndex = InfinitTabBarIndexFiles;
 }
 
@@ -409,31 +392,22 @@ shouldSelectViewController:(UIViewController*)viewController
   CGRect final_view_rect = [self growRect:resize_view.frame
                                   byWidth:0.0f
                                 andHeight:d_h];
-  if (animate)
-  {
-    [UIView animateWithDuration:self.animator.linear_duration
-                          delay:self.animator.linear_duration
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^
+  [UIView animateWithDuration:animate ? self.animator.linear_duration : 0.0f
+                        delay:animate ? self.animator.linear_duration : 0.0f
+                      options:UIViewAnimationOptionCurveEaseInOut
+                   animations:^
+   {
+     self.tabBar.frame = final_bar_rect;
+     resize_view.frame = final_view_rect;
+   } completion:^(BOOL finished)
+   {
+     if (!finished)
      {
        self.tabBar.frame = final_bar_rect;
        resize_view.frame = final_view_rect;
-     } completion:^(BOOL finished)
-     {
-       if (!finished)
-       {
-         self.tabBar.frame = final_bar_rect;
-         resize_view.frame = final_view_rect;
-       }
-       self.tabBar.hidden = YES;
-     }];
-  }
-  else
-  {
-    self.tabBar.frame = final_bar_rect;
-    resize_view.frame = final_view_rect;
-    self.tabBar.hidden = YES;
-  }
+     }
+     self.tabBar.hidden = YES;
+   }];
 }
 
 - (void)noGalleryAccessPopUp
@@ -515,7 +489,7 @@ shouldSelectViewController:(UIViewController*)viewController
                                                                     size:20.0f],
                                NSForegroundColorAttributeName: [UIColor whiteColor]};
   self.permission_view.message_label.text =
-    NSLocalizedString(@"Tap \"OK\" to start sending\nyour photos and videos.", nil);
+    NSLocalizedString(@"Tap \"OK\" to select your photos and videos.", nil);
   NSMutableAttributedString* res = [self.permission_view.message_label.attributedText mutableCopy];
   NSRange bold_range = [res.string rangeOfString:@"OK"];
   [res setAttributes:bold_attrs range:bold_range];
@@ -589,6 +563,7 @@ shouldSelectViewController:(UIViewController*)viewController
   else
   {
     [JDStatusBarNotification showWithStatus:@"Reconnecting..."
+                               dismissAfter:2.0f
                                   styleName:_status_bar_warning_style_id];
     [JDStatusBarNotification showActivityIndicator:YES
                                     indicatorStyle:UIActivityIndicatorViewStyleWhite];
