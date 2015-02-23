@@ -132,7 +132,7 @@
 - (void)configureSearchField
 {
   if (self.swagger_results.count > 1)
-    self.search_field.placeholderText = NSLocalizedString(@"Type email or search...", nil);
+    self.search_field.placeholderText = NSLocalizedString(@"Search contacts by name or email...", nil);
   else
     self.search_field.placeholderText = NSLocalizedString(@"Type email or send to yourself...", nil);
   self.search_field.toLabelTextColor = [UIColor blackColor];
@@ -213,7 +213,8 @@
 
 - (void)resetView
 {
-  [self.assets removeAllObjects];
+  self.assets = nil;
+  self.files = nil;
   [self.recipients removeAllObjects];
 }
 
@@ -410,28 +411,36 @@
 - (IBAction)sendButtonTapped:(id)sender
 {
   [self setSendButtonHidden:YES];
-  if ([PHAsset class])
+  if (self.assets.count > 0)
   {
-    [[InfinitTemporaryFileManager sharedInstance] addPHAssetsLibraryURLList:self.assets
-                                                             toManagedFiles:_managed_files_id
-                                                            performSelector:@selector(temporaryFileManagerCallback)
-                                                                   onObject:self];
-  }
-  else
-  {
-    NSMutableArray* asset_urls = [NSMutableArray array];
-    for (ALAsset* asset in self.assets)
+    if ([PHAsset class])
     {
-      [asset_urls addObject:asset.defaultRepresentation.url];
+      [[InfinitTemporaryFileManager sharedInstance] addPHAssetsLibraryURLList:self.assets
+                                                               toManagedFiles:_managed_files_id
+                                                              performSelector:@selector(temporaryFileManagerCallback)
+                                                                     onObject:self];
     }
-    [[InfinitTemporaryFileManager sharedInstance] addALAssetsLibraryURLList:asset_urls
-                                                             toManagedFiles:_managed_files_id
-                                                            performSelector:@selector(temporaryFileManagerCallback)
-                                                                   onObject:self];
+    else
+    {
+      NSMutableArray* asset_urls = [NSMutableArray array];
+      for (ALAsset* asset in self.assets)
+      {
+        [asset_urls addObject:asset.defaultRepresentation.url];
+      }
+      [[InfinitTemporaryFileManager sharedInstance] addALAssetsLibraryURLList:asset_urls
+                                                               toManagedFiles:_managed_files_id
+                                                              performSelector:@selector(temporaryFileManagerCallback)
+                                                                     onObject:self];
+    }
+    [self.tabBarController performSelectorOnMainThread:@selector(showMainScreen)
+                                            withObject:nil
+                                         waitUntilDone:NO];
   }
-  [self.tabBarController performSelectorOnMainThread:@selector(showMainScreen)
-                                          withObject:nil
-                                       waitUntilDone:NO];
+  else if (self.files.count > 0)
+  {
+    [self sendFilesToCurrentRecipients:self.files];
+    [self.navigationController popToRootViewControllerAnimated:YES];
+  }
   [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewSend method:InfinitUIMethodTap];
 }
 
@@ -439,8 +448,14 @@
 {
   NSArray* files =
     [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:_managed_files_id];
-  NSMutableArray* actual_recipients = [NSMutableArray array];
+  NSArray* ids = [self sendFilesToCurrentRecipients:files];
+  [[InfinitTemporaryFileManager sharedInstance] setTransactionIds:ids
+                                                  forManagedFiles:_managed_files_id];
+}
 
+- (NSArray*)sendFilesToCurrentRecipients:(NSArray*)files
+{
+  NSMutableArray* actual_recipients = [NSMutableArray array];
   for (InfinitContact* contact in self.recipients)
   {
     if (contact.infinit_user != nil)
@@ -452,11 +467,9 @@
       [actual_recipients addObject:contact.emails[contact.selected_email_index]];
     }
   }
-  NSArray* ids = [[InfinitPeerTransactionManager sharedInstance] sendFiles:files
-                                                              toRecipients:actual_recipients
-                                                               withMessage:@""];
-  [[InfinitTemporaryFileManager sharedInstance] setTransactionIds:ids
-                                                  forManagedFiles:_managed_files_id];
+  return [[InfinitPeerTransactionManager sharedInstance] sendFiles:files
+                                                      toRecipients:actual_recipients
+                                                       withMessage:@""];
 }
 
 - (IBAction)inviteBarButtonTapped:(id)sender
@@ -794,7 +807,7 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
 
 - (BOOL)inputsGood
 {
-  if (self.assets.count == 0 || self.recipients.count == 0)
+  if ((self.assets.count == 0 && self.files.count == 0) || self.recipients.count == 0)
     return NO;
   return YES;
 }

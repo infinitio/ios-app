@@ -12,7 +12,8 @@
 
 @interface InfinitSendRecipientsController : UIViewController
 
-@property (nonatomic, strong) NSMutableArray* assets;
+@property (nonatomic, strong) NSArray* assets;
+@property (nonatomic, strong) NSArray* files;
 @property (nonatomic, weak, readwrite) InfinitContact* recipient;
 
 - (void)resetView;
