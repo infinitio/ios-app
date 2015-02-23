@@ -108,21 +108,6 @@ ELLE_LOG_COMPONENT("iOS.FilesViewController");
   }
   [self.table_view scrollRectToVisible:CGRectMake(0.0f, 0.0f, 1.0f, 1.0f) animated:NO];
   [super viewWillAppear:animated];
-  InfinitFilesNavigationController* nav_controller =
-    (InfinitFilesNavigationController*)self.navigationController;
-  if (nav_controller.folder)
-  {
-    NSUInteger index = [self.all_folders indexOfObject:nav_controller.folder];
-    if (index != NSNotFound)
-    {
-      [self.table_view selectRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]
-                                   animated:YES 
-                             scrollPosition:UITableViewScrollPositionMiddle];
-      [self tableView:self.table_view didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:index
-                                                                                 inSection:0]];
-    }
-  }
-  nav_controller.folder = nil;
 }
 
 - (void)showNoFilesOverlay
