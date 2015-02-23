@@ -10,18 +10,24 @@
 
 #import "InfinitColor.h"
 #import "InfinitDownloadFolderManager.h"
+#import "InfinitFilesMultipleViewController.h"
+#import "InfinitFilePreviewController.h"
 #import "InfinitHomeItem.h"
+#import "InfinitHomeNavigationBar.h"
 #import "InfinitHomePeerTransactionCell.h"
 #import "InfinitHomeFeedbackViewController.h"
 #import "InfinitHomeOnboardingCell.h"
 #import "InfinitHomeRatingCell.h"
 #import "InfinitOfflineOverlay.h"
 #import "InfinitRatingManager.h"
+#import "InfinitSendRecipientsController.h"
 #import "InfinitTabBarController.h"
 
 #import <Gap/InfinitDataSize.h>
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitUserManager.h>
+
+#import "UIImage+Rounded.h"
 
 @interface InfinitHomeViewController () <InfinitHomePeerTransactionCellProtocol,
                                          UICollectionViewDataSource,
@@ -36,13 +42,28 @@
 @property (nonatomic, weak) InfinitHomeRatingCell* rating_cell;
 @property (nonatomic, readonly) BOOL show_rate_us;
 
+@property (nonatomic, readonly) UIImageView* cell_image_view;
+@property (nonatomic, weak, readonly) UICollectionViewCell* moving_cell;
+@property (nonatomic, readonly) UIOffset touch_offset;
+@property (nonatomic, readonly) UIDynamicAnimator* dynamic_animator;
+@property (nonatomic, readonly) UIAttachmentBehavior* anchor_behavior;
+@property (nonatomic) CGPoint last_location;
+@property (nonatomic) NSTimeInterval last_time;
+
+@property (nonatomic, readonly) NSMutableDictionary* round_avatar_cache;
+
+@property (nonatomic, readwrite) BOOL previewing_files;
+
 @end
+
+static CGSize _avatar_size = {55.0f, 55.0f};
 
 @implementation InfinitHomeViewController
 {
 @private
   NSString* _onboarding_cell_id;
   NSString* _peer_transaction_cell_id;
+  NSString* _peer_transaction_cell_no_files_id;
   NSString* _rating_cell_id;
 
   NSTimer* _progress_timer;
@@ -50,11 +71,17 @@
   NSMutableArray* _running_transactions;
 }
 
+- (void)didReceiveMemoryWarning
+{
+  [self.round_avatar_cache removeAllObjects];
+}
+
 #pragma mark - Init
 
 - (void)viewDidLoad
 {
   _peer_transaction_cell_id = @"home_peer_transaction_cell";
+  _peer_transaction_cell_no_files_id = @"home_peer_transaction_no_files_cell";
   _onboarding_cell_id = @"home_onboarding_cell";
   _rating_cell_id = @"home_rating_cell";
   _update_interval = 0.5f;
@@ -67,6 +94,10 @@
     [UINib nibWithNibName:NSStringFromClass(InfinitHomePeerTransactionCell.class) bundle:nil];
   [self.collection_view registerNib:transaction_cell_nib
         forCellWithReuseIdentifier:_peer_transaction_cell_id];
+  NSString* no_files_name =
+    [NSString stringWithFormat:@"%@NoFiles", NSStringFromClass(InfinitHomePeerTransactionCell.class)];
+  [self.collection_view registerNib:[UINib nibWithNibName:no_files_name bundle:nil]
+         forCellWithReuseIdentifier:_peer_transaction_cell_no_files_id];
   UINib* onboarding_cell_nib =
     [UINib nibWithNibName:NSStringFromClass(InfinitHomeOnboardingCell.class) bundle:nil];
   [self.collection_view registerNib:onboarding_cell_nib
@@ -82,9 +113,38 @@
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
-  if (self.current_status)
+  if (self.cell_image_view != nil)
+  {
+    [self.cell_image_view removeFromSuperview];
+    _cell_image_view = nil;
+  }
+  InfinitTabBarController* tab_controller = (InfinitTabBarController*)self.tabBarController;
+  [tab_controller setTabBarHidden:NO animated:YES];
+  UINavigationBar* nav_bar = self.navigationController.navigationBar;
+  if (nav_bar.barTintColor != [InfinitColor colorFromPalette:InfinitPaletteColorLightGray]
+      || [UIApplication sharedApplication].statusBarHidden)
+  {
+    [UIView animateWithDuration:(animated ? 0.3f : 0.0f)
+                     animations:^
+     {
+       ((InfinitHomeNavigationBar*)self.navigationController.navigationBar).large = NO;
+       [[UIApplication sharedApplication] setStatusBarHidden:NO
+                                               withAnimation:UIStatusBarAnimationSlide];
+       nav_bar.barTintColor = [InfinitColor colorFromPalette:InfinitPaletteColorLightGray];
+     }];
+  }
+  if (self.current_status && !self.previewing_files)
     [self refreshContents];
-  [self.collection_view scrollRectToVisible:CGRectMake(0.0f, 0.0f, 1.0f, 1.0f) animated:NO];
+  else if (!self.previewing_files)
+  {
+    [self.collection_view scrollRectToVisible:CGRectMake(0.0f, 0.0f, 1.0f, 1.0f) animated:NO];
+  }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+  self.previewing_files = NO;
+  [super viewDidAppear:animated];
 }
 
 - (void)refreshContents
@@ -194,7 +254,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  if (!self.previewing_files)
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
   [_progress_timer invalidate];
   _progress_timer = nil;
   [super viewWillDisappear:animated];
@@ -233,6 +294,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
   CGSize new_size = [self collectionView:self.collection_view
                                   layout:self.collection_view.collectionViewLayout
                   sizeForItemAtIndexPath:index_path];
+  peer_cell.layer.shadowPath = nil;
   [UIView animateWithDuration:0.5f
                         delay:0.0f
        usingSpringWithDamping:0.8f
@@ -245,10 +307,11 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
                                   new_size.width,
                                   new_size.height);
      [peer_cell layoutIfNeeded];
-     peer_cell.expanded = item.expanded;
    } completion:^(BOOL finished)
    {
      peer_cell.expanded = item.expanded;
+     peer_cell.layer.shadowPath =
+       [UIBezierPath bezierPathWithRoundedRect:peer_cell.bounds cornerRadius:3.0f].CGPath;
    }];
 }
 
@@ -268,6 +331,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
   else
     return (self.data.count == 0) ? 2 : self.data.count;
 }
+
 
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView
                  cellForItemAtIndexPath:(NSIndexPath*)indexPath
@@ -293,10 +357,26 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
     if (item.transaction != nil && [item.transaction isKindOfClass:InfinitPeerTransaction.class])
     {
       InfinitPeerTransaction* peer_transaction = (InfinitPeerTransaction*)item.transaction;
-      InfinitHomePeerTransactionCell* cell =
-        [self.collection_view dequeueReusableCellWithReuseIdentifier:_peer_transaction_cell_id
-                                                       forIndexPath:indexPath];
-      [cell setUpWithDelegate:self transaction:peer_transaction expanded:item.expanded];
+      InfinitHomePeerTransactionCell* cell;
+      if (self.round_avatar_cache == nil)
+        _round_avatar_cache = [NSMutableDictionary dictionary];
+      UIImage* avatar = [self.round_avatar_cache objectForKey:peer_transaction.other_user.id_];
+      if (avatar == nil)
+      {
+        avatar = [peer_transaction.other_user.avatar circularMaskOfSize:_avatar_size];
+        [self.round_avatar_cache setObject:avatar forKey:peer_transaction.other_user.id_];
+      }
+      if (peer_transaction.to_device || peer_transaction.receivable)
+      {
+        cell = [self.collection_view dequeueReusableCellWithReuseIdentifier:_peer_transaction_cell_id
+                                                               forIndexPath:indexPath];
+      }
+      else
+      {
+        cell = [self.collection_view dequeueReusableCellWithReuseIdentifier:_peer_transaction_cell_no_files_id
+                                                               forIndexPath:indexPath];
+      }
+      [cell setUpWithDelegate:self transaction:peer_transaction expanded:item.expanded avatar:avatar];
       res = cell;
     }
   }
@@ -437,7 +517,6 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
     [self performSelectorOnMainThread:@selector(removeOnboardingView)
                            withObject:nil
                         waitUntilDone:NO];
-    return;
   }
   NSNumber* transaction_id = notification.userInfo[@"id"];
   InfinitPeerTransaction* peer_transaction =
@@ -475,7 +554,6 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
         [self performSelectorOnMainThread:@selector(removeOnboardingView)
                                withObject:nil
                             waitUntilDone:NO];
-        return;
       }
       [self performSelectorOnMainThread:@selector(updateItem:) withObject:item waitUntilDone:NO];
       return;
@@ -524,12 +602,14 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
       InfinitPeerTransaction* peer_transaction = (InfinitPeerTransaction*)item.transaction;
       if ([peer_transaction.other_user.id_ isEqualToNumber:user_id])
       {
+        UIImage* avatar = [peer_transaction.other_user.avatar circularMaskOfSize:_avatar_size];
+        [self.round_avatar_cache setObject:avatar forKey:peer_transaction.other_user.id_];
         NSIndexPath* path = [NSIndexPath indexPathForRow:row inSection:self.show_rate_us ? 1 : 0];
         if (![self.collection_view.indexPathsForVisibleItems containsObject:path])
           return;
         InfinitHomePeerTransactionCell* cell =
           (InfinitHomePeerTransactionCell*)[self.collection_view cellForItemAtIndexPath:path];
-        [cell performSelectorOnMainThread:@selector(updateAvatar) withObject:nil waitUntilDone:NO];
+        [cell performSelectorOnMainThread:@selector(setAvatar:) withObject:avatar waitUntilDone:NO];
       }
     }
     row++;
@@ -538,34 +618,154 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 
 #pragma mark - Gesture Handling
 
+- (IBAction)handleLongPress:(UILongPressGestureRecognizer*)recognizer
+{
+  CGPoint location = [recognizer locationInView:self.collection_view];
+  CGPoint window_location = [self.view.window convertPoint:location fromView:self.collection_view];
+
+  if (recognizer.state == UIGestureRecognizerStateBegan)
+  {
+    NSIndexPath* index = [self.collection_view indexPathForItemAtPoint:location];
+    UICollectionViewCell* cell = [self.collection_view cellForItemAtIndexPath:index];
+    if (!cell)
+      return;
+    if (self.data.count > 0)
+    {
+      NSIndexPath* index = [self.collection_view indexPathForCell:cell];
+      InfinitHomeItem* item = self.data[index.row];
+      if (item.transaction != nil && !item.transaction.done)
+      {
+        cell.transform = CGAffineTransformTranslate(cell.transform, -20.0f, 0.0f);
+        [UIView animateWithDuration:0.5f
+                              delay:0.0f
+             usingSpringWithDamping:0.2f
+              initialSpringVelocity:10.0f
+                            options:0
+                         animations:^
+        {
+          cell.transform = CGAffineTransformIdentity;
+        } completion:^(BOOL finished)
+        {
+          cell.transform = CGAffineTransformIdentity;
+          if (!item.expanded)
+          {
+            [self.collection_view selectItemAtIndexPath:index
+                                               animated:YES
+                                         scrollPosition:UICollectionViewScrollPositionNone];
+            [self collectionView:self.collection_view didSelectItemAtIndexPath:index];
+          }
+        }];
+        return;
+      }
+    }
+    _moving_cell = cell;
+    _touch_offset = UIOffsetMake(location.x - cell.center.x, location.y - cell.center.y);
+
+    UIGraphicsBeginImageContextWithOptions(cell.bounds.size, NO, 0.0f);
+    [cell.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage* cell_image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    _cell_image_view = [[UIImageView alloc] initWithImage:cell_image];
+    self.cell_image_view.layer.cornerRadius = 3.0f;
+    self.cell_image_view.layer.masksToBounds = NO;
+    self.cell_image_view.layer.shadowOpacity = 0.3f;
+    self.cell_image_view.layer.shadowRadius = 5.0f;
+    self.cell_image_view.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.cell_image_view.layer.shadowOffset = CGSizeMake(0.0f, 5.0f);
+    self.cell_image_view.layer.shadowPath =
+      [UIBezierPath bezierPathWithRoundedRect:self.cell_image_view.bounds cornerRadius:3.0f].CGPath;
+    [self.cell_image_view setCenter:CGPointMake(window_location.x - self.touch_offset.horizontal,
+                                                window_location.y - self.touch_offset.vertical)];
+    if (self.dynamic_animator == nil)
+      _dynamic_animator = [[UIDynamicAnimator alloc] init];
+    else
+      [self.dynamic_animator removeAllBehaviors];
+    _anchor_behavior = [[UIAttachmentBehavior alloc] initWithItem:self.cell_image_view
+                                                 offsetFromCenter:self.touch_offset
+                                                 attachedToAnchor:window_location];
+    self.anchor_behavior.length = 0.0f;
+    [self.dynamic_animator addBehavior:self.anchor_behavior];
+    [self.view.window addSubview:self.cell_image_view];
+    cell.alpha = 0.0f;
+  }
+  else if (recognizer.state == UIGestureRecognizerStateChanged)
+  {
+    if (self.anchor_behavior)
+      self.anchor_behavior.anchorPoint = window_location;
+  }
+  else if (recognizer.state == UIGestureRecognizerStateEnded)
+  {
+    if (!self.anchor_behavior)
+      return;
+    [self.dynamic_animator removeAllBehaviors];
+    NSTimeInterval t_diff = CFAbsoluteTimeGetCurrent() - self.last_time;
+    CGPoint velocity = CGPointMake((location.x - self.last_location.x) / t_diff,
+                                   (location.y - self.last_location.y) / t_diff);
+    CGFloat limit = 5.0f;
+    BOOL remove_cell =
+      location.x < limit || location.x > self.collection_view.bounds.size.width - limit ||
+      (ABS(self.moving_cell.center.x - location.x) > 50.0f &&
+       ABS(velocity.x) > 0.9f * ABS(velocity.y) && ABS(velocity.x) > 100.0f);
+    if (remove_cell)
+    {
+      UIPushBehavior* final_behavior =
+        [[UIPushBehavior alloc] initWithItems:@[self.cell_image_view]
+                                         mode:UIPushBehaviorModeInstantaneous];
+      final_behavior.magnitude = 50.0f;
+      final_behavior.pushDirection = CGVectorMake(velocity.x, velocity.y);
+      final_behavior.action = ^
+      {
+        if (!CGRectIntersectsRect(self.view.window.frame, self.cell_image_view.frame))
+        {
+          [self.dynamic_animator removeAllBehaviors];
+          NSIndexPath* index = [self.collection_view indexPathForCell:self.moving_cell];
+          [self removeItemAtIndexPath:index];
+          [self.cell_image_view removeFromSuperview];
+          _cell_image_view = nil;
+          _anchor_behavior = nil;
+        }
+      };
+      [self.dynamic_animator addBehavior:final_behavior];
+    }
+    else
+    {
+      CGPoint final_point = [self.view.window convertPoint:self.moving_cell.center
+                                                  fromView:self.collection_view];
+      UISnapBehavior* snap_back = [[UISnapBehavior alloc] initWithItem:self.cell_image_view
+                                                           snapToPoint:final_point];
+      snap_back.action = ^
+      {
+        if (CGPointEqualToPoint(self.cell_image_view.center, final_point))
+        {
+          [self.dynamic_animator removeAllBehaviors];
+          self.moving_cell.alpha = 1.0f;
+          [self.cell_image_view removeFromSuperview];
+          _cell_image_view = nil;
+          _anchor_behavior = nil;
+        }
+      };
+      [self.dynamic_animator addBehavior:snap_back];
+    }
+  }
+  self.last_time = CFAbsoluteTimeGetCurrent();
+  self.last_location = location;
+}
+
 - (void)removeItemAtIndexPath:(NSIndexPath*)path
 {
   if (path == nil)
     return;
   @synchronized(self.data)
   {
-    [self.data removeObjectAtIndex:path.row];
-    [self.collection_view deleteItemsAtIndexPaths:@[path]];
-  }
-}
-
-- (void)leftSwipeGesture:(UISwipeGestureRecognizer*)recognizer
-{
-  if (recognizer.state == UIGestureRecognizerStateEnded)
-  {
-    NSIndexPath* path =
-      [self.collection_view indexPathForItemAtPoint:[recognizer locationInView:self.collection_view]];
-    [self removeItemAtIndexPath:path];
-  }
-}
-
-- (void)rightSwipeGesture:(UISwipeGestureRecognizer*)recognizer
-{
-  if (recognizer.state == UIGestureRecognizerStateEnded)
-  {
-    NSIndexPath* path =
-      [self.collection_view indexPathForItemAtPoint:[recognizer locationInView:self.collection_view]];
-    [self removeItemAtIndexPath:path];
+    [self.collection_view performBatchUpdates:^
+    {
+      [self.data removeObjectAtIndex:path.row];
+      [self.collection_view deleteItemsAtIndexPaths:@[path]];
+    } completion:^(BOOL finished)
+    {
+      [self updateRunningTransactions];
+    }];
   }
 }
 
@@ -618,15 +818,40 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 
 - (void)cellOpenTapped:(InfinitHomePeerTransactionCell*)sender
 {
-  InfinitTabBarController* tab_controller = (InfinitTabBarController*)self.tabBarController;
   InfinitFolderModel* folder =
     [[InfinitDownloadFolderManager sharedInstance] completedFolderForTransactionMetaId:sender.transaction.meta_id];
-  if (folder != nil)
-    [tab_controller showFilesScreenForFolder:folder];
+  if (folder.files.count == 1)
+  {
+    self.previewing_files = YES;
+    InfinitFilePreviewController* preview_controller =
+      [InfinitFilePreviewController controllerWithFolder:folder andIndex:0];
+    UINavigationController* nav_controller =
+      [[UINavigationController alloc] initWithRootViewController:preview_controller];
+    [self presentViewController:nav_controller animated:YES completion:nil];
+  }
+  else if (folder.files.count > 1)
+  {
+    self.previewing_files = YES;
+    [self performSegueWithIdentifier:@"home_files_segue" sender:folder];
+  }
+}
+
+- (void)cell:(InfinitHomePeerTransactionCell*)sender
+openFileTapped:(NSUInteger)file_index
+{
+  self.previewing_files = YES;
+  InfinitFolderModel* folder =
+    [[InfinitDownloadFolderManager sharedInstance] completedFolderForTransactionMetaId:sender.transaction.meta_id];
+  InfinitFilePreviewController* preview_controller =
+    [InfinitFilePreviewController controllerWithFolder:folder andIndex:file_index];
+  UINavigationController* nav_controller =
+  [[UINavigationController alloc] initWithRootViewController:preview_controller];
+  [self presentViewController:nav_controller animated:YES completion:nil];
 }
 
 - (void)cellSendTapped:(InfinitHomePeerTransactionCell*)sender
 {
+  [self performSegueWithIdentifier:@"home_to_send_segue" sender:sender];
 }
 
 #pragma mark - Rating Cell Handling
@@ -638,7 +863,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
   {
     _show_rate_us = NO;
     [self.collection_view deleteSections:[NSIndexSet indexSetWithIndex:0]];
-  } completion:nil];
+  } completion:NULL];
 }
 
 - (void)positiveButtonTapped:(id)sender
@@ -696,6 +921,37 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
   if (status)
     [self refreshContents];
   [super statusChangedTo:status];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue*)segue
+                 sender:(id)sender
+{
+  if ([segue.identifier isEqualToString:@"home_to_send_segue"])
+  {
+    InfinitTabBarController* tab_controller = (InfinitTabBarController*)self.tabBarController;
+    [tab_controller setTabBarHidden:YES animated:NO];
+    InfinitHomePeerTransactionCell* cell = (InfinitHomePeerTransactionCell*)sender;
+    InfinitFolderModel* folder =
+      [[InfinitDownloadFolderManager sharedInstance] completedFolderForTransactionMetaId:cell.transaction.meta_id];
+    InfinitSendRecipientsController* send_controller =
+      (InfinitSendRecipientsController*)segue.destinationViewController;
+    send_controller.files = folder.file_paths;
+    [UIView animateWithDuration:0.3f
+                     animations:^
+    {
+      ((InfinitHomeNavigationBar*)self.navigationController.navigationBar).large = YES;
+      [[UIApplication sharedApplication] setStatusBarHidden:YES
+                                              withAnimation:UIStatusBarAnimationSlide];
+      self.navigationController.navigationBar.barTintColor =
+        [InfinitColor colorFromPalette:InfinitPaletteColorSendBlack];
+    }];
+  }
+  else if ([segue.identifier isEqualToString:@"home_files_segue"])
+  {
+    InfinitFilesMultipleViewController* files_view_controller =
+      (InfinitFilesMultipleViewController*)segue.destinationViewController;
+    files_view_controller.folder = sender;
+  }
 }
 
 @end
