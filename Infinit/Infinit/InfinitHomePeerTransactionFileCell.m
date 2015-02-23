@@ -8,8 +8,6 @@
 
 #import "InfinitHomePeerTransactionFileCell.h"
 
-#import "UIImage+Rounded.h"
-
 @interface InfinitHomePeerTransactionFileCell ()
 
 @property (nonatomic, weak) IBOutlet UIImageView* file_icon_view;
@@ -26,8 +24,7 @@
 
 - (void)setThumbnail:(UIImage*)thumbnail
 {
-  self.file_icon_view.image = [thumbnail roundedMaskOfSize:self.file_icon_view.bounds.size
-                                              cornerRadius:0.0f];
+  self.file_icon_view.image = thumbnail;
 }
 
 @end
