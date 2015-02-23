@@ -21,6 +21,7 @@
 @property (nonatomic, weak) IBOutlet UIImageView* password_image;
 @property (nonatomic, weak) IBOutlet UITextField* password_field;
 @property (nonatomic, weak) IBOutlet UILabel* error_label;
+@property (nonatomic, weak) IBOutlet UIButton* legal_button;
 
 @property (nonatomic, readonly) CGFloat height;
 
