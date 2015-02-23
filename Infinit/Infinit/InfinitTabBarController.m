@@ -360,6 +360,11 @@ shouldSelectViewController:(UIViewController*)viewController
   _last_index = self.selectedIndex;
   if ([viewController.title isEqualToString:@"SEND"])
   {
+    if ([InfinitConnectionManager sharedInstance].was_logged_in)
+    {
+      if ([JDStatusBarNotification isVisible])
+        [JDStatusBarNotification dismiss];
+    }
     if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusNotDetermined)
     {
       [self loadGalleryPermissionView];
