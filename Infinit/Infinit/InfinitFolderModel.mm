@@ -243,6 +243,14 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
 
 #pragma mark - Properties
 
+- (NSArray*)file_paths
+{
+  NSMutableArray* res = [NSMutableArray array];
+  for (InfinitFileModel* file in self.files)
+    [res addObject:file.path];
+  return [res copy];
+}
+
 - (void)setDone:(BOOL)done
 {
   _done = done;

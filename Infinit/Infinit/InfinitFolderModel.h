@@ -13,6 +13,7 @@
 
 @property (nonatomic, readonly) NSNumber* ctime;
 @property (nonatomic, readwrite) BOOL done;
+@property (nonatomic, readonly) NSArray* file_paths;
 @property (nonatomic, readonly) NSArray* files;
 @property (nonatomic, readonly) NSString* id_;
 @property (nonatomic, readonly) UIImage* thumbnail;
