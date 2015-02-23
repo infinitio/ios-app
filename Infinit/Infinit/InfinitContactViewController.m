@@ -115,7 +115,7 @@ static UIImage* _infinit_icon = nil;
 
 - (void)setFavoriteButtonHidden:(BOOL)hidden
 {
-  self.send_center_constraint.constant = hidden ? 0.0f :61.0f;
+  self.send_center_constraint.constant = hidden ? 0.0f : 61.0f;
   self.favorite_button.hidden = hidden;
 }
 
