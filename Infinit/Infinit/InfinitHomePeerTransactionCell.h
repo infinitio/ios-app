@@ -22,9 +22,10 @@
 
 - (void)setUpWithDelegate:(id<InfinitHomePeerTransactionCellProtocol>)delegate
               transaction:(InfinitPeerTransaction*)transaction
-                 expanded:(BOOL)expanded;
+                 expanded:(BOOL)expanded
+                   avatar:(UIImage*)avatar;
 
-- (void)updateAvatar;
+- (void)setAvatar:(UIImage*)avatar;
 - (void)updateProgressOverDuration:(NSTimeInterval)duration;
 
 @end
@@ -39,6 +40,8 @@
 - (void)cellCancelTapped:(InfinitHomePeerTransactionCell*)sender;
 
 - (void)cellOpenTapped:(InfinitHomePeerTransactionCell*)sender;
+- (void)cell:(InfinitHomePeerTransactionCell*)sender
+openFileTapped:(NSUInteger)file_index;
 - (void)cellSendTapped:(InfinitHomePeerTransactionCell*)sender;
 
 @end

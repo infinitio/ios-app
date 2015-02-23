@@ -16,10 +16,9 @@
 #import "InfinitHomePeerTransactionFileCell.h"
 #import "InfinitShrinkingLine.h"
 
-#import <Gap/InfinitTime.h>
 #import <Gap/InfinitDataSize.h>
+#import <Gap/InfinitTime.h>
 
-#import "UIImage+ImageEffects.h"
 #import "UIImage+Rounded.h"
 
 @interface InfinitHomePeerTransactionCell () <UICollectionViewDataSource,
@@ -71,6 +70,12 @@ static UIImage* _open_image = nil;
 static UIImage* _pause_image = nil;
 static UIImage* _send_image = nil;
 
+static UIImage* _audio_icon = nil;
+static UIImage* _directory_icon = nil;
+static UIImage* _document_icon = nil;
+static UIImage* _image_icon = nil;
+static UIImage* _video_icon = nil;
+
 static CGFloat _status_height = 45.0f;
 static CGFloat _button_height = 45.0f;
 
@@ -80,7 +85,6 @@ static CGFloat _button_height = 45.0f;
 {
   [super prepareForReuse];
   _delegate = nil;
-  _folder = nil;
   self.status_view.run_transfer_animation = NO;
 }
 
@@ -168,18 +172,18 @@ static CGFloat _button_height = 45.0f;
 - (void)setUpWithDelegate:(id<InfinitHomePeerTransactionCellProtocol>)delegate
               transaction:(InfinitPeerTransaction*)transaction
                  expanded:(BOOL)expanded
+                   avatar:(UIImage*)avatar
 {
   _delegate = delegate;
-  _transaction = transaction;
   _expanded = expanded;
+  _transaction = transaction;
   if (self.download_manager == nil)
     _download_manager = [InfinitDownloadFolderManager sharedInstance];
   _folder = [self.download_manager completedFolderForTransactionMetaId:self.transaction.meta_id];
 
-  [self configureCellLayout];
+  [self configureCellLayoutWithShadow:YES];
   [self configureCellStatusView];
-  [self configureBackgroundColor];
-  self.avatar_view.image = self.transaction.other_user.avatar;
+  self.avatar_view.image = avatar;
   NSString* other_name = nil;
   if (self.transaction.other_user.is_self)
     other_name = NSLocalizedString(@"me", nil);
@@ -270,7 +274,7 @@ static CGFloat _button_height = 45.0f;
   [self.right_button setAttributedTitle:_send_str forState:UIControlStateNormal];
 }
 
-- (void)configureCellLayout
+- (void)configureCellLayoutWithShadow:(BOOL)shadow
 {
   self.top_line.hidden = YES;
   self.files_view.hidden = YES;
@@ -287,14 +291,12 @@ static CGFloat _button_height = 45.0f;
     case gap_transaction_waiting_accept:
       [self setButtonsHidden:!(self.expanded || self.transaction.receivable)];
       [self setStatusViewHidden:!self.expanded];
+      self.top_line.hidden = !self.expanded;
       if (self.transaction.receivable)
       {
         [self setAcceptRejectButtons];
         if (self.expanded)
-        {
-          self.top_line.hidden = NO;
           self.files_view.hidden = NO;
-        }
       }
       else if (self.expanded)
       {
@@ -347,6 +349,11 @@ static CGFloat _button_height = 45.0f;
   }
   if (!self.files_view.hidden)
     [self.files_view reloadData];
+  if (shadow)
+  {
+    self.layer.shadowPath =
+      [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:3.0f].CGPath;
+  }
 }
 
 - (void)configureCellStatusView
@@ -378,28 +385,12 @@ static CGFloat _button_height = 45.0f;
   }
 }
 
-- (void)configureBackgroundColor
-{
-  switch (self.transaction.status)
-  {
-    case gap_transaction_canceled:
-    case gap_transaction_failed:
-    case gap_transaction_rejected:
-      self.backgroundColor = [InfinitColor colorWithGray:246];
-      break;
-
-    default:
-      self.backgroundColor = [UIColor whiteColor];
-      break;
-  }
-}
-
 - (void)setExpanded:(BOOL)expanded
 {
   if (self.expanded == expanded)
     return;
   _expanded = expanded;
-  [self configureCellLayout];
+  [self configureCellLayoutWithShadow:YES];
 }
 
 - (void)setProgress
@@ -424,51 +415,77 @@ static CGFloat _button_height = 45.0f;
     case gap_transaction_new:
       return NSLocalizedString(@"Preparing", nil);
     case gap_transaction_on_other_device:
-      return NSLocalizedString(@"On another device", nil);
+      return NSLocalizedString(@"Transferring on another device", nil);
     case gap_transaction_waiting_accept:
-      return NSLocalizedString(@"Waiting for accept", nil);
-    case gap_transaction_connecting:
-    case gap_transaction_transferring:
-      if (self.transaction.from_device)
-        return NSLocalizedString(@"Sending", nil);
-      else if (self.transaction.recipient.is_self)
-        return NSLocalizedString(@"Receiving", nil);
-      else
-        return NSLocalizedString(@"Sending", nil);
+      if (self.transaction.recipient.is_self && self.transaction.from_device)
+      {
+        return NSLocalizedString(@"Accept on receiving device", nil);
+      }
+      else if (self.transaction.receivable)
+      {
+        return NSLocalizedString(@"Waiting for you to accept", nil);
+      }
+      else if (self.transaction.sender.is_self)
+      {
+        return [NSString stringWithFormat:NSLocalizedString(@"Waiting for %@ to accept", nil),
+                self.transaction.recipient.fullname];
+      }
     case gap_transaction_waiting_data:
-      if (self.transaction.other_user.is_self)
+      if (self.transaction.from_device)
       {
-        return NSLocalizedString(@"Waiting for your device to be online...", nil);
+        return NSLocalizedString(@"Paused – Check network", nil);
       }
-      else
+      else if (self.transaction.recipient.is_self && self.transaction.to_device)
       {
-        return [NSString stringWithFormat:NSLocalizedString(@"Waiting for %@ to be online", nil),
-                self.transaction.other_user.fullname];
+        return NSLocalizedString(@"Paused by sending device", nil);
       }
+      else if (self.transaction.recipient.is_self)
+      {
+        return [NSString stringWithFormat:NSLocalizedString(@"Paused by %@", nil),
+                self.transaction.sender.fullname];
+      }
+    case gap_transaction_connecting:
+      return NSLocalizedString(@"Connecting", nil);
+    case gap_transaction_transferring:
+      return NSLocalizedString(@"Transferring", nil);
+    case gap_transaction_paused:
+      return NSLocalizedString(@"Paused", nil);
     case gap_transaction_cloud_buffered:
       return NSLocalizedString(@"Sent", nil);
     case gap_transaction_canceled:
-      return NSLocalizedString(@"Canceled", nil);
+      if (self.transaction.canceler.is_self)
+      {
+        return NSLocalizedString(@"Canceled by you", nil);
+      }
+      else
+      {
+        return [NSString stringWithFormat:NSLocalizedString(@"Canceled by %@", nil),
+                self.transaction.canceler.fullname];
+      }
     case gap_transaction_failed:
-      return NSLocalizedString(@"Failed", nil);
+      if (self.transaction.recipient.is_self && !self.transaction.sender.is_self)
+        return [NSString stringWithFormat:NSLocalizedString(@"Error – %@ must retry", nil),
+                self.transaction.sender.fullname];
+      else
+        return NSLocalizedString(@"Error – Please retry", nil);
     case gap_transaction_finished:
       if (self.transaction.from_device)
-        return NSLocalizedString(@"Sent", nil);
+        return NSLocalizedString(@"Delivered", nil);
       else if (self.transaction.to_device)
         return NSLocalizedString(@"Received", nil);
       else if (self.transaction.other_user.is_self)
-        return NSLocalizedString(@"Received elsewhere", nil);
+        return NSLocalizedString(@"Received on another device", nil);
       else
-        return NSLocalizedString(@"Sent", nil);
+        return NSLocalizedString(@"Delivered", nil);
     case gap_transaction_rejected:
       if (!self.transaction.recipient.is_self)
       {
-        return [NSString stringWithFormat:NSLocalizedString(@"%@ declined the transfer", nil),
+        return [NSString stringWithFormat:NSLocalizedString(@"Canceled by %@", nil),
                 self.transaction.other_user.fullname];
       }
       else
       {
-        return NSLocalizedString(@"You declined the transfer", nil);
+        return NSLocalizedString(@"Canceled by you", nil);
       }
 
     default:
@@ -476,9 +493,9 @@ static CGFloat _button_height = 45.0f;
   }
 }
 
-- (void)updateAvatar
+- (void)setAvatar:(UIImage*)avatar
 {
-  self.avatar_view.image = self.transaction.other_user.avatar;
+  self.avatar_view.image = avatar;
 }
 
 - (void)updateProgressOverDuration:(NSTimeInterval)duration
@@ -488,10 +505,20 @@ static CGFloat _button_height = 45.0f;
 
 #pragma mark - Collection View Datasource/Delegate
 
+- (void)collectionView:(UICollectionView*)collectionView
+didSelectItemAtIndexPath:(NSIndexPath*)indexPath
+{
+  if (self.folder != nil)
+    [self.delegate cell:self openFileTapped:indexPath.row];
+}
+
 - (NSInteger)collectionView:(UICollectionView*)collectionView
      numberOfItemsInSection:(NSInteger)section
 {
-  return self.transaction.files.count > 5 ? 5 : self.transaction.files.count;
+  if (self.folder)
+    return self.folder.files.count > 5 ? 5 : self.folder.files.count;
+  else
+    return self.transaction.files.count > 5 ? 5 : self.transaction.files.count;
 }
 
 - (CGSize)collectionView:(UICollectionView*)collectionView
@@ -509,11 +536,50 @@ static CGFloat _button_height = 45.0f;
   if (self.folder)
   {
     [cell setFilename:[self.folder.files[indexPath.row] name]];
-    [cell setThumbnail:[self.folder.files[indexPath.row] thumbnail]];
+    UIImage* thumb =
+      [[self.folder.files[indexPath.row] thumbnail] roundedMaskOfSize:CGSizeMake(45.0f, 45.0f)
+                                                         cornerRadius:2.0f];
+    [cell setThumbnail:thumb];
   }
   else
   {
     [cell setFilename:self.transaction.files[indexPath.row]];
+    UIImage* icon = nil;
+    switch ([InfinitFilePreview fileTypeForPath:self.transaction.files[indexPath.row]])
+    {
+      case InfinitFileTypeAudio:
+        if (_audio_icon == nil)
+          _audio_icon = [UIImage imageNamed:@"icon-mimetype-audio-home"];
+        icon = _audio_icon;
+        break;
+      case InfinitFileTypeDirectory:
+        if (_directory_icon == nil)
+          _directory_icon = [UIImage imageNamed:@"icon-mimetype-folder-home"];
+        icon = _directory_icon;
+      case InfinitFileTypeDocument:
+        if (_document_icon == nil)
+          _document_icon = [UIImage imageNamed:@"icon-mimetype-doc-home"];
+        icon = _document_icon;
+        break;
+      case InfinitFileTypeImage:
+        if (_image_icon == nil)
+          _image_icon = [UIImage imageNamed:@"icon-mimetype-picture-home"];
+        icon = _image_icon;
+        break;
+      case InfinitFileTypeVideo:
+        if (_video_icon == nil)
+          _video_icon = [UIImage imageNamed:@"icon-mimetype-video-home"];
+        icon = _video_icon;
+        break;
+
+      case InfinitFileTypeOther:
+      default:
+        if (_document_icon == nil)
+          _document_icon = [UIImage imageNamed:@"icon-mimetype-doc-home"];
+        icon = _document_icon;
+        break;
+    }
+    [cell setThumbnail:icon];
   }
   return cell;
 }
@@ -555,6 +621,8 @@ static CGFloat _button_height = 45.0f;
     case gap_transaction_waiting_accept:
       if (self.transaction.receivable)
         [self.delegate cellRejectTapped:self];
+      else
+        [self.delegate cellCancelTapped:self];
       break;
 
     case gap_transaction_new:
