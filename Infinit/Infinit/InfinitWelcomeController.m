@@ -31,6 +31,7 @@
 #import <Gap/InfinitUserManager.h>
 
 #define INFINIT_FORGOT_PASSWORD_URL @"https://infinit.io/forgot_password?utm_source=app&utm_medium=ios&utm_campaign=forgot_password"
+#define INFINIT_LEGAL_URL           @"https://infinit.io/legal?utm_source=app&utm_medium=ios&utm_campaign=terms"
 
 @import MobileCoreServices;
 
@@ -235,6 +236,9 @@
   [self.signup_form_view.avatar_button addTarget:self
                                           action:@selector(registerAvatarButtonTapped:)
                                 forControlEvents:UIControlEventTouchUpInside];
+  [self.signup_form_view.legal_button addTarget:self 
+                                         action:@selector(legalLinkTapped:)
+                               forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)addBalloonParallax
@@ -599,7 +603,7 @@
   {
     self.signup_form_view.password_image.image = [UIImage imageNamed:@"icon-password-error"];
     self.signup_form_view.error_label.text =
-      NSLocalizedString(@"Password must be at least 3 chars.", nil);
+      NSLocalizedString(@"Password must be at least 3 characters.", nil);
     self.signup_form_view.error_label.hidden = NO;
   }
   else
@@ -611,6 +615,12 @@
 - (void)forgotPasswordTapped:(id)sender
 {
   NSURL* url = [NSURL URLWithString:INFINIT_FORGOT_PASSWORD_URL];
+  [[UIApplication sharedApplication] openURL:url];
+}
+
+- (void)legalLinkTapped:(id)sender
+{
+  NSURL* url = [NSURL URLWithString:INFINIT_LEGAL_URL];
   [[UIApplication sharedApplication] openURL:url];
 }
 
