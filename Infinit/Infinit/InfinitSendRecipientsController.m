@@ -496,20 +496,18 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
 {
-//  if ([self noResults])
-//    return 1;
-//  else
+  if ([self noResults])
+    return 1;
+  else
     return 3;
 }
 
 - (NSInteger)tableView:(UITableView*)tableView
  numberOfRowsInSection:(NSInteger)section
 {
-//  if ([self noResults])
-//  {
-//    return 1;
-//  }
-//  else if (section == 0)
+  if ([self noResults])
+    return 1;
+
   switch (section)
   {
     case 0:
@@ -530,15 +528,24 @@
 {
   UITableViewCell* res = nil;
   InfinitContact* contact = nil;
-//  if ([self noResults])
-//  {
-//    InfinitSendNoResultsCell* cell =
-//      [tableView dequeueReusableCellWithIdentifier:_no_results_cell_id forIndexPath:indexPath];
-//    cell.show_buttons = ![self askedForAddressBookAccess];
-//    res = cell;
-//  }
-//  else if (indexPath.section == 0)
-  if (indexPath.section == 0)
+  if ([self noResults])
+  {
+    InfinitSendNoResultsCell* cell =
+      [tableView dequeueReusableCellWithIdentifier:_no_results_cell_id forIndexPath:indexPath];
+    cell.show_buttons = ![self askedForAddressBookAccess];
+    if ([self askedForAddressBookAccess])
+    {
+      cell.message_label.text =
+        NSLocalizedString(@"No one here by that name.\nTry an email instead.", nil);
+    }
+    else
+    {
+      cell.message_label.text =
+        NSLocalizedString(@"No one here by that name.\nTry connecting your Contacts", nil);
+    }
+    res = cell;
+  }
+  else if (indexPath.section == 0)
   {
     InfinitSendUserCell* cell = [tableView dequeueReusableCellWithIdentifier:_me_cell_id
                                                                 forIndexPath:indexPath];
@@ -593,6 +600,9 @@
 - (CGFloat)tableView:(UITableView*)tableView
 heightForHeaderInSection:(NSInteger)section
 {
+  if ([self noResults])
+    return 0.0f;
+
   switch (section)
   {
     case 0:
@@ -636,6 +646,8 @@ viewForHeaderInSection:(NSInteger)section
 - (CGFloat)tableView:(UITableView*)tableView
 heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
+  if ([self noResults])
+    return 349.0f;
   if (indexPath.section == 2 && ![self askedForAddressBookAccess])
     return 349.0f;
   else
@@ -918,8 +930,10 @@ didDeleteTokenAtIndex:(NSUInteger)index
 
 #pragma mark - Search
 
+
 - (void)reloadSearchResults
 {
+  BOOL were_no_results = [self noResults];
   NSMutableIndexSet* sections = [NSMutableIndexSet indexSet];
   if (!_me_match)
   {
@@ -936,12 +950,15 @@ didDeleteTokenAtIndex:(NSUInteger)index
     self.contact_results = [self.all_contacts copy];
     [sections addIndex:2];
   }
-  if (sections.count > 0)
+  if (were_no_results || [self noResults])
+    [self.table_view reloadData];
+  else if (sections.count > 0)
     [self.table_view reloadSections:sections withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 - (void)updateSearchResultsWithSearchString:(NSString*)search_string
 {
+  BOOL were_no_results = [self noResults];
   if ([self.me_contact containsSearchString:search_string])
     _me_match = YES;
   else
@@ -970,15 +987,10 @@ didDeleteTokenAtIndex:(NSUInteger)index
     self.contact_results = contacts_temp;
     [sections addIndex:2];
   }
-  if (sections.count > 0)
-  {
-    [self.table_view reloadSections:sections
-                   withRowAnimation:UITableViewRowAnimationAutomatic];
-  }
-//  else if ([self noResults])
-//  {
-//    [self.table_view reloadData];
-//  }
+  if (were_no_results || [self noResults])
+    [self.table_view reloadData];
+  else if (sections.count > 0)
+    [self.table_view reloadSections:sections withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 #pragma mark - User Avatar
@@ -1011,7 +1023,8 @@ didDeleteTokenAtIndex:(NSUInteger)index
 
 - (BOOL)noResults
 {
-  return (self.swagger_results.count == 0 &&
+  return (!_me_match &&
+          self.swagger_results.count == 0 &&
           self.contact_results.count == 0);
 }
 

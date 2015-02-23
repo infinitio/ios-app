@@ -10,6 +10,7 @@
 
 @interface InfinitSendNoResultsCell : UITableViewCell
 
+@property (nonatomic, weak) IBOutlet UILabel* message_label;
 @property (nonatomic, weak) IBOutlet UIButton* facebook_button;
 @property (nonatomic, weak) IBOutlet UIButton* contacts_button;
 
