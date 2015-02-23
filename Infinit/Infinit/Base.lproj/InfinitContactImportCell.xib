@@ -39,7 +39,7 @@
                             </mask>
                         </variation>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Infinit is 2x faster and encrypted if your friends are on the app." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t2U-eE-XfF">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Infinit is 2x faster and more secure if your friends are on the app." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t2U-eE-XfF">
                         <rect key="frame" x="172" y="30" width="255" height="58"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="58" id="XTN-ek-YLO"/>
@@ -59,7 +59,7 @@
                         </constraints>
                         <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
                         <inset key="imageEdgeInsets" minX="-12" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        <state key="normal" title="IMPORT PHONE CONTACTS" image="icon-contacts">
+                        <state key="normal" title="ACCESS PHONE CONTACTS" image="icon-contacts">
                             <color key="titleColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>

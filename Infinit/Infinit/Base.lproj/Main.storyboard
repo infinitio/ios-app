@@ -141,7 +141,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
                                 <inset key="imageEdgeInsets" minX="-15" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" title="SIGN UP WITH FACEBOOK" image="icon-facebook-white">
+                                <state key="normal" title="SIGN IN WITH FACEBOOK" image="icon-facebook-white">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -586,7 +586,7 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <navigationItem key="navigationItem" title="SELECT..." id="0rw-4j-beG">
+                    <navigationItem key="navigationItem" title="SELECT" id="0rw-4j-beG">
                         <barButtonItem key="leftBarButtonItem" image="icon-close" id="3v5-C0-y92">
                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
@@ -615,7 +615,7 @@
                         <viewControllerLayoutGuide type="bottom" id="zqG-cb-qD6"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="nF7-gs-IAg">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="556"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B4i-MR-JeK">
@@ -1151,7 +1151,7 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <navigationItem key="navigationItem" title="SEND TO..." id="zuc-EM-7Qy">
+                    <navigationItem key="navigationItem" title="SEND" id="zuc-EM-7Qy">
                         <barButtonItem key="leftBarButtonItem" image="icon-back-white" id="7eZ-z1-1er">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
@@ -1360,7 +1360,7 @@
                 <navigationController title="HOME" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="aTr-06-n7W" customClass="InfinitPortraitNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="icon-tab-home" id="9HD-Ms-g7K"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="c7Y-hg-pWS">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="c7Y-hg-pWS" customClass="InfinitHomeNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95294117647058818" alpha="1" colorSpace="calibratedRGB"/>
@@ -1407,20 +1407,32 @@
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="WCF-Qo-N8t" secondAttribute="bottom" id="0Lv-oI-Lrs"/>
                             <constraint firstItem="WCF-Qo-N8t" firstAttribute="top" secondItem="9ku-bS-AU6" secondAttribute="top" id="qqw-J0-Qjg"/>
                             <constraint firstItem="WCF-Qo-N8t" firstAttribute="leading" secondItem="9ku-bS-AU6" secondAttribute="leading" id="spe-ET-BoX"/>
                             <constraint firstAttribute="trailing" secondItem="WCF-Qo-N8t" secondAttribute="trailing" id="utL-Nq-0c9"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="Lpp-Zz-OUv" appends="YES" id="q8v-On-KLh"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="4Jl-p9-SSq"/>
                     <connections>
                         <outlet property="collection_view" destination="WCF-Qo-N8t" id="ERx-az-ndb"/>
                         <outlet property="view" destination="9ku-bS-AU6" id="kpd-nK-2hz"/>
+                        <segue destination="9ZK-3B-PXo" kind="show" identifier="home_to_send_segue" id="hT3-x2-Ji5"/>
+                        <segue destination="jvf-eB-UiL" kind="show" identifier="home_files_segue" id="Yah-cg-ZRU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m95-wo-hyW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer delaysTouchesBegan="YES" allowableMovement="10" minimumPressDuration="0.25" id="Lpp-Zz-OUv">
+                    <connections>
+                        <action selector="handleLongPress:" destination="RJM-ey-XCj" id="K7R-B3-36r"/>
+                        <outlet property="delegate" destination="RJM-ey-XCj" id="MnL-hu-XxW"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="742" y="-1724"/>
         </scene>
@@ -1517,14 +1529,14 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cAz-dS-fQ5">
-                                <rect key="frame" x="177" y="218" width="124" height="31"/>
+                                <rect key="frame" x="194" y="218" width="90" height="31"/>
                                 <color key="backgroundColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="31" id="uOk-Fk-N7j"/>
-                                    <constraint firstAttribute="width" constant="124" id="xUU-rq-uuf"/>
+                                    <constraint firstAttribute="width" constant="90" id="xUU-rq-uuf"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
-                                <state key="normal" title="SEND FILES" image="icon-send-white">
+                                <state key="normal" title="SEND" image="icon-send-white">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -1533,7 +1545,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1LK-Mw-637">
-                                <rect key="frame" x="308" y="218" width="116" height="31"/>
+                                <rect key="frame" x="291" y="218" width="116" height="31"/>
                                 <color key="backgroundColor" red="0.8901960784313725" green="0.88627450980392153" blue="0.078431372549019607" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="116" id="jsN-Sg-XHZ"/>
@@ -1682,7 +1694,7 @@
                                     <constraint firstAttribute="width" constant="30" id="UyJ-dy-ZCt"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send files to your friends without limits" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bbd-IZ-yiZ">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send any photo or video to your friends" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bbd-IZ-yiZ">
                                 <rect key="frame" x="160" y="74" width="280" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="280" id="5Ql-by-J9k"/>
@@ -1692,8 +1704,8 @@
                                 <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Any number, size, or format!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0G6-1i-g1R">
-                                <rect key="frame" x="212" y="159" width="176" height="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No limits. No waiting. No hassle. Always works!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0G6-1i-g1R">
+                                <rect key="frame" x="152" y="159" width="297" height="17"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" red="0.69411764710000001" green="0.69411764710000001" blue="0.69411764710000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1820,7 +1832,7 @@
                                     <constraint firstAttribute="width" constant="30" id="FLj-Zn-RpC"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send your files between your devices" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N40-3y-JCe">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send your files between your own devices" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N40-3y-JCe">
                                 <rect key="frame" x="160" y="74" width="280" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="280" id="JZ9-3l-aWa"/>
@@ -1830,8 +1842,8 @@
                                 <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Available for Mac, Windows, Android &amp; iOS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eE6-sR-faf">
-                                <rect key="frame" x="165" y="159" width="270" height="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Available on Mac, Windows, Android &amp; iOS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eE6-sR-faf">
+                                <rect key="frame" x="166" y="159" width="269" height="17"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" red="0.69411764710000001" green="0.69411764710000001" blue="0.69411764710000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1979,7 +1991,7 @@
                                     <constraint firstAttribute="height" constant="27" id="kvr-ub-i6A"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Finally a simple file manager for iPhone" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J59-YW-qzz">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Receive and view any type of file in Infinit" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J59-YW-qzz">
                                 <rect key="frame" x="160" y="74" width="280" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="YUa-eR-Kfw"/>
@@ -1989,8 +2001,8 @@
                                 <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Access your photos, videos, music, zip, pdf..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kjb-PN-Gxr">
-                                <rect key="frame" x="158" y="159" width="285" height="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Access photos, videos, music, PDFs and more" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kjb-PN-Gxr">
+                                <rect key="frame" x="153" y="159" width="296" height="17"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" red="0.69411764710000001" green="0.69411764710000001" blue="0.69411764710000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -2105,6 +2117,8 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="0ax-4u-uN8"/>
+        <segue reference="Yah-cg-ZRU"/>
+        <segue reference="zep-Dc-F4h"/>
         <segue reference="mYU-YK-ihc"/>
         <segue reference="a62-sa-S8B"/>
     </inferredMetricsTieBreakers>

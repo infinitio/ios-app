@@ -152,7 +152,7 @@
                                 <color key="textColor" red="0.5725490196078431" green="0.5725490196078431" blue="0.5725490196078431" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="x files" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nv8-VG-ULd">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="x files" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nv8-VG-ULd">
                                 <rect key="frame" x="85" y="52" width="41" height="18"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
                                 <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -236,7 +236,7 @@
                 <outlet property="top_container" destination="mNB-P5-UmA" id="A1v-bk-XbO"/>
                 <outlet property="top_line" destination="1em-cy-DgJ" id="pTL-Rp-F2P"/>
             </connections>
-            <point key="canvasLocation" x="337" y="242.5"/>
+            <point key="canvasLocation" x="226" y="154.5"/>
         </collectionViewCell>
     </objects>
 </document>

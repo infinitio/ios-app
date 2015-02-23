@@ -19,7 +19,7 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="illustration-camera-roll" translatesAutoresizingMaskIntoConstraints="NO" id="vfK-md-Jc5">
                     <rect key="frame" x="164" y="236" width="272" height="127"/>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send any of your photos or videos, no matter the size!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xt0-AB-E6P">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send your photos and videos without size limits!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xt0-AB-E6P">
                     <rect key="frame" x="155" y="90" width="290" height="65"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="65" id="CZl-Hk-j5k"/>
@@ -37,7 +37,7 @@
                         <constraint firstAttribute="width" constant="266" id="CM4-b9-NyI"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
-                    <state key="normal" title="ACCESS MY CAMERA GALLERY">
+                    <state key="normal" title="ACCESS MY CAMERA ROLL">
                         <color key="titleColor" red="0.1803921568627451" green="0.1803921568627451" blue="0.1803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
