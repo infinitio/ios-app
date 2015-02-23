@@ -10,8 +10,6 @@
 
 #import "InfinitColor.h"
 
-#import "UIImage+Rounded.h"
-
 @interface InfinitHomeAvatarView ()
 
 @property (nonatomic, readonly) CAShapeLayer* circle_layer;
@@ -32,7 +30,7 @@
 
 - (void)setImage:(UIImage*)image
 {
-  self.image_view.image = [image circularMaskOfSize:self.image_view.bounds.size];
+  self.image_view.image = image;
 }
 
 - (void)setProgress:(CGFloat)progress
