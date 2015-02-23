@@ -14,9 +14,13 @@
 {
   CGRect image_rect = CGRectMake(0.0f, 0.0f, size.width, size.height);
   UIGraphicsBeginImageContextWithOptions(image_rect.size, NO, 0.0f);
-  UIBezierPath* circle_path = [UIBezierPath bezierPathWithOvalInRect:image_rect];
-  [circle_path addClip];
-  [self drawInRect:image_rect];
+  CGContextRef context = UIGraphicsGetCurrentContext();
+  CGContextTranslateCTM(context, 0.0, size.height);
+  CGContextScaleCTM(context, 1.0, -1.0);
+  CGContextAddPath(context, [UIBezierPath bezierPathWithOvalInRect:image_rect].CGPath);
+  CGContextClip(context);
+  CGContextSetBlendMode(context, kCGBlendModeCopy);
+  CGContextDrawImage(context, CGRectMake(0.0, 0.0, size.width, size.height), self.CGImage);
 
   UIImage* masked_image = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
@@ -34,11 +38,14 @@
 {
   CGRect image_rect = CGRectMake(0.0f, 0.0f, size.width, size.height);
   UIGraphicsBeginImageContextWithOptions(image_rect.size, NO, 0.0f);
-
-  UIBezierPath* circle_path = [UIBezierPath bezierPathWithRoundedRect:image_rect
-                                                         cornerRadius:radius];
-  [circle_path addClip];
-  [self drawInRect:image_rect];
+  CGContextRef context = UIGraphicsGetCurrentContext();
+  CGContextTranslateCTM(context, 0.0, size.height);
+  CGContextScaleCTM(context, 1.0, -1.0);
+  CGContextAddPath(context,
+                   [UIBezierPath bezierPathWithRoundedRect:image_rect cornerRadius:radius].CGPath);
+  CGContextClip(context);
+  CGContextSetBlendMode(context, kCGBlendModeCopy);
+  CGContextDrawImage(context, CGRectMake(0.0, 0.0, size.width, size.height), self.CGImage);
 
   UIImage* masked_image = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
