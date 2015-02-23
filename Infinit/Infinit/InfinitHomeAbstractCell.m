@@ -15,15 +15,19 @@
 
 - (void)awakeFromNib
 {
-  if ([InfinitHostDevice deviceCPU] >= InfinitCPUType_ARM64_v8 && self.layer.shadowPath == nil)
-  {
-    self.layer.cornerRadius = 3.0f;
-    self.layer.masksToBounds = NO;
-    self.layer.shadowOpacity = 0.15f;
-    self.layer.shadowRadius = 2.0f;
-    self.layer.shadowColor = [InfinitColor colorWithGray:0].CGColor;
-    self.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
-  }
+  self.layer.cornerRadius = 3.0f;
+  self.layer.masksToBounds = NO;
+  self.layer.shadowOpacity = 0.15f;
+  self.layer.shadowRadius = 2.0f;
+  self.layer.shadowColor = [UIColor blackColor].CGColor;
+  self.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
+  self.layer.shadowPath =
+    [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:3.0f].CGPath;
+}
+
+- (void)prepareForReuse
+{
+  self.alpha = 1.0f;
 }
 
 @end
