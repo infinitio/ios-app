@@ -47,7 +47,7 @@
   self.next_button.hidden = YES;
   self.send_email_button.hidden = NO;
   self.already_infinit_button.hidden = NO;
-  self.header_label.text = NSLocalizedString(@"Install Infinit for\nMac or Windows!", nil);
+  self.header_label.text = NSLocalizedString(@"Install Infinit on\n your Mac or PC!", nil);
   self.info_label.text = NSLocalizedString(@"Visit infinit.io on your computer to\ndownload.", nil);
   self.info_label.numberOfLines = 2;
   self.first_image.hidden = YES;
