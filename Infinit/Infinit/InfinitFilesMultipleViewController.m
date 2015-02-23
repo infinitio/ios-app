@@ -8,6 +8,7 @@
 
 #import "InfinitFilesMultipleViewController.h"
 
+#import "InfinitColor.h"
 #import "InfinitFilesTableCell.h"
 #import "InfinitFilePreviewController.h"
 
@@ -41,6 +42,12 @@
   UINib* cell_nib = [UINib nibWithNibName:NSStringFromClass(InfinitFilesTableCell.class) bundle:nil];
   [self.table_view registerNib:cell_nib forCellReuseIdentifier:_file_cell_id];
   self.table_view.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+  NSDictionary* nav_bar_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
+                                                                       size:17.0f],
+                                  NSForegroundColorAttributeName: [InfinitColor colorWithRed:81
+                                                                                       green:81
+                                                                                        blue:73]};
+  [self.navigationController.navigationBar setTitleTextAttributes:nav_bar_attrs];
   self.navigationController.interactivePopGestureRecognizer.enabled = YES;
   self.navigationController.interactivePopGestureRecognizer.delegate = self;
   self.navigationItem.backBarButtonItem =
