@@ -712,7 +712,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
       UIPushBehavior* final_behavior =
         [[UIPushBehavior alloc] initWithItems:@[self.cell_image_view]
                                          mode:UIPushBehaviorModeInstantaneous];
-      final_behavior.magnitude = 50.0f;
+      final_behavior.magnitude = 5.0f;
       final_behavior.pushDirection = CGVectorMake(velocity.x, velocity.y);
       final_behavior.action = ^
       {
