@@ -40,7 +40,9 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
   [super viewWillDisappear:animated];
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:INFINIT_CONNECTION_STATUS_CHANGE
+                                                object:nil];
 }
 
 #pragma mark - Connection Status Change
