@@ -42,6 +42,8 @@
 		8343F5D61A628011006E04C0 /* InfinitTabAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8343F5D51A628011006E04C0 /* InfinitTabAnimator.m */; };
 		834FCFC41A7B93CA00930BD8 /* InfinitBackgroundManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 834FCFC31A7B93CA00930BD8 /* InfinitBackgroundManager.mm */; };
 		83519B461A9793B800541B5E /* InfinitHomeTransactionStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83519B451A9793B800541B5E /* InfinitHomeTransactionStatusView.m */; };
+		83519B491A98ABE600541B5E /* InfinitHomePeerTransactionCellNoFiles.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83519B481A98ABE600541B5E /* InfinitHomePeerTransactionCellNoFiles.xib */; };
+		83519B501A98D5F700541B5E /* InfinitHomeNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 83519B4F1A98D5F700541B5E /* InfinitHomeNavigationBar.m */; };
 		836024EF1A6FAC00002889DB /* InfinitHostDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 836024EE1A6FAC00002889DB /* InfinitHostDevice.m */; };
 		83612F8E1A5D7FDB00BDF7CE /* NSData+Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = 83612F8D1A5D7FDB00BDF7CE /* NSData+Conversion.m */; };
 		8365DE881A5E8694003527DE /* InfinitColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8365DE871A5E8694003527DE /* InfinitColor.m */; };
@@ -274,6 +276,9 @@
 		834FCFC31A7B93CA00930BD8 /* InfinitBackgroundManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitBackgroundManager.mm; sourceTree = "<group>"; };
 		83519B441A9793B800541B5E /* InfinitHomeTransactionStatusView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitHomeTransactionStatusView.h; sourceTree = "<group>"; };
 		83519B451A9793B800541B5E /* InfinitHomeTransactionStatusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitHomeTransactionStatusView.m; sourceTree = "<group>"; };
+		83519B481A98ABE600541B5E /* InfinitHomePeerTransactionCellNoFiles.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitHomePeerTransactionCellNoFiles.xib; sourceTree = "<group>"; };
+		83519B4E1A98D5F700541B5E /* InfinitHomeNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitHomeNavigationBar.h; sourceTree = "<group>"; };
+		83519B4F1A98D5F700541B5E /* InfinitHomeNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitHomeNavigationBar.m; sourceTree = "<group>"; };
 		836024ED1A6FAC00002889DB /* InfinitHostDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitHostDevice.h; sourceTree = "<group>"; };
 		836024EE1A6FAC00002889DB /* InfinitHostDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitHostDevice.m; sourceTree = "<group>"; };
 		83612F8C1A5D7FDB00BDF7CE /* NSData+Conversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Conversion.h"; sourceTree = "<group>"; };
@@ -329,7 +334,6 @@
 		83B32DFB1A84DF62004088DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfinitContactCell.xib; sourceTree = "<group>"; };
 		83B32DFE1A84DF66004088DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfinitContactImportCell.xib; sourceTree = "<group>"; };
 		83B32E011A84DF7C004088DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		83B32E041A84E126004088DD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		83B32E051A1365E9004AB945 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		83B32E0D1A84FE54004088DD /* InfinitSettingsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSettingsCell.h; sourceTree = "<group>"; };
 		83B32E0E1A84FE54004088DD /* InfinitSettingsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSettingsCell.m; sourceTree = "<group>"; };
@@ -608,9 +612,9 @@
 				83157ED41A73D29100F8E87F /* InfinitFilesTableCell.h */,
 				83157ED51A73D29100F8E87F /* InfinitFilesTableCell.m */,
 				83157ED61A73D29100F8E87F /* InfinitFilesTableCell.xib */,
-				83157F051A76702C00F8E87F /* InfinitFilesMultipleViewController.h */,
 				8311B5C11A7D407900832FDE /* InfinitFilesNavigationController.h */,
 				8311B5C21A7D407900832FDE /* InfinitFilesNavigationController.m */,
+				83157F051A76702C00F8E87F /* InfinitFilesMultipleViewController.h */,
 				83157F061A76702C00F8E87F /* InfinitFilesMultipleViewController.m */,
 				83157ED91A73D49D00F8E87F /* InfinitFilesViewController.h */,
 				83157EDA1A73D49D00F8E87F /* InfinitFilesViewController.mm */,
@@ -892,6 +896,7 @@
 				83A95FCB1A6A746B000B75C8 /* InfinitHomePeerTransactionCell.h */,
 				83A95FCC1A6A746B000B75C8 /* InfinitHomePeerTransactionCell.m */,
 				83B32DEC1A84DF1E004088DD /* InfinitHomePeerTransactionCell.xib */,
+				83519B481A98ABE600541B5E /* InfinitHomePeerTransactionCellNoFiles.xib */,
 			);
 			name = "Peer Transaction Cell";
 			sourceTree = "<group>";
@@ -1107,6 +1112,8 @@
 				831115A91A698C8B00E5B056 /* Model */,
 				D0517F821A5ACBC8008F06D2 /* Cells */,
 				8369E8851A83BC2C00ECD519 /* Feedback Controller */,
+				83519B4E1A98D5F700541B5E /* InfinitHomeNavigationBar.h */,
+				83519B4F1A98D5F700541B5E /* InfinitHomeNavigationBar.m */,
 				D0D613C61A52E51600D454B6 /* InfinitHomeViewController.h */,
 				D0D613C71A52E51600D454B6 /* InfinitHomeViewController.m */,
 			);
@@ -1230,6 +1237,7 @@
 				D09848191A43391B002D26AC /* SourceSansPro-It.otf in Resources */,
 				83EBB0871A9397F000144BC6 /* InfinitOfflineOverlay.xib in Resources */,
 				832284FC1A794C97000893A1 /* Main.storyboard in Resources */,
+				83519B491A98ABE600541B5E /* InfinitHomePeerTransactionCellNoFiles.xib in Resources */,
 				83B32E131A850C9B004088DD /* InfinitSettingsUserCell.xib in Resources */,
 				83B32DEA1A84DF1E004088DD /* InfinitHomePeerTransactionCell.xib in Resources */,
 				83B32E001A84DF7C004088DD /* LaunchScreen.xib in Resources */,
@@ -1336,6 +1344,7 @@
 				83FA72FF1A66FF1D0014B0E4 /* VENTokenField.m in Sources */,
 				83EBB0B11A97237500144BC6 /* InfinitShrinkingLine.m in Sources */,
 				83FA72FD1A66FF1D0014B0E4 /* VENToken.m in Sources */,
+				83519B501A98D5F700541B5E /* InfinitHomeNavigationBar.m in Sources */,
 				832A8B001A6EB7930024A304 /* InfinitSettingsReportProblemController.m in Sources */,
 				83157EF31A76260E00F8E87F /* InfinitFolderModel.mm in Sources */,
 				8369E87E1A83780A00ECD519 /* InfinitRatingManager.m in Sources */,
@@ -1393,7 +1402,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				832284FD1A794C97000893A1 /* Base */,
-				83B32E041A84E126004088DD /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
