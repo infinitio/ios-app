@@ -1023,7 +1023,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YNY-lR-rkF">
-                                                            <rect key="frame" x="167" y="329" width="266" height="55"/>
+                                                            <rect key="frame" x="167" y="297" width="266" height="55"/>
                                                             <color key="backgroundColor" red="0.1647058824" green="0.42352941179999998" blue="0.70980392160000005" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="266" id="TIX-qK-OoL"/>
@@ -1045,18 +1045,8 @@
                                                                 <action selector="findFacebookFriendsTapped:" destination="9ZK-3B-PXo" eventType="touchUpInside" id="lW1-c7-Fm0"/>
                                                             </connections>
                                                         </button>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send to an email address or import your contacts" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o7a-na-oAQ">
-                                                            <rect key="frame" x="172" y="165" width="255" height="58"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="58" id="9Eh-hw-l6N"/>
-                                                                <constraint firstAttribute="width" constant="255" id="Elw-2d-xCN"/>
-                                                            </constraints>
-                                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
-                                                            <color key="textColor" red="0.68627450980000004" green="0.68627450980000004" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CQ1-1P-kb6">
-                                                            <rect key="frame" x="167" y="258" width="266" height="55"/>
+                                                            <rect key="frame" x="167" y="227" width="266" height="55"/>
                                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="266" id="2lT-q9-UpR"/>
@@ -1065,7 +1055,7 @@
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
                                                             <inset key="imageEdgeInsets" minX="-12" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                            <state key="normal" title="IMPORT PHONE CONTACTS" image="icon-contacts">
+                                                            <state key="normal" title="ACCESS PHONE CONTACTS" image="icon-contacts">
                                                                 <color key="titleColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
@@ -1078,39 +1068,41 @@
                                                                 <action selector="importPhoneContactsTapped:" destination="9ZK-3B-PXo" eventType="touchUpInside" id="3B0-45-ZeW"/>
                                                             </connections>
                                                         </button>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No results." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eGc-7u-5hd">
-                                                            <rect key="frame" x="262" y="32" width="77" height="19"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eGc-7u-5hd">
+                                                            <rect key="frame" x="197" y="40" width="207" height="38"/>
+                                                            <string key="text">Send to an email address or
+access your phone contacts!</string>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
-                                                            <color key="textColor" red="0.18431372549019609" green="0.18431372549019609" blue="0.18431372549019609" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="textColor" red="0.5725490196078431" green="0.5725490196078431" blue="0.5725490196078431" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="illustration-no-results" translatesAutoresizingMaskIntoConstraints="NO" id="03w-Ak-rD3">
-                                                            <rect key="frame" x="170" y="79" width="259" height="54"/>
+                                                            <rect key="frame" x="170" y="118" width="259" height="54"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="54" id="0FD-Nn-574"/>
-                                                                <constraint firstAttribute="width" constant="259" id="oV4-1L-BDF"/>
+                                                                <constraint firstAttribute="height" constant="54" id="p9J-DB-Owo"/>
+                                                                <constraint firstAttribute="width" constant="259" id="tVC-Fg-U8v"/>
                                                             </constraints>
                                                         </imageView>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="YNY-lR-rkF" firstAttribute="top" secondItem="CQ1-1P-kb6" secondAttribute="bottom" constant="16" id="1CI-Um-gSV"/>
-                                                        <constraint firstAttribute="centerX" secondItem="CQ1-1P-kb6" secondAttribute="centerX" id="IlM-qi-Dom"/>
+                                                        <constraint firstItem="03w-Ak-rD3" firstAttribute="top" secondItem="eGc-7u-5hd" secondAttribute="bottom" constant="40" id="0mL-jY-2c8"/>
+                                                        <constraint firstAttribute="centerX" secondItem="03w-Ak-rD3" secondAttribute="centerX" id="HlU-A2-9ds"/>
                                                         <constraint firstAttribute="centerX" secondItem="eGc-7u-5hd" secondAttribute="centerX" id="LQe-EJ-Qnc"/>
+                                                        <constraint firstAttribute="centerX" secondItem="CQ1-1P-kb6" secondAttribute="centerX" id="MOb-Qc-66q"/>
                                                         <constraint firstAttribute="centerX" secondItem="YNY-lR-rkF" secondAttribute="centerX" id="NUC-a0-f7k"/>
-                                                        <constraint firstItem="o7a-na-oAQ" firstAttribute="top" secondItem="03w-Ak-rD3" secondAttribute="bottom" constant="32" id="Ojh-mI-S0X"/>
-                                                        <constraint firstItem="eGc-7u-5hd" firstAttribute="top" secondItem="aHw-qE-rXm" secondAttribute="top" constant="32" id="PFt-I6-qFs"/>
                                                         <constraint firstAttribute="centerX" secondItem="03w-Ak-rD3" secondAttribute="centerX" id="SfK-NN-Zks"/>
-                                                        <constraint firstItem="CQ1-1P-kb6" firstAttribute="top" secondItem="o7a-na-oAQ" secondAttribute="bottom" constant="35" id="YPq-vg-ucw"/>
-                                                        <constraint firstItem="03w-Ak-rD3" firstAttribute="top" secondItem="eGc-7u-5hd" secondAttribute="bottom" constant="28" id="bOP-U6-Jnp"/>
-                                                        <constraint firstAttribute="centerX" secondItem="o7a-na-oAQ" secondAttribute="centerX" id="nBu-2A-lWq"/>
+                                                        <constraint firstAttribute="centerX" secondItem="eGc-7u-5hd" secondAttribute="centerX" id="V5s-Wh-IsI"/>
+                                                        <constraint firstItem="YNY-lR-rkF" firstAttribute="top" secondItem="CQ1-1P-kb6" secondAttribute="bottom" constant="15" id="h2I-WX-4si"/>
+                                                        <constraint firstItem="CQ1-1P-kb6" firstAttribute="top" secondItem="03w-Ak-rD3" secondAttribute="bottom" constant="55" id="phg-Sc-Jhh"/>
+                                                        <constraint firstItem="eGc-7u-5hd" firstAttribute="top" secondItem="aHw-qE-rXm" secondAttribute="top" constant="40" id="y5Y-aa-peI"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
-                                                <color key="backgroundColor" red="0.94509803920000002" green="0.94509803920000002" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <inset key="separatorInset" minX="1000" minY="0.0" maxX="1000" maxY="0.0"/>
                                                 <connections>
                                                     <outlet property="contacts_button" destination="CQ1-1P-kb6" id="SM4-w4-hSj"/>
                                                     <outlet property="facebook_button" destination="YNY-lR-rkF" id="vLz-dB-VwZ"/>
-                                                    <outlet property="message_label" destination="o7a-na-oAQ" id="aSj-6i-qyx"/>
+                                                    <outlet property="message_label" destination="eGc-7u-5hd" id="KID-A3-atp"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
@@ -2001,8 +1993,8 @@
                                 <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Access photos, videos, music, PDFs and more" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kjb-PN-Gxr">
-                                <rect key="frame" x="153" y="159" width="296" height="17"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Access photos, videos, music, PDFs and more" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kjb-PN-Gxr">
+                                <rect key="frame" x="154" y="159" width="293" height="17"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" red="0.69411764710000001" green="0.69411764710000001" blue="0.69411764710000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
