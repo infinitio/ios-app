@@ -29,6 +29,17 @@ static CGFloat _max_size = 10.0f;
   [super setImage:image];
 }
 
+- (void)dealloc
+{
+  [self.layer removeAllAnimations];
+  for (CAShapeLayer* layer in self.circles)
+  {
+    [layer removeAllAnimations];
+    [layer removeFromSuperlayer];
+  }
+  _circles = nil;
+}
+
 #pragma mark - Transfer Animation
 
 - (void)setRun_transfer_animation:(BOOL)animate
