@@ -34,6 +34,7 @@ static InfinitDownloadFolderManager* _instance = nil;
   NSCAssert(_instance == nil, @"Use the sharedInstance");
   if (self = [super init])
   {
+    [self checkFolder];
     [self loadFolders];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(transactionUpdated:)
@@ -48,6 +49,36 @@ static InfinitDownloadFolderManager* _instance = nil;
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)checkFolder
+{
+  NSError* error = nil;
+  NSArray* contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:self.download_dir
+                                                                          error:&error];
+  if (error)
+  {
+    ELLE_ERR("%s: unable to access downloads directory", self.description.UTF8String);
+    return;
+  }
+  NSString* path = nil;
+  BOOL dir = NO;
+  for (NSString* file in contents)
+  {
+    path = [self.download_dir stringByAppendingPathComponent:file];
+    [[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&dir];
+    if (!dir)
+    {
+      ELLE_WARN("%s: found normal file in root download folder, removing: %s",
+                self.description.UTF8String, path.UTF8String);
+      [[NSFileManager defaultManager] removeItemAtPath:path error:&error];
+      if (error)
+      {
+        ELLE_WARN("%s: unable to remove normal file in root download folder: %s",
+                  self.description.UTF8String, path.UTF8String);
+      }
+    }
+  }
+}
+
 - (void)loadFolders
 {
   if (_folder_map == nil)
@@ -60,7 +91,7 @@ static InfinitDownloadFolderManager* _instance = nil;
     ELLE_ERR("%s: unable to access downloads directory", self.description.UTF8String);
     return;
   }
-  NSString* path;
+  NSString* path = nil;
   for (NSString* folder_name in contents)
   {
     path = [self.download_dir stringByAppendingPathComponent:folder_name];
