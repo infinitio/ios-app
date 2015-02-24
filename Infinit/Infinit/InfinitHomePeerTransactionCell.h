@@ -26,6 +26,7 @@
                    avatar:(UIImage*)avatar;
 
 - (void)setAvatar:(UIImage*)avatar;
+- (void)pauseAnimations;
 - (void)updateProgressOverDuration:(NSTimeInterval)duration;
 
 @end

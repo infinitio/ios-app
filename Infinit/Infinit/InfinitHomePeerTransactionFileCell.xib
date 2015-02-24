@@ -13,8 +13,8 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yok-Af-E7D">
-                        <rect key="frame" x="0.0" y="55" width="70" height="11"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="middleTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yok-Af-E7D">
+                        <rect key="frame" x="0.0" y="45" width="70" height="30"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="9"/>
                         <color key="textColor" red="0.6588235294117647" green="0.6588235294117647" blue="0.6588235294117647" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -33,8 +33,9 @@
                 <constraint firstAttribute="centerX" secondItem="YjW-32-sqL" secondAttribute="centerX" id="08h-4M-uCp"/>
                 <constraint firstAttribute="trailing" secondItem="Yok-Af-E7D" secondAttribute="trailing" id="GTW-ay-3cT"/>
                 <constraint firstAttribute="centerX" secondItem="Yok-Af-E7D" secondAttribute="centerX" id="HEV-za-R8E"/>
+                <constraint firstAttribute="bottom" secondItem="Yok-Af-E7D" secondAttribute="bottom" id="Rnd-sS-Fzd"/>
                 <constraint firstItem="Yok-Af-E7D" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="YxW-5q-fUT"/>
-                <constraint firstItem="Yok-Af-E7D" firstAttribute="top" secondItem="YjW-32-sqL" secondAttribute="bottom" constant="10" id="ltJ-ol-98O"/>
+                <constraint firstItem="Yok-Af-E7D" firstAttribute="top" secondItem="YjW-32-sqL" secondAttribute="bottom" id="ltJ-ol-98O"/>
                 <constraint firstItem="YjW-32-sqL" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="xsy-V7-fFM"/>
             </constraints>
             <connections>

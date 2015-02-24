@@ -189,15 +189,15 @@ static CGFloat _button_height = 45.0f;
     other_name = NSLocalizedString(@"me", nil);
   else
     other_name = self.transaction.other_user.fullname;
-  if (self.transaction.recipient.is_self)
+  if (self.transaction.sender.is_self && !self.transaction.to_device)
   {
     self.other_user_label.text =
-      [NSString stringWithFormat:NSLocalizedString(@"From %@", nil), other_name];
+      [NSString stringWithFormat:NSLocalizedString(@"To %@", nil), other_name];
   }
   else
   {
     self.other_user_label.text =
-      [NSString stringWithFormat:NSLocalizedString(@"To %@", nil), other_name];
+      [NSString stringWithFormat:NSLocalizedString(@"From %@", nil), other_name];
   }
   self.time_label.text = [InfinitTime relativeDateOf:self.transaction.mtime longerFormat:NO];
   if (self.folder)
@@ -310,13 +310,11 @@ static CGFloat _button_height = 45.0f;
     case gap_transaction_paused:
       [self setButtonsHidden:!self.expanded];
       [self setStatusViewHidden:!self.expanded];
+      self.top_line.hidden = !self.expanded;
       if (self.expanded)
         [self setPauseCancelButtons];
       if (self.transaction.to_device && self.expanded)
-      {
-        self.top_line.hidden = NO;
         self.files_view.hidden = NO;
-      }
       break;
 
     case gap_transaction_cloud_buffered:
@@ -498,8 +496,19 @@ static CGFloat _button_height = 45.0f;
   self.avatar_view.image = avatar;
 }
 
+- (void)pauseAnimations
+{
+  self.status_view.run_transfer_animation = NO;
+}
+
 - (void)updateProgressOverDuration:(NSTimeInterval)duration
 {
+  if (self.transaction.status != gap_transaction_connecting &&
+      self.transaction.status != gap_transaction_transferring)
+  {
+    return;
+  }
+  self.status_view.run_transfer_animation = YES;
   [self.avatar_view setProgress:self.transaction.progress withAnimationTime:duration];
 }
 
@@ -525,7 +534,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
                   layout:(UICollectionViewLayout*)collectionViewLayout 
   sizeForItemAtIndexPath:(NSIndexPath*)indexPath
 {
-  return CGSizeMake((self.bounds.size.width / 3.0f) - 10.0f, 70.0f);
+  return CGSizeMake((self.bounds.size.width / 3.0f) - 10.0f, 72.0f);
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView
