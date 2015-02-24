@@ -157,7 +157,8 @@ static CGSize _avatar_size = {55.0f, 55.0f};
 {
   @synchronized(self.data)
   {
-    NSArray* peer_transactions = [[InfinitPeerTransactionManager sharedInstance] transactions];
+    NSArray* peer_transactions =
+      [[InfinitPeerTransactionManager sharedInstance] transactionsIncludingArchived:NO];
     if (self.data == nil)
       _data = [NSMutableArray array];
     else
@@ -798,6 +799,12 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
   {
     [self.collection_view performBatchUpdates:^
     {
+      InfinitTransaction* transaction = [self.data[path.row] transaction];
+      if (transaction != nil && [transaction isKindOfClass:InfinitPeerTransaction.class])
+      {
+        InfinitPeerTransaction* peer_transaction = (InfinitPeerTransaction*)transaction;
+        [[InfinitPeerTransactionManager sharedInstance] archiveTransaction:peer_transaction];
+      }
       [self.data removeObjectAtIndex:path.row];
       [self.collection_view deleteItemsAtIndexPaths:@[path]];
     } completion:^(BOOL finished)
