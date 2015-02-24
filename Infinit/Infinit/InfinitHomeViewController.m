@@ -246,6 +246,8 @@ static CGSize _avatar_size = {55.0f, 55.0f};
   }
   for (NSIndexPath* path in _running_transactions)
   {
+    if (![self.collection_view.indexPathsForVisibleItems containsObject:path])
+      continue;
     InfinitHomePeerTransactionCell* cell =
       (InfinitHomePeerTransactionCell*)[self.collection_view cellForItemAtIndexPath:path];
     [cell updateProgressOverDuration:_update_interval];
@@ -266,6 +268,28 @@ static CGSize _avatar_size = {55.0f, 55.0f};
 - (void)scrollToTop
 {
   [self.collection_view scrollRectToVisible:CGRectMake(0.0f, 0.0f, 1.0f, 1.0f) animated:YES];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView*)scrollView
+{
+  [self updateRunningTransactions];
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView*)scrollView
+{
+  if (_running_transactions.count > 0 && _progress_timer.isValid)
+  {
+    [_progress_timer invalidate];
+    _progress_timer = nil;
+  }
+  for (NSIndexPath* index in _running_transactions)
+  {
+    InfinitHomePeerTransactionCell* cell =
+      (InfinitHomePeerTransactionCell*)[self.collection_view cellForItemAtIndexPath:index];
+    [cell pauseAnimations];
+  }
+  if (_running_transactions)
+    [_running_transactions removeAllObjects];
 }
 
 #pragma mark - Collection View Protocol
@@ -295,7 +319,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
                                   layout:self.collection_view.collectionViewLayout
                   sizeForItemAtIndexPath:index_path];
   peer_cell.layer.shadowPath = nil;
-  [UIView animateWithDuration:0.5f
+  [UIView animateWithDuration:0.3f
                         delay:0.0f
        usingSpringWithDamping:0.8f
         initialSpringVelocity:20.0f
@@ -420,7 +444,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
   CGFloat width = [UIScreen mainScreen].bounds.size.width - 26.0f;
   CGFloat height = 101.0f;
-  CGFloat file_h = 70.0f + 10.0f;
+  CGFloat file_h = 72.0f + 10.0f;
   CGFloat status_h = 45.0f;
   CGFloat button_h = 46.0f; // Includes line above buttons.
   if (self.show_rate_us && indexPath.section == 0) // Rating
@@ -457,6 +481,8 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
       case gap_transaction_paused:
         if (transaction.to_device && expanded)
           height += (transaction.files.count > 3 ? 2 * file_h : file_h) + status_h + button_h;
+        else if (expanded)
+          height += status_h + button_h;
         break;
 
       case gap_transaction_cloud_buffered:
@@ -618,7 +644,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 
 #pragma mark - Gesture Handling
 
-- (IBAction)handleLongPress:(UILongPressGestureRecognizer*)recognizer
+- (IBAction)handleRemoveGesture:(UIGestureRecognizer*)recognizer
 {
   CGPoint location = [recognizer locationInView:self.collection_view];
   CGPoint window_location = [self.view.window convertPoint:location fromView:self.collection_view];
@@ -700,8 +726,16 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
       return;
     [self.dynamic_animator removeAllBehaviors];
     NSTimeInterval t_diff = CFAbsoluteTimeGetCurrent() - self.last_time;
-    CGPoint velocity = CGPointMake((location.x - self.last_location.x) / t_diff,
-                                   (location.y - self.last_location.y) / t_diff);
+    CGPoint velocity;
+    if ([recognizer isKindOfClass:UIPanGestureRecognizer.class])
+    {
+      velocity = [(UIPanGestureRecognizer*)recognizer velocityInView:self.view.window];
+    }
+    else
+    {
+      velocity = CGPointMake((location.x - self.last_location.x) / t_diff,
+                             (location.y - self.last_location.y) / t_diff);
+    }
     CGFloat limit = 5.0f;
     BOOL remove_cell =
       location.x < limit || location.x > self.collection_view.bounds.size.width - limit ||
@@ -709,12 +743,15 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
        ABS(velocity.x) > 0.9f * ABS(velocity.y) && ABS(velocity.x) > 100.0f);
     if (remove_cell)
     {
-      UIPushBehavior* final_behavior =
+      UIDynamicItemBehavior* current_behavior =
+        [[UIDynamicItemBehavior alloc] initWithItems:@[self.cell_image_view]];
+      [current_behavior addLinearVelocity:velocity forItem:self.cell_image_view];
+      UIPushBehavior* push_behavior =
         [[UIPushBehavior alloc] initWithItems:@[self.cell_image_view]
-                                         mode:UIPushBehaviorModeInstantaneous];
-      final_behavior.magnitude = 5.0f;
-      final_behavior.pushDirection = CGVectorMake(velocity.x, velocity.y);
-      final_behavior.action = ^
+                                         mode:UIPushBehaviorModeContinuous];
+      push_behavior.magnitude = 1.0f;
+      push_behavior.pushDirection = CGVectorMake(velocity.x, velocity.y);
+      current_behavior.action = ^
       {
         if (!CGRectIntersectsRect(self.view.window.frame, self.cell_image_view.frame))
         {
@@ -726,7 +763,8 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
           _anchor_behavior = nil;
         }
       };
-      [self.dynamic_animator addBehavior:final_behavior];
+      [self.dynamic_animator addBehavior:current_behavior];
+      [self.dynamic_animator addBehavior:push_behavior];
     }
     else
     {
