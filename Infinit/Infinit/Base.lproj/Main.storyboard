@@ -615,7 +615,7 @@
                         <viewControllerLayoutGuide type="bottom" id="zqG-cb-qD6"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="nF7-gs-IAg">
-                        <rect key="frame" x="0.0" y="64" width="600" height="556"/>
+                        <rect key="frame" x="0.0" y="44" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B4i-MR-JeK">
@@ -648,7 +648,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z9O-hM-TV6">
-                                <rect key="frame" x="0.0" y="556" width="600" height="55"/>
+                                <rect key="frame" x="0.0" y="536" width="600" height="55"/>
                                 <color key="backgroundColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="eCK-g0-lfl"/>
@@ -669,10 +669,10 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lp7-op-Gu1">
-                                <rect key="frame" x="0.0" y="66" width="600" height="490"/>
+                                <rect key="frame" x="0.0" y="66" width="600" height="470"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="40" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Gnb-fF-2Af">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="490"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="470"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="288" id="FK0-i4-Q5v"/>
                                             <constraint firstAttribute="height" constant="400" id="MW8-zC-bIP"/>
@@ -1408,6 +1408,7 @@ access your phone contacts!</string>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="Lpp-Zz-OUv" appends="YES" id="q8v-On-KLh"/>
+                            <outletCollection property="gestureRecognizers" destination="msG-dj-ObM" appends="YES" id="E5c-2h-uXl"/>
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" id="4Jl-p9-SSq"/>
@@ -1421,10 +1422,16 @@ access your phone contacts!</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m95-wo-hyW" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <pongPressGestureRecognizer delaysTouchesBegan="YES" allowableMovement="10" minimumPressDuration="0.25" id="Lpp-Zz-OUv">
                     <connections>
-                        <action selector="handleLongPress:" destination="RJM-ey-XCj" id="K7R-B3-36r"/>
+                        <action selector="handleRemoveGesture:" destination="RJM-ey-XCj" id="U1O-Ma-anS"/>
                         <outlet property="delegate" destination="RJM-ey-XCj" id="MnL-hu-XxW"/>
                     </connections>
                 </pongPressGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="msG-dj-ObM">
+                    <connections>
+                        <action selector="handleRemoveGesture:" destination="RJM-ey-XCj" id="n0i-AJ-MsU"/>
+                        <outlet property="delegate" destination="RJM-ey-XCj" id="hUn-4H-WWD"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="742" y="-1724"/>
         </scene>
@@ -2108,10 +2115,10 @@ access your phone contacts!</string>
         <image name="schema-onboarding-infinite" width="181" height="129"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="hT3-x2-Ji5"/>
         <segue reference="0ax-4u-uN8"/>
         <segue reference="Yah-cg-ZRU"/>
-        <segue reference="zep-Dc-F4h"/>
-        <segue reference="mYU-YK-ihc"/>
         <segue reference="a62-sa-S8B"/>
+        <segue reference="mYU-YK-ihc"/>
     </inferredMetricsTieBreakers>
 </document>
