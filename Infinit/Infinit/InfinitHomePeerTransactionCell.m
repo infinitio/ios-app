@@ -14,6 +14,7 @@
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitHostDevice.h"
 #import "InfinitHomePeerTransactionFileCell.h"
+#import "InfinitHomePeerTransactionMoreFilesCell.h"
 #import "InfinitShrinkingLine.h"
 
 #import <Gap/InfinitDataSize.h>
@@ -55,6 +56,7 @@
 @end
 
 static NSString* _file_cell_id = @"home_file_cell";
+static NSString* _more_files_cell_id = @"home_more_files_cell";
 
 static NSAttributedString* _accept_str = nil;
 static NSAttributedString* _cancel_str = nil;
@@ -94,6 +96,11 @@ static CGFloat _button_height = 45.0f;
   self.translatesAutoresizingMaskIntoConstraints = NO;
   UINib* file_cell_nib =
     [UINib nibWithNibName:NSStringFromClass(InfinitHomePeerTransactionFileCell.class) bundle:nil];
+  [self.files_view registerNib:file_cell_nib forCellWithReuseIdentifier:_file_cell_id];
+  UINib* more_files_cell_nib =
+    [UINib nibWithNibName:NSStringFromClass(InfinitHomePeerTransactionMoreFilesCell.class)
+                   bundle:nil];
+  [self.files_view registerNib:more_files_cell_nib forCellWithReuseIdentifier:_more_files_cell_id];
   [self.files_view registerNib:file_cell_nib forCellWithReuseIdentifier:_file_cell_id];
   self.left_button.imageView.contentMode = UIViewContentModeCenter;
   self.left_button.imageEdgeInsets = UIEdgeInsetsMake(2.0f, -3.0f, 0.0f, 0.0f);
@@ -286,6 +293,7 @@ static CGFloat _button_height = 45.0f;
       if (self.expanded)
         [self setPauseCancelButtons];
       [self setButtonsHidden:!self.expanded];
+      self.top_line.hidden = !self.expanded;
       [self setStatusViewHidden:!self.expanded];
       break;
     case gap_transaction_waiting_accept:
@@ -518,28 +526,45 @@ static CGFloat _button_height = 45.0f;
 didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
   if (self.folder != nil)
+  {
+    if (indexPath.row == 5)
+      [self.delegate cellOpenTapped:self];
+    else
     [self.delegate cell:self openFileTapped:indexPath.row];
+  }
 }
 
 - (NSInteger)collectionView:(UICollectionView*)collectionView
      numberOfItemsInSection:(NSInteger)section
 {
   if (self.folder)
-    return self.folder.files.count > 5 ? 5 : self.folder.files.count;
+    return self.folder.files.count > 5 ? 6 : self.folder.files.count;
   else
-    return self.transaction.files.count > 5 ? 5 : self.transaction.files.count;
+    return self.transaction.files.count > 5 ? 6 : self.transaction.files.count;
 }
 
 - (CGSize)collectionView:(UICollectionView*)collectionView
                   layout:(UICollectionViewLayout*)collectionViewLayout 
   sizeForItemAtIndexPath:(NSIndexPath*)indexPath
 {
-  return CGSizeMake((self.bounds.size.width / 3.0f) - 10.0f, 72.0f);
+  return CGSizeMake((self.bounds.size.width / 3.0f) - 10.0f, 75.0f);
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView
                  cellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
+  if (indexPath.row == 5)
+  {
+    InfinitHomePeerTransactionMoreFilesCell* cell =
+      [self.files_view dequeueReusableCellWithReuseIdentifier:_more_files_cell_id
+                                                 forIndexPath:indexPath];
+    if (self.folder)
+      cell.count = self.folder.files.count - 5;
+    else
+      cell.count = self.transaction.files.count - 5;
+    return cell;
+  }
+
   InfinitHomePeerTransactionFileCell* cell =
     [self.files_view dequeueReusableCellWithReuseIdentifier:_file_cell_id forIndexPath:indexPath];
   if (self.folder)
