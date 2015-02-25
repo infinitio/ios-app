@@ -20,6 +20,18 @@
   return self;
 }
 
+#pragma mark - NSObject
+
+- (BOOL)isEqual:(id)object
+{
+  if (![object isKindOfClass:InfinitHomeItem.class])
+    return NO;
+  InfinitHomeItem* other = (InfinitHomeItem*)object;
+  if ([self.transaction isEqual:other.transaction])
+    return YES;
+  return NO;
+}
+
 - (NSString*)description
 {
   return [NSString stringWithFormat:@"HomeItem: transaction (%@), %@",
