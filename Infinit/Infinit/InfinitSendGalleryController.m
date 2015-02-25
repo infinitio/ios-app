@@ -223,21 +223,29 @@
 
   if ([PHAsset class])
   {
-    NSInteger current_tag = cell.tag + 1;
-    cell.tag = current_tag;
+    if (cell.tag != 0)
+    {
+      [self.image_caching_manager cancelImageRequest:(PHImageRequestID)cell.tag];
+      cell.tag = 0;
+    }
     PHAsset* asset = self.assets[indexPath.row];
     CGSize size = [self collectionView:self.collection_view
                                 layout:self.collection_view.collectionViewLayout
                 sizeForItemAtIndexPath:indexPath];
-    [self.image_caching_manager requestImageForAsset:asset
-                                          targetSize:size
-                                         contentMode:PHImageContentModeAspectFill
-                                             options:nil
-                                       resultHandler:^(UIImage* result,
-                                                       NSDictionary* info)
+    cell.tag = [self.image_caching_manager requestImageForAsset:asset
+                                                     targetSize:size
+                                                    contentMode:PHImageContentModeAspectFill
+                                                        options:nil
+                                                  resultHandler:^(UIImage* result,
+                                                                  NSDictionary* info)
      {
-       if (cell.tag == current_tag)
+       InfinitSendGalleryCell* cell =
+        (InfinitSendGalleryCell*)[collectionView cellForItemAtIndexPath:indexPath];
+       if (cell)
+       {
          cell.thumbnail_view.image = result;
+         cell.tag = 0;
+       }
      }];
     if (asset.mediaType == PHAssetMediaTypeVideo)
     {
@@ -306,7 +314,7 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
     (InfinitSendGalleryCell*)[collectionView cellForItemAtIndexPath:indexPath];
   if (animate)
   {
-    [UIView animateWithDuration:0.1f
+    [UIView animateWithDuration:animate ? 0.1f : 0.0f
                           delay:0.0f
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^
@@ -315,7 +323,7 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
        [cell.contentView layoutIfNeeded];
      } completion:^(BOOL finished)
      {
-       [UIView animateWithDuration:0.5f
+       [UIView animateWithDuration:animate ? 0.2f : 0.0f
                              delay:0.0f
             usingSpringWithDamping:0.3f
              initialSpringVelocity:10.0f
