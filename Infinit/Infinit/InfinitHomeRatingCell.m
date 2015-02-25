@@ -26,6 +26,7 @@
 - (void)awakeFromNib
 {
   [super awakeFromNib];
+  self.layer.shadowPath = nil;
   self.positive_button.layer.cornerRadius = self.positive_button.bounds.size.height / 2.0f;
   self.negative_button.layer.cornerRadius = self.negative_button.bounds.size.height / 2.0f;
   self.negative_button.layer.borderColor = [InfinitColor colorWithGray:175].CGColor;

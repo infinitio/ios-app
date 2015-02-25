@@ -16,6 +16,7 @@
 - (void)awakeFromNib
 {
   [super awakeFromNib];
+  self.layer.shadowPath = nil;
 }
 
 @end
