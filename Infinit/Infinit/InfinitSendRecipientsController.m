@@ -143,6 +143,10 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+  if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
+  {
+    [self performSelectorInBackground:@selector(fetchAddressBook) withObject:nil];
+  }
   _me_match = YES;
   [self fetchSwaggers];
   [self configureSearchField];
@@ -159,10 +163,6 @@
   [super viewDidAppear:animated];
   [self.navigationController.navigationBar.subviews[0] setUserInteractionEnabled:YES];
   [self.navigationController.navigationBar.subviews[0] addGestureRecognizer:_nav_bar_tap];
-  if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
-  {
-    [self fetchAddressBook];
-  }
   if (self.recipient != nil)
   {
     NSUInteger section = NSNotFound;
@@ -271,7 +271,9 @@
                                                           selector:@selector(caseInsensitiveCompare:)];
     [self.all_contacts sortUsingDescriptors:@[sort]];
     self.contact_results = [self.all_contacts mutableCopy];
-    [self.table_view reloadData];
+    [self.table_view performSelectorOnMainThread:@selector(reloadData)
+                                      withObject:nil
+                                   waitUntilDone:NO];
   }
 }
 
@@ -1010,7 +1012,7 @@ didDeleteTokenAtIndex:(NSUInteger)index
   {
     if ([contact.infinit_user.id_ isEqualToNumber:updated_id])
     {
-      NSIndexPath* path = [NSIndexPath indexPathForRow:row inSection:2];
+      NSIndexPath* path = [NSIndexPath indexPathForRow:row inSection:1];
       InfinitSendUserCell* cell = (InfinitSendUserCell*)[self.table_view cellForRowAtIndexPath:path];
       [cell performSelectorOnMainThread:@selector(updateAvatar) withObject:nil waitUntilDone:NO];
       return;
