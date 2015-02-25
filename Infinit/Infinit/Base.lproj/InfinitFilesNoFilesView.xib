@@ -17,7 +17,7 @@
                         <constraint firstAttribute="width" constant="260" id="CAn-oG-Lef"/>
                         <constraint firstAttribute="height" constant="50" id="f61-20-8Lh"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                     <color key="textColor" red="0.68627450980392157" green="0.68627450980392157" blue="0.68627450980392157" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
