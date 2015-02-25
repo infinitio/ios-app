@@ -54,6 +54,7 @@
 		836D394A1A67F0FB00892206 /* NSString+email.m in Sources */ = {isa = PBXBuildFile; fileRef = 836D39491A67F0FB00892206 /* NSString+email.m */; };
 		836D39A11A69409300892206 /* UIImage+Rounded.m in Sources */ = {isa = PBXBuildFile; fileRef = 836D39A01A69409300892206 /* UIImage+Rounded.m */; };
 		836F5C8C1A166720007C9C4E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836F5C8B1A166720007C9C4E /* SystemConfiguration.framework */; };
+		837640F81A9D1F2A00BB2316 /* InfinitHomeEmptyOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 837640FA1A9D1F2A00BB2316 /* InfinitHomeEmptyOverlay.xib */; };
 		83825BE11A701FE900420F24 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83825BE01A701FE900420F24 /* Photos.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		838490981A767F6E00969CF7 /* InfinitFilePreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 838490971A767F6E00969CF7 /* InfinitFilePreviewController.m */; };
 		8384909C1A76969700969CF7 /* InfinitFilePreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 8384909B1A76969700969CF7 /* InfinitFilePreview.m */; };
@@ -99,7 +100,8 @@
 		83EBB0AD1A966F1400144BC6 /* InfinitHomePeerTransactionFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB0AB1A966F1400144BC6 /* InfinitHomePeerTransactionFileCell.m */; };
 		83EBB0AE1A966F1400144BC6 /* InfinitHomePeerTransactionFileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83EBB0AC1A966F1400144BC6 /* InfinitHomePeerTransactionFileCell.xib */; };
 		83EBB0B11A97237500144BC6 /* InfinitShrinkingLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB0B01A97237500144BC6 /* InfinitShrinkingLine.m */; };
-		83F4D0251A1374660068BEB2 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D0241A1374660068BEB2 /* libc++.dylib */; };
+		83F31BB51A9D190B00A6007C /* libc++.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F31BB31A9D190B00A6007C /* libc++.a */; };
+		83F31BB61A9D190B00A6007C /* libc++abi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F31BB41A9D190B00A6007C /* libc++abi.a */; };
 		83F4D04B1A1387EF0068BEB2 /* libaws.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D04A1A1387EF0068BEB2 /* libaws.a */; };
 		83F4D0541A1388050068BEB2 /* libboost_atomic-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D04C1A1388050068BEB2 /* libboost_atomic-mt-s.a */; };
 		83F4D0551A1388050068BEB2 /* libboost_chrono-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D04D1A1388050068BEB2 /* libboost_chrono-mt-s.a */; };
@@ -297,6 +299,7 @@
 		836D399F1A69409300892206 /* UIImage+Rounded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Rounded.h"; sourceTree = "<group>"; };
 		836D39A01A69409300892206 /* UIImage+Rounded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Rounded.m"; sourceTree = "<group>"; };
 		836F5C8B1A166720007C9C4E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		837640F91A9D1F2A00BB2316 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfinitHomeEmptyOverlay.xib; sourceTree = "<group>"; };
 		83825BE01A701FE900420F24 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		838490961A767F6E00969CF7 /* InfinitFilePreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFilePreviewController.h; sourceTree = "<group>"; };
 		838490971A767F6E00969CF7 /* InfinitFilePreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFilePreviewController.m; sourceTree = "<group>"; };
@@ -375,6 +378,8 @@
 		83EBB0AC1A966F1400144BC6 /* InfinitHomePeerTransactionFileCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitHomePeerTransactionFileCell.xib; sourceTree = "<group>"; };
 		83EBB0AF1A97237500144BC6 /* InfinitShrinkingLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitShrinkingLine.h; sourceTree = "<group>"; };
 		83EBB0B01A97237500144BC6 /* InfinitShrinkingLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitShrinkingLine.m; sourceTree = "<group>"; };
+		83F31BB31A9D190B00A6007C /* libc++.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libc++.a"; path = "../../../_build/ios/elle/reactor/lib/libc++.a"; sourceTree = "<group>"; };
+		83F31BB41A9D190B00A6007C /* libc++abi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libc++abi.a"; path = "../../../_build/ios/elle/reactor/lib/libc++abi.a"; sourceTree = "<group>"; };
 		83F4D0241A1374660068BEB2 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		83F4D04A1A1387EF0068BEB2 /* libaws.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libaws.a; path = ../../../_build/ios/elle/aws/lib/libaws.a; sourceTree = "<group>"; };
 		83F4D04C1A1388050068BEB2 /* libboost_atomic-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_atomic-mt-s.a"; path = "../../../_build/ios/elle/boost/lib/libboost_atomic-mt-s.a"; sourceTree = "<group>"; };
@@ -427,6 +432,8 @@
 		83FA73041A66FF260014B0E4 /* ViewFrameAccessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewFrameAccessor.h; sourceTree = "<group>"; };
 		83FA73051A66FF260014B0E4 /* ViewFrameAccessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewFrameAccessor.m; sourceTree = "<group>"; };
 		83FB1C761A920C9D00D4C2F8 /* InfinitSendGalleryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitSendGalleryCell.xib; sourceTree = "<group>"; };
+		83FBD7051A9CD5AF005685AF /* libc++abi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libc++abi.a"; path = "../../../_build/ios/elle/reactor/llvm/libcxxabi-3.5.1.src/build/lib/libc++abi.a"; sourceTree = "<group>"; };
+		83FBD70A1A9CDCE4005685AF /* libc++.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libc++.a"; path = "../../../../../Downloads/libc++.a"; sourceTree = "<group>"; };
 		83FE658F1A6E571600D3CA9A /* InfinitHomeOnboardingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitHomeOnboardingCell.h; sourceTree = "<group>"; };
 		83FE65901A6E571600D3CA9A /* InfinitHomeOnboardingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitHomeOnboardingCell.m; sourceTree = "<group>"; };
 		83FE65921A6E597500D3CA9A /* InfinitHomeAbstractCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitHomeAbstractCell.h; sourceTree = "<group>"; };
@@ -473,6 +480,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83F31BB51A9D190B00A6007C /* libc++.a in Frameworks */,
+				83F31BB61A9D190B00A6007C /* libc++abi.a in Frameworks */,
 				83825BE11A701FE900420F24 /* Photos.framework in Frameworks */,
 				830AD1F51A6D172200E2B058 /* Accelerate.framework in Frameworks */,
 				83B5D60E1A6663430061931F /* Security.framework in Frameworks */,
@@ -493,7 +502,6 @@
 				83F4D07B1A1388760068BEB2 /* libstation.a in Frameworks */,
 				83F4D0821A1388F40068BEB2 /* libbackend_boost_context.a in Frameworks */,
 				83F4D0631A1388170068BEB2 /* libcurl.a in Frameworks */,
-				83F4D0251A1374660068BEB2 /* libc++.dylib in Frameworks */,
 				83F4D0551A1388050068BEB2 /* libboost_chrono-mt-s.a in Frameworks */,
 				83F4D07A1A1388760068BEB2 /* libpapier.a in Frameworks */,
 				83F4D05B1A1388050068BEB2 /* libboost_thread-mt-s.a in Frameworks */,
@@ -709,6 +717,10 @@
 		836F5C8A1A16670F007C9C4E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				83F31BB31A9D190B00A6007C /* libc++.a */,
+				83F31BB41A9D190B00A6007C /* libc++abi.a */,
+				83FBD70A1A9CDCE4005685AF /* libc++.a */,
+				83FBD7051A9CD5AF005685AF /* libc++abi.a */,
 				83825BE01A701FE900420F24 /* Photos.framework */,
 				830AD1F41A6D172200E2B058 /* Accelerate.framework */,
 				83B5D60D1A6663430061931F /* Security.framework */,
@@ -1010,6 +1022,14 @@
 			path = ThirdParty/FrameAccessor/FrameAccessor;
 			sourceTree = "<group>";
 		};
+		83FBD70C1A9CE8AB005685AF /* Empty Overlay */ = {
+			isa = PBXGroup;
+			children = (
+				837640FA1A9D1F2A00BB2316 /* InfinitHomeEmptyOverlay.xib */,
+			);
+			name = "Empty Overlay";
+			sourceTree = "<group>";
+		};
 		83FE65961A6E5AE100D3CA9A /* Onboarding Overlay */ = {
 			isa = PBXGroup;
 			children = (
@@ -1108,6 +1128,7 @@
 		D0BD35281A43307A00AB8EF9 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				83FBD70C1A9CE8AB005685AF /* Empty Overlay */,
 				83FE65961A6E5AE100D3CA9A /* Onboarding Overlay */,
 				831115A91A698C8B00E5B056 /* Model */,
 				D0517F821A5ACBC8008F06D2 /* Cells */,
@@ -1265,6 +1286,7 @@
 				83B32DF71A84DF52004088DD /* InfinitSendToSelfOverlayView.xib in Resources */,
 				83B32DFD1A84DF66004088DD /* InfinitContactImportCell.xib in Resources */,
 				8322850E1A794D65000893A1 /* InfinitHomeOnboardingView.xib in Resources */,
+				837640F81A9D1F2A00BB2316 /* InfinitHomeEmptyOverlay.xib in Resources */,
 				8369E8831A83BC1D00ECD519 /* InfinitHomeFeedbackViewController.xib in Resources */,
 				D098481A1A43391B002D26AC /* SourceSansPro-Light.otf in Resources */,
 				D098481F1A43391B002D26AC /* LucidaGrande.ttc in Resources */,
@@ -1452,6 +1474,14 @@
 				8322850F1A794D65000893A1 /* Base */,
 			);
 			name = InfinitHomeOnboardingView.xib;
+			sourceTree = "<group>";
+		};
+		837640FA1A9D1F2A00BB2316 /* InfinitHomeEmptyOverlay.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				837640F91A9D1F2A00BB2316 /* Base */,
+			);
+			name = InfinitHomeEmptyOverlay.xib;
 			sourceTree = "<group>";
 		};
 		83B32DEC1A84DF1E004088DD /* InfinitHomePeerTransactionCell.xib */ = {
