@@ -39,6 +39,7 @@
 
 @property (nonatomic, readonly) NSMutableArray* data;
 @property (nonatomic, strong) UIView* onboarding_view;
+@property (nonatomic, strong) UIView* no_activity_view;
 @property (nonatomic, weak) InfinitHomeRatingCell* rating_cell;
 @property (nonatomic, readonly) BOOL show_rate_us;
 
@@ -151,6 +152,10 @@ static CGSize _avatar_size = {55.0f, 55.0f};
 {
   _show_rate_us = [InfinitRatingManager sharedInstance].show_transaction_rating;
   [self loadTransactions];
+  if ([InfinitPeerTransactionManager sharedInstance].transactions.count == 0)
+    [self showOnboardingArrow];
+  else if (self.data.count == 0)
+    [self showNoActivityView];
 }
 
 - (void)loadTransactions
@@ -201,6 +206,30 @@ static CGSize _avatar_size = {55.0f, 55.0f};
                self.view.bounds.size.width,
                height);
   self.onboarding_view.frame = [self.view convertRect:frame fromView:self.view.superview];
+}
+
+- (void)showNoActivityView
+{
+  if (self.no_activity_view == nil)
+  {
+    UINib* activity_nib = [UINib nibWithNibName:@"InfinitHomeEmptyOverlay" bundle:nil];
+    self.no_activity_view = [[activity_nib instantiateWithOwner:self options:nil] firstObject];
+    self.no_activity_view.translatesAutoresizingMaskIntoConstraints = NO;
+    self.no_activity_view.backgroundColor =
+      [InfinitColor colorFromPalette:InfinitPaletteColorLightGray];
+    [self.view addSubview:self.no_activity_view];
+    NSDictionary* views = @{@"view": self.no_activity_view};
+    NSArray* h_constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|"
+                                                                     options:0
+                                                                     metrics:nil
+                                                                       views:views];
+    NSArray* v_constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|"
+                                                                     options:0
+                                                                     metrics:nil
+                                                                       views:views];
+    [self.view addConstraints:h_constraints];
+    [self.view addConstraints:v_constraints];
+  }
 }
 
 - (void)updateRunningTransactions
@@ -352,9 +381,14 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
      numberOfItemsInSection:(NSInteger)section
 {
   if (self.show_rate_us && section == 0)
+  {
     return 1;
+  }
   else
-    return (self.data.count == 0) ? 2 : self.data.count;
+  {
+    NSUInteger count = [InfinitPeerTransactionManager sharedInstance].transactions.count;
+    return (count == 0) ? 2 : self.data.count;
+  }
 }
 
 
@@ -539,12 +573,25 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 
 - (void)peerTransactionAdded:(NSNotification*)notification
 {
+  if (![[NSThread currentThread] isEqual:[NSThread mainThread]])
+  {
+    [self performSelectorOnMainThread:@selector(peerTransactionAdded:)
+                           withObject:notification 
+                        waitUntilDone:NO];
+  }
   if (self.onboarding_view != nil)
   {
     [self performSelectorOnMainThread:@selector(removeOnboardingView)
                            withObject:nil
                         waitUntilDone:NO];
   }
+  if (self.no_activity_view != nil)
+  {
+    [self performSelectorOnMainThread:@selector(removeNoActivityView)
+                           withObject:nil
+                        waitUntilDone:NO];
+  }
+
   NSNumber* transaction_id = notification.userInfo[@"id"];
   InfinitPeerTransaction* peer_transaction =
     [[InfinitPeerTransactionManager sharedInstance] transactionWithId:transaction_id];
@@ -556,16 +603,27 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
   @synchronized(self.data)
   {
+    if ([self.data containsObject:item])
+      return;
     [self.collection_view.collectionViewLayout invalidateLayout];
-    [self.collection_view performBatchUpdates:^
-     {
-       [self.data insertObject:item atIndex:0];
-       NSIndexPath* index = [NSIndexPath indexPathForRow:0 inSection:self.show_rate_us ? 1 : 0];
-       [self.collection_view insertItemsAtIndexPaths:@[index]];
-     } completion:^(BOOL finished)
-     {
-       [self updateRunningTransactions];
-     }];
+    if (self.data.count == 0)
+    {
+      [self.data insertObject:item atIndex:0];
+      [self.collection_view reloadData];
+      [self updateRunningTransactions];
+    }
+    else
+    {
+      [self.collection_view performBatchUpdates:^
+       {
+         [self.data insertObject:item atIndex:0];
+         NSIndexPath* index = [NSIndexPath indexPathForRow:0 inSection:self.show_rate_us ? 1 : 0];
+         [self.collection_view insertItemsAtIndexPaths:@[index]];
+       } completion:^(BOOL finished)
+       {
+         [self updateRunningTransactions];
+       }];
+    }
   }
 }
 
@@ -582,6 +640,12 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
                                withObject:nil
                             waitUntilDone:NO];
       }
+      if (self.no_activity_view != nil)
+      {
+        [self performSelectorOnMainThread:@selector(removeNoActivityView)
+                               withObject:nil
+                            waitUntilDone:NO];
+      }
       [self performSelectorOnMainThread:@selector(updateItem:) withObject:item waitUntilDone:NO];
       return;
     }
@@ -593,6 +657,12 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
   [self.onboarding_view removeFromSuperview];
   self.onboarding_view = nil;
   [self loadTransactions];
+}
+
+- (void)removeNoActivityView
+{
+  [self.no_activity_view removeFromSuperview];
+  self.no_activity_view = nil;
 }
 
 - (void)updateItem:(InfinitHomeItem*)item
@@ -793,11 +863,11 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 
 - (void)removeItemAtIndexPath:(NSIndexPath*)path
 {
-  if (path == nil)
+  if (path == nil || self.data.count == 0)
     return;
   @synchronized(self.data)
   {
-    [self.collection_view performBatchUpdates:^
+    if (self.data.count == 1)
     {
       InfinitTransaction* transaction = [self.data[path.row] transaction];
       if (transaction != nil && [transaction isKindOfClass:InfinitPeerTransaction.class])
@@ -805,12 +875,27 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
         InfinitPeerTransaction* peer_transaction = (InfinitPeerTransaction*)transaction;
         [[InfinitPeerTransactionManager sharedInstance] archiveTransaction:peer_transaction];
       }
-      [self.data removeObjectAtIndex:path.row];
-      [self.collection_view deleteItemsAtIndexPaths:@[path]];
-    } completion:^(BOOL finished)
+      [self.data removeAllObjects];
+      [self.collection_view reloadData];
+      [self showNoActivityView];
+    }
+    else
     {
-      [self updateRunningTransactions];
-    }];
+      [self.collection_view performBatchUpdates:^
+      {
+        InfinitTransaction* transaction = [self.data[path.row] transaction];
+        if (transaction != nil && [transaction isKindOfClass:InfinitPeerTransaction.class])
+        {
+          InfinitPeerTransaction* peer_transaction = (InfinitPeerTransaction*)transaction;
+          [[InfinitPeerTransactionManager sharedInstance] archiveTransaction:peer_transaction];
+        }
+        [self.data removeObjectAtIndex:path.row];
+        [self.collection_view deleteItemsAtIndexPaths:@[path]];
+      } completion:^(BOOL finished)
+      {
+        [self updateRunningTransactions];
+      }];
+    }
   }
 }
 
@@ -853,7 +938,13 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 
 - (void)cellPauseTapped:(InfinitHomePeerTransactionCell*)sender
 {
-  // XXX pause/resume
+  UIAlertView* alert =
+    [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Compter says no.", nil)
+                               message:NSLocalizedString(@"Pause is coming soon!", nil)
+                              delegate:nil 
+                     cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                     otherButtonTitles:nil];
+  [alert show];
 }
 
 - (void)cellCancelTapped:(InfinitHomePeerTransactionCell*)sender
