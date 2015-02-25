@@ -76,6 +76,18 @@ static InfinitDownloadFolderManager* _instance = nil;
                   self.description.UTF8String, path.UTF8String);
       }
     }
+    else
+    {
+      // Check that folders are marked as done if their transaction is done.
+      InfinitFolderModel* folder = [[InfinitFolderModel alloc] initWithPath:path];
+      if (!folder.done)
+      {
+        InfinitPeerTransaction* transaction =
+          [[InfinitPeerTransactionManager sharedInstance] transactionWithMetaId:folder.id_];
+        if (transaction.done)
+          folder.done = YES;
+      }
+    }
   }
 }
 
