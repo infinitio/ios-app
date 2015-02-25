@@ -479,7 +479,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
   CGFloat width = [UIScreen mainScreen].bounds.size.width - 26.0f;
   CGFloat height = 101.0f;
-  CGFloat file_h = 72.0f + 10.0f;
+  CGFloat file_h = 75.0f + 10.0f;
   CGFloat status_h = 45.0f;
   CGFloat button_h = 46.0f; // Includes line above buttons.
   if (self.show_rate_us && indexPath.section == 0) // Rating
