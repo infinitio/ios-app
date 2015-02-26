@@ -13,13 +13,13 @@
 #import "InfinitFilesMultipleViewController.h"
 #import "InfinitFilePreviewController.h"
 #import "InfinitHomeItem.h"
-#import "InfinitHomeNavigationBar.h"
 #import "InfinitHomePeerTransactionCell.h"
 #import "InfinitHomeFeedbackViewController.h"
 #import "InfinitHomeOnboardingCell.h"
 #import "InfinitHomeRatingCell.h"
 #import "InfinitOfflineOverlay.h"
 #import "InfinitRatingManager.h"
+#import "InfinitResizableNavigationBar.h"
 #import "InfinitSendRecipientsController.h"
 #import "InfinitTabBarController.h"
 
@@ -54,6 +54,7 @@
 @property (nonatomic, readonly) NSMutableDictionary* round_avatar_cache;
 
 @property (nonatomic, readwrite) BOOL previewing_files;
+@property (nonatomic, readwrite) BOOL sending;
 
 @end
 
@@ -120,17 +121,21 @@ static CGSize _avatar_size = {55.0f, 55.0f};
     _cell_image_view = nil;
   }
   InfinitTabBarController* tab_controller = (InfinitTabBarController*)self.tabBarController;
-  [tab_controller setTabBarHidden:NO animated:YES];
-  UINavigationBar* nav_bar = self.navigationController.navigationBar;
-  if (nav_bar.barTintColor != [InfinitColor colorFromPalette:InfinitPaletteColorLightGray]
-      || [UIApplication sharedApplication].statusBarHidden)
+  if (self.sending)
+    [tab_controller setTabBarHidden:NO animated:NO];
+  else
+    [tab_controller setTabBarHidden:NO animated:YES withDelay:0.2f];
+  _sending = NO;
+  InfinitResizableNavigationBar* nav_bar =
+    (InfinitResizableNavigationBar*)self.navigationController.navigationBar;
+  if (nav_bar.large || [UIApplication sharedApplication].statusBarHidden)
   {
     [UIView animateWithDuration:(animated ? 0.3f : 0.0f)
                      animations:^
      {
-       ((InfinitHomeNavigationBar*)self.navigationController.navigationBar).large = NO;
        [[UIApplication sharedApplication] setStatusBarHidden:NO
                                                withAnimation:UIStatusBarAnimationSlide];
+       ((InfinitResizableNavigationBar*)self.navigationController.navigationBar).large = NO;
        nav_bar.barTintColor = [InfinitColor colorFromPalette:InfinitPaletteColorLightGray];
      }];
   }
@@ -156,6 +161,11 @@ static CGSize _avatar_size = {55.0f, 55.0f};
     [self showOnboardingArrow];
   else if (self.data.count == 0)
     [self showNoActivityView];
+  else if (self.no_activity_view != nil)
+  {
+    [self.no_activity_view removeFromSuperview];
+    self.no_activity_view = nil;
+  }
 }
 
 - (void)loadTransactions
@@ -827,8 +837,15 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
         if (!CGRectIntersectsRect(self.view.window.frame, self.cell_image_view.frame))
         {
           [self.dynamic_animator removeAllBehaviors];
-          NSIndexPath* index = [self.collection_view indexPathForCell:self.moving_cell];
-          [self removeItemAtIndexPath:index];
+          if ([self.moving_cell isKindOfClass:InfinitHomePeerTransactionCell.class])
+          {
+            NSIndexPath* index = [self.collection_view indexPathForCell:self.moving_cell];
+            [self removeItemAtIndexPath:index];
+          }
+          else if ([self.moving_cell isKindOfClass:InfinitHomeRatingCell.class])
+          {
+            [self doneRating];
+          }
           [self.cell_image_view removeFromSuperview];
           _cell_image_view = nil;
           _anchor_behavior = nil;
@@ -987,6 +1004,7 @@ openFileTapped:(NSUInteger)file_index
 
 - (void)cellSendTapped:(InfinitHomePeerTransactionCell*)sender
 {
+  _sending = YES;
   [self performSegueWithIdentifier:@"home_to_send_segue" sender:sender];
 }
 
@@ -1075,7 +1093,7 @@ openFileTapped:(NSUInteger)file_index
     [UIView animateWithDuration:0.3f
                      animations:^
     {
-      ((InfinitHomeNavigationBar*)self.navigationController.navigationBar).large = YES;
+      ((InfinitResizableNavigationBar*)self.navigationController.navigationBar).large = YES;
       [[UIApplication sharedApplication] setStatusBarHidden:YES
                                               withAnimation:UIStatusBarAnimationSlide];
       self.navigationController.navigationBar.barTintColor =
