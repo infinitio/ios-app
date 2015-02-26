@@ -126,7 +126,7 @@
   }
   else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
   {
-    [self fetchAddressBook];
+    [self performSelectorInBackground:@selector(fetchAddressBook) withObject:nil];
   }
 }
 
@@ -189,8 +189,15 @@
                                                           selector:@selector(caseInsensitiveCompare:)];
     [self.all_contacts sortUsingDescriptors:@[sort]];
     self.contact_results = [self.all_contacts mutableCopy];
-    [self.table_view reloadData];
+    [self performSelectorOnMainThread:@selector(reloadTableSections:)
+                           withObject:[NSIndexSet indexSetWithIndex:2]
+                        waitUntilDone:NO];
   }
+}
+
+- (void)reloadTableSections:(NSIndexSet*)set
+{
+  [self.table_view reloadSections:set withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 #pragma mark - Overlays
@@ -393,10 +400,6 @@
     [self.table_view reloadSections:sections
                    withRowAnimation:UITableViewRowAnimationAutomatic];
   }
-  //  else if ([self noResults])
-  //  {
-  //    [self.table_view reloadData];
-  //  }
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar*)searchBar
@@ -460,11 +463,6 @@ viewForHeaderInSection:(NSInteger)section
 - (NSInteger)tableView:(UITableView*)tableView
  numberOfRowsInSection:(NSInteger)section
 {
-  //  if ([self noResults])
-  //  {
-  //    return 1;
-  //  }
-  //  else if (section == 0)
   switch (section)
   {
     case 0:
@@ -528,6 +526,8 @@ viewForHeaderInSection:(NSInteger)section
       res = cell;
     }
   }
+  if ([tableView.indexPathsForSelectedRows containsObject:indexPath])
+    res.selected = YES;
   return res;
 }
 
