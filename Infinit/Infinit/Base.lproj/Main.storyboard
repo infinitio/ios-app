@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14D72i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Sta-NW-erU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14D87h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Sta-NW-erU">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -543,21 +543,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="twX-us-XtL">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
-                                <color key="backgroundColor" red="0.1803921568627451" green="0.1803921568627451" blue="0.1803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="7" minimumInteritemSpacing="7" id="GIU-o5-Bjl">
-                                    <size key="itemSize" width="50" height="50"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells/>
-                                <connections>
-                                    <outlet property="dataSource" destination="Cz7-xE-6Ks" id="g1k-Vi-fgc"/>
-                                    <outlet property="delegate" destination="Cz7-xE-6Ks" id="fqG-L7-Qgr"/>
-                                </connections>
-                            </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jCk-aB-ANg">
                                 <rect key="frame" x="0.0" y="556" width="600" height="55"/>
                                 <color key="backgroundColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -573,6 +558,21 @@
                                     <segue destination="9ZK-3B-PXo" kind="show" identifier="send_to_segue" id="zep-Dc-F4h"/>
                                 </connections>
                             </button>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="twX-us-XtL">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
+                                <color key="backgroundColor" red="0.1803921568627451" green="0.1803921568627451" blue="0.1803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="7" minimumInteritemSpacing="6" id="GIU-o5-Bjl">
+                                    <size key="itemSize" width="100" height="100"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Cz7-xE-6Ks" id="g1k-Vi-fgc"/>
+                                    <outlet property="delegate" destination="Cz7-xE-6Ks" id="fqG-L7-Qgr"/>
+                                </connections>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -597,6 +597,7 @@
                     <keyCommands/>
                     <connections>
                         <outlet property="collection_view" destination="twX-us-XtL" id="qMf-oi-xtn"/>
+                        <outlet property="layout" destination="GIU-o5-Bjl" id="Hf1-D6-Ysp"/>
                         <outlet property="next_button" destination="jCk-aB-ANg" id="DTo-Nf-blu"/>
                         <outlet property="next_constraint" destination="jTs-Me-fnt" id="gyh-Fz-dwe"/>
                         <outlet property="view" destination="HT9-3T-yrz" id="Yg4-i7-CPW"/>
@@ -1215,7 +1216,7 @@ access your phone contacts!</string>
             <objects>
                 <navigationController title="FILES" extendedLayoutIncludesOpaqueBars="YES" id="E3A-FT-LpY" customClass="InfinitFilesNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="icon-tab-files" id="2li-2o-HFp"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="kfa-vf-1Zs">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="kfa-vf-1Zs" customClass="InfinitResizableNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1247,32 +1248,54 @@ access your phone contacts!</string>
                                     <outlet property="delegate" destination="SKR-5b-K6J" id="rCk-5J-Di7"/>
                                 </connections>
                             </searchBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="cMN-l7-2GD">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="cMN-l7-2GD">
                                 <rect key="frame" x="0.0" y="44" width="600" height="492"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="separatorInset" minX="65" minY="0.0" maxX="20" maxY="0.0"/>
                                 <connections>
                                     <outlet property="dataSource" destination="SKR-5b-K6J" id="4vU-JB-NDs"/>
                                     <outlet property="delegate" destination="SKR-5b-K6J" id="eeg-3W-LDU"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tad-RY-w3V">
+                                <rect key="frame" x="0.0" y="536" width="600" height="49"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="49" id="psQ-sy-ROP"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95294117647058818" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="ijA-4P-WMS" secondAttribute="trailing" id="4OA-z9-Mu7"/>
+                            <constraint firstAttribute="bottom" secondItem="Tad-RY-w3V" secondAttribute="top" id="5Cx-Pt-aXl"/>
                             <constraint firstItem="cMN-l7-2GD" firstAttribute="leading" secondItem="H2k-Qi-iPx" secondAttribute="leading" id="Aeh-A4-y26"/>
                             <constraint firstAttribute="trailing" secondItem="cMN-l7-2GD" secondAttribute="trailing" id="CiV-TC-agy"/>
+                            <constraint firstItem="cMN-l7-2GD" firstAttribute="bottom" secondItem="Tad-RY-w3V" secondAttribute="top" id="ai5-6n-QGV"/>
                             <constraint firstItem="ijA-4P-WMS" firstAttribute="leading" secondItem="H2k-Qi-iPx" secondAttribute="leading" id="dIA-Y2-GSd"/>
+                            <constraint firstAttribute="trailing" secondItem="Tad-RY-w3V" secondAttribute="trailing" id="g2F-LJ-ruV"/>
+                            <constraint firstItem="Tad-RY-w3V" firstAttribute="leading" secondItem="H2k-Qi-iPx" secondAttribute="leading" id="gmB-VM-t48"/>
                             <constraint firstItem="cMN-l7-2GD" firstAttribute="top" secondItem="ijA-4P-WMS" secondAttribute="bottom" id="iBX-Xh-ciZ"/>
-                            <constraint firstAttribute="bottom" secondItem="cMN-l7-2GD" secondAttribute="bottom" id="wKl-nw-2bl"/>
                             <constraint firstItem="ijA-4P-WMS" firstAttribute="top" secondItem="H2k-Qi-iPx" secondAttribute="top" id="z3a-Cf-rm4"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <navigationItem key="navigationItem" title="FILES" id="ZoT-BP-9BH"/>
+                    <navigationItem key="navigationItem" title="FILES" id="ZoT-BP-9BH">
+                        <barButtonItem key="rightBarButtonItem" title="Select" id="dDd-tw-C0S">
+                            <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="selectTapped:" destination="SKR-5b-K6J" id="uW3-hO-aDP"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="bottom_bar_constraint" destination="5Cx-Pt-aXl" id="7kK-6R-tPF"/>
+                        <outlet property="bottom_view" destination="Tad-RY-w3V" id="JNb-H6-ttG"/>
                         <outlet property="search_bar" destination="ijA-4P-WMS" id="gow-bf-Zei"/>
+                        <outlet property="select_button" destination="dDd-tw-C0S" id="Qr6-Zg-N0p"/>
                         <outlet property="table_view" destination="cMN-l7-2GD" id="r7s-Z4-oWf"/>
                         <segue destination="jvf-eB-UiL" kind="show" identifier="files_multiple_segue" id="AkK-Qo-7Ww"/>
+                        <segue destination="9ZK-3B-PXo" kind="show" identifier="files_to_send_segue" id="fmd-I3-ULn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dmh-ZX-r0y" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1349,10 +1372,10 @@ access your phone contacts!</string>
         <!--HOME-->
         <scene sceneID="5gd-sV-tfq">
             <objects>
-                <navigationController title="HOME" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="aTr-06-n7W" customClass="InfinitPortraitNavigationController" sceneMemberID="viewController">
+                <navigationController title="HOME" extendedLayoutIncludesOpaqueBars="YES" id="aTr-06-n7W" customClass="InfinitHomeNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="icon-tab-home" id="9HD-Ms-g7K"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="c7Y-hg-pWS" customClass="InfinitHomeNavigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="c7Y-hg-pWS" customClass="InfinitResizableNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95294117647058818" alpha="1" colorSpace="calibratedRGB"/>
@@ -1447,7 +1470,7 @@ access your phone contacts!</string>
                         <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="kr4-Ee-MVL">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="kr4-Ee-MVL">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
@@ -1455,13 +1478,23 @@ access your phone contacts!</string>
                                     <outlet property="delegate" destination="jvf-eB-UiL" id="LZF-WW-C8H"/>
                                 </connections>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CGq-RU-kSR">
+                                <rect key="frame" x="0.0" y="536" width="600" height="49"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="49" id="B07-77-yJY"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.95294117649999999" green="0.95294117649999999" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="kr4-Ee-MVL" firstAttribute="leading" secondItem="XuL-nQ-tpW" secondAttribute="leading" id="4tw-80-5vU"/>
-                            <constraint firstAttribute="bottom" secondItem="kr4-Ee-MVL" secondAttribute="bottom" id="67B-OF-tQK"/>
-                            <constraint firstAttribute="trailing" secondItem="kr4-Ee-MVL" secondAttribute="trailing" id="OCJ-Zr-hoK"/>
-                            <constraint firstItem="kr4-Ee-MVL" firstAttribute="top" secondItem="XuL-nQ-tpW" secondAttribute="top" id="Poi-rA-h1o"/>
+                            <constraint firstAttribute="trailing" secondItem="kr4-Ee-MVL" secondAttribute="trailing" id="NNh-3Z-5Dk"/>
+                            <constraint firstItem="kr4-Ee-MVL" firstAttribute="top" secondItem="XuL-nQ-tpW" secondAttribute="top" id="OQT-j2-rSJ"/>
+                            <constraint firstItem="CGq-RU-kSR" firstAttribute="leading" secondItem="XuL-nQ-tpW" secondAttribute="leading" id="Wva-1T-KLs"/>
+                            <constraint firstAttribute="trailing" secondItem="CGq-RU-kSR" secondAttribute="trailing" id="a34-iW-GYV"/>
+                            <constraint firstAttribute="bottom" secondItem="CGq-RU-kSR" secondAttribute="top" id="e5D-Rg-UqS"/>
+                            <constraint firstItem="kr4-Ee-MVL" firstAttribute="bottom" secondItem="CGq-RU-kSR" secondAttribute="top" id="hGG-qQ-ueF"/>
+                            <constraint firstItem="kr4-Ee-MVL" firstAttribute="leading" secondItem="XuL-nQ-tpW" secondAttribute="leading" id="paS-2P-RTD"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
@@ -1472,9 +1505,20 @@ access your phone contacts!</string>
                                 <action selector="backButtonTapped:" destination="jvf-eB-UiL" id="V8I-Qo-Qcj"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Select" id="hHs-X5-8Rx">
+                            <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="selectTapped:" destination="jvf-eB-UiL" id="GHd-Qc-hDn"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="back_button" destination="9pR-EW-353" id="ACn-sW-KRC"/>
+                        <outlet property="bottom_bar_constraint" destination="e5D-Rg-UqS" id="m4x-i1-0O3"/>
+                        <outlet property="bottom_view" destination="CGq-RU-kSR" id="3Mc-s3-Lfd"/>
+                        <outlet property="select_button" destination="hHs-X5-8Rx" id="TLA-0y-f2z"/>
                         <outlet property="table_view" destination="kr4-Ee-MVL" id="d3L-tY-u1b"/>
+                        <segue destination="9ZK-3B-PXo" kind="show" identifier="files_multi_to_send" id="asi-Vl-HYs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Aq-za-j4F" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2115,9 +2159,9 @@ access your phone contacts!</string>
         <image name="schema-onboarding-infinite" width="181" height="129"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="hT3-x2-Ji5"/>
+        <segue reference="AkK-Qo-7Ww"/>
+        <segue reference="asi-Vl-HYs"/>
         <segue reference="0ax-4u-uN8"/>
-        <segue reference="Yah-cg-ZRU"/>
         <segue reference="a62-sa-S8B"/>
         <segue reference="mYU-YK-ihc"/>
     </inferredMetricsTieBreakers>
