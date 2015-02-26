@@ -9,14 +9,25 @@
 #import "InfinitFilesMultipleViewController.h"
 
 #import "InfinitColor.h"
+#import "InfinitFilesBottomBar.h"
 #import "InfinitFilesTableCell.h"
 #import "InfinitFilePreviewController.h"
+#import "InfinitFilesNavigationController.h"
+#import "InfinitResizableNavigationBar.h"
+#import "InfinitSendRecipientsController.h"
+#import "InfinitTabBarController.h"
 
 @interface InfinitFilesMultipleViewController () <UIGestureRecognizerDelegate,
                                                   UITableViewDataSource,
                                                   UITableViewDelegate>
 
+@property (nonatomic, weak) IBOutlet UIBarButtonItem* back_button;
 @property (nonatomic, weak) IBOutlet UITableView* table_view;
+
+@property (nonatomic, weak) IBOutlet UIBarButtonItem* select_button;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* bottom_bar_constraint;
+@property (nonatomic, weak) IBOutlet UIView* bottom_view;
+@property (nonatomic, strong) InfinitFilesBottomBar* bottom_bar;
 
 @end
 
@@ -41,13 +52,8 @@
 {
   UINib* cell_nib = [UINib nibWithNibName:NSStringFromClass(InfinitFilesTableCell.class) bundle:nil];
   [self.table_view registerNib:cell_nib forCellReuseIdentifier:_file_cell_id];
-  self.table_view.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-  NSDictionary* nav_bar_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
-                                                                       size:17.0f],
-                                  NSForegroundColorAttributeName: [InfinitColor colorWithRed:81
-                                                                                       green:81
-                                                                                        blue:73]};
-  [self.navigationController.navigationBar setTitleTextAttributes:nav_bar_attrs];
+  CGRect footer_rect = CGRectMake(0.0f, 0.0f, self.table_view.bounds.size.width, 60.0f);
+  self.table_view.tableFooterView = [[UIView alloc] initWithFrame:footer_rect];
   self.navigationController.interactivePopGestureRecognizer.enabled = YES;
   self.navigationController.interactivePopGestureRecognizer.delegate = self;
   self.navigationItem.backBarButtonItem =
@@ -56,12 +62,59 @@
                                     target:nil
                                     action:nil];
   [super viewDidLoad];
+  [self configureBottomBar];
+}
+
+- (void)configureBottomBar
+{
+  UINib* bottom_nib =
+    [UINib nibWithNibName:NSStringFromClass(InfinitFilesBottomBar.class) bundle:nil];
+  _bottom_bar = [[bottom_nib instantiateWithOwner:self options:nil] firstObject];
+  [self.bottom_view addSubview:self.bottom_bar];
+  NSDictionary* views = @{@"view": self.bottom_bar};
+  NSArray* v_constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|"
+                                                                   options:0
+                                                                   metrics:nil
+                                                                     views:views];
+  NSArray* h_constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|"
+                                                                   options:0
+                                                                   metrics:nil
+                                                                     views:views];
+  [self.bottom_view addConstraints:v_constraints];
+  [self.bottom_view addConstraints:h_constraints];
+  [self.bottom_bar.send_button addTarget:self
+                                  action:@selector(sendTapped:)
+                        forControlEvents:UIControlEventTouchUpInside];
+  [self.bottom_bar.delete_button addTarget:self
+                                    action:@selector(deleteTapped:)
+                          forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+  NSDictionary* nav_bar_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
+                                                                       size:17.0f],
+                                  NSForegroundColorAttributeName: [InfinitColor colorWithRed:81
+                                                                                       green:81
+                                                                                        blue:73]};
+  [self.navigationController.navigationBar setTitleTextAttributes:nav_bar_attrs];
+  self.select_button.title = NSLocalizedString(@"Select", nil);
   self.navigationItem.title = [NSString stringWithFormat:NSLocalizedString(@"%lu FILES", nil),
                                self.folder.files.count];
+  InfinitResizableNavigationBar* nav_bar =
+    (InfinitResizableNavigationBar*)self.navigationController.navigationBar;
+  if (nav_bar.large || [UIApplication sharedApplication].statusBarHidden)
+  {
+    [UIView animateWithDuration:(animated ? 0.3f : 0.0f)
+                     animations:^
+     {
+       [[UIApplication sharedApplication] setStatusBarHidden:NO
+                                               withAnimation:UIStatusBarAnimationSlide];
+       ((InfinitResizableNavigationBar*)self.navigationController.navigationBar).large = NO;
+       nav_bar.barTintColor = [UIColor whiteColor];
+       [nav_bar sizeToFit];
+     }];
+  }
   [self.table_view reloadData];
   [super viewWillAppear:animated];
   [self.table_view deselectRowAtIndexPath:self.table_view.indexPathForSelectedRow animated:animated];
@@ -117,8 +170,29 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
 }
 
 - (void)tableView:(UITableView*)tableView
+didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
+{
+  if (self.table_view.editing)
+  {
+    self.bottom_bar.enabled = (self.table_view.indexPathsForSelectedRows.count > 0);
+    return;
+  }
+}
+
+- (void)tableView:(UITableView*)tableView
 didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
+  if (self.table_view.editing)
+  {
+    self.bottom_bar.enabled = (self.table_view.indexPathsForSelectedRows.count > 0);
+    return;
+  }
+  if ([self.navigationController isKindOfClass:InfinitFilesNavigationController.class])
+  {
+    InfinitFilesNavigationController* files_nav_controller =
+      (InfinitFilesNavigationController*)self.navigationController;
+    files_nav_controller.previewing = YES;
+  }
   InfinitFilePreviewController* preview_controller =
     [InfinitFilePreviewController controllerWithFolder:self.folder andIndex:indexPath.row];
   UINavigationController* nav_controller =
@@ -143,6 +217,84 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer*)otherGe
 shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer*)otherGestureRecognizer
 {
   return [gestureRecognizer isKindOfClass:UIScreenEdgePanGestureRecognizer.class];
+}
+
+- (IBAction)selectTapped:(id)sender
+{
+  if (self.table_view.editing)
+    [self setTableEditing:NO];
+  else
+    [self setTableEditing:YES];
+}
+
+- (void)setTableEditing:(BOOL)editing
+{
+  InfinitTabBarController* main_tab_bar = (InfinitTabBarController*)self.tabBarController;
+  [self.table_view setEditing:editing animated:YES];
+  [main_tab_bar setTabBarHidden:editing animated:YES];
+  self.bottom_bar.hidden = !editing;
+  self.back_button.enabled = !editing;
+  if (editing)
+  {
+    self.select_button.title = NSLocalizedString(@"Cancel", nil);
+    self.bottom_bar_constraint.constant = 2.0f * CGRectGetHeight(self.bottom_bar.bounds);
+  }
+  else
+  {
+    self.select_button.title = NSLocalizedString(@"Select", nil);
+    self.bottom_bar_constraint.constant = 0.0f;
+  }
+}
+
+- (void)sendTapped:(id)sender
+{
+  if (!self.table_view.editing)
+    return;
+
+  self.bottom_bar_constraint.constant = 0.0f;
+  self.bottom_bar.hidden = YES;
+  [self performSegueWithIdentifier:@"files_multi_to_send" sender:self];
+}
+
+- (void)deleteTapped:(id)sender
+{
+  [self.table_view beginUpdates];
+  for (NSIndexPath* index in self.table_view.indexPathsForSelectedRows)
+    [self.folder deleteFileAtIndex:index.row];
+  [self.table_view deleteRowsAtIndexPaths:self.table_view.indexPathsForSelectedRows
+                   withRowAnimation:UITableViewRowAnimationAutomatic];
+  [self.table_view endUpdates];
+}
+
+#pragma mark - Storyboard
+
+- (void)prepareForSegue:(UIStoryboardSegue*)segue
+                 sender:(id)sender
+{
+  if ([segue.identifier isEqualToString:@"files_multi_to_send"])
+  {
+    InfinitTabBarController* tab_controller = (InfinitTabBarController*)self.tabBarController;
+    [tab_controller setTabBarHidden:YES animated:NO];
+    NSMutableIndexSet* set = [NSMutableIndexSet indexSet];
+    for (NSIndexPath* index in self.table_view.indexPathsForSelectedRows)
+      [set addIndex:index.row];
+    NSMutableArray* files = [NSMutableArray array];
+    for (InfinitFileModel* file in [self.folder.files objectsAtIndexes:set])
+      [files addObject:file.path];
+    InfinitSendRecipientsController* send_controller =
+    (InfinitSendRecipientsController*)segue.destinationViewController;
+    send_controller.files = files;
+    [self.table_view setEditing:NO animated:NO];
+    [UIView animateWithDuration:0.3f
+                     animations:^
+     {
+       ((InfinitResizableNavigationBar*)self.navigationController.navigationBar).large = YES;
+       [[UIApplication sharedApplication] setStatusBarHidden:YES
+                                               withAnimation:UIStatusBarAnimationSlide];
+       self.navigationController.navigationBar.barTintColor =
+       [InfinitColor colorFromPalette:InfinitPaletteColorSendBlack];
+     }];
+  }
 }
 
 @end
