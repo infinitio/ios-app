@@ -12,8 +12,10 @@
 
 @interface InfinitSendRecipientsController : UIViewController
 
+/// List of ALAssets or PHAssets.
 @property (nonatomic, strong) NSArray* assets;
-@property (nonatomic, strong) NSArray* files;
+/// List of file paths as NSStrings.
+@property (nonatomic, copy) NSArray* files;
 @property (nonatomic, weak, readwrite) InfinitContact* recipient;
 
 - (void)resetView;

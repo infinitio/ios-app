@@ -143,10 +143,6 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-  if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
-  {
-    [self performSelectorInBackground:@selector(fetchAddressBook) withObject:nil];
-  }
   _me_match = YES;
   [self fetchSwaggers];
   [self configureSearchField];
@@ -156,6 +152,10 @@
                                                name:INFINIT_USER_AVATAR_NOTIFICATION
                                              object:nil];
   _managed_files_id = [[InfinitTemporaryFileManager sharedInstance] createManagedFiles];
+  if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
+  {
+    [self performSelectorInBackground:@selector(fetchAddressBook) withObject:nil];
+  }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -204,6 +204,8 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
   _recipient = nil;
+  _files = nil;
+  _assets = nil;
   [self.navigationController.navigationBar.subviews[0] removeGestureRecognizer:_nav_bar_tap];
   [super viewWillDisappear:animated];
   [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -271,10 +273,15 @@
                                                           selector:@selector(caseInsensitiveCompare:)];
     [self.all_contacts sortUsingDescriptors:@[sort]];
     self.contact_results = [self.all_contacts mutableCopy];
-    [self.table_view performSelectorOnMainThread:@selector(reloadData)
-                                      withObject:nil
-                                   waitUntilDone:NO];
+    [self performSelectorOnMainThread:@selector(reloadTableSections:)
+                           withObject:[NSIndexSet indexSetWithIndex:2]
+                        waitUntilDone:NO];
   }
+}
+
+- (void)reloadTableSections:(NSIndexSet*)set
+{
+  [self.table_view reloadSections:set withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 
@@ -434,16 +441,15 @@
                                                               performSelector:@selector(temporaryFileManagerCallback)
                                                                      onObject:self];
     }
-    [self.tabBarController performSelectorOnMainThread:@selector(showMainScreen)
-                                            withObject:nil
-                                         waitUntilDone:NO];
   }
   else if (self.files.count > 0)
   {
     [self sendFilesToCurrentRecipients:self.files];
-    [self.navigationController popToRootViewControllerAnimated:YES];
   }
   [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewSend method:InfinitUIMethodTap];
+  [self.tabBarController performSelectorOnMainThread:@selector(showMainScreen:)
+                                          withObject:self
+                                       waitUntilDone:NO];
 }
 
 - (void)temporaryFileManagerCallback
@@ -461,13 +467,9 @@
   for (InfinitContact* contact in self.recipients)
   {
     if (contact.infinit_user != nil)
-    {
       [actual_recipients addObject:contact.infinit_user];
-    }
     else
-    {
       [actual_recipients addObject:contact.emails[contact.selected_email_index]];
-    }
   }
   return [[InfinitPeerTransactionManager sharedInstance] sendFiles:files
                                                       toRecipients:actual_recipients
@@ -788,11 +790,13 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
   if (hidden)
   {
     self.send_button.enabled = NO;
+    self.send_button.hidden = YES;
     constraint_final = - self.send_button.frame.size.height;
   }
   else
   {
     self.send_button.enabled = YES;
+    self.send_button.hidden = NO;
     constraint_final = 0.0f;
   }
   if (self.send_constraint.constant == constraint_final)
