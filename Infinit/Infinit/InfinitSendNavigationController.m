@@ -28,7 +28,9 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
   self.delegate = nil;
-  [(InfinitTabBarController*)self.tabBarController setTabBarHidden:NO animated:animated];
+  [(InfinitTabBarController*)self.tabBarController setTabBarHidden:NO
+                                                          animated:animated 
+                                                         withDelay:0.4f];
   [super viewWillDisappear:animated];
 }
 
