@@ -18,9 +18,17 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+  _previewing = NO;
   if ([self.visibleViewController isKindOfClass:InfinitFilesMultipleViewController.class])
     [self popToRootViewControllerAnimated:animated];
   [super viewWillAppear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+  if (!self.previewing)
+    [self popToRootViewControllerAnimated:NO];
+  [super viewDidDisappear:animated];
 }
 
 @end

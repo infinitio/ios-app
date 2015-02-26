@@ -12,4 +12,6 @@
 
 @interface InfinitFilesNavigationController : InfinitPortraitNavigationController
 
+@property (nonatomic, readwrite) BOOL previewing;
+
 @end
