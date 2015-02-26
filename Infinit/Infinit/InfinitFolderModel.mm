@@ -290,6 +290,10 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
   NSMutableArray* res = [self.files mutableCopy];
   [res removeObjectAtIndex:index];
   _files = [res copy];
+  if (self.files.count == 1)
+    self.name = [self.files.firstObject name];
+  else
+    self.name = [NSString stringWithFormat:NSLocalizedString(@"%lu files", nil), self.files.count];
 }
 
 - (void)deleteFolder
