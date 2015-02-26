@@ -9,11 +9,15 @@
 #import "InfinitFilesViewController.h"
 
 #import "InfinitColor.h"
+#import "InfinitDownloadFolderManager.h"
+#import "InfinitFilesBottomBar.h"
 #import "InfinitFilesMultipleViewController.h"
 #import "InfinitFilesNavigationController.h"
 #import "InfinitFilePreviewController.h"
 #import "InfinitFilesTableCell.h"
-#import "InfinitDownloadFolderManager.h"
+#import "InfinitResizableNavigationBar.h"
+#import "InfinitSendRecipientsController.h"
+#import "InfinitTabBarController.h"
 
 #import <Gap/InfinitDirectoryManager.h>
 
@@ -25,6 +29,7 @@ ELLE_LOG_COMPONENT("iOS.FilesViewController");
 @interface InfinitFilesViewController () <InfinitDownloadFolderManagerProtocol,
                                           UISearchBarDelegate,
                                           UITableViewDataSource,
+                                          UITabBarDelegate,
                                           UITableViewDelegate>
 
 @property (nonatomic, readonly) NSArray* all_folders;
@@ -33,6 +38,11 @@ ELLE_LOG_COMPONENT("iOS.FilesViewController");
 @property (nonatomic) UIView* no_files_view;
 @property (nonatomic, weak) IBOutlet UITableView* table_view;
 @property (nonatomic, weak) IBOutlet UISearchBar* search_bar;
+
+@property (nonatomic, weak) IBOutlet UIBarButtonItem* select_button;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* bottom_bar_constraint;
+@property (nonatomic, weak) IBOutlet UIView* bottom_view;
+@property (nonatomic, strong) InfinitFilesBottomBar* bottom_bar;
 
 @end
 
@@ -62,12 +72,6 @@ ELLE_LOG_COMPONENT("iOS.FilesViewController");
   CGRect footer_rect = CGRectMake(0.0f, 0.0f, self.table_view.bounds.size.width, 60.0f);
   self.table_view.tableFooterView = [[UIView alloc] initWithFrame:footer_rect];
   [super viewDidLoad];
-  NSDictionary* nav_bar_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
-                                                                       size:17.0f],
-                                  NSForegroundColorAttributeName: [InfinitColor colorWithRed:81
-                                                                                       green:81
-                                                                                        blue:73]};
-  [self.navigationController.navigationBar setTitleTextAttributes:nav_bar_attrs];
   self.navigationItem.backBarButtonItem =
     [[UIBarButtonItem alloc] initWithTitle:@""
                                      style:UIBarButtonItemStylePlain
@@ -80,6 +84,32 @@ ELLE_LOG_COMPONENT("iOS.FilesViewController");
   UIGraphicsEndImageContext();
   self.search_bar.backgroundImage = search_bar_bg;
   _download_manager = [InfinitDownloadFolderManager sharedInstance];
+  [self configureBottomBar];
+}
+
+- (void)configureBottomBar
+{
+  UINib* bottom_nib =
+    [UINib nibWithNibName:NSStringFromClass(InfinitFilesBottomBar.class) bundle:nil];
+  _bottom_bar = [[bottom_nib instantiateWithOwner:self options:nil] firstObject];
+  [self.bottom_view addSubview:self.bottom_bar];
+  NSDictionary* views = @{@"view": self.bottom_bar};
+  NSArray* v_constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|"
+                                                                   options:0 
+                                                                   metrics:nil 
+                                                                     views:views];
+  NSArray* h_constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|"
+                                                                   options:0
+                                                                   metrics:nil
+                                                                     views:views];
+  [self.bottom_view addConstraints:v_constraints];
+  [self.bottom_view addConstraints:h_constraints];
+  [self.bottom_bar.send_button addTarget:self
+                                  action:@selector(sendTapped:)
+                        forControlEvents:UIControlEventTouchUpInside];
+  [self.bottom_bar.delete_button addTarget:self
+                                    action:@selector(deleteTapped:)
+                          forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -89,6 +119,30 @@ ELLE_LOG_COMPONENT("iOS.FilesViewController");
   _all_folders = self.download_manager.completed_folders;
   _folder_results = [self.all_folders mutableCopy];
   self.download_manager.delegate = self;
+  self.select_button.enabled = (self.all_folders.count > 0);
+  InfinitTabBarController* tab_controller = (InfinitTabBarController*)self.tabBarController;
+  [tab_controller setTabBarHidden:NO animated:YES withDelay:0.2f];
+  NSDictionary* nav_bar_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
+                                                                       size:17.0f],
+                                  NSForegroundColorAttributeName: [InfinitColor colorWithRed:81
+                                                                                       green:81
+                                                                                        blue:73]};
+  [self.navigationController.navigationBar setTitleTextAttributes:nav_bar_attrs];
+  self.select_button.title = NSLocalizedString(@"Select", nil);
+  InfinitResizableNavigationBar* nav_bar =
+    (InfinitResizableNavigationBar*)self.navigationController.navigationBar;
+  if (nav_bar.large || [UIApplication sharedApplication].statusBarHidden)
+  {
+    [UIView animateWithDuration:(animated ? 0.3f : 0.0f)
+                     animations:^
+     {
+       [[UIApplication sharedApplication] setStatusBarHidden:NO
+                                               withAnimation:UIStatusBarAnimationSlide];
+       ((InfinitResizableNavigationBar*)self.navigationController.navigationBar).large = NO;
+       nav_bar.barTintColor = [UIColor whiteColor];
+       [nav_bar sizeToFit];
+     }];
+  }
   if (self.all_folders.count == 0)
   {
     [self showNoFilesOverlay];
@@ -107,6 +161,8 @@ ELLE_LOG_COMPONENT("iOS.FilesViewController");
       [self delayedSearch:_last_search_text];
   }
   [self.table_view scrollRectToVisible:CGRectMake(0.0f, 0.0f, 1.0f, 1.0f) animated:NO];
+  for (NSIndexPath* index in self.table_view.indexPathsForSelectedRows)
+    [self.table_view deselectRowAtIndexPath:index animated:NO];
   [super viewWillAppear:animated];
 }
 
@@ -144,6 +200,14 @@ ELLE_LOG_COMPONENT("iOS.FilesViewController");
 
 #pragma mark - Search Bar Delegate
 
+- (void)resetSearch
+{
+  self.search_bar.text = @"";
+  _last_search_text = @"";
+  _folder_results = [self.all_folders mutableCopy];
+  [self.table_view reloadData];
+}
+
 - (void)searchBar:(UISearchBar*)searchBar
     textDidChange:(NSString*)searchText
 {
@@ -152,8 +216,7 @@ ELLE_LOG_COMPONENT("iOS.FilesViewController");
                                              object:_last_search_text];
   if (searchText.length == 0)
   {
-    _folder_results = [self.all_folders mutableCopy];
-    [self.table_view reloadData];
+    [self resetSearch];
   }
   [self performSelector:@selector(delayedSearch:) withObject:searchText afterDelay:0.2f];
   _last_search_text = searchText;
@@ -224,9 +287,23 @@ forRowAtIndexPath:(NSIndexPath*)indexPath
                      withRowAnimation:UITableViewRowAnimationAutomatic];
   }
 }
+
+- (void)tableView:(UITableView*)tableView 
+didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
+{
+  if (self.table_view.editing)
+    self.bottom_bar.enabled = (self.table_view.indexPathsForSelectedRows.count > 0);
+}
+
 - (void)tableView:(UITableView*)tableView
 didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
+  if (self.table_view.editing)
+  {
+    self.bottom_bar.enabled = (self.table_view.indexPathsForSelectedRows.count > 0);
+    return;
+  }
+
   InfinitFolderModel* folder = self.folder_results[indexPath.row];
   if (folder.files.count > 1)
   {
@@ -235,11 +312,76 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   else
   {
     InfinitFolderModel* folder = self.folder_results[self.table_view.indexPathForSelectedRow.row];
+    if ([self.navigationController isKindOfClass:InfinitFilesNavigationController.class])
+    {
+      InfinitFilesNavigationController* files_nav_controller =
+      (InfinitFilesNavigationController*)self.navigationController;
+      files_nav_controller.previewing = YES;
+    }
     InfinitFilePreviewController* preview_controller =
       [InfinitFilePreviewController controllerWithFolder:folder andIndex:0];
     UINavigationController* nav_controller =
       [[UINavigationController alloc] initWithRootViewController:preview_controller];
     [self presentViewController:nav_controller animated:YES completion:nil];
+  }
+}
+
+#pragma mark - Button Handling
+
+- (IBAction)selectTapped:(id)sender
+{
+  if (self.table_view.editing)
+    [self setTableEditing:NO];
+  else
+    [self setTableEditing:YES];
+}
+
+- (void)setTableEditing:(BOOL)editing
+{
+  InfinitTabBarController* main_tab_bar = (InfinitTabBarController*)self.tabBarController;
+  [self.table_view setEditing:editing animated:YES];
+  [main_tab_bar setTabBarHidden:editing animated:YES];
+  self.bottom_bar.hidden = !editing;
+  if (editing)
+  {
+    self.select_button.title = NSLocalizedString(@"Cancel", nil);
+    self.bottom_bar_constraint.constant = 2.0f * CGRectGetHeight(self.bottom_bar.bounds);
+  }
+  else
+  {
+    self.select_button.title = NSLocalizedString(@"Select", nil);
+    self.bottom_bar_constraint.constant = 0.0f;
+  }
+}
+
+- (void)sendTapped:(id)sender
+{
+  if (!self.table_view.editing)
+    return;
+
+  self.bottom_bar_constraint.constant = 0.0f;
+  self.bottom_bar.hidden = YES;
+  [self performSegueWithIdentifier:@"files_to_send_segue" sender:self];
+}
+
+- (void)deleteTapped:(id)sender
+{
+  if (!self.table_view.editing)
+    return;
+  NSMutableIndexSet* set = [NSMutableIndexSet indexSet];
+  for (NSIndexPath* index in self.table_view.indexPathsForSelectedRows)
+    [set addIndex:index.row];
+  NSArray* folders = [self.folder_results objectsAtIndexes:set];
+  [self.folder_results removeObjectsAtIndexes:set];
+  for (InfinitFolderModel* folder in folders)
+    [[InfinitDownloadFolderManager sharedInstance] deleteFolder:folder];
+  [self setTableEditing:NO];
+  [self resetSearch];
+  _all_folders = [InfinitDownloadFolderManager sharedInstance].completed_folders;
+  if (self.all_folders.count == 0)
+  {
+    [self showNoFilesOverlay];
+    self.select_button.enabled = NO;
   }
 }
 
@@ -254,11 +396,18 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
   _all_folders = self.download_manager.completed_folders;
   if (self.search_bar.text.length == 0)
-    [self.table_view reloadData];
+  {
+    [self.table_view performSelectorOnMainThread:@selector(reloadData)
+                                      withObject:nil
+                                   waitUntilDone:NO];
+  }
   if (self.no_files_view != nil)
   {
-    [self.no_files_view removeFromSuperview];
+    [self.no_files_view performSelectorOnMainThread:@selector(removeFromSuperview)
+                                         withObject:nil 
+                                      waitUntilDone:NO];
     self.no_files_view = nil;
+    self.select_button.enabled = YES;
   }
 }
 
@@ -283,8 +432,12 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   InfinitFolderModel* folder = self.folder_results[row];
   [self.folder_results removeObjectAtIndex:row];
   [[InfinitDownloadFolderManager sharedInstance] deleteFolder:folder];
-  if (self.folder_results.count == 0)
+  _all_folders = [InfinitDownloadFolderManager sharedInstance].completed_folders;
+  if (self.all_folders.count == 0)
+  {
     [self showNoFilesOverlay];
+    self.select_button.enabled = NO;
+  }
 }
 
 #pragma mark - Segue
@@ -297,6 +450,30 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
     InfinitFilesMultipleViewController* view_controller =
       (InfinitFilesMultipleViewController*)segue.destinationViewController;
     view_controller.folder = self.folder_results[self.table_view.indexPathForSelectedRow.row];
+  }
+  else if ([segue.identifier isEqualToString:@"files_to_send_segue"])
+  {
+    InfinitTabBarController* tab_controller = (InfinitTabBarController*)self.tabBarController;
+    [tab_controller setTabBarHidden:YES animated:NO];
+    NSMutableIndexSet* set = [NSMutableIndexSet indexSet];
+    for (NSIndexPath* index in self.table_view.indexPathsForSelectedRows)
+      [set addIndex:index.row];
+    NSMutableArray* files = [NSMutableArray array];
+    for (InfinitFolderModel* folder in [self.folder_results objectsAtIndexes:set])
+      [files addObjectsFromArray:folder.file_paths];
+    InfinitSendRecipientsController* send_controller =
+      (InfinitSendRecipientsController*)segue.destinationViewController;
+    send_controller.files = files;
+    [self.table_view setEditing:NO animated:NO];
+    [UIView animateWithDuration:0.3f
+                     animations:^
+     {
+       ((InfinitResizableNavigationBar*)self.navigationController.navigationBar).large = YES;
+       [[UIApplication sharedApplication] setStatusBarHidden:YES
+                                               withAnimation:UIStatusBarAnimationSlide];
+       self.navigationController.navigationBar.barTintColor =
+       [InfinitColor colorFromPalette:InfinitPaletteColorSendBlack];
+     }];
   }
 }
 
