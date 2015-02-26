@@ -14,9 +14,13 @@
 @interface InfinitTabBarController : UITabBarController
 
 - (void)lastSelectedIndex;
-- (void)setTabBarHidden:(BOOL)hidden animated:(BOOL)animate;
+- (void)setTabBarHidden:(BOOL)hidden
+               animated:(BOOL)animate;
+- (void)setTabBarHidden:(BOOL)hidden
+               animated:(BOOL)animate 
+              withDelay:(NSTimeInterval)delay;
 - (void)showFilesScreen;
-- (void)showMainScreen;
+- (void)showMainScreen:(id)sender;
 - (void)showSendScreenWithContact:(InfinitContact*)contact;
 - (void)showWelcomeScreen;
 

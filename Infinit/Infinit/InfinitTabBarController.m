@@ -77,6 +77,15 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)appplicationIsActive
+{
+  if (self.tabBar.hidden)
+  {
+    self.tabBar.hidden = NO;
+    [self setTabBarHidden:YES animated:NO];
+  }
+}
+
 - (void)viewDidLoad
 {
   _first_appear = NO;
@@ -97,13 +106,17 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
                                            selector:@selector(connectionStatusChanged:)
                                                name:INFINIT_CONNECTION_STATUS_CHANGE
                                              object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(appplicationIsActive)
+                                               name:UIApplicationDidBecomeActiveNotification
+                                             object:nil];
   [super viewDidLoad];
 
   self.delegate = self;
   self.tabBar.tintColor = [UIColor clearColor];
 
   [[UITabBar appearance] setBackgroundImage:[[UIImage alloc] init]];
-  [[UITabBar appearance] setShadowImage:[[UIImage alloc] init]];
+  self.tabBar.shadowImage = [[UIImage alloc] init];
 
   UIView* shadow_line =
     [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 1.0f)];
@@ -243,35 +256,6 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   [self selectorToPosition:selectedIndex];
 }
 
-- (void)showTabBarWithAnimation:(BOOL)animate
-{
-  if (!self.tab_bar_hidden)
-    return;
-  _tab_bar_hidden = NO;
-  CGFloat d_h = self.tabBar.frame.size.height + 10.0f;
-  CGRect final_bar_rect = CGRectOffset(self.tabBar.frame, 0.0f, - d_h);
-  UIView* resize_view = self.selectedViewController.view;
-  CGRect final_view_rect = [self growRect:resize_view.frame
-                                  byWidth:0.0f
-                                andHeight:-d_h];
-  self.tabBar.hidden = NO;
-  [UIView animateWithDuration:animate ? self.animator.linear_duration : 0.0f
-                        delay:animate ? self.animator.linear_duration : 0.0f
-                      options:UIViewAnimationOptionCurveEaseInOut
-                   animations:^
-   {
-     self.tabBar.frame = final_bar_rect;
-     resize_view.frame = final_view_rect;
-   } completion:^(BOOL finished)
-   {
-     if (!finished)
-     {
-       self.tabBar.frame = final_bar_rect;
-       resize_view.frame = final_view_rect;
-     }
-   }];
-}
-
 #pragma mark - General
 
 - (void)lastSelectedIndex
@@ -282,20 +266,57 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 - (void)setTabBarHidden:(BOOL)hidden
                animated:(BOOL)animate
 {
-  if (hidden)
+  [self setTabBarHidden:hidden animated:animate withDelay:0.0f];
+}
+
+- (void)setTabBarHidden:(BOOL)hidden
+               animated:(BOOL)animate
+              withDelay:(NSTimeInterval)delay
+{
+  if (self.tabBar.hidden == hidden)
+    return;
+
+  CGSize screen_size = [[UIScreen mainScreen] bounds].size;
+  BOOL landscape =
+    UIDeviceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation);
+  float height =  landscape ? screen_size.width : screen_size.height;
+
+  if (!hidden)
   {
-    [self hideTabBarWithAnimation:animate];
+    height -= CGRectGetHeight(self.tabBar.frame);
+    self.tabBar.hidden = NO;
   }
   else
   {
-    [self showTabBarWithAnimation:animate];
+    height += CGRectGetHeight(self.send_tab_icon.frame) - CGRectGetHeight(self.tabBar.frame);
   }
+
+  UIView* view = self.selectedViewController.view;
+
+  [UIView animateWithDuration:(animate ? self.animator.linear_duration : 0.0f)
+                        delay:delay
+                      options:0
+                   animations:^
+  {
+    CGRect frame = self.tabBar.frame;
+    frame.origin.y = height;
+    self.tabBar.frame = frame;
+    frame = view.frame;
+    frame.size.height += (hidden ? 1.0f : -1.0f) * CGRectGetHeight(self.tabBar.frame);
+    view.frame = frame;
+  } completion:^(BOOL finished)
+  {
+    self.tabBar.hidden = hidden;
+  }];
 }
 
-- (void)showMainScreen
+- (void)showMainScreen:(id)sender
 {
   [[UIApplication sharedApplication] setStatusBarHidden:NO];
-  self.selectedIndex = InfinitTabBarIndexHome;
+  if (self.selectedIndex == InfinitTabBarIndexHome)
+    [((UIViewController*)sender).navigationController popToRootViewControllerAnimated:YES];
+  else
+    self.selectedIndex = InfinitTabBarIndexHome;
 }
 
 - (void)showFilesScreen
@@ -306,7 +327,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 
 - (void)showSendScreenWithContact:(InfinitContact*)contact
 {
-  [self hideTabBarWithAnimation:YES];
+  [self setTabBarHidden:YES animated:YES withDelay:self.animator.linear_duration];
   _last_index = InfinitTabBarIndexContacts;
   if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusNotDetermined)
   {
@@ -380,39 +401,10 @@ shouldSelectViewController:(UIViewController*)viewController
       [InfinitMetricsManager sendMetric:InfinitUIEventSendGalleryViewOpen
                                  method:InfinitUIMethodTabBar];
     }
-    [self hideTabBarWithAnimation:YES];
+    [self setTabBarHidden:YES animated:YES withDelay:self.animator.linear_duration];
   }
   [self selectorToPosition:[self.viewControllers indexOfObject:viewController]];
   return YES;
-}
-
-- (void)hideTabBarWithAnimation:(BOOL)animate
-{
-  if (self.tab_bar_hidden)
-    return;
-  _tab_bar_hidden = YES;
-  CGFloat d_h = self.tabBar.frame.size.height + 10.0f;
-  CGRect final_bar_rect = CGRectOffset(self.tabBar.frame, 0.0f, d_h);
-  UIView* resize_view = self.selectedViewController.view;
-  CGRect final_view_rect = [self growRect:resize_view.frame
-                                  byWidth:0.0f
-                                andHeight:d_h];
-  [UIView animateWithDuration:animate ? self.animator.linear_duration : 0.0f
-                        delay:animate ? self.animator.linear_duration : 0.0f
-                      options:UIViewAnimationOptionCurveEaseInOut
-                   animations:^
-   {
-     self.tabBar.frame = final_bar_rect;
-     resize_view.frame = final_view_rect;
-   } completion:^(BOOL finished)
-   {
-     if (!finished)
-     {
-       self.tabBar.frame = final_bar_rect;
-       resize_view.frame = final_view_rect;
-     }
-     self.tabBar.hidden = YES;
-   }];
 }
 
 - (void)noGalleryAccessPopUp
@@ -520,7 +512,7 @@ shouldSelectViewController:(UIViewController*)viewController
                                    afterDelay:0.51f];
         self.permission_view = nil;
       }];
-     [self hideTabBarWithAnimation:NO];
+     [self setTabBarHidden:NO animated:NO];
      self.selectedIndex = InfinitTabBarIndexSend;
      [InfinitMetricsManager sendMetric:InfinitUIEventAccessGallery
                                 method:InfinitUIMethodYes];
