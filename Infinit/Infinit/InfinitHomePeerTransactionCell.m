@@ -207,7 +207,7 @@ static CGFloat _button_height = 45.0f;
       [NSString stringWithFormat:NSLocalizedString(@"From %@", nil), other_name];
   }
   self.time_label.text = [InfinitTime relativeDateOf:self.transaction.mtime longerFormat:NO];
-  if (self.folder)
+  if (self.folder && self.folder.files.count > 0)
   {
     if (self.folder.files.count == 1)
     {
@@ -465,8 +465,15 @@ static CGFloat _button_height = 45.0f;
       }
       else
       {
-        return [NSString stringWithFormat:NSLocalizedString(@"Canceled by %@", nil),
-                self.transaction.canceler.fullname];
+        if (self.transaction.canceler.fullname.length > 0)
+        {
+          return [NSString stringWithFormat:NSLocalizedString(@"Canceled by %@", nil),
+                  self.transaction.canceler.fullname];
+        }
+        else
+        {
+          return NSLocalizedString(@"Canceled", nil);
+        }
       }
     case gap_transaction_failed:
       if (self.transaction.recipient.is_self && !self.transaction.sender.is_self)
@@ -627,6 +634,8 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
     case gap_transaction_waiting_accept:
       if (self.transaction.receivable)
         [self.delegate cellAcceptTapped:self];
+      else
+        [self.delegate cellPauseTapped:self];
       break;
 
     case gap_transaction_new:
