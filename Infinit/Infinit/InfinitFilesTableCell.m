@@ -27,6 +27,9 @@
   self.duration_label.layer.shadowColor = [InfinitColor colorWithGray:0 alpha:0.5f].CGColor;
   self.duration_label.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
   self.duration_label.layer.shadowRadius = 2.0f;
+  UIView* background = [[UIView alloc] initWithFrame:self.bounds];
+  background.backgroundColor = [UIColor whiteColor];
+  self.selectedBackgroundView = background;
 }
 
 - (void)configureCellWithFile:(InfinitFileModel*)file
