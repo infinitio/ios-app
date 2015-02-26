@@ -69,7 +69,7 @@
   if (_enable_progress)
   {
     _circle_layer = [self circleLayer];
-    self.circle_layer.strokeColor = [InfinitColor colorWithGray:224].CGColor;
+    self.circle_layer.strokeColor = [InfinitColor colorWithGray:228].CGColor;
     [self.layer addSublayer:self.circle_layer];
     _progress_layer = [self circleLayer];
     self.progress_layer.strokeColor = [InfinitColor colorWithRed:43 green:190 blue:189].CGColor;
