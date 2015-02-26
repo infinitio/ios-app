@@ -30,8 +30,36 @@
 @property (nonatomic, weak) IBOutlet UIButton* next_button;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* next_constraint;
 @property (nonatomic, strong) PHCachingImageManager* image_caching_manager;
+@property (nonatomic, weak) IBOutlet UICollectionViewFlowLayout* layout;
 
 @end
+
+@interface UICollectionView (Convenience)
+
+- (NSArray*)infinit_indexPathsForElementsInRect:(CGRect)rect;
+
+@end
+
+@implementation UICollectionView (Convenience)
+
+- (NSArray*)infinit_indexPathsForElementsInRect:(CGRect)rect
+{
+  NSArray* all_layout_attrs = [self.collectionViewLayout layoutAttributesForElementsInRect:rect];
+  if (all_layout_attrs.count == 0)
+    return nil;
+  NSMutableArray* indexes = [NSMutableArray arrayWithCapacity:all_layout_attrs.count];
+  for (UICollectionViewLayoutAttributes* attrs in all_layout_attrs)
+  {
+    NSIndexPath* index = attrs.indexPath;
+    [indexes addObject:index];
+  }
+  return indexes;
+}
+
+@end
+
+static CGSize _cell_size;
+static CGSize _asset_size;
 
 @implementation InfinitSendGalleryController
 {
@@ -40,6 +68,8 @@
   UITapGestureRecognizer* _nav_bar_tap;
 
   BOOL _selected_something;
+
+  CGRect _previous_preheat_rect;
 }
 
 - (id)initWithCoder:(NSCoder*)aDecoder
@@ -53,16 +83,6 @@
     self.dark = YES;
   }
   return self;
-}
-
-- (BOOL)prefersStatusBarHidden
-{
-  return YES;
-}
-
-- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation
-{
-  return UIStatusBarAnimationSlide;
 }
 
 - (void)viewDidLoad
@@ -97,23 +117,28 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-  if (self.collection_view.indexPathsForSelectedItems.count == 0)
-    _selected_something = NO;
+  CGFloat screen_width = [UIScreen mainScreen].bounds.size.width;
+  CGFloat diameter = floor(screen_width / 3.0f) - 5.0f;
+  _cell_size = CGSizeMake(diameter, diameter);
+  CGFloat scale = [UIScreen mainScreen].scale;
+  _asset_size = CGSizeMake(diameter * scale, diameter * scale);
+  self.layout.itemSize = _cell_size;
+  [super viewWillAppear:animated];
   if (self.assets == nil)
     [self loadAssets];
+  if (self.collection_view.indexPathsForSelectedItems.count == 0)
+    _selected_something = NO;
   [self configureNextButton];
   self.collection_view.contentOffset =
     CGPointMake(0.0f, 0.0f - self.collection_view.contentInset.top);
-  [super viewWillAppear:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
   [super viewDidAppear:animated];
-  [self.collection_view.collectionViewLayout invalidateLayout];
+  [self updateCachedAssets];
   [self.navigationController.navigationBar.subviews[0] setUserInteractionEnabled:YES];
   [self.navigationController.navigationBar.subviews[0] addGestureRecognizer:_nav_bar_tap];
-  [self.image_caching_manager stopCachingImagesForAllAssets];
 }
 
 - (void)navBarTapped
@@ -124,6 +149,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
   [self.navigationController.navigationBar.subviews[0] removeGestureRecognizer:_nav_bar_tap];
+  [self resetCachedAssets];
   [super viewWillDisappear:animated];
 }
 
@@ -157,7 +183,6 @@
     }];
     [temp_assets removeObjectsInArray:except_list];
     self.assets = [temp_assets copy];
-    [self.collection_view reloadData];
   }
   else
   {
@@ -183,6 +208,120 @@
       NSLog(@"Error loading images %@", error);
     }];
   }
+}
+
+#pragma mark - Asset Caching
+
+- (void)resetCachedAssets
+{
+  [self.image_caching_manager stopCachingImagesForAllAssets];
+  _previous_preheat_rect = CGRectZero;
+}
+
+- (void)updateCachedAssets
+{
+  BOOL visible = self.isViewLoaded && self.view.window != nil;
+  if (!visible)
+    return;
+
+  // The preheat window is twice the height of the visible rect
+  CGRect preheat_rect = self.collection_view.bounds;
+  preheat_rect = CGRectInset(preheat_rect, 0.0f, -0.5f * CGRectGetHeight(preheat_rect));
+
+  // If scrolled by a "reasonable" amount...
+  CGFloat delta = ABS(CGRectGetMidY(preheat_rect) - CGRectGetMidY(_previous_preheat_rect));
+  if (delta > CGRectGetHeight(self.collection_view.bounds) / 3.0f)
+  {
+    // Compute the assets to start caching and to stop caching.
+    NSMutableArray* added_indexes = [NSMutableArray array];
+    NSMutableArray* removed_indexes = [NSMutableArray array];
+
+    [self computeDifferenceBetweenRect:_previous_preheat_rect
+                               andRect:preheat_rect
+                        removedHandler:^(CGRect removed_rect)
+    {
+      NSArray* indexes = [self.collection_view infinit_indexPathsForElementsInRect:removed_rect];
+      [removed_indexes addObjectsFromArray:indexes];
+    } addedHandler:^(CGRect added_rect)
+    {
+      NSArray* indexes = [self.collection_view infinit_indexPathsForElementsInRect:added_rect];
+      [added_indexes addObjectsFromArray:indexes];
+    }];
+
+    NSArray* assets_to_start_caching = [self assetsAtIndexPaths:added_indexes];
+    NSArray* assets_to_stop_caching = [self assetsAtIndexPaths:removed_indexes];
+
+    PHImageRequestOptions* options = [[PHImageRequestOptions alloc] init];
+    options.networkAccessAllowed = YES;
+
+    [self.image_caching_manager startCachingImagesForAssets:assets_to_start_caching
+                                        targetSize:_asset_size
+                                       contentMode:PHImageContentModeAspectFill
+                                           options:nil];
+    [self.image_caching_manager stopCachingImagesForAssets:assets_to_stop_caching
+                                       targetSize:_asset_size
+                                      contentMode:PHImageContentModeAspectFill
+                                          options:nil];
+
+    _previous_preheat_rect = preheat_rect;
+  }
+}
+
+- (void)computeDifferenceBetweenRect:(CGRect)old_rect
+                             andRect:(CGRect)new_rect
+                      removedHandler:(void (^)(CGRect removed_rect))removedHandler
+                        addedHandler:(void (^)(CGRect added_rect))addedHandler
+{
+  if (CGRectIntersectsRect(new_rect, old_rect))
+  {
+    CGFloat old_max_y = CGRectGetMaxY(old_rect);
+    CGFloat old_min_y = CGRectGetMinY(old_rect);
+    CGFloat new_max_y = CGRectGetMaxY(new_rect);
+    CGFloat new_min_y = CGRectGetMinY(new_rect);
+    if (new_max_y > old_max_y)
+    {
+      CGRect rect_to_add = CGRectMake(new_rect.origin.x, old_max_y,
+                                      new_rect.size.width, (new_max_y - old_max_y));
+      addedHandler(rect_to_add);
+    }
+    if (old_min_y > new_min_y)
+    {
+      CGRect rect_to_add = CGRectMake(new_rect.origin.x, new_min_y,
+                                      new_rect.size.width, (old_min_y - new_min_y));
+      addedHandler(rect_to_add);
+    }
+    if (new_max_y < old_max_y)
+    {
+      CGRect rect_to_remove = CGRectMake(new_rect.origin.x, new_max_y,
+                                         new_rect.size.width, (old_max_y - new_max_y));
+      removedHandler(rect_to_remove);
+    }
+    if (old_min_y < new_min_y)
+    {
+      CGRect rect_to_remove = CGRectMake(new_rect.origin.x, old_min_y,
+                                         new_rect.size.width, (new_min_y - old_min_y));
+      removedHandler(rect_to_remove);
+    }
+  }
+  else
+  {
+    addedHandler(new_rect);
+    removedHandler(old_rect);
+  }
+}
+
+- (NSArray*)assetsAtIndexPaths:(NSArray*)indexPaths
+{
+  if (indexPaths.count == 0)
+    return nil;
+
+  NSMutableArray* assets = [NSMutableArray arrayWithCapacity:indexPaths.count];
+  for (NSIndexPath* indexPath in indexPaths)
+  {
+    PHAsset* asset = self.assets[indexPath.item];
+    [assets addObject:asset];
+  }
+  return assets;
 }
 
 #pragma mark - General
@@ -223,28 +362,24 @@
 
   if ([PHAsset class])
   {
-    if (cell.tag != 0)
-    {
-      [self.image_caching_manager cancelImageRequest:(PHImageRequestID)cell.tag];
-      cell.tag = 0;
-    }
+    NSInteger current_tag = cell.tag + 1;
+    cell.tag = current_tag;
     PHAsset* asset = self.assets[indexPath.row];
-    CGSize size = [self collectionView:self.collection_view
-                                layout:self.collection_view.collectionViewLayout
-                sizeForItemAtIndexPath:indexPath];
-    cell.tag = [self.image_caching_manager requestImageForAsset:asset
-                                                     targetSize:size
-                                                    contentMode:PHImageContentModeAspectFill
-                                                        options:nil
-                                                  resultHandler:^(UIImage* result,
-                                                                  NSDictionary* info)
+    [self.image_caching_manager requestImageForAsset:asset
+                                          targetSize:_asset_size
+                                         contentMode:PHImageContentModeAspectFill
+                                             options:nil
+                                       resultHandler:^(UIImage* result, NSDictionary* info)
      {
-       InfinitSendGalleryCell* cell =
-        (InfinitSendGalleryCell*)[collectionView cellForItemAtIndexPath:indexPath];
-       if (cell)
+       if (cell.tag == current_tag)
        {
          cell.thumbnail_view.image = result;
-         cell.tag = 0;
+       }
+       else
+       {
+         InfinitSendGalleryCell* old_cell =
+          (InfinitSendGalleryCell*)[collectionView cellForItemAtIndexPath:indexPath];
+         old_cell.thumbnail_view.image = result;
        }
      }];
     if (asset.mediaType == PHAssetMediaTypeVideo)
@@ -281,15 +416,22 @@
   return cell;
 }
 
+#pragma mark - Scroll Delegate
+
+- (void)scrollViewDidScroll:(UIScrollView*)scrollView
+{
+  [self updateCachedAssets];
+}
+
 #pragma mark – UICollectionViewDelegateFlowLayout
 
 - (CGSize)collectionView:(UICollectionView*)collectionView
                   layout:(UICollectionViewLayout*)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath*)indexPath
 {
-  return CGSizeMake(floor(self.view.bounds.size.width / 3.0f) - 4.0f,
-                    floor(self.view.bounds.size.width / 3.0f) - 4.0f);
+  return _cell_size;
 }
+
 
 # pragma mark - UICollectionViewDelegate
 
