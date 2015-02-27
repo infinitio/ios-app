@@ -16,6 +16,7 @@
 #import "InfinitSendContactCell.h"
 #import "InfinitContactImportCell.h"
 #import "InfinitMetricsManager.h"
+#import "InfinitSendEmailCell.h"
 #import "InfinitSendNoResultsCell.h"
 #import "InfinitSendToSelfOverlayView.h"
 #import "InfinitSendUserCell.h"
@@ -50,6 +51,7 @@
 
 @property (nonatomic, strong) InfinitContact* me_contact;
 @property (nonatomic) BOOL me_match;
+@property (nonatomic) BOOL email_entered;
 @property (nonatomic, strong) NSMutableArray* all_swaggers;
 @property (nonatomic, strong) NSMutableArray* swagger_results;
 @property (nonatomic, strong) NSMutableArray* all_contacts;
@@ -64,6 +66,7 @@
   NSString* _managed_files_id;
 
   NSString* _me_cell_id;
+  NSString* _email_cell_id;
   NSString* _infinit_user_cell_id;
   NSString* _contact_cell_id;
   NSString* _import_cell_id;
@@ -80,6 +83,7 @@
   if (self = [super initWithCoder:aDecoder])
   {
     _me_cell_id = @"send_user_me_cell";
+    _email_cell_id = @"send_email_cell";
     _infinit_user_cell_id = @"send_user_infinit_cell";
     _contact_cell_id = @"send_contact_cell";
     _import_cell_id = @"contact_import_cell";
@@ -532,7 +536,14 @@
 {
   UITableViewCell* res = nil;
   InfinitContact* contact = nil;
-  if ([self noResults])
+  if (self.email_entered)
+  {
+    InfinitSendEmailCell* cell = [tableView dequeueReusableCellWithIdentifier:_email_cell_id
+                                                                 forIndexPath:indexPath];
+    cell.email_label.text = [NSString stringWithFormat:@"\"%@\"", _last_search];
+    res = cell;
+  }
+  else if ([self noResults])
   {
     InfinitSendNoResultsCell* cell =
       [tableView dequeueReusableCellWithIdentifier:_no_results_cell_id forIndexPath:indexPath];
@@ -650,6 +661,8 @@ viewForHeaderInSection:(NSInteger)section
 - (CGFloat)tableView:(UITableView*)tableView
 heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
+  if (self.email_entered)
+    return 62.0f;
   if ([self noResults])
     return 349.0f;
   if (indexPath.section == 2 && ![self askedForAddressBookAccess])
@@ -663,8 +676,11 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
 - (BOOL)tableView:(UITableView*)tableView
 shouldHighlightRowAtIndexPath:(NSIndexPath*)indexPath
 {
-  if (![self askedForAddressBookAccess] && indexPath.section == 2)
+  if (([self noResults] && !_last_search.isEmail) ||
+      (![self askedForAddressBookAccess] && indexPath.section == 2))
+  {
     return NO;
+  }
   return YES;
 }
 
@@ -674,7 +690,14 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   if (self.recipients == nil)
     _recipients = [[NSMutableOrderedSet alloc] init];
   InfinitContact* contact = nil;
-  if (indexPath.section == 0)
+  if (self.email_entered)
+  {
+    [self addContactFromEmailAddress:_last_search];
+    _last_search = @"";
+    [self.search_field resignFirstResponder];
+    return;
+  }
+  else if (indexPath.section == 0)
   {
     InfinitApplicationSettings* settings = [InfinitApplicationSettings sharedInstance];
     if (![[settings send_to_self_onboarded] isEqualToNumber:@1])
@@ -939,6 +962,7 @@ didDeleteTokenAtIndex:(NSUInteger)index
 
 - (void)reloadSearchResults
 {
+  self.email_entered = NO;
   BOOL were_no_results = [self noResults];
   NSMutableIndexSet* sections = [NSMutableIndexSet indexSet];
   if (!_me_match)
@@ -964,6 +988,7 @@ didDeleteTokenAtIndex:(NSUInteger)index
 
 - (void)updateSearchResultsWithSearchString:(NSString*)search_string
 {
+  self.email_entered = NO;
   BOOL were_no_results = [self noResults];
   if ([self.me_contact containsSearchString:search_string])
     _me_match = YES;
@@ -993,10 +1018,21 @@ didDeleteTokenAtIndex:(NSUInteger)index
     self.contact_results = contacts_temp;
     [sections addIndex:2];
   }
-  if (were_no_results || [self noResults])
+  if ((were_no_results || [self noResults]) && !search_string.isEmail)
+  {
     [self.table_view reloadData];
+  }
+  else if ([self noResults] && search_string.isEmail)
+  {
+    self.email_entered = YES;
+    [self.table_view reloadSections:[NSIndexSet indexSetWithIndex:0]
+                   withRowAnimation:UITableViewRowAnimationAutomatic];
+  }
   else if (sections.count > 0)
+  {
+
     [self.table_view reloadSections:sections withRowAnimation:UITableViewRowAnimationAutomatic];
+  }
 }
 
 #pragma mark - User Avatar
