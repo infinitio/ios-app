@@ -1228,7 +1228,7 @@ access your phone contacts!</string>
             </objects>
             <point key="canvasLocation" x="1723" y="-1724"/>
         </scene>
-        <!--FILES-->
+        <!--RECEIVED FILES-->
         <scene sceneID="3Qo-yF-SIK">
             <objects>
                 <viewController extendedLayoutIncludesOpaqueBars="YES" id="SKR-5b-K6J" customClass="InfinitFilesViewController" sceneMemberID="viewController">
@@ -1280,7 +1280,7 @@ access your phone contacts!</string>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <navigationItem key="navigationItem" title="FILES" id="ZoT-BP-9BH">
+                    <navigationItem key="navigationItem" title="RECEIVED FILES" id="ZoT-BP-9BH">
                         <barButtonItem key="rightBarButtonItem" title="Select" id="dDd-tw-C0S">
                             <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
@@ -2160,7 +2160,7 @@ access your phone contacts!</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="AkK-Qo-7Ww"/>
-        <segue reference="asi-Vl-HYs"/>
+        <segue reference="fmd-I3-ULn"/>
         <segue reference="0ax-4u-uN8"/>
         <segue reference="a62-sa-S8B"/>
         <segue reference="mYU-YK-ihc"/>
