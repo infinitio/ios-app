@@ -750,7 +750,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
     [self.recipients removeObject:contact];
     [self.table_view deselectRowAtIndexPath:[NSIndexPath indexPathForRow:[self.contact_results
                                                                           indexOfObject:contact]
-                                                               inSection:3]
+                                                               inSection:2]
                                    animated:YES];
     [self.search_field reloadData];
   }
