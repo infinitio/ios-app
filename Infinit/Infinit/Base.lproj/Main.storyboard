@@ -1017,6 +1017,112 @@
                                                     <outlet property="name_label" destination="Dz8-88-hEf" id="PUQ-3B-eyo"/>
                                                 </connections>
                                             </tableViewCell>
+                                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="send_email_cell" rowHeight="62" id="0Vs-2e-Ey6" customClass="InfinitSendEmailCell">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0Vs-2e-Ey6" id="cKd-uP-wbh">
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-email-results" translatesAutoresizingMaskIntoConstraints="NO" id="7i2-5d-xlz">
+                                                            <rect key="frame" x="18" y="10" width="40" height="40"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="40" id="25d-eu-18D"/>
+                                                                <constraint firstAttribute="height" constant="25" id="3y2-Ee-xNG"/>
+                                                                <constraint firstAttribute="height" constant="32" id="RqV-1Y-Pbo"/>
+                                                                <constraint firstAttribute="width" constant="25" id="emF-Th-rvh"/>
+                                                                <constraint firstAttribute="width" constant="40" id="saQ-qe-GdV"/>
+                                                                <constraint firstAttribute="width" constant="32" id="ytm-mP-u5M"/>
+                                                            </constraints>
+                                                            <variation key="default">
+                                                                <mask key="constraints">
+                                                                    <exclude reference="ytm-mP-u5M"/>
+                                                                    <exclude reference="3y2-Ee-xNG"/>
+                                                                    <exclude reference="emF-Th-rvh"/>
+                                                                    <exclude reference="RqV-1Y-Pbo"/>
+                                                                </mask>
+                                                            </variation>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;email@email.com&quot;" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nnb-QO-NCG">
+                                                            <rect key="frame" x="70" y="20" width="469" height="22"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="200" id="1yH-sY-hsS"/>
+                                                                <constraint firstAttribute="height" constant="22" id="4fM-0z-tC1"/>
+                                                                <constraint firstAttribute="height" constant="21" id="6Ef-IB-GIo"/>
+                                                                <constraint firstAttribute="width" constant="200" id="gAE-Bt-Zb9"/>
+                                                                <constraint firstAttribute="width" constant="200" id="o5d-Cd-ccr"/>
+                                                                <constraint firstAttribute="height" constant="21" id="yih-iL-xfQ"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                                            <color key="textColor" red="0.67450980392156867" green="0.67450980392156867" blue="0.67450980392156867" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <variation key="default">
+                                                                <mask key="constraints">
+                                                                    <exclude reference="1yH-sY-hsS"/>
+                                                                    <exclude reference="o5d-Cd-ccr"/>
+                                                                    <exclude reference="yih-iL-xfQ"/>
+                                                                    <exclude reference="6Ef-IB-GIo"/>
+                                                                    <exclude reference="gAE-Bt-Zb9"/>
+                                                                </mask>
+                                                            </variation>
+                                                        </label>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bgt-o7-Kgy">
+                                                            <rect key="frame" x="16" y="60" width="562" height="1"/>
+                                                            <color key="backgroundColor" red="0.8901960784313725" green="0.8901960784313725" blue="0.8901960784313725" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="1" id="dJk-qs-jAI"/>
+                                                            </constraints>
+                                                        </view>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="bgt-o7-Kgy" secondAttribute="trailing" constant="22" id="0Aw-pv-1Xw"/>
+                                                        <constraint firstItem="7i2-5d-xlz" firstAttribute="centerY" secondItem="nnb-QO-NCG" secondAttribute="centerY" constant="0.5" id="5Zs-ZD-dDZ"/>
+                                                        <constraint firstItem="nnb-QO-NCG" firstAttribute="leading" secondItem="7i2-5d-xlz" secondAttribute="trailing" constant="10" id="6NO-jO-iCD"/>
+                                                        <constraint firstItem="7i2-5d-xlz" firstAttribute="top" secondItem="cKd-uP-wbh" secondAttribute="topMargin" constant="-4" id="7je-cu-SBs"/>
+                                                        <constraint firstItem="7i2-5d-xlz" firstAttribute="leading" secondItem="cKd-uP-wbh" secondAttribute="leadingMargin" constant="3" id="DdY-G6-ivP"/>
+                                                        <constraint firstItem="nnb-QO-NCG" firstAttribute="centerY" secondItem="7i2-5d-xlz" secondAttribute="centerY" constant="-0.5" id="Fnx-gj-aKj"/>
+                                                        <constraint firstAttribute="centerY" secondItem="7i2-5d-xlz" secondAttribute="centerY" id="HW0-lT-MNE"/>
+                                                        <constraint firstItem="bgt-o7-Kgy" firstAttribute="leading" secondItem="cKd-uP-wbh" secondAttribute="leading" constant="16" id="Jfk-qs-KJa"/>
+                                                        <constraint firstItem="nnb-QO-NCG" firstAttribute="leading" secondItem="7i2-5d-xlz" secondAttribute="trailing" constant="8" id="Mmq-wd-kXp"/>
+                                                        <constraint firstItem="7i2-5d-xlz" firstAttribute="leading" secondItem="cKd-uP-wbh" secondAttribute="leadingMargin" id="P7g-PV-Jwf"/>
+                                                        <constraint firstAttribute="centerY" secondItem="7i2-5d-xlz" secondAttribute="centerY" constant="0.5" id="PRE-hr-52s"/>
+                                                        <constraint firstAttribute="centerY" secondItem="nnb-QO-NCG" secondAttribute="centerY" id="PcF-ly-sug"/>
+                                                        <constraint firstItem="7i2-5d-xlz" firstAttribute="leading" secondItem="cKd-uP-wbh" secondAttribute="leading" constant="18" id="QNc-4w-7St"/>
+                                                        <constraint firstItem="7i2-5d-xlz" firstAttribute="leading" secondItem="cKd-uP-wbh" secondAttribute="leadingMargin" constant="6" id="Rqu-sf-NJV"/>
+                                                        <constraint firstItem="nnb-QO-NCG" firstAttribute="leading" secondItem="7i2-5d-xlz" secondAttribute="trailing" constant="10" id="TBg-ff-bbq"/>
+                                                        <constraint firstItem="nnb-QO-NCG" firstAttribute="leading" secondItem="7i2-5d-xlz" secondAttribute="trailing" constant="12" id="XIM-rI-snj"/>
+                                                        <constraint firstItem="7i2-5d-xlz" firstAttribute="top" secondItem="cKd-uP-wbh" secondAttribute="topMargin" constant="-2" id="Z2W-Tx-PBm"/>
+                                                        <constraint firstItem="nnb-QO-NCG" firstAttribute="top" secondItem="cKd-uP-wbh" secondAttribute="topMargin" id="aRL-xn-bLV"/>
+                                                        <constraint firstAttribute="bottom" secondItem="bgt-o7-Kgy" secondAttribute="bottom" id="i9h-uT-rFp"/>
+                                                        <constraint firstItem="nnb-QO-NCG" firstAttribute="leading" secondItem="7i2-5d-xlz" secondAttribute="trailing" constant="8" id="inW-Ea-AUZ"/>
+                                                        <constraint firstAttribute="centerY" secondItem="7i2-5d-xlz" secondAttribute="centerY" constant="-0.5" id="oYb-y5-UWV"/>
+                                                        <constraint firstAttribute="trailing" secondItem="nnb-QO-NCG" secondAttribute="trailing" constant="61" id="piy-9u-uvH"/>
+                                                        <constraint firstAttribute="centerY" secondItem="nnb-QO-NCG" secondAttribute="centerY" constant="0.5" id="wV5-5e-fhu"/>
+                                                    </constraints>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="5Zs-ZD-dDZ"/>
+                                                            <exclude reference="7je-cu-SBs"/>
+                                                            <exclude reference="DdY-G6-ivP"/>
+                                                            <exclude reference="P7g-PV-Jwf"/>
+                                                            <exclude reference="PRE-hr-52s"/>
+                                                            <exclude reference="Rqu-sf-NJV"/>
+                                                            <exclude reference="Z2W-Tx-PBm"/>
+                                                            <exclude reference="oYb-y5-UWV"/>
+                                                            <exclude reference="6NO-jO-iCD"/>
+                                                            <exclude reference="Fnx-gj-aKj"/>
+                                                            <exclude reference="Mmq-wd-kXp"/>
+                                                            <exclude reference="TBg-ff-bbq"/>
+                                                            <exclude reference="aRL-xn-bLV"/>
+                                                            <exclude reference="inW-Ea-AUZ"/>
+                                                            <exclude reference="wV5-5e-fhu"/>
+                                                        </mask>
+                                                    </variation>
+                                                </tableViewCellContentView>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <connections>
+                                                    <outlet property="email_label" destination="nnb-QO-NCG" id="vgz-s4-v7m"/>
+                                                </connections>
+                                            </tableViewCell>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="send_no_results_cell" rowHeight="464" id="imq-4s-tH6" customClass="InfinitSendNoResultsCell">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
@@ -2137,6 +2243,7 @@ access your phone contacts!</string>
         <image name="icon-contact-favorite" width="19" height="18"/>
         <image name="icon-contact-me" width="22" height="16"/>
         <image name="icon-contacts" width="17" height="20"/>
+        <image name="icon-email-results" width="39" height="38"/>
         <image name="icon-facebook-white" width="21" height="21"/>
         <image name="icon-favorite-white" width="16" height="15"/>
         <image name="icon-gallery-next" width="8" height="14"/>
