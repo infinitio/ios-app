@@ -90,6 +90,7 @@
 		83B5D60C1A6661D80061931F /* InfinitKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B5D60B1A6661D80061931F /* InfinitKeychain.m */; };
 		83B5D60E1A6663430061931F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83B5D60D1A6663430061931F /* Security.framework */; };
 		83B5D6171A66BC4E0061931F /* ALAsset+Date.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B5D6161A66BC4E0061931F /* ALAsset+Date.m */; };
+		83C616381AA0B76900F68C94 /* InfinitSendEmailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C616371AA0B76900F68C94 /* InfinitSendEmailCell.m */; };
 		83E0AC0A1A6A608B003F60C6 /* InfinitHomeItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E0AC091A6A608B003F60C6 /* InfinitHomeItem.m */; };
 		83E112D91A8266090072DAE0 /* InfinitWelcomeOnboardingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E112D71A8266090072DAE0 /* InfinitWelcomeOnboardingController.m */; };
 		83E112DD1A8266D60072DAE0 /* InfinitOnboardingProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E112DC1A8266D60072DAE0 /* InfinitOnboardingProgressView.m */; };
@@ -362,6 +363,8 @@
 		83B5D60D1A6663430061931F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		83B5D6151A66BC4E0061931F /* ALAsset+Date.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAsset+Date.h"; sourceTree = "<group>"; };
 		83B5D6161A66BC4E0061931F /* ALAsset+Date.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAsset+Date.m"; sourceTree = "<group>"; };
+		83C616361AA0B76900F68C94 /* InfinitSendEmailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendEmailCell.h; sourceTree = "<group>"; };
+		83C616371AA0B76900F68C94 /* InfinitSendEmailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendEmailCell.m; sourceTree = "<group>"; };
 		83E0AC081A6A608B003F60C6 /* InfinitHomeItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitHomeItem.h; sourceTree = "<group>"; };
 		83E0AC091A6A608B003F60C6 /* InfinitHomeItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitHomeItem.m; sourceTree = "<group>"; };
 		83E112D61A8266090072DAE0 /* InfinitWelcomeOnboardingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitWelcomeOnboardingController.h; sourceTree = "<group>"; };
@@ -1068,6 +1071,8 @@
 				D05726B11A50BA880097083C /* InfinitSendUserCell.m */,
 				839B813D1A6407990057E92B /* InfinitSendContactCell.h */,
 				839B813E1A6407990057E92B /* InfinitSendContactCell.m */,
+				83C616361AA0B76900F68C94 /* InfinitSendEmailCell.h */,
+				83C616371AA0B76900F68C94 /* InfinitSendEmailCell.m */,
 				83F7C3B31A6E96C600FA283C /* InfinitSendNoResultsCell.h */,
 				83F7C3B41A6E96C600FA283C /* InfinitSendNoResultsCell.m */,
 				D05D5D181A24C4B1005529E8 /* InfinitSendGalleryCell.h */,
@@ -1346,6 +1351,7 @@
 				83E112D91A8266090072DAE0 /* InfinitWelcomeOnboardingController.m in Sources */,
 				830AD20E1A6D57C900E2B058 /* InfinitSendNavigationController.m in Sources */,
 				8311B5C01A7D18E500832FDE /* InfinitContactViewController.m in Sources */,
+				83C616381AA0B76900F68C94 /* InfinitSendEmailCell.m in Sources */,
 				8311B5C31A7D407900832FDE /* InfinitFilesNavigationController.m in Sources */,
 				83B5D60C1A6661D80061931F /* InfinitKeychain.m in Sources */,
 				83E112DD1A8266D60072DAE0 /* InfinitOnboardingProgressView.m in Sources */,
