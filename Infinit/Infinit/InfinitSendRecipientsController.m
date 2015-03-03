@@ -27,6 +27,7 @@
 #import <Gap/InfinitUserManager.h>
 
 #import "NSString+email.h"
+#import "JDStatusBarNotification.h"
 #import "VENTokenField.h"
 
 @import AddressBook;
@@ -426,12 +427,13 @@
   [self setSendButtonHidden:YES];
   if (self.assets.count > 0)
   {
+    InfinitTemporaryFileManager* manager = [InfinitTemporaryFileManager sharedInstance];
     if ([PHAsset class])
     {
-      [[InfinitTemporaryFileManager sharedInstance] addPHAssetsLibraryURLList:self.assets
-                                                               toManagedFiles:_managed_files_id
-                                                              performSelector:@selector(temporaryFileManagerCallback)
-                                                                     onObject:self];
+      [manager addPHAssetsLibraryURLList:self.assets
+                          toManagedFiles:_managed_files_id
+                         performSelector:@selector(temporaryFileManagerCallback)
+                                onObject:self];
     }
     else
     {
@@ -440,10 +442,16 @@
       {
         [asset_urls addObject:asset.defaultRepresentation.url];
       }
-      [[InfinitTemporaryFileManager sharedInstance] addALAssetsLibraryURLList:asset_urls
-                                                               toManagedFiles:_managed_files_id
-                                                              performSelector:@selector(temporaryFileManagerCallback)
-                                                                     onObject:self];
+      [manager addALAssetsLibraryURLList:asset_urls
+                          toManagedFiles:_managed_files_id
+                         performSelector:@selector(temporaryFileManagerCallback)
+                                onObject:self];
+    }
+    if (self.assets.count > 3)
+    {
+      [self.tabBarController performSelectorOnMainThread:@selector(showTransactionPreparingNotification)
+                                              withObject:nil 
+                                           waitUntilDone:NO];
     }
   }
   else if (self.files.count > 0)
