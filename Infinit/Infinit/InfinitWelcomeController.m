@@ -17,6 +17,7 @@
 #import "InfinitFacebookManager.h"
 #import "InfinitHostDevice.h"
 #import "InfinitKeychain.h"
+#import "InfinitLoginInvitationCodeController.h"
 #import "InfinitRatingManager.h"
 #import "WelcomeLoginFormView.h"
 #import "WelcomeSignupFacebookView.h"
@@ -1173,6 +1174,19 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
       return;
     label.text = NSLocalizedString(@"Ensure you're connected to the Internet.", nil);
     label.hidden = NO;
+  }
+}
+
+#pragma mark - Storyboard
+
+- (void)prepareForSegue:(UIStoryboardSegue*)segue
+                 sender:(id)sender
+{
+  if ([segue.identifier isEqualToString:@"register_invitation_code_segue"])
+  {
+    InfinitLoginInvitationCodeController* dest_vc =
+      (InfinitLoginInvitationCodeController*)segue.destinationViewController;
+    dest_vc.login_mode = YES;
   }
 }
 
