@@ -9,7 +9,9 @@
 #import "InfinitSettingsViewController.h"
 
 #import "InfinitColor.h"
+#import "InfinitLoginInvitationCodeController.h"
 #import "InfinitSettingsCell.h"
+#import "InfinitSettingsExpandedCell.h"
 #import "InfinitSettingsReportProblemController.h"
 #import "InfinitSettingsUserCell.h"
 #import "InfinitTabBarController.h"
@@ -22,6 +24,7 @@
 typedef NS_ENUM(NSUInteger, InfinitSettingsSections)
 {
   InfinitSettingsSectionAccount = 0,
+  InfinitSettingsSectionOther,
   InfinitSettingsSectionFeedback,
   InfinitSettingsSectionLogout,
 
@@ -34,6 +37,13 @@ typedef NS_ENUM(NSUInteger, InfinitAccountSettings)
   InfinitAccountSettingEdit,
 
   InfinitAccountSettingsCount
+};
+
+typedef NS_ENUM(NSUInteger, InfinitOtherSettings)
+{
+  InfinitOtherSettingEnterCode = 0,
+
+  InfinitOtherSettingsCount
 };
 
 typedef NS_ENUM(NSUInteger, InfinitFeedbackSettings)
@@ -65,12 +75,14 @@ typedef NS_ENUM(NSUInteger, InfinitLogoutSettings)
 @private
   BOOL _logging_out;
   NSString* _norm_cell_id;
+  NSString* _expanded_cell_id;
   NSString* _user_cell_id;
 }
 
 - (void)viewDidLoad
 {
   _norm_cell_id = @"settings_cell";
+  _expanded_cell_id = @"settings_expanded_cell";
   _user_cell_id = @"settings_user_cell";
   self.table_view.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
   _logging_out = NO;
@@ -84,6 +96,9 @@ typedef NS_ENUM(NSUInteger, InfinitLogoutSettings)
   UINib* norm_cell_nib = [UINib nibWithNibName:NSStringFromClass(InfinitSettingsCell.class)
                                         bundle:nil];
   [self.table_view registerNib:norm_cell_nib forCellReuseIdentifier:_norm_cell_id];
+  UINib* expanded_cell_nib =
+    [UINib nibWithNibName:NSStringFromClass(InfinitSettingsExpandedCell.class) bundle:nil];
+  [self.table_view registerNib:expanded_cell_nib forCellReuseIdentifier:_expanded_cell_id];
   UINib* user_cell_nib = [UINib nibWithNibName:NSStringFromClass(InfinitSettingsUserCell.class)
                                         bundle:nil];
   [self.table_view registerNib:user_cell_nib forCellReuseIdentifier:_user_cell_id];
@@ -135,6 +150,8 @@ typedef NS_ENUM(NSUInteger, InfinitLogoutSettings)
   {
     case InfinitSettingsSectionAccount:
       return InfinitAccountSettingsCount;
+    case InfinitSettingsSectionOther:
+      return InfinitOtherSettingsCount;
     case InfinitSettingsSectionFeedback:
       return InfinitFeedbackSettingsCount;
     case InfinitSettingsSectionLogout:
@@ -172,6 +189,21 @@ typedef NS_ENUM(NSUInteger, InfinitLogoutSettings)
         break;
       }
     }
+  }
+  else if (indexPath.section == InfinitSettingsSectionOther)
+  {
+    InfinitSettingsExpandedCell* cell =
+      [self.table_view dequeueReusableCellWithIdentifier:_expanded_cell_id forIndexPath:indexPath];
+    switch (indexPath.row)
+    {
+      case InfinitOtherSettingEnterCode:
+        cell.icon_view.image = [UIImage imageNamed:@"icon-code"];
+        cell.title_label.text = NSLocalizedString(@"Enter a code", nil);
+        cell.info_label.text = NSLocalizedString(@"Retrieve files from an invitation", nil);
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        break;
+    }
+    res = cell;
   }
   else if (indexPath.section == InfinitSettingsSectionFeedback)
   {
@@ -228,6 +260,10 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
         return 50.0f;
     }
   }
+  else if (indexPath.section == InfinitSettingsSectionOther)
+  {
+    return 68.0f;
+  }
   else if (indexPath.section == InfinitSettingsSectionFeedback)
   {
     return 50.0f;
@@ -268,6 +304,18 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
           [self performSegueWithIdentifier:@"settings_edit_profile" sender:self];
         }
       }
+        break;
+
+      default:
+        break;
+    }
+  }
+  else if (indexPath.section == InfinitSettingsSectionOther)
+  {
+    switch (indexPath.row)
+    {
+      case InfinitOtherSettingEnterCode:
+        [self performSegueWithIdentifier:@"settings_invite_code_segue" sender:self];
         break;
 
       default:
@@ -357,6 +405,13 @@ viewForFooterInSection:(NSInteger)section
       ((UINavigationController*)segue.destinationViewController).viewControllers[0];
     controller.feedback_mode = YES;
   }
+  else if ([segue.identifier isEqualToString:@"register_invitation_code_segue"])
+  {
+    InfinitLoginInvitationCodeController* dest_vc =
+      (InfinitLoginInvitationCodeController*)segue.destinationViewController;
+    dest_vc.login_mode = NO;
+  }
 }
+
 
 @end
