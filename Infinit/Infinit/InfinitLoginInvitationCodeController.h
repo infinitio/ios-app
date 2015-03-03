@@ -10,4 +10,6 @@
 
 @interface InfinitLoginInvitationCodeController : UIViewController
 
+@property (nonatomic, readwrite) BOOL login_mode;
+
 @end

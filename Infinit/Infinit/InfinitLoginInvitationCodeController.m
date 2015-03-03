@@ -15,6 +15,7 @@
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView* activity_indicator;
 @property (nonatomic, weak) IBOutlet UITextField* code_field;
 @property (nonatomic, weak) IBOutlet UILabel* error_label;
+@property (nonatomic, weak) IBOutlet UIView* top_view;
 
 @property (nonatomic, weak) IBOutlet UIView* line_1;
 @property (nonatomic, weak) IBOutlet UIView* line_2;
@@ -43,6 +44,22 @@ static NSDictionary* _attrs = nil;
   }
   self.code_field.tintColor = [InfinitColor colorWithRed:81 green:81 blue:73];
   self.code_field.defaultTextAttributes = _attrs;
+  NSDictionary* nav_bar_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
+                                                                       size:17.0f],
+                                  NSForegroundColorAttributeName: [InfinitColor colorWithRed:81
+                                                                                       green:81
+                                                                                        blue:73]};
+  [self.navigationController.navigationBar setTitleTextAttributes:nav_bar_attrs];
+  self.navigationController.navigationBar.tintColor =
+    [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+  [super viewWillAppear:animated];
+  self.navigationController.navigationBarHidden = self.login_mode;
+  self.code_field.text = @"";
+  self.top_view.hidden = !self.login_mode;
 }
 
 #pragma mark - Text Field Delegate
@@ -72,6 +89,11 @@ replacementString:(NSString*)string
 - (IBAction)skipTapped:(id)sender
 {
   [self showHomeScreen];
+}
+
+- (IBAction)backTapped:(id)sender
+{
+  [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Helpers
