@@ -27,7 +27,6 @@
 #import <Gap/InfinitUserManager.h>
 
 #import "NSString+email.h"
-#import "JDStatusBarNotification.h"
 #import "VENTokenField.h"
 
 @import AddressBook;
