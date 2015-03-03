@@ -41,6 +41,7 @@ static NSDictionary* _attrs = nil;
                NSForegroundColorAttributeName: [InfinitColor colorWithRed:81 green:81 blue:73],
                NSKernAttributeName: @13.0f};
   }
+  self.code_field.tintColor = [InfinitColor colorWithRed:81 green:81 blue:73];
   self.code_field.defaultTextAttributes = _attrs;
 }
 
