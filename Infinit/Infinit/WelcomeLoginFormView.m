@@ -14,7 +14,6 @@
 {
   self.avatar_button.layer.cornerRadius = self.avatar_button.frame.size.height / 2.0f;
   self.avatar_button.clipsToBounds = YES;
-  self.facebook_hidden = YES;
 }
 
 - (CGFloat)height
