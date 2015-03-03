@@ -25,6 +25,8 @@
 		83157EF31A76260E00F8E87F /* InfinitFolderModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83157EF21A76260D00F8E87F /* InfinitFolderModel.mm */; };
 		83157EFA1A76422D00F8E87F /* InfinitFileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83157EF91A76422D00F8E87F /* InfinitFileModel.m */; };
 		83157F071A76702C00F8E87F /* InfinitFilesMultipleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83157F061A76702C00F8E87F /* InfinitFilesMultipleViewController.m */; };
+		831AB8601AA6054900E10E65 /* InfinitSettingsExpandedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 831AB85E1AA6054900E10E65 /* InfinitSettingsExpandedCell.m */; };
+		831AB8611AA6054900E10E65 /* InfinitSettingsExpandedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 831AB85F1AA6054900E10E65 /* InfinitSettingsExpandedCell.xib */; };
 		832284FC1A794C97000893A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 832284FE1A794C97000893A1 /* Main.storyboard */; };
 		832284FF1A794D25000893A1 /* WelcomeLoginFormView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832285011A794D25000893A1 /* WelcomeLoginFormView.xib */; };
 		832285021A794D2B000893A1 /* WelcomeSignupFormView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832285041A794D2B000893A1 /* WelcomeSignupFormView.xib */; };
@@ -265,6 +267,9 @@
 		83157EF91A76422D00F8E87F /* InfinitFileModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFileModel.m; sourceTree = "<group>"; };
 		83157F051A76702C00F8E87F /* InfinitFilesMultipleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFilesMultipleViewController.h; sourceTree = "<group>"; };
 		83157F061A76702C00F8E87F /* InfinitFilesMultipleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFilesMultipleViewController.m; sourceTree = "<group>"; };
+		831AB85D1AA6054900E10E65 /* InfinitSettingsExpandedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSettingsExpandedCell.h; sourceTree = "<group>"; };
+		831AB85E1AA6054900E10E65 /* InfinitSettingsExpandedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSettingsExpandedCell.m; sourceTree = "<group>"; };
+		831AB85F1AA6054900E10E65 /* InfinitSettingsExpandedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitSettingsExpandedCell.xib; sourceTree = "<group>"; };
 		832284FD1A794C97000893A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		832285001A794D25000893A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/WelcomeLoginFormView.xib; sourceTree = "<group>"; };
 		832285031A794D2B000893A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/WelcomeSignupFormView.xib; sourceTree = "<group>"; };
@@ -571,6 +576,9 @@
 				83B32E0D1A84FE54004088DD /* InfinitSettingsCell.h */,
 				83B32E0E1A84FE54004088DD /* InfinitSettingsCell.m */,
 				83B32E0F1A84FE54004088DD /* InfinitSettingsCell.xib */,
+				831AB85D1AA6054900E10E65 /* InfinitSettingsExpandedCell.h */,
+				831AB85E1AA6054900E10E65 /* InfinitSettingsExpandedCell.m */,
+				831AB85F1AA6054900E10E65 /* InfinitSettingsExpandedCell.xib */,
 				83F7C3BC1A6EAEDD00FA283C /* InfinitSettingsUserCell.h */,
 				83F7C3BD1A6EAEDD00FA283C /* InfinitSettingsUserCell.m */,
 				83B32E121A850C9B004088DD /* InfinitSettingsUserCell.xib */,
@@ -1327,6 +1335,7 @@
 				83EBB0871A9397F000144BC6 /* InfinitOfflineOverlay.xib in Resources */,
 				83A0A7F51AA44DCE00B8F9E8 /* WelcomeSignupFacebookView.xib in Resources */,
 				832284FC1A794C97000893A1 /* Main.storyboard in Resources */,
+				831AB8611AA6054900E10E65 /* InfinitSettingsExpandedCell.xib in Resources */,
 				83519B491A98ABE600541B5E /* InfinitHomePeerTransactionCellNoFiles.xib in Resources */,
 				835B9D631A9E620900FD0D54 /* InfinitFilesBottomBar.xib in Resources */,
 				83B32E131A850C9B004088DD /* InfinitSettingsUserCell.xib in Resources */,
@@ -1433,6 +1442,7 @@
 				8369E8821A83BC1D00ECD519 /* InfinitHomeFeedbackViewController.m in Sources */,
 				D00045BD1A499A20008DB448 /* InfinitContactImportCell.m in Sources */,
 				834FCFC41A7B93CA00930BD8 /* InfinitBackgroundManager.mm in Sources */,
+				831AB8601AA6054900E10E65 /* InfinitSettingsExpandedCell.m in Sources */,
 				D05D5D1A1A24C4B1005529E8 /* InfinitSendGalleryCell.m in Sources */,
 				8369E8791A83684700ECD519 /* InfinitHomeRatingCell.m in Sources */,
 				83F7C3BE1A6EAEDD00FA283C /* InfinitSettingsUserCell.m in Sources */,
@@ -1682,7 +1692,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "83ffb333-c311-474d-86b1-20f2329efd74";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
@@ -1725,7 +1735,7 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "83ffb333-c311-474d-86b1-20f2329efd74";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
