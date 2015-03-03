@@ -23,8 +23,7 @@
 @property (nonatomic, weak) IBOutlet UILabel* error_label;
 @property (nonatomic, weak) IBOutlet UIButton* legal_button;
 
+@property (nonatomic, readwrite) UIImage* avatar;
 @property (nonatomic, readonly) CGFloat height;
-
-- (void)setAvatar:(UIImage*)image;
 
 @end

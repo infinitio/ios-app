@@ -12,7 +12,7 @@
 
 @implementation WelcomeSignupFormView
 
--(void)awakeFromNib
+- (void)awakeFromNib
 {
   self.avatar_button.layer.cornerRadius = self.avatar_button.frame.size.height / 2.0f;
   self.avatar_button.layer.borderWidth = 1.0f;
