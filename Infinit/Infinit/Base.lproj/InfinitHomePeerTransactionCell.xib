@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14D72i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14D87h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -146,8 +146,8 @@
                                 <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Wf-vV-jNI">
-                                <rect key="frame" x="245" y="30" width="29" height="16"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="500" verticalHuggingPriority="251" misplaced="YES" text="Time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Wf-vV-jNI">
+                                <rect key="frame" x="229" y="30" width="45" height="16"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                 <color key="textColor" red="0.5725490196078431" green="0.5725490196078431" blue="0.5725490196078431" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -192,7 +192,7 @@
                             <constraint firstItem="nv8-VG-ULd" firstAttribute="bottom" secondItem="Wd0-60-V07" secondAttribute="bottom" constant="-10" id="ikE-nm-WGr"/>
                             <constraint firstItem="X23-hd-A0U" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="nv8-VG-ULd" secondAttribute="trailing" constant="15" id="qao-7j-3Ot"/>
                             <constraint firstItem="nv8-VG-ULd" firstAttribute="leading" secondItem="ykT-DY-Cbm" secondAttribute="leading" id="tuV-7Y-fzb"/>
-                            <constraint firstItem="6Wf-vV-jNI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ykT-DY-Cbm" secondAttribute="trailing" constant="20" id="xeN-pr-eez"/>
+                            <constraint firstItem="6Wf-vV-jNI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ykT-DY-Cbm" secondAttribute="trailing" constant="15" id="xeN-pr-eez"/>
                             <constraint firstAttribute="height" constant="100" id="y0J-bl-08a"/>
                         </constraints>
                     </view>
