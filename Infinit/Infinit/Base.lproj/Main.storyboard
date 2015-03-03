@@ -1738,16 +1738,26 @@ access your phone contacts!</string>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="URe-76-9Is">
                                 <rect key="frame" x="290" y="295" width="20" height="20"/>
                             </activityIndicatorView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="illustration-code-left" translatesAutoresizingMaskIntoConstraints="NO" id="nBa-rg-72k">
+                                <rect key="frame" x="123" y="219" width="77" height="42"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="illustration-code-right" translatesAutoresizingMaskIntoConstraints="NO" id="YIs-OP-s06">
+                                <rect key="frame" x="400" y="219" width="77" height="42"/>
+                            </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95294117647058818" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.95294117647058818" alpha="1" colorSpace="deviceRGB"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="YIs-OP-s06" firstAttribute="centerY" secondItem="n5U-7z-7Sc" secondAttribute="centerY" id="09G-1v-R4O"/>
+                            <constraint firstItem="n5U-7z-7Sc" firstAttribute="leading" secondItem="nBa-rg-72k" secondAttribute="trailing" id="7D8-nt-Oba"/>
                             <constraint firstItem="PgA-vU-iGo" firstAttribute="centerX" secondItem="URe-76-9Is" secondAttribute="centerX" id="E5U-TB-c12"/>
                             <constraint firstItem="fDg-7C-Fxf" firstAttribute="top" secondItem="Q7f-dP-Vae" secondAttribute="bottom" constant="15" id="IYd-rS-dI4"/>
                             <constraint firstAttribute="centerX" secondItem="PgA-vU-iGo" secondAttribute="centerX" id="LP7-w8-yvX"/>
+                            <constraint firstItem="n5U-7z-7Sc" firstAttribute="centerY" secondItem="nBa-rg-72k" secondAttribute="centerY" id="MBJ-AI-LA2"/>
                             <constraint firstAttribute="centerX" secondItem="Q7f-dP-Vae" secondAttribute="centerX" id="Nqk-JJ-JYV"/>
                             <constraint firstAttribute="centerX" secondItem="fDg-7C-Fxf" secondAttribute="centerX" id="O1J-kY-RR8"/>
                             <constraint firstItem="PgA-vU-iGo" firstAttribute="top" secondItem="n5U-7z-7Sc" secondAttribute="bottom" constant="25" id="gQ0-IA-rlb"/>
+                            <constraint firstItem="YIs-OP-s06" firstAttribute="leading" secondItem="n5U-7z-7Sc" secondAttribute="trailing" id="gkV-Tl-lXj"/>
                             <constraint firstItem="DVe-OC-QNf" firstAttribute="leading" secondItem="VzX-n3-lKL" secondAttribute="leading" id="i7g-kG-ba8"/>
                             <constraint firstItem="Q7f-dP-Vae" firstAttribute="top" secondItem="DVe-OC-QNf" secondAttribute="bottom" constant="30" id="kLS-ah-Ged"/>
                             <constraint firstItem="DVe-OC-QNf" firstAttribute="top" secondItem="VzX-n3-lKL" secondAttribute="top" id="kc6-B7-6CC"/>
@@ -2517,6 +2527,8 @@ access your phone contacts!</string>
         <image name="icon-tab-files" width="23" height="21"/>
         <image name="icon-tab-home" width="26" height="21"/>
         <image name="icon-tab-settings" width="22" height="22"/>
+        <image name="illustration-code-left" width="77" height="42"/>
+        <image name="illustration-code-right" width="77" height="42"/>
         <image name="illustration-no-results" width="259" height="54"/>
         <image name="logotype" width="184" height="102"/>
         <image name="schema-file-manager" width="175" height="169"/>
