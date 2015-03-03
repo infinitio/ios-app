@@ -8,6 +8,8 @@
 
 #import "InfinitFilesBottomBar.h"
 
+#import <Gap/InfinitConnectionManager.h>
+
 @implementation InfinitFilesBottomBar
 
 - (void)awakeFromNib
@@ -21,7 +23,7 @@
     return;
   _enabled = enabled;
   self.delete_button.enabled = enabled;
-  self.send_button.enabled = enabled;
+  self.send_button.enabled = enabled && [InfinitConnectionManager sharedInstance].was_logged_in;
 }
 
 @end
