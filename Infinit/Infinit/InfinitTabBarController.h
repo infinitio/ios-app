@@ -24,4 +24,6 @@
 - (void)showSendScreenWithContact:(InfinitContact*)contact;
 - (void)showWelcomeScreen;
 
+- (void)showTransactionPreparingNotification;
+
 @end

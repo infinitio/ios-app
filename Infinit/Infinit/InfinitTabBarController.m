@@ -354,6 +354,15 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   [self presentViewController:login_controller animated:YES completion:nil];
 }
 
+- (void)showTransactionPreparingNotification
+{
+  [JDStatusBarNotification showWithStatus:NSLocalizedString(@"Preparing your transfer...", nil)
+                             dismissAfter:2.0f
+                                styleName:_status_bar_good_style_id];
+  [JDStatusBarNotification showActivityIndicator:YES
+                                  indicatorStyle:UIActivityIndicatorViewStyleWhite];
+}
+
 #pragma mark - Delegate Functions
 
 - (BOOL)tabBarController:(UITabBarController*)tabBarController
@@ -554,12 +563,12 @@ shouldSelectViewController:(UIViewController*)viewController
   InfinitConnectionManager* manager = [InfinitConnectionManager sharedInstance];
   if (manager.network_status == InfinitNetworkStatusNotReachable)
   {
-    [JDStatusBarNotification showWithStatus:@"You're currently offline..."
+    [JDStatusBarNotification showWithStatus:NSLocalizedString(@"You're currently offline...", nil)
                                   styleName:_status_bar_warning_style_id];
   }
   else
   {
-    [JDStatusBarNotification showWithStatus:@"Reconnecting..."
+    [JDStatusBarNotification showWithStatus:NSLocalizedString(@"Reconnecting...", nil)
                                dismissAfter:2.0f
                                   styleName:_status_bar_warning_style_id];
     [JDStatusBarNotification showActivityIndicator:YES
@@ -569,7 +578,7 @@ shouldSelectViewController:(UIViewController*)viewController
 
 - (void)handleOnline
 {
-  [JDStatusBarNotification showWithStatus:@"Connected!"
+  [JDStatusBarNotification showWithStatus:NSLocalizedString(@"Connected!", nil)
                              dismissAfter:2.0f
                                 styleName:_status_bar_good_style_id];
   [self.offline_overlay removeFromSuperview];
