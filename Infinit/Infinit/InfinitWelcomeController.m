@@ -10,16 +10,16 @@
 
 #import "AppDelegate.h"
 
-//#import <FacebookSDK/FacebookSDK.h>
-
 #import "InfinitApplicationSettings.h"
 #import "InfinitBackgroundManager.h"
 #import "InfinitColor.h"
 #import "InfinitDownloadFolderManager.h"
+#import "InfinitFacebookManager.h"
 #import "InfinitHostDevice.h"
 #import "InfinitKeychain.h"
 #import "InfinitRatingManager.h"
 #import "WelcomeLoginFormView.h"
+#import "WelcomeSignupFacebookView.h"
 #import "WelcomeSignupFormView.h"
 
 #import "NSString+email.h"
@@ -29,6 +29,8 @@
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitStateResult.h>
 #import <Gap/InfinitUserManager.h>
+
+#import <FacebookSDK/FacebookSDK.h>
 
 #define INFINIT_FORGOT_PASSWORD_URL @"https://infinit.io/forgot_password?utm_source=app&utm_medium=ios&utm_campaign=forgot_password"
 #define INFINIT_LEGAL_URL           @"https://infinit.io/legal?utm_source=app&utm_medium=ios&utm_campaign=terms"
@@ -41,6 +43,7 @@
                                         UINavigationControllerDelegate>
 
 @property (nonatomic, strong) WelcomeLoginFormView* login_form_view;
+@property (nonatomic, strong) WelcomeSignupFacebookView* signup_facebook_view;
 @property (nonatomic, strong) WelcomeSignupFormView* signup_form_view;
 
 @property (nonatomic, weak) IBOutlet UIImageView* logo_image_view;
@@ -109,6 +112,7 @@
   self.login_button.layer.cornerRadius = self.login_button.bounds.size.height / 2.0f;
 
   [self configureLoginView];
+  [self configureFacebookView];
   [self configureSignupView];
 }
 
@@ -195,6 +199,46 @@
                                forControlEvents:UIControlEventTouchUpInside];
 }
 
+- (void)configureFacebookView
+{
+  UINib* facebook_nib = [UINib nibWithNibName:NSStringFromClass(WelcomeSignupFacebookView.class)
+                                       bundle:nil];
+  self.signup_facebook_view = [[facebook_nib instantiateWithOwner:self options:nil] firstObject];
+  self.signup_facebook_view.frame = CGRectMake(0.0f, self.view.frame.size.height,
+                                           self.view.frame.size.width, self.view.frame.size.height);
+  [self.view addSubview:self.signup_facebook_view];
+  [self.view bringSubviewToFront:self.signup_facebook_view];
+
+  self.signup_facebook_view.email_field.delegate = self;
+  self.signup_facebook_view.fullname_field.delegate = self;
+
+  [self.signup_facebook_view.email_field addTarget:self
+                                            action:@selector(facebookEmailTextChanged:)
+                                  forControlEvents:UIControlEventEditingChanged];
+  [self.signup_facebook_view.email_field addTarget:self
+                                            action:@selector(facebookEmailTextEditingEnded:)
+                                  forControlEvents:UIControlEventEditingDidEnd];
+  [self.signup_facebook_view.fullname_field addTarget:self
+                                               action:@selector(facebookFullnameTextChanged:)
+                                     forControlEvents:UIControlEventEditingChanged];
+  [self.signup_facebook_view.fullname_field addTarget:self
+                                               action:@selector(facebookFullnameTextEditingEnded:)
+                                     forControlEvents:UIControlEventEditingDidEnd];
+
+  [self.signup_facebook_view.back_button addTarget:self
+                                            action:@selector(overlayBackButtonTapped:)
+                                  forControlEvents:UIControlEventTouchUpInside];
+  [self.signup_facebook_view.next_button addTarget:self
+                                            action:@selector(facebookNextButtonTapped:)
+                                  forControlEvents:UIControlEventTouchUpInside];
+  [self.signup_facebook_view.avatar_button addTarget:self
+                                              action:@selector(avatarButtonTapped:)
+                                    forControlEvents:UIControlEventTouchUpInside];
+  [self.signup_facebook_view.legal_button addTarget:self
+                                             action:@selector(legalLinkTapped:)
+                                   forControlEvents:UIControlEventTouchUpInside];
+}
+
 - (void)configureSignupView
 {
   UINib* signup_nib = [UINib nibWithNibName:@"WelcomeSignupFormView" bundle:nil];
@@ -234,7 +278,7 @@
                                         action:@selector(registerNextButtonTapped:)
                               forControlEvents:UIControlEventTouchUpInside];
   [self.signup_form_view.avatar_button addTarget:self
-                                          action:@selector(registerAvatarButtonTapped:)
+                                          action:@selector(avatarButtonTapped:)
                                 forControlEvents:UIControlEventTouchUpInside];
   [self.signup_form_view.legal_button addTarget:self 
                                          action:@selector(legalLinkTapped:)
@@ -274,26 +318,52 @@
 
 - (IBAction)facebookButtonTapped:(id)sender
 {
-  UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
-                                                  message:@"Computer says no"
-                                                 delegate:nil
-                                        cancelButtonTitle:@"Back"
-                                        otherButtonTitles:nil];
-  [alert show];
+  [self performSegueWithIdentifier:@"register_invitation_code_segue" sender:self];
 //  self.signup_with_facebook_button.enabled = NO;
-//
-//  // Open a session showing the user the login UI
-//  // You must ALWAYS ask for public_profile permissions when opening a session
-//  [FBSession openActiveSessionWithReadPermissions:@[@"public_profile", @"email", @"user_friends", @"user_birthday"]
-//                                     allowLoginUI:YES
-//                                completionHandler:
-//   ^(FBSession *session, FBSessionState state, NSError *error) {
-//     
-//     // Retrieve the app delegate
-//     AppDelegate *appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
-//     // Call the app delegate's sessionStateChanged:state:error method to handle session state changes
-//     [appDelegate sessionStateChanged:session state:state error:error];
-//   }];
+//  // If the session state is any of the two "open" states when the button is clicked
+//  if (FBSession.activeSession.state == FBSessionStateOpen
+//      || FBSession.activeSession.state == FBSessionStateOpenTokenExtended)
+//  {
+//    // Close the session and remove the access token from the cache
+//    // The session state handler (in the app delegate) will be called automatically
+//    [FBSession.activeSession closeAndClearTokenInformation];
+//  }
+//  else // If the session state is not any of the two "open" states when the button is clicked
+//  {
+//    InfinitFacebookManager* manager = [InfinitFacebookManager sharedInstance];
+//    // Open a session showing the user the login UI
+//    // You must ALWAYS ask for public_profile permissions when opening a session
+//    [FBSession openActiveSessionWithReadPermissions:manager.permission_list
+//                                       allowLoginUI:YES
+//                                  completionHandler:^(FBSession* session,
+//                                                      FBSessionState state,
+//                                                      NSError* error)
+//     {
+//       // Call the app delegate's sessionStateChanged:state:error method to handle session state changes
+//       [manager sessionStateChanged:session state:state error:error];
+//       if (state == FBSessionStateClosedLoginFailed || error)
+//       {
+//         NSString* title = NSLocalizedString(@"Unable to login with Facebook", nil);
+//         NSString* message = nil;
+//         if (error)
+//         {
+//           message = error.localizedDescription;
+//         }
+//         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
+//                                                         message:message
+//                                                        delegate:self 
+//                                               cancelButtonTitle:@"OK" 
+//                                               otherButtonTitles:nil];
+//         [alert show];
+//       }
+//       else
+//       {
+//         self.signup_facebook_view.fullname_field.text = manager.user_name;
+//         self.signup_facebook_view.avatar = manager.user_avatar;
+//         [self showOverlayView:self.signup_facebook_view ofHeight:self.signup_facebook_view.height];
+//       }
+//     }];
+//  }
 }
 
 - (IBAction)loginOrRegisterTapped:(id)sender
@@ -312,6 +382,12 @@
   }
   if (overlay_view == nil)
     return;
+  [self showOverlayView:overlay_view ofHeight:height];
+}
+
+- (void)showOverlayView:(UIView*)overlay_view
+               ofHeight:(CGFloat)height
+{
   [self.view bringSubviewToFront:overlay_view];
   CGRect new_frame = CGRectMake(0.0f, self.view.frame.size.height - height,
                                 self.view.frame.size.width, overlay_view.frame.size.height);
@@ -321,15 +397,15 @@
         initialSpringVelocity:20.f
                       options:0
                    animations:^
-  {
-    overlay_view.frame = new_frame;
-  } completion:^(BOOL finished)
-  {
-    if (!finished)
-    {
-      overlay_view.frame = new_frame;
-    }
-  }];
+   {
+     overlay_view.frame = new_frame;
+   } completion:^(BOOL finished)
+   {
+     if (!finished)
+     {
+       overlay_view.frame = new_frame;
+     }
+   }];
 }
 
 - (void)overlayBackButtonTapped:(id)sender
@@ -338,6 +414,11 @@
   if (sender == self.signup_form_view.back_button)
   {
     overlay_view = self.signup_form_view;
+  }
+  else if (sender == self.signup_facebook_view.back_button)
+  {
+    overlay_view = self.signup_facebook_view;
+    [[InfinitFacebookManager sharedInstance] cleanSession];
   }
   else if (sender == self.login_form_view.back_button)
   {
@@ -428,13 +509,19 @@
   [self tryLogin];
 }
 
+- (void)facebookNextButtonTapped:(id)sender
+{
+  self.signup_facebook_view.next_button.enabled = NO;
+  [self tryFacebookRegister];
+}
+
 - (void)registerNextButtonTapped:(id)sender
 {
   self.signup_form_view.next_button.enabled = NO;
   [self tryRegister];
 }
 
-#pragma mark - Input Checks
+#pragma mark - Login Input Checks
 
 - (void)checkLoginInputs
 {
@@ -506,6 +593,91 @@
   else
   {
     self.login_form_view.password_image.image = [UIImage imageNamed:@"icon-password-valid"];
+  }
+}
+
+- (void)forgotPasswordTapped:(id)sender
+{
+  NSURL* url = [NSURL URLWithString:INFINIT_FORGOT_PASSWORD_URL];
+  [[UIApplication sharedApplication] openURL:url];
+}
+
+#pragma mark - Register Input Checks
+
+- (void)checkFacebookInputs
+{
+  [self facebookInputsGood];
+}
+
+- (BOOL)facebookInputsGood
+{
+  if (self.signup_facebook_view.email_field.text.isEmail &&
+      self.signup_facebook_view.fullname_field.text.length >= 3)
+  {
+    self.signup_facebook_view.next_button.enabled = YES;
+    self.signup_facebook_view.next_button.hidden = NO;
+    return YES;
+  }
+  else
+  {
+    self.signup_facebook_view.next_button.hidden = YES;
+    self.signup_facebook_view.next_button.enabled = NO;
+    return NO;
+  }
+}
+
+- (void)facebookEmailTextChanged:(id)sender
+{
+  if (self.signup_facebook_view.email_field.text.length == 0)
+  {
+    self.signup_facebook_view.email_image.image = [UIImage imageNamed:@"icon-email"];
+  }
+  [self checkFacebookInputs];
+}
+
+- (void)facebookEmailTextEditingEnded:(id)sender
+{
+  NSCharacterSet* white_space = [NSCharacterSet whitespaceCharacterSet];
+  self.signup_facebook_view.email_field.text =
+  [self.signup_facebook_view.email_field.text stringByTrimmingCharactersInSet:white_space];
+  if (self.signup_facebook_view.email_field.text.isEmail)
+  {
+    self.signup_facebook_view.email_image.image = [UIImage imageNamed:@"icon-email-valid"];
+    self.signup_facebook_view.error_label.hidden = YES;
+  }
+  else
+  {
+    self.signup_facebook_view.email_image.image = [UIImage imageNamed:@"icon-email-error"];
+    self.signup_facebook_view.error_label.text = NSLocalizedString(@"Email not valid.", nil);
+    self.signup_facebook_view.error_label.hidden = NO;
+  }
+}
+
+- (void)facebookFullnameTextChanged:(id)sender
+{
+  if (self.signup_facebook_view.fullname_field.text.length == 0)
+  {
+    self.signup_facebook_view.fullname_image.image = [UIImage imageNamed:@"icon-fullname"];
+  }
+  self.signup_facebook_view.error_label.hidden = YES;
+  [self checkFacebookInputs];
+}
+
+- (void)facebookFullnameTextEditingEnded:(id)sender
+{
+  NSCharacterSet* white_space = [NSCharacterSet whitespaceCharacterSet];
+  self.signup_facebook_view.fullname_field.text =
+  [self.signup_facebook_view.fullname_field.text stringByTrimmingCharactersInSet:white_space];
+  if (self.signup_facebook_view.fullname_field.text.length < 3)
+  {
+    self.signup_facebook_view.fullname_image.image = [UIImage imageNamed:@"icon-fullname-error"];
+    self.signup_facebook_view.error_label.text =
+      NSLocalizedString(@"Name must be at least 3 chars.", nil);
+    self.signup_facebook_view.error_label.hidden = NO;
+  }
+  else
+  {
+    self.signup_facebook_view.fullname_image.image = [UIImage imageNamed:@"icon-fullname-valid"];
   }
 }
 
@@ -612,12 +784,6 @@
   }
 }
 
-- (void)forgotPasswordTapped:(id)sender
-{
-  NSURL* url = [NSURL URLWithString:INFINIT_FORGOT_PASSWORD_URL];
-  [[UIApplication sharedApplication] openURL:url];
-}
-
 - (void)legalLinkTapped:(id)sender
 {
   NSURL* url = [NSURL URLWithString:INFINIT_LEGAL_URL];
@@ -701,7 +867,7 @@
   }
   _logging_in = YES;
   self.login_form_view.error_label.hidden = YES;
-//  self.login_form_view.facebook_hidden = YES;
+  self.login_form_view.facebook_hidden = YES;
   if ([self loginInputsGood])
   {
     [self.view endEditing:YES];
@@ -736,6 +902,11 @@
     _password = [self.login_form_view.password_field.text copy];
     self.login_form_view.password_field.text = nil;
     [self onSuccessfulLogin];
+    UIStoryboard* storyboard =
+      [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    UIViewController* view_controller =
+      [storyboard instantiateViewControllerWithIdentifier:@"tab_bar_controller"];
+    [self presentViewController:view_controller animated:YES completion:nil];
   }
   else
   {
@@ -746,7 +917,7 @@
     self.login_form_view.error_label.hidden = NO;
     if (result.status == gap_email_password_dont_match)
       self.login_form_view.forgot_button.hidden = NO;
-//    self.login_form_view.facebook_hidden = NO;
+    self.login_form_view.facebook_hidden = NO;
   }
 }
 
@@ -776,12 +947,6 @@
     [[InfinitKeychain sharedInstance] addPassword:_password forAccount:_username];
   }
   _password = nil;
-
-  UIStoryboard* storyboard =
-    [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-  UIViewController* view_controller =
-    [storyboard instantiateViewControllerWithIdentifier:@"tab_bar_controller"];
-  [self presentViewController:view_controller animated:YES completion:nil];
 }
 
 - (NSString*)registerLoginErrorFromStatus:(gap_Status)status
@@ -814,6 +979,46 @@
     default:
       return [NSString stringWithFormat:@"%@: %d", NSLocalizedString(@"Unknown login error", nil),
               status];
+  }
+}
+
+- (void)tryFacebookRegister
+{
+  if (_registering)
+    return;
+  if ([InfinitConnectionManager sharedInstance].network_status == InfinitNetworkStatusNotReachable)
+  {
+    self.signup_facebook_view.error_label.text =
+      NSLocalizedString(@"Ensure you're connected to the Internet.", nil);
+    self.signup_facebook_view.error_label.hidden = NO;
+    self.signup_facebook_view.next_button.enabled = YES;
+    return;
+  }
+  _registering = YES;
+  self.signup_facebook_view.error_label.hidden = YES;
+  if ([self facebookInputsGood])
+  {
+    [self.view endEditing:YES];
+    [self keyboardEntryDone];
+    self.signup_facebook_view.next_button.hidden = YES;
+    [self.signup_facebook_view.activity startAnimating];
+    self.signup_facebook_view.email_field.enabled = NO;
+    self.signup_facebook_view.fullname_field.enabled = NO;
+    self.signup_facebook_view.back_button.enabled = NO;
+//    NSCharacterSet* white_space = [NSCharacterSet whitespaceCharacterSet];
+//    NSString* email =
+//      [self.signup_form_view.email_field.text stringByTrimmingCharactersInSet:white_space];
+//    NSString* fullname =
+//      [self.signup_form_view.fullname_field.text stringByTrimmingCharactersInSet:white_space];
+//    [[InfinitStateManager sharedInstance] registerFullname:fullname
+//                                                     email:email
+//                                                  password:self.signup_form_view.password_field.text
+//                                           performSelector:@selector(registerCallback:)
+//                                                  onObject:self];
+  }
+  else
+  {
+    self.signup_facebook_view.next_button.enabled = YES;
   }
 }
 
@@ -851,6 +1056,7 @@
                                                   password:self.signup_form_view.password_field.text
                                            performSelector:@selector(registerCallback:)
                                                   onObject:self];
+    [self performSegueWithIdentifier:@"register_invitation_code_segue" sender:self];
   }
   else
   {
@@ -889,7 +1095,7 @@
 
 #pragma mark - Avatar Picker
 
-- (void)registerAvatarButtonTapped:(id)sender
+- (void)avatarButtonTapped:(id)sender
 {
   UIActionSheet* actionSheet =
     [[UIActionSheet alloc] initWithTitle:nil
@@ -942,8 +1148,11 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
   self.avatar_image = info[UIImagePickerControllerEditedImage];
   self.signup_form_view.avatar_button.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
   self.signup_form_view.avatar_button.imageEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
+  self.signup_facebook_view.avatar_button.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
+  self.signup_facebook_view.avatar_button.imageEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
 
-  [self.signup_form_view setAvatar:self.avatar_image];
+  self.signup_form_view.avatar = self.avatar_image;
+  self.signup_facebook_view.avatar = self.avatar_image;
   
   [self.picker dismissViewControllerAnimated:YES completion:nil];
 }
