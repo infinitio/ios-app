@@ -11,6 +11,7 @@
 #import "InfinitApplicationSettings.h"
 #import "InfinitBackgroundManager.h"
 #import "InfinitDownloadFolderManager.h"
+#import "InfinitFacebookManager.h"
 #import "InfinitKeychain.h"
 #import "InfinitLocalNotificationManager.h"
 #import "InfinitMetricsManager.h"
@@ -25,6 +26,8 @@
 
 #import "NSData+Conversion.h"
 
+#import <FacebookSDK/FacebookSDK.h>
+
 @interface AppDelegate () <InfinitWelcomeOnboardingProtocol>
 
 @property (nonatomic, weak) InfinitWelcomeOnboardingNavigationController* onboarding_controller;
@@ -37,8 +40,35 @@
 - (BOOL)application:(UIApplication*)application
 didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
+  [[InfinitKeychain sharedInstance] removeAccount:@"chris@infinit.io"];
   [InfinitConnectionManager sharedInstance];
   [InfinitStateManager startState];
+
+  if (FBSession.activeSession.state == FBSessionStateOpen
+      || FBSession.activeSession.state == FBSessionStateOpenTokenExtended)
+  {
+    // Close the session and remove the access token from the cache
+    // The session state handler (in the app delegate) will be called automatically
+    [FBSession.activeSession closeAndClearTokenInformation];
+  }
+
+//  // Whenever a person opens app, check for a cached session
+//  if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded)
+//  {
+//    InfinitFacebookManager* manager = [InfinitFacebookManager sharedInstance];
+//    // If there's one, just open the session silently, without showing the user the login UI
+//    [FBSession openActiveSessionWithReadPermissions:manager.permission_list
+//                                       allowLoginUI:NO
+//                                  completionHandler:^(FBSession* session,
+//                                                      FBSessionState state,
+//                                                      NSError* error)
+//    {
+//      // Handler for session state changes
+//      // Call this method EACH time the session state changes,
+//      // NOT just when the session open
+//      [manager sessionStateChanged:session state:state error:error];
+//    }];
+//  }
 
   self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
   UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -140,15 +170,6 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   [[InfinitAvatarManager sharedInstance] clearCachedAvatars];
 }
 
-//Facebook SDK url handling
-//- (BOOL)application:(UIApplication*)application
-//            openURL:(NSURL*)url
-//  sourceApplication:(NSString*)sourceApplication
-//         annotation:(id)annotation {
-//  // attempt to extract a token from the url
-//  return [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
-//}
-
 - (void)applicationWillResignActive:(UIApplication*)application
 {
   // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -170,6 +191,11 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 - (void)applicationDidBecomeActive:(UIApplication*)application
 {
   // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+
+  // Handle the user leaving the app while the Facebook login dialog is being shown
+  // For example: when the user presses the iOS "home" button while the login dialog is active
+  [FBAppCall handleDidBecomeActive];
+
   [[UIApplication sharedApplication] cancelAllLocalNotifications];
   [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 }
@@ -177,43 +203,34 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 - (void)applicationWillTerminate:(UIApplication*)application
 {
   // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+  [[InfinitFacebookManager sharedInstance] closeSession];
   [InfinitStateManager stopState];
 }
 
-// This method will handle ALL the session state changes in the app
-//- (void)sessionStateChanged:(FBSession*)session
-//                      state:(FBSessionState)state
-//                      error:(NSError*)error
-//{
-//  
-//  // If the session was opened successfully
-//  if (!error && state == FBSessionStateOpen)
-//  {
-//    NSLog(@"Session opened");
-//    // Take the information and add it to InfinitUserObject.
-//    [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection* connection, NSDictionary<FBGraphUser>* FBuser, NSError* error)
-//    {
-//      if (error)
-//      {
-//        // Handle error
-//      }
-//      else
-//      {
-//        
-//        NSString* userName =
-//          [FBuser name];
-//        NSString* userImageURL =
-//          [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large", [FBuser objectID]];
-//      }
-//    }];
-//    return;
-//  }
-//  if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed){
-//    // If the session is closed
-//    NSLog(@"Session closed");
-//    
-//  }
-//}
+#pragma mark - URL Handling
+
+- (BOOL)application:(UIApplication*)application
+            openURL:(NSURL*)url
+  sourceApplication:(NSString*)sourceApplication
+         annotation:(id)annotation
+{
+//  InfinitFacebookManager* manager = [InfinitFacebookManager sharedInstance];
+//  // Note this handler block should be the exact same as the handler passed to any open calls.
+//  [FBSession.activeSession setStateChangeHandler:^(FBSession* session,
+//                                                   FBSessionState state,
+//                                                   NSError* error)
+//   {
+//     // Call the app delegate's sessionStateChanged:state:error method to handle session state changes
+//     [manager sessionStateChanged:session state:state error:error];
+//   }];
+
+  // Call FBAppCall's handleOpenURL:sourceApplication to handle Facebook app responses
+  BOOL was_handled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
+
+  // You can add your app-specific url handling code here if needed
+
+  return was_handled;
+}
 
 #pragma mark - Notification Handling
 
@@ -290,24 +307,9 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
     completionHandler(UIBackgroundFetchResultNoData);
     return;
   }
-
   [self performSelector:@selector(delayedCompletionHandlerWithNewData:)
              withObject:completionHandler
              afterDelay:10.0f];
-
-//  NSDictionary* dict = userInfo[@"i"];
-//  UIBackgroundFetchResult res =
-//    [[InfinitLocalNotificationManager sharedInstance] localNotificationForRemoteNotification:dict];
-//  if (res == UIBackgroundFetchResultNewData)
-//  {
-//    [self performSelector:@selector(delayedCompletionHandlerWithNewData:)
-//               withObject:completionHandler
-//               afterDelay:10.0f];
-//  }
-//  else
-//  {
-//      completionHandler(res);
-//  }
 }
 
 - (void)delayedCompletionHandlerWithNewData:(void (^)(UIBackgroundFetchResult))completionHandler
@@ -334,6 +336,5 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
   [self.window makeKeyAndVisible];
   self.onboarding_controller = nil;
 }
-
 
 @end
