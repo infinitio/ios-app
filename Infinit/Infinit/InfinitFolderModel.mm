@@ -315,7 +315,8 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
 
 #pragma mark - Search
 
-- (BOOL)string:(NSString*)string contains:(NSString*)search
+- (BOOL)string:(NSString*)string
+      contains:(NSString*)search
 {
   if ([string rangeOfString:search options:NSCaseInsensitiveSearch].location != NSNotFound)
     return YES;
