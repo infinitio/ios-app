@@ -24,6 +24,8 @@ typedef NS_ENUM(NSUInteger, InfinitFileTypes)
 
 + (InfinitFileTypes)fileTypeForPath:(NSString*)path;
 
++ (UIImage*)iconForFilename:(NSString*)filename;
+
 + (UIImage*)previewForPath:(NSString*)path
                     ofSize:(CGSize)size
                       crop:(BOOL)crop;

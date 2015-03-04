@@ -47,6 +47,34 @@
   return res;
 }
 
++ (UIImage*)iconForFilename:(NSString*)filename
+{
+  UIImage* res = nil;
+  switch ([InfinitFilePreview fileTypeForPath:filename])
+  {
+    case InfinitFileTypeAudio:
+      res = [UIImage imageNamed:@"icon-mimetype-audio-home"];
+      break;
+    case InfinitFileTypeDirectory:
+      res = [UIImage imageNamed:@"icon-mimetype-folder-home"];
+    case InfinitFileTypeDocument:
+      res = [UIImage imageNamed:@"icon-mimetype-doc-home"];
+      break;
+    case InfinitFileTypeImage:
+      res = [UIImage imageNamed:@"icon-mimetype-picture-home"];
+      break;
+    case InfinitFileTypeVideo:
+      res = [UIImage imageNamed:@"icon-mimetype-video-home"];
+      break;
+
+    case InfinitFileTypeOther:
+    default:
+      res = [UIImage imageNamed:@"icon-mimetype-doc-home"];
+      break;
+  }
+  return res;
+}
+
 + (UIImage*)previewForPath:(NSString*)path
                     ofSize:(CGSize)size
                       crop:(BOOL)crop
@@ -66,6 +94,10 @@
   else if (type == InfinitFileTypeImage)
   {
     res = [UIImage imageWithContentsOfFile:path];
+  }
+  else if (type == InfinitFileTypeDirectory)
+  {
+    res = [UIImage imageNamed:@"icon-mimetype-folder"];
   }
   else if (type == InfinitFileTypeVideo)
   {
