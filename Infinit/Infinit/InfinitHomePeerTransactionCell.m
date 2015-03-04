@@ -16,6 +16,7 @@
 #import "InfinitHomePeerTransactionFileCell.h"
 #import "InfinitHomePeerTransactionMoreFilesCell.h"
 #import "InfinitShrinkingLine.h"
+#import "InfinitUploadThumbnailManager.h"
 
 #import <Gap/InfinitDataSize.h>
 #import <Gap/InfinitTime.h>
@@ -53,6 +54,8 @@
 @property (nonatomic, weak) InfinitDownloadFolderManager* download_manager;
 @property (nonatomic, weak) InfinitFolderModel* folder;
 
+@property (nonatomic, readonly) NSArray* upload_thumbnails;
+
 @end
 
 static NSString* _file_cell_id = @"home_file_cell";
@@ -72,12 +75,6 @@ static UIImage* _open_image = nil;
 static UIImage* _pause_image = nil;
 static UIImage* _send_image = nil;
 
-static UIImage* _audio_icon = nil;
-static UIImage* _directory_icon = nil;
-static UIImage* _document_icon = nil;
-static UIImage* _image_icon = nil;
-static UIImage* _video_icon = nil;
-
 static CGFloat _status_height = 45.0f;
 static CGFloat _button_height = 45.0f;
 
@@ -88,6 +85,7 @@ static CGFloat _button_height = 45.0f;
   [super prepareForReuse];
   _delegate = nil;
   self.status_view.run_transfer_animation = NO;
+  _upload_thumbnails = nil;
 }
 
 - (void)awakeFromNib
@@ -231,6 +229,12 @@ static CGFloat _button_height = 45.0f;
                                self.transaction.files.count];
     }
   }
+  if (self.transaction.from_device)
+  {
+    InfinitUploadThumbnailManager* manager = [InfinitUploadThumbnailManager sharedInstance];
+    if ([manager areThumbnailsForTransaction:self.transaction])
+      _upload_thumbnails = [manager thumbnailsForTransaction:self.transaction];
+  }
   self.status_label.text = [self statusString];
   self.size_label.text = [InfinitDataSize fileSizeStringFrom:self.transaction.size];
   [self setProgress];
@@ -288,13 +292,17 @@ static CGFloat _button_height = 45.0f;
   switch (self.transaction.status)
   {
     case gap_transaction_new:
-      // Can only be this device who is sender.
     case gap_transaction_on_other_device:
       if (self.expanded)
         [self setPauseCancelButtons];
       [self setButtonsHidden:!self.expanded];
       self.top_line.hidden = !self.expanded;
       [self setStatusViewHidden:!self.expanded];
+      if (self.transaction.from_device && self.expanded)
+      {
+        self.top_line.hidden = NO;
+        self.files_view.hidden = NO;
+      }
       break;
     case gap_transaction_waiting_accept:
       [self setButtonsHidden:!(self.expanded || self.transaction.receivable)];
@@ -310,6 +318,11 @@ static CGFloat _button_height = 45.0f;
       {
         [self setPauseCancelButtons];
       }
+      if (self.transaction.from_device && self.expanded)
+      {
+        self.top_line.hidden = NO;
+        self.files_view.hidden = NO;
+      }
       break;
 
     case gap_transaction_waiting_data:
@@ -323,6 +336,11 @@ static CGFloat _button_height = 45.0f;
         [self setPauseCancelButtons];
       if (self.transaction.to_device && self.expanded)
         self.files_view.hidden = NO;
+      if (self.transaction.from_device && self.expanded)
+      {
+        self.top_line.hidden = NO;
+        self.files_view.hidden = NO;
+      }
       break;
 
     case gap_transaction_cloud_buffered:
@@ -346,6 +364,11 @@ static CGFloat _button_height = 45.0f;
             [self setButtonsHidden:NO];
           }
         }
+        self.files_view.hidden = NO;
+      }
+      if (self.transaction.from_device && self.expanded)
+      {
+        self.top_line.hidden = NO;
         self.files_view.hidden = NO;
       }
       break;
@@ -576,51 +599,23 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
     [self.files_view dequeueReusableCellWithReuseIdentifier:_file_cell_id forIndexPath:indexPath];
   if (self.folder)
   {
-    [cell setFilename:[self.folder.files[indexPath.row] name]];
-    UIImage* thumb =
+    cell.filename = [self.folder.files[indexPath.row] name];
+    cell.file_icon_view.contentMode = UIViewContentModeCenter;
+    cell.thumbnail =
       [[self.folder.files[indexPath.row] thumbnail] roundedMaskOfSize:CGSizeMake(45.0f, 45.0f)
                                                          cornerRadius:2.0f];
-    [cell setThumbnail:thumb];
+  }
+  else if (self.upload_thumbnails)
+  {
+    cell.filename = self.transaction.files[indexPath.row];
+    cell.file_icon_view.contentMode = UIViewContentModeScaleAspectFit;
+    cell.thumbnail = self.upload_thumbnails[indexPath.row];
   }
   else
   {
-    [cell setFilename:self.transaction.files[indexPath.row]];
-    UIImage* icon = nil;
-    switch ([InfinitFilePreview fileTypeForPath:self.transaction.files[indexPath.row]])
-    {
-      case InfinitFileTypeAudio:
-        if (_audio_icon == nil)
-          _audio_icon = [UIImage imageNamed:@"icon-mimetype-audio-home"];
-        icon = _audio_icon;
-        break;
-      case InfinitFileTypeDirectory:
-        if (_directory_icon == nil)
-          _directory_icon = [UIImage imageNamed:@"icon-mimetype-folder-home"];
-        icon = _directory_icon;
-      case InfinitFileTypeDocument:
-        if (_document_icon == nil)
-          _document_icon = [UIImage imageNamed:@"icon-mimetype-doc-home"];
-        icon = _document_icon;
-        break;
-      case InfinitFileTypeImage:
-        if (_image_icon == nil)
-          _image_icon = [UIImage imageNamed:@"icon-mimetype-picture-home"];
-        icon = _image_icon;
-        break;
-      case InfinitFileTypeVideo:
-        if (_video_icon == nil)
-          _video_icon = [UIImage imageNamed:@"icon-mimetype-video-home"];
-        icon = _video_icon;
-        break;
-
-      case InfinitFileTypeOther:
-      default:
-        if (_document_icon == nil)
-          _document_icon = [UIImage imageNamed:@"icon-mimetype-doc-home"];
-        icon = _document_icon;
-        break;
-    }
-    [cell setThumbnail:icon];
+    cell.filename = self.transaction.files[indexPath.row];
+    cell.file_icon_view.contentMode = UIViewContentModeCenter;
+    cell.thumbnail = [InfinitFilePreview iconForFilename:self.transaction.files[indexPath.row]];
   }
   return cell;
 }

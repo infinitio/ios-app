@@ -12,7 +12,10 @@
 
 @interface InfinitHomePeerTransactionFileCell : UICollectionViewCell
 
-- (void)setFilename:(NSString*)filename;
-- (void)setThumbnail:(UIImage*)thumbnail;
+@property (nonatomic, weak) IBOutlet UIImageView* file_icon_view;
+@property (nonatomic, weak) IBOutlet UILabel* file_name_label;
+
+@property (nonatomic, readwrite) NSString* filename;
+@property (nonatomic, readwrite) UIImage* thumbnail;
 
 @end

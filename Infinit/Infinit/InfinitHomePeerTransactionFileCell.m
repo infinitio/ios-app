@@ -8,13 +8,6 @@
 
 #import "InfinitHomePeerTransactionFileCell.h"
 
-@interface InfinitHomePeerTransactionFileCell ()
-
-@property (nonatomic, weak) IBOutlet UIImageView* file_icon_view;
-@property (nonatomic, weak) IBOutlet UILabel* file_name_label;
-
-@end
-
 @implementation InfinitHomePeerTransactionFileCell
 
 - (void)setFilename:(NSString*)filename
