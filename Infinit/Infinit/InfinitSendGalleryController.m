@@ -124,8 +124,7 @@ static CGSize _asset_size;
   _asset_size = CGSizeMake(diameter * scale, diameter * scale);
   self.layout.itemSize = _cell_size;
   [super viewWillAppear:animated];
-  if (self.assets == nil)
-    [self loadAssets];
+  [self loadAssets];
   if (self.collection_view.indexPathsForSelectedItems.count == 0)
     _selected_something = NO;
   [self configureNextButton];
@@ -183,6 +182,9 @@ static CGSize _asset_size;
     }];
     [temp_assets removeObjectsInArray:except_list];
     self.assets = [temp_assets copy];
+    [self.collection_view performSelectorOnMainThread:@selector(reloadData)
+                                           withObject:nil
+                                        waitUntilDone:NO];
   }
   else
   {
@@ -226,7 +228,7 @@ static CGSize _asset_size;
 
   // The preheat window is twice the height of the visible rect
   CGRect preheat_rect = self.collection_view.bounds;
-  preheat_rect = CGRectInset(preheat_rect, 0.0f, -0.5f * CGRectGetHeight(preheat_rect));
+  preheat_rect = CGRectInset(preheat_rect, 0.0f, - 0.5f * CGRectGetHeight(preheat_rect));
 
   // If scrolled by a "reasonable" amount...
   CGFloat delta = ABS(CGRectGetMidY(preheat_rect) - CGRectGetMidY(_previous_preheat_rect));
