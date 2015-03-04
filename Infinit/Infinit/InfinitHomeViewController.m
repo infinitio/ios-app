@@ -22,6 +22,7 @@
 #import "InfinitResizableNavigationBar.h"
 #import "InfinitSendRecipientsController.h"
 #import "InfinitTabBarController.h"
+#import "InfinitUploadThumbnailManager.h"
 
 #import <Gap/InfinitDataSize.h>
 #import <Gap/InfinitPeerTransactionManager.h>
@@ -173,7 +174,8 @@ static CGSize _avatar_size = {55.0f, 55.0f};
   @synchronized(self.data)
   {
     NSArray* peer_transactions =
-      [[InfinitPeerTransactionManager sharedInstance] transactionsIncludingArchived:NO];
+      [[InfinitPeerTransactionManager sharedInstance] transactionsIncludingArchived:NO
+                                                                     thisDeviceOnly:YES];
     if (self.data == nil)
       _data = [NSMutableArray array];
     else
@@ -435,7 +437,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
         avatar = [peer_transaction.other_user.avatar circularMaskOfSize:_avatar_size];
         [self.round_avatar_cache setObject:avatar forKey:peer_transaction.other_user.id_];
       }
-      if (peer_transaction.to_device || peer_transaction.receivable)
+      if (peer_transaction.from_device || peer_transaction.to_device || peer_transaction.receivable)
       {
         cell = [self.collection_view dequeueReusableCellWithReuseIdentifier:_peer_transaction_cell_id
                                                                forIndexPath:indexPath];
@@ -509,15 +511,27 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
         // Can only be this device who is sender.
       case gap_transaction_on_other_device:
         if (expanded)
+        {
           height += status_h + button_h;
+          if (transaction.from_device)
+            height += (transaction.files.count > 3 ? 2 * file_h : file_h);
+        }
         break;
       case gap_transaction_waiting_accept:
         if (transaction.receivable && expanded)
+        {
           height += (transaction.files.count > 3 ? 2 * file_h : file_h) + status_h + button_h;
+        }
         else if (transaction.receivable)
+        {
           height += button_h;
+        }
         else if (transaction.sender.is_self && expanded)
+        {
           height += status_h + button_h;
+          if (transaction.from_device)
+            height += (transaction.files.count > 3 ? 2 * file_h : file_h);
+        }
         break;
 
       case gap_transaction_waiting_data:
@@ -525,9 +539,15 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
       case gap_transaction_transferring:
       case gap_transaction_paused:
         if (transaction.to_device && expanded)
+        {
           height += (transaction.files.count > 3 ? 2 * file_h : file_h) + status_h + button_h;
+        }
         else if (expanded)
+        {
           height += status_h + button_h;
+          if (transaction.from_device)
+            height += (transaction.files.count > 3 ? 2 * file_h : file_h);
+        }
         break;
 
       case gap_transaction_cloud_buffered:
@@ -536,7 +556,11 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
       case gap_transaction_failed:
       case gap_transaction_canceled:
         if (expanded)
+        {
           height += status_h;
+          if (transaction.from_device)
+            height += (transaction.files.count > 3 ? 2 * file_h : file_h);
+        }
         if (transaction.status == gap_transaction_finished && transaction.to_device && expanded)
         {
           InfinitDownloadFolderManager* manager = [InfinitDownloadFolderManager sharedInstance];
@@ -583,12 +607,6 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 
 - (void)peerTransactionAdded:(NSNotification*)notification
 {
-  if (![[NSThread currentThread] isEqual:[NSThread mainThread]])
-  {
-    [self performSelectorOnMainThread:@selector(peerTransactionAdded:)
-                           withObject:notification 
-                        waitUntilDone:NO];
-  }
   if (self.onboarding_view != nil)
   {
     [self performSelectorOnMainThread:@selector(removeOnboardingView)
@@ -605,6 +623,8 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
   NSNumber* transaction_id = notification.userInfo[@"id"];
   InfinitPeerTransaction* peer_transaction =
     [[InfinitPeerTransactionManager sharedInstance] transactionWithId:transaction_id];
+  if (!peer_transaction.concerns_device)
+    return;
   InfinitHomeItem* item = [[InfinitHomeItem alloc] initWithTransaction:peer_transaction];
   [self performSelectorOnMainThread:@selector(addItem:) withObject:item waitUntilDone:NO];
 }
@@ -660,6 +680,13 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
       return;
     }
   }
+  // Transaction not in local model.
+  InfinitPeerTransaction* peer_transaction =
+    [[InfinitPeerTransactionManager sharedInstance] transactionWithId:transaction_id];
+  if (!peer_transaction.concerns_device)
+    return;
+  InfinitHomeItem* item = [[InfinitHomeItem alloc] initWithTransaction:peer_transaction];
+  [self performSelectorOnMainThread:@selector(addItem:) withObject:item waitUntilDone:NO];
 }
 
 - (void)removeOnboardingView
@@ -679,16 +706,22 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
   @synchronized(self.data)
   {
+    if (![self.data containsObject:item])
+      return;
     [self.collection_view performBatchUpdates:^
     {
+      BOOL concerns_device = item.transaction.concerns_device;
       NSUInteger index = [self.data indexOfObject:item];
       [self.data removeObject:item];
-      [self.data insertObject:item atIndex:0];
       NSUInteger section = self.show_rate_us ? 1 : 0;
       [self.collection_view deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index
-                                                                         inSection:section]]];
-      [self.collection_view insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0
-                                                                        inSection:section]]];
+                                                                          inSection:section]]];
+      if (concerns_device)
+      {
+        [self.data insertObject:item atIndex:0];
+        [self.collection_view insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0
+                                                                            inSection:section]]];
+      }
     } completion:^(BOOL finished)
     {
       [self updateRunningTransactions];
@@ -732,6 +765,12 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 
   if (recognizer.state == UIGestureRecognizerStateBegan)
   {
+    if (self.cell_image_view)
+    {
+      [self.cell_image_view removeFromSuperview];
+      _cell_image_view = nil;
+      return;
+    }
     NSIndexPath* index = [self.collection_view indexPathForItemAtPoint:location];
     UICollectionViewCell* cell = [self.collection_view cellForItemAtIndexPath:index];
     if (!cell)
@@ -891,6 +930,8 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
       {
         InfinitPeerTransaction* peer_transaction = (InfinitPeerTransaction*)transaction;
         [[InfinitPeerTransactionManager sharedInstance] archiveTransaction:peer_transaction];
+        if (transaction.from_device)
+          [[InfinitUploadThumbnailManager sharedInstance] removeThumbnailsForTransaction:peer_transaction];
       }
       [self.data removeAllObjects];
       [self.collection_view reloadData];
@@ -905,6 +946,8 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
         {
           InfinitPeerTransaction* peer_transaction = (InfinitPeerTransaction*)transaction;
           [[InfinitPeerTransactionManager sharedInstance] archiveTransaction:peer_transaction];
+          if (transaction.from_device)
+            [[InfinitUploadThumbnailManager sharedInstance] removeThumbnailsForTransaction:peer_transaction];
         }
         [self.data removeObjectAtIndex:path.row];
         [self.collection_view deleteItemsAtIndexPaths:@[path]];
