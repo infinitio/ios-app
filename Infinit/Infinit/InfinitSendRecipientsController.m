@@ -21,6 +21,7 @@
 #import "InfinitSendToSelfOverlayView.h"
 #import "InfinitSendUserCell.h"
 #import "InfinitTabBarController.h"
+#import "InfinitUploadThumbnailManager.h"
 
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitTemporaryFileManager.h>
@@ -74,6 +75,8 @@
 
   NSString* _last_search;
   UITapGestureRecognizer* _nav_bar_tap;
+
+  NSArray* _thumbnail_elements;
 }
 
 #pragma mark - Init
@@ -427,6 +430,7 @@
   if (self.assets.count > 0)
   {
     InfinitTemporaryFileManager* manager = [InfinitTemporaryFileManager sharedInstance];
+    _thumbnail_elements = [self.assets copy];
     if ([PHAsset class])
     {
       [manager addPHAssetsLibraryURLList:self.assets
@@ -446,16 +450,24 @@
                          performSelector:@selector(temporaryFileManagerCallback)
                                 onObject:self];
     }
-    if (self.assets.count > 3)
+    if (_thumbnail_elements.count > 10)
     {
-      [self.tabBarController performSelectorOnMainThread:@selector(showTransactionPreparingNotification)
-                                              withObject:nil 
-                                           waitUntilDone:NO];
+      [self.tabBarController performSelector:@selector(showTransactionPreparingNotification)
+                                  withObject:nil 
+                                  afterDelay:1.0f];
     }
   }
   else if (self.files.count > 0)
   {
-    [self sendFilesToCurrentRecipients:self.files];
+    _thumbnail_elements = [self.files copy];
+    NSArray* ids = [self sendFilesToCurrentRecipients:self.files];
+    for (NSNumber* id_ in ids)
+    {
+      InfinitPeerTransaction* transaction =
+        [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
+      [[InfinitUploadThumbnailManager sharedInstance] generateThumbnailsForFiles:_thumbnail_elements
+                                                                  forTransaction:transaction];
+    }
   }
   [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewSend method:InfinitUIMethodTap];
   [self.tabBarController performSelectorOnMainThread:@selector(showMainScreen:)
@@ -470,6 +482,13 @@
   NSArray* ids = [self sendFilesToCurrentRecipients:files];
   [[InfinitTemporaryFileManager sharedInstance] setTransactionIds:ids
                                                   forManagedFiles:_managed_files_id];
+  for (NSNumber* id_ in ids)
+  {
+    InfinitPeerTransaction* transaction =
+      [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
+    [[InfinitUploadThumbnailManager sharedInstance] generateThumbnailsForAssets:_thumbnail_elements
+                                                                 forTransaction:transaction];
+  }
 }
 
 - (NSArray*)sendFilesToCurrentRecipients:(NSArray*)files
