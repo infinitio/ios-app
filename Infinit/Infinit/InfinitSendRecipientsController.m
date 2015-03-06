@@ -12,6 +12,7 @@
 #import "InfinitApplicationSettings.h"
 #import "InfinitColor.h"
 #import "InfinitContact.h"
+#import "InfinitHostDevice.h"
 #import "InfinitImportOverlayView.h"
 #import "InfinitSendContactCell.h"
 #import "InfinitContactImportCell.h"
@@ -32,6 +33,7 @@
 
 @import AddressBook;
 @import AssetsLibrary;
+@import MessageUI;
 @import Photos;
 
 @interface InfinitSendRecipientsController () <UIActionSheetDelegate,
@@ -59,6 +61,9 @@
 @property (nonatomic, strong) NSMutableArray* contact_results;
 @property (nonatomic, strong) NSMutableOrderedSet* recipients;
 
+@property (nonatomic, readonly) InfinitContact* sms_contact;
+@property (nonatomic, readonly) MFMessageComposeViewController* sms_controller;
+
 @end
 
 @implementation InfinitSendRecipientsController
@@ -77,6 +82,8 @@
   UITapGestureRecognizer* _nav_bar_tap;
 
   NSArray* _thumbnail_elements;
+
+  NSInteger _max_recipients;
 }
 
 #pragma mark - Init
@@ -93,6 +100,7 @@
     _no_results_cell_id = @"send_no_results_cell";
     _nav_bar_tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                            action:@selector(navBarTapped)];
+    _max_recipients = 10;
   }
   return self;
 }
@@ -150,6 +158,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+  _sms_contact = nil;
   _me_match = YES;
   [self fetchSwaggers];
   [self configureSearchField];
@@ -267,8 +276,11 @@
         if (person)
         {
           InfinitContact* contact = [[InfinitContact alloc] initWithABRecord:person];
-          if (contact != nil && contact.emails.count > 0)
+          if (contact != nil && (contact.emails.count > 0 ||
+                                 (contact.phone_numbers.count > 0 && [InfinitHostDevice canSendSMS])))
+          {
             [self.all_contacts addObject:contact];
+          }
         }
       }
       CFRelease(contacts);
@@ -280,9 +292,12 @@
                                                           selector:@selector(caseInsensitiveCompare:)];
     [self.all_contacts sortUsingDescriptors:@[sort]];
     self.contact_results = [self.all_contacts mutableCopy];
-    [self performSelectorOnMainThread:@selector(reloadTableSections:)
-                           withObject:[NSIndexSet indexSetWithIndex:2]
-                        waitUntilDone:NO];
+    if (self.all_contacts.count > 0)
+    {
+      [self performSelectorOnMainThread:@selector(reloadTableSections:)
+                             withObject:[NSIndexSet indexSetWithIndex:2]
+                          waitUntilDone:NO];
+    }
   }
 }
 
@@ -333,9 +348,6 @@
     UINib* overlay_nib = [UINib nibWithNibName:NSStringFromClass(InfinitSendToSelfOverlayView.class)
                                         bundle:nil];
     self.send_to_self_overlay = [[overlay_nib instantiateWithOwner:self options:nil] firstObject];
-    [self.send_to_self_overlay.already_infinit_button addTarget:self
-                                                         action:@selector(cancelOverlayFromButton:)
-                                    forControlEvents:UIControlEventTouchUpInside];
     [self.send_to_self_overlay.send_email_button addTarget:self
                                                     action:@selector(cancelOverlayFromButton:)
                                           forControlEvents:UIControlEventTouchUpInside];
@@ -497,13 +509,35 @@
   for (InfinitContact* contact in self.recipients)
   {
     if (contact.infinit_user != nil)
+    {
       [actual_recipients addObject:contact.infinit_user];
+    }
     else
-      [actual_recipients addObject:contact.emails[contact.selected_email_index]];
+    {
+      if (contact.selected_email_index != NSNotFound)
+      {
+        [actual_recipients addObject:contact.emails[contact.selected_email_index]];
+      }
+      else if (contact.selected_phone_index != NSNotFound)
+      {
+        [actual_recipients addObject:contact.phone_numbers[contact.selected_phone_index]];
+      }
+    }
   }
-  return [[InfinitPeerTransactionManager sharedInstance] sendFiles:files
-                                                      toRecipients:actual_recipients
-                                                       withMessage:@""];
+  NSArray* res = [[InfinitPeerTransactionManager sharedInstance] sendFiles:files
+                                                              toRecipients:actual_recipients
+                                                               withMessage:@""];
+  NSUInteger sms_index = [self.recipients indexOfObject:self.sms_contact];
+  if (sms_index != NSNotFound)
+  {
+    // XXX
+    if (self.sms_controller == nil)
+      _sms_controller = [[MFMessageComposeViewController alloc] init];
+    self.sms_controller.recipients =
+      @[self.sms_contact.phone_numbers[self.sms_contact.selected_phone_index]];
+    self.sms_controller.body = [NSString stringWithFormat:NSLocalizedString(@"", nil)];
+  }
+  return res;
 }
 
 - (IBAction)inviteBarButtonTapped:(id)sender
@@ -707,6 +741,8 @@ shouldHighlightRowAtIndexPath:(NSIndexPath*)indexPath
   {
     return NO;
   }
+  if (self.recipients.count > _max_recipients)
+    return NO;
   return YES;
 }
 
@@ -726,11 +762,11 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   else if (indexPath.section == 0)
   {
     InfinitApplicationSettings* settings = [InfinitApplicationSettings sharedInstance];
-    if (![[settings send_to_self_onboarded] isEqualToNumber:@1])
-    {
+//    if (![[settings send_to_self_onboarded] isEqualToNumber:@1])
+//    {
       [settings setSend_to_self_onboarded:@1];
       [self showSendToSelfOverlay];
-    }
+//    }
     contact = self.me_contact;
   }
   else if (indexPath.section == 1)
@@ -756,6 +792,19 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
     {
       contact.selected_email_index = 0;
     }
+    else if (contact.phone_numbers.count == 1)
+    {
+      if (self.sms_contact)
+      {
+        [self showSendToOnePhoneMessage];
+        contact = nil;
+      }
+      else
+      {
+        contact.selected_phone_index = 0;
+        _sms_contact = contact;
+      }
+    }
     else
     {
       UIActionSheet* sheet = [[UIActionSheet alloc] initWithTitle:nil
@@ -767,6 +816,13 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
       {
         [sheet addButtonWithTitle:email];
       }
+      if ([InfinitHostDevice canSendSMS])
+      {
+        for (NSString* phone in contact.phone_numbers)
+        {
+          [sheet addButtonWithTitle:phone];
+        }
+      }
       [sheet showFromTabBar:self.tabBarController.tabBar];
     }
   }
@@ -776,6 +832,19 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   [self.search_field reloadData];
   [self reloadSearchResults];
   [self.search_field resignFirstResponder];
+}
+
+- (void)showSendToOnePhoneMessage
+{
+  NSString* title = NSLocalizedString(@"Unable to add contact!", nil);
+  NSString* message =
+    NSLocalizedString(@"You can only send to one contact when sending to a phone number", nil);
+  UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
+                                                  message:message
+                                                 delegate:self
+                                        cancelButtonTitle:@"OK"
+                                        otherButtonTitles:nil];
+  [alert show];
 }
 
 - (void)actionSheetCancel:(UIActionSheet*)actionSheet
@@ -805,9 +874,30 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
   }
   else
   {
-    NSUInteger email_index = buttonIndex - 1;
+    NSUInteger index = buttonIndex - 1;
     InfinitContact* contact = self.recipients.lastObject;
-    contact.selected_email_index = email_index;
+    if (index < contact.emails.count)
+    {
+      contact.selected_email_index = index;
+    }
+    else
+    {
+      if (self.sms_contact)
+      {
+        [self showSendToOnePhoneMessage];
+        [self.recipients removeObject:contact];
+        [self.table_view deselectRowAtIndexPath:[NSIndexPath indexPathForRow:[self.contact_results
+                                                                              indexOfObject:contact]
+                                                                   inSection:2]
+                                       animated:YES];
+        [self.search_field reloadData];
+      }
+      else
+      {
+        contact.selected_phone_index = index - contact.emails.count - 1;
+        _sms_contact = contact;
+      }
+    }
   }
   [self updateSendButton];
 }
@@ -818,6 +908,10 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
   InfinitContact* contact =
     [(InfinitSendAbstractCell*)([self.table_view cellForRowAtIndexPath:indexPath]) contact];
   [_recipients removeObject:contact];
+  if ([contact isEqual:self.sms_contact])
+    _sms_contact = nil;
+  contact.selected_phone_index = NSNotFound;
+  contact.selected_email_index = NSNotFound;
   [self.search_field reloadData];
   [self reloadSearchResults];
   [self updateSendButton];
@@ -883,6 +977,8 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
 
 - (void)addContactFromEmailAddress:(NSString*)email
 {
+  if (self.recipients.count > _max_recipients)
+    return;
   InfinitContact* contact = [[InfinitContact alloc] initWithEmail:email];
   if (self.recipients == nil)
     self.recipients = [NSMutableOrderedSet orderedSet];
@@ -910,6 +1006,8 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
 didDeleteTokenAtIndex:(NSUInteger)index
 {
   InfinitContact* contact = self.recipients[index];
+  contact.selected_email_index = NSNotFound;
+  contact.selected_phone_index = NSNotFound;
   if ([contact isEqual:self.me_contact])
   {
     [self.table_view deselectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
