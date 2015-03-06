@@ -389,6 +389,7 @@ static CGFloat _button_height = 45.0f;
 {
   switch (self.transaction.status)
   {
+    case gap_transaction_new:
     case gap_transaction_connecting:
     case gap_transaction_transferring:
       self.status_view.run_transfer_animation = YES;
