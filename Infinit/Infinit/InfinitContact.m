@@ -13,11 +13,13 @@
 
 #import "UIImage+Rounded.h"
 
+@interface InfinitContact ()
+
+@property (readonly) BOOL inited_with_infinit_user;
+
+@end
+
 @implementation InfinitContact
-{
-@private
-  BOOL _inited_with_infinit_user;
-}
 
 #pragma mark - Init
 
@@ -83,7 +85,8 @@
     _infinit_user = nil;
     _avatar = nil;
     _emails = @[email];
-    _selected_email_index = 0;
+    _selected_email_index = NSNotFound;
+    _selected_phone_index = NSNotFound;
     _fullname = email;
     _first_name = email;
     _phone_numbers = nil;
@@ -239,6 +242,7 @@ containsString:(NSString*)string
     _infinit_user = original.infinit_user;
     _phone_numbers = [original.phone_numbers copy];
     _selected_email_index = original.selected_email_index;
+    _selected_phone_index = original.selected_phone_index;
   }
   return self;
 }

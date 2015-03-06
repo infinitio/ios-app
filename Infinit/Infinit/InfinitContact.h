@@ -19,7 +19,8 @@
 @property (nonatomic, strong) NSString* fullname;
 @property (nonatomic, weak) InfinitUser* infinit_user;
 @property (nonatomic, strong) NSArray* phone_numbers;
-@property (nonatomic, readwrite) NSUInteger selected_email_index;
+@property (nonatomic, readwrite) NSInteger selected_email_index;
+@property (nonatomic, readwrite) NSInteger selected_phone_index;
 
 
 - (id)initWithABRecord:(ABRecordRef)record;
