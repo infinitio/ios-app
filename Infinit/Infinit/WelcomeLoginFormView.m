@@ -21,13 +21,4 @@
   return 310.0f;
 }
 
-- (void)setFacebook_hidden:(BOOL)facebook_hidden
-{
-  if (_facebook_hidden == facebook_hidden)
-    return;
-  _facebook_hidden = facebook_hidden;
-  self.facebook_button.hidden = facebook_hidden;
-  self.facebook_line.hidden = facebook_hidden;
-}
-
 @end

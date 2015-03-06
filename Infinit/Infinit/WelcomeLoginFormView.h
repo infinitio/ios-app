@@ -23,7 +23,6 @@
 @property (nonatomic, weak) IBOutlet UILabel* error_label;
 @property (nonatomic, weak) IBOutlet UIButton* forgot_button;
 
-@property (nonatomic, readwrite) BOOL facebook_hidden;
 @property (nonatomic, readonly) CGFloat height;
 
 @end
