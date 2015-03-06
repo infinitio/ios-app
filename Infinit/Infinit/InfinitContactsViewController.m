@@ -13,6 +13,7 @@
 #import "InfinitContactCell.h"
 #import "InfinitContactViewController.h"
 #import "InfinitContactImportCell.h"
+#import "InfinitHostDevice.h"
 #import "InfinitImportOverlayView.h"
 #import "InfinitMetricsManager.h"
 
@@ -176,8 +177,11 @@
         if (person)
         {
           InfinitContact* contact = [[InfinitContact alloc] initWithABRecord:person];
-          if (contact != nil && contact.emails.count > 0)
+          if (contact != nil && (contact.emails.count > 0 ||
+                                 ([InfinitHostDevice canSendSMS] && contact.phone_numbers.count > 0)))
+          {
             [self.all_contacts addObject:contact];
+          }
         }
       }
       CFRelease(contacts);
@@ -188,10 +192,13 @@
                                                          ascending:YES
                                                           selector:@selector(caseInsensitiveCompare:)];
     [self.all_contacts sortUsingDescriptors:@[sort]];
-    self.contact_results = [self.all_contacts mutableCopy];
-    [self performSelectorOnMainThread:@selector(reloadTableSections:)
-                           withObject:[NSIndexSet indexSetWithIndex:2]
-                        waitUntilDone:NO];
+    if (self.all_contacts.count > 0)
+    {
+      self.contact_results = [self.all_contacts mutableCopy];
+      [self performSelectorOnMainThread:@selector(reloadTableSections:)
+                             withObject:[NSIndexSet indexSetWithIndex:2]
+                          waitUntilDone:NO];
+    }
   }
 }
 

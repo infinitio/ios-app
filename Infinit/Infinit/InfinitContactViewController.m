@@ -9,6 +9,7 @@
 #import "InfinitContactViewController.h"
 
 #import "InfinitColor.h"
+#import "InfinitHostDevice.h"
 #import "InfinitMetricsManager.h"
 #import "InfinitTabBarController.h"
 
@@ -25,8 +26,12 @@
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* send_center_constraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* send_size_constraint;
 @property (nonatomic, weak) IBOutlet UIButton* favorite_button;
-@property (nonatomic, weak) IBOutlet UILabel* email_title_label;
+@property (nonatomic, weak) IBOutlet UIView* email_view;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* email_height;
 @property (nonatomic, weak) IBOutlet UILabel* email_address_label;
+@property (nonatomic, weak) IBOutlet UIView* phone_view;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* phone_height;
+@property (nonatomic, weak) IBOutlet UILabel* phone_label;
 
 @end
 
@@ -81,8 +86,11 @@ static UIImage* _infinit_icon = nil;
   {
     self.icon_view.hidden = YES;
     [self setFavoriteButtonHidden:YES];
-    self.email_title_label.hidden = NO;
-    self.email_address_label.hidden = NO;
+    self.email_view.hidden = !(self.contact.emails.count > 0);
+    self.email_height.constant = self.contact.emails.count > 0 ? 55.0f : 0.0f;
+    self.phone_view.hidden =
+      !(self.contact.phone_numbers.count > 0) && [InfinitHostDevice canSendSMS];
+    self.phone_height.constant = self.contact.phone_numbers.count > 0 ? 55.0f : 0.0f;
     NSMutableString* email_str = [[NSMutableString alloc] init];
     NSUInteger count = 0;
     for (NSString* email in self.contact.emails)
@@ -91,12 +99,21 @@ static UIImage* _infinit_icon = nil;
       if (++count < self.contact.emails.count)
         [email_str appendString:@", "];
     }
+    NSMutableString* phone_str = [[NSMutableString alloc] init];
+    count = 0;
+    for (NSString* number in self.contact.phone_numbers)
+    {
+      [phone_str appendString:number];
+      if (++count < self.contact.phone_numbers.count)
+        [phone_str appendString:@", "];
+    }
     self.email_address_label.text = email_str;
+    self.phone_label.text = phone_str;
   }
   else
   {
-    self.email_title_label.hidden = YES;
-    self.email_address_label.hidden = YES;
+    self.email_view.hidden = YES;
+    self.phone_view.hidden = YES;
     if (self.contact.infinit_user.favorite || self.contact.infinit_user.is_self)
     {
       self.icon_view.image = _favorite_icon;
