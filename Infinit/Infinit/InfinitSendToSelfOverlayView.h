@@ -11,6 +11,5 @@
 @interface InfinitSendToSelfOverlayView : UIView
 
 @property (nonatomic, weak) IBOutlet UIButton* send_email_button;
-@property (nonatomic, weak) IBOutlet UIButton* already_infinit_button;
 
 @end
