@@ -40,35 +40,13 @@
 - (BOOL)application:(UIApplication*)application
 didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
-  [[InfinitKeychain sharedInstance] removeAccount:@"chris@infinit.io"];
   [InfinitConnectionManager sharedInstance];
   [InfinitStateManager startState];
 
-  if (FBSession.activeSession.state == FBSessionStateOpen
-      || FBSession.activeSession.state == FBSessionStateOpenTokenExtended)
-  {
-    // Close the session and remove the access token from the cache
-    // The session state handler (in the app delegate) will be called automatically
-    [FBSession.activeSession closeAndClearTokenInformation];
-  }
-
-//  // Whenever a person opens app, check for a cached session
-//  if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded)
-//  {
-//    InfinitFacebookManager* manager = [InfinitFacebookManager sharedInstance];
-//    // If there's one, just open the session silently, without showing the user the login UI
-//    [FBSession openActiveSessionWithReadPermissions:manager.permission_list
-//                                       allowLoginUI:NO
-//                                  completionHandler:^(FBSession* session,
-//                                                      FBSessionState state,
-//                                                      NSError* error)
-//    {
-//      // Handler for session state changes
-//      // Call this method EACH time the session state changes,
-//      // NOT just when the session open
-//      [manager sessionStateChanged:session state:state error:error];
-//    }];
-//  }
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(willLogout)
+                                               name:INFINIT_WILL_LOGOUT_NOTIFICATION
+                                             object:nil];
 
   self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
   UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -99,6 +77,38 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
         self.window.rootViewController =
           [storyboard instantiateViewControllerWithIdentifier:@"tab_bar_controller"];
       }
+    }
+    else if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded)
+    {
+      self.window.rootViewController =
+        [storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
+      [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:25.0f];
+      [[NSNotificationCenter defaultCenter] addObserver:self
+                                               selector:@selector(facebookSessionStateChanged:)
+                                                   name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
+                                                 object:nil];
+      InfinitFacebookManager* manager = [InfinitFacebookManager sharedInstance];
+      // If there's one, just open the session silently, without showing the user the login UI
+      [FBSession openActiveSessionWithReadPermissions:manager.permission_list
+                                         allowLoginUI:NO
+                                    completionHandler:^(FBSession* session,
+                                                        FBSessionState state,
+                                                        NSError* error)
+       {
+         // Handler for session state changes
+         // Call this method EACH time the session state changes,
+         // NOT just when the session open
+         [manager sessionStateChanged:session state:state error:error];
+       }];
+    }
+    else if (FBSession.activeSession.state == FBSessionStateOpen ||
+             FBSession.activeSession.state == FBSessionStateOpenTokenExtended)
+    {
+      NSLog(@"xxx token open");
+      self.window.rootViewController =
+        [storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
+      [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:15.0f];
+      [self tryFacebookLogin];
     }
     else
     {
@@ -214,15 +224,15 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   sourceApplication:(NSString*)sourceApplication
          annotation:(id)annotation
 {
-//  InfinitFacebookManager* manager = [InfinitFacebookManager sharedInstance];
-//  // Note this handler block should be the exact same as the handler passed to any open calls.
-//  [FBSession.activeSession setStateChangeHandler:^(FBSession* session,
-//                                                   FBSessionState state,
-//                                                   NSError* error)
-//   {
-//     // Call the app delegate's sessionStateChanged:state:error method to handle session state changes
-//     [manager sessionStateChanged:session state:state error:error];
-//   }];
+  InfinitFacebookManager* manager = [InfinitFacebookManager sharedInstance];
+  // Note this handler block should be the exact same as the handler passed to any open calls.
+  [FBSession.activeSession setStateChangeHandler:^(FBSession* session,
+                                                   FBSessionState state,
+                                                   NSError* error)
+   {
+     // Call the app delegate's sessionStateChanged:state:error method to handle session state changes
+     [manager sessionStateChanged:session state:state error:error];
+   }];
 
   // Call FBAppCall's handleOpenURL:sourceApplication to handle Facebook app responses
   BOOL was_handled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
@@ -335,6 +345,52 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
   }
   [self.window makeKeyAndVisible];
   self.onboarding_controller = nil;
+}
+
+#pragma mark - Facebok Session State Changed
+
+- (void)tryFacebookLogin
+{
+  NSString* email = [InfinitApplicationSettings sharedInstance].username;
+  NSString* token = FBSession.activeSession.accessTokenData.accessToken;
+  [[InfinitStateManager sharedInstance] facebookConnect:token
+                                           emailAddress:email
+                                        performSelector:@selector(loginCallback:)
+                                               onObject:self];
+}
+
+- (void)facebookSessionStateChanged:(NSNotification*)notification
+{
+  FBSessionState state = [notification.userInfo[@"state"] unsignedIntegerValue];
+  NSError* error = notification.userInfo[@"error"];
+  if (state == FBSessionStateOpen || state == FBSessionStateOpenTokenExtended)
+  {
+    [self tryFacebookLogin];
+  }
+  else
+  {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                             selector:@selector(tooLongToLogin)
+                                               object:nil];
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    NSString* identifier = identifier = @"welcome_controller";
+    self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:identifier];
+    [self.window makeKeyAndVisible];
+  }
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
+                                                object:nil];
+}
+
+#pragma mark - Will Logout
+
+- (void)willLogout
+{
+  if (FBSession.activeSession.state == FBSessionStateOpen
+      || FBSession.activeSession.state == FBSessionStateOpenTokenExtended)
+  {
+    [[InfinitFacebookManager sharedInstance] cleanSession];
+  }
 }
 
 @end
