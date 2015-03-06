@@ -77,15 +77,6 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)appplicationIsActive
-{
-  if (self.tabBar.hidden)
-  {
-    self.tabBar.hidden = NO;
-    [self setTabBarHidden:YES animated:NO];
-  }
-}
-
 - (void)viewDidLoad
 {
   _first_appear = NO;
@@ -105,10 +96,6 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(connectionStatusChanged:)
                                                name:INFINIT_CONNECTION_STATUS_CHANGE
-                                             object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(appplicationIsActive)
-                                               name:UIApplicationDidBecomeActiveNotification
                                              object:nil];
   [super viewDidLoad];
 
@@ -521,7 +508,7 @@ shouldSelectViewController:(UIViewController*)viewController
                                    afterDelay:0.51f];
         self.permission_view = nil;
       }];
-     [self setTabBarHidden:NO animated:NO];
+     [self setTabBarHidden:YES animated:NO];
      self.selectedIndex = InfinitTabBarIndexSend;
      [InfinitMetricsManager sendMetric:InfinitUIEventAccessGallery
                                 method:InfinitUIMethodYes];
