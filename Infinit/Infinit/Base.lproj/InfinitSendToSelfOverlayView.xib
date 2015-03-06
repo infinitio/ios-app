@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14D72i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14D87h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="SourceSansPro-Bold.otf">
-            <string>SourceSansPro-Bold</string>
-            <string>SourceSansPro-Bold</string>
-            <string>SourceSansPro-Bold</string>
             <string>SourceSansPro-Bold</string>
         </mutableArray>
     </customFonts>
@@ -19,90 +16,28 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send files to your other devices!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MRU-8D-Qd1">
-                    <rect key="frame" x="175" y="52" width="250" height="70"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MRU-8D-Qd1">
+                    <rect key="frame" x="150" y="65" width="300" height="70"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="250" id="054-fi-Dhn"/>
+                        <constraint firstAttribute="width" constant="300" id="054-fi-Dhn"/>
                         <constraint firstAttribute="height" constant="70" id="B9C-Rx-Gfg"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="25"/>
+                    <string key="text">Send your transfer now, and
+install the Mac or Windows app
+to receive it later.</string>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="schema-send-multi-devices" translatesAutoresizingMaskIntoConstraints="NO" id="C9S-UM-PhF">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="schema-send-multi-devices" translatesAutoresizingMaskIntoConstraints="NO" id="C9S-UM-PhF">
                     <rect key="frame" x="187" y="230" width="227" height="173"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="173" id="6E2-X4-UZm"/>
                         <constraint firstAttribute="width" constant="227" id="VoS-yO-6A2"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A notification will be sent to your devices." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4v-5A-4Vv">
-                    <rect key="frame" x="161" y="142" width="279" height="36"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="36" id="O8C-RN-or0"/>
-                        <constraint firstAttribute="width" constant="279" id="dpJ-dU-RxQ"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FYC-oJ-qAY">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Lh-NQ-J3V">
                     <rect key="frame" x="167" y="515" width="266" height="55"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="266" id="Ad8-cb-Vj3"/>
-                        <constraint firstAttribute="height" constant="55" id="TIM-sI-jim"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
-                    <state key="normal" title="NEXT">
-                        <color key="titleColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="nextTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="yLj-Gg-yw3"/>
-                    </connections>
-                </button>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qir-vk-uPf">
-                    <rect key="frame" x="167" y="515" width="266" height="55"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="266" id="7RZ-iU-kHm"/>
-                        <constraint firstAttribute="height" constant="55" id="HUe-yQ-rYW"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
-                    <state key="normal" title="I ALREADY HAVE INFINIT">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5rm-ZI-GS5">
-                    <rect key="frame" x="223" y="247" width="155" height="91"/>
-                    <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-windows-white" translatesAutoresizingMaskIntoConstraints="NO" id="bL3-as-rbf">
-                            <rect key="frame" x="87" y="22" width="48" height="48"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="48" id="XLe-tZ-SEA"/>
-                                <constraint firstAttribute="width" constant="48" id="ya5-wl-dzo"/>
-                            </constraints>
-                        </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-apple-white" translatesAutoresizingMaskIntoConstraints="NO" id="yF9-cW-2Pq">
-                            <rect key="frame" x="20" y="20" width="41" height="51"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="51" id="2Gb-FJ-L5F"/>
-                                <constraint firstAttribute="width" constant="41" id="cis-OX-8VX"/>
-                            </constraints>
-                        </imageView>
-                    </subviews>
-                    <constraints>
-                        <constraint firstItem="yF9-cW-2Pq" firstAttribute="leading" secondItem="5rm-ZI-GS5" secondAttribute="leading" constant="20" id="5Mj-3e-opV"/>
-                        <constraint firstAttribute="centerY" secondItem="yF9-cW-2Pq" secondAttribute="centerY" id="HEK-BL-phQ"/>
-                        <constraint firstAttribute="centerY" secondItem="bL3-as-rbf" secondAttribute="centerY" id="W66-YB-ZgN"/>
-                        <constraint firstAttribute="width" constant="155" id="XAo-8X-SR4"/>
-                        <constraint firstItem="bL3-as-rbf" firstAttribute="leading" secondItem="yF9-cW-2Pq" secondAttribute="trailing" constant="26" id="ovO-6k-oKQ"/>
-                        <constraint firstAttribute="height" constant="91" id="uGq-HQ-khv"/>
-                    </constraints>
-                </view>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Lh-NQ-J3V">
-                    <rect key="frame" x="167" y="445" width="266" height="55"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="55" id="BPJ-l6-0Vz"/>
@@ -117,30 +52,15 @@
             </subviews>
             <color key="backgroundColor" red="0.19215686274509802" green="0.19215686274509802" blue="0.19215686274509802" alpha="0.95000000000000007" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="C9S-UM-PhF" firstAttribute="top" secondItem="z4v-5A-4Vv" secondAttribute="bottom" constant="52" id="6La-rM-ZiQ"/>
                 <constraint firstAttribute="centerX" secondItem="2Lh-NQ-J3V" secondAttribute="centerX" id="7Rk-24-vmU"/>
-                <constraint firstAttribute="bottom" secondItem="qir-vk-uPf" secondAttribute="bottom" constant="30" id="H14-Bg-IZ6"/>
-                <constraint firstItem="qir-vk-uPf" firstAttribute="top" secondItem="2Lh-NQ-J3V" secondAttribute="bottom" constant="15" id="NKh-Qg-3Nv"/>
                 <constraint firstAttribute="centerX" secondItem="MRU-8D-Qd1" secondAttribute="centerX" id="O65-am-HFj"/>
-                <constraint firstAttribute="centerX" secondItem="FYC-oJ-qAY" secondAttribute="centerX" id="S5k-eY-Ywp"/>
-                <constraint firstAttribute="bottom" secondItem="FYC-oJ-qAY" secondAttribute="bottom" constant="30" id="Sit-wj-Q5z"/>
-                <constraint firstItem="z4v-5A-4Vv" firstAttribute="top" secondItem="MRU-8D-Qd1" secondAttribute="bottom" constant="20" id="U9v-Dw-2Q2"/>
                 <constraint firstAttribute="centerX" secondItem="C9S-UM-PhF" secondAttribute="centerX" id="YJo-gI-DXe"/>
-                <constraint firstAttribute="centerX" secondItem="5rm-ZI-GS5" secondAttribute="centerX" id="Zxv-dy-Ecd"/>
-                <constraint firstItem="5rm-ZI-GS5" firstAttribute="top" secondItem="z4v-5A-4Vv" secondAttribute="bottom" constant="69" id="bcC-Aj-joE"/>
-                <constraint firstAttribute="centerX" secondItem="z4v-5A-4Vv" secondAttribute="centerX" id="ir4-zI-44C"/>
-                <constraint firstAttribute="centerX" secondItem="qir-vk-uPf" secondAttribute="centerX" id="ynA-hZ-qJe"/>
-                <constraint firstItem="MRU-8D-Qd1" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="52" id="zic-cz-es2"/>
+                <constraint firstAttribute="bottom" secondItem="2Lh-NQ-J3V" secondAttribute="bottom" constant="30" id="fhZ-vk-ZVT"/>
+                <constraint firstItem="MRU-8D-Qd1" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="65" id="zic-cz-es2"/>
             </constraints>
             <connections>
-                <outlet property="already_infinit_button" destination="qir-vk-uPf" id="oap-XX-OhJ"/>
                 <outlet property="first_image" destination="C9S-UM-PhF" id="kLp-4A-poC"/>
-                <outlet property="first_image_constraint" destination="6La-rM-ZiQ" id="MJ4-1X-r4o"/>
                 <outlet property="header_label" destination="MRU-8D-Qd1" id="bP5-KU-Qpm"/>
-                <outlet property="info_label" destination="z4v-5A-4Vv" id="4mW-Wx-RMr"/>
-                <outlet property="next_button" destination="FYC-oJ-qAY" id="FvZ-3k-vf5"/>
-                <outlet property="second_image" destination="5rm-ZI-GS5" id="lVD-ec-52s"/>
-                <outlet property="second_image_constraint" destination="bcC-Aj-joE" id="Fse-zQ-tmB"/>
                 <outlet property="send_email_button" destination="2Lh-NQ-J3V" id="NvL-Te-MaR"/>
                 <outlet property="top_constraint" destination="zic-cz-es2" id="99X-pe-8Qh"/>
             </connections>
@@ -148,8 +68,6 @@
         </view>
     </objects>
     <resources>
-        <image name="icon-apple-white" width="41" height="51"/>
-        <image name="icon-windows-white" width="48" height="48"/>
         <image name="schema-send-multi-devices" width="227" height="173"/>
     </resources>
 </document>

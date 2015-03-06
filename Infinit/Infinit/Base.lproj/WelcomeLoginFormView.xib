@@ -101,7 +101,7 @@
                                 <constraint firstAttribute="height" constant="21" id="sNl-AN-cVo"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
-                            <state key="normal" title="  Sign in with facebook" image="icon-facebook-blue">
+                            <state key="normal" title="  Log in with Facebook" image="icon-facebook-blue">
                                 <color key="titleColor" red="0.1647058824" green="0.42352941179999998" blue="0.70980392160000005" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
