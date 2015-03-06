@@ -38,6 +38,49 @@
 
 @import MobileCoreServices;
 
+@interface InfinitFacebookUser : NSObject
+
+@property (nonatomic, readonly) UIImage* avatar;
+@property (nonatomic, readonly) NSString* email;
+@property (nonatomic, readonly) NSString* fullname;
+
++ (instancetype)userWithAvatar:(UIImage*)avatar
+                         email:(NSString*)email
+                      fullname:(NSString*)fullname;
+
+@end
+
+@implementation InfinitFacebookUser
+
+- (id)initWithAvatar:(UIImage*)avatar
+               email:(NSString*)email
+            fullname:(NSString*)fullname
+{
+  if (self = [super init])
+  {
+    _avatar = avatar;
+    _email = email;
+    _fullname = fullname;
+  }
+  return self;
+}
+
++ (instancetype)userWithAvatar:(UIImage*)avatar
+                         email:(NSString*)email
+                      fullname:(NSString*)fullname
+{
+  return [[InfinitFacebookUser alloc] initWithAvatar:avatar email:email fullname:fullname];
+}
+
+@end
+
+typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
+{
+  InfinitFacebookConnectNone = 0,
+  InfinitFacebookConnectRegister,
+  InfinitFacebookConnectLogin,
+};
+
 @interface InfinitWelcomeController () <UITextFieldDelegate,
                                         UIActionSheetDelegate,
                                         UIImagePickerControllerDelegate,
@@ -57,6 +100,9 @@
 
 @property (nonatomic, strong) UIImage* avatar_image;
 @property (nonatomic, strong) UIImagePickerController* picker;
+
+@property (nonatomic, readonly) InfinitFacebookConnectType facebook_connect_type;
+@property (nonatomic, readonly) InfinitFacebookUser* facebook_user;
 
 @end
 
@@ -134,6 +180,11 @@
                                            selector:@selector(connectionTypeChanged:)
                                                name:INFINIT_CONNECTION_TYPE_CHANGE
                                              object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(facebookSessionStateChanged:)
+                                               name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
+                                             object:nil];
+  _facebook_connect_type = InfinitFacebookConnectNone;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -193,7 +244,7 @@
                                        action:@selector(loginNextButtonTapped:)
                              forControlEvents:UIControlEventTouchUpInside];
   [self.login_form_view.facebook_button addTarget:self
-                                           action:@selector(facebookButtonTapped:)
+                                           action:@selector(facebookLoginButtonTapped:)
                                  forControlEvents:UIControlEventTouchUpInside];
   [self.login_form_view.forgot_button addTarget:self
                                          action:@selector(forgotPasswordTapped:)
@@ -317,54 +368,55 @@
 
 #pragma mark - Button Handling
 
-- (IBAction)facebookButtonTapped:(id)sender
+- (void)facebookLoginButtonTapped:(id)sender
 {
-  [self performSegueWithIdentifier:@"register_invitation_code_segue" sender:self];
-//  self.signup_with_facebook_button.enabled = NO;
-//  // If the session state is any of the two "open" states when the button is clicked
-//  if (FBSession.activeSession.state == FBSessionStateOpen
-//      || FBSession.activeSession.state == FBSessionStateOpenTokenExtended)
-//  {
-//    // Close the session and remove the access token from the cache
-//    // The session state handler (in the app delegate) will be called automatically
-//    [FBSession.activeSession closeAndClearTokenInformation];
-//  }
-//  else // If the session state is not any of the two "open" states when the button is clicked
-//  {
-//    InfinitFacebookManager* manager = [InfinitFacebookManager sharedInstance];
-//    // Open a session showing the user the login UI
-//    // You must ALWAYS ask for public_profile permissions when opening a session
-//    [FBSession openActiveSessionWithReadPermissions:manager.permission_list
-//                                       allowLoginUI:YES
-//                                  completionHandler:^(FBSession* session,
-//                                                      FBSessionState state,
-//                                                      NSError* error)
-//     {
-//       // Call the app delegate's sessionStateChanged:state:error method to handle session state changes
-//       [manager sessionStateChanged:session state:state error:error];
-//       if (state == FBSessionStateClosedLoginFailed || error)
-//       {
-//         NSString* title = NSLocalizedString(@"Unable to login with Facebook", nil);
-//         NSString* message = nil;
-//         if (error)
-//         {
-//           message = error.localizedDescription;
-//         }
-//         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
-//                                                         message:message
-//                                                        delegate:self 
-//                                               cancelButtonTitle:@"OK" 
-//                                               otherButtonTitles:nil];
-//         [alert show];
-//       }
-//       else
-//       {
-//         self.signup_facebook_view.fullname_field.text = manager.user_name;
-//         self.signup_facebook_view.avatar = manager.user_avatar;
-//         [self showOverlayView:self.signup_facebook_view ofHeight:self.signup_facebook_view.height];
-//       }
-//     }];
-//  }
+  _facebook_connect_type = InfinitFacebookConnectLogin;
+  if (FBSession.activeSession.state == FBSessionStateOpen &&
+      FBSession.activeSession.state == FBSessionStateOpenTokenExtended)
+  {
+    [self tryFacebookLogin];
+  }
+  else
+  {
+    InfinitFacebookManager* manager = [InfinitFacebookManager sharedInstance];
+    [FBSession openActiveSessionWithReadPermissions:manager.permission_list
+                                       allowLoginUI:YES
+                                  completionHandler:^(FBSession* session,
+                                                      FBSessionState state,
+                                                      NSError* error)
+     {
+       // Call the app delegate's sessionStateChanged:state:error method to handle session state changes
+       [manager sessionStateChanged:session state:state error:error];
+     }];
+  }
+}
+
+- (IBAction)facebookRegisterButtonTapped:(id)sender
+{
+  _facebook_connect_type = InfinitFacebookConnectRegister;
+  // If the session state is any of the two "open" states when the button is clicked
+  if (FBSession.activeSession.state == FBSessionStateOpen
+      || FBSession.activeSession.state == FBSessionStateOpenTokenExtended)
+  {
+    // Close the session and remove the access token from the cache
+    // The session state handler (in the app delegate) will be called automatically
+    [FBSession.activeSession closeAndClearTokenInformation];
+  }
+
+  InfinitFacebookManager* manager = [InfinitFacebookManager sharedInstance];
+  // Open a session showing the user the login UI
+  // You must ALWAYS ask for public_profile permissions when opening a session
+  [FBSession openActiveSessionWithReadPermissions:manager.permission_list
+                                     allowLoginUI:YES
+                                completionHandler:^(FBSession* session,
+                                                    FBSessionState state,
+                                                    NSError* error)
+   {
+     [manager sessionStateChanged:session state:state error:error];
+   }];
+
+  [self showOverlayView:self.signup_facebook_view ofHeight:self.signup_facebook_view.height];
+  [self.signup_facebook_view.activity startAnimating];
 }
 
 - (IBAction)loginOrRegisterTapped:(id)sender
@@ -841,6 +893,14 @@
   {
     [self tryRegister];
   }
+  else if (textField == self.signup_facebook_view.email_field)
+  {
+    [self.signup_facebook_view.fullname_field becomeFirstResponder];
+  }
+  else if (textField == self.signup_facebook_view.fullname_field)
+  {
+    [self tryFacebookRegister];
+  }
   else if (textField == self.login_form_view.email_field)
   {
     [self.login_form_view.password_field becomeFirstResponder];
@@ -868,7 +928,7 @@
   }
   _logging_in = YES;
   self.login_form_view.error_label.hidden = YES;
-  self.login_form_view.facebook_hidden = YES;
+  self.login_form_view.facebook_button.enabled = NO;
   if ([self loginInputsGood])
   {
     [self.view endEditing:YES];
@@ -890,6 +950,28 @@
   {
     self.login_form_view.next_button.enabled = YES;
   }
+}
+
+- (void)tryFacebookLogin
+{
+  if (_logging_in)
+    return;
+  if ([InfinitConnectionManager sharedInstance].network_status == InfinitNetworkStatusNotReachable)
+  {
+    self.login_form_view.error_label.text =
+    NSLocalizedString(@"Ensure you're connected to the Internet.", nil);
+    self.login_form_view.error_label.hidden = NO;
+    self.login_form_view.next_button.enabled = YES;
+    return;
+  }
+  _logging_in = YES;
+  self.login_form_view.error_label.hidden = YES;
+  self.login_form_view.facebook_button.enabled = NO;
+  NSString* token = FBSession.activeSession.accessTokenData.accessToken;
+  [[InfinitStateManager sharedInstance] facebookConnect:token
+                                           emailAddress:nil
+                                        performSelector:@selector(loginCallback:)
+                                               onObject:self];
 }
 
 - (void)loginCallback:(InfinitStateResult*)result
@@ -918,7 +1000,7 @@
     self.login_form_view.error_label.hidden = NO;
     if (result.status == gap_email_password_dont_match)
       self.login_form_view.forgot_button.hidden = NO;
-    self.login_form_view.facebook_hidden = NO;
+    self.login_form_view.facebook_button.enabled = YES;
   }
 }
 
@@ -930,7 +1012,7 @@
   [InfinitBackgroundManager sharedInstance];
   [InfinitRatingManager sharedInstance];
 
-  NSString* old_account = [[InfinitApplicationSettings sharedInstance] username];
+  NSString* old_account = [InfinitApplicationSettings sharedInstance].username;
   if (![old_account isEqualToString:_username])
   {
     if ([[InfinitKeychain sharedInstance] credentialsForAccountInKeychain:old_account])
@@ -939,13 +1021,16 @@
     }
   }
   [[InfinitApplicationSettings sharedInstance] setUsername:_username];
-  if ([[InfinitKeychain sharedInstance] credentialsForAccountInKeychain:_username])
+  if (_password)
   {
-    [[InfinitKeychain sharedInstance] updatePassword:_password forAccount:_username];
-  }
-  else
-  {
-    [[InfinitKeychain sharedInstance] addPassword:_password forAccount:_username];
+    if ([[InfinitKeychain sharedInstance] credentialsForAccountInKeychain:_username])
+    {
+      [[InfinitKeychain sharedInstance] updatePassword:_password forAccount:_username];
+    }
+    else
+    {
+      [[InfinitKeychain sharedInstance] addPassword:_password forAccount:_username];
+    }
   }
   _password = nil;
 }
@@ -1006,20 +1091,54 @@
     self.signup_facebook_view.email_field.enabled = NO;
     self.signup_facebook_view.fullname_field.enabled = NO;
     self.signup_facebook_view.back_button.enabled = NO;
-//    NSCharacterSet* white_space = [NSCharacterSet whitespaceCharacterSet];
-//    NSString* email =
-//      [self.signup_form_view.email_field.text stringByTrimmingCharactersInSet:white_space];
-//    NSString* fullname =
-//      [self.signup_form_view.fullname_field.text stringByTrimmingCharactersInSet:white_space];
-//    [[InfinitStateManager sharedInstance] registerFullname:fullname
-//                                                     email:email
-//                                                  password:self.signup_form_view.password_field.text
-//                                           performSelector:@selector(registerCallback:)
-//                                                  onObject:self];
+    NSCharacterSet* white_space = [NSCharacterSet whitespaceCharacterSet];
+    NSString* email =
+      [self.signup_facebook_view.email_field.text stringByTrimmingCharactersInSet:white_space];
+    NSString* facebook_token = FBSession.activeSession.accessTokenData.accessToken;
+    [[InfinitStateManager sharedInstance] facebookConnect:facebook_token
+                                             emailAddress:email
+                                          performSelector:@selector(facebookConnectRegisterCallback:)
+                                                 onObject:self];
   }
   else
   {
     self.signup_facebook_view.next_button.enabled = YES;
+  }
+}
+
+- (void)facebookConnectRegisterCallback:(InfinitStateResult*)result
+{
+  _registering = NO;
+  self.signup_facebook_view.next_button.hidden = NO;
+  [self.signup_facebook_view.activity stopAnimating];
+  if (result.success)
+  {
+    _password = nil;
+    NSCharacterSet* white_space = [NSCharacterSet whitespaceCharacterSet];
+    NSString* fullname =
+      [self.signup_facebook_view.fullname_field.text stringByTrimmingCharactersInSet:white_space];
+    [self onSuccessfulLogin];
+    if (self.avatar_image != nil)
+    {
+      [[InfinitStateManager sharedInstance] setSelfAvatar:self.avatar_image
+                                          performSelector:NULL
+                                                 onObject:nil];
+    }
+    if (![fullname isEqualToString:self.facebook_user.fullname])
+    {
+      [[InfinitStateManager sharedInstance] setSelfFullname:fullname
+                                            performSelector:NULL 
+                                                   onObject:nil];
+    }
+    [self performSegueWithIdentifier:@"register_invitation_code_segue" sender:self];
+  }
+  else
+  {
+    self.signup_facebook_view.email_field.enabled = YES;
+    self.signup_facebook_view.fullname_field.enabled = NO;
+    self.signup_facebook_view.back_button.enabled = YES;
+    self.signup_facebook_view.error_label.text = [self registerLoginErrorFromStatus:result.status];
+    self.signup_facebook_view.error_label.hidden = NO;
   }
 }
 
@@ -1057,7 +1176,6 @@
                                                   password:self.signup_form_view.password_field.text
                                            performSelector:@selector(registerCallback:)
                                                   onObject:self];
-    [self performSegueWithIdentifier:@"register_invitation_code_segue" sender:self];
   }
   else
   {
@@ -1082,6 +1200,7 @@
                                           performSelector:NULL
                                                  onObject:nil];
     }
+    [self performSegueWithIdentifier:@"register_invitation_code_segue" sender:self];
   }
   else
   {
@@ -1188,6 +1307,84 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
       (InfinitLoginInvitationCodeController*)segue.destinationViewController;
     dest_vc.login_mode = YES;
   }
+}
+
+#pragma mark - Facebook Handling
+
+- (void)facebookSessionStateChanged:(NSNotification*)notification
+{
+  FBSessionState state = [notification.userInfo[@"state"] unsignedIntegerValue];
+  NSError* error = notification.userInfo[@"error"];
+  [self.signup_facebook_view.activity stopAnimating];
+  [self.login_form_view.activity stopAnimating];
+  if (state == FBSessionStateOpen || state == FBSessionStateOpenTokenExtended)
+  {
+    if (self.facebook_connect_type == InfinitFacebookConnectRegister)
+    {
+      [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection* connection,
+                                                             NSDictionary<FBGraphUser>* fb_user,
+                                                             NSError* error)
+       {
+         UIImage* avatar = nil;
+         NSString* email = nil;
+         NSString* fullname = nil;
+         if (error)
+         {
+         }
+         else
+         {
+           NSData* avatar_data =
+             [NSData dataWithContentsOfURL:[self avatarURLForUserWithId:fb_user.objectID]];
+           avatar = [UIImage imageWithData:avatar_data];
+           email = fb_user[@"email"];
+           fullname = fb_user.name;
+         }
+         _facebook_user = [InfinitFacebookUser userWithAvatar:avatar
+                                                        email:email
+                                                     fullname:fullname];
+         [self performSelectorOnMainThread:@selector(updateFacebookUser)
+                                withObject:nil
+                             waitUntilDone:NO];
+       }];
+    }
+    else if (self.facebook_connect_type == InfinitFacebookConnectLogin)
+    {
+      [self tryFacebookLogin];
+    }
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
+                                                  object:nil];
+  }
+  else if (state == FBSessionStateClosedLoginFailed || error)
+  {
+    NSString* title = NSLocalizedString(@"Unable to login with Facebook", nil);
+    NSString* message = nil;
+    if (error)
+    {
+      message = error.localizedDescription;
+    }
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
+                                                    message:message
+                                                   delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+  }
+}
+
+- (void)updateFacebookUser
+{
+  self.signup_facebook_view.avatar = self.facebook_user.avatar;
+  self.signup_facebook_view.fullname_field.text = self.facebook_user.fullname;
+  self.signup_facebook_view.email_field.text = self.facebook_user.email;
+  [self checkFacebookInputs];
+}
+
+- (NSURL*)avatarURLForUserWithId:(NSString*)id_
+{
+  NSString* str =
+    [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large", id_];
+  return [NSURL URLWithString:str];
 }
 
 @end
