@@ -12,7 +12,11 @@
 #import <sys/sysctl.h>
 #import <mach/machine.h>
 
+@import MessageUI;
+
 @implementation InfinitHostDevice
+
+#pragma mark - CPU
 
 + (InfinitCPUTypes)deviceCPU
 {
@@ -86,6 +90,8 @@
   }
 }
 
+#pragma mark - Screen
+
 + (CGFloat)screenScale
 {
   return [UIScreen mainScreen].scale;
@@ -96,6 +102,13 @@
   if ([UIScreen mainScreen].bounds.size.height < 568.0f)
     return YES;
   return NO;
+}
+
+#pragma mark - Messaging
+
++ (BOOL)canSendSMS
+{
+  return [MFMessageComposeViewController canSendText];
 }
 
 @end

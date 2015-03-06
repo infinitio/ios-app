@@ -30,4 +30,6 @@ typedef NS_ENUM(NSUInteger, InfinitCPUTypes)
 + (CGFloat)screenScale;
 + (BOOL)smallScreen;
 
++ (BOOL)canSendSMS;
+
 @end
