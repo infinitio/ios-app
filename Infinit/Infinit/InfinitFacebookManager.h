@@ -10,14 +10,11 @@
 
 #import <FacebookSDK/FacebookSDK.h>
 
-@protocol InfinitFacebookManagerProtocol;
+#define INFINIT_FACEBOOK_SESSION_STATE_CHANGED @"INFINIT_FACEBOOK_SESSION_STATE_CHANGED"
 
 @interface InfinitFacebookManager : NSObject
 
 @property (nonatomic, readonly) NSArray* permission_list;
-
-@property (nonatomic, readonly) UIImage* user_avatar;
-@property (nonatomic, readonly) NSString* user_name;
 
 + (instancetype)sharedInstance;
 
@@ -27,11 +24,5 @@
 
 - (void)cleanSession;
 - (void)closeSession;
-
-@end
-
-@protocol InfinitFacebookManagerProtocol <NSObject>
-
-- (void)facebookUserAvatarUpdated:(UIImage*)avatar;
 
 @end
