@@ -142,7 +142,12 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
     for (InfinitFileModel* file in self.files)
     {
       if (file.type == InfinitFileTypeImage || file.type == InfinitFileTypeVideo)
-        [thumbs addObject:file.thumbnail];
+      {
+        UIImage* thumb = file.thumbnail;
+        if (thumb == nil)
+          thumb = [UIImage imageNamed:@"icon-mimetype-folder"];
+        [thumbs addObject:thumb];
+      }
       if (thumbs.count > 3)
         break;
     }
