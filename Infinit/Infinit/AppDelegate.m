@@ -12,6 +12,7 @@
 #import "InfinitBackgroundManager.h"
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitFacebookManager.h"
+#import "InfinitFilesOnboardingManager.h"
 #import "InfinitKeychain.h"
 #import "InfinitLocalNotificationManager.h"
 #import "InfinitMetricsManager.h"
@@ -40,8 +41,12 @@
 - (BOOL)application:(UIApplication*)application
 didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
+  [[InfinitKeychain sharedInstance] removeAccount:@"chris+ghost25@infinit.io"];
   [InfinitConnectionManager sharedInstance];
   [InfinitStateManager startState];
+
+  if (![InfinitApplicationSettings sharedInstance].been_launched)
+    [self handleFirstLaunch];
 
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(willLogout)
@@ -63,25 +68,10 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   else
   {
     _onboarding = NO;
-    if ([self canAutoLogin])
-    {
-      InfinitConnectionManager* manager = [InfinitConnectionManager sharedInstance];
-      if (manager.network_status != InfinitNetworkStatusNotReachable)
-      {
-        self.window.rootViewController =
-          [storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
-        [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:15.0f];
-      }
-      else
-      {
-        self.window.rootViewController =
-          [storyboard instantiateViewControllerWithIdentifier:@"tab_bar_controller"];
-      }
-    }
-    else if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded)
+    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded)
     {
       self.window.rootViewController =
-        [storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
+      [storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
       [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:25.0f];
       [[NSNotificationCenter defaultCenter] addObserver:self
                                                selector:@selector(facebookSessionStateChanged:)
@@ -100,6 +90,21 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
          // NOT just when the session open
          [manager sessionStateChanged:session state:state error:error];
        }];
+    }
+    else if ([self canAutoLogin])
+    {
+      InfinitConnectionManager* manager = [InfinitConnectionManager sharedInstance];
+      if (manager.network_status != InfinitNetworkStatusNotReachable)
+      {
+        self.window.rootViewController =
+          [storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
+        [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:15.0f];
+      }
+      else
+      {
+        self.window.rootViewController =
+          [storyboard instantiateViewControllerWithIdentifier:@"tab_bar_controller"];
+      }
     }
     else if (FBSession.activeSession.state == FBSessionStateOpen ||
              FBSession.activeSession.state == FBSessionStateOpenTokenExtended)
@@ -362,7 +367,6 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 - (void)facebookSessionStateChanged:(NSNotification*)notification
 {
   FBSessionState state = [notification.userInfo[@"state"] unsignedIntegerValue];
-  NSError* error = notification.userInfo[@"error"];
   if (state == FBSessionStateOpen || state == FBSessionStateOpenTokenExtended)
   {
     [self tryFacebookLogin];
@@ -391,6 +395,14 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
   {
     [[InfinitFacebookManager sharedInstance] cleanSession];
   }
+}
+
+#pragma mark - First Launch
+
+- (void)handleFirstLaunch
+{
+  [InfinitApplicationSettings sharedInstance].been_launched = YES;
+  [InfinitFilesOnboardingManager copyFilesForOnboarding];
 }
 
 @end
