@@ -8,6 +8,7 @@
 
 #import "InfinitHomeViewController.h"
 
+#import "InfinitApplicationSettings.h"
 #import "InfinitColor.h"
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitFilesMultipleViewController.h"
@@ -29,6 +30,32 @@
 #import <Gap/InfinitUserManager.h>
 
 #import "UIImage+Rounded.h"
+
+@interface InfinitHomeOnboardingItem : NSObject
+
+@property (nonatomic, readonly) InfinitHomeOnboardingCellType type;
+
++ (instancetype)initWithType:(InfinitHomeOnboardingCellType)type;
+
+@end
+
+@implementation InfinitHomeOnboardingItem
+
+- (instancetype)_initWithType:(InfinitHomeOnboardingCellType)type
+{
+  if (self = [super init])
+  {
+    _type = type;
+  }
+  return self;
+}
+
++ (instancetype)initWithType:(InfinitHomeOnboardingCellType)type
+{
+  return [[InfinitHomeOnboardingItem alloc] _initWithType:type];
+}
+
+@end
 
 @interface InfinitHomeViewController () <InfinitHomePeerTransactionCellProtocol,
                                          UICollectionViewDataSource,
@@ -57,9 +84,21 @@
 @property (nonatomic, readwrite) BOOL previewing_files;
 @property (nonatomic, readwrite) BOOL sending;
 
+// Onboarding
+@property (nonatomic, readwrite) BOOL notification_onboarded;
+@property (nonatomic, readwrite) BOOL swipe_onboarded;
+@property (nonatomic, readwrite) BOOL peer_send_onboarded;
+@property (nonatomic, readonly) NSString* onboarding_peer_name;
+@property (nonatomic, readwrite) BOOL ghost_send_onboarded;
+@property (nonatomic, readonly) NSString* onboarding_ghost_name;
+@property (nonatomic, readwrite) BOOL self_send_onboarded;
+@property (nonatomic, readwrite) BOOL background_onboarded;
+@property (nonatomic, readonly) NSMutableArray* onboarding_model;
+
 @end
 
 static CGSize _avatar_size = {55.0f, 55.0f};
+static NSUInteger _background_onboard_size = 5 * 1000 * 1000;
 
 @implementation InfinitHomeViewController
 {
@@ -81,8 +120,15 @@ static CGSize _avatar_size = {55.0f, 55.0f};
 
 #pragma mark - Init
 
+- (void)dealloc
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad
 {
+  _notification_onboarded = [InfinitApplicationSettings sharedInstance].home_onboarded_initial;
+  _swipe_onboarded = [InfinitApplicationSettings sharedInstance].home_onboarded_initial;
   _peer_transaction_cell_id = @"home_peer_transaction_cell";
   _peer_transaction_cell_no_files_id = @"home_peer_transaction_no_files_cell";
   _onboarding_cell_id = @"home_onboarding_cell";
@@ -158,9 +204,12 @@ static CGSize _avatar_size = {55.0f, 55.0f};
 {
   _show_rate_us = [InfinitRatingManager sharedInstance].show_transaction_rating;
   [self loadTransactions];
-  if ([InfinitPeerTransactionManager sharedInstance].transactions.count == 0)
+  NSInteger count =
+    [[InfinitPeerTransactionManager sharedInstance] transactionsIncludingArchived:YES
+                                                                   thisDeviceOnly:YES].count;
+  if (count == 0)
     [self showOnboardingArrow];
-  else if (self.data.count == 0)
+  else if (self.data.count == 0 && self.swipe_onboarded && self.notification_onboarded)
     [self showNoActivityView];
   else if (self.no_activity_view != nil)
   {
@@ -180,11 +229,75 @@ static CGSize _avatar_size = {55.0f, 55.0f};
       _data = [NSMutableArray array];
     else
       [self.data removeAllObjects];
+    // Onboarding variables. If any given one is true, we must add the cell to the onboarding model.
+    BOOL add_background = NO;
+    BOOL add_self = NO;
+    BOOL add_peer = NO;
+    _onboarding_peer_name = nil;
+    BOOL add_ghost = NO;
+    _onboarding_ghost_name = nil;
     for (InfinitTransaction* transaction in peer_transactions)
     {
       InfinitHomeItem* item = [[InfinitHomeItem alloc] initWithTransaction:transaction];
+      if ([transaction isKindOfClass:InfinitPeerTransaction.class])
+      {
+        InfinitPeerTransaction* peer_transaction = (InfinitPeerTransaction*)transaction;
+        if (!self.background_onboarded &&
+            peer_transaction.sender.is_self && peer_transaction.size.unsignedIntegerValue > _background_onboard_size)
+        {
+          add_background = YES;
+        }
+        if (!self.self_send_onboarded &&
+            peer_transaction.sender.is_self && peer_transaction.recipient.is_self)
+        {
+          add_self = YES;
+        }
+        if (!self.peer_send_onboarded &&
+            !peer_transaction.recipient.is_self && !peer_transaction.recipient.ghost)
+        {
+          if (self.onboarding_peer_name == nil)
+            _onboarding_peer_name = [peer_transaction.recipient.fullname copy];
+          add_peer = YES;
+        }
+        if (!self.ghost_send_onboarded &&
+            !peer_transaction.recipient.is_self && peer_transaction.recipient.ghost)
+        {
+          if (self.onboarding_ghost_name == nil)
+            _onboarding_ghost_name = [peer_transaction.recipient.fullname copy];
+          add_ghost = YES;
+        }
+      }
       [self.data addObject:item];
     }
+    if (self.onboarding_model == nil)
+      _onboarding_model = [NSMutableArray array];
+    else
+      [self.onboarding_model removeAllObjects];
+    if (add_background)
+    {
+      InfinitHomeOnboardingItem* item =
+        [InfinitHomeOnboardingItem initWithType:InfinitHomeOnboardingCellBackground];
+      [self.onboarding_model addObject:item];
+    }
+    if (add_self)
+    {
+      InfinitHomeOnboardingItem* item =
+        [InfinitHomeOnboardingItem initWithType:InfinitHomeOnboardingCellSelfSent];
+      [self.onboarding_model addObject:item];
+    }
+    if (add_peer)
+    {
+      InfinitHomeOnboardingItem* item =
+        [InfinitHomeOnboardingItem initWithType:InfinitHomeOnboardingCellPeerSent];
+      [self.onboarding_model addObject:item];
+    }
+    if (add_ghost)
+    {
+      InfinitHomeOnboardingItem* item =
+        [InfinitHomeOnboardingItem initWithType:InfinitHomeOnboardingCellGhostSent];
+      [self.onboarding_model addObject:item];
+    }
+
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(peerTransactionUpdated:)
@@ -257,7 +370,7 @@ static CGSize _avatar_size = {55.0f, 55.0f};
     {
       if (item.transaction != nil && item.transaction.status == gap_transaction_transferring)
       {
-        NSIndexPath* path = [NSIndexPath indexPathForRow:row inSection:self.show_rate_us ? 1 : 0];
+        NSIndexPath* path = [NSIndexPath indexPathForRow:row inSection:[self topSection] ? 1 : 0];
         [_running_transactions addObject:path];
       }
     }
@@ -347,7 +460,8 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
   }
 }
 
-- (void)setExpanded:(BOOL)expanded forIndexPath:(NSIndexPath*)index_path
+- (void)setExpanded:(BOOL)expanded
+       forIndexPath:(NSIndexPath*)index_path
 {
   InfinitHomeItem* item = self.data[index_path.row];
   item.expanded = expanded;
@@ -385,21 +499,40 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView*)collectionView
 {
-  return self.show_rate_us ? 2 : 1;
+  NSInteger res = 0;
+  if (self.data.count > 0)
+    res++;
+  if ([self bottomSection])
+    res++;
+  if ([self topSection])
+    res++;
+  return res;
 }
 
 
 - (NSInteger)collectionView:(UICollectionView*)collectionView
      numberOfItemsInSection:(NSInteger)section
 {
-  if (self.show_rate_us && section == 0)
+  if ([self topSection] && section == 0)
   {
-    return 1;
+    NSInteger res = self.onboarding_model.count;
+    if (self.show_rate_us)
+      res += 1;
+    return res;
+  }
+  else if ((![self topSection] && self.data.count > 0 && section == 0) ||
+           ([self topSection] && self.data.count > 0 && section == 1))
+  {
+    return self.data.count;
   }
   else
   {
-    NSUInteger count = [InfinitPeerTransactionManager sharedInstance].transactions.count;
-    return (count == 0) ? 2 : self.data.count;
+    NSInteger res = 0;
+    if (!self.notification_onboarded)
+      res += 1;
+    if (!self.swipe_onboarded)
+      res += 1;
+    return res;
   }
 }
 
@@ -408,21 +541,70 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
                  cellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
   UICollectionViewCell* res = nil;
-  if (self.show_rate_us && indexPath.section == 0)
+  if ([self topSection] && indexPath.section == 0)
   {
-    InfinitHomeRatingCell* cell =
-      [self.collection_view dequeueReusableCellWithReuseIdentifier:_rating_cell_id
-                                                     forIndexPath:indexPath];
-    [cell.positive_button addTarget:self
-                             action:@selector(positiveButtonTapped:)
-                   forControlEvents:UIControlEventTouchUpInside];
-    [cell.negative_button addTarget:self
-                             action:@selector(negativeButtonTapped:)
-                   forControlEvents:UIControlEventTouchUpInside];
-    self.rating_cell = cell;
-    res = cell;
+    if (indexPath.row == self.onboarding_model.count)
+    {
+      InfinitHomeRatingCell* cell =
+        [self.collection_view dequeueReusableCellWithReuseIdentifier:_rating_cell_id
+                                                        forIndexPath:indexPath];
+      [cell.positive_button addTarget:self
+                               action:@selector(positiveButtonTapped:)
+                     forControlEvents:UIControlEventTouchUpInside];
+      [cell.negative_button addTarget:self
+                               action:@selector(negativeButtonTapped:)
+                     forControlEvents:UIControlEventTouchUpInside];
+      self.rating_cell = cell;
+      res = cell;
+    }
+    else
+    {
+      InfinitHomeOnboardingCell* cell =
+        [self.collection_view dequeueReusableCellWithReuseIdentifier:_onboarding_cell_id
+                                                        forIndexPath:indexPath];
+      InfinitHomeOnboardingItem* item = self.onboarding_model[indexPath.row];
+      NSString* text = nil;
+      NSInteger lines = 0;
+      NSRange gray_range = NSMakeRange(NSNotFound, 0);
+      switch (item.type)
+      {
+        case InfinitHomeOnboardingCellBackground:
+          text = NSLocalizedString(@"Rest assured! Closing Infinit\n"
+                                   "won't stop your transfer.", nil);
+          lines = 2;
+          break;
+        case InfinitHomeOnboardingCellGhostSent:
+          text =
+            [NSString stringWithFormat:NSLocalizedString(@"All set! A link will be sent\n"
+                                                         "to %@.", nil),
+             self.onboarding_ghost_name];
+          gray_range = [text rangeOfString:self.onboarding_ghost_name];
+          lines = 2;
+          break;
+        case InfinitHomeOnboardingCellPeerSent:
+          text = [NSString stringWithFormat:NSLocalizedString(@"All set! We'll let you know\n"
+                                                              "when %@\n"
+                                                              "receives your files.", nil),
+                  self.onboarding_peer_name];
+          gray_range = [text rangeOfString:self.onboarding_peer_name];
+          lines = 3;
+          break;
+        case InfinitHomeOnboardingCellSelfSent:
+          text = NSLocalizedString(@"Install Infinit on another\n"
+                                   "device to retrieve your\n"
+                                   "transfer.", nil);
+          lines = 3;
+          break;
+
+        default:
+          break;
+      }
+      [cell setType:item.type withText:text grayRange:gray_range numberOfLines:lines];
+      res = cell;
+    }
   }
-  else if (self.data.count > 0)
+  else if ((![self topSection] && self.data.count > 0 && indexPath.section == 0) ||
+           ([self topSection] && self.data.count > 0 && indexPath.section == 1))
   {
     InfinitHomeItem* item = self.data[indexPath.row];
     if (item.transaction != nil && [item.transaction isKindOfClass:InfinitPeerTransaction.class])
@@ -447,7 +629,10 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
         cell = [self.collection_view dequeueReusableCellWithReuseIdentifier:_peer_transaction_cell_no_files_id
                                                                forIndexPath:indexPath];
       }
-      [cell setUpWithDelegate:self transaction:peer_transaction expanded:item.expanded avatar:avatar];
+      [cell setUpWithDelegate:self
+                  transaction:peer_transaction
+                     expanded:item.expanded
+                       avatar:avatar];
       res = cell;
     }
   }
@@ -455,29 +640,22 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
   {
     InfinitHomeOnboardingCell* cell =
       [self.collection_view dequeueReusableCellWithReuseIdentifier:_onboarding_cell_id
-                                                     forIndexPath:indexPath];
-    NSString* message = nil;
-    NSString* fullname = [[[InfinitUserManager sharedInstance] me] fullname];
-    NSUInteger lines = 0;
-    switch (indexPath.row)
+                                                      forIndexPath:indexPath];
+    InfinitHomeOnboardingCellType type;
+    NSString* text = nil;
+    if (indexPath.row == 0)
     {
-      case 0:
-        message =
-          NSLocalizedString(@"This is where all your current transfers\n"
-                            @"and notifications will be displayed.", nil);
-        lines = 2;
-        break;
-      case 1:
-        message = [NSString stringWithFormat:NSLocalizedString(@"Welcome to Infinit, %@!", nil),
-                   fullname];
-        lines = 1;
-        break;
-
-      default:
-        break;
+      type = InfinitHomeOnboardingCellNotifications;
+      text = NSLocalizedString(@"Your current transfers and\n"
+                               "notifications will show up here.", nil);
     }
-    cell.message.numberOfLines = lines;
-    cell.message.text = message;
+    else
+    {
+      type = InfinitHomeOnboardingCellSwipe;
+      text = NSLocalizedString(@"Swipe the cards left or right\n"
+                               "to remove them.", nil);
+    }
+    [cell setType:type withText:text grayRange:NSMakeRange(NSNotFound, 0) numberOfLines:2];
     res = cell;
   }
   return res;
@@ -491,15 +669,36 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
   CGFloat width = [UIScreen mainScreen].bounds.size.width - 26.0f;
   CGFloat height = 101.0f;
-  CGFloat file_h = 75.0f + 10.0f;
-  CGFloat status_h = 45.0f;
-  CGFloat button_h = 46.0f; // Includes line above buttons.
-  if (self.show_rate_us && indexPath.section == 0) // Rating
+  if ([self topSection] && indexPath.section == 0) // Top onboarding and/or rating
   {
-    height = 100.0f;
+    if (indexPath.row == self.onboarding_model.count)
+    {
+      height = 100.0f;
+    }
+    else
+    {
+      InfinitHomeOnboardingItem* item = self.onboarding_model[indexPath.row];
+      switch (item.type)
+      {
+        case InfinitHomeOnboardingCellBackground:
+          height = 83.0f;
+          break;
+        case InfinitHomeOnboardingCellGhostSent:
+        case InfinitHomeOnboardingCellPeerSent:
+        case InfinitHomeOnboardingCellSelfSent:
+          height = 100.0f;
+
+        default:
+          break;
+      }
+    }
   }
-  else if (self.data.count > 0) // Peer transaction
+  else if ((![self topSection] && self.data.count > 0 && indexPath.section == 0) ||
+           ([self topSection] && self.data.count > 0 && indexPath.section == 1)) // Peer Transaction.
   {
+    CGFloat file_h = 75.0f + 10.0f;
+    CGFloat status_h = 45.0f;
+    CGFloat button_h = 46.0f; // Includes line above buttons.
     InfinitHomeItem* item = self.data[indexPath.row];
     InfinitPeerTransaction* transaction = nil;
     if (item.transaction != nil && [item.transaction isKindOfClass:InfinitPeerTransaction.class])
@@ -580,14 +779,14 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
         break;
     }
   }
-  else // Onboarding
+  else // Initial onboarding
   {
     switch (indexPath.row)
     {
       case 0:
-        return CGSizeMake(width, 79.0f);
+        height = 83.0f;
       case 1:
-        return CGSizeMake(width, 63.0f);
+        height = 94.0f;
 
       default:
         break;
@@ -600,7 +799,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
                         layout:(UICollectionViewLayout*)collectionViewLayout
         insetForSectionAtIndex:(NSInteger)section
 {
-  return UIEdgeInsetsMake(20.0f, 0.0f, 20.0f, 0.0f);
+  return UIEdgeInsetsMake(20.0f, 0.0f, 0.0f, 0.0f);
 }
 
 #pragma mark - Transaction Handling
@@ -623,7 +822,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
   NSNumber* transaction_id = notification.userInfo[@"id"];
   InfinitPeerTransaction* peer_transaction =
     [[InfinitPeerTransactionManager sharedInstance] transactionWithId:transaction_id];
-  if (!peer_transaction.concerns_device)
+  if (!peer_transaction.concerns_device || peer_transaction.archived)
     return;
   InfinitHomeItem* item = [[InfinitHomeItem alloc] initWithTransaction:peer_transaction];
   [self performSelectorOnMainThread:@selector(addItem:) withObject:item waitUntilDone:NO];
@@ -638,6 +837,46 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
     [self.collection_view.collectionViewLayout invalidateLayout];
     if (self.data.count == 0)
     {
+      if (item.transaction && [item.transaction isKindOfClass:InfinitPeerTransaction.class])
+      {
+        InfinitPeerTransaction* transaction = (InfinitPeerTransaction*)item.transaction;
+        if (self.onboarding_model == nil)
+          _onboarding_model = [NSMutableArray array];
+        else
+          [self.onboarding_model removeAllObjects];
+        if (!self.background_onboarded &&
+            transaction.sender.is_self && transaction.size.unsignedIntegerValue > _background_onboard_size)
+        {
+          InfinitHomeOnboardingItem* item =
+            [InfinitHomeOnboardingItem initWithType:InfinitHomeOnboardingCellBackground];
+          [self.onboarding_model addObject:item];
+        }
+        if (!self.self_send_onboarded &&
+            transaction.sender.is_self && transaction.recipient.is_self)
+        {
+          InfinitHomeOnboardingItem* item =
+            [InfinitHomeOnboardingItem initWithType:InfinitHomeOnboardingCellSelfSent];
+          [self.onboarding_model addObject:item];
+        }
+        if (!self.peer_send_onboarded &&
+            !transaction.recipient.is_self && !transaction.recipient.ghost)
+        {
+          if (self.onboarding_peer_name == nil)
+            _onboarding_peer_name = [transaction.recipient.fullname copy];
+          InfinitHomeOnboardingItem* item =
+            [InfinitHomeOnboardingItem initWithType:InfinitHomeOnboardingCellPeerSent];
+          [self.onboarding_model addObject:item];
+        }
+        if (!self.ghost_send_onboarded &&
+            !transaction.recipient.is_self && transaction.recipient.ghost)
+        {
+          if (self.onboarding_ghost_name == nil)
+            _onboarding_ghost_name = [transaction.recipient.fullname copy];
+          InfinitHomeOnboardingItem* item =
+            [InfinitHomeOnboardingItem initWithType:InfinitHomeOnboardingCellGhostSent];
+          [self.onboarding_model addObject:item];
+        }
+      }
       [self.data insertObject:item atIndex:0];
       [self.collection_view reloadData];
       [self updateRunningTransactions];
@@ -647,7 +886,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
       [self.collection_view performBatchUpdates:^
        {
          [self.data insertObject:item atIndex:0];
-         NSIndexPath* index = [NSIndexPath indexPathForRow:0 inSection:self.show_rate_us ? 1 : 0];
+         NSIndexPath* index = [NSIndexPath indexPathForRow:0 inSection:[self topSection] ? 1 : 0];
          [self.collection_view insertItemsAtIndexPaths:@[index]];
        } completion:^(BOOL finished)
        {
@@ -683,7 +922,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
   // Transaction not in local model.
   InfinitPeerTransaction* peer_transaction =
     [[InfinitPeerTransactionManager sharedInstance] transactionWithId:transaction_id];
-  if (!peer_transaction.concerns_device)
+  if (!peer_transaction.concerns_device || peer_transaction.archived)
     return;
   InfinitHomeItem* item = [[InfinitHomeItem alloc] initWithTransaction:peer_transaction];
   [self performSelectorOnMainThread:@selector(addItem:) withObject:item waitUntilDone:NO];
@@ -713,7 +952,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
       BOOL concerns_device = item.transaction.concerns_device;
       NSUInteger index = [self.data indexOfObject:item];
       [self.data removeObject:item];
-      NSUInteger section = self.show_rate_us ? 1 : 0;
+      NSUInteger section = [self topSection] ? 1 : 0;
       [self.collection_view deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index
                                                                           inSection:section]]];
       if (concerns_device)
@@ -744,7 +983,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
       {
         UIImage* avatar = [peer_transaction.other_user.avatar circularMaskOfSize:_avatar_size];
         [self.round_avatar_cache setObject:avatar forKey:peer_transaction.other_user.id_];
-        NSIndexPath* path = [NSIndexPath indexPathForRow:row inSection:self.show_rate_us ? 1 : 0];
+        NSIndexPath* path = [NSIndexPath indexPathForRow:row inSection:[self topSection] ? 1 : 0];
         if (![self.collection_view.indexPathsForVisibleItems containsObject:path])
           return;
         InfinitHomePeerTransactionCell* cell =
@@ -775,9 +1014,9 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
     UICollectionViewCell* cell = [self.collection_view cellForItemAtIndexPath:index];
     if (!cell)
       return;
-    if (self.data.count > 0)
+    if ((![self topSection] && self.data.count > 0 && index.section == 0) ||
+        ([self topSection] && self.data.count > 0 && index.section == 1))
     {
-      NSIndexPath* index = [self.collection_view indexPathForCell:cell];
       InfinitHomeItem* item = self.data[index.row];
       if (item.transaction != nil && !item.transaction.done)
       {
@@ -881,6 +1120,10 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
             NSIndexPath* index = [self.collection_view indexPathForCell:self.moving_cell];
             [self removeItemAtIndexPath:index];
           }
+          else if ([self.moving_cell isKindOfClass:InfinitHomeOnboardingCell.class])
+          {
+            [self removeOnboardingCell:(InfinitHomeOnboardingCell*)self.moving_cell];
+          }
           else if ([self.moving_cell isKindOfClass:InfinitHomeRatingCell.class])
           {
             [self doneRating];
@@ -935,7 +1178,8 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
       }
       [self.data removeAllObjects];
       [self.collection_view reloadData];
-      [self showNoActivityView];
+      if (![self topSection] && ![self bottomSection])
+        [self showNoActivityView];
     }
     else
     {
@@ -1051,6 +1295,63 @@ openFileTapped:(NSUInteger)file_index
   [self performSegueWithIdentifier:@"home_to_send_segue" sender:sender];
 }
 
+#pragma mark - Onboarding Cell Handling
+
+- (void)removeOnboardingCell:(InfinitHomeOnboardingCell*)cell
+{
+  NSIndexPath* index = [self.collection_view indexPathForCell:cell];
+  switch (cell.type)
+  {
+    case InfinitHomeOnboardingCellBackground:
+      self.background_onboarded = YES;
+      break;
+    case InfinitHomeOnboardingCellPeerSent:
+      self.peer_send_onboarded = YES;
+      break;
+    case InfinitHomeOnboardingCellGhostSent:
+      self.ghost_send_onboarded = YES;
+      break;
+    case InfinitHomeOnboardingCellSelfSent:
+      self.self_send_onboarded = YES;
+      break;
+    case InfinitHomeOnboardingCellNotifications:
+      self.notification_onboarded = YES;
+      break;
+    case InfinitHomeOnboardingCellSwipe:
+      self.swipe_onboarded = YES;
+      break;
+  }
+  [self.collection_view performBatchUpdates:^
+  {
+    if ([self topSection] && index.section == 0)
+    {
+      [self.onboarding_model removeObjectAtIndex:index.row];
+      if (self.onboarding_model.count == 0 && !self.show_rate_us)
+      {
+        [self.collection_view deleteSections:[NSIndexSet indexSetWithIndex:0]];
+        [self updateRunningTransactions];
+        if (self.swipe_onboarded && self.notification_onboarded && self.data.count == 0)
+          [self showNoActivityView];
+      }
+      else
+      {
+        [self.collection_view deleteItemsAtIndexPaths:@[index]];
+      }
+    }
+    else if (!self.swipe_onboarded || !self.notification_onboarded)
+    {
+      [self.collection_view deleteItemsAtIndexPaths:@[index]];
+    }
+    else
+    {
+      NSInteger section = self.collection_view.numberOfSections - 1;
+      [self.collection_view deleteSections:[NSIndexSet indexSetWithIndex:section]];
+      if (self.onboarding_model.count == 0 && self.data.count == 0)
+        [self showNoActivityView];
+    }
+  } completion:NULL];
+}
+
 #pragma mark - Rating Cell Handling
 
 - (void)doneRating
@@ -1059,7 +1360,8 @@ openFileTapped:(NSUInteger)file_index
   [self.collection_view performBatchUpdates:^
   {
     _show_rate_us = NO;
-    [self.collection_view deleteSections:[NSIndexSet indexSetWithIndex:0]];
+    NSArray* indexes = @[[NSIndexPath indexPathForRow:self.onboarding_model.count inSection:0]];
+    [self.collection_view deleteItemsAtIndexPaths:indexes];
   } completion:NULL];
 }
 
@@ -1149,6 +1451,72 @@ openFileTapped:(NSUInteger)file_index
       (InfinitFilesMultipleViewController*)segue.destinationViewController;
     files_view_controller.folder = sender;
   }
+}
+
+#pragma mark - Onboarding
+
+- (BOOL)topSection
+{
+  return (self.show_rate_us || self.onboarding_model.count > 0);
+}
+
+- (BOOL)bottomSection
+{
+  return (!self.notification_onboarded || !self.swipe_onboarded);
+}
+
+- (void)setNotification_onboarded:(BOOL)notification_onboarded
+{
+  _notification_onboarded = notification_onboarded;
+  if (self.swipe_onboarded)
+    [InfinitApplicationSettings sharedInstance].home_onboarded_initial = YES;
+}
+
+- (void)setSwipe_onboarded:(BOOL)swipe_onboarded
+{
+  _swipe_onboarded = swipe_onboarded;
+  if (self.notification_onboarded)
+    [InfinitApplicationSettings sharedInstance].home_onboarded_initial = YES;
+}
+
+- (BOOL)peer_send_onboarded
+{
+  return [InfinitApplicationSettings sharedInstance].home_onboarded_normal_send;
+}
+
+- (void)setPeer_send_onboarded:(BOOL)normal_send_onboarded
+{
+  [InfinitApplicationSettings sharedInstance].home_onboarded_normal_send = normal_send_onboarded;
+}
+
+- (BOOL)ghost_send_onboarded
+{
+  return [InfinitApplicationSettings sharedInstance].home_onboarded_ghost_send;
+}
+
+- (void)setGhost_send_onboarded:(BOOL)ghost_send_onboarded
+{
+  [InfinitApplicationSettings sharedInstance].home_onboarded_ghost_send = ghost_send_onboarded;
+}
+
+- (BOOL)self_send_onboarded
+{
+  return [InfinitApplicationSettings sharedInstance].home_onboarded_self_send;
+}
+
+- (void)setSelf_send_onboarded:(BOOL)self_send_onboarded
+{
+  [InfinitApplicationSettings sharedInstance].home_onboarded_self_send = self_send_onboarded;
+}
+
+- (BOOL)background_onboarded
+{
+  return [InfinitApplicationSettings sharedInstance].home_onboarded_background;
+}
+
+- (void)setBackground_onboarded:(BOOL)background_onboarded
+{
+  [InfinitApplicationSettings sharedInstance].home_onboarded_background = background_onboarded;
 }
 
 @end
