@@ -116,6 +116,11 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
   BOOL _registering;
 }
 
+- (void)dealloc
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (BOOL)prefersStatusBarHidden
 {
   return YES;
@@ -361,15 +366,17 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
   [self.balloon_image_view addMotionEffect:group];
 }
 
-- (void)dealloc
-{
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 #pragma mark - Button Handling
 
 - (void)facebookLoginButtonTapped:(id)sender
 {
+  if (![[NSThread currentThread] isEqual:[NSThread mainThread]])
+  {
+    [self performSelectorOnMainThread:@selector(facebookLoginButtonTapped:)
+                           withObject:sender
+                        waitUntilDone:NO];
+    return;
+  }
   _facebook_connect_type = InfinitFacebookConnectLogin;
   if (FBSession.activeSession.state == FBSessionStateOpen &&
       FBSession.activeSession.state == FBSessionStateOpenTokenExtended)
@@ -393,6 +400,13 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
 
 - (IBAction)facebookRegisterButtonTapped:(id)sender
 {
+  if (![[NSThread currentThread] isEqual:[NSThread mainThread]])
+  {
+    [self performSelectorOnMainThread:@selector(facebookRegisterButtonTapped:)
+                           withObject:sender
+                        waitUntilDone:NO];
+    return;
+  }
   _facebook_connect_type = InfinitFacebookConnectRegister;
   // If the session state is any of the two "open" states when the button is clicked
   if (FBSession.activeSession.state == FBSessionStateOpen
@@ -414,7 +428,6 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
    {
      [manager sessionStateChanged:session state:state error:error];
    }];
-
   [self showOverlayView:self.signup_facebook_view ofHeight:self.signup_facebook_view.height];
   [self.signup_facebook_view.activity startAnimating];
 }
@@ -1313,6 +1326,13 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
 
 - (void)facebookSessionStateChanged:(NSNotification*)notification
 {
+  if (![[NSThread currentThread] isEqual:[NSThread mainThread]])
+  {
+    [self performSelectorOnMainThread:@selector(facebookSessionStateChanged:)
+                           withObject:notification 
+                        waitUntilDone:NO];
+    return;
+  }
   FBSessionState state = [notification.userInfo[@"state"] unsignedIntegerValue];
   NSError* error = notification.userInfo[@"error"];
   [self.signup_facebook_view.activity stopAnimating];
