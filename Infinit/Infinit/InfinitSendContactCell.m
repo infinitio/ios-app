@@ -10,8 +10,6 @@
 
 #import "InfinitColor.h"
 
-static BOOL _show_numbers = NO;
-
 @implementation InfinitSendContactCell
 
 - (void)setContact:(InfinitContact*)contact
@@ -23,10 +21,10 @@ static BOOL _show_numbers = NO;
   if (contact.emails.count > 0)
   {
     [res appendFormat:@"%@", contact.emails[0]];
-    if (contact.emails.count > 1)
+    if (contact.emails.count > 1 && contact.phone_numbers.count == 0)
       [res appendFormat:@"..."];
   }
-  if (_show_numbers && contact.phone_numbers.count > 0)
+  if (contact.phone_numbers.count > 0)
   {
     if (contact.emails.count > 0)
       [res appendFormat:@", "];
