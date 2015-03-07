@@ -88,7 +88,7 @@
 - (CAShapeLayer*)circleLayer
 {
   CAShapeLayer* res = [CAShapeLayer layer];
-  CGFloat radius = self.bounds.size.width / 2.0f;
+  CGFloat radius = floor(self.bounds.size.width / 2.0f);
   CGPoint arc_center = CGPointMake(CGRectGetMidY(self.bounds), CGRectGetMidX(self.bounds));
   res.path = [UIBezierPath bezierPathWithArcCenter:arc_center
                                             radius:radius
@@ -96,7 +96,7 @@
                                           endAngle:(3.0f * M_PI_2)
                                          clockwise:YES].CGPath;
   res.fillColor = [UIColor clearColor].CGColor;
-  res.lineWidth = 4.0f;
+  res.lineWidth = 5.0f;
   return res;
 }
 
