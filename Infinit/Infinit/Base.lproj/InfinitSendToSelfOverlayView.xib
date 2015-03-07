@@ -29,7 +29,7 @@ to receive it later.</string>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="schema-send-multi-devices" translatesAutoresizingMaskIntoConstraints="NO" id="C9S-UM-PhF">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="schema-send-multi-devices" translatesAutoresizingMaskIntoConstraints="NO" id="C9S-UM-PhF">
                     <rect key="frame" x="187" y="230" width="227" height="173"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="173" id="6E2-X4-UZm"/>
@@ -53,6 +53,7 @@ to receive it later.</string>
             <color key="backgroundColor" red="0.19215686274509802" green="0.19215686274509802" blue="0.19215686274509802" alpha="0.95000000000000007" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="2Lh-NQ-J3V" secondAttribute="centerX" id="7Rk-24-vmU"/>
+                <constraint firstItem="C9S-UM-PhF" firstAttribute="top" secondItem="MRU-8D-Qd1" secondAttribute="bottom" constant="95" id="DJh-P8-Z7y"/>
                 <constraint firstAttribute="centerX" secondItem="MRU-8D-Qd1" secondAttribute="centerX" id="O65-am-HFj"/>
                 <constraint firstAttribute="centerX" secondItem="C9S-UM-PhF" secondAttribute="centerX" id="YJo-gI-DXe"/>
                 <constraint firstAttribute="bottom" secondItem="2Lh-NQ-J3V" secondAttribute="bottom" constant="30" id="fhZ-vk-ZVT"/>
@@ -61,6 +62,7 @@ to receive it later.</string>
             <connections>
                 <outlet property="first_image" destination="C9S-UM-PhF" id="kLp-4A-poC"/>
                 <outlet property="header_label" destination="MRU-8D-Qd1" id="bP5-KU-Qpm"/>
+                <outlet property="image_constraint" destination="DJh-P8-Z7y" id="bVh-kW-w3r"/>
                 <outlet property="send_email_button" destination="2Lh-NQ-J3V" id="NvL-Te-MaR"/>
                 <outlet property="top_constraint" destination="zic-cz-es2" id="99X-pe-8Qh"/>
             </connections>

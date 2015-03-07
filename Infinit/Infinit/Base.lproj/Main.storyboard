@@ -83,12 +83,6 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The smartest way to send files" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zfi-ZH-cuk">
-                                <rect key="frame" x="186" y="225" width="227" height="22"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="18"/>
-                                <color key="textColor" red="0.31764705882352939" green="0.31764705882352939" blue="0.28627450980392155" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uxW-Ck-QDb">
                                 <rect key="frame" x="167" y="522" width="266" height="55"/>
                                 <color key="backgroundColor" red="0.46274509800000002" green="0.54117647059999996" blue="0.56078431370000004" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
@@ -197,7 +191,6 @@
                             <constraint firstAttribute="centerX" secondItem="cUm-Pm-ow2" secondAttribute="centerX" id="FSx-4h-ija"/>
                             <constraint firstItem="0o5-Nq-fz7" firstAttribute="leading" secondItem="rux-55-a1T" secondAttribute="trailing" constant="8" id="FvR-5b-OfS"/>
                             <constraint firstItem="rux-55-a1T" firstAttribute="top" secondItem="cUm-Pm-ow2" secondAttribute="top" constant="68" id="H7N-eJ-G08"/>
-                            <constraint firstItem="Zfi-ZH-cuk" firstAttribute="top" secondItem="QZk-N4-E1a" secondAttribute="bottom" constant="25" id="HIJ-Hc-83W"/>
                             <constraint firstAttribute="trailingMargin" secondItem="cUm-Pm-ow2" secondAttribute="trailing" constant="27" id="IFq-BR-R6L"/>
                             <constraint firstItem="cUm-Pm-ow2" firstAttribute="top" secondItem="3Ll-4d-pK2" secondAttribute="bottom" constant="9" id="M2K-77-BoV"/>
                             <constraint firstAttribute="centerX" secondItem="uxW-Ck-QDb" secondAttribute="centerX" id="Oi0-6M-YuX"/>
@@ -206,7 +199,6 @@
                             <constraint firstAttribute="trailingMargin" secondItem="cUm-Pm-ow2" secondAttribute="trailing" constant="11" id="U98-v4-wws"/>
                             <constraint firstItem="QZk-N4-E1a" firstAttribute="top" secondItem="C1z-9F-Php" secondAttribute="top" constant="98" id="WNg-If-7mS"/>
                             <constraint firstItem="0o5-Nq-fz7" firstAttribute="centerY" secondItem="rux-55-a1T" secondAttribute="centerY" id="aeA-1m-aaI"/>
-                            <constraint firstAttribute="centerX" secondItem="Zfi-ZH-cuk" secondAttribute="centerX" id="cZM-NG-JEz"/>
                             <constraint firstAttribute="bottom" secondItem="uxW-Ck-QDb" secondAttribute="bottom" constant="23" id="caU-TR-TMR"/>
                             <constraint firstItem="cUm-Pm-ow2" firstAttribute="top" secondItem="3Ll-4d-pK2" secondAttribute="top" constant="68" id="gZC-Pu-nYh"/>
                             <constraint firstItem="3Ll-4d-pK2" firstAttribute="top" secondItem="cvr-81-2Cd" secondAttribute="bottom" constant="313" id="idk-d9-qP8"/>
@@ -250,7 +242,6 @@
                         <outlet property="logo_image_view" destination="QZk-N4-E1a" id="ObK-OP-C1i"/>
                         <outlet property="signup_with_email_button" destination="cUm-Pm-ow2" id="H0L-Qg-IYz"/>
                         <outlet property="signup_with_facebook_button" destination="3Ll-4d-pK2" id="ww9-6s-CJr"/>
-                        <outlet property="tagline" destination="Zfi-ZH-cuk" id="4tL-OL-UIi"/>
                         <segue destination="FZF-o8-gIc" kind="show" identifier="register_invitation_code_segue" id="5W2-Bn-yTj"/>
                     </connections>
                 </viewController>
@@ -1521,12 +1512,12 @@ access your phone contacts!</string>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="20" minimumInteritemSpacing="0.0" id="hxB-nB-CCG">
                                     <size key="itemSize" width="300" height="300"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="50"/>
+                                    <size key="footerReferenceSize" width="0.0" height="70"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells/>
                                 <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="1bH-2x-Xkz">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                    <rect key="frame" x="0.0" y="64" width="600" height="70"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionReusableView>
                                 <connections>
@@ -1751,25 +1742,29 @@ access your phone contacts!</string>
                                 <rect key="frame" x="290" y="295" width="20" height="20"/>
                             </activityIndicatorView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="illustration-code-left" translatesAutoresizingMaskIntoConstraints="NO" id="nBa-rg-72k">
-                                <rect key="frame" x="135" y="219" width="65" height="42"/>
+                                <rect key="frame" x="154" y="230" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="98T-Do-nbz"/>
+                                    <constraint firstAttribute="width" constant="46" id="qrR-Qn-02q"/>
+                                </constraints>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="illustration-code-right" translatesAutoresizingMaskIntoConstraints="NO" id="YIs-OP-s06">
-                                <rect key="frame" x="400" y="219" width="65" height="42"/>
+                                <rect key="frame" x="400" y="227" width="52" height="36"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.95294117647058818" alpha="1" colorSpace="deviceRGB"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="YIs-OP-s06" firstAttribute="centerY" secondItem="n5U-7z-7Sc" secondAttribute="centerY" id="09G-1v-R4O"/>
+                            <constraint firstItem="YIs-OP-s06" firstAttribute="centerY" secondItem="n5U-7z-7Sc" secondAttribute="centerY" constant="5" id="34a-9R-D10"/>
                             <constraint firstItem="n5U-7z-7Sc" firstAttribute="leading" secondItem="nBa-rg-72k" secondAttribute="trailing" id="7D8-nt-Oba"/>
                             <constraint firstItem="PgA-vU-iGo" firstAttribute="centerX" secondItem="URe-76-9Is" secondAttribute="centerX" id="E5U-TB-c12"/>
                             <constraint firstItem="fDg-7C-Fxf" firstAttribute="top" secondItem="Q7f-dP-Vae" secondAttribute="bottom" constant="15" id="IYd-rS-dI4"/>
                             <constraint firstAttribute="centerX" secondItem="PgA-vU-iGo" secondAttribute="centerX" id="LP7-w8-yvX"/>
-                            <constraint firstItem="n5U-7z-7Sc" firstAttribute="centerY" secondItem="nBa-rg-72k" secondAttribute="centerY" id="MBJ-AI-LA2"/>
                             <constraint firstAttribute="centerX" secondItem="Q7f-dP-Vae" secondAttribute="centerX" id="Nqk-JJ-JYV"/>
                             <constraint firstAttribute="centerX" secondItem="fDg-7C-Fxf" secondAttribute="centerX" id="O1J-kY-RR8"/>
                             <constraint firstItem="PgA-vU-iGo" firstAttribute="top" secondItem="n5U-7z-7Sc" secondAttribute="bottom" constant="25" id="gQ0-IA-rlb"/>
                             <constraint firstItem="YIs-OP-s06" firstAttribute="leading" secondItem="n5U-7z-7Sc" secondAttribute="trailing" id="gkV-Tl-lXj"/>
+                            <constraint firstItem="nBa-rg-72k" firstAttribute="centerY" secondItem="n5U-7z-7Sc" secondAttribute="centerY" constant="5" id="hwk-Zi-EiY"/>
                             <constraint firstItem="DVe-OC-QNf" firstAttribute="leading" secondItem="VzX-n3-lKL" secondAttribute="leading" id="i7g-kG-ba8"/>
                             <constraint firstItem="Q7f-dP-Vae" firstAttribute="top" secondItem="DVe-OC-QNf" secondAttribute="bottom" constant="30" id="kLS-ah-Ged"/>
                             <constraint firstItem="DVe-OC-QNf" firstAttribute="top" secondItem="VzX-n3-lKL" secondAttribute="top" id="kc6-B7-6CC"/>
@@ -2553,8 +2548,8 @@ access your phone contacts!</string>
         <image name="icon-tab-files" width="23" height="21"/>
         <image name="icon-tab-home" width="26" height="21"/>
         <image name="icon-tab-settings" width="22" height="22"/>
-        <image name="illustration-code-left" width="65" height="42"/>
-        <image name="illustration-code-right" width="65" height="42"/>
+        <image name="illustration-code-left" width="46" height="30"/>
+        <image name="illustration-code-right" width="52" height="36"/>
         <image name="illustration-no-results" width="259" height="54"/>
         <image name="logotype" width="184" height="102"/>
         <image name="schema-file-manager" width="175" height="169"/>
@@ -2562,9 +2557,9 @@ access your phone contacts!</string>
         <image name="schema-onboarding-infinite" width="214" height="90"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="fmd-I3-ULn"/>
+        <segue reference="hT3-x2-Ji5"/>
         <segue reference="0ax-4u-uN8"/>
-        <segue reference="AkK-Qo-7Ww"/>
+        <segue reference="Yah-cg-ZRU"/>
         <segue reference="5W2-Bn-yTj"/>
         <segue reference="a62-sa-S8B"/>
         <segue reference="mYU-YK-ihc"/>
