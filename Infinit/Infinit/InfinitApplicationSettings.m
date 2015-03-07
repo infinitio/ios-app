@@ -11,11 +11,18 @@
 typedef NS_ENUM(NSUInteger, InfinitSettings)
 {
   InfinitSettingAskedNotifications,
+  InfinitSettingBeenLaunched,
   InfinitSettingRatedApp,
   InfinitSettingRatingTransactions,
   InfinitSettingSendToSelfOnboarded,
   InfinitSettingUsername,
   InfinitSettingWelcomeOnboarded,
+  // Home onboarding
+  InfinitSettingHomeOnboardedInitial,
+  InfinitSettingHomeOnboardedNormalSend,
+  InfinitSettingHomeOnboardedGhostSend,
+  InfinitSettingHomeOnboardedSelfSend,
+  InfinitSettingHomeOnboardedBackground,
 };
 
 static InfinitApplicationSettings* _instance = nil;
@@ -49,10 +56,7 @@ static InfinitApplicationSettings* _instance = nil;
 
 - (BOOL)asked_notifications
 {
-  NSNumber* res = [_defaults valueForKey:[self keyForSetting:InfinitSettingAskedNotifications]];
-  if (res != nil && res.boolValue)
-    return YES;
-  return NO;
+  return [self boolFromNumber:[_defaults valueForKey:[self keyForSetting:InfinitSettingAskedNotifications]]];
 }
 
 - (void)setAsked_notifications:(BOOL)asked_notifications
@@ -61,12 +65,19 @@ static InfinitApplicationSettings* _instance = nil;
                forKey:[self keyForSetting:InfinitSettingAskedNotifications]];
 }
 
+- (BOOL)been_launched
+{
+  return [self boolFromNumber:[_defaults valueForKey:[self keyForSetting:InfinitSettingBeenLaunched]]];
+}
+
+- (void)setBeen_launched:(BOOL)been_launched
+{
+  [_defaults setValue:@(been_launched) forKey:[self keyForSetting:InfinitSettingBeenLaunched]];
+}
+
 - (BOOL)rated_app
 {
-  NSNumber* res = [_defaults valueForKey:[self keyForSetting:InfinitSettingRatedApp]];
-  if (res != nil && res.boolValue)
-    return YES;
-  return NO;
+  return [self boolFromNumber:[_defaults valueForKey:[self keyForSetting:InfinitSettingRatedApp]]];
 }
 
 - (void)setRated_app:(BOOL)rated_app
@@ -116,6 +127,63 @@ static InfinitApplicationSettings* _instance = nil;
   [_defaults setValue:welcome_onboarded forKey:[self keyForSetting:InfinitSettingWelcomeOnboarded]];
 }
 
+#pragma mark - Home Onboarding
+
+- (BOOL)home_onboarded_initial
+{
+  return [self boolFromNumber:[_defaults valueForKey:[self keyForSetting:InfinitSettingHomeOnboardedInitial]]];
+}
+
+- (void)setHome_onboarded_initial:(BOOL)home_onboarded_initial
+{
+  [_defaults setValue:@(home_onboarded_initial)
+               forKey:[self keyForSetting:InfinitSettingHomeOnboardedInitial]];
+}
+
+- (BOOL)home_onboarded_normal_send
+{
+  return [self boolFromNumber:[_defaults valueForKey:[self keyForSetting:InfinitSettingHomeOnboardedNormalSend]]];
+}
+
+- (void)setHome_onboarded_normal_send:(BOOL)home_onboarded_normal_send
+{
+  [_defaults setValue:@(home_onboarded_normal_send)
+               forKey:[self keyForSetting:InfinitSettingHomeOnboardedNormalSend]];
+}
+
+- (BOOL)home_onboarded_ghost_send
+{
+  return [self boolFromNumber:[_defaults valueForKey:[self keyForSetting:InfinitSettingHomeOnboardedGhostSend]]];
+}
+
+- (void)setHome_onboarded_ghost_send:(BOOL)home_onboarded_ghost_send
+{
+  [_defaults setValue:@(home_onboarded_ghost_send)
+               forKey:[self keyForSetting:InfinitSettingHomeOnboardedGhostSend]];
+}
+
+- (BOOL)home_onboarded_self_send
+{
+  return [self boolFromNumber:[_defaults valueForKey:[self keyForSetting:InfinitSettingHomeOnboardedSelfSend]]];
+}
+
+- (void)setHome_onboarded_self_send:(BOOL)home_onboarded_self_send
+{
+  [_defaults setValue:@(home_onboarded_self_send)
+               forKey:[self keyForSetting:InfinitSettingHomeOnboardedSelfSend]];
+}
+
+- (BOOL)home_onboarded_background
+{
+  return [self boolFromNumber:[_defaults valueForKey:[self keyForSetting:InfinitSettingHomeOnboardedBackground]]];
+}
+
+- (void)setHome_onboarded_background:(BOOL)home_onboarded_background
+{
+  [_defaults setValue:@(home_onboarded_background)
+               forKey:[self keyForSetting:InfinitSettingHomeOnboardedBackground]];
+}
+
 #pragma mark - Enum
 
 - (NSString*)keyForSetting:(InfinitSettings)setting
@@ -124,6 +192,8 @@ static InfinitApplicationSettings* _instance = nil;
   {
     case InfinitSettingAskedNotifications:
       return @"asked_notifications";
+    case InfinitSettingBeenLaunched:
+      return @"been_launched";
     case InfinitSettingRatedApp:
       return @"rated_app";
     case InfinitSettingRatingTransactions:
@@ -134,10 +204,26 @@ static InfinitApplicationSettings* _instance = nil;
       return @"username";
     case InfinitSettingWelcomeOnboarded:
       return @"welcome_onboarded";
-
-    default:
-      return @"";
+    case InfinitSettingHomeOnboardedBackground:
+      return @"home_onboarded_background";
+    case InfinitSettingHomeOnboardedGhostSend:
+      return @"home_onboarded_ghost_send";
+    case InfinitSettingHomeOnboardedInitial:
+      return @"home_onboarded_initial";
+    case InfinitSettingHomeOnboardedNormalSend:
+      return @"home_onboarded_normal_send";
+    case InfinitSettingHomeOnboardedSelfSend:
+      return @"home_onboarded_self_send";
   }
+}
+
+#pragma mark - Helpers
+
+- (BOOL)boolFromNumber:(NSNumber*)number
+{
+  if (number == nil)
+    return NO;
+  return  number.boolValue;
 }
 
 @end
