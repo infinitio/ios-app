@@ -186,7 +186,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
   [self.activity_indicator stopAnimating];
   self.code_field.enabled = YES;
   self.error_label.hidden = YES;
-  if (result.success)
+  if (result.success || result.status == gap_ghost_code_already_used)
   {
     if (self.login_mode)
     {
