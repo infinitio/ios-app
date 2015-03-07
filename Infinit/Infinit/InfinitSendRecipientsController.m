@@ -27,13 +27,13 @@
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitTemporaryFileManager.h>
 #import <Gap/InfinitUserManager.h>
+#import <Gap/NSString+PhoneNumber.h>
 
 #import "NSString+email.h"
 #import "VENTokenField.h"
 
 @import AddressBook;
 @import AssetsLibrary;
-@import MessageUI;
 @import Photos;
 
 @interface InfinitSendRecipientsController () <UIActionSheetDelegate,
@@ -62,7 +62,6 @@
 @property (nonatomic, strong) NSMutableOrderedSet* recipients;
 
 @property (nonatomic, readonly) InfinitContact* sms_contact;
-@property (nonatomic, readonly) MFMessageComposeViewController* sms_controller;
 
 @end
 
@@ -103,6 +102,11 @@
     _max_recipients = 10;
   }
   return self;
+}
+
+- (void)dealloc
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -475,10 +479,8 @@
     NSArray* ids = [self sendFilesToCurrentRecipients:self.files];
     for (NSNumber* id_ in ids)
     {
-      InfinitPeerTransaction* transaction =
-        [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
       [[InfinitUploadThumbnailManager sharedInstance] generateThumbnailsForFiles:_thumbnail_elements
-                                                                  forTransaction:transaction];
+                                                            forTransactionWithId:id_];
     }
   }
   [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewSend method:InfinitUIMethodTap];
@@ -496,10 +498,8 @@
                                                   forManagedFiles:_managed_files_id];
   for (NSNumber* id_ in ids)
   {
-    InfinitPeerTransaction* transaction =
-      [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
     [[InfinitUploadThumbnailManager sharedInstance] generateThumbnailsForAssets:_thumbnail_elements
-                                                                 forTransaction:transaction];
+                                                           forTransactionWithId:id_];
   }
 }
 
@@ -520,24 +520,15 @@
       }
       else if (contact.selected_phone_index != NSNotFound)
       {
-        [actual_recipients addObject:contact.phone_numbers[contact.selected_phone_index]];
+        NSString* number = contact.phone_numbers[contact.selected_phone_index];
+        NSCharacterSet* whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+        [actual_recipients addObject:[number stringByTrimmingCharactersInSet:whitespace]];
       }
     }
   }
-  NSArray* res = [[InfinitPeerTransactionManager sharedInstance] sendFiles:files
-                                                              toRecipients:actual_recipients
-                                                               withMessage:@""];
-  NSUInteger sms_index = [self.recipients indexOfObject:self.sms_contact];
-  if (sms_index != NSNotFound)
-  {
-    // XXX
-    if (self.sms_controller == nil)
-      _sms_controller = [[MFMessageComposeViewController alloc] init];
-    self.sms_controller.recipients =
-      @[self.sms_contact.phone_numbers[self.sms_contact.selected_phone_index]];
-    self.sms_controller.body = [NSString stringWithFormat:NSLocalizedString(@"", nil)];
-  }
-  return res;
+  return [[InfinitPeerTransactionManager sharedInstance] sendFiles:files
+                                                      toRecipients:actual_recipients
+                                                       withMessage:@""];
 }
 
 - (IBAction)inviteBarButtonTapped:(id)sender
@@ -762,11 +753,11 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   else if (indexPath.section == 0)
   {
     InfinitApplicationSettings* settings = [InfinitApplicationSettings sharedInstance];
-//    if (![[settings send_to_self_onboarded] isEqualToNumber:@1])
-//    {
+    if (![[settings send_to_self_onboarded] isEqualToNumber:@1])
+    {
       [settings setSend_to_self_onboarded:@1];
       [self showSendToSelfOverlay];
-//    }
+    }
     contact = self.me_contact;
   }
   else if (indexPath.section == 1)
@@ -980,6 +971,7 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
   if (self.recipients.count > _max_recipients)
     return;
   InfinitContact* contact = [[InfinitContact alloc] initWithEmail:email];
+  contact.selected_email_index = 0;
   if (self.recipients == nil)
     self.recipients = [NSMutableOrderedSet orderedSet];
   [self.recipients addObject:contact];
@@ -1006,6 +998,8 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
 didDeleteTokenAtIndex:(NSUInteger)index
 {
   InfinitContact* contact = self.recipients[index];
+  if ([contact isEqual:self.sms_contact])
+    _sms_contact = nil;
   contact.selected_email_index = NSNotFound;
   contact.selected_phone_index = NSNotFound;
   if ([contact isEqual:self.me_contact])
@@ -1068,7 +1062,19 @@ didDeleteTokenAtIndex:(NSUInteger)index
 - (NSString*)tokenField:(VENTokenField*)tokenField
    titleForTokenAtIndex:(NSUInteger)index
 {
-  return [[self.recipients objectAtIndex:index] first_name];
+  InfinitContact* contact = [self.recipients objectAtIndex:index];
+  if (contact.first_name.length > 0)
+  {
+    return contact.first_name;
+  }
+  else
+  {
+    if (contact.selected_email_index != NSNotFound)
+      return contact.emails[contact.selected_email_index];
+    else if (contact.selected_phone_index != NSNotFound)
+      return contact.phone_numbers[contact.selected_phone_index];
+  }
+  return NSLocalizedString(@"Unknown", nil);
 }
 
 - (NSUInteger)numberOfTokensInTokenField:(VENTokenField*)tokenField
