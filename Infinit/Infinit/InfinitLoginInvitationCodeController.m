@@ -9,8 +9,13 @@
 #import "InfinitLoginInvitationCodeController.h"
 
 #import "InfinitColor.h"
+#import "InfinitHostDevice.h"
 
-@interface InfinitLoginInvitationCodeController () <UITextFieldDelegate>
+#import <Gap/InfinitStateManager.h>
+#import <Gap/InfinitStateResult.h>
+
+@interface InfinitLoginInvitationCodeController () <UIAlertViewDelegate,
+                                                    UITextFieldDelegate>
 
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView* activity_indicator;
 @property (nonatomic, weak) IBOutlet UITextField* code_field;
@@ -30,6 +35,11 @@
 static NSDictionary* _attrs = nil;
 
 @implementation InfinitLoginInvitationCodeController
+
+- (void)dealloc
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (void)viewDidLoad
 {
@@ -60,6 +70,16 @@ static NSDictionary* _attrs = nil;
   self.navigationController.navigationBarHidden = self.login_mode;
   self.code_field.text = @"";
   self.top_view.hidden = !self.login_mode;
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(keyboardWillShow:)
+                                               name:UIKeyboardWillShowNotification
+                                             object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+  [super viewWillDisappear:animated];
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Text Field Delegate
@@ -75,13 +95,26 @@ replacementString:(NSString*)string
 {
   if (sender.text.length == 5)
   {
-    // XXX Check code
+    [self.activity_indicator startAnimating];
+    self.code_field.enabled = NO;
+    [self dismissKeyboard:nil];
+    NSString* code =
+      [self.code_field.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    [[InfinitStateManager sharedInstance] useGhostCode:code.lowercaseString
+                                       performSelector:@selector(checkCodeCallback:)
+                                              onObject:self];
   }
 }
 
 - (IBAction)dismissKeyboard:(UITapGestureRecognizer*)sender
 {
   [self.code_field resignFirstResponder];
+  [UIView animateWithDuration:0.2f
+                   animations:^
+  {
+    self.view.frame = CGRectMake(0.0f, 0.0f,
+                                 self.view.frame.size.width, self.view.frame.size.height);
+  }];
 }
 
 #pragma mark - Button Handling
@@ -94,6 +127,28 @@ replacementString:(NSString*)string
 - (IBAction)backTapped:(id)sender
 {
   [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - Keyboard
+
+- (void)keyboardWillShow:(NSNotification*)notification
+{
+  CGFloat delta = -50.0f;
+  [UIView animateWithDuration:0.5f
+                        delay:0.0f
+                      options:UIViewAnimationOptionCurveEaseInOut
+                   animations:^
+   {
+     self.view.frame = CGRectMake(0.0f, delta,
+                                  self.view.frame.size.width, self.view.frame.size.height);
+   } completion:^(BOOL finished)
+   {
+     if (!finished)
+     {
+       self.view.frame = CGRectMake(0.0f, delta,
+                                    self.view.frame.size.width, self.view.frame.size.height);
+     }
+   }];
 }
 
 #pragma mark - Helpers
@@ -111,6 +166,49 @@ replacementString:(NSString*)string
   UIViewController* view_controller =
     [storyboard instantiateViewControllerWithIdentifier:@"tab_bar_controller"];
   [self presentViewController:view_controller animated:YES completion:nil];
+}
+
+#pragma mark - Code Callback
+
+- (void)alertView:(UIAlertView*)alertView
+didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+  [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)alertViewCancel:(UIAlertView*)alertView
+{
+  [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)checkCodeCallback:(InfinitStateResult*)result
+{
+  [self.activity_indicator stopAnimating];
+  self.code_field.enabled = YES;
+  self.error_label.hidden = YES;
+  if (result.success)
+  {
+    if (self.login_mode)
+    {
+      [self showHomeScreen];
+    }
+    else
+    {
+      NSString* message = NSLocalizedString(@"Check your home screen for your transaction.", nil);
+      UIAlertView* alert =
+        [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Code added!", nil)
+                                   message:message
+                                  delegate:self
+                         cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                         otherButtonTitles:nil];
+      [alert show];
+    }
+  }
+  else
+  {
+    self.error_label.text = NSLocalizedString(@"Invalid code.", nil);
+    self.error_label.hidden = NO;
+  }
 }
 
 @end
