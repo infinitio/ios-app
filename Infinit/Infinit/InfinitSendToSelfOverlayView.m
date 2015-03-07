@@ -13,7 +13,6 @@
 @interface InfinitSendToSelfOverlayView ()
 
 @property (nonatomic, weak) IBOutlet UILabel* header_label;
-@property (nonatomic, weak) IBOutlet UILabel* info_label;
 @property (nonatomic, weak) IBOutlet UIImageView* first_image;
 
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* image_constraint;
