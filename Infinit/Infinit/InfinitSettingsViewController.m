@@ -79,6 +79,11 @@ typedef NS_ENUM(NSUInteger, InfinitLogoutSettings)
   NSString* _user_cell_id;
 }
 
+- (void)dealloc
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad
 {
   _norm_cell_id = @"settings_cell";
