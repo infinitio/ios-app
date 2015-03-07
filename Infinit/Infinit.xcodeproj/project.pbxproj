@@ -153,6 +153,9 @@
 		83F5E5A51AA5C35E0011E4F0 /* Monaco.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 83F5E5A41AA5C35E0011E4F0 /* Monaco.ttf */; };
 		83F7C3B51A6E96C600FA283C /* InfinitSendNoResultsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F7C3B41A6E96C600FA283C /* InfinitSendNoResultsCell.m */; };
 		83F7C3BE1A6EAEDD00FA283C /* InfinitSettingsUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F7C3BD1A6EAEDD00FA283C /* InfinitSettingsUserCell.m */; };
+		83F962A51AAB2F62003F2DE7 /* How To Send To Someone.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 83F962A31AAB2F55003F2DE7 /* How To Send To Someone.mp4 */; };
+		83F962A61AAB2F62003F2DE7 /* How To Send To Self.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 83F962A41AAB2F55003F2DE7 /* How To Send To Self.mp4 */; };
+		83F962A91AAB331D003F2DE7 /* InfinitFilesOnboardingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F962A81AAB331D003F2DE7 /* InfinitFilesOnboardingManager.m */; };
 		83FA72FC1A66FF1D0014B0E4 /* VENBackspaceTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FA72F61A66FF1D0014B0E4 /* VENBackspaceTextField.m */; };
 		83FA72FD1A66FF1D0014B0E4 /* VENToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 83FA72F81A66FF1D0014B0E4 /* VENToken.m */; };
 		83FA72FE1A66FF1D0014B0E4 /* VENToken.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83FA72F91A66FF1D0014B0E4 /* VENToken.xib */; };
@@ -461,6 +464,10 @@
 		83F7C3B41A6E96C600FA283C /* InfinitSendNoResultsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendNoResultsCell.m; sourceTree = "<group>"; };
 		83F7C3BC1A6EAEDD00FA283C /* InfinitSettingsUserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSettingsUserCell.h; sourceTree = "<group>"; };
 		83F7C3BD1A6EAEDD00FA283C /* InfinitSettingsUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSettingsUserCell.m; sourceTree = "<group>"; };
+		83F962A31AAB2F55003F2DE7 /* How To Send To Someone.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "How To Send To Someone.mp4"; sourceTree = "<group>"; };
+		83F962A41AAB2F55003F2DE7 /* How To Send To Self.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "How To Send To Self.mp4"; sourceTree = "<group>"; };
+		83F962A71AAB331D003F2DE7 /* InfinitFilesOnboardingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFilesOnboardingManager.h; sourceTree = "<group>"; };
+		83F962A81AAB331D003F2DE7 /* InfinitFilesOnboardingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFilesOnboardingManager.m; sourceTree = "<group>"; };
 		83FA72F51A66FF1D0014B0E4 /* VENBackspaceTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENBackspaceTextField.h; sourceTree = "<group>"; };
 		83FA72F61A66FF1D0014B0E4 /* VENBackspaceTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VENBackspaceTextField.m; sourceTree = "<group>"; };
 		83FA72F71A66FF1D0014B0E4 /* VENToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VENToken.h; sourceTree = "<group>"; };
@@ -659,6 +666,7 @@
 		83157ED31A73D25A00F8E87F /* Files */ = {
 			isa = PBXGroup;
 			children = (
+				83F9629F1AAB2A5E003F2DE7 /* Onboarding */,
 				83157EFE1A76667200F8E87F /* No Files Overlay */,
 				83B02E8B1A790B1D009070FB /* Preview Controller */,
 				83157ED41A73D29100F8E87F /* InfinitFilesTableCell.h */,
@@ -814,8 +822,8 @@
 				834FCFC11A7B93B900930BD8 /* Background Manager */,
 				8311B5AF1A7CE0CB00832FDE /* Contacts */,
 				83EBB0A11A947AF900144BC6 /* Customised Classes */,
-				83EBB0B21A97308000144BC6 /* File Management */,
 				83F5E5921AA4BCE70011E4F0 /* Facebook Manager */,
+				83EBB0B21A97308000144BC6 /* File Management */,
 				83157ED31A73D25A00F8E87F /* Files */,
 				D0BD35281A43307A00AB8EF9 /* Home */,
 				83B32DF41A1365A9004AB945 /* Login */,
@@ -1062,6 +1070,25 @@
 			name = "Invitation Code";
 			sourceTree = "<group>";
 		};
+		83F9629F1AAB2A5E003F2DE7 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				83F962AA1AAB332E003F2DE7 /* Resources */,
+				83F962A71AAB331D003F2DE7 /* InfinitFilesOnboardingManager.h */,
+				83F962A81AAB331D003F2DE7 /* InfinitFilesOnboardingManager.m */,
+			);
+			name = Onboarding;
+			sourceTree = "<group>";
+		};
+		83F962AA1AAB332E003F2DE7 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				83F962A31AAB2F55003F2DE7 /* How To Send To Someone.mp4 */,
+				83F962A41AAB2F55003F2DE7 /* How To Send To Self.mp4 */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		83FA72591A66FEF90014B0E4 /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
@@ -1212,8 +1239,8 @@
 				83FBD70C1A9CE8AB005685AF /* Empty Overlay */,
 				83FE65961A6E5AE100D3CA9A /* Onboarding Overlay */,
 				831115A91A698C8B00E5B056 /* Model */,
-				D0517F821A5ACBC8008F06D2 /* Cells */,
 				8369E8851A83BC2C00ECD519 /* Feedback Controller */,
+				D0517F821A5ACBC8008F06D2 /* Cells */,
 				83672B8E1A9F4493009425E6 /* InfinitHomeNavigationController.h */,
 				83672B8F1A9F4493009425E6 /* InfinitHomeNavigationController.m */,
 				D0D613C61A52E51600D454B6 /* InfinitHomeViewController.h */,
@@ -1333,6 +1360,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83F962A51AAB2F62003F2DE7 /* How To Send To Someone.mp4 in Resources */,
+				83F962A61AAB2F62003F2DE7 /* How To Send To Self.mp4 in Resources */,
 				D09848211A43391B002D26AC /* Montserrat-Regular.ttf in Resources */,
 				832285051A794D47000893A1 /* InfinitAccessGalleryView.xib in Resources */,
 				D098481D1A43391B002D26AC /* SourceSansPro-Semibold.otf in Resources */,
@@ -1446,6 +1475,7 @@
 				83B32E101A84FE54004088DD /* InfinitSettingsCell.m in Sources */,
 				83B5D6171A66BC4E0061931F /* ALAsset+Date.m in Sources */,
 				8369E8821A83BC1D00ECD519 /* InfinitHomeFeedbackViewController.m in Sources */,
+				83F962A91AAB331D003F2DE7 /* InfinitFilesOnboardingManager.m in Sources */,
 				D00045BD1A499A20008DB448 /* InfinitContactImportCell.m in Sources */,
 				834FCFC41A7B93CA00930BD8 /* InfinitBackgroundManager.mm in Sources */,
 				831AB8601AA6054900E10E65 /* InfinitSettingsExpandedCell.m in Sources */,
