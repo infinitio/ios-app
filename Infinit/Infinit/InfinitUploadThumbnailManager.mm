@@ -97,7 +97,7 @@ static InfinitUploadThumbnailManager* _instance = nil;
 }
 
 - (void)generateThumbnailsForAssets:(NSArray*)assets
-                     forTransaction:(InfinitPeerTransaction*)transaction
+               forTransactionWithId:(NSNumber*)id_
 {
   @synchronized(self.pending_thumbnails)
   {
@@ -148,12 +148,12 @@ static InfinitUploadThumbnailManager* _instance = nil;
           break;
       }
     }
-    [self.pending_thumbnails setObject:thumbnails forKey:transaction.id_];
+    [self.pending_thumbnails setObject:thumbnails forKey:id_];
   }
 }
 
 - (void)generateThumbnailsForFiles:(NSArray*)files
-                    forTransaction:(InfinitPeerTransaction*)transaction
+              forTransactionWithId:(NSNumber*)id_
 {
   @synchronized(self.pending_thumbnails)
   {
@@ -165,7 +165,7 @@ static InfinitUploadThumbnailManager* _instance = nil;
                                                      crop:YES];
       [thumbnails addObject:thumb];
     }
-    [self.pending_thumbnails setObject:thumbnails forKey:transaction.id_];
+    [self.pending_thumbnails setObject:thumbnails forKey:id_];
   }
 }
 
@@ -240,7 +240,8 @@ static InfinitUploadThumbnailManager* _instance = nil;
     NSString* res_folder = [self thumbnailFolderForTransactionMetaId:transaction.meta_id
                                                               create:YES];
     NSString* res_path = nil;
-    for (NSUInteger i = 0; i < transaction.files.count; i++)
+    NSInteger number_of_files = transaction.files.count > 5 ? 5 : transaction.files.count;
+    for (NSUInteger i = 0; i < number_of_files; i++)
     {
       res_path = [res_folder stringByAppendingPathComponent:transaction.files[i]];
       [self writeImage:thumbnails[i] toPath:res_path];
