@@ -10,8 +10,23 @@
 
 #import "InfinitHomeAbstractCell.h"
 
+typedef NS_ENUM(NSUInteger, InfinitHomeOnboardingCellType)
+{
+  InfinitHomeOnboardingCellSwipe = 0,
+  InfinitHomeOnboardingCellNotifications,
+  InfinitHomeOnboardingCellBackground,
+  InfinitHomeOnboardingCellPeerSent,
+  InfinitHomeOnboardingCellSelfSent,
+  InfinitHomeOnboardingCellGhostSent,
+};
+
 @interface InfinitHomeOnboardingCell : InfinitHomeAbstractCell
 
-@property (nonatomic, weak) IBOutlet UILabel* message;
+@property (nonatomic, readonly) InfinitHomeOnboardingCellType type;
+
+- (void)setType:(InfinitHomeOnboardingCellType)type
+       withText:(NSString*)text
+      grayRange:(NSRange)gray_range
+  numberOfLines:(NSInteger)lines;
 
 @end
