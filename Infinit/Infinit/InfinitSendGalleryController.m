@@ -467,7 +467,7 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
        [cell.contentView layoutIfNeeded];
      } completion:^(BOOL finished)
      {
-       [UIView animateWithDuration:animate ? 0.2f : 0.0f
+       [UIView animateWithDuration:animate ? 0.15f : 0.0f
                              delay:0.0f
             usingSpringWithDamping:0.3f
              initialSpringVelocity:10.0f
