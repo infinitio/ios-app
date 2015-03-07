@@ -71,6 +71,8 @@
     _avatar = [UIImage imageWithData:image_data scale:1.0f];
     if (self.avatar == nil)
       [self generateAvatarWithFirstName:first_name surname:surname];
+    _selected_email_index = NSNotFound;
+    _selected_phone_index = NSNotFound;
   }
   return self;
 }
@@ -112,6 +114,8 @@
     else
       _first_name = self.fullname;
     _phone_numbers = nil;
+    _selected_email_index = NSNotFound;
+    _selected_phone_index = NSNotFound;
   }
   return self;
 }
