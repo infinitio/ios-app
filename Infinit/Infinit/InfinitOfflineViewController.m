@@ -17,6 +17,11 @@
 
 @implementation InfinitOfflineViewController
 
+- (void)dealloc
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
   InfinitConnectionManager* manager = [InfinitConnectionManager sharedInstance];
