@@ -14,6 +14,7 @@
 #import "InfinitFilesNavigationController.h"
 #import "InfinitFilesViewController.h"
 #import "InfinitHomeViewController.h"
+#import "InfinitHostDevice.h"
 #import "InfinitMetricsManager.h"
 #import "InfinitOfflineOverlay.h"
 #import "InfinitSendTabIcon.h"
@@ -26,6 +27,7 @@
 #import <Gap/InfinitPeerTransactionManager.h>
 
 @import AssetsLibrary;
+@import MessageUI;
 
 typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 {
@@ -36,7 +38,9 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   InfinitTabBarIndexSettings,
 };
 
-@interface InfinitTabBarController () <UITabBarControllerDelegate>
+@interface InfinitTabBarController () <MFMessageComposeViewControllerDelegate,
+                                       UINavigationControllerDelegate,
+                                       UITabBarControllerDelegate>
 
 @property (nonatomic, strong) InfinitTabAnimator* animator;
 @property (nonatomic) NSUInteger last_index;
@@ -45,6 +49,8 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 @property (nonatomic, strong) InfinitSendTabIcon* send_tab_icon;
 @property (nonatomic, strong) InfinitOfflineOverlay* offline_overlay;
 @property (nonatomic) BOOL tab_bar_hidden;
+
+@property (nonatomic, strong) MFMessageComposeViewController* sms_controller;
 
 @end
 
@@ -92,6 +98,10 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(peerTransactionUpdated:)
                                                name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(peerInvitationCode:)
+                                               name:INFINIT_PEER_PHONE_TRANSACTION_NOTIFICATION
                                              object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(connectionStatusChanged:)
@@ -571,6 +581,55 @@ shouldSelectViewController:(UIViewController*)viewController
   [self.offline_overlay removeFromSuperview];
 }
 
+#pragma mark - Peer Invitation Code
+
+- (void)handlePeerInvitationCode:(NSDictionary*)dict
+{
+  if (![InfinitHostDevice canSendSMS])
+    return;
+  InfinitPeerTransaction* transaction =
+    [[InfinitPeerTransactionManager sharedInstance] transactionWithId:dict[@"id"]];
+  if (transaction == nil)
+    return;
+  InfinitUser* recipient = transaction.recipient;
+  if (!recipient.phone_number.length ||
+      !recipient.ghost_code.length ||
+      !recipient.ghost_invitation_url.length)
+  {
+    return;
+  }
+  NSString* files = transaction.files.count == 1 ? NSLocalizedString(@"file", nil)
+                                                 : NSLocalizedString(@"files", nil);
+  NSString* message =
+    [NSString stringWithFormat:NSLocalizedString(@"Hi, I just sent you %lu %@ via Infinit. "
+                                                 "It's a fast and secure app! "
+                                                 "Get the %@ here: %@\nInvitation code: %@", nil),
+     transaction.files.count, files, files, recipient.ghost_invitation_url, recipient.ghost_code];
+  if (self.sms_controller == nil)
+    _sms_controller = [[MFMessageComposeViewController alloc] init];
+  self.sms_controller.recipients = @[recipient.phone_number];
+  self.sms_controller.body = message;
+  self.sms_controller.messageComposeDelegate = self;
+  [self presentViewController:self.sms_controller animated:YES completion:NULL];
+}
+
+#pragma mark - SMS Delegate
+
+- (void)messageComposeViewController:(MFMessageComposeViewController*)controller
+                 didFinishWithResult:(MessageComposeResult)result
+{
+  switch (result)
+  {
+    case MessageComposeResultCancelled:
+      break;
+    case MessageComposeResultFailed:
+      break;
+    case MessageComposeResultSent:
+      break;
+  }
+  [controller dismissViewControllerAnimated:YES completion:NULL];
+}
+
 #pragma mark - Peer Transaction Notifications
 
 - (void)newPeerTransaction:(NSNotification*)notification
@@ -581,6 +640,13 @@ shouldSelectViewController:(UIViewController*)viewController
 - (void)peerTransactionUpdated:(NSNotification*)notification
 {
   [self performSelectorOnMainThread:@selector(updateHomeBadge) withObject:nil waitUntilDone:NO];
+}
+
+- (void)peerInvitationCode:(NSNotification*)notification
+{
+  [self performSelectorOnMainThread:@selector(handlePeerInvitationCode:)
+                         withObject:notification.userInfo
+                      waitUntilDone:NO];
 }
 
 #pragma mark - Connection Handling
