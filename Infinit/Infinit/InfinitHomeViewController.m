@@ -806,6 +806,13 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 
 - (void)peerTransactionAdded:(NSNotification*)notification
 {
+  NSNumber* transaction_id = notification.userInfo[@"id"];
+  InfinitPeerTransaction* peer_transaction =
+    [[InfinitPeerTransactionManager sharedInstance] transactionWithId:transaction_id];
+  if (!peer_transaction.concerns_device || peer_transaction.archived)
+    return;
+  InfinitHomeItem* item = [[InfinitHomeItem alloc] initWithTransaction:peer_transaction];
+  [self performSelectorOnMainThread:@selector(addItem:) withObject:item waitUntilDone:NO];
   if (self.onboarding_view != nil)
   {
     [self performSelectorOnMainThread:@selector(removeOnboardingView)
@@ -818,14 +825,6 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
                            withObject:nil
                         waitUntilDone:NO];
   }
-
-  NSNumber* transaction_id = notification.userInfo[@"id"];
-  InfinitPeerTransaction* peer_transaction =
-    [[InfinitPeerTransactionManager sharedInstance] transactionWithId:transaction_id];
-  if (!peer_transaction.concerns_device || peer_transaction.archived)
-    return;
-  InfinitHomeItem* item = [[InfinitHomeItem alloc] initWithTransaction:peer_transaction];
-  [self performSelectorOnMainThread:@selector(addItem:) withObject:item waitUntilDone:NO];
 }
 
 - (void)addItem:(InfinitHomeItem*)item
@@ -903,18 +902,6 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
   {
     if (item.transaction != nil && [item.transaction.id_ isEqualToNumber:transaction_id])
     {
-      if (self.onboarding_view != nil)
-      {
-        [self performSelectorOnMainThread:@selector(removeOnboardingView)
-                               withObject:nil
-                            waitUntilDone:NO];
-      }
-      if (self.no_activity_view != nil)
-      {
-        [self performSelectorOnMainThread:@selector(removeNoActivityView)
-                               withObject:nil
-                            waitUntilDone:NO];
-      }
       [self performSelectorOnMainThread:@selector(updateItem:) withObject:item waitUntilDone:NO];
       return;
     }
@@ -932,7 +919,6 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
   [self.onboarding_view removeFromSuperview];
   self.onboarding_view = nil;
-  [self loadTransactions];
 }
 
 - (void)removeNoActivityView
@@ -957,6 +943,18 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
                                                                           inSection:section]]];
       if (concerns_device)
       {
+        if (self.onboarding_view != nil)
+        {
+          [self performSelectorOnMainThread:@selector(removeOnboardingView)
+                                 withObject:nil
+                              waitUntilDone:NO];
+        }
+        if (self.no_activity_view != nil)
+        {
+          [self performSelectorOnMainThread:@selector(removeNoActivityView)
+                                 withObject:nil
+                              waitUntilDone:NO];
+        }
         [self.data insertObject:item atIndex:0];
         [self.collection_view insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0
                                                                             inSection:section]]];
