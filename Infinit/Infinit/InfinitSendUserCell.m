@@ -13,6 +13,8 @@
 #import "UIImage+Rounded.h"
 
 static NSDictionary* _me_attrs = nil;
+static UIImage* _mac_image = nil;
+static UIImage* _star_image = nil;
 
 @implementation InfinitSendUserCell
 
@@ -20,9 +22,20 @@ static NSDictionary* _me_attrs = nil;
 {
   if ([self.contact isEqual:contact])
     return;
-  [super setContact:contact];
+  super.contact = contact;
   if (self.contact.infinit_user.is_self)
+  {
+    if (_mac_image == nil)
+      _mac_image = [UIImage imageNamed:@"icon-device-mac"];
+    self.user_type_view.image = _mac_image;
     [self setSelfTextColor];
+  }
+  else
+  {
+    if (_star_image == nil)
+      _star_image = [UIImage imageNamed:@"icon-contact-favorite"];
+    self.user_type_view.image = _star_image;
+  }
 }
 
 - (void)setSelfTextColor
