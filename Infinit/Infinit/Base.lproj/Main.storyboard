@@ -679,7 +679,7 @@
                                             <constraint firstAttribute="height" constant="278" id="c6e-Rz-8sG"/>
                                         </constraints>
                                         <prototypes>
-                                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="send_user_me_cell" rowHeight="62" id="eqh-rJ-glX" customClass="InfinitSendUserCell">
+                                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="send_device_cell" rowHeight="62" id="eqh-rJ-glX" customClass="InfinitSendDeviceCell">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eqh-rJ-glX" id="V5m-cX-0aY">
@@ -727,11 +727,11 @@
                                                                 </mask>
                                                             </variation>
                                                         </imageView>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-contact-me" translatesAutoresizingMaskIntoConstraints="NO" id="FCE-dg-tH6">
+                                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="icon-device-mac" translatesAutoresizingMaskIntoConstraints="NO" id="FCE-dg-tH6">
                                                             <rect key="frame" x="550" y="23" width="22" height="16"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="22" id="Wgb-eP-gpt"/>
-                                                                <constraint firstAttribute="height" constant="16" id="iAy-ju-9yt"/>
+                                                                <constraint firstAttribute="width" constant="22" id="4Bz-5S-FJQ"/>
+                                                                <constraint firstAttribute="height" constant="27" id="ubI-oJ-5LJ"/>
                                                             </constraints>
                                                         </imageView>
                                                     </subviews>
@@ -782,8 +782,8 @@
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <connections>
                                                     <outlet property="avatar_view" destination="695-GN-s1x" id="BPU-AU-bcU"/>
+                                                    <outlet property="device_type_view" destination="FCE-dg-tH6" id="Icu-cc-2rX"/>
                                                     <outlet property="name_label" destination="6G8-BA-BUD" id="U6O-Uw-w1M"/>
-                                                    <outlet property="user_type_view" destination="FCE-dg-tH6" id="Ro2-ys-8so"/>
                                                 </connections>
                                             </tableViewCell>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="send_user_infinit_cell" rowHeight="62" id="Ct8-cb-QIX" customClass="InfinitSendUserCell">
@@ -793,7 +793,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mike Dee" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0RN-Xm-k4b">
-                                                            <rect key="frame" x="70" y="19" width="467" height="22"/>
+                                                            <rect key="frame" x="70" y="19" width="466" height="22"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="22" id="6KS-hy-rW6"/>
                                                                 <constraint firstAttribute="width" constant="200" id="7DT-o0-Aa6"/>
@@ -834,11 +834,11 @@
                                                                 </mask>
                                                             </variation>
                                                         </imageView>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-contact-favorite" translatesAutoresizingMaskIntoConstraints="NO" id="9Zr-OE-tM8">
-                                                            <rect key="frame" x="552" y="22" width="19" height="18"/>
+                                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-contact-favorite" translatesAutoresizingMaskIntoConstraints="NO" id="9Zr-OE-tM8">
+                                                            <rect key="frame" x="551" y="22" width="22" height="18"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="18" id="EsM-mM-F6i"/>
-                                                                <constraint firstAttribute="width" constant="19" id="dNx-Xs-el4"/>
+                                                                <constraint firstAttribute="width" constant="22" id="dNx-Xs-el4"/>
                                                             </constraints>
                                                         </imageView>
                                                     </subviews>
@@ -864,7 +864,7 @@
                                                         <constraint firstAttribute="centerY" secondItem="0RN-Xm-k4b" secondAttribute="centerY" constant="0.5" id="rn4-27-pUT"/>
                                                         <constraint firstItem="0RN-Xm-k4b" firstAttribute="centerY" secondItem="yuS-my-INj" secondAttribute="centerY" constant="-0.5" id="tK8-us-Log"/>
                                                         <constraint firstItem="yuS-my-INj" firstAttribute="leading" secondItem="Scd-3f-bhR" secondAttribute="leadingMargin" constant="3" id="uVG-dm-ExS"/>
-                                                        <constraint firstAttribute="trailing" secondItem="9Zr-OE-tM8" secondAttribute="trailing" constant="29" id="weg-Vm-b0j"/>
+                                                        <constraint firstAttribute="trailing" secondItem="9Zr-OE-tM8" secondAttribute="trailing" constant="27" id="weg-Vm-b0j"/>
                                                     </constraints>
                                                     <variation key="default">
                                                         <mask key="constraints">
@@ -2530,8 +2530,8 @@ access your phone contacts!</string>
         <image name="icon-back-white" width="11" height="18"/>
         <image name="icon-close" width="16" height="17"/>
         <image name="icon-contact-favorite" width="19" height="18"/>
-        <image name="icon-contact-me" width="22" height="16"/>
         <image name="icon-contacts" width="17" height="20"/>
+        <image name="icon-device-mac" width="22" height="16"/>
         <image name="icon-email-results" width="39" height="38"/>
         <image name="icon-facebook-white" width="21" height="21"/>
         <image name="icon-favorite-white" width="16" height="15"/>
