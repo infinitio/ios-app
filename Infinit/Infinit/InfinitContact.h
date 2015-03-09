@@ -9,11 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <AddressBook/AddressBook.h>
 
+#import <Gap/InfinitDevice.h>
 #import <Gap/InfinitUser.h>
 
 @interface InfinitContact : NSObject
 
 @property (nonatomic, strong) UIImage* avatar;
+@property (nonatomic, strong) InfinitDevice* device;
+@property (nonatomic, readonly) NSString* device_name;
 @property (nonatomic, strong) NSArray* emails;
 @property (nonatomic, strong) NSString* first_name;
 @property (nonatomic, strong) NSString* fullname;
@@ -26,8 +29,12 @@
 - (id)initWithABRecord:(ABRecordRef)record;
 - (id)initWithEmail:(NSString*)email;
 - (id)initWithInfinitUser:(InfinitUser*)user;
+- (id)initWithInfinitUser:(InfinitUser*)user
+                andDevice:(InfinitDevice*)device;
 
 - (BOOL)containsSearchString:(NSString*)search_string;
 - (void)updateAvatar;
+
++ (NSString*)deviceNameFrom:(InfinitDeviceType)type;
 
 @end

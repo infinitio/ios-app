@@ -73,6 +73,7 @@
       [self generateAvatarWithFirstName:first_name surname:surname];
     _selected_email_index = NSNotFound;
     _selected_phone_index = NSNotFound;
+    _device = nil;
   }
   return self;
 }
@@ -92,11 +93,18 @@
     _fullname = email;
     _first_name = email;
     _phone_numbers = nil;
+    _device = nil;
   }
   return self;
 }
 
 - (id)initWithInfinitUser:(InfinitUser*)user
+{
+  return [[InfinitContact alloc] initWithInfinitUser:user andDevice:nil];
+}
+
+- (id)initWithInfinitUser:(InfinitUser*)user
+                andDevice:(InfinitDevice*)device
 {
   if (self = [super init])
   {
@@ -116,6 +124,7 @@
     _phone_numbers = nil;
     _selected_email_index = NSNotFound;
     _selected_phone_index = NSNotFound;
+    _device = device;
   }
   return self;
 }
@@ -165,28 +174,39 @@
   UIGraphicsEndImageContext();
 }
 
+#pragma mark - Device Name
+
+- (NSString*)device_name
+{
+  if (self.device == nil)
+    return nil;
+  return [InfinitContact deviceNameFrom:self.device.type];
+}
+
++ (NSString*)deviceNameFrom:(InfinitDeviceType)type
+{
+  switch (type)
+  {
+    case InfinitDeviceTypeAndroid:
+      return NSLocalizedString(@"My Android", nil);
+    case  InfinitDeviceTypeiPhone:
+      return NSLocalizedString(@"My iPhone", nil);
+    case InfinitDeviceTypeMacLaptop:
+      return NSLocalizedString(@"My Mac", nil);
+    case InfinitDeviceTypePCLinux:
+    case InfinitDeviceTypePCWindows:
+      return NSLocalizedString(@"My PC", nil);
+    case InfinitDeviceTypeUnknown:
+      return NSLocalizedString(@"Unknown", nil);
+  }
+}
+
 #pragma mark - Helpers
 
 - (NSString*)description
 {
-  return [NSString stringWithFormat:@"<%@> emails: %@\rnumbers: %@\rinfinit:%@",
-          self.fullname, self.emails, self.phone_numbers, self.infinit_user];
-}
-
-#pragma mark - Comparison
-
-- (BOOL)isEqual:(id)object
-{
-  if (![object isKindOfClass:self.class])
-    return NO;
-  InfinitContact* other = (InfinitContact*)object;
-  if ([self.infinit_user isEqual:other.infinit_user])
-    return YES;
-  if ([self.emails isEqualToArray:other.emails])
-    return YES;
-  if ([self.fullname isEqualToString:other.fullname])
-    return YES;
-  return NO;
+  return [NSString stringWithFormat:@"<%@> emails: %@\rnumbers: %@\rinfinit:%@\rdevice: %@",
+          self.fullname, self.emails, self.phone_numbers, self.infinit_user, self.device];
 }
 
 #pragma mark - Search
@@ -202,7 +222,8 @@
     if ([self source:self.fullname containsString:component] ||
         [self emails:self.emails containString:component] ||
         (self.infinit_user != nil &&
-         [self source:self.infinit_user.handle containsString:component]))
+         [self source:self.infinit_user.handle containsString:component]) ||
+        (self.device != nil && [self source:self.device_name containsString:component]))
     {
       score++;
     }
