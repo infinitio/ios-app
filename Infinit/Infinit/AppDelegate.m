@@ -41,7 +41,6 @@
 - (BOOL)application:(UIApplication*)application
 didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
-  [[InfinitKeychain sharedInstance] removeAccount:@"chris+ghost25@infinit.io"];
   [InfinitConnectionManager sharedInstance];
   [InfinitStateManager startState];
 
