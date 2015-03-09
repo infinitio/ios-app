@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "icon-contact-me.png"
+      "filename" : "icon-device-mac-avatar.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "icon-contact-me@2x.png"
+      "filename" : "icon-device-mac-avatar@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "icon-contact-me@3x.png"
+      "filename" : "icon-device-mac-avatar@3x.png"
     }
   ],
   "info" : {
