@@ -64,6 +64,7 @@
 		836D39A11A69409300892206 /* UIImage+Rounded.m in Sources */ = {isa = PBXBuildFile; fileRef = 836D39A01A69409300892206 /* UIImage+Rounded.m */; };
 		836F5C8C1A166720007C9C4E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836F5C8B1A166720007C9C4E /* SystemConfiguration.framework */; };
 		837640F81A9D1F2A00BB2316 /* InfinitHomeEmptyOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 837640FA1A9D1F2A00BB2316 /* InfinitHomeEmptyOverlay.xib */; };
+		837F664A1AADCB5100EA49C4 /* InfinitSendDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 837F66491AADCB5100EA49C4 /* InfinitSendDeviceCell.m */; };
 		83825BE11A701FE900420F24 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83825BE01A701FE900420F24 /* Photos.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		838490981A767F6E00969CF7 /* InfinitFilePreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 838490971A767F6E00969CF7 /* InfinitFilePreviewController.m */; };
 		8384909C1A76969700969CF7 /* InfinitFilePreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 8384909B1A76969700969CF7 /* InfinitFilePreview.m */; };
@@ -333,6 +334,8 @@
 		836D39A01A69409300892206 /* UIImage+Rounded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Rounded.m"; sourceTree = "<group>"; };
 		836F5C8B1A166720007C9C4E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		837640F91A9D1F2A00BB2316 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfinitHomeEmptyOverlay.xib; sourceTree = "<group>"; };
+		837F66481AADCB5100EA49C4 /* InfinitSendDeviceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendDeviceCell.h; sourceTree = "<group>"; };
+		837F66491AADCB5100EA49C4 /* InfinitSendDeviceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendDeviceCell.m; sourceTree = "<group>"; };
 		83825BE01A701FE900420F24 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		838490961A767F6E00969CF7 /* InfinitFilePreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFilePreviewController.h; sourceTree = "<group>"; };
 		838490971A767F6E00969CF7 /* InfinitFilePreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFilePreviewController.m; sourceTree = "<group>"; };
@@ -1148,6 +1151,8 @@
 			children = (
 				839B81491A6443220057E92B /* InfinitSendAbstractCell.h */,
 				839B814A1A6443220057E92B /* InfinitSendAbstractCell.m */,
+				837F66481AADCB5100EA49C4 /* InfinitSendDeviceCell.h */,
+				837F66491AADCB5100EA49C4 /* InfinitSendDeviceCell.m */,
 				D05726B21A50BA880097083C /* InfinitSendUserCell.h */,
 				D05726B11A50BA880097083C /* InfinitSendUserCell.m */,
 				839B813D1A6407990057E92B /* InfinitSendContactCell.h */,
@@ -1432,6 +1437,7 @@
 				D0BD35231A4245AF00AB8EF9 /* InfinitSendRecipientsController.m in Sources */,
 				8343F5D61A628011006E04C0 /* InfinitTabAnimator.m in Sources */,
 				83294B911AA6FEA700C6CA9A /* InfinitUploadThumbnailManager.mm in Sources */,
+				837F664A1AADCB5100EA49C4 /* InfinitSendDeviceCell.m in Sources */,
 				833E3ACC1A63D89B0088D3FF /* InfinitImportOverlayView.m in Sources */,
 				8311B5C61A7FAB2800832FDE /* InfinitContactsNavigationController.m in Sources */,
 				83672B901A9F4493009425E6 /* InfinitHomeNavigationController.m in Sources */,
