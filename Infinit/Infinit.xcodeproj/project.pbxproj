@@ -114,6 +114,7 @@
 		83EBB0B11A97237500144BC6 /* InfinitShrinkingLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB0B01A97237500144BC6 /* InfinitShrinkingLine.m */; };
 		83F31BB51A9D190B00A6007C /* libc++.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F31BB31A9D190B00A6007C /* libc++.a */; };
 		83F31BB61A9D190B00A6007C /* libc++abi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F31BB41A9D190B00A6007C /* libc++abi.a */; };
+		83F4282F1AAE048B009A1A7C /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4282E1AAE048B009A1A7C /* CoreTelephony.framework */; };
 		83F4D04B1A1387EF0068BEB2 /* libaws.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D04A1A1387EF0068BEB2 /* libaws.a */; };
 		83F4D0541A1388050068BEB2 /* libboost_atomic-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D04C1A1388050068BEB2 /* libboost_atomic-mt-s.a */; };
 		83F4D0551A1388050068BEB2 /* libboost_chrono-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D04D1A1388050068BEB2 /* libboost_chrono-mt-s.a */; };
@@ -420,6 +421,7 @@
 		83EBB0B01A97237500144BC6 /* InfinitShrinkingLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitShrinkingLine.m; sourceTree = "<group>"; };
 		83F31BB31A9D190B00A6007C /* libc++.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libc++.a"; path = "../../../_build/ios/elle/reactor/lib/libc++.a"; sourceTree = "<group>"; };
 		83F31BB41A9D190B00A6007C /* libc++abi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libc++abi.a"; path = "../../../_build/ios/elle/reactor/lib/libc++abi.a"; sourceTree = "<group>"; };
+		83F4282E1AAE048B009A1A7C /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		83F4D0241A1374660068BEB2 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		83F4D04A1A1387EF0068BEB2 /* libaws.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libaws.a; path = ../../../_build/ios/elle/aws/lib/libaws.a; sourceTree = "<group>"; };
 		83F4D04C1A1388050068BEB2 /* libboost_atomic-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_atomic-mt-s.a"; path = "../../../_build/ios/elle/boost/lib/libboost_atomic-mt-s.a"; sourceTree = "<group>"; };
@@ -530,6 +532,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83F4282F1AAE048B009A1A7C /* CoreTelephony.framework in Frameworks */,
 				83F31BB51A9D190B00A6007C /* libc++.a in Frameworks */,
 				83F31BB61A9D190B00A6007C /* libc++abi.a in Frameworks */,
 				83825BE11A701FE900420F24 /* Photos.framework in Frameworks */,
@@ -775,6 +778,7 @@
 		836F5C8A1A16670F007C9C4E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				83F4282E1AAE048B009A1A7C /* CoreTelephony.framework */,
 				83F31BB31A9D190B00A6007C /* libc++.a */,
 				83F31BB41A9D190B00A6007C /* libc++abi.a */,
 				83F5E5901AA4A9590011E4F0 /* FacebookSDK.framework */,
