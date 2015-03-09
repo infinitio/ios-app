@@ -20,7 +20,7 @@ static UIImage* _me_icon = nil;
   if (_favorite_icon == nil)
     _favorite_icon = [UIImage imageNamed:@"icon-contact-favorite"];
   if (_me_icon == nil)
-    _me_icon = [UIImage imageNamed:@"icon-contact-me"];
+    _me_icon = [UIImage imageNamed:@"icon-device-mac"];
   self.letter_label.hidden = YES;
   self.icon_view.hidden = YES;
 }
