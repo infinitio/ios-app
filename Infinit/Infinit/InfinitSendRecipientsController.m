@@ -885,7 +885,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
       }
       else
       {
-        contact.selected_phone_index = index - contact.emails.count - 1;
+        contact.selected_phone_index = index - contact.emails.count;
         _sms_contact = contact;
       }
     }
