@@ -17,6 +17,7 @@
 #import "InfinitSendContactCell.h"
 #import "InfinitContactImportCell.h"
 #import "InfinitMetricsManager.h"
+#import "InfinitSendDeviceCell.h"
 #import "InfinitSendEmailCell.h"
 #import "InfinitSendNoResultsCell.h"
 #import "InfinitSendToSelfOverlayView.h"
@@ -24,6 +25,7 @@
 #import "InfinitTabBarController.h"
 #import "InfinitUploadThumbnailManager.h"
 
+#import <Gap/InfinitDeviceManager.h>
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitTemporaryFileManager.h>
 #import <Gap/InfinitUserManager.h>
@@ -52,9 +54,10 @@
 @property (nonatomic, strong) InfinitImportOverlayView* import_overlay;
 @property (nonatomic, strong) InfinitSendToSelfOverlayView* send_to_self_overlay;
 
-@property (nonatomic, strong) InfinitContact* me_contact;
-@property (nonatomic) BOOL me_match;
 @property (nonatomic) BOOL email_entered;
+@property (nonatomic, strong) InfinitContact* me_contact;
+@property (nonatomic, strong) NSMutableArray* all_devices;
+@property (nonatomic, strong) NSMutableArray* device_results;
 @property (nonatomic, strong) NSMutableArray* all_swaggers;
 @property (nonatomic, strong) NSMutableArray* swagger_results;
 @property (nonatomic, strong) NSMutableArray* all_contacts;
@@ -70,7 +73,7 @@
 @private
   NSString* _managed_files_id;
 
-  NSString* _me_cell_id;
+  NSString* _device_cell_id;
   NSString* _email_cell_id;
   NSString* _infinit_user_cell_id;
   NSString* _contact_cell_id;
@@ -91,7 +94,7 @@
 {
   if (self = [super initWithCoder:aDecoder])
   {
-    _me_cell_id = @"send_user_me_cell";
+    _device_cell_id = @"send_device_cell";
     _email_cell_id = @"send_email_cell";
     _infinit_user_cell_id = @"send_user_infinit_cell";
     _contact_cell_id = @"send_contact_cell";
@@ -163,7 +166,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
   _sms_contact = nil;
-  _me_match = YES;
+  [self fetchDevices];
   [self fetchSwaggers];
   [self configureSearchField];
   [super viewWillAppear:animated];
@@ -240,10 +243,33 @@
   [self.recipients removeAllObjects];
 }
 
+- (void)fetchDevices
+{
+  InfinitUserManager* manager = [InfinitUserManager sharedInstance];
+  NSArray* other_devices = [InfinitDeviceManager sharedInstance].other_devices;
+  if (self.all_devices == nil)
+    _all_devices = [NSMutableArray array];
+  else
+    [self.all_devices removeAllObjects];
+  if (other_devices.count == 0)
+  {
+    [self.all_devices addObject:[[InfinitContact alloc] initWithInfinitUser:manager.me]];
+  }
+  else
+  {
+    for (InfinitDevice* device in [InfinitDeviceManager sharedInstance].other_devices)
+    {
+      InfinitContact* contact = [[InfinitContact alloc] initWithInfinitUser:manager.me
+                                                                  andDevice:device];
+      [self.all_devices addObject:contact];
+    }
+  }
+  self.device_results = [self.all_devices copy];
+}
+
 - (void)fetchSwaggers
 {
   InfinitUserManager* manager = [InfinitUserManager sharedInstance];
-  self.me_contact = [[InfinitContact alloc] initWithInfinitUser:[manager me]];
   self.all_swaggers = [NSMutableArray array];
   for (InfinitUser* user in [manager favorites])
   {
@@ -506,11 +532,16 @@
 - (NSArray*)sendFilesToCurrentRecipients:(NSArray*)files
 {
   NSMutableArray* actual_recipients = [NSMutableArray array];
+  NSMutableArray* device_specific_recipients = [NSMutableArray array];
   for (InfinitContact* contact in self.recipients)
   {
-    if (contact.infinit_user != nil)
+    if (contact.infinit_user != nil && contact.device == nil)
     {
       [actual_recipients addObject:contact.infinit_user];
+    }
+    else if (contact.infinit_user != nil && contact.device != nil)
+    {
+      [device_specific_recipients addObject:contact];
     }
     else
     {
@@ -522,13 +553,26 @@
       {
         NSString* number = contact.phone_numbers[contact.selected_phone_index];
         NSCharacterSet* whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-        [actual_recipients addObject:[number stringByTrimmingCharactersInSet:whitespace]];
+        number = [number stringByTrimmingCharactersInSet:whitespace];
+        NSArray* number_parts = [number componentsSeparatedByCharactersInSet:whitespace];
+        number = [number_parts componentsJoinedByString:@""];
+        [actual_recipients addObject:number];
       }
     }
   }
-  return [[InfinitPeerTransactionManager sharedInstance] sendFiles:files
-                                                      toRecipients:actual_recipients
-                                                       withMessage:@""];
+  NSMutableArray* ids =
+    [[[InfinitPeerTransactionManager sharedInstance] sendFiles:files
+                                                  toRecipients:actual_recipients
+                                                   withMessage:@""] mutableCopy];
+  for (InfinitContact* contact in device_specific_recipients)
+  {
+    NSNumber* id_ = [[InfinitPeerTransactionManager sharedInstance] sendFiles:files
+                                                                  toRecipient:contact.infinit_user
+                                                                     onDevice:contact.device 
+                                                                  withMessage:@""];
+    [ids addObject:id_];
+  }
+  return ids;
 }
 
 - (IBAction)inviteBarButtonTapped:(id)sender
@@ -570,7 +614,7 @@
   switch (section)
   {
     case 0:
-      return self.me_match ? 1 : 0;
+      return self.device_results.count;
     case 1:
       return self.swagger_results.count;
     case 2:
@@ -613,11 +657,21 @@
   }
   else if (indexPath.section == 0)
   {
-    InfinitSendUserCell* cell = [tableView dequeueReusableCellWithIdentifier:_me_cell_id
-                                                                forIndexPath:indexPath];
-    cell.contact = self.me_contact;
-    cell.user_type_view.hidden = NO;
-    res = cell;
+    if (self.all_devices.count == 1)
+    {
+      InfinitSendUserCell* cell = [tableView dequeueReusableCellWithIdentifier:_infinit_user_cell_id
+                                                                  forIndexPath:indexPath];
+      cell.contact = self.device_results[indexPath.row];
+      cell.user_type_view.hidden = NO;
+      res = cell;
+    }
+    else
+    {
+      InfinitSendDeviceCell* cell = [tableView dequeueReusableCellWithIdentifier:_device_cell_id
+                                                                    forIndexPath:indexPath];
+      [cell setupForContact:self.device_results[indexPath.row]];
+      res = cell;
+    }
   }
   else if (indexPath.section == 1)
   {
@@ -672,7 +726,7 @@ heightForHeaderInSection:(NSInteger)section
   switch (section)
   {
     case 0:
-      if (_me_match)
+      if (self.device_results.count > 0)
         break;
       else
         return 0.0f;
@@ -758,7 +812,7 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
       [settings setSend_to_self_onboarded:@1];
       [self showSendToSelfOverlay];
     }
-    contact = self.me_contact;
+    contact = self.device_results[indexPath.row];
   }
   else if (indexPath.section == 1)
   {
@@ -818,7 +872,7 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
     }
   }
   if (contact != nil)
-    [_recipients addObject:contact];
+    [self.recipients addObject:contact];
   [self updateSendButton];
   [self.search_field reloadData];
   [self reloadSearchResults];
@@ -903,6 +957,7 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
     _sms_contact = nil;
   contact.selected_phone_index = NSNotFound;
   contact.selected_email_index = NSNotFound;
+  contact.device = nil;
   [self.search_field reloadData];
   [self reloadSearchResults];
   [self updateSendButton];
@@ -1004,8 +1059,17 @@ didDeleteTokenAtIndex:(NSUInteger)index
   contact.selected_phone_index = NSNotFound;
   if ([contact isEqual:self.me_contact])
   {
-    [self.table_view deselectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
-                                   animated:YES];
+    if (self.all_devices.count == 1)
+    {
+      [self.table_view deselectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
+                                     animated:YES];
+    }
+    else
+    {
+      NSUInteger table_index = [self.device_results indexOfObject:contact];
+      [self.table_view deselectRowAtIndexPath:[NSIndexPath indexPathForRow:table_index inSection:0]
+                                     animated:YES];
+    }
   }
   else if ([self.swagger_results containsObject:contact])
   {
@@ -1063,7 +1127,11 @@ didDeleteTokenAtIndex:(NSUInteger)index
    titleForTokenAtIndex:(NSUInteger)index
 {
   InfinitContact* contact = [self.recipients objectAtIndex:index];
-  if (contact.first_name.length > 0)
+  if (contact.device != nil)
+  {
+    return contact.device_name;
+  }
+  else if (contact.first_name.length > 0)
   {
     return contact.first_name;
   }
@@ -1095,9 +1163,9 @@ didDeleteTokenAtIndex:(NSUInteger)index
   self.email_entered = NO;
   BOOL were_no_results = [self noResults];
   NSMutableIndexSet* sections = [NSMutableIndexSet indexSet];
-  if (!_me_match)
+  if (![self.device_results isEqualToArray:self.all_devices])
   {
-    _me_match = YES;
+    self.device_results = [self.all_devices copy];
     [sections addIndex:0];
   }
   if (![self.swagger_results isEqualToArray:self.all_swaggers])
@@ -1120,10 +1188,12 @@ didDeleteTokenAtIndex:(NSUInteger)index
 {
   self.email_entered = NO;
   BOOL were_no_results = [self noResults];
-  if ([self.me_contact containsSearchString:search_string])
-    _me_match = YES;
-  else
-    _me_match = NO;
+  NSMutableArray* devices_temp = [NSMutableArray array];
+  for (InfinitContact* device in self.all_devices)
+  {
+    if ([device containsSearchString:search_string])
+      [devices_temp addObject:device];
+  }
   NSMutableArray* swaggers_temp = [NSMutableArray array];
   for (InfinitContact* contact in self.all_swaggers)
   {
@@ -1137,7 +1207,11 @@ didDeleteTokenAtIndex:(NSUInteger)index
       [contacts_temp addObject:contact];
   }
   NSMutableIndexSet* sections = [NSMutableIndexSet indexSet];
-  [sections addIndex:0];
+  if (![self.device_results isEqualToArray:devices_temp])
+  {
+    self.device_results = devices_temp;
+    [sections addIndex:0];
+  }
   if (![self.swagger_results isEqualToArray:swaggers_temp])
   {
     self.swagger_results = swaggers_temp;
@@ -1170,7 +1244,7 @@ didDeleteTokenAtIndex:(NSUInteger)index
 - (void)userAvatarFetched:(NSNotification*)notification
 {
   NSNumber* updated_id = notification.userInfo[@"id"];
-  if ([self.me_contact.infinit_user.id_ isEqual:updated_id])
+  if ([self.me_contact.infinit_user.id_ isEqual:updated_id] && self.all_devices.count == 1)
   {
     NSIndexPath* path = [NSIndexPath indexPathForRow:0 inSection:0];
     InfinitSendUserCell* cell = (InfinitSendUserCell*)[self.table_view cellForRowAtIndexPath:path];
@@ -1195,7 +1269,7 @@ didDeleteTokenAtIndex:(NSUInteger)index
 
 - (BOOL)noResults
 {
-  return (!_me_match &&
+  return (self.device_results.count == 0 &&
           self.swagger_results.count == 0 &&
           self.contact_results.count == 0);
 }
