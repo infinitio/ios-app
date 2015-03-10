@@ -111,4 +111,13 @@
   return [MFMessageComposeViewController canSendText];
 }
 
+#pragma mark - OS Version
+
++ (BOOL)iOS7
+{
+  NSComparisonResult res = [[UIDevice currentDevice].systemVersion compare:@"8.0"
+                                                                   options:NSNumericSearch];
+  return (res == NSOrderedAscending);
+}
+
 @end

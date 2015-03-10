@@ -32,4 +32,6 @@ typedef NS_ENUM(NSUInteger, InfinitCPUTypes)
 
 + (BOOL)canSendSMS;
 
++ (BOOL)iOS7;
+
 @end
