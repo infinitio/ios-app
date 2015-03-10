@@ -9,6 +9,7 @@
 #import "InfinitSettingsViewController.h"
 
 #import "InfinitColor.h"
+#import "InfinitHostDevice.h"
 #import "InfinitLoginInvitationCodeController.h"
 #import "InfinitSettingsCell.h"
 #import "InfinitSettingsExpandedCell.h"
@@ -400,14 +401,20 @@ viewForFooterInSection:(NSInteger)section
 {
   if ([segue.identifier isEqualToString:@"settings_report_problem"])
   {
-    InfinitSettingsReportProblemController* controller =
-      ((UINavigationController*)segue.destinationViewController).viewControllers[0];
+    InfinitSettingsReportProblemController* controller = nil;
+    if ([InfinitHostDevice iOS7])
+      controller = segue.destinationViewController;
+    else
+      controller = ((UINavigationController*)segue.destinationViewController).viewControllers[0];
     controller.feedback_mode = NO;
   }
   else if ([segue.identifier isEqualToString:@"settings_feedback"])
   {
-    InfinitSettingsReportProblemController* controller =
-      ((UINavigationController*)segue.destinationViewController).viewControllers[0];
+    InfinitSettingsReportProblemController* controller = nil;
+    if ([InfinitHostDevice iOS7])
+      controller = segue.destinationViewController;
+    else
+      controller = ((UINavigationController*)segue.destinationViewController).viewControllers[0];
     controller.feedback_mode = YES;
   }
   else if ([segue.identifier isEqualToString:@"register_invitation_code_segue"])
