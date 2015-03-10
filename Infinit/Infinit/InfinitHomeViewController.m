@@ -419,6 +419,11 @@ static NSUInteger _background_onboard_size = 5 * 1000 * 1000;
   [_progress_timer invalidate];
   _progress_timer = nil;
   [super viewWillDisappear:animated];
+  if (self.cell_image_view)
+  {
+    [self.cell_image_view removeFromSuperview];
+    _cell_image_view = nil;
+  }
 }
 
 #pragma mark - General
@@ -1006,11 +1011,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
   if (recognizer.state == UIGestureRecognizerStateBegan)
   {
     if (self.cell_image_view)
-    {
-      [self.cell_image_view removeFromSuperview];
-      _cell_image_view = nil;
       return;
-    }
     NSIndexPath* index = [self.collection_view indexPathForItemAtPoint:location];
     UICollectionViewCell* cell = [self.collection_view cellForItemAtIndexPath:index];
     if (!cell)
