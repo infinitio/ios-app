@@ -26,6 +26,7 @@
 #import "NSString+email.h"
 
 #import <Gap/InfinitConnectionManager.h>
+#import <Gap/InfinitDeviceManager.h>
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitStateResult.h>
@@ -430,6 +431,8 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
    }];
   [self showOverlayView:self.signup_facebook_view ofHeight:self.signup_facebook_view.height];
   [self.signup_facebook_view.activity startAnimating];
+  self.signup_facebook_view.fullname_field.enabled = NO;
+  self.signup_facebook_view.email_field.enabled = NO;
 }
 
 - (IBAction)loginOrRegisterTapped:(id)sender
@@ -1019,6 +1022,7 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
 
 - (void)onSuccessfulLogin
 {
+  [InfinitDeviceManager sharedInstance];
   [InfinitUserManager sharedInstance];
   [InfinitPeerTransactionManager sharedInstance];
   [InfinitDownloadFolderManager sharedInstance];
@@ -1397,6 +1401,8 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
   self.signup_facebook_view.avatar = self.facebook_user.avatar;
   self.signup_facebook_view.fullname_field.text = self.facebook_user.fullname;
   self.signup_facebook_view.email_field.text = self.facebook_user.email;
+  self.signup_facebook_view.fullname_field.enabled = YES;
+  self.signup_facebook_view.email_field.enabled = YES;
   [self checkFacebookInputs];
 }
 
