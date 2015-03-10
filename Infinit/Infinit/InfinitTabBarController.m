@@ -557,27 +557,10 @@ shouldSelectViewController:(UIViewController*)viewController
 
 - (void)handleOffline
 {
-  InfinitConnectionManager* manager = [InfinitConnectionManager sharedInstance];
-  if (manager.network_status == InfinitNetworkStatusNotReachable)
-  {
-    [JDStatusBarNotification showWithStatus:NSLocalizedString(@"You're currently offline...", nil)
-                                  styleName:_status_bar_warning_style_id];
-  }
-  else
-  {
-    [JDStatusBarNotification showWithStatus:NSLocalizedString(@"Reconnecting...", nil)
-                               dismissAfter:2.0f
-                                  styleName:_status_bar_warning_style_id];
-    [JDStatusBarNotification showActivityIndicator:YES
-                                    indicatorStyle:UIActivityIndicatorViewStyleWhite];
-  }
 }
 
 - (void)handleOnline
 {
-  [JDStatusBarNotification showWithStatus:NSLocalizedString(@"Connected!", nil)
-                             dismissAfter:2.0f
-                                styleName:_status_bar_good_style_id];
   [self.offline_overlay removeFromSuperview];
 }
 
@@ -602,8 +585,8 @@ shouldSelectViewController:(UIViewController*)viewController
                                                  : NSLocalizedString(@"files", nil);
   NSString* message =
     [NSString stringWithFormat:NSLocalizedString(@"Hi, I just sent you %lu %@ via Infinit. "
-                                                 "It's a fast and secure app! "
-                                                 "Get the %@ here: %@\nInvitation code: %@", nil),
+                                                 "You can get the %@ here: %@ with "
+                                                 "invitation code: %@", nil),
      transaction.files.count, files, files, recipient.ghost_invitation_url, recipient.ghost_code];
   if (self.sms_controller == nil)
     _sms_controller = [[MFMessageComposeViewController alloc] init];
