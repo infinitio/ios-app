@@ -600,7 +600,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
         case InfinitHomeOnboardingCellSelfSent:
           text = NSLocalizedString(@"Install Infinit on another\n"
                                    "device to retrieve your\n"
-                                   "transfer.", nil);
+                                   "files.", nil);
           lines = 3;
           break;
 
