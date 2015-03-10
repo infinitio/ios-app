@@ -12,7 +12,7 @@
 #import <sys/sysctl.h>
 #import <mach/machine.h>
 
-@import MessageUI;
+@import CoreTelephony;
 
 @implementation InfinitHostDevice
 
@@ -108,7 +108,11 @@
 
 + (BOOL)canSendSMS
 {
-  return [MFMessageComposeViewController canSendText];
+  CTTelephonyNetworkInfo* network_info = [[CTTelephonyNetworkInfo alloc] init];
+  CTCarrier* carrier = [network_info subscriberCellularProvider];
+  if (carrier.isoCountryCode != nil && carrier.isoCountryCode.length > 0)
+    return YES;
+  return NO;
 }
 
 #pragma mark - OS Version
