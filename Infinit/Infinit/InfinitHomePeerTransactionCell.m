@@ -19,6 +19,7 @@
 #import "InfinitUploadThumbnailManager.h"
 
 #import <Gap/InfinitDataSize.h>
+#import <Gap/InfinitDeviceManager.h>
 #import <Gap/InfinitTime.h>
 
 #import "UIImage+Rounded.h"
@@ -213,10 +214,19 @@ static CGFloat _button_height = 45.0f;
   self.avatar_view.image = avatar;
   NSString* other_name = nil;
   if (self.transaction.other_user.is_self)
-    other_name = NSLocalizedString(@"me", nil);
+  {
+    InfinitDevice* device =
+      [[InfinitDeviceManager sharedInstance] deviceWithId:transaction.recipient_device];
+    if (device == nil)
+      other_name = NSLocalizedString(@"me", nil);
+    else
+      other_name = device.friendly_name;
+  }
   else
+  {
     other_name = self.transaction.other_user.fullname;
-  if (self.transaction.sender.is_self && !self.transaction.to_device)
+  }
+  if (self.transaction.from_device)
   {
     self.other_user_label.text =
       [NSString stringWithFormat:NSLocalizedString(@"To %@", nil), other_name];
