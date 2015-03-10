@@ -9,19 +9,22 @@
 #import "InfinitHomePeerTransactionCell.h"
 
 #import "InfinitColor.h"
+#import "InfinitHostDevice.h"
 #import "InfinitFilePreview.h"
 #import "InfinitHomeTransactionStatusView.h"
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitHostDevice.h"
 #import "InfinitHomePeerTransactionFileCell.h"
 #import "InfinitHomePeerTransactionMoreFilesCell.h"
-#import "InfinitShrinkingLine.h"
 #import "InfinitUploadThumbnailManager.h"
 
 #import <Gap/InfinitDataSize.h>
 #import <Gap/InfinitTime.h>
 
 #import "UIImage+Rounded.h"
+
+@interface InfinitHomeStatusView : UIView
+@end
 
 @interface InfinitHomePeerTransactionCell () <UICollectionViewDataSource,
                                               UICollectionViewDelegate,
@@ -33,9 +36,10 @@
 @property (nonatomic, weak) IBOutlet UILabel* files_label;
 @property (nonatomic, weak) IBOutlet UILabel* time_label;
 @property (nonatomic, weak) IBOutlet InfinitHomeTransactionStatusView* status_view;
-@property (nonatomic, weak) IBOutlet InfinitShrinkingLine* top_line;
+@property (nonatomic, weak) IBOutlet UIView* top_line;
 
 @property (nonatomic, weak) IBOutlet UICollectionView* files_view;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* files_constraint;
 
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* status_constraint;
 @property (nonatomic, weak) IBOutlet UIView* status_container;
@@ -44,10 +48,11 @@
 
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* buttons_constraint;
 @property (nonatomic, weak) IBOutlet UIView* button_container;
-@property (nonatomic, weak) IBOutlet InfinitShrinkingLine* bottom_line;
+@property (nonatomic, weak) IBOutlet UIView* bottom_line;
 @property (nonatomic, weak) IBOutlet UIButton* left_button;
 @property (nonatomic, weak) IBOutlet UIButton* right_button;
 @property (nonatomic, weak) IBOutlet UIView* button_separator_line;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* button_separator_constraint;
 
 @property (nonatomic, readonly) id<InfinitHomePeerTransactionCellProtocol> delegate;
 
@@ -86,10 +91,28 @@ static CGFloat _button_height = 45.0f;
   _delegate = nil;
   self.status_view.run_transfer_animation = NO;
   _upload_thumbnails = nil;
+  [self setFilesViewHidden:YES];
+  [self setStatusViewHidden:YES];
+  [self setButtonsHidden:YES];
+  [self setLeftButtonHidden:NO];
 }
 
 - (void)awakeFromNib
 {
+  if (![InfinitHostDevice iOS7])
+  {
+    [self.status_container removeConstraint:self.status_constraint];
+    self.status_constraint = [NSLayoutConstraint constraintWithItem:self.status_container
+                                                          attribute:NSLayoutAttributeHeight
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:nil
+                                                          attribute:NSLayoutAttributeNotAnAttribute 
+                                                         multiplier:1.0f
+                                                           constant:45.0f];
+    self.status_constraint.priority = 999;
+    [self.status_container addConstraint:self.status_constraint];
+    [self.files_view removeConstraint:self.files_constraint];
+  }
   [super awakeFromNib];
   self.translatesAutoresizingMaskIntoConstraints = NO;
   UINib* file_cell_nib =
@@ -185,7 +208,6 @@ static CGFloat _button_height = 45.0f;
   if (self.download_manager == nil)
     _download_manager = [InfinitDownloadFolderManager sharedInstance];
   _folder = [self.download_manager completedFolderForTransactionMetaId:self.transaction.meta_id];
-
   [self configureCellLayoutWithShadow:YES];
   [self configureCellStatusView];
   self.avatar_view.image = avatar;
@@ -252,6 +274,24 @@ static CGFloat _button_height = 45.0f;
   self.status_constraint.constant = hidden ? 0.0f : _status_height;
 }
 
+- (void)setFilesViewHidden:(BOOL)hidden
+{
+  self.top_line.hidden = hidden;
+  self.files_view.hidden = hidden;
+  self.files_constraint.constant =
+    hidden ? 0.0f : self.files_view.collectionViewLayout.collectionViewContentSize.height;
+  if (!hidden)
+    [self.files_view reloadData];
+}
+
+- (void)setLeftButtonHidden:(BOOL)hidden
+{
+  self.button_separator_constraint.constant = hidden ? (self.bounds.size.width / 2.0f - 1.0f)
+                                                     : 0.0f;
+  self.button_separator_line.hidden = hidden;
+  self.left_button.hidden = hidden;
+}
+
 - (void)setPauseCancelButtons
 {
   [self.left_button setImage:_pause_image forState:UIControlStateNormal];
@@ -263,6 +303,7 @@ static CGFloat _button_height = 45.0f;
   [self.right_button setImage:_cancel_image forState:UIControlStateNormal];
   self.right_button.tintColor = [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
   [self.right_button setAttributedTitle:_cancel_str forState:UIControlStateNormal];
+  [self setLeftButtonHidden:YES];
 }
 
 - (void)setAcceptRejectButtons
@@ -273,6 +314,7 @@ static CGFloat _button_height = 45.0f;
   [self.right_button setImage:_cancel_image forState:UIControlStateNormal];
   [self.right_button setAttributedTitle:_decline_str forState:UIControlStateNormal];
   self.right_button.tintColor = [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
+  [self setLeftButtonHidden:NO];
 }
 
 - (void)setOpenSendButtons
@@ -283,12 +325,12 @@ static CGFloat _button_height = 45.0f;
   [self.right_button setImage:_send_image forState:UIControlStateNormal];
   self.right_button.tintColor = [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
   [self.right_button setAttributedTitle:_send_str forState:UIControlStateNormal];
+  [self setLeftButtonHidden:NO];
 }
 
 - (void)configureCellLayoutWithShadow:(BOOL)shadow
 {
-  self.top_line.hidden = YES;
-  self.files_view.hidden = YES;
+  [self setFilesViewHidden:YES];
   switch (self.transaction.status)
   {
     case gap_transaction_new:
@@ -299,10 +341,7 @@ static CGFloat _button_height = 45.0f;
       self.top_line.hidden = !self.expanded;
       [self setStatusViewHidden:!self.expanded];
       if (self.transaction.from_device && self.expanded)
-      {
-        self.top_line.hidden = NO;
-        self.files_view.hidden = NO;
-      }
+        [self setFilesViewHidden:NO];
       break;
     case gap_transaction_waiting_accept:
       [self setButtonsHidden:!(self.expanded || self.transaction.receivable)];
@@ -312,7 +351,7 @@ static CGFloat _button_height = 45.0f;
       {
         [self setAcceptRejectButtons];
         if (self.expanded)
-          self.files_view.hidden = NO;
+          [self setFilesViewHidden:NO];
       }
       else if (self.expanded)
       {
@@ -320,8 +359,7 @@ static CGFloat _button_height = 45.0f;
       }
       if (self.transaction.from_device && self.expanded)
       {
-        self.top_line.hidden = NO;
-        self.files_view.hidden = NO;
+        [self setFilesViewHidden:NO];
       }
       break;
 
@@ -335,12 +373,9 @@ static CGFloat _button_height = 45.0f;
       if (self.expanded)
         [self setPauseCancelButtons];
       if (self.transaction.to_device && self.expanded)
-        self.files_view.hidden = NO;
+        [self setFilesViewHidden:NO];
       if (self.transaction.from_device && self.expanded)
-      {
-        self.top_line.hidden = NO;
-        self.files_view.hidden = NO;
-      }
+        [self setFilesViewHidden:NO];
       break;
 
     case gap_transaction_cloud_buffered:
@@ -363,21 +398,16 @@ static CGFloat _button_height = 45.0f;
             [self setOpenSendButtons];
             [self setButtonsHidden:NO];
           }
+          [self setFilesViewHidden:NO];
         }
-        self.files_view.hidden = NO;
       }
       if (self.transaction.from_device && self.expanded)
-      {
-        self.top_line.hidden = NO;
-        self.files_view.hidden = NO;
-      }
+        [self setFilesViewHidden:NO];
       break;
 
     default:
       break;
   }
-  if (!self.files_view.hidden)
-    [self.files_view reloadData];
   if (shadow)
   {
     self.layer.shadowPath =

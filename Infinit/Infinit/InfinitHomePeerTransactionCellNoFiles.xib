@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14D87h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14D87h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -37,15 +37,12 @@
                                     <action selector="rightButtonTapped:" destination="SsQ-Nf-PKU" eventType="touchUpInside" id="2XY-s0-dZZ"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p6Y-7H-N1Z" customClass="InfinitShrinkingLine">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p6Y-7H-N1Z">
                                 <rect key="frame" x="0.0" y="0.0" width="294" height="1"/>
                                 <color key="backgroundColor" red="0.85490196080000003" green="0.85490196080000003" blue="0.85490196080000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="Dmz-Sw-qRq"/>
                                 </constraints>
-                                <connections>
-                                    <outlet property="h_constraint" destination="Dmz-Sw-qRq" id="0A5-3e-SIm"/>
-                                </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ghI-2T-am8">
                                 <rect key="frame" x="147" y="0.0" width="1" height="34"/>
@@ -147,15 +144,12 @@
                                 <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D4s-7L-PCz" customClass="InfinitShrinkingLine">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D4s-7L-PCz">
                                 <rect key="frame" x="0.0" y="99" width="294" height="1"/>
                                 <color key="backgroundColor" red="0.85490196080000003" green="0.85490196080000003" blue="0.85490196080000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="lpM-tI-Lmc"/>
                                 </constraints>
-                                <connections>
-                                    <outlet property="h_constraint" destination="lpM-tI-Lmc" id="jeB-ET-fUR"/>
-                                </connections>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="N1P-Qx-gXw" customClass="InfinitHomeTransactionStatusView">
                                 <rect key="frame" x="239" y="46" width="35" height="30"/>
@@ -206,6 +200,7 @@
                 <outlet property="avatar_view" destination="KW4-et-D9I" id="8oZ-U4-Eph"/>
                 <outlet property="bottom_line" destination="p6Y-7H-N1Z" id="v7o-el-EIx"/>
                 <outlet property="button_container" destination="ode-04-Kjo" id="C5p-zh-90u"/>
+                <outlet property="button_separator_constraint" destination="mxS-0e-AaT" id="5Yn-so-qX7"/>
                 <outlet property="button_separator_line" destination="ghI-2T-am8" id="4CD-7h-vwG"/>
                 <outlet property="buttons_constraint" destination="qmD-AD-sPc" id="lwe-Rb-1Z3"/>
                 <outlet property="files_label" destination="dm4-5h-5FJ" id="Z0s-9Z-oMX"/>

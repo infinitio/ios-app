@@ -41,7 +41,7 @@ static UIImage* _icon_image = nil;
 - (void)setCount:(NSUInteger)count
 {
   self.icon_view.image = _icon_image;
-  self.files_label.text = [NSString stringWithFormat:@"+%lu", count];
+  self.files_label.text = [NSString stringWithFormat:@"+%lu", (unsigned long)count];
 }
 
 @end
