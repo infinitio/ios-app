@@ -18,6 +18,7 @@
 #import "InfinitHomeFeedbackViewController.h"
 #import "InfinitHomeOnboardingCell.h"
 #import "InfinitHomeRatingCell.h"
+#import "InfinitHostDevice.h"
 #import "InfinitOfflineOverlay.h"
 #import "InfinitRatingManager.h"
 #import "InfinitResizableNavigationBar.h"
@@ -354,6 +355,8 @@ static NSUInteger _background_onboard_size = 5 * 1000 * 1000;
                                                                        views:views];
     [self.view addConstraints:h_constraints];
     [self.view addConstraints:v_constraints];
+    if (self.onboarding_view && ![InfinitHostDevice smallScreen])
+      [self.view bringSubviewToFront:self.onboarding_view];
   }
 }
 
@@ -668,7 +671,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
   sizeForItemAtIndexPath:(NSIndexPath*)indexPath
 {
   CGFloat width = [UIScreen mainScreen].bounds.size.width - 26.0f;
-  CGFloat height = 101.0f;
+  CGFloat height = 100.0f;
   if ([self topSection] && indexPath.section == 0) // Top onboarding and/or rating
   {
     if (indexPath.row == self.onboarding_model.count)
@@ -876,7 +879,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
           [self.onboarding_model addObject:item];
         }
       }
-      [self.data insertObject:item atIndex:0];
+      [self.data addObject:item];
       [self.collection_view reloadData];
       [self updateRunningTransactions];
     }
@@ -1358,8 +1361,15 @@ openFileTapped:(NSUInteger)file_index
   [self.collection_view performBatchUpdates:^
   {
     _show_rate_us = NO;
-    NSArray* indexes = @[[NSIndexPath indexPathForRow:self.onboarding_model.count inSection:0]];
-    [self.collection_view deleteItemsAtIndexPaths:indexes];
+    if (self.onboarding_model.count == 0)
+    {
+      [self.collection_view deleteSections:[NSIndexSet indexSetWithIndex:0]];
+    }
+    else
+    {
+      NSArray* indexes = @[[NSIndexPath indexPathForRow:self.onboarding_model.count inSection:0]];
+      [self.collection_view deleteItemsAtIndexPaths:indexes];
+    }
   } completion:NULL];
 }
 
