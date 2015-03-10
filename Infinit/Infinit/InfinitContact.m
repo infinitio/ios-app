@@ -41,6 +41,12 @@
     if (self.emails.count == 0 && self.phone_numbers.count == 0)
       return nil;
 
+    if (self.emails.count == 0)
+      _emails = nil;
+
+    if (self.phone_numbers.count == 0)
+      _phone_numbers = nil;
+
     NSString* first_name = (__bridge_transfer NSString*)ABRecordCopyValue(record, kABPersonFirstNameProperty);
     NSString* surname = (__bridge_transfer NSString*)ABRecordCopyValue(record, kABPersonLastNameProperty);
     NSMutableString* name_str = [[NSMutableString alloc] init];
@@ -180,28 +186,35 @@
 {
   if (self.device == nil)
     return nil;
-  return [InfinitContact deviceNameFrom:self.device.type];
-}
-
-+ (NSString*)deviceNameFrom:(InfinitDeviceType)type
-{
-  switch (type)
-  {
-    case InfinitDeviceTypeAndroid:
-      return NSLocalizedString(@"My Android", nil);
-    case  InfinitDeviceTypeiPhone:
-      return NSLocalizedString(@"My iPhone", nil);
-    case InfinitDeviceTypeMacLaptop:
-      return NSLocalizedString(@"My Mac", nil);
-    case InfinitDeviceTypePCLinux:
-    case InfinitDeviceTypePCWindows:
-      return NSLocalizedString(@"My PC", nil);
-    case InfinitDeviceTypeUnknown:
-      return NSLocalizedString(@"Unknown", nil);
-  }
+  return self.device.friendly_name;
 }
 
 #pragma mark - Helpers
+
+- (BOOL)isEqual:(id)object
+{
+  if (![object isKindOfClass:self.class])
+    return NO;
+  InfinitContact* other = (InfinitContact*)object;
+  if (self.infinit_user && other.infinit_user && [self.infinit_user isEqual:other.infinit_user])
+  {
+    if (self.infinit_user.is_self)
+    {
+      if ([self.device isEqual:other.device])
+        return YES;
+    }
+    else
+    {
+      return YES;
+    }
+  }
+  if (self.emails && other.emails && [self.emails isEqualToArray:other.emails])
+    return YES;
+  if (self.phone_numbers && other.phone_numbers &&
+      [self.phone_numbers isEqualToArray:other.phone_numbers])
+    return YES;
+  return NO;
+}
 
 - (NSString*)description
 {

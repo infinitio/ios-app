@@ -35,6 +35,4 @@
 - (BOOL)containsSearchString:(NSString*)search_string;
 - (void)updateAvatar;
 
-+ (NSString*)deviceNameFrom:(InfinitDeviceType)type;
-
 @end
