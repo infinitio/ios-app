@@ -92,6 +92,10 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(appplicationIsActive)
+                                               name:UIApplicationDidBecomeActiveNotification
+                                             object:nil];
   NSDictionary* nav_bar_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
                                                                        size:17.0f],
                                   NSForegroundColorAttributeName: [InfinitColor colorWithRed:81
@@ -117,11 +121,19 @@
   }
   [self.table_view reloadData];
   [super viewWillAppear:animated];
+  [self setTableEditing:NO animated:YES];
   [self.table_view deselectRowAtIndexPath:self.table_view.indexPathForSelectedRow animated:animated];
+}
+
+- (void)appplicationIsActive
+{
+  if (self.table_view.editing)
+    [self setTableEditing:NO animated:NO];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
   self.navigationController.interactivePopGestureRecognizer.delegate = nil;
   [super viewWillDisappear:animated];
 }
@@ -222,16 +234,17 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer*)otherGestureReco
 - (IBAction)selectTapped:(id)sender
 {
   if (self.table_view.editing)
-    [self setTableEditing:NO];
+    [self setTableEditing:NO animated:YES];
   else
-    [self setTableEditing:YES];
+    [self setTableEditing:YES animated:YES];
 }
 
 - (void)setTableEditing:(BOOL)editing
+               animated:(BOOL)animated
 {
   InfinitTabBarController* main_tab_bar = (InfinitTabBarController*)self.tabBarController;
-  [self.table_view setEditing:editing animated:YES];
-  [main_tab_bar setTabBarHidden:editing animated:YES];
+  [self.table_view setEditing:editing animated:animated];
+  [main_tab_bar setTabBarHidden:editing animated:animated];
   self.bottom_bar.hidden = !editing;
   self.back_button.enabled = !editing;
   if (editing)
