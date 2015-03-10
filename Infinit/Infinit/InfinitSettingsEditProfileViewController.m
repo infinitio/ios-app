@@ -35,6 +35,8 @@
 @property (nonatomic, strong, readonly) UIImagePickerController* picker;
 @property (nonatomic, weak) InfinitUser* user;
 
+@property (nonatomic, strong) CAShapeLayer* dark_layer;
+
 @end
 
 @implementation InfinitSettingsEditProfileViewController
@@ -61,6 +63,16 @@
   self.name_view.layer.borderColor = [InfinitColor colorWithGray:216].CGColor;
   self.name_view.layer.borderWidth = 1.0f;
   [super viewDidLoad];
+  if (self.dark_layer == nil)
+  {
+    _dark_layer = [CAShapeLayer layer];
+    self.dark_layer.opacity = 0.3f;
+    self.dark_layer.fillColor = [UIColor blackColor].CGColor;
+    self.dark_layer.path =
+    [UIBezierPath bezierPathWithRoundedRect:self.avatar_view.bounds
+                               cornerRadius:self.avatar_view.bounds.size.width].CGPath;
+    [self.avatar_view.layer addSublayer:self.dark_layer];
+  }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -104,10 +116,18 @@
   [actionSheet showInView:self.view];
 }
 
+- (void)goBack
+{
+  if ([InfinitHostDevice iOS7])
+    [self.navigationController popViewControllerAnimated:YES];
+  else
+    [self.navigationController.navigationController popToRootViewControllerAnimated:YES];
+}
+
 - (IBAction)backTapped:(id)sender
 {
   [self dismissKeyboard];
-  [self.navigationController.navigationController popViewControllerAnimated:YES];
+  [self goBack];
 }
 
 - (IBAction)okTapped:(id)sender
@@ -138,7 +158,7 @@
                                                  onObject:nil];
     self.user.fullname = [self.name_field.text copy];
   }
-  [self.navigationController.navigationController popViewControllerAnimated:YES];
+  [self goBack];
 }
 
 - (IBAction)screenTap:(id)sender
@@ -175,12 +195,12 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
   {
     self.picker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
   }
-  [self presentViewController:self.picker animated:YES completion:nil];
+  [self presentViewController:self.picker animated:YES completion:NULL];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController*)picker
 {
-  [self dismissViewControllerAnimated:YES completion:nil];
+  [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)imagePickerController:(UIImagePickerController*)picker
