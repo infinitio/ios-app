@@ -204,19 +204,8 @@
         row = [self.swagger_results indexOfObject:self.recipient];
       }
     }
-    else
-    {
-      section = 2;
-      row = [self.contact_results indexOfObject:self.recipient];
-    }
     if (section != NSNotFound && row != NSNotFound)
-    {
-      NSIndexPath* path = [NSIndexPath indexPathForRow:row inSection:section];
-      [self.table_view selectRowAtIndexPath:path
-                                   animated:NO
-                             scrollPosition:UITableViewScrollPositionNone];
-      [self tableView:self.table_view didSelectRowAtIndexPath:path];
-    }
+      [self selectIndexPath:[NSIndexPath indexPathForRow:row inSection:section]];
   }
 }
 
@@ -325,11 +314,22 @@
                                                           selector:@selector(caseInsensitiveCompare:)];
     [self.all_contacts sortUsingDescriptors:@[sort]];
     self.contact_results = [self.all_contacts mutableCopy];
+    NSUInteger section = 2;
     if (self.all_contacts.count > 0)
     {
       [self performSelectorOnMainThread:@selector(reloadTableSections:)
-                             withObject:[NSIndexSet indexSetWithIndex:2]
+                             withObject:[NSIndexSet indexSetWithIndex:section]
                           waitUntilDone:NO];
+    }
+    if (self.recipient)
+    {
+      NSUInteger row = [self.contact_results indexOfObject:self.recipient];
+      if (row != NSNotFound)
+      {
+        [self performSelectorOnMainThread:@selector(selectIndexPath:)
+                               withObject:[NSIndexPath indexPathForRow:row inSection:section]
+                            waitUntilDone:NO];
+      }
     }
   }
 }
@@ -339,6 +339,13 @@
   [self.table_view reloadSections:set withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
+- (void)selectIndexPath:(NSIndexPath*)index
+{
+  [self.table_view selectRowAtIndexPath:index
+                               animated:NO
+                         scrollPosition:UITableViewScrollPositionNone];
+  [self tableView:self.table_view didSelectRowAtIndexPath:index];
+}
 
 #pragma mark - Overlays
 
