@@ -124,9 +124,11 @@ static CGSize _asset_size;
   _asset_size = CGSizeMake(diameter * scale, diameter * scale);
   self.layout.itemSize = _cell_size;
   [super viewWillAppear:animated];
-  [self loadAssets];
   if (self.collection_view.indexPathsForSelectedItems.count == 0)
+  {
+    [self loadAssets];
     _selected_something = NO;
+  }
   [self configureNextButton];
   self.collection_view.contentOffset =
     CGPointMake(0.0f, 0.0f - self.collection_view.contentInset.top);
