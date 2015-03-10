@@ -9,8 +9,22 @@
 #import "InfinitSendContactCell.h"
 
 #import "InfinitColor.h"
+#import "InfinitHostDevice.h"
+
+static BOOL _checked_sms = NO;
+static BOOL _show_numbers;
 
 @implementation InfinitSendContactCell
+
+- (void)awakeFromNib
+{
+  [super awakeFromNib];
+  if (!_checked_sms)
+  {
+    _checked_sms = YES;
+    _show_numbers = [InfinitHostDevice canSendSMS];
+  }
+}
 
 - (void)setContact:(InfinitContact*)contact
 {
@@ -21,10 +35,10 @@
   if (contact.emails.count > 0)
   {
     [res appendFormat:@"%@", contact.emails[0]];
-    if (contact.emails.count > 1 && contact.phone_numbers.count == 0)
+    if (contact.emails.count > 1 && contact.phone_numbers.count == 0 && _show_numbers)
       [res appendFormat:@"..."];
   }
-  if (contact.phone_numbers.count > 0)
+  if (contact.phone_numbers.count > 0 && _show_numbers)
   {
     if (contact.emails.count > 0)
       [res appendFormat:@", "];
