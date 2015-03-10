@@ -54,6 +54,7 @@
 @property (nonatomic, strong) InfinitImportOverlayView* import_overlay;
 @property (nonatomic, strong) InfinitSendToSelfOverlayView* send_to_self_overlay;
 
+@property (nonatomic) BOOL no_devices;
 @property (nonatomic) BOOL email_entered;
 @property (nonatomic, strong) InfinitContact* me_contact;
 @property (nonatomic, strong) NSMutableArray* all_devices;
@@ -253,10 +254,12 @@
     [self.all_devices removeAllObjects];
   if (other_devices.count == 0)
   {
+    _no_devices = YES;
     [self.all_devices addObject:[[InfinitContact alloc] initWithInfinitUser:manager.me]];
   }
   else
   {
+    _no_devices = NO;
     for (InfinitDevice* device in [InfinitDeviceManager sharedInstance].other_devices)
     {
       InfinitContact* contact = [[InfinitContact alloc] initWithInfinitUser:manager.me
@@ -657,7 +660,7 @@
   }
   else if (indexPath.section == 0)
   {
-    if (self.all_devices.count == 1)
+    if (self.no_devices)
     {
       InfinitSendUserCell* cell = [tableView dequeueReusableCellWithIdentifier:_infinit_user_cell_id
                                                                   forIndexPath:indexPath];
@@ -708,7 +711,7 @@
       res = cell;
     }
   }
-  if ([self.recipients containsObject:contact])
+  if ([self.table_view.indexPathsForSelectedRows containsObject:indexPath])
   {
     [self.table_view selectRowAtIndexPath:indexPath
                                  animated:NO
@@ -833,7 +836,7 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
     contact = self.contact_results[indexPath.row];
     [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewSelectAddressBookContact
                                method:InfinitUIMethodTap];
-    if (contact.emails.count == 1)
+    if (contact.emails.count == 1 && contact.phone_numbers.count == 0)
     {
       contact.selected_email_index = 0;
     }
@@ -1059,7 +1062,7 @@ didDeleteTokenAtIndex:(NSUInteger)index
   contact.selected_phone_index = NSNotFound;
   if ([contact isEqual:self.me_contact])
   {
-    if (self.all_devices.count == 1)
+    if (self.no_devices)
     {
       [self.table_view deselectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
                                      animated:YES];
@@ -1244,7 +1247,7 @@ didDeleteTokenAtIndex:(NSUInteger)index
 - (void)userAvatarFetched:(NSNotification*)notification
 {
   NSNumber* updated_id = notification.userInfo[@"id"];
-  if ([self.me_contact.infinit_user.id_ isEqual:updated_id] && self.all_devices.count == 1)
+  if ([self.me_contact.infinit_user.id_ isEqual:updated_id] && self.no_devices)
   {
     NSIndexPath* path = [NSIndexPath indexPathForRow:0 inSection:0];
     InfinitSendUserCell* cell = (InfinitSendUserCell*)[self.table_view cellForRowAtIndexPath:path];
