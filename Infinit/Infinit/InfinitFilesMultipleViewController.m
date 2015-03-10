@@ -277,6 +277,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer*)otherGestureReco
   [self.table_view deleteRowsAtIndexPaths:self.table_view.indexPathsForSelectedRows
                    withRowAnimation:UITableViewRowAnimationAutomatic];
   [self.table_view endUpdates];
+  [self setTableEditing:NO animated:YES];
 }
 
 #pragma mark - Storyboard
