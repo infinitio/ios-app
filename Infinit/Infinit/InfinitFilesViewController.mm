@@ -114,6 +114,10 @@ ELLE_LOG_COMPONENT("iOS.FilesViewController");
 
 - (void)viewWillAppear:(BOOL)animated
 {
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(appplicationIsActive)
+                                               name:UIApplicationDidBecomeActiveNotification
+                                             object:nil];
   if (self.table_view.indexPathForSelectedRow != nil)
     [self.table_view deselectRowAtIndexPath:self.table_view.indexPathForSelectedRow animated:YES];
   _all_folders = self.download_manager.completed_folders;
@@ -191,8 +195,15 @@ ELLE_LOG_COMPONENT("iOS.FilesViewController");
   self.search_bar.hidden = YES;
 }
 
+- (void)appplicationIsActive
+{
+  if (self.table_view.editing)
+    [self setTableEditing:NO animated:NO];
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
   self.download_manager.delegate = nil;
   [super viewWillDisappear:animated];
@@ -331,16 +342,17 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 - (IBAction)selectTapped:(id)sender
 {
   if (self.table_view.editing)
-    [self setTableEditing:NO];
+    [self setTableEditing:NO animated:YES];
   else
-    [self setTableEditing:YES];
+    [self setTableEditing:YES animated:YES];
 }
 
 - (void)setTableEditing:(BOOL)editing
+               animated:(BOOL)animated
 {
   InfinitTabBarController* main_tab_bar = (InfinitTabBarController*)self.tabBarController;
-  [self.table_view setEditing:editing animated:YES];
-  [main_tab_bar setTabBarHidden:editing animated:YES];
+  [self.table_view setEditing:editing animated:animated];
+  [main_tab_bar setTabBarHidden:editing animated:animated];
   self.bottom_bar.hidden = !editing;
   if (editing)
   {
@@ -375,7 +387,7 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   [self.folder_results removeObjectsAtIndexes:set];
   for (InfinitFolderModel* folder in folders)
     [[InfinitDownloadFolderManager sharedInstance] deleteFolder:folder];
-  [self setTableEditing:NO];
+  [self setTableEditing:NO animated:YES];
   [self resetSearch];
   _all_folders = [InfinitDownloadFolderManager sharedInstance].completed_folders;
   if (self.all_folders.count == 0)
