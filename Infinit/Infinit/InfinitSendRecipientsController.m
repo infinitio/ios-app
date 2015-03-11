@@ -87,6 +87,8 @@
   NSArray* _thumbnail_elements;
 
   NSInteger _max_recipients;
+
+  BOOL _can_send_sms;
 }
 
 #pragma mark - Init
@@ -166,6 +168,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+  _can_send_sms = [InfinitHostDevice canSendSMS];
   _sms_contact = nil;
   [self fetchDevices];
   [self fetchSwaggers];
@@ -843,15 +846,17 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
     contact = self.contact_results[indexPath.row];
     [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewSelectAddressBookContact
                                method:InfinitUIMethodTap];
-    if (contact.emails.count == 1 && contact.phone_numbers.count == 0)
+    if (contact.emails.count == 1 && (contact.phone_numbers.count == 0 || !_can_send_sms))
     {
       contact.selected_email_index = 0;
     }
-    else if (contact.phone_numbers.count == 1 && contact.emails.count == 0)
+    else if (_can_send_sms && contact.phone_numbers.count == 1 && contact.emails.count == 0)
     {
       if (self.sms_contact)
       {
         [self showSendToOnePhoneMessage];
+        [self.table_view deselectRowAtIndexPath:indexPath
+                                       animated:NO];
         contact = nil;
       }
       else
