@@ -10,6 +10,7 @@
 
 #import "InfinitColor.h"
 #import "InfinitHostDevice.h"
+#import "InfinitTabBarController.h"
 
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitStateResult.h>
@@ -173,12 +174,14 @@ replacementString:(NSString*)string
 - (void)alertView:(UIAlertView*)alertView
 didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-  [self.navigationController popViewControllerAnimated:YES];
+  InfinitTabBarController* tab_controller = (InfinitTabBarController*)self.tabBarController;
+  [tab_controller showMainScreen:self];
 }
 
 - (void)alertViewCancel:(UIAlertView*)alertView
 {
-  [self.navigationController popViewControllerAnimated:YES];
+  InfinitTabBarController* tab_controller = (InfinitTabBarController*)self.tabBarController;
+  [tab_controller showMainScreen:self];
 }
 
 - (void)checkCodeCallback:(InfinitStateResult*)result
@@ -194,7 +197,8 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     }
     else
     {
-      NSString* message = NSLocalizedString(@"Check your home screen for your transaction.", nil);
+      NSString* message =
+        NSLocalizedString(@"Your files are now available on the home screen.", nil);
       UIAlertView* alert =
         [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Code added!", nil)
                                    message:message
