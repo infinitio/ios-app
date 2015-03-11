@@ -422,7 +422,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 
 - (void)handleFirstLaunch
 {
-  [[InfinitPeerTransactionManager sharedInstance] archiveAllTransactions];
+  [[InfinitPeerTransactionManager sharedInstance] archiveIrrelevantTransactions];
   [InfinitApplicationSettings sharedInstance].been_launched = YES;
   [InfinitFilesOnboardingManager copyFilesForOnboarding];
 }
