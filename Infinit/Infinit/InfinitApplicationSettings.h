@@ -19,7 +19,8 @@
 @property (nonatomic, readwrite) NSNumber* welcome_onboarded;
 
 /// Home screen onboarding.
-@property (nonatomic, readwrite) BOOL home_onboarded_initial;
+@property (nonatomic, readwrite) BOOL home_onboarded_swipe;
+@property (nonatomic, readwrite) BOOL home_onboarded_notifications;
 @property (nonatomic, readwrite) BOOL home_onboarded_normal_send;
 @property (nonatomic, readwrite) BOOL home_onboarded_ghost_send;
 @property (nonatomic, readwrite) BOOL home_onboarded_self_send;

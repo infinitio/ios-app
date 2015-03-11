@@ -18,7 +18,8 @@ typedef NS_ENUM(NSUInteger, InfinitSettings)
   InfinitSettingUsername,
   InfinitSettingWelcomeOnboarded,
   // Home onboarding
-  InfinitSettingHomeOnboardedInitial,
+  InfinitSettingHomeOnboardedNotifications,
+  InfinitSettingHomeOnboardedSwipe,
   InfinitSettingHomeOnboardedNormalSend,
   InfinitSettingHomeOnboardedGhostSend,
   InfinitSettingHomeOnboardedSelfSend,
@@ -129,15 +130,26 @@ static InfinitApplicationSettings* _instance = nil;
 
 #pragma mark - Home Onboarding
 
-- (BOOL)home_onboarded_initial
+- (BOOL)home_onboarded_notifications
 {
-  return [self boolFromNumber:[_defaults valueForKey:[self keyForSetting:InfinitSettingHomeOnboardedInitial]]];
+  return [self boolFromNumber:[_defaults valueForKey:[self keyForSetting:InfinitSettingHomeOnboardedNotifications]]];
 }
 
-- (void)setHome_onboarded_initial:(BOOL)home_onboarded_initial
+- (void)setHome_onboarded_notifications:(BOOL)home_onboarded_notifications
 {
-  [_defaults setValue:@(home_onboarded_initial)
-               forKey:[self keyForSetting:InfinitSettingHomeOnboardedInitial]];
+  [_defaults setValue:@(home_onboarded_notifications)
+               forKey:[self keyForSetting:InfinitSettingHomeOnboardedNotifications]];
+}
+
+- (BOOL)home_onboarded_swipe
+{
+  return [self boolFromNumber:[_defaults valueForKey:[self keyForSetting:InfinitSettingHomeOnboardedSwipe]]];
+}
+
+- (void)setHome_onboarded_swipe:(BOOL)home_onboarded_swipe
+{
+  [_defaults setValue:@(home_onboarded_swipe)
+               forKey:[self keyForSetting:InfinitSettingHomeOnboardedSwipe]];
 }
 
 - (BOOL)home_onboarded_normal_send
@@ -208,8 +220,10 @@ static InfinitApplicationSettings* _instance = nil;
       return @"home_onboarded_background";
     case InfinitSettingHomeOnboardedGhostSend:
       return @"home_onboarded_ghost_send";
-    case InfinitSettingHomeOnboardedInitial:
-      return @"home_onboarded_initial";
+    case InfinitSettingHomeOnboardedNotifications:
+      return @"home_onboarded_notifications";
+    case InfinitSettingHomeOnboardedSwipe:
+      return @"home_onboarded_swipe";
     case InfinitSettingHomeOnboardedNormalSend:
       return @"home_onboarded_normal_send";
     case InfinitSettingHomeOnboardedSelfSend:
