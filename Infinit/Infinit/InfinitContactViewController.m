@@ -33,6 +33,8 @@
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* phone_height;
 @property (nonatomic, weak) IBOutlet UILabel* phone_label;
 
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* bar_width_constraint;
+
 @end
 
 static UIImage* _favorite_icon = nil;
@@ -63,6 +65,7 @@ static UIImage* _infinit_icon = nil;
 
 - (void)viewWillAppear:(BOOL)animated
 {
+  self.bar_width_constraint.constant = self.view.bounds.size.width - (2.0f * 45.0f);
   [self configureView];
   [super viewWillAppear:animated];
 }
