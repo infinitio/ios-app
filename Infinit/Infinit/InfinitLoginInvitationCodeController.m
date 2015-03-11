@@ -197,10 +197,20 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
     }
     else
     {
-      NSString* message =
-        NSLocalizedString(@"Your files are now available on the home screen.", nil);
+      NSString* title = nil;
+      NSString* message = nil;
+      if (result.success)
+      {
+        title = NSLocalizedString(@"Code added!", nil);
+        message = NSLocalizedString(@"Your files are now available on the home screen.", nil);
+      }
+      else
+      {
+        title = NSLocalizedString(@"Code already used!", nil);
+        message = NSLocalizedString(@"You've already used this code to fetch the files.", nil);
+      }
       UIAlertView* alert =
-        [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Code added!", nil)
+        [[UIAlertView alloc] initWithTitle:title
                                    message:message
                                   delegate:self
                          cancelButtonTitle:NSLocalizedString(@"OK", nil)
