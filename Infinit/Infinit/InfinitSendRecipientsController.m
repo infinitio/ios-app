@@ -847,7 +847,7 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
     {
       contact.selected_email_index = 0;
     }
-    else if (contact.phone_numbers.count == 1)
+    else if (contact.phone_numbers.count == 1 && contact.emails.count == 0)
     {
       if (self.sms_contact)
       {
