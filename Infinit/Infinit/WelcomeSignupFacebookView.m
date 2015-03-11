@@ -9,6 +9,9 @@
 #import "WelcomeSignupFacebookView.h"
 
 #import "InfinitColor.h"
+#import "InfinitHostDevice.h"
+
+#import "UIImage+Rounded.h"
 
 @implementation WelcomeSignupFacebookView
 
@@ -42,9 +45,12 @@
 
 - (void)setAvatar:(UIImage*)image
 {
+  CGSize size = self.avatar_button.bounds.size;
+  UIImage* res = [image roundedMaskOfSize:size cornerRadius:size.width / 2.0f];
   [self.avatar_button setTitle:@"" forState:UIControlStateNormal];
-  [self.avatar_button setImage:image forState:UIControlStateNormal];
+  [self.avatar_button setImage:res forState:UIControlStateNormal];
   self.avatar_button.layer.borderWidth = 0.0f;
+  self.avatar_button.imageEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
 @end
