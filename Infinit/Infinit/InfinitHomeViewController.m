@@ -581,14 +581,14 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
           break;
         case InfinitHomeOnboardingCellGhostSent:
           text =
-            [NSString stringWithFormat:NSLocalizedString(@"All set! A link will be sent\n"
+            [NSString stringWithFormat:NSLocalizedString(@"All set! A message will be sent\n"
                                                          "to %@.", nil),
              self.onboarding_ghost_name];
           gray_range = [text rangeOfString:self.onboarding_ghost_name];
           lines = 2;
           break;
         case InfinitHomeOnboardingCellPeerSent:
-          text = [NSString stringWithFormat:NSLocalizedString(@"All set! We'll let you know\n"
+          text = [NSString stringWithFormat:NSLocalizedString(@"We'll let you know\n"
                                                               "when %@\n"
                                                               "receives your files.", nil),
                   self.onboarding_peer_name];
