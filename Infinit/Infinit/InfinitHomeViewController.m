@@ -404,9 +404,12 @@ static NSUInteger _background_onboard_size = 5 * 1000 * 1000;
   {
     if (![self.collection_view.indexPathsForVisibleItems containsObject:path])
       continue;
-    InfinitHomePeerTransactionCell* cell =
-      (InfinitHomePeerTransactionCell*)[self.collection_view cellForItemAtIndexPath:path];
-    [cell updateProgressOverDuration:_update_interval];
+    UICollectionViewCell* cell = [self.collection_view cellForItemAtIndexPath:path];
+    if ([cell isKindOfClass:InfinitHomePeerTransactionCell.class])
+    {
+      InfinitHomePeerTransactionCell* peer_cell = (InfinitHomePeerTransactionCell*)cell;
+      [peer_cell updateProgressOverDuration:_update_interval];
+    }
   }
 }
 
@@ -1369,7 +1372,10 @@ openFileTapped:(NSUInteger)file_index
       NSArray* indexes = @[[NSIndexPath indexPathForRow:self.onboarding_model.count inSection:0]];
       [self.collection_view deleteItemsAtIndexPaths:indexes];
     }
-  } completion:NULL];
+  } completion:^
+   {
+     [self updateRunningTransactions];
+   }];
 }
 
 - (void)positiveButtonTapped:(id)sender
