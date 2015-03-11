@@ -44,10 +44,12 @@
 @property (nonatomic, readonly) UIImage* avatar;
 @property (nonatomic, readonly) NSString* email;
 @property (nonatomic, readonly) NSString* fullname;
+@property (nonatomic, readonly) NSString* facebook_id;
 
 + (instancetype)userWithAvatar:(UIImage*)avatar
                          email:(NSString*)email
-                      fullname:(NSString*)fullname;
+                      fullname:(NSString*)fullname
+                   facebook_id:(NSString*)facebook_id;
 
 @end
 
@@ -56,12 +58,14 @@
 - (id)initWithAvatar:(UIImage*)avatar
                email:(NSString*)email
             fullname:(NSString*)fullname
+         facebook_id:(NSString*)facebook_id
 {
   if (self = [super init])
   {
     _avatar = avatar;
     _email = email;
     _fullname = fullname;
+    _facebook_id = facebook_id;
   }
   return self;
 }
@@ -69,8 +73,12 @@
 + (instancetype)userWithAvatar:(UIImage*)avatar
                          email:(NSString*)email
                       fullname:(NSString*)fullname
+                   facebook_id:(NSString*)facebook_id
 {
-  return [[InfinitFacebookUser alloc] initWithAvatar:avatar email:email fullname:fullname];
+  return [[InfinitFacebookUser alloc] initWithAvatar:avatar
+                                               email:email
+                                            fullname:fullname
+                                         facebook_id:facebook_id];
 }
 
 @end
@@ -185,10 +193,6 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(connectionTypeChanged:)
                                                name:INFINIT_CONNECTION_TYPE_CHANGE
-                                             object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(facebookSessionStateChanged:)
-                                               name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
                                              object:nil];
   _facebook_connect_type = InfinitFacebookConnectNone;
 }
@@ -371,6 +375,13 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
 
 - (void)facebookLoginButtonTapped:(id)sender
 {
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED 
+                                                object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(facebookSessionStateChanged:)
+                                               name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
+                                             object:nil];
   if (![[NSThread currentThread] isEqual:[NSThread mainThread]])
   {
     [self performSelectorOnMainThread:@selector(facebookLoginButtonTapped:)
@@ -401,6 +412,13 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
 
 - (IBAction)facebookRegisterButtonTapped:(id)sender
 {
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
+                                                object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(facebookSessionStateChanged:)
+                                               name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
+                                             object:nil];
   if (![[NSThread currentThread] isEqual:[NSThread mainThread]])
   {
     [self performSelectorOnMainThread:@selector(facebookRegisterButtonTapped:)
@@ -486,8 +504,14 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
   }
   else if (sender == self.signup_facebook_view.back_button)
   {
-    overlay_view = self.signup_facebook_view;
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED 
+                                                  object:nil];
     [[InfinitFacebookManager sharedInstance] cleanSession];
+    overlay_view = self.signup_facebook_view;
+    self.signup_facebook_view.email_field.text = @"";
+    self.signup_facebook_view.fullname_field.text = @"";
+    self.signup_facebook_view.next_button.hidden = YES;
   }
   else if (sender == self.login_form_view.back_button)
   {
@@ -495,6 +519,11 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
   }
   if (overlay_view == nil)
     return;
+  [self hideOverlay:overlay_view];
+}
+
+- (void)hideOverlay:(UIView*)overlay_view
+{
   CGRect overlay_frame = CGRectMake(0.0f, self.view.frame.size.height,
                                     overlay_view.frame.size.width, overlay_view.frame.size.height);
   if (self.view.frame.origin.y != 0.0f)
@@ -506,31 +535,31 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
                           delay:0.0f
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^
-    {
-      self.view.frame = main_frame;
-    } completion:^(BOOL finished)
-    {
-      if (finished)
-      {
-        [UIView animateWithDuration:0.25f
-                              delay:0.0f
-                            options:UIViewAnimationOptionCurveEaseInOut animations:^
-        {
-          overlay_view.frame = overlay_frame;
-        } completion:^(BOOL finished)
-        {
-          if (!finished)
+     {
+       self.view.frame = main_frame;
+     } completion:^(BOOL finished)
+     {
+       if (finished)
+       {
+         [UIView animateWithDuration:0.25f
+                               delay:0.0f
+                             options:UIViewAnimationOptionCurveEaseInOut animations:^
           {
             overlay_view.frame = overlay_frame;
-          }
-        }];
-      }
-      else
-      {
-        self.view.frame = main_frame;
-        overlay_view.frame = overlay_frame;
-      }
-    }];
+          } completion:^(BOOL finished)
+          {
+            if (!finished)
+            {
+              overlay_view.frame = overlay_frame;
+            }
+          }];
+       }
+       else
+       {
+         self.view.frame = main_frame;
+         overlay_view.frame = overlay_frame;
+       }
+     }];
   }
   else
   {
@@ -972,6 +1001,7 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
 {
   if (_logging_in)
     return;
+  [self.login_form_view.activity startAnimating];
   if ([InfinitConnectionManager sharedInstance].network_status == InfinitNetworkStatusNotReachable)
   {
     self.login_form_view.error_label.text =
@@ -995,6 +1025,7 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
   _logging_in = NO;
   self.login_form_view.next_button.hidden = NO;
   [self.login_form_view.activity stopAnimating];
+  [self.signup_facebook_view.activity startAnimating];
   if (result.success)
   {
     _username = [self.login_form_view.email_field.text copy];
@@ -1009,6 +1040,7 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
   }
   else
   {
+    [self setFacebookRegisterFieldsEnabled:YES];
     self.login_form_view.email_field.enabled = YES;
     self.login_form_view.password_field.enabled = YES;
     self.login_form_view.back_button.enabled = YES;
@@ -1085,6 +1117,18 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
   }
 }
 
+- (void)setFacebookRegisterFieldsEnabled:(BOOL)enabled
+{
+  self.signup_facebook_view.next_button.hidden = !enabled;
+  if (!enabled)
+    [self.signup_facebook_view.activity startAnimating];
+  else
+    [self.signup_facebook_view.activity stopAnimating];
+  self.signup_facebook_view.email_field.enabled = enabled;
+  self.signup_facebook_view.fullname_field.enabled = enabled;
+  self.signup_facebook_view.back_button.enabled = enabled;
+}
+
 - (void)tryFacebookRegister
 {
   if (_registering)
@@ -1103,11 +1147,7 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
   {
     [self.view endEditing:YES];
     [self keyboardEntryDone];
-    self.signup_facebook_view.next_button.hidden = YES;
-    [self.signup_facebook_view.activity startAnimating];
-    self.signup_facebook_view.email_field.enabled = NO;
-    self.signup_facebook_view.fullname_field.enabled = NO;
-    self.signup_facebook_view.back_button.enabled = NO;
+    [self setFacebookRegisterFieldsEnabled:NO];
     NSCharacterSet* white_space = [NSCharacterSet whitespaceCharacterSet];
     NSString* email =
       [self.signup_facebook_view.email_field.text stringByTrimmingCharactersInSet:white_space];
@@ -1151,9 +1191,7 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
   }
   else
   {
-    self.signup_facebook_view.email_field.enabled = YES;
-    self.signup_facebook_view.fullname_field.enabled = NO;
-    self.signup_facebook_view.back_button.enabled = YES;
+    [self setFacebookRegisterFieldsEnabled:YES];
     self.signup_facebook_view.error_label.text = [self registerLoginErrorFromStatus:result.status];
     self.signup_facebook_view.error_label.hidden = NO;
   }
@@ -1330,6 +1368,9 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
 
 - (void)facebookSessionStateChanged:(NSNotification*)notification
 {
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
+                                                object:nil];
   if (![[NSThread currentThread] isEqual:[NSThread mainThread]])
   {
     [self performSelectorOnMainThread:@selector(facebookSessionStateChanged:)
@@ -1343,7 +1384,8 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
   [self.login_form_view.activity stopAnimating];
   if (state == FBSessionStateOpen || state == FBSessionStateOpenTokenExtended)
   {
-    if (self.facebook_connect_type == InfinitFacebookConnectRegister)
+    if (self.facebook_connect_type == InfinitFacebookConnectRegister ||
+        self.facebook_connect_type == InfinitFacebookConnectLogin)
     {
       [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection* connection,
                                                              NSDictionary<FBGraphUser>* fb_user,
@@ -1365,19 +1407,13 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
          }
          _facebook_user = [InfinitFacebookUser userWithAvatar:avatar
                                                         email:email
-                                                     fullname:fullname];
+                                                     fullname:fullname
+                                                  facebook_id:fb_user.objectID];
          [self performSelectorOnMainThread:@selector(updateFacebookUser)
                                 withObject:nil
                              waitUntilDone:NO];
        }];
     }
-    else if (self.facebook_connect_type == InfinitFacebookConnectLogin)
-    {
-      [self tryFacebookLogin];
-    }
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
-                                                  object:nil];
   }
   else if (state == FBSessionStateClosedLoginFailed || error)
   {
@@ -1403,7 +1439,29 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
   self.signup_facebook_view.email_field.text = self.facebook_user.email;
   self.signup_facebook_view.fullname_field.enabled = YES;
   self.signup_facebook_view.email_field.enabled = YES;
-  [self checkFacebookInputs];
+  [[InfinitStateManager sharedInstance] userRegisteredWithFacebookId:self.facebook_user.facebook_id
+                                                     performSelector:@selector(facebookAlreadyRegisteredCallback:)
+                                                            onObject:self
+                                                            withData:[NSMutableDictionary dictionary]];
+}
+
+- (void)facebookAlreadyRegisteredCallback:(InfinitStateResult*)result
+{
+  if ([result.data[@"registered"] boolValue] == YES)
+  {
+    [self setFacebookRegisterFieldsEnabled:NO];
+    [self tryFacebookLogin];
+  }
+  else if (self.facebook_connect_type == InfinitFacebookConnectRegister)
+  {
+    [self checkFacebookInputs];
+  }
+  else if (self.facebook_connect_type == InfinitFacebookConnectLogin)
+  {
+    [self hideOverlay:self.login_form_view];
+    [self showOverlayView:self.signup_facebook_view ofHeight:self.signup_facebook_view.height];
+    [self checkFacebookInputs];
+  }
 }
 
 - (NSURL*)avatarURLForUserWithId:(NSString*)id_
