@@ -215,8 +215,12 @@ static CGFloat _button_height = 45.0f;
   NSString* other_name = nil;
   if (self.transaction.other_user.is_self)
   {
-    InfinitDevice* device =
-      [[InfinitDeviceManager sharedInstance] deviceWithId:transaction.recipient_device];
+    InfinitDevice* device = nil;
+    if (self.transaction.from_device)
+      device = [[InfinitDeviceManager sharedInstance] deviceWithId:transaction.recipient_device];
+    else
+      device = [[InfinitDeviceManager sharedInstance] deviceWithId:transaction.sender_device_id];
+
     if (device == nil)
       other_name = NSLocalizedString(@"me", nil);
     else
