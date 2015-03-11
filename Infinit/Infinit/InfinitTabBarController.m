@@ -610,7 +610,11 @@ shouldSelectViewController:(UIViewController*)viewController
     case MessageComposeResultSent:
       break;
   }
-  [controller dismissViewControllerAnimated:YES completion:NULL];
+  [self.sms_controller dismissViewControllerAnimated:YES
+                                          completion:^
+  {
+    self.sms_controller = nil;
+  }];
 }
 
 #pragma mark - Peer Transaction Notifications
