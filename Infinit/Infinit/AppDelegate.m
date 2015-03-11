@@ -79,7 +79,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
     if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded)
     {
       self.window.rootViewController =
-      [storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
+        [storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
       [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:25.0f];
       [[NSNotificationCenter defaultCenter] addObserver:self
                                                selector:@selector(facebookSessionStateChanged:)
@@ -99,6 +99,15 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
          [manager sessionStateChanged:session state:state error:error];
        }];
     }
+    else if (FBSession.activeSession.state == FBSessionStateCreatedOpening||
+             FBSession.activeSession.state == FBSessionStateOpen ||
+             FBSession.activeSession.state == FBSessionStateOpenTokenExtended)
+    {
+      self.window.rootViewController =
+        [storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
+      [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:15.0f];
+      [self tryFacebookLogin];
+    }
     else if ([self canAutoLogin])
     {
       InfinitConnectionManager* manager = [InfinitConnectionManager sharedInstance];
@@ -113,15 +122,6 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
         self.window.rootViewController =
           [storyboard instantiateViewControllerWithIdentifier:@"tab_bar_controller"];
       }
-    }
-    else if (FBSession.activeSession.state == FBSessionStateOpen ||
-             FBSession.activeSession.state == FBSessionStateOpenTokenExtended)
-    {
-      NSLog(@"xxx token open");
-      self.window.rootViewController =
-        [storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
-      [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:15.0f];
-      [self tryFacebookLogin];
     }
     else
     {
