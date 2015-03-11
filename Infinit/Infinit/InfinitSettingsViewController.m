@@ -121,6 +121,7 @@ typedef NS_ENUM(NSUInteger, InfinitLogoutSettings)
     (InfinitSettingsUserCell*)[self.table_view cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0
                                                                                        inSection:0]];
   [cell configureWithUser:[InfinitUserManager sharedInstance].me];
+  [self.table_view scrollRectToVisible:CGRectMake(0.0f, 0.0f, 1.0f, 1.0f) animated:NO];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
