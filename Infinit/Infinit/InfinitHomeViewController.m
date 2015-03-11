@@ -128,8 +128,6 @@ static NSUInteger _background_onboard_size = 5 * 1000 * 1000;
 
 - (void)viewDidLoad
 {
-  _notification_onboarded = [InfinitApplicationSettings sharedInstance].home_onboarded_initial;
-  _swipe_onboarded = [InfinitApplicationSettings sharedInstance].home_onboarded_initial;
   _peer_transaction_cell_id = @"home_peer_transaction_cell";
   _peer_transaction_cell_no_files_id = @"home_peer_transaction_no_files_cell";
   _onboarding_cell_id = @"home_onboarding_cell";
@@ -244,7 +242,7 @@ static NSUInteger _background_onboard_size = 5 * 1000 * 1000;
       {
         InfinitPeerTransaction* peer_transaction = (InfinitPeerTransaction*)transaction;
         if (!self.background_onboarded &&
-            peer_transaction.sender.is_self && peer_transaction.size.unsignedIntegerValue > _background_onboard_size)
+            peer_transaction.size.unsignedIntegerValue > _background_onboard_size)
         {
           add_background = YES;
         }
@@ -1474,18 +1472,24 @@ openFileTapped:(NSUInteger)file_index
   return (!self.notification_onboarded || !self.swipe_onboarded);
 }
 
+- (BOOL)notification_onboarded
+{
+  return [InfinitApplicationSettings sharedInstance].home_onboarded_notifications;
+}
+
 - (void)setNotification_onboarded:(BOOL)notification_onboarded
 {
-  _notification_onboarded = notification_onboarded;
-  if (self.swipe_onboarded)
-    [InfinitApplicationSettings sharedInstance].home_onboarded_initial = YES;
+  [InfinitApplicationSettings sharedInstance].home_onboarded_notifications = notification_onboarded;
+}
+
+- (BOOL)swipe_onboarded
+{
+  return [InfinitApplicationSettings sharedInstance].home_onboarded_swipe;
 }
 
 - (void)setSwipe_onboarded:(BOOL)swipe_onboarded
 {
-  _swipe_onboarded = swipe_onboarded;
-  if (self.notification_onboarded)
-    [InfinitApplicationSettings sharedInstance].home_onboarded_initial = YES;
+  [InfinitApplicationSettings sharedInstance].home_onboarded_swipe = swipe_onboarded;
 }
 
 - (BOOL)peer_send_onboarded
