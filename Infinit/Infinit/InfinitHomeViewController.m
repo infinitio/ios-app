@@ -1372,7 +1372,7 @@ openFileTapped:(NSUInteger)file_index
       NSArray* indexes = @[[NSIndexPath indexPathForRow:self.onboarding_model.count inSection:0]];
       [self.collection_view deleteItemsAtIndexPaths:indexes];
     }
-  } completion:^
+  } completion:^(BOOL finished)
    {
      [self updateRunningTransactions];
    }];
