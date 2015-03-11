@@ -96,11 +96,13 @@ replacementString:(NSString*)string
 {
   if (sender.text.length == 5)
   {
+    self.navigationItem.leftBarButtonItem.enabled = NO;
     [self.activity_indicator startAnimating];
     self.code_field.enabled = NO;
     [self dismissKeyboard:nil];
     NSString* code =
       [self.code_field.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    self.error_label.hidden = YES;
     [[InfinitStateManager sharedInstance] useGhostCode:code.lowercaseString
                                        performSelector:@selector(checkCodeCallback:)
                                               onObject:self];
@@ -186,6 +188,7 @@ didDismissWithButtonIndex:(NSInteger)buttonIndex
 
 - (void)checkCodeCallback:(InfinitStateResult*)result
 {
+  self.navigationItem.leftBarButtonItem.enabled = YES;
   [self.activity_indicator stopAnimating];
   self.code_field.enabled = YES;
   self.error_label.hidden = YES;
