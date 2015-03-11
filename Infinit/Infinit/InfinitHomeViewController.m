@@ -853,7 +853,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
         else
           [self.onboarding_model removeAllObjects];
         if (!self.background_onboarded &&
-            transaction.sender.is_self && transaction.size.unsignedIntegerValue > _background_onboard_size)
+            transaction.size.unsignedIntegerValue > _background_onboard_size)
         {
           InfinitHomeOnboardingItem* item =
             [InfinitHomeOnboardingItem initWithType:InfinitHomeOnboardingCellBackground];
