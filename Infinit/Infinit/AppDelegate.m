@@ -66,6 +66,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 
   if (![[[InfinitApplicationSettings sharedInstance] welcome_onboarded] isEqualToNumber:@1])
   {
+    [FBSession activeSession]; // Ensure that we call FBSession on the main thread at least once.
     _onboarding = YES;
     [[InfinitApplicationSettings sharedInstance] setWelcome_onboarded:@1];
     self.onboarding_controller =
