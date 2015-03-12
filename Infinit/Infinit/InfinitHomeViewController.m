@@ -15,6 +15,7 @@
 #import "InfinitFilePreviewController.h"
 #import "InfinitHomeItem.h"
 #import "InfinitHomePeerTransactionCell.h"
+#import "InfinitHomeEmptyOverlay.h"
 #import "InfinitHomeFeedbackViewController.h"
 #import "InfinitHomeOnboardingCell.h"
 #import "InfinitHomeRatingCell.h"
@@ -310,8 +311,8 @@ static NSUInteger _background_onboard_size = 5 * 1000 * 1000;
                                              selector:@selector(userAvatarUpdated:)
                                                  name:INFINIT_USER_AVATAR_NOTIFICATION
                                                object:nil];
-    [self updateRunningTransactions];
     [self.collection_view reloadData];
+    [self updateRunningTransactions];
   }
 }
 
@@ -336,7 +337,8 @@ static NSUInteger _background_onboard_size = 5 * 1000 * 1000;
 {
   if (self.no_activity_view == nil)
   {
-    UINib* activity_nib = [UINib nibWithNibName:@"InfinitHomeEmptyOverlay" bundle:nil];
+    UINib* activity_nib = [UINib nibWithNibName:NSStringFromClass(InfinitHomeEmptyOverlay.class)
+                                         bundle:nil];
     self.no_activity_view = [[activity_nib instantiateWithOwner:self options:nil] firstObject];
     self.no_activity_view.translatesAutoresizingMaskIntoConstraints = NO;
     self.no_activity_view.backgroundColor =
