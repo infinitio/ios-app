@@ -11,7 +11,7 @@
 #import "InfinitColor.h"
 #import "InfinitHostDevice.h"
 
-#import "UIImage+Rounded.h"
+#import "NSString+email.h"
 
 @interface InfinitContact ()
 
@@ -33,7 +33,13 @@
     ABMultiValueRef email_property = ABRecordCopyValue(record, kABPersonEmailProperty);
     _emails = (__bridge_transfer NSArray*)ABMultiValueCopyArrayOfAllValues(email_property);
     CFRelease(email_property);
-
+    NSMutableArray* temp_emails = [NSMutableArray array];
+    for (NSString* email in self.emails)
+    {
+      if (email.isEmail)
+        [temp_emails addObject:email];
+    }
+    _emails = [temp_emails copy];
     ABMultiValueRef phone_property = ABRecordCopyValue(record, kABPersonPhoneProperty);
     _phone_numbers = (__bridge_transfer NSArray*)ABMultiValueCopyArrayOfAllValues(phone_property);
     CFRelease(phone_property);
@@ -47,8 +53,10 @@
     if (self.phone_numbers.count == 0)
       _phone_numbers = nil;
 
-    NSString* first_name = (__bridge_transfer NSString*)ABRecordCopyValue(record, kABPersonFirstNameProperty);
-    NSString* surname = (__bridge_transfer NSString*)ABRecordCopyValue(record, kABPersonLastNameProperty);
+    NSString* first_name =
+      (__bridge_transfer NSString*)ABRecordCopyValue(record, kABPersonFirstNameProperty);
+    NSString* surname =
+      (__bridge_transfer NSString*)ABRecordCopyValue(record, kABPersonLastNameProperty);
     NSMutableString* name_str = [[NSMutableString alloc] init];
     if (first_name.length > 0)
     {
