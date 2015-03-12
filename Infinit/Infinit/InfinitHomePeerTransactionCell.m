@@ -470,7 +470,7 @@ static CGFloat _button_height = 45.0f;
 - (void)setProgress
 {
   float progress = self.transaction.progress;
-  if (!self.transaction.done &&
+  if (!(self.transaction.done || self.transaction.status == gap_transaction_cloud_buffered) &&
       (progress > 0.0f || self.transaction.status == gap_transaction_transferring))
   {
     self.avatar_view.progress = progress;
