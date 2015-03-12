@@ -295,9 +295,9 @@
         ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(address_book,
                                                                   source,
                                                                   kABPersonSortByFirstName);
-      for (int i = 0; i < CFArrayGetCount(contacts); i++)
+      for (int j = 0; j < CFArrayGetCount(contacts); j++)
       {
-        ABRecordRef person = CFArrayGetValueAtIndex(contacts, i);
+        ABRecordRef person = CFArrayGetValueAtIndex(contacts, j);
         if (person)
         {
           InfinitContact* contact = [[InfinitContact alloc] initWithABRecord:person];
