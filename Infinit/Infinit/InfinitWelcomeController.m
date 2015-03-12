@@ -1091,7 +1091,7 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
     case gap_already_logged_in:
       return NSLocalizedString(@"You're already logged in.", nil);
     case gap_deprecated:
-      return NSLocalizedString(@"Version not supported, please update.", nil);
+      return NSLocalizedString(@"Please update Infinit.", nil);
     case gap_email_already_registered:
       return NSLocalizedString(@"Email already registered.", nil);
     case gap_email_not_confirmed:
@@ -1110,8 +1110,6 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
       return NSLocalizedString(@"Our Server is down. Thanks for being patient.", nil);
     case gap_password_not_valid:
       return NSLocalizedString(@"Password not valid.", nil);
-    case gap_deprecated:
-      return NSLocalizedString(@"Please update Infinit.", nil);
 
     default:
       return [NSString stringWithFormat:@"%@: %d", NSLocalizedString(@"Unknown login error", nil),
