@@ -375,13 +375,6 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
 
 - (void)facebookLoginButtonTapped:(id)sender
 {
-  [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                  name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED 
-                                                object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(facebookSessionStateChanged:)
-                                               name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
-                                             object:nil];
   if (![[NSThread currentThread] isEqual:[NSThread mainThread]])
   {
     [self performSelectorOnMainThread:@selector(facebookLoginButtonTapped:)
@@ -389,6 +382,13 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
                         waitUntilDone:NO];
     return;
   }
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
+                                                object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(facebookSessionStateChanged:)
+                                               name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
+                                             object:nil];
   _facebook_connect_type = InfinitFacebookConnectLogin;
   if (FBSession.activeSession.state == FBSessionStateOpen &&
       FBSession.activeSession.state == FBSessionStateOpenTokenExtended)
@@ -1260,7 +1260,7 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
   else
   {
     self.signup_form_view.email_field.enabled = YES;
-    self.signup_form_view.fullname_field.enabled = NO;
+    self.signup_form_view.fullname_field.enabled = YES;
     self.signup_form_view.password_field.enabled = YES;
     self.signup_form_view.back_button.enabled = YES;
     self.signup_form_view.error_label.text = [self registerLoginErrorFromStatus:result.status];
@@ -1368,9 +1368,6 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
 
 - (void)facebookSessionStateChanged:(NSNotification*)notification
 {
-  [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                  name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
-                                                object:nil];
   if (![[NSThread currentThread] isEqual:[NSThread mainThread]])
   {
     [self performSelectorOnMainThread:@selector(facebookSessionStateChanged:)
@@ -1378,6 +1375,9 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
                         waitUntilDone:NO];
     return;
   }
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
+                                                object:nil];
   FBSessionState state = [notification.userInfo[@"state"] unsignedIntegerValue];
   NSError* error = notification.userInfo[@"error"];
   [self.signup_facebook_view.activity stopAnimating];
