@@ -23,7 +23,9 @@
 
 ELLE_LOG_COMPONENT("iOS.UploadThumbnailManager");
 
-static CGSize _thumbnail_size = CGSizeZero;
+static CGSize _thumbnail_size = {50.0f, 50.0f};
+static CGSize _thumbnail_scaled_size = CGSizeZero;
+static NSUInteger _max_thumbnails = 5;
 
 static InfinitUploadThumbnailManager* _instance = nil;
 
@@ -51,10 +53,11 @@ static InfinitUploadThumbnailManager* _instance = nil;
                                              selector:@selector(transactionUpdated:) 
                                                  name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION 
                                                object:nil];
-    if (CGSizeEqualToSize(CGSizeZero, _thumbnail_size))
+    if (CGSizeEqualToSize(CGSizeZero, _thumbnail_scaled_size))
     {
       CGFloat scale = [InfinitHostDevice screenScale];
-      _thumbnail_size = CGSizeMake(50.0f * scale, 50.0f * scale);
+      _thumbnail_scaled_size = CGSizeMake(_thumbnail_size.width * scale,
+                                          _thumbnail_size.height * scale);
     }
   }
   return self;
@@ -112,15 +115,15 @@ static InfinitUploadThumbnailManager* _instance = nil;
       for (PHAsset* asset in assets)
       {
         [manager requestImageForAsset:asset
-                           targetSize:_thumbnail_size
+                           targetSize:_thumbnail_scaled_size
                           contentMode:PHImageContentModeAspectFill
                               options:options
                         resultHandler:^(UIImage* result, NSDictionary* info)
          {
-           if (result != nil && (result.size.width >= _thumbnail_size.width))
+           if (result != nil && (result.size.width >= _thumbnail_scaled_size.width))
            {
-             CGFloat scale = MAX(result.size.width / _thumbnail_size.width,
-                                 result.size.height / _thumbnail_size.height);
+             CGFloat scale = MAX(result.size.width / _thumbnail_scaled_size.width,
+                                 result.size.height / _thumbnail_scaled_size.height);
              CGFloat new_w = result.size.width / scale;
              CGFloat new_h = result.size.height / scale;
              CGRect rect = CGRectMake(0.0f, 0.0f, new_w, new_h);
@@ -131,7 +134,7 @@ static InfinitUploadThumbnailManager* _instance = nil;
              [thumbnails addObject:thumbnail];
            }
          }];
-        if (++count >= 5)
+        if (++count >= _max_thumbnails)
           break;
       }
     }
@@ -144,11 +147,16 @@ static InfinitUploadThumbnailManager* _instance = nil;
                                                  scale:1.0f
                                            orientation:UIImageOrientationUp];
         [thumbnails addObject:thumbnail];
-        if (++count >= 5)
+        if (++count >= _max_thumbnails)
           break;
       }
     }
-    [self.pending_thumbnails setObject:thumbnails forKey:id_];
+    InfinitPeerTransaction* transaction =
+      [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
+    if (transaction.done)
+      [self writeThumbnailsForTransaction:transaction];
+    else
+      [self.pending_thumbnails setObject:thumbnails forKey:id_];
   }
 }
 
@@ -161,11 +169,16 @@ static InfinitUploadThumbnailManager* _instance = nil;
     for (NSString* file in files)
     {
       UIImage* thumb = [InfinitFilePreview previewForPath:file
-                                                   ofSize:CGSizeMake(50.0f, 50.0f)
+                                                   ofSize:_thumbnail_size
                                                      crop:YES];
       [thumbnails addObject:thumb];
     }
-    [self.pending_thumbnails setObject:thumbnails forKey:id_];
+    InfinitPeerTransaction* transaction =
+      [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
+    if (transaction.done)
+      [self writeThumbnailsForTransaction:transaction];
+    else
+      [self.pending_thumbnails setObject:thumbnails forKey:id_];
   }
 }
 
@@ -191,7 +204,7 @@ static InfinitUploadThumbnailManager* _instance = nil;
                 self.description.UTF8String, error.description.UTF8String);
       generate_thumbnails = YES;
     }
-    else if (contents.count < 5 && contents.count != transaction.files.count)
+    else if (contents.count < _max_thumbnails && contents.count != transaction.files.count)
     {
       ELLE_WARN("%s: number of cached thumbnails (%lu) differs from number of transaction files (%lu)",
                 self.description.UTF8String, contents.count, transaction.files.count);
@@ -222,34 +235,43 @@ static InfinitUploadThumbnailManager* _instance = nil;
 
 - (void)transactionUpdated:(NSNotification*)notification
 {
-  NSNumber* id_ = notification.userInfo[@"id"];
-  InfinitPeerTransaction* transaction =
-    [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
-  if ([self.pending_thumbnails.allKeys containsObject:id_] && transaction.meta_id.length > 0)
-    [self writeThumbnailsForTransaction:transaction];
-}
-
-- (void)writeThumbnailsForTransaction:(InfinitPeerTransaction*)transaction
-{
   @synchronized(self.pending_thumbnails)
   {
-    NSArray* thumbnails = [self.pending_thumbnails objectForKey:transaction.id_];
-    if (thumbnails == nil || thumbnails.count == 0)
-      return;
-    [self.pending_thumbnails removeObjectForKey:transaction.id_];
-    NSString* res_folder = [self thumbnailFolderForTransactionMetaId:transaction.meta_id
-                                                              create:YES];
-    NSString* res_path = nil;
-    NSInteger number_of_files = transaction.files.count > 5 ? 5 : transaction.files.count;
-    for (NSUInteger i = 0; i < number_of_files; i++)
+    NSNumber* id_ = notification.userInfo[@"id"];
+    InfinitPeerTransaction* transaction =
+      [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
+    NSArray* thumbnails = [self.pending_thumbnails objectForKey:id_];
+    if (thumbnails && thumbnails.count == [self expectedThumbnailsForTransaction:transaction] &&
+        transaction.meta_id.length > 0)
     {
-      res_path = [res_folder stringByAppendingPathComponent:transaction.files[i]];
-      [self writeImage:thumbnails[i] toPath:res_path];
+      [self writeThumbnailsForTransaction:transaction];
     }
   }
 }
 
+- (void)writeThumbnailsForTransaction:(InfinitPeerTransaction*)transaction
+{
+  NSArray* thumbnails = [self.pending_thumbnails objectForKey:transaction.id_];
+  if (thumbnails == nil || thumbnails.count == 0)
+    return;
+  [self.pending_thumbnails removeObjectForKey:transaction.id_];
+  NSString* res_folder = [self thumbnailFolderForTransactionMetaId:transaction.meta_id
+                                                            create:YES];
+  NSString* res_path = nil;
+  NSInteger number_of_files = [self expectedThumbnailsForTransaction:transaction];
+  for (NSUInteger i = 0; i < number_of_files; i++)
+  {
+    res_path = [res_folder stringByAppendingPathComponent:transaction.files[i]];
+    [self writeImage:thumbnails[i] toPath:res_path];
+  }
+}
+
 #pragma mark - Helpers
+
+- (NSUInteger)expectedThumbnailsForTransaction:(InfinitPeerTransaction*)transaction
+{
+  return transaction.files.count > _max_thumbnails ? _max_thumbnails : transaction.files.count;
+}
 
 - (NSString*)thumbnailFolderForTransactionMetaId:(NSString*)meta_id
                                           create:(BOOL)create
