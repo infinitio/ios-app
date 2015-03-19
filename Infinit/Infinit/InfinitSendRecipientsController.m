@@ -1119,15 +1119,15 @@ didDeleteTokenAtIndex:(NSUInteger)index
     [self addContactFromEmailAddress:email];
     return;
   }
-  _last_search = text;
   if (text.length == 0)
   {
     [self reloadSearchResults];
     return;
   }
+  _last_search = text;
   [self performSelector:@selector(updateSearchResultsWithSearchString:)
              withObject:text.lowercaseString
-             afterDelay:0.3f];
+             afterDelay:0.25f];
 }
 
 - (void)tokenFieldDidBeginEditing:(VENTokenField*)tokenField
@@ -1246,8 +1246,15 @@ didDeleteTokenAtIndex:(NSUInteger)index
     else if ([self noResults] && search_string.isEmail)
     {
       self.email_entered = YES;
-      [self.table_view reloadSections:[NSIndexSet indexSetWithIndex:0]
-                     withRowAnimation:UITableViewRowAnimationAutomatic];
+      if (self.table_view.numberOfSections == 1)
+      {
+        [self.table_view reloadSections:[NSIndexSet indexSetWithIndex:0]
+                       withRowAnimation:UITableViewRowAnimationAutomatic];
+      }
+      else
+      {
+        [self.table_view reloadData];
+      }
     }
     else if (sections.count > 0)
     {
