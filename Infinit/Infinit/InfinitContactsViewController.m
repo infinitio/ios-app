@@ -379,38 +379,41 @@
 
 - (void)updateSearchResultsWithSearchString:(NSString*)search_string
 {
-  if ([self.me_contact containsSearchString:search_string])
-    _me_match = YES;
-  else
-    _me_match = NO;
-  NSMutableArray* swaggers_temp = [NSMutableArray array];
-  for (InfinitContact* contact in self.all_swaggers)
+  @synchronized(self)
   {
-    if ([contact containsSearchString:search_string])
-      [swaggers_temp addObject:contact];
-  }
-  NSMutableArray* contacts_temp = [NSMutableArray array];
-  for (InfinitContact* contact in self.all_contacts)
-  {
-    if ([contact containsSearchString:search_string])
-      [contacts_temp addObject:contact];
-  }
-  NSMutableIndexSet* sections = [NSMutableIndexSet indexSet];
-  [sections addIndex:0];
-  if (![self.swagger_results isEqualToArray:swaggers_temp])
-  {
-    self.swagger_results = swaggers_temp;
-    [sections addIndex:1];
-  }
-  if (![self.contact_results isEqualToArray:contacts_temp] && [self gotAccessToAddressBook])
-  {
-    self.contact_results = contacts_temp;
-    [sections addIndex:2];
-  }
-  if (sections.count > 0)
-  {
-    [self.table_view reloadSections:sections
-                   withRowAnimation:UITableViewRowAnimationAutomatic];
+    if ([self.me_contact containsSearchString:search_string])
+      _me_match = YES;
+    else
+      _me_match = NO;
+    NSMutableArray* swaggers_temp = [NSMutableArray array];
+    for (InfinitContact* contact in self.all_swaggers)
+    {
+      if ([contact containsSearchString:search_string])
+        [swaggers_temp addObject:contact];
+    }
+    NSMutableArray* contacts_temp = [NSMutableArray array];
+    for (InfinitContact* contact in self.all_contacts)
+    {
+      if ([contact containsSearchString:search_string])
+        [contacts_temp addObject:contact];
+    }
+    NSMutableIndexSet* sections = [NSMutableIndexSet indexSet];
+    [sections addIndex:0];
+    if (![self.swagger_results isEqualToArray:swaggers_temp])
+    {
+      self.swagger_results = swaggers_temp;
+      [sections addIndex:1];
+    }
+    if (![self.contact_results isEqualToArray:contacts_temp] && [self gotAccessToAddressBook])
+    {
+      self.contact_results = contacts_temp;
+      [sections addIndex:2];
+    }
+    if (sections.count > 0)
+    {
+      [self.table_view reloadSections:sections
+                     withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
   }
 }
 
