@@ -1201,56 +1201,59 @@ didDeleteTokenAtIndex:(NSUInteger)index
 
 - (void)updateSearchResultsWithSearchString:(NSString*)search_string
 {
-  self.email_entered = NO;
-  BOOL were_no_results = [self noResults];
-  NSMutableArray* devices_temp = [NSMutableArray array];
-  for (InfinitContact* device in self.all_devices)
+  @synchronized(self)
   {
-    if ([device containsSearchString:search_string])
-      [devices_temp addObject:device];
-  }
-  NSMutableArray* swaggers_temp = [NSMutableArray array];
-  for (InfinitContact* contact in self.all_swaggers)
-  {
-    if ([contact containsSearchString:search_string])
-      [swaggers_temp addObject:contact];
-  }
-  NSMutableArray* contacts_temp = [NSMutableArray array];
-  for (InfinitContact* contact in self.all_contacts)
-  {
-    if ([contact containsSearchString:search_string])
-      [contacts_temp addObject:contact];
-  }
-  NSMutableIndexSet* sections = [NSMutableIndexSet indexSet];
-  if (![self.device_results isEqualToArray:devices_temp])
-  {
-    self.device_results = devices_temp;
-    [sections addIndex:0];
-  }
-  if (![self.swagger_results isEqualToArray:swaggers_temp])
-  {
-    self.swagger_results = swaggers_temp;
-    [sections addIndex:1];
-  }
-  if (![self.contact_results isEqualToArray:contacts_temp])
-  {
-    self.contact_results = contacts_temp;
-    [sections addIndex:2];
-  }
-  if ((were_no_results || [self noResults]) && !search_string.isEmail)
-  {
-    [self.table_view reloadData];
-  }
-  else if ([self noResults] && search_string.isEmail)
-  {
-    self.email_entered = YES;
-    [self.table_view reloadSections:[NSIndexSet indexSetWithIndex:0]
-                   withRowAnimation:UITableViewRowAnimationAutomatic];
-  }
-  else if (sections.count > 0)
-  {
+    self.email_entered = NO;
+    BOOL were_no_results = [self noResults];
+    NSMutableArray* devices_temp = [NSMutableArray array];
+    for (InfinitContact* device in self.all_devices)
+    {
+      if ([device containsSearchString:search_string])
+        [devices_temp addObject:device];
+    }
+    NSMutableArray* swaggers_temp = [NSMutableArray array];
+    for (InfinitContact* contact in self.all_swaggers)
+    {
+      if ([contact containsSearchString:search_string])
+        [swaggers_temp addObject:contact];
+    }
+    NSMutableArray* contacts_temp = [NSMutableArray array];
+    for (InfinitContact* contact in self.all_contacts)
+    {
+      if ([contact containsSearchString:search_string])
+        [contacts_temp addObject:contact];
+    }
+    NSMutableIndexSet* sections = [NSMutableIndexSet indexSet];
+    if (![self.device_results isEqualToArray:devices_temp])
+    {
+      self.device_results = devices_temp;
+      [sections addIndex:0];
+    }
+    if (![self.swagger_results isEqualToArray:swaggers_temp])
+    {
+      self.swagger_results = swaggers_temp;
+      [sections addIndex:1];
+    }
+    if (![self.contact_results isEqualToArray:contacts_temp])
+    {
+      self.contact_results = contacts_temp;
+      [sections addIndex:2];
+    }
+    if ((were_no_results || [self noResults]) && !search_string.isEmail)
+    {
+      [self.table_view reloadData];
+    }
+    else if ([self noResults] && search_string.isEmail)
+    {
+      self.email_entered = YES;
+      [self.table_view reloadSections:[NSIndexSet indexSetWithIndex:0]
+                     withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+    else if (sections.count > 0)
+    {
 
-    [self.table_view reloadSections:sections withRowAnimation:UITableViewRowAnimationAutomatic];
+      [self.table_view reloadSections:sections withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
   }
 }
 
