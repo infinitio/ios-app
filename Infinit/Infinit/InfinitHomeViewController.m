@@ -209,8 +209,11 @@ static NSUInteger _background_onboard_size = 5 * 1000 * 1000;
                                                                    thisDeviceOnly:YES].count;
   if (count == 0)
     [self showOnboardingArrow];
-  else if (self.data.count == 0 && self.swipe_onboarded && self.notification_onboarded)
+
+  if (self.data.count == 0 && self.swipe_onboarded && self.notification_onboarded)
+  {
     [self showNoActivityView];
+  }
   else if (self.no_activity_view != nil)
   {
     [self.no_activity_view removeFromSuperview];
