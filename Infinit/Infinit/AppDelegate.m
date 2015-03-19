@@ -25,7 +25,6 @@
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitStateResult.h>
-#import <Gap/InfinitUserManager.h>
 
 #import "NSData+Conversion.h"
 
@@ -48,6 +47,13 @@
 - (BOOL)application:(UIApplication*)application
 didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
+  if (![InfinitApplicationSettings sharedInstance].been_launched)
+  {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(archiveOldTransactions)
+                                                 name:INFINIT_PEER_TRANSACTION_MODEL_READY_NOTIFICATION
+                                               object:nil];
+  }
   [InfinitConnectionManager sharedInstance];
   [InfinitStateManager startState];
 
@@ -177,8 +183,6 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   if (result.success)
   {
     [InfinitDeviceManager sharedInstance];
-    [InfinitUserManager sharedInstance];
-    [InfinitPeerTransactionManager sharedInstance];
     [InfinitDownloadFolderManager sharedInstance];
     [InfinitBackgroundManager sharedInstance];
     [InfinitRatingManager sharedInstance];
@@ -423,9 +427,13 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 
 - (void)handleFirstLaunch
 {
-  [[InfinitPeerTransactionManager sharedInstance] archiveIrrelevantTransactions];
   [InfinitApplicationSettings sharedInstance].been_launched = YES;
   [InfinitFilesOnboardingManager copyFilesForOnboarding];
+}
+
+- (void)archiveOldTransactions
+{
+  [[InfinitPeerTransactionManager sharedInstance] archiveIrrelevantTransactions];
 }
 
 @end
