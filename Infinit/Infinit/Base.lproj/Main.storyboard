@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14D87h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Sta-NW-erU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14D105g" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Sta-NW-erU">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
@@ -263,7 +263,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="ob9-mb-YaE">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="separatorInset" minX="18" minY="0.0" maxX="18" maxY="0.0"/>
                                 <sections/>
                                 <connections>
@@ -696,7 +696,7 @@
                                                                 <constraint firstAttribute="width" constant="200" id="ntB-Fh-hgH"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                             <variation key="default">
                                                                 <mask key="constraints">
@@ -803,7 +803,7 @@
                                                                 <constraint firstAttribute="height" constant="21" id="nkP-ZA-jlK"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                             <variation key="default">
                                                                 <mask key="constraints">
@@ -948,7 +948,7 @@
                                                                 <constraint firstAttribute="height" constant="22" id="wdi-qW-IV3"/>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                             <variation key="default">
                                                                 <mask key="constraints">
@@ -2305,12 +2305,6 @@ access your phone contacts!</string>
                                 <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Available on Mac, Windows, Android &amp; iOS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eE6-sR-faf">
-                                <rect key="frame" x="166" y="159" width="269" height="17"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                <color key="textColor" red="0.69411764710000001" green="0.69411764710000001" blue="0.69411764710000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i0c-uG-j3m" customClass="InfinitOnboardingProgressView">
                                 <rect key="frame" x="260" y="542" width="80" height="15"/>
                                 <subviews>
@@ -2401,9 +2395,7 @@ access your phone contacts!</string>
                             <constraint firstAttribute="trailing" secondItem="tXH-Hc-MJF" secondAttribute="trailing" constant="35" id="Lfo-w8-eWm"/>
                             <constraint firstItem="zAQ-6j-Oni" firstAttribute="leading" secondItem="qqB-75-Bzg" secondAttribute="leading" constant="35" id="NRq-og-S8z"/>
                             <constraint firstAttribute="centerX" secondItem="N40-3y-JCe" secondAttribute="centerX" id="Rq7-UH-5b5"/>
-                            <constraint firstAttribute="centerX" secondItem="eE6-sR-faf" secondAttribute="centerX" id="ScL-ab-dyX"/>
                             <constraint firstItem="i0c-uG-j3m" firstAttribute="top" secondItem="aWW-o8-HZw" secondAttribute="bottom" constant="100" id="TEt-pb-bA5"/>
-                            <constraint firstItem="eE6-sR-faf" firstAttribute="top" secondItem="N40-3y-JCe" secondAttribute="bottom" constant="15" id="cZG-lf-jDG"/>
                             <constraint firstItem="tXH-Hc-MJF" firstAttribute="centerY" secondItem="zAQ-6j-Oni" secondAttribute="centerY" id="cyA-Hl-zSI"/>
                             <constraint firstAttribute="centerX" secondItem="q5c-sk-108" secondAttribute="centerX" id="fdX-Ku-XX2"/>
                             <constraint firstItem="N40-3y-JCe" firstAttribute="top" secondItem="q5c-sk-108" secondAttribute="bottom" constant="30" id="kFF-io-4Yi"/>
