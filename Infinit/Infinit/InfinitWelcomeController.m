@@ -27,10 +27,8 @@
 
 #import <Gap/InfinitConnectionManager.h>
 #import <Gap/InfinitDeviceManager.h>
-#import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitStateResult.h>
-#import <Gap/InfinitUserManager.h>
 
 #import <FacebookSDK/FacebookSDK.h>
 
@@ -1055,8 +1053,6 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
 - (void)onSuccessfulLogin
 {
   [InfinitDeviceManager sharedInstance];
-  [InfinitUserManager sharedInstance];
-  [InfinitPeerTransactionManager sharedInstance];
   [InfinitDownloadFolderManager sharedInstance];
   [InfinitBackgroundManager sharedInstance];
   [InfinitRatingManager sharedInstance];
