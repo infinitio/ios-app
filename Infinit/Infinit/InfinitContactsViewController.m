@@ -366,15 +366,15 @@
   [NSObject cancelPreviousPerformRequestsWithTarget:self
                                            selector:@selector(updateSearchResultsWithSearchString:)
                                              object:_last_search];
-  _last_search = searchText;
   if (searchText.length == 0)
   {
     [self reloadSearchResults];
     return;
   }
+  _last_search = searchText;
   [self performSelector:@selector(updateSearchResultsWithSearchString:)
              withObject:searchText
-             afterDelay:0.3f];
+             afterDelay:0.25f];
 }
 
 - (void)updateSearchResultsWithSearchString:(NSString*)search_string
