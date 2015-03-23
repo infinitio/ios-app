@@ -131,7 +131,8 @@ static InfinitUploadThumbnailManager* _instance = nil;
              [result drawInRect:rect];
              UIImage* thumbnail = UIGraphicsGetImageFromCurrentImageContext();
              UIGraphicsEndImageContext();
-             [thumbnails addObject:thumbnail];
+             if (thumbnail != nil)
+               [thumbnails addObject:thumbnail];
            }
          }];
         if (++count >= _max_thumbnails)
@@ -146,9 +147,12 @@ static InfinitUploadThumbnailManager* _instance = nil;
         UIImage* thumbnail = [UIImage imageWithCGImage:asset.thumbnail
                                                  scale:1.0f
                                            orientation:UIImageOrientationUp];
-        [thumbnails addObject:thumbnail];
-        if (++count >= _max_thumbnails)
-          break;
+        if (thumbnail != nil)
+        {
+          [thumbnails addObject:thumbnail];
+          if (++count >= _max_thumbnails)
+            break;
+        }
       }
     }
     InfinitPeerTransaction* transaction =
@@ -171,7 +175,8 @@ static InfinitUploadThumbnailManager* _instance = nil;
       UIImage* thumb = [InfinitFilePreview previewForPath:file
                                                    ofSize:_thumbnail_size
                                                      crop:YES];
-      [thumbnails addObject:thumb];
+      if (thumb != nil)
+        [thumbnails addObject:thumb];
     }
     InfinitPeerTransaction* transaction =
       [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
@@ -237,7 +242,7 @@ static InfinitUploadThumbnailManager* _instance = nil;
 {
   @synchronized(self.pending_thumbnails)
   {
-    NSNumber* id_ = notification.userInfo[@"id"];
+    NSNumber* id_ = notification.userInfo[kInfinitTransactionId];
     InfinitPeerTransaction* transaction =
       [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
     NSArray* thumbnails = [self.pending_thumbnails objectForKey:id_];
