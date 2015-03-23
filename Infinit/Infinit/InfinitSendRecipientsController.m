@@ -518,8 +518,11 @@
     NSArray* ids = [self sendFilesToCurrentRecipients:self.files];
     for (NSNumber* id_ in ids)
     {
-      [[InfinitUploadThumbnailManager sharedInstance] generateThumbnailsForFiles:_thumbnail_elements
-                                                            forTransactionWithId:id_];
+      if (id_.unsignedIntValue != 0)
+      {
+        [[InfinitUploadThumbnailManager sharedInstance] generateThumbnailsForFiles:_thumbnail_elements
+                                                              forTransactionWithId:id_];
+      }
     }
   }
   [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewSend method:InfinitUIMethodTap];
@@ -537,8 +540,11 @@
                                                   forManagedFiles:_managed_files_id];
   for (NSNumber* id_ in ids)
   {
-    [[InfinitUploadThumbnailManager sharedInstance] generateThumbnailsForAssets:_thumbnail_elements
-                                                           forTransactionWithId:id_];
+    if (id_.unsignedIntValue != 0)
+    {
+      [[InfinitUploadThumbnailManager sharedInstance] generateThumbnailsForAssets:_thumbnail_elements
+                                                             forTransactionWithId:id_];
+    }
   }
 }
 

@@ -820,7 +820,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 
 - (void)peerTransactionAdded:(NSNotification*)notification
 {
-  NSNumber* transaction_id = notification.userInfo[@"id"];
+  NSNumber* transaction_id = notification.userInfo[kInfinitTransactionId];
   InfinitPeerTransaction* peer_transaction =
     [[InfinitPeerTransactionManager sharedInstance] transactionWithId:transaction_id];
   if (!peer_transaction.concerns_device || peer_transaction.archived)
@@ -911,7 +911,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 
 - (void)peerTransactionUpdated:(NSNotification*)notification
 {
-  NSNumber* transaction_id = notification.userInfo[@"id"];
+  NSNumber* transaction_id = notification.userInfo[kInfinitTransactionId];
   for (InfinitHomeItem* item in self.data)
   {
     if (item.transaction != nil && [item.transaction.id_ isEqualToNumber:transaction_id])

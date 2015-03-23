@@ -77,7 +77,7 @@ static NSUInteger _required_transaction_count = 3;
 {
   if (self.settings.rated_app)
     return;
-  NSNumber* id_ = notification.userInfo[@"id"];
+  NSNumber* id_ = notification.userInfo[kInfinitTransactionId];
   InfinitPeerTransaction* transaction =
     [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
   NSString* self_device_id = [InfinitStateManager sharedInstance].self_device_id;

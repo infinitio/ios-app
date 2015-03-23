@@ -571,7 +571,7 @@ shouldSelectViewController:(UIViewController*)viewController
   if (![InfinitHostDevice canSendSMS])
     return;
   InfinitPeerTransaction* transaction =
-    [[InfinitPeerTransactionManager sharedInstance] transactionWithId:dict[@"id"]];
+    [[InfinitPeerTransactionManager sharedInstance] transactionWithId:dict[kInfinitTransactionId]];
   if (transaction == nil)
     return;
   InfinitUser* recipient = transaction.recipient;

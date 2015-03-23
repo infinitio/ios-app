@@ -118,7 +118,7 @@ static InfinitBackgroundManager* _instance = nil;
 
 - (void)transactionUpdated:(NSNotification*)notification
 {
-  NSNumber* id_ = notification.userInfo[@"id"];
+  NSNumber* id_ = notification.userInfo[kInfinitTransactionId];
   InfinitPeerTransaction* transaction =
     [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
   InfinitBackgroundTask* existing = [self.task_map objectForKey:transaction.id_];

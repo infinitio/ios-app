@@ -161,7 +161,7 @@ static InfinitDownloadFolderManager* _instance = nil;
 
 - (void)transactionUpdated:(NSNotification*)notification
 {
-  NSNumber* txn_id = notification.userInfo[@"id"];
+  NSNumber* txn_id = notification.userInfo[kInfinitTransactionId];
   InfinitPeerTransaction* transaction =
     [[InfinitPeerTransactionManager sharedInstance] transactionWithId:txn_id];
   switch (transaction.status)
