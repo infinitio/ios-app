@@ -272,7 +272,10 @@ static CGFloat _button_height = 45.0f;
       _upload_thumbnails = [manager thumbnailsForTransaction:self.transaction];
   }
   self.status_label.text = [self statusString];
-  self.size_label.text = [InfinitDataSize fileSizeStringFrom:self.transaction.size];
+  if (self.transaction.size.unsignedIntegerValue == 0)
+    self.size_label.text = @"";
+  else
+    self.size_label.text = [InfinitDataSize fileSizeStringFrom:self.transaction.size];
   [self setProgress];
 }
 
