@@ -35,9 +35,18 @@
 @property (nonatomic, weak) InfinitWelcomeOnboardingNavigationController* onboarding_controller;
 @property (nonatomic, readonly) BOOL onboarding;
 
+@property (nonatomic, readonly) BOOL facebook_login;       // Doing some kind of Facebook login.
+@property (nonatomic, readonly) BOOL facebook_quick_login; // Facebook login with valid token.
+@property (nonatomic, readonly) BOOL facebook_long_login;  // Facebook login with expired token.
+
 @end
 
 @implementation AppDelegate
+
+- (BOOL)facebook_login
+{
+  return (self.facebook_quick_login || self.facebook_long_login);
+}
 
 - (void)dealloc
 {
@@ -85,6 +94,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
     _onboarding = NO;
     if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded)
     {
+      _facebook_long_login = YES;
       self.window.rootViewController =
         [storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
       [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:25.0f];
@@ -110,10 +120,10 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
              FBSession.activeSession.state == FBSessionStateOpen ||
              FBSession.activeSession.state == FBSessionStateOpenTokenExtended)
     {
+      _facebook_quick_login = YES;
       self.window.rootViewController =
         [storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
       [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:15.0f];
-      [self tryFacebookLogin];
     }
     else if ([self canAutoLogin])
     {
@@ -288,29 +298,31 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   }
 }
 
+- (void)doneRegisterNotifications:(BOOL)allowed
+{
+  if ([self canAutoLogin] && !self.onboarding && !self.facebook_login)
+    [self tryLogin];
+  else if (self.facebook_quick_login)
+    [self tryFacebookLogin];
+  if (![InfinitApplicationSettings sharedInstance].asked_notifications)
+  {
+    [InfinitApplicationSettings sharedInstance].asked_notifications = YES;
+    InfinitUIMethods method = allowed ? InfinitUIMethodYes : InfinitUIMethodNo;
+    [InfinitMetricsManager sendMetric:InfinitUIEventAccessNotifications method:method];
+  }
+}
+
 - (void)application:(UIApplication*)application
 didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
   [InfinitStateManager sharedInstance].push_token = deviceToken.hexadecimalString;
-  if ([self canAutoLogin] && !self.onboarding)
-    [self tryLogin];
-  if (![InfinitApplicationSettings sharedInstance].asked_notifications)
-  {
-    [InfinitApplicationSettings sharedInstance].asked_notifications = YES;
-    [InfinitMetricsManager sendMetric:InfinitUIEventAccessNotifications method:InfinitUIMethodYes];
-  }
+  [self doneRegisterNotifications:YES];
 }
 
 - (void)application:(UIApplication*)application
 didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
-  if ([self canAutoLogin] && !self.onboarding)
-    [self tryLogin];
-  if (![InfinitApplicationSettings sharedInstance].asked_notifications)
-  {
-    [InfinitApplicationSettings sharedInstance].asked_notifications = YES;
-    [InfinitMetricsManager sendMetric:InfinitUIEventAccessNotifications method:InfinitUIMethodNo];
-  }
+  [self doneRegisterNotifications:NO];
 }
 
 - (void)application:(UIApplication*)application
@@ -416,10 +428,18 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 
 - (void)willLogout
 {
-  if (FBSession.activeSession.state == FBSessionStateOpen
-      || FBSession.activeSession.state == FBSessionStateOpenTokenExtended)
+  if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded ||
+      FBSession.activeSession.state == FBSessionStateCreatedOpening||
+      FBSession.activeSession.state == FBSessionStateOpen ||
+      FBSession.activeSession.state == FBSessionStateOpenTokenExtended)
   {
     [[InfinitFacebookManager sharedInstance] cleanSession];
+  }
+  else
+  {
+    NSString* account_email = [InfinitApplicationSettings sharedInstance].username;
+    if (account_email != nil)
+      [[InfinitKeychain sharedInstance] removeAccount:account_email];
   }
 }
 
