@@ -406,7 +406,8 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
 
 - (NSString*)description
 {
-  return [NSString stringWithFormat:@"FolderModel (%@): %@", self.id_, self.files];
+  return [NSString stringWithFormat:@"FolderModel (%@)%@: %@",
+          self.id_, self.done ? @" done": @"", self.files];
 }
 
 @end
