@@ -409,15 +409,15 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   _all_folders = self.download_manager.completed_folders;
   if (self.search_bar.text.length == 0)
   {
-    [self.table_view performSelectorOnMainThread:@selector(reloadData)
-                                      withObject:nil
-                                   waitUntilDone:NO];
+    [self.table_view beginUpdates];
+    [self.folder_results insertObject:folder atIndex:0];
+    [self.table_view insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
+                           withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.table_view endUpdates];
   }
   if (self.no_files_view != nil)
   {
-    [self.no_files_view performSelectorOnMainThread:@selector(removeFromSuperview)
-                                         withObject:nil 
-                                      waitUntilDone:NO];
+    [self.no_files_view removeFromSuperview];
     self.no_files_view = nil;
     self.select_button.enabled = YES;
   }
@@ -431,9 +431,11 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   {
     NSIndexPath* index = [NSIndexPath indexPathForRow:[self.folder_results indexOfObject:folder] 
                                             inSection:0];
+    [self.table_view beginUpdates];
     [self.folder_results removeObject:folder];
     [self.table_view deleteRowsAtIndexPaths:@[index]
                            withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.table_view endUpdates];
   }
 }
 
