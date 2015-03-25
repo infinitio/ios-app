@@ -44,7 +44,6 @@
                                                VENTokenFieldDelegate,
                                                VENTokenFieldDataSource>
 
-@property (nonatomic, weak) IBOutlet UIBarButtonItem* invite_button;
 @property (nonatomic, weak) IBOutlet VENTokenField* search_field;
 @property (nonatomic, weak) IBOutlet UITableView* table_view;
 @property (nonatomic, weak) IBOutlet UIButton* send_button;
@@ -149,7 +148,6 @@
                                                                        size:17.0f],
                                   NSForegroundColorAttributeName: [UIColor whiteColor]};
   [self.navigationController.navigationBar setTitleTextAttributes:nav_bar_attrs];
-  [self.invite_button setTitleTextAttributes:nav_bar_attrs forState:UIControlStateNormal];
   self.table_view.separatorStyle = UITableViewCellSeparatorStyleNone;
   self.table_view.contentInset = UIEdgeInsetsMake(-1.0f, 0.0f, 0.0f, 0.0);
 }
@@ -594,24 +592,9 @@
   return ids;
 }
 
-- (IBAction)inviteBarButtonTapped:(id)sender
-{
-  [self showImportOverlay];
-}
-
 - (IBAction)importPhoneContactsTapped:(id)sender
 {
   [self showAddressBookOverlay];
-}
-
-- (IBAction)findFacebookFriendsTapped:(id)sender
-{
-  
-}
-
-- (IBAction)findPeopleOnInfinitTapped:(id)sender
-{
-  
 }
 
 #pragma mark - Table View Data Source
