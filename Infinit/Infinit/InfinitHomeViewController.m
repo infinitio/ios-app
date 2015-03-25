@@ -250,7 +250,7 @@ static NSUInteger _background_onboard_size = 5 * 1000 * 1000;
         {
           add_background = YES;
         }
-        if (!self.self_send_onboarded &&
+        if (!self.self_send_onboarded && peer_transaction.from_device &&
             peer_transaction.sender.is_self && peer_transaction.recipient.is_self)
         {
           add_self = YES;
@@ -864,7 +864,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
             [InfinitHomeOnboardingItem initWithType:InfinitHomeOnboardingCellBackground];
           [self.onboarding_model addObject:item];
         }
-        if (!self.self_send_onboarded &&
+        if (!self.self_send_onboarded && transaction.from_device &&
             transaction.sender.is_self && transaction.recipient.is_self)
         {
           InfinitHomeOnboardingItem* item =
