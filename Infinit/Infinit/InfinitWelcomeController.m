@@ -999,7 +999,6 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
 {
   if (_logging_in)
     return;
-  [self.login_form_view.activity startAnimating];
   if ([InfinitConnectionManager sharedInstance].network_status == InfinitNetworkStatusNotReachable)
   {
     self.login_form_view.error_label.text =
@@ -1009,8 +1008,11 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
     return;
   }
   _logging_in = YES;
-  self.login_form_view.error_label.hidden = YES;
-  self.login_form_view.facebook_button.enabled = NO;
+  self.login_form_view.next_button.hidden = YES;
+  [self.login_form_view.activity startAnimating];
+  self.login_form_view.email_field.enabled = NO;
+  self.login_form_view.password_field.enabled = NO;
+  self.login_form_view.back_button.enabled = NO;
   NSString* token = FBSession.activeSession.accessTokenData.accessToken;
   [[InfinitStateManager sharedInstance] facebookConnect:token
                                            emailAddress:nil
