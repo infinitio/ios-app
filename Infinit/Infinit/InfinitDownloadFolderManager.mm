@@ -60,6 +60,7 @@ static InfinitDownloadFolderManager* _instance = nil;
     return;
   }
   NSString* path = nil;
+  NSString* meta_path = nil;
   BOOL dir = NO;
   for (NSString* file in contents)
   {
@@ -78,14 +79,29 @@ static InfinitDownloadFolderManager* _instance = nil;
     }
     else
     {
-      // Check that folders are marked as done if their transaction is done.
-      InfinitFolderModel* folder = [[InfinitFolderModel alloc] initWithPath:path];
-      if (!folder.done)
+      meta_path = [path stringByAppendingPathComponent:@".meta"];
+      if (![[NSFileManager defaultManager] fileExistsAtPath:meta_path])
       {
-        InfinitPeerTransaction* transaction =
-          [[InfinitPeerTransactionManager sharedInstance] transactionWithMetaId:folder.id_];
-        if (transaction.done)
-          folder.done = YES;
+        ELLE_WARN("%s: missing .meta file for transaction (%s), removing",
+                  self.description.UTF8String, path.lastPathComponent.UTF8String);
+        [[NSFileManager defaultManager] removeItemAtPath:path error:&error];
+        if (error)
+        {
+          ELLE_WARN("%s: unable to remove transaction folder with missing .meta: %s",
+                    self.description.UTF8String, path.UTF8String);
+        }
+      }
+      else
+      {
+        // Check that folders are marked as done if their transaction is done.
+        InfinitFolderModel* folder = [[InfinitFolderModel alloc] initWithPath:path];
+        if (!folder.done)
+        {
+          InfinitPeerTransaction* transaction =
+            [[InfinitPeerTransactionManager sharedInstance] transactionWithMetaId:folder.id_];
+          if (transaction.done)
+            folder.done = YES;
+        }
       }
     }
   }
@@ -136,7 +152,7 @@ static InfinitDownloadFolderManager* _instance = nil;
   NSSortDescriptor* sort = [NSSortDescriptor sortDescriptorWithKey:@"ctime" ascending:NO];
   for (InfinitFolderModel* folder in all_folders)
   {
-    if (folder.done)
+    if (folder.done && folder.files.count > 0)
       [res addObject:folder];
   }
   return [res sortedArrayUsingDescriptors:@[sort]];
@@ -164,12 +180,12 @@ static InfinitDownloadFolderManager* _instance = nil;
   NSNumber* txn_id = notification.userInfo[kInfinitTransactionId];
   InfinitPeerTransaction* transaction =
     [[InfinitPeerTransactionManager sharedInstance] transactionWithId:txn_id];
+  NSString* path = [self.download_dir stringByAppendingPathComponent:transaction.meta_id];
   switch (transaction.status)
   {
     case gap_transaction_connecting:
     case gap_transaction_transferring:
     {
-      NSString* path = [self.download_dir stringByAppendingPathComponent:transaction.meta_id];
       if (![[NSFileManager defaultManager] fileExistsAtPath:path])
       {
         return;
@@ -188,9 +204,17 @@ static InfinitDownloadFolderManager* _instance = nil;
     {
       InfinitFolderModel* folder = [self.folder_map objectForKey:transaction.meta_id];
       if (folder == nil)
-        return;
-      folder.done = YES;
-      [_delegate downloadFolderManager:self folderFinished:folder];
+      {
+        folder = [[InfinitFolderModel alloc] initWithPath:path];
+        folder.done = YES;
+        [self.folder_map setObject:folder forKey:folder.id_];
+        [_delegate downloadFolderManager:self folderFinished:folder];
+      }
+      else
+      {
+        folder.done = YES;
+        [_delegate downloadFolderManager:self folderFinished:folder];
+      }
       return;
     }
 
