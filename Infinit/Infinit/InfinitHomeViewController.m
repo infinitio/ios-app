@@ -28,6 +28,7 @@
 #import "InfinitUploadThumbnailManager.h"
 
 #import <Gap/InfinitDataSize.h>
+#import <Gap/InfinitDeviceManager.h>
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitUserManager.h>
 
@@ -82,6 +83,7 @@
 @property (nonatomic) NSTimeInterval last_time;
 
 @property (nonatomic, readonly) NSMutableDictionary* round_avatar_cache;
+@property (nonatomic, readonly) NSMutableDictionary* round_avatar_device_cache;
 
 @property (nonatomic, readwrite) BOOL previewing_files;
 @property (nonatomic, readwrite) BOOL sending;
@@ -118,6 +120,7 @@ static NSUInteger _background_onboard_size = 5 * 1000 * 1000;
 - (void)didReceiveMemoryWarning
 {
   [self.round_avatar_cache removeAllObjects];
+  [self.round_avatar_device_cache removeAllObjects];
 }
 
 #pragma mark - Init
@@ -625,13 +628,52 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
     {
       InfinitPeerTransaction* peer_transaction = (InfinitPeerTransaction*)item.transaction;
       InfinitHomePeerTransactionCell* cell;
-      if (self.round_avatar_cache == nil)
-        _round_avatar_cache = [NSMutableDictionary dictionary];
-      UIImage* avatar = [self.round_avatar_cache objectForKey:peer_transaction.other_user.id_];
+      UIImage* avatar = nil;
+      if (peer_transaction.sender.is_self && peer_transaction.recipient.is_self)
+      {
+        NSString* device_id = nil;
+        if (peer_transaction.to_device)
+          device_id = peer_transaction.sender_device_id;
+        else
+          device_id = peer_transaction.recipient_device;
+        InfinitDevice* device = [[InfinitDeviceManager sharedInstance] deviceWithId:device_id];
+
+        if (self.round_avatar_device_cache == nil)
+          _round_avatar_device_cache = [NSMutableDictionary dictionary];
+        avatar = [self.round_avatar_device_cache objectForKey:@(device.type)];
+        if (avatar == nil)
+        {
+          UIImage* raw_image = nil;
+          switch (device.type)
+          {
+            case InfinitDeviceTypeAndroid:
+              raw_image = [UIImage imageNamed:@"icon-device-android-avatar"];
+              break;
+            case InfinitDeviceTypeiPhone:
+              raw_image = [UIImage imageNamed:@"icon-device-ios-avatar"];
+              break;
+            case InfinitDeviceTypeMacLaptop:
+              raw_image = [UIImage imageNamed:@"icon-device-mac-avatar"];
+              break;
+
+            default:
+              raw_image = [UIImage imageNamed:@"icon-device-windows-avatar"];
+              break;
+          }
+          avatar = [raw_image circularMaskOfSize:_avatar_size];
+          [self.round_avatar_device_cache setObject:avatar forKey:@(device.type)];
+        }
+      }
       if (avatar == nil)
       {
-        avatar = [peer_transaction.other_user.avatar circularMaskOfSize:_avatar_size];
-        [self.round_avatar_cache setObject:avatar forKey:peer_transaction.other_user.id_];
+        if (self.round_avatar_cache == nil)
+          _round_avatar_cache = [NSMutableDictionary dictionary];
+        avatar = [self.round_avatar_cache objectForKey:peer_transaction.other_user.id_];
+        if (avatar == nil)
+        {
+          avatar = [peer_transaction.other_user.avatar circularMaskOfSize:_avatar_size];
+          [self.round_avatar_cache setObject:avatar forKey:peer_transaction.other_user.id_];
+        }
       }
       if (peer_transaction.from_device || peer_transaction.to_device || peer_transaction.receivable)
       {
