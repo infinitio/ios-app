@@ -180,6 +180,8 @@ static InfinitDownloadFolderManager* _instance = nil;
   NSNumber* txn_id = notification.userInfo[kInfinitTransactionId];
   InfinitPeerTransaction* transaction =
     [[InfinitPeerTransactionManager sharedInstance] transactionWithId:txn_id];
+  if (!transaction.to_device)
+    return;
   NSString* path = [self.download_dir stringByAppendingPathComponent:transaction.meta_id];
   switch (transaction.status)
   {
