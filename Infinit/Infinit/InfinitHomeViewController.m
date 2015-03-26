@@ -109,7 +109,6 @@ static NSUInteger _background_onboard_size = 5 * 1000 * 1000;
 @private
   NSString* _onboarding_cell_id;
   NSString* _peer_transaction_cell_id;
-  NSString* _peer_transaction_cell_no_files_id;
   NSString* _rating_cell_id;
 
   NSTimer* _progress_timer;
@@ -133,7 +132,6 @@ static NSUInteger _background_onboard_size = 5 * 1000 * 1000;
 - (void)viewDidLoad
 {
   _peer_transaction_cell_id = @"home_peer_transaction_cell";
-  _peer_transaction_cell_no_files_id = @"home_peer_transaction_no_files_cell";
   _onboarding_cell_id = @"home_onboarding_cell";
   _rating_cell_id = @"home_rating_cell";
   _update_interval = 0.5f;
@@ -146,10 +144,6 @@ static NSUInteger _background_onboard_size = 5 * 1000 * 1000;
     [UINib nibWithNibName:NSStringFromClass(InfinitHomePeerTransactionCell.class) bundle:nil];
   [self.collection_view registerNib:transaction_cell_nib
         forCellWithReuseIdentifier:_peer_transaction_cell_id];
-  NSString* no_files_name =
-    [NSString stringWithFormat:@"%@NoFiles", NSStringFromClass(InfinitHomePeerTransactionCell.class)];
-  [self.collection_view registerNib:[UINib nibWithNibName:no_files_name bundle:nil]
-         forCellWithReuseIdentifier:_peer_transaction_cell_no_files_id];
   UINib* onboarding_cell_nib =
     [UINib nibWithNibName:NSStringFromClass(InfinitHomeOnboardingCell.class) bundle:nil];
   [self.collection_view registerNib:onboarding_cell_nib
@@ -675,16 +669,8 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
           [self.round_avatar_cache setObject:avatar forKey:peer_transaction.other_user.id_];
         }
       }
-      if (peer_transaction.from_device || peer_transaction.to_device || peer_transaction.receivable)
-      {
-        cell = [self.collection_view dequeueReusableCellWithReuseIdentifier:_peer_transaction_cell_id
-                                                               forIndexPath:indexPath];
-      }
-      else
-      {
-        cell = [self.collection_view dequeueReusableCellWithReuseIdentifier:_peer_transaction_cell_no_files_id
-                                                               forIndexPath:indexPath];
-      }
+      cell = [self.collection_view dequeueReusableCellWithReuseIdentifier:_peer_transaction_cell_id
+                                                             forIndexPath:indexPath];
       [cell setUpWithDelegate:self
                   transaction:peer_transaction
                      expanded:item.expanded
