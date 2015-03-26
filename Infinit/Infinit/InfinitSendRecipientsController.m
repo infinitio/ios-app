@@ -66,6 +66,8 @@
 
 @property (nonatomic, readonly) InfinitContact* sms_contact;
 
+@property (atomic) BOOL preloading_contacts;
+
 @end
 
 @implementation InfinitSendRecipientsController
@@ -179,7 +181,12 @@
   _managed_files_id = [[InfinitTemporaryFileManager sharedInstance] createManagedFiles];
   if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
   {
+    self.preloading_contacts = YES;
     [self performSelectorInBackground:@selector(fetchAddressBook) withObject:nil];
+  }
+  else
+  {
+    self.preloading_contacts = NO;
   }
 }
 
@@ -329,10 +336,11 @@
       {
         [self performSelectorOnMainThread:@selector(selectIndexPath:)
                                withObject:[NSIndexPath indexPathForRow:row inSection:section]
-                            waitUntilDone:NO];
+                            waitUntilDone:YES];
       }
     }
   }
+  self.preloading_contacts = NO;
 }
 
 - (void)reloadTableSections:(NSIndexSet*)set
@@ -1192,6 +1200,13 @@ didDeleteTokenAtIndex:(NSUInteger)index
 {
   @synchronized(self)
   {
+    if (self.preloading_contacts)
+    {
+      [self performSelector:@selector(updateSearchResultsWithSearchString:)
+                 withObject:search_string
+                 afterDelay:0.5f];
+      return;
+    }
     self.email_entered = NO;
     BOOL were_no_results = [self noResults];
     NSMutableArray* devices_temp = [NSMutableArray array];
