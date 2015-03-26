@@ -38,6 +38,8 @@
 @property (nonatomic, strong) NSMutableArray* all_contacts;
 @property (nonatomic, strong) NSMutableArray* contact_results;
 
+@property (atomic) BOOL preloading_contacts;
+
 @end
 
 @implementation InfinitContactsViewController
@@ -132,7 +134,12 @@
   }
   else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
   {
+    self.preloading_contacts = YES;
     [self performSelectorInBackground:@selector(fetchAddressBook) withObject:nil];
+  }
+  else
+  {
+    self.preloading_contacts = NO;
   }
 }
 
@@ -202,9 +209,10 @@
       self.contact_results = [self.all_contacts mutableCopy];
       [self performSelectorOnMainThread:@selector(reloadTableSections:)
                              withObject:[NSIndexSet indexSetWithIndex:2]
-                          waitUntilDone:NO];
+                          waitUntilDone:YES];
     }
   }
+  self.preloading_contacts = NO;
 }
 
 - (void)reloadTableSections:(NSIndexSet*)set
@@ -381,6 +389,13 @@
 {
   @synchronized(self)
   {
+    if (self.preloading_contacts)
+    {
+      [self performSelector:@selector(updateSearchResultsWithSearchString:)
+                 withObject:search_string 
+                 afterDelay:0.5f];
+      return;
+    }
     if ([self.me_contact containsSearchString:search_string])
       _me_match = YES;
     else
