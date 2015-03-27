@@ -68,7 +68,7 @@
 
 @property (nonatomic, weak) IBOutlet UICollectionView* collection_view;
 
-@property (nonatomic, readonly) NSMutableArray* data;
+@property (atomic, readonly) NSMutableArray* data;
 @property (nonatomic, strong) UIView* onboarding_view;
 @property (nonatomic, strong) UIView* no_activity_view;
 @property (nonatomic, weak) InfinitHomeRatingCell* rating_cell;
@@ -85,19 +85,19 @@
 @property (nonatomic, readonly) NSMutableDictionary* round_avatar_cache;
 @property (nonatomic, readonly) NSMutableDictionary* round_avatar_device_cache;
 
-@property (nonatomic, readwrite) BOOL previewing_files;
-@property (nonatomic, readwrite) BOOL sending;
+@property (atomic, readwrite) BOOL previewing_files;
+@property (atomic, readwrite) BOOL sending;
 
 // Onboarding
-@property (nonatomic, readwrite) BOOL notification_onboarded;
-@property (nonatomic, readwrite) BOOL swipe_onboarded;
-@property (nonatomic, readwrite) BOOL peer_send_onboarded;
+@property (atomic, readwrite) BOOL notification_onboarded;
+@property (atomic, readwrite) BOOL swipe_onboarded;
+@property (atomic, readwrite) BOOL peer_send_onboarded;
 @property (nonatomic, readonly) NSString* onboarding_peer_name;
-@property (nonatomic, readwrite) BOOL ghost_send_onboarded;
+@property (atomic, readwrite) BOOL ghost_send_onboarded;
 @property (nonatomic, readonly) NSString* onboarding_ghost_name;
-@property (nonatomic, readwrite) BOOL self_send_onboarded;
-@property (nonatomic, readwrite) BOOL background_onboarded;
-@property (nonatomic, readonly) NSMutableArray* onboarding_model;
+@property (atomic, readwrite) BOOL self_send_onboarded;
+@property (atomic, readwrite) BOOL background_onboarded;
+@property (atomic, readonly) NSMutableArray* onboarding_model;
 
 @end
 
