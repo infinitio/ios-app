@@ -31,12 +31,12 @@
 @property (nonatomic, strong) InfinitAccessContactsView* contacts_overlay;
 @property (nonatomic, strong) InfinitImportOverlayView* import_overlay;
 
-@property (nonatomic, strong) InfinitContact* me_contact;
+@property (atomic, strong) InfinitContact* me_contact;
 @property (nonatomic) BOOL me_match;
-@property (nonatomic, strong) NSMutableArray* all_swaggers;
-@property (nonatomic, strong) NSMutableArray* swagger_results;
-@property (nonatomic, strong) NSMutableArray* all_contacts;
-@property (nonatomic, strong) NSMutableArray* contact_results;
+@property (atomic, strong) NSMutableArray* all_swaggers;
+@property (atomic, strong) NSMutableArray* swagger_results;
+@property (atomic, strong) NSMutableArray* all_contacts;
+@property (atomic, strong) NSMutableArray* contact_results;
 
 @property (atomic) BOOL preloading_contacts;
 
