@@ -56,15 +56,15 @@
 @property (nonatomic) BOOL no_devices;
 @property (nonatomic) BOOL email_entered;
 @property (nonatomic, strong) InfinitContact* me_contact;
-@property (nonatomic, strong) NSMutableArray* all_devices;
-@property (nonatomic, strong) NSMutableArray* device_results;
-@property (nonatomic, strong) NSMutableArray* all_swaggers;
-@property (nonatomic, strong) NSMutableArray* swagger_results;
-@property (nonatomic, strong) NSMutableArray* all_contacts;
-@property (nonatomic, strong) NSMutableArray* contact_results;
-@property (nonatomic, strong) NSMutableOrderedSet* recipients;
+@property (atomic, strong) NSMutableArray* all_devices;
+@property (atomic, strong) NSMutableArray* device_results;
+@property (atomic, strong) NSMutableArray* all_swaggers;
+@property (atomic, strong) NSMutableArray* swagger_results;
+@property (atomic, strong) NSMutableArray* all_contacts;
+@property (atomic, strong) NSMutableArray* contact_results;
+@property (atomic, strong) NSMutableOrderedSet* recipients;
 
-@property (nonatomic, readonly) InfinitContact* sms_contact;
+@property (atomic, readonly) InfinitContact* sms_contact;
 
 @property (atomic) BOOL preloading_contacts;
 
