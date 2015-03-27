@@ -202,11 +202,7 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
   if ([[InfinitApplicationSettings sharedInstance] username] != nil)
   {
     NSString* account = [[InfinitApplicationSettings sharedInstance] username];
-    NSString* password = [[InfinitKeychain sharedInstance] passwordForAccount:account];
     self.login_form_view.email_field.text = account;
-    self.login_form_view.password_field.text = [password copy];
-    self.login_form_view.forgot_button.hidden = (password.length > 0);
-    password = nil;
     [self checkLoginInputs];
   }
   [super viewDidAppear:animated];
