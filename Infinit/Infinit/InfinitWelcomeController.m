@@ -192,7 +192,16 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
                                            selector:@selector(connectionTypeChanged:)
                                                name:INFINIT_CONNECTION_TYPE_CHANGE
                                              object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(backgroundedApp)
+                                               name:UIApplicationDidEnterBackgroundNotification
+ object:nil];
   _facebook_connect_type = InfinitFacebookConnectNone;
+}
+
+- (void)backgroundedApp
+{
+  [self keyboardEntryDoneWithAnimation:NO];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -578,9 +587,15 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
 
 - (void)keyboardEntryDone
 {
+  [self keyboardEntryDoneWithAnimation:YES];
+}
+
+- (void)keyboardEntryDoneWithAnimation:(BOOL)animate
+{
+  [self.view endEditing:YES];
   CGRect main_frame = CGRectMake(0.0f, 0.0f,
                                  self.view.frame.size.width, self.view.frame.size.height);
-  [UIView animateWithDuration:0.5f
+  [UIView animateWithDuration:(animate ? 0.5f : 0.0f)
                         delay:0.0f
                       options:UIViewAnimationOptionCurveEaseInOut
                    animations:^
@@ -970,7 +985,6 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
   self.login_form_view.facebook_button.enabled = NO;
   if ([self loginInputsGood])
   {
-    [self.view endEditing:YES];
     [self keyboardEntryDone];
     self.login_form_view.next_button.hidden = YES;
     [self.login_form_view.activity startAnimating];
@@ -1139,7 +1153,6 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
   self.signup_facebook_view.error_label.hidden = YES;
   if ([self facebookInputsGood])
   {
-    [self.view endEditing:YES];
     [self keyboardEntryDone];
     [self setFacebookRegisterFieldsEnabled:NO];
     NSCharacterSet* white_space = [NSCharacterSet whitespaceCharacterSet];
@@ -1207,7 +1220,6 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
   self.signup_form_view.error_label.hidden = YES;
   if ([self registerInputsGood])
   {
-    [self.view endEditing:YES];
     [self keyboardEntryDone];
     self.signup_form_view.next_button.hidden = YES;
     [self.signup_form_view.activity startAnimating];
