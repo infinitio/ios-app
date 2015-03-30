@@ -28,6 +28,7 @@ static CGSize _thumbnail_scaled_size = CGSizeZero;
 static NSUInteger _max_thumbnails = 5;
 
 static InfinitUploadThumbnailManager* _instance = nil;
+static dispatch_once_t _instance_token = 0;
 
 @interface InfinitUploadThumbnailManager ()
 
@@ -70,8 +71,10 @@ static InfinitUploadThumbnailManager* _instance = nil;
 
 + (instancetype)sharedInstance
 {
-  if (_instance == nil)
+  dispatch_once(&_instance_token, ^
+  {
     _instance = [[InfinitUploadThumbnailManager alloc] init];
+  });
   return _instance;
 }
 
@@ -80,11 +83,11 @@ static InfinitUploadThumbnailManager* _instance = nil;
   NSString* root_folder = [InfinitDirectoryManager sharedInstance].upload_thumbnail_cache_directory;
   NSArray* contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:root_folder
                                                                           error:nil];
-  NSArray* archived_transactions =
-    [InfinitPeerTransactionManager sharedInstance].archived_transaction_meta_ids;
+  InfinitPeerTransaction* transaction = nil;
   for (NSString* folder in contents)
   {
-    if ([archived_transactions containsObject:folder])
+    transaction = [[InfinitPeerTransactionManager sharedInstance] transactionWithMetaId:folder];
+    if (!transaction || transaction.archived)
       [self removeThumbnailFolderForTransactionMetaId:folder];
   }
 }
