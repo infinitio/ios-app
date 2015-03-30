@@ -43,7 +43,7 @@
 {
   if (_progress == progress)
     return;
-  if (duration > 0.0f)
+  if (duration > 0.0f && progress > _progress)
   {
     CGFloat last_progress = self.progress;
     self.progress_layer.strokeEnd = progress;
