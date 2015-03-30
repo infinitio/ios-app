@@ -160,6 +160,8 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   NSString* account = [[InfinitApplicationSettings sharedInstance] username];
   if ([[InfinitKeychain sharedInstance] credentialsForAccountInKeychain:account])
     return YES;
+  // Ensure that credentials are removed. Fixes issue with beta users not able to auto login.
+  [[InfinitKeychain sharedInstance] removeAccount:account];
   return NO;
 }
 
