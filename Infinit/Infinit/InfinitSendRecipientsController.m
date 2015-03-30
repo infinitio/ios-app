@@ -492,12 +492,21 @@
   {
     InfinitTemporaryFileManager* manager = [InfinitTemporaryFileManager sharedInstance];
     _thumbnail_elements = [self.assets copy];
+    BOOL show_preparing_message = NO;
     if ([PHAsset class])
     {
       [manager addPHAssetsLibraryURLList:self.assets
                           toManagedFiles:_managed_files_id
                          performSelector:@selector(temporaryFileManagerCallback)
                                 onObject:self];
+      for (PHAsset* asset in _thumbnail_elements)
+      {
+        if (asset.mediaType == PHAssetMediaTypeVideo)
+        {
+          show_preparing_message = YES;
+          break;
+        }
+      }
     }
     else
     {
@@ -505,13 +514,17 @@
       for (ALAsset* asset in self.assets)
       {
         [asset_urls addObject:asset.defaultRepresentation.url];
+        if ([asset valueForProperty:ALAssetPropertyType] == ALAssetTypeVideo)
+          show_preparing_message = YES;
       }
       [manager addALAssetsLibraryURLList:asset_urls
                           toManagedFiles:_managed_files_id
                          performSelector:@selector(temporaryFileManagerCallback)
                                 onObject:self];
     }
-    if (_thumbnail_elements.count > 10)
+    if (_thumbnail_elements.count >= 10)
+      show_preparing_message = YES;
+    if (show_preparing_message)
     {
       [self.tabBarController performSelector:@selector(showTransactionPreparingNotification)
                                   withObject:nil 
