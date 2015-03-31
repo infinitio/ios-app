@@ -1338,29 +1338,30 @@ openFileTapped:(NSUInteger)file_index
 - (void)removeOnboardingCell:(InfinitHomeOnboardingCell*)cell
 {
   NSIndexPath* index = [self.collection_view indexPathForCell:cell];
-  switch (cell.type)
-  {
-    case InfinitHomeOnboardingCellBackground:
-      self.background_onboarded = YES;
-      break;
-    case InfinitHomeOnboardingCellPeerSent:
-      self.peer_send_onboarded = YES;
-      break;
-    case InfinitHomeOnboardingCellGhostSent:
-      self.ghost_send_onboarded = YES;
-      break;
-    case InfinitHomeOnboardingCellSelfSent:
-      self.self_send_onboarded = YES;
-      break;
-    case InfinitHomeOnboardingCellNotifications:
-      self.notification_onboarded = YES;
-      break;
-    case InfinitHomeOnboardingCellSwipe:
-      self.swipe_onboarded = YES;
-      break;
-  }
   [self.collection_view performBatchUpdates:^
   {
+    NSUInteger section_count = self.collection_view.numberOfSections;
+    switch (cell.type)
+    {
+      case InfinitHomeOnboardingCellBackground:
+        self.background_onboarded = YES;
+        break;
+      case InfinitHomeOnboardingCellPeerSent:
+        self.peer_send_onboarded = YES;
+        break;
+      case InfinitHomeOnboardingCellGhostSent:
+        self.ghost_send_onboarded = YES;
+        break;
+      case InfinitHomeOnboardingCellSelfSent:
+        self.self_send_onboarded = YES;
+        break;
+      case InfinitHomeOnboardingCellNotifications:
+        self.notification_onboarded = YES;
+        break;
+      case InfinitHomeOnboardingCellSwipe:
+        self.swipe_onboarded = YES;
+        break;
+    }
     if ([self topSection] && index.section == 0)
     {
       [self.onboarding_model removeObjectAtIndex:index.row];
@@ -1382,8 +1383,7 @@ openFileTapped:(NSUInteger)file_index
     }
     else
     {
-      NSInteger section = self.collection_view.numberOfSections - 1;
-      [self.collection_view deleteSections:[NSIndexSet indexSetWithIndex:section]];
+      [self.collection_view deleteSections:[NSIndexSet indexSetWithIndex:(section_count - 1)]];
       if (self.onboarding_model.count == 0 && self.data.count == 0)
         [self showNoActivityView];
     }
