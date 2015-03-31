@@ -1217,7 +1217,7 @@ didDeleteTokenAtIndex:(NSUInteger)index
     {
       [self performSelector:@selector(updateSearchResultsWithSearchString:)
                  withObject:search_string
-                 afterDelay:0.5f];
+                 afterDelay:0.3f];
       return;
     }
     self.email_entered = NO;
