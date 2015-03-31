@@ -626,36 +626,38 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
       if (peer_transaction.sender.is_self && peer_transaction.recipient.is_self)
       {
         NSString* device_id = nil;
-        if (peer_transaction.to_device)
-          device_id = peer_transaction.sender_device_id;
-        else
+        if (peer_transaction.from_device)
           device_id = peer_transaction.recipient_device;
+        else
+          device_id = peer_transaction.sender_device_id;
         InfinitDevice* device = [[InfinitDeviceManager sharedInstance] deviceWithId:device_id];
-
-        if (self.round_avatar_device_cache == nil)
-          _round_avatar_device_cache = [NSMutableDictionary dictionary];
-        avatar = [self.round_avatar_device_cache objectForKey:@(device.type)];
-        if (avatar == nil)
+        if (device != nil)
         {
-          UIImage* raw_image = nil;
-          switch (device.type)
+          if (self.round_avatar_device_cache == nil)
+            _round_avatar_device_cache = [NSMutableDictionary dictionary];
+          avatar = [self.round_avatar_device_cache objectForKey:@(device.type)];
+          if (avatar == nil)
           {
-            case InfinitDeviceTypeAndroid:
-              raw_image = [UIImage imageNamed:@"icon-device-android-avatar"];
-              break;
-            case InfinitDeviceTypeiPhone:
-              raw_image = [UIImage imageNamed:@"icon-device-ios-avatar"];
-              break;
-            case InfinitDeviceTypeMacLaptop:
-              raw_image = [UIImage imageNamed:@"icon-device-mac-avatar"];
-              break;
+            UIImage* raw_image = nil;
+            switch (device.type)
+            {
+              case InfinitDeviceTypeAndroid:
+                raw_image = [UIImage imageNamed:@"icon-device-android-avatar"];
+                break;
+              case InfinitDeviceTypeiPhone:
+                raw_image = [UIImage imageNamed:@"icon-device-ios-avatar"];
+                break;
+              case InfinitDeviceTypeMacLaptop:
+                raw_image = [UIImage imageNamed:@"icon-device-mac-avatar"];
+                break;
 
-            default:
-              raw_image = [UIImage imageNamed:@"icon-device-windows-avatar"];
-              break;
+              default:
+                raw_image = [UIImage imageNamed:@"icon-device-windows-avatar"];
+                break;
+            }
+            avatar = [raw_image circularMaskOfSize:_avatar_size];
+            [self.round_avatar_device_cache setObject:avatar forKey:@(device.type)];
           }
-          avatar = [raw_image circularMaskOfSize:_avatar_size];
-          [self.round_avatar_device_cache setObject:avatar forKey:@(device.type)];
         }
       }
       if (avatar == nil)
