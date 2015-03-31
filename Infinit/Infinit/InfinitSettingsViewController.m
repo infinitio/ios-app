@@ -335,7 +335,7 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
     {
       case InfinitFeedbackSettingRate:
       {
-        NSString* itunes_link = @"https://itunes.apple.com/us/app/apple-store/id955849852";
+        NSString* itunes_link = @"https://itunes.apple.com/app/apple-store/id955849852";
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:itunes_link]];
         break;
       }
