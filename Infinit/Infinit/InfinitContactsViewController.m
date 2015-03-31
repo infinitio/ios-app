@@ -393,7 +393,7 @@
     {
       [self performSelector:@selector(updateSearchResultsWithSearchString:)
                  withObject:search_string 
-                 afterDelay:0.5f];
+                 afterDelay:0.3f];
       return;
     }
     if ([self.me_contact containsSearchString:search_string])
