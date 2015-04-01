@@ -318,7 +318,10 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
   [InfinitStateManager sharedInstance].push_token = deviceToken.hexadecimalString;
-  [self doneRegisterNotifications:YES];
+  if (deviceToken.hexadecimalString.length)
+    [self doneRegisterNotifications:YES];
+  else
+    [self doneRegisterNotifications:NO];
 }
 
 - (void)application:(UIApplication*)application
