@@ -331,7 +331,8 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
     [self loadGalleryPermissionView];
     return;
   }
-  else if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusDenied)
+  else if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusRestricted ||
+           [ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusDenied)
   {
     [self noGalleryAccessPopUp];
     return;
@@ -397,7 +398,8 @@ shouldSelectViewController:(UIViewController*)viewController
       [self loadGalleryPermissionView];
       return NO;
     }
-    else if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusDenied)
+    else if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusRestricted ||
+             [ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusDenied)
     {
       [self noGalleryAccessPopUp];
       return NO;
