@@ -26,13 +26,16 @@ typedef NS_ENUM(NSUInteger, InfinitSettings)
   InfinitSettingHomeOnboardedBackground,
 };
 
+@interface InfinitApplicationSettings ()
+
+@property (atomic) NSUserDefaults* defaults;
+
+@end
+
 static InfinitApplicationSettings* _instance = nil;
+static dispatch_once_t _instance_token = 0;
 
 @implementation InfinitApplicationSettings
-{
-@private
-  NSUserDefaults* _defaults;
-}
 
 #pragma mark - Init
 
@@ -48,8 +51,10 @@ static InfinitApplicationSettings* _instance = nil;
 
 + (instancetype)sharedInstance
 {
-  if (_instance == nil)
+  dispatch_once(&_instance_token, ^
+  {
     _instance = [[InfinitApplicationSettings alloc] init];
+  });
   return _instance;
 }
 
@@ -57,143 +62,143 @@ static InfinitApplicationSettings* _instance = nil;
 
 - (BOOL)asked_notifications
 {
-  return [self boolFromNumber:[_defaults valueForKey:[self keyForSetting:InfinitSettingAskedNotifications]]];
+  return [self boolFromNumber:[self.defaults valueForKey:[self keyForSetting:InfinitSettingAskedNotifications]]];
 }
 
 - (void)setAsked_notifications:(BOOL)asked_notifications
 {
-  [_defaults setValue:@(asked_notifications)
-               forKey:[self keyForSetting:InfinitSettingAskedNotifications]];
+  [self.defaults setValue:@(asked_notifications)
+                   forKey:[self keyForSetting:InfinitSettingAskedNotifications]];
 }
 
 - (BOOL)been_launched
 {
-  return [self boolFromNumber:[_defaults valueForKey:[self keyForSetting:InfinitSettingBeenLaunched]]];
+  return [self boolFromNumber:[self.defaults valueForKey:[self keyForSetting:InfinitSettingBeenLaunched]]];
 }
 
 - (void)setBeen_launched:(BOOL)been_launched
 {
-  [_defaults setValue:@(been_launched) forKey:[self keyForSetting:InfinitSettingBeenLaunched]];
+  [self.defaults setValue:@(been_launched) forKey:[self keyForSetting:InfinitSettingBeenLaunched]];
 }
 
 - (BOOL)rated_app
 {
-  return [self boolFromNumber:[_defaults valueForKey:[self keyForSetting:InfinitSettingRatedApp]]];
+  return [self boolFromNumber:[self.defaults valueForKey:[self keyForSetting:InfinitSettingRatedApp]]];
 }
 
 - (void)setRated_app:(BOOL)rated_app
 {
-  [_defaults setValue:@(rated_app) forKey:[self keyForSetting:InfinitSettingRatedApp]];
+  [self.defaults setValue:@(rated_app) forKey:[self keyForSetting:InfinitSettingRatedApp]];
 }
 
 - (NSNumber*)rating_transactions
 {
-  return [_defaults valueForKey:[self keyForSetting:InfinitSettingRatingTransactions]];
+  return [self.defaults valueForKey:[self keyForSetting:InfinitSettingRatingTransactions]];
 }
 
 - (void)setRating_transactions:(NSNumber*)rating_transactions
 {
-  [_defaults setValue:rating_transactions
-               forKey:[self keyForSetting:InfinitSettingRatingTransactions]];
+  [self.defaults setValue:rating_transactions
+                   forKey:[self keyForSetting:InfinitSettingRatingTransactions]];
 }
 
 - (NSNumber*)send_to_self_onboarded
 {
-  return [_defaults valueForKey:[self keyForSetting:InfinitSettingSendToSelfOnboarded]];
+  return [self.defaults valueForKey:[self keyForSetting:InfinitSettingSendToSelfOnboarded]];
 }
 
 - (void)setSend_to_self_onboarded:(NSNumber*)send_to_self_onboarded
 {
-  [_defaults setValue:send_to_self_onboarded
-               forKey:[self keyForSetting:InfinitSettingSendToSelfOnboarded]];
+  [self.defaults setValue:send_to_self_onboarded
+                   forKey:[self keyForSetting:InfinitSettingSendToSelfOnboarded]];
 }
 
 - (NSString*)username
 {
-  return [_defaults valueForKey:[self keyForSetting:InfinitSettingUsername]];
+  return [self.defaults valueForKey:[self keyForSetting:InfinitSettingUsername]];
 }
 
 - (void)setUsername:(NSString*)username
 {
-  [_defaults setValue:username.lowercaseString forKey:[self keyForSetting:InfinitSettingUsername]];
+  [self.defaults setValue:username.lowercaseString forKey:[self keyForSetting:InfinitSettingUsername]];
 }
 
 - (NSNumber*)welcome_onboarded
 {
-  return [_defaults valueForKey:[self keyForSetting:InfinitSettingWelcomeOnboarded]];
+  return [self.defaults valueForKey:[self keyForSetting:InfinitSettingWelcomeOnboarded]];
 }
 
 - (void)setWelcome_onboarded:(NSNumber*)welcome_onboarded
 {
-  [_defaults setValue:welcome_onboarded forKey:[self keyForSetting:InfinitSettingWelcomeOnboarded]];
+  [self.defaults setValue:welcome_onboarded forKey:[self keyForSetting:InfinitSettingWelcomeOnboarded]];
 }
 
 #pragma mark - Home Onboarding
 
 - (BOOL)home_onboarded_notifications
 {
-  return [self boolFromNumber:[_defaults valueForKey:[self keyForSetting:InfinitSettingHomeOnboardedNotifications]]];
+  return [self boolFromNumber:[self.defaults valueForKey:[self keyForSetting:InfinitSettingHomeOnboardedNotifications]]];
 }
 
 - (void)setHome_onboarded_notifications:(BOOL)home_onboarded_notifications
 {
-  [_defaults setValue:@(home_onboarded_notifications)
+  [self.defaults setValue:@(home_onboarded_notifications)
                forKey:[self keyForSetting:InfinitSettingHomeOnboardedNotifications]];
 }
 
 - (BOOL)home_onboarded_swipe
 {
-  return [self boolFromNumber:[_defaults valueForKey:[self keyForSetting:InfinitSettingHomeOnboardedSwipe]]];
+  return [self boolFromNumber:[self.defaults valueForKey:[self keyForSetting:InfinitSettingHomeOnboardedSwipe]]];
 }
 
 - (void)setHome_onboarded_swipe:(BOOL)home_onboarded_swipe
 {
-  [_defaults setValue:@(home_onboarded_swipe)
-               forKey:[self keyForSetting:InfinitSettingHomeOnboardedSwipe]];
+  [self.defaults setValue:@(home_onboarded_swipe)
+                   forKey:[self keyForSetting:InfinitSettingHomeOnboardedSwipe]];
 }
 
 - (BOOL)home_onboarded_normal_send
 {
-  return [self boolFromNumber:[_defaults valueForKey:[self keyForSetting:InfinitSettingHomeOnboardedNormalSend]]];
+  return [self boolFromNumber:[self.defaults valueForKey:[self keyForSetting:InfinitSettingHomeOnboardedNormalSend]]];
 }
 
 - (void)setHome_onboarded_normal_send:(BOOL)home_onboarded_normal_send
 {
-  [_defaults setValue:@(home_onboarded_normal_send)
-               forKey:[self keyForSetting:InfinitSettingHomeOnboardedNormalSend]];
+  [self.defaults setValue:@(home_onboarded_normal_send)
+                   forKey:[self keyForSetting:InfinitSettingHomeOnboardedNormalSend]];
 }
 
 - (BOOL)home_onboarded_ghost_send
 {
-  return [self boolFromNumber:[_defaults valueForKey:[self keyForSetting:InfinitSettingHomeOnboardedGhostSend]]];
+  return [self boolFromNumber:[self.defaults valueForKey:[self keyForSetting:InfinitSettingHomeOnboardedGhostSend]]];
 }
 
 - (void)setHome_onboarded_ghost_send:(BOOL)home_onboarded_ghost_send
 {
-  [_defaults setValue:@(home_onboarded_ghost_send)
-               forKey:[self keyForSetting:InfinitSettingHomeOnboardedGhostSend]];
+  [self.defaults setValue:@(home_onboarded_ghost_send)
+                   forKey:[self keyForSetting:InfinitSettingHomeOnboardedGhostSend]];
 }
 
 - (BOOL)home_onboarded_self_send
 {
-  return [self boolFromNumber:[_defaults valueForKey:[self keyForSetting:InfinitSettingHomeOnboardedSelfSend]]];
+  return [self boolFromNumber:[self.defaults valueForKey:[self keyForSetting:InfinitSettingHomeOnboardedSelfSend]]];
 }
 
 - (void)setHome_onboarded_self_send:(BOOL)home_onboarded_self_send
 {
-  [_defaults setValue:@(home_onboarded_self_send)
-               forKey:[self keyForSetting:InfinitSettingHomeOnboardedSelfSend]];
+  [self.defaults setValue:@(home_onboarded_self_send)
+                   forKey:[self keyForSetting:InfinitSettingHomeOnboardedSelfSend]];
 }
 
 - (BOOL)home_onboarded_background
 {
-  return [self boolFromNumber:[_defaults valueForKey:[self keyForSetting:InfinitSettingHomeOnboardedBackground]]];
+  return [self boolFromNumber:[self.defaults valueForKey:[self keyForSetting:InfinitSettingHomeOnboardedBackground]]];
 }
 
 - (void)setHome_onboarded_background:(BOOL)home_onboarded_background
 {
-  [_defaults setValue:@(home_onboarded_background)
-               forKey:[self keyForSetting:InfinitSettingHomeOnboardedBackground]];
+  [self.defaults setValue:@(home_onboarded_background)
+                   forKey:[self keyForSetting:InfinitSettingHomeOnboardedBackground]];
 }
 
 #pragma mark - Enum
