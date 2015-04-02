@@ -441,7 +441,8 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
 {
-  if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusDenied)
+  if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusDenied ||
+      ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusRestricted)
     return 2;
   return 3;
 }
