@@ -12,6 +12,7 @@
 #import "InfinitHostDevice.h"
 
 #import "NSString+email.h"
+#import "NSString+PhoneNumber.h"
 
 @interface InfinitContact ()
 
@@ -43,7 +44,22 @@
     ABMultiValueRef phone_property = ABRecordCopyValue(record, kABPersonPhoneProperty);
     _phone_numbers = (__bridge_transfer NSArray*)ABMultiValueCopyArrayOfAllValues(phone_property);
     CFRelease(phone_property);
-
+    NSMutableArray* temp_numbers = [NSMutableArray array];
+    for (NSString* number in self.phone_numbers)
+    {
+      if (number.isPhoneNumber)
+      {
+        [temp_numbers addObject:number];
+      }
+      else if ([number rangeOfString:@"00"].location == 0)
+      {
+        NSString* new_number = [number stringByReplacingCharactersInRange:NSMakeRange(0, 2)
+                                                               withString:@"+"];
+        if (new_number.isPhoneNumber)
+          [temp_numbers addObject:new_number];
+      }
+    }
+    _phone_numbers = [temp_numbers copy];
     if (self.emails.count == 0 && self.phone_numbers.count == 0)
       return nil;
 
