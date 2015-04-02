@@ -687,7 +687,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
                                                       forIndexPath:indexPath];
     InfinitHomeOnboardingCellType type;
     NSString* text = nil;
-    if (indexPath.row == 0)
+    if (indexPath.row == 0 && !self.notification_onboarded)
     {
       type = InfinitHomeOnboardingCellNotifications;
       text = NSLocalizedString(@"Your current transfers and\n"
@@ -1337,57 +1337,68 @@ openFileTapped:(NSUInteger)file_index
 
 - (void)removeOnboardingCell:(InfinitHomeOnboardingCell*)cell
 {
-  NSIndexPath* index = [self.collection_view indexPathForCell:cell];
-  [self.collection_view performBatchUpdates:^
+  @synchronized(self.data)
   {
-    NSUInteger section_count = self.collection_view.numberOfSections;
-    switch (cell.type)
+    NSIndexPath* index = [self.collection_view indexPathForCell:cell];
+    [self.collection_view performBatchUpdates:^
     {
-      case InfinitHomeOnboardingCellBackground:
-        self.background_onboarded = YES;
-        break;
-      case InfinitHomeOnboardingCellPeerSent:
-        self.peer_send_onboarded = YES;
-        break;
-      case InfinitHomeOnboardingCellGhostSent:
-        self.ghost_send_onboarded = YES;
-        break;
-      case InfinitHomeOnboardingCellSelfSent:
-        self.self_send_onboarded = YES;
-        break;
-      case InfinitHomeOnboardingCellNotifications:
-        self.notification_onboarded = YES;
-        break;
-      case InfinitHomeOnboardingCellSwipe:
-        self.swipe_onboarded = YES;
-        break;
-    }
-    if ([self topSection] && index.section == 0)
-    {
-      [self.onboarding_model removeObjectAtIndex:index.row];
-      if (self.onboarding_model.count == 0 && !self.show_rate_us)
+      NSUInteger section_count = self.collection_view.numberOfSections;
+      switch (cell.type)
       {
-        [self.collection_view deleteSections:[NSIndexSet indexSetWithIndex:0]];
-        [self updateRunningTransactions];
-        if (self.swipe_onboarded && self.notification_onboarded && self.data.count == 0)
-          [self showNoActivityView];
+        case InfinitHomeOnboardingCellBackground:
+          self.background_onboarded = YES;
+          break;
+        case InfinitHomeOnboardingCellPeerSent:
+          self.peer_send_onboarded = YES;
+          break;
+        case InfinitHomeOnboardingCellGhostSent:
+          self.ghost_send_onboarded = YES;
+          break;
+        case InfinitHomeOnboardingCellSelfSent:
+          self.self_send_onboarded = YES;
+          break;
+        case InfinitHomeOnboardingCellNotifications:
+          self.notification_onboarded = YES;
+          break;
+        case InfinitHomeOnboardingCellSwipe:
+          self.swipe_onboarded = YES;
+          break;
+      }
+      if ([self topSection] && index.section == 0)
+      {
+        [self.onboarding_model removeObjectAtIndex:index.row];
+        if (self.onboarding_model.count == 0 && !self.show_rate_us)
+        {
+          [self.collection_view deleteSections:[NSIndexSet indexSetWithIndex:0]];
+          [self updateRunningTransactions];
+          if (self.swipe_onboarded && self.notification_onboarded && self.data.count == 0)
+            [self showNoActivityView];
+        }
+        else
+        {
+          [self.collection_view deleteItemsAtIndexPaths:@[index]];
+        }
+      }
+      else if (!self.swipe_onboarded || !self.notification_onboarded)
+      {
+        NSUInteger count = 0;
+        if (self.swipe_onboarded)
+          count += 1;
+        if (self.notification_onboarded)
+          count += 1;
+        if (count != 2)
+          [self.collection_view deleteItemsAtIndexPaths:@[index]];
+        else
+          [self.collection_view deleteSections:[NSIndexSet indexSetWithIndex:index.section]];
       }
       else
       {
-        [self.collection_view deleteItemsAtIndexPaths:@[index]];
+        [self.collection_view deleteSections:[NSIndexSet indexSetWithIndex:(section_count - 1)]];
+        if (self.onboarding_model.count == 0 && self.data.count == 0)
+          [self showNoActivityView];
       }
-    }
-    else if (!self.swipe_onboarded || !self.notification_onboarded)
-    {
-      [self.collection_view deleteItemsAtIndexPaths:@[index]];
-    }
-    else
-    {
-      [self.collection_view deleteSections:[NSIndexSet indexSetWithIndex:(section_count - 1)]];
-      if (self.onboarding_model.count == 0 && self.data.count == 0)
-        [self showNoActivityView];
-    }
-  } completion:NULL];
+    } completion:NULL];
+  }
 }
 
 #pragma mark - Rating Cell Handling
