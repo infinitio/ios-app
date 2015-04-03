@@ -11,6 +11,7 @@
 @interface InfinitFilesBottomBar : UIView
 
 @property (nonatomic, weak) IBOutlet UIButton* delete_button;
+@property (nonatomic, weak) IBOutlet UIButton* save_button;
 @property (nonatomic, weak) IBOutlet UIButton* send_button;
 
 @property (nonatomic, readwrite) BOOL enabled;

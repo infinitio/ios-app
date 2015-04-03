@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14D87h" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14D130a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -37,6 +37,16 @@
                         <constraint firstAttribute="height" constant="1" id="ddg-TD-huj"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VA6-rw-Dpj">
+                    <rect key="frame" x="283" y="9" width="34" height="30"/>
+                    <state key="normal" title="Save">
+                        <color key="titleColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="disabled">
+                        <color key="titleColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
@@ -46,11 +56,14 @@
                 <constraint firstItem="Iyp-1t-hXd" firstAttribute="leading" secondItem="z7W-fk-rRI" secondAttribute="leading" constant="20" id="K2n-qW-XEe"/>
                 <constraint firstAttribute="centerY" secondItem="Iyp-1t-hXd" secondAttribute="centerY" id="SVl-MH-M7S"/>
                 <constraint firstItem="GvW-Xk-Y7u" firstAttribute="leading" secondItem="z7W-fk-rRI" secondAttribute="leading" id="X6l-lf-8mc"/>
+                <constraint firstAttribute="centerX" secondItem="VA6-rw-Dpj" secondAttribute="centerX" id="YhS-LF-5m9"/>
+                <constraint firstAttribute="centerY" secondItem="VA6-rw-Dpj" secondAttribute="centerY" id="gc6-DN-qSc"/>
                 <constraint firstItem="GvW-Xk-Y7u" firstAttribute="top" secondItem="z7W-fk-rRI" secondAttribute="top" id="gr9-L9-4BC"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="delete_button" destination="FW0-IA-Qjv" id="mdv-re-c3H"/>
+                <outlet property="save_button" destination="VA6-rw-Dpj" id="c8w-mW-O9e"/>
                 <outlet property="send_button" destination="Iyp-1t-hXd" id="qy0-fp-KOD"/>
             </connections>
         </view>
