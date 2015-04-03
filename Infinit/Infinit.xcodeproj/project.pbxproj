@@ -27,7 +27,7 @@
 		83157EDB1A73D49D00F8E87F /* InfinitFilesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83157EDA1A73D49D00F8E87F /* InfinitFilesViewController.mm */; };
 		83157EF31A76260E00F8E87F /* InfinitFolderModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83157EF21A76260D00F8E87F /* InfinitFolderModel.mm */; };
 		83157EFA1A76422D00F8E87F /* InfinitFileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83157EF91A76422D00F8E87F /* InfinitFileModel.m */; };
-		83157F071A76702C00F8E87F /* InfinitFilesMultipleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83157F061A76702C00F8E87F /* InfinitFilesMultipleViewController.m */; };
+		83157F071A76702C00F8E87F /* InfinitFilesMultipleViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83157F061A76702C00F8E87F /* InfinitFilesMultipleViewController.mm */; };
 		831AB8601AA6054900E10E65 /* InfinitSettingsExpandedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 831AB85E1AA6054900E10E65 /* InfinitSettingsExpandedCell.m */; };
 		831AB8611AA6054900E10E65 /* InfinitSettingsExpandedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 831AB85F1AA6054900E10E65 /* InfinitSettingsExpandedCell.xib */; };
 		832284FC1A794C97000893A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 832284FE1A794C97000893A1 /* Main.storyboard */; };
@@ -54,7 +54,9 @@
 		835B9D611A9E61EE00FD0D54 /* InfinitFilesBottomBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 835B9D601A9E61EE00FD0D54 /* InfinitFilesBottomBar.m */; };
 		835B9D631A9E620900FD0D54 /* InfinitFilesBottomBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 835B9D621A9E620900FD0D54 /* InfinitFilesBottomBar.xib */; };
 		836024EF1A6FAC00002889DB /* InfinitHostDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 836024EE1A6FAC00002889DB /* InfinitHostDevice.m */; };
+		836080541ACEC68E00EBC4E2 /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 836080531ACEC68E00EBC4E2 /* ALAssetsLibrary+CustomPhotoAlbum.m */; };
 		83612F8E1A5D7FDB00BDF7CE /* NSData+Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = 83612F8D1A5D7FDB00BDF7CE /* NSData+Conversion.m */; };
+		8363E4AF1ACE76C2005F98A2 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8363E4AE1ACE76C2005F98A2 /* FacebookSDK.framework */; };
 		836406061AB89221005CC50C /* InfinitKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 836406051AB89221005CC50C /* InfinitKeychain.m */; };
 		8365DE881A5E8694003527DE /* InfinitColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 8365DE871A5E8694003527DE /* InfinitColor.m */; };
 		83672B901A9F4493009425E6 /* InfinitHomeNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83672B8F1A9F4493009425E6 /* InfinitHomeNavigationController.m */; };
@@ -150,7 +152,6 @@
 		83F4D08B1A1389430068BEB2 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D08A1A1389430068BEB2 /* libiconv.dylib */; };
 		83F4D0961A13902A0068BEB2 /* libGap-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D0931A1390170068BEB2 /* libGap-iOS.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		83F5C3B11A814C8900E751CD /* InfinitSendToSelfOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F5C3B01A814C8900E751CD /* InfinitSendToSelfOverlayView.m */; };
-		83F5E5911AA4A9590011E4F0 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F5E5901AA4A9590011E4F0 /* FacebookSDK.framework */; };
 		83F5E5951AA4BD000011E4F0 /* InfinitFacebookManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83F5E5941AA4BD000011E4F0 /* InfinitFacebookManager.mm */; };
 		83F5E59D1AA4F9360011E4F0 /* InfinitLoginInvitationCodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F5E59C1AA4F9360011E4F0 /* InfinitLoginInvitationCodeController.m */; };
 		83F5E5A01AA4F9550011E4F0 /* InfinitInnerShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F5E59F1AA4F9550011E4F0 /* InfinitInnerShadowView.m */; };
@@ -280,7 +281,7 @@
 		83157EF81A76422D00F8E87F /* InfinitFileModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFileModel.h; sourceTree = "<group>"; };
 		83157EF91A76422D00F8E87F /* InfinitFileModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFileModel.m; sourceTree = "<group>"; };
 		83157F051A76702C00F8E87F /* InfinitFilesMultipleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFilesMultipleViewController.h; sourceTree = "<group>"; };
-		83157F061A76702C00F8E87F /* InfinitFilesMultipleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFilesMultipleViewController.m; sourceTree = "<group>"; };
+		83157F061A76702C00F8E87F /* InfinitFilesMultipleViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitFilesMultipleViewController.mm; sourceTree = "<group>"; };
 		831AB85D1AA6054900E10E65 /* InfinitSettingsExpandedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSettingsExpandedCell.h; sourceTree = "<group>"; };
 		831AB85E1AA6054900E10E65 /* InfinitSettingsExpandedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSettingsExpandedCell.m; sourceTree = "<group>"; };
 		831AB85F1AA6054900E10E65 /* InfinitSettingsExpandedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitSettingsExpandedCell.xib; sourceTree = "<group>"; };
@@ -322,8 +323,12 @@
 		835B9D621A9E620900FD0D54 /* InfinitFilesBottomBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitFilesBottomBar.xib; sourceTree = "<group>"; };
 		836024ED1A6FAC00002889DB /* InfinitHostDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitHostDevice.h; sourceTree = "<group>"; };
 		836024EE1A6FAC00002889DB /* InfinitHostDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitHostDevice.m; sourceTree = "<group>"; };
+		836080521ACEC68E00EBC4E2 /* ALAssetsLibrary+CustomPhotoAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAssetsLibrary+CustomPhotoAlbum.h"; sourceTree = "<group>"; };
+		836080531ACEC68E00EBC4E2 /* ALAssetsLibrary+CustomPhotoAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAssetsLibrary+CustomPhotoAlbum.m"; sourceTree = "<group>"; };
 		83612F8C1A5D7FDB00BDF7CE /* NSData+Conversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Conversion.h"; sourceTree = "<group>"; };
 		83612F8D1A5D7FDB00BDF7CE /* NSData+Conversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Conversion.m"; sourceTree = "<group>"; };
+		8363E4AE1ACE76C2005F98A2 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ThirdParty/FacebookSDK.framework; sourceTree = "<group>"; };
+		8363E4B11ACE7734005F98A2 /* InfinitConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfinitConstants.h; sourceTree = "<group>"; };
 		836406041AB89221005CC50C /* InfinitKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InfinitKeychain.h; path = "../../../objcpp-gap/Gap/InfinitKeychain.h"; sourceTree = "<group>"; };
 		836406051AB89221005CC50C /* InfinitKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InfinitKeychain.m; path = "../../../objcpp-gap/Gap/InfinitKeychain.m"; sourceTree = "<group>"; };
 		8365DE861A5E8694003527DE /* InfinitColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitColor.h; sourceTree = "<group>"; };
@@ -464,7 +469,6 @@
 		83F4D08D1A1390160068BEB2 /* Gap.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Gap.xcodeproj; path = "../../objcpp-gap/Gap/Gap.xcodeproj"; sourceTree = "<group>"; };
 		83F5C3AF1A814C8900E751CD /* InfinitSendToSelfOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendToSelfOverlayView.h; sourceTree = "<group>"; };
 		83F5C3B01A814C8900E751CD /* InfinitSendToSelfOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendToSelfOverlayView.m; sourceTree = "<group>"; };
-		83F5E5901AA4A9590011E4F0 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		83F5E5931AA4BD000011E4F0 /* InfinitFacebookManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFacebookManager.h; sourceTree = "<group>"; };
 		83F5E5941AA4BD000011E4F0 /* InfinitFacebookManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitFacebookManager.mm; sourceTree = "<group>"; };
 		83F5E59B1AA4F9360011E4F0 /* InfinitLoginInvitationCodeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitLoginInvitationCodeController.h; sourceTree = "<group>"; };
@@ -561,7 +565,6 @@
 				83F4D06F1A13885B0068BEB2 /* libreactor.a in Frameworks */,
 				83F4D07B1A1388760068BEB2 /* libstation.a in Frameworks */,
 				83F4D0821A1388F40068BEB2 /* libbackend_boost_context.a in Frameworks */,
-				83F5E5911AA4A9590011E4F0 /* FacebookSDK.framework in Frameworks */,
 				83F4D0631A1388170068BEB2 /* libcurl.a in Frameworks */,
 				83F4D0551A1388050068BEB2 /* libboost_chrono-mt-s.a in Frameworks */,
 				83F4D07A1A1388760068BEB2 /* libpapier.a in Frameworks */,
@@ -574,6 +577,7 @@
 				83F4D06B1A13883E0068BEB2 /* libssl.a in Frameworks */,
 				83F4D0851A1389120068BEB2 /* libminiupnp.a in Frameworks */,
 				83F4D0781A1388760068BEB2 /* libfrete.a in Frameworks */,
+				8363E4AF1ACE76C2005F98A2 /* FacebookSDK.framework in Frameworks */,
 				83F4D0831A1388F40068BEB2 /* libbackend.a in Frameworks */,
 				83F4D06D1A1388500068BEB2 /* libprotocol.a in Frameworks */,
 				83F4D04B1A1387EF0068BEB2 /* libaws.a in Frameworks */,
@@ -693,7 +697,7 @@
 				835B9D601A9E61EE00FD0D54 /* InfinitFilesBottomBar.m */,
 				835B9D621A9E620900FD0D54 /* InfinitFilesBottomBar.xib */,
 				83157F051A76702C00F8E87F /* InfinitFilesMultipleViewController.h */,
-				83157F061A76702C00F8E87F /* InfinitFilesMultipleViewController.m */,
+				83157F061A76702C00F8E87F /* InfinitFilesMultipleViewController.mm */,
 				83157ED91A73D49D00F8E87F /* InfinitFilesViewController.h */,
 				83157EDA1A73D49D00F8E87F /* InfinitFilesViewController.mm */,
 			);
@@ -739,6 +743,16 @@
 			name = "Background Manager";
 			sourceTree = "<group>";
 		};
+		836080511ACEC68E00EBC4E2 /* ALAssetsLibrary-CustomPhotoAlbum */ = {
+			isa = PBXGroup;
+			children = (
+				836080521ACEC68E00EBC4E2 /* ALAssetsLibrary+CustomPhotoAlbum.h */,
+				836080531ACEC68E00EBC4E2 /* ALAssetsLibrary+CustomPhotoAlbum.m */,
+			);
+			name = "ALAssetsLibrary-CustomPhotoAlbum";
+			path = "ThirdParty/ALAssetsLibrary-CustomPhotoAlbum";
+			sourceTree = "<group>";
+		};
 		83612F881A5D7F9500BDF7CE /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -748,6 +762,7 @@
 				833E3AC51A63D16C0088D3FF /* InfinitApplicationSettings.m */,
 				8365DE861A5E8694003527DE /* InfinitColor.h */,
 				8365DE871A5E8694003527DE /* InfinitColor.m */,
+				8363E4B11ACE7734005F98A2 /* InfinitConstants.h */,
 				8384909A1A76969700969CF7 /* InfinitFilePreview.h */,
 				8384909B1A76969700969CF7 /* InfinitFilePreview.m */,
 				836024ED1A6FAC00002889DB /* InfinitHostDevice.h */,
@@ -794,7 +809,7 @@
 				83F4282E1AAE048B009A1A7C /* CoreTelephony.framework */,
 				83F31BB31A9D190B00A6007C /* libc++.a */,
 				83F31BB41A9D190B00A6007C /* libc++abi.a */,
-				83F5E5901AA4A9590011E4F0 /* FacebookSDK.framework */,
+				8363E4AE1ACE76C2005F98A2 /* FacebookSDK.framework */,
 				83825BE01A701FE900420F24 /* Photos.framework */,
 				830AD1F41A6D172200E2B058 /* Accelerate.framework */,
 				83B5D60D1A6663430061931F /* Security.framework */,
@@ -1109,6 +1124,7 @@
 		83FA72591A66FEF90014B0E4 /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
+				836080511ACEC68E00EBC4E2 /* ALAssetsLibrary-CustomPhotoAlbum */,
 				83FA73001A66FF260014B0E4 /* FrameAccessor */,
 				83EBB0741A93943C00144BC6 /* JDStatusBarNotification */,
 				83FA72F41A66FF1D0014B0E4 /* VENTokenField */,
@@ -1472,7 +1488,7 @@
 				83E0AC0A1A6A608B003F60C6 /* InfinitHomeItem.m in Sources */,
 				836024EF1A6FAC00002889DB /* InfinitHostDevice.m in Sources */,
 				830AD1F31A6D0B6E00E2B058 /* UIImage+ImageEffects.m in Sources */,
-				83157F071A76702C00F8E87F /* InfinitFilesMultipleViewController.m in Sources */,
+				83157F071A76702C00F8E87F /* InfinitFilesMultipleViewController.mm in Sources */,
 				83A95FD21A6A78A0000B75C8 /* InfinitHomeAvatarView.m in Sources */,
 				83EBB0A01A9479D800144BC6 /* InfinitOfflineViewController.m in Sources */,
 				D0659F661A3E865A0001ACAE /* InfinitWelcomeController.m in Sources */,
@@ -1480,6 +1496,7 @@
 				83F7C3B51A6E96C600FA283C /* InfinitSendNoResultsCell.m in Sources */,
 				D0BC70471A41C04C006923F2 /* InfinitSendGalleryController.m in Sources */,
 				83C50FA41AB6BF8E009EBB44 /* JDStatusBarNotification.m in Sources */,
+				836080541ACEC68E00EBC4E2 /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */,
 				831237281A602C6900D5C41C /* InfinitSendTabIcon.m in Sources */,
 				835B9D611A9E61EE00FD0D54 /* InfinitFilesBottomBar.m in Sources */,
 				83B32D691A136485004AB945 /* ViewController.m in Sources */,
@@ -1823,6 +1840,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/ThirdParty",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1877,6 +1895,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/ThirdParty",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
