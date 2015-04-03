@@ -9,6 +9,7 @@
 #import "InfinitFilesViewController.h"
 
 #import "InfinitColor.h"
+#import "InfinitConstants.h"
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitFilesBottomBar.h"
 #import "InfinitFilesMultipleViewController.h"
@@ -20,6 +21,9 @@
 #import "InfinitTabBarController.h"
 
 #import <Gap/InfinitDirectoryManager.h>
+
+#import <ALAssetsLibrary+CustomPhotoAlbum.h>
+#import <Photos/Photos.h>
 
 #undef check
 #import <elle/log.hh>
@@ -44,7 +48,11 @@ ELLE_LOG_COMPONENT("iOS.FilesViewController");
 @property (nonatomic, weak) IBOutlet UIView* bottom_view;
 @property (nonatomic, strong) InfinitFilesBottomBar* bottom_bar;
 
+@property (nonatomic, strong) ALAssetsLibrary* library;
+
 @end
+
+static dispatch_once_t _library_token = 0;
 
 @implementation InfinitFilesViewController
 {
@@ -104,6 +112,9 @@ ELLE_LOG_COMPONENT("iOS.FilesViewController");
                                                                      views:views];
   [self.bottom_view addConstraints:v_constraints];
   [self.bottom_view addConstraints:h_constraints];
+  [self.bottom_bar.save_button addTarget:self
+                                  action:@selector(saveTapped:)
+                        forControlEvents:UIControlEventTouchUpInside];
   [self.bottom_bar.send_button addTarget:self
                                   action:@selector(sendTapped:)
                         forControlEvents:UIControlEventTouchUpInside];
@@ -114,6 +125,7 @@ ELLE_LOG_COMPONENT("iOS.FilesViewController");
 
 - (void)viewWillAppear:(BOOL)animated
 {
+  _library_token = 0;
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(appplicationIsActive)
                                                name:UIApplicationDidBecomeActiveNotification
@@ -168,6 +180,8 @@ ELLE_LOG_COMPONENT("iOS.FilesViewController");
   for (NSIndexPath* index in self.table_view.indexPathsForSelectedRows)
     [self.table_view deselectRowAtIndexPath:index animated:NO];
   [super viewWillAppear:animated];
+  self.bottom_bar.save_button.hidden = ![self haveGalleryAccess];
+  self.bottom_bar.save_button.enabled = NO;
 }
 
 - (void)showNoFilesOverlay
@@ -303,7 +317,10 @@ forRowAtIndexPath:(NSIndexPath*)indexPath
 didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
 {
   if (self.table_view.editing)
+  {
     self.bottom_bar.enabled = (self.table_view.indexPathsForSelectedRows.count > 0);
+    self.bottom_bar.save_button.enabled = (self.table_view.indexPathsForSelectedRows.count > 0);
+  }
 }
 
 - (void)tableView:(UITableView*)tableView
@@ -312,6 +329,7 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   if (self.table_view.editing)
   {
     self.bottom_bar.enabled = (self.table_view.indexPathsForSelectedRows.count > 0);
+    self.bottom_bar.save_button.enabled = (self.table_view.indexPathsForSelectedRows.count > 0);
     return;
   }
 
@@ -338,6 +356,111 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 }
 
 #pragma mark - Button Handling
+
+- (void)saveTapped:(id)sender
+{
+  NSMutableArray* paths = [NSMutableArray array];
+  for (NSIndexPath* index in self.table_view.indexPathsForSelectedRows)
+  {
+    InfinitFolderModel* folder = self.folder_results[index.row];
+    for (NSString* path in folder.file_paths)
+      [paths addObject:path];
+  }
+  if ([PHAsset class])
+  {
+    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^
+     {
+       PHFetchResult* collections = [PHCollection fetchTopLevelUserCollectionsWithOptions:nil];
+       __block PHAssetCollection* collection = nil;
+       [collections enumerateObjectsUsingBlock:^(PHAssetCollection* user_collection,
+                                                 NSUInteger index,
+                                                 BOOL* stop)
+        {
+          if ([user_collection.localizedTitle isEqualToString:kInfinitAlbumName])
+            collection = user_collection;
+        }];
+       PHAssetCollectionChangeRequest* collection_request = nil;
+       if (!collection)
+       {
+         collection_request =
+         [PHAssetCollectionChangeRequest creationRequestForAssetCollectionWithTitle:kInfinitAlbumName];
+       }
+       else
+       {
+         collection_request =
+         [PHAssetCollectionChangeRequest changeRequestForAssetCollection:collection];
+       }
+       NSMutableArray* assets = [NSMutableArray array];
+       for (NSString* path in paths)
+       {
+         InfinitFileTypes type = [InfinitFilePreview fileTypeForPath:path];
+         PHAssetChangeRequest* asset_request = nil;
+         if (type == InfinitFileTypeImage)
+         {
+           UIImage* image = [UIImage imageWithContentsOfFile:path];
+           asset_request = [PHAssetChangeRequest creationRequestForAssetFromImage:image];
+           if (asset_request)
+             [assets addObject:asset_request.placeholderForCreatedAsset];
+         }
+         else if (type == InfinitFileTypeVideo)
+         {
+           NSURL* url = [NSURL URLWithString:path];
+           asset_request = [PHAssetChangeRequest creationRequestForAssetFromVideoAtFileURL:url];
+           if (asset_request)
+             [assets addObject:asset_request.placeholderForCreatedAsset];
+         }
+       }
+       [collection_request addAssets:assets];
+     } completionHandler:^(BOOL success, NSError* error)
+     {
+     }];
+  }
+  else
+  {
+    for (NSString* path in paths)
+    {
+      InfinitFileTypes type = [InfinitFilePreview fileTypeForPath:path];
+      if (type == InfinitFileTypeImage)
+      {
+        [self.library saveImageData:[NSData dataWithContentsOfFile:path]
+                            toAlbum:kInfinitAlbumName
+                           metadata:nil
+                         completion:^(NSURL* assetURL, NSError* error)
+         {
+           if (error)
+           {
+             ELLE_ERR("%s: unable to save image: %s", self.description.UTF8String, path.UTF8String);
+           }
+         } failure:^(NSError* error)
+         {
+           if (error)
+           {
+             ELLE_ERR("%s: unable to save image: %s", self.description.UTF8String, path.UTF8String);
+           }
+         }];
+      }
+      else if (type == InfinitFileTypeVideo)
+      {
+        [self.library saveVideo:[NSURL URLWithString:path]
+                        toAlbum:kInfinitAlbumName
+                     completion:^(NSURL* assetURL, NSError* error)
+         {
+           if (error)
+           {
+             ELLE_ERR("%s: unable to save image: %s", self.description.UTF8String, path.UTF8String);
+           }
+         } failure:^(NSError* error)
+         {
+           if (error)
+           {
+             ELLE_ERR("%s: unable to save image: %s", self.description.UTF8String, path.UTF8String);
+           }
+         }];
+      }
+    }
+  }
+  [self setTableEditing:NO animated:YES];
+}
 
 - (IBAction)selectTapped:(id)sender
 {
@@ -497,6 +620,24 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
     [self.table_view scrollRectToVisible:CGRectMake(0.0f, 0.0f, 1.0f, 1.0f) animated:YES];
   else
     [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+#pragma mark - Helpers
+
+- (ALAssetsLibrary*)library
+{
+  dispatch_once(&_library_token, ^
+  {
+    _library = [[ALAssetsLibrary alloc] init];
+  });
+  return _library;
+}
+
+- (BOOL)haveGalleryAccess
+{
+  if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusAuthorized)
+    return YES;
+  return NO;
 }
 
 @end
