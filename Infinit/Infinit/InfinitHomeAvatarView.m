@@ -41,9 +41,9 @@
 - (void)setProgress:(CGFloat)progress
   withAnimationTime:(NSTimeInterval)duration
 {
-  if (_progress == progress)
+  if (self.progress == progress)
     return;
-  if (duration > 0.0f && progress > _progress)
+  if (duration > 0.0f && progress > self.progress)
   {
     CGFloat last_progress = self.progress;
     self.progress_layer.strokeEnd = progress;
