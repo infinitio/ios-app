@@ -207,7 +207,7 @@
           id sharedPhotoLibrary = [PHPhotoLibrary_class performSelector:NSSelectorFromString(@"sharedPhotoLibrary")];
 #pragma clang diagnostic pop
           
-          BOOL shouldInvokeSuccessBlockInMainThread = ([NSThread currentThread] == [NSThread mainThread]);
+          BOOL shouldInvokeSuccessBlockInMainThread = ([NSThread isMainThread]);
           
           SEL performChanges;
           if (shouldInvokeSuccessBlockInMainThread) {
