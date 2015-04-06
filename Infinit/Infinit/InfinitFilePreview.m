@@ -120,10 +120,12 @@
        if (error)
        {
          NSLog(@"unable to generate video thumbnail: %@", error);
-         dispatch_semaphore_signal(thumb_sema);
-         return;
+         res = [UIImage imageNamed:@"icon-mimetype-video-home"];
        }
-       res = [UIImage imageWithCGImage:image];
+       else
+       {
+         res = [UIImage imageWithCGImage:image];
+       }
        dispatch_semaphore_signal(thumb_sema);
      }];
     dispatch_semaphore_wait(thumb_sema, DISPATCH_TIME_FOREVER);
