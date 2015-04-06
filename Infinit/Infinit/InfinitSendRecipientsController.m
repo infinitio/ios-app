@@ -182,7 +182,10 @@
   if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
   {
     self.preloading_contacts = YES;
-    [self performSelectorInBackground:@selector(fetchAddressBook) withObject:nil];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+    {
+      [self fetchAddressBook];
+    });
   }
   else
   {
