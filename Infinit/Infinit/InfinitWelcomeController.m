@@ -378,7 +378,7 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
 
 - (void)facebookLoginButtonTapped:(id)sender
 {
-  if (![[NSThread currentThread] isEqual:[NSThread mainThread]])
+  if (![NSThread isMainThread])
   {
     [self performSelectorOnMainThread:@selector(facebookLoginButtonTapped:)
                            withObject:sender
@@ -422,7 +422,7 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
                                            selector:@selector(facebookSessionStateChanged:)
                                                name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
                                              object:nil];
-  if (![[NSThread currentThread] isEqual:[NSThread mainThread]])
+  if (![NSThread isMainThread])
   {
     [self performSelectorOnMainThread:@selector(facebookRegisterButtonTapped:)
                            withObject:sender
@@ -1374,7 +1374,7 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
 
 - (void)facebookSessionStateChanged:(NSNotification*)notification
 {
-  if (![[NSThread currentThread] isEqual:[NSThread mainThread]])
+  if (![NSThread isMainThread])
   {
     [self performSelectorOnMainThread:@selector(facebookSessionStateChanged:)
                            withObject:notification 
