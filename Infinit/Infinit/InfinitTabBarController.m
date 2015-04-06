@@ -558,8 +558,7 @@ shouldSelectViewController:(UIViewController*)viewController
 #pragma mark - Offline Warning
 
 - (void)handleOffline
-{
-}
+{}
 
 - (void)handleOnline
 {
@@ -645,19 +644,15 @@ shouldSelectViewController:(UIViewController*)viewController
   InfinitConnectionStatus* connection_status = notification.object;
   if (!connection_status.status && !connection_status.still_trying)
   {
-    [self performSelectorOnMainThread:@selector(showWelcomeScreen) withObject:nil waitUntilDone:NO];
+    [self showWelcomeScreen];
   }
   else if (!connection_status.status)
   {
-    [self performSelectorOnMainThread:@selector(handleOffline)
-                           withObject:nil
-                        waitUntilDone:NO];
+    [self handleOffline];
   }
   else if (connection_status.status)
   {
-    [self performSelectorOnMainThread:@selector(handleOnline)
-                           withObject:nil
-                        waitUntilDone:NO];
+    [self handleOnline];
   }
 }
 
