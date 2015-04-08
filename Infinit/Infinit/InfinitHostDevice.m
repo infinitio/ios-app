@@ -13,6 +13,7 @@
 #import <mach/machine.h>
 
 @import CoreTelephony;
+@import UIKit;
 
 @implementation InfinitHostDevice
 
@@ -92,7 +93,7 @@
 
 #pragma mark - Screen
 
-+ (CGFloat)screenScale
++ (float)screenScale
 {
   return [UIScreen mainScreen].scale;
 }
@@ -129,6 +130,11 @@
   NSComparisonResult res = [[UIDevice currentDevice].systemVersion compare:@"8.0"
                                                                    options:NSNumericSearch];
   return (res == NSOrderedAscending);
+}
+
++ (float)iOSVersion
+{
+  return [UIDevice currentDevice].systemVersion.floatValue;
 }
 
 @end

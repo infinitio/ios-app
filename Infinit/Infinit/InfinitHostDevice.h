@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 
 // Ordered in increasing power.
 typedef NS_ENUM(NSUInteger, InfinitCPUTypes)
@@ -27,11 +26,13 @@ typedef NS_ENUM(NSUInteger, InfinitCPUTypes)
 + (InfinitCPUTypes)deviceCPU;
 + (NSString*)deviceCPUDescription;
 
-+ (CGFloat)screenScale;
++ (float)screenScale;
 + (BOOL)smallScreen;
 
 + (BOOL)canSendSMS;
 
 + (BOOL)iOS7;
+
++ (float)iOSVersion;
 
 @end
