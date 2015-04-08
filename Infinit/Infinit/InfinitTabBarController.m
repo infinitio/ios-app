@@ -10,6 +10,7 @@
 
 #import "InfinitAccessGalleryView.h"
 #import "InfinitColor.h"
+#import "InfinitConstants.h"
 #import "InfinitContactsViewController.h"
 #import "InfinitFilesNavigationController.h"
 #import "InfinitFilesViewController.h"
@@ -24,6 +25,7 @@
 #import "JDStatusBarNotification.h"
 
 #import <Gap/InfinitConnectionManager.h>
+#import <Gap/InfinitTemporaryFileManager.h>
 #import <Gap/InfinitPeerTransactionManager.h>
 
 @import AssetsLibrary;
@@ -76,6 +78,13 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   return self.selectedViewController.supportedInterfaceOrientations;
 }
 
+#pragma mark - Application Status Changes
+
+- (void)applicationBecameActive
+{
+  [self handleExtensionFiles];
+}
+
 #pragma mark - Init
 
 - (void)dealloc
@@ -106,6 +115,14 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(connectionStatusChanged:)
                                                name:INFINIT_CONNECTION_STATUS_CHANGE
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(applicationBecameActive)
+                                               name:UIApplicationDidBecomeActiveNotification
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(temporaryFileManagerReady)
+                                               name:INFINIT_TEMPORARY_FILE_MANAGER_READY
                                              object:nil];
   [super viewDidLoad];
 
@@ -274,8 +291,18 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
     return;
 
   CGSize screen_size = [[UIScreen mainScreen] bounds].size;
-  BOOL landscape =
-    UIDeviceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation);
+  BOOL landscape = NO;
+  switch ([UIApplication sharedApplication].statusBarOrientation)
+  {
+    case UIInterfaceOrientationLandscapeLeft:
+    case UIInterfaceOrientationLandscapeRight:
+      landscape = YES;
+      break;
+
+    default:
+      landscape = NO;
+      break;
+  }
   float height =  landscape ? screen_size.width : screen_size.height;
 
   if (!hidden)
@@ -563,6 +590,7 @@ shouldSelectViewController:(UIViewController*)viewController
 - (void)handleOnline
 {
   [self.offline_overlay removeFromSuperview];
+  [self handleExtensionFiles];
 }
 
 #pragma mark - Peer Invitation Code
@@ -622,19 +650,17 @@ shouldSelectViewController:(UIViewController*)viewController
 
 - (void)newPeerTransaction:(NSNotification*)notification
 {
-  [self performSelectorOnMainThread:@selector(updateHomeBadge) withObject:nil waitUntilDone:NO];
+  [self updateHomeBadge];
 }
 
 - (void)peerTransactionUpdated:(NSNotification*)notification
 {
-  [self performSelectorOnMainThread:@selector(updateHomeBadge) withObject:nil waitUntilDone:NO];
+  [self updateHomeBadge];
 }
 
 - (void)peerInvitationCode:(NSNotification*)notification
 {
-  [self performSelectorOnMainThread:@selector(handlePeerInvitationCode:)
-                         withObject:notification.userInfo
-                      waitUntilDone:NO];
+  [self handlePeerInvitationCode:notification.userInfo];
 }
 
 #pragma mark - Connection Handling
@@ -653,6 +679,48 @@ shouldSelectViewController:(UIViewController*)viewController
   else if (connection_status.status)
   {
     [self handleOnline];
+  }
+}
+
+#pragma mark - Extension Files Handling
+
+- (void)temporaryFileManagerReady
+{
+  [self handleExtensionFiles];
+}
+
+- (void)handleExtensionFiles
+{
+  @synchronized(self)
+  {
+    if (![InfinitConnectionManager sharedInstance].connected)
+      return;
+
+    NSFileManager* manager = [NSFileManager defaultManager];
+    NSURL* shared_url =
+      [manager containerURLForSecurityApplicationGroupIdentifier:kInfinitAppGroupName];
+    NSString* extension_files = [NSString stringWithFormat:@"%@/extension/files", shared_url.path];
+    NSArray* contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:extension_files
+                                                                            error:nil];
+    if (contents.count > 0)
+    {
+      InfinitTemporaryFileManager* manager = [InfinitTemporaryFileManager sharedInstance];
+      NSString* uuid = [manager createManagedFiles];
+      NSMutableArray* file_paths = [NSMutableArray array];
+      for (NSString* file in contents)
+      {
+        [file_paths addObject:[extension_files stringByAppendingPathComponent:file]];
+      }
+      [manager addFiles:file_paths toManagedFiles:uuid copy:NO];
+      [self showMainScreen:self.viewControllers[self.selectedIndex]];
+      InfinitHomeViewController* home_controller =
+        (InfinitHomeViewController*)[self.viewControllers[InfinitTabBarIndexHome] topViewController];
+      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(500 * NSEC_PER_MSEC)),
+                     dispatch_get_main_queue(), ^
+      {
+        [home_controller showRecipientsForManagedFiles:uuid];
+      });
+    }
   }
 }
 
