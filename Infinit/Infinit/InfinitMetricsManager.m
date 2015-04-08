@@ -127,6 +127,8 @@ static InfinitMetricsManager* _instance = nil;
       return @"tab bar";
     case InfinitUIMethodSendGalleryNext:
       return @"send gallery next";
+    case InfinitUIMethodExtensionFiles:
+      return @"extension files";
 
     default:
       NSCAssert(false, @"Unknown metrics method");
