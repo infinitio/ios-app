@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7528.3" systemVersion="14D130a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="10c-xg-QMx">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7518.3"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="SourceSansPro-Bold.otf">
+            <string>SourceSansPro-Bold</string>
+        </mutableArray>
+    </customFonts>
+    <scenes>
+        <!--Share View Controller-->
+        <scene sceneID="Uw1-ME-ahb">
+            <objects>
+                <viewController id="10c-xg-QMx" customClass="ShareViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fh5-YX-1Dh"/>
+                        <viewControllerLayoutGuide type="bottom" id="3sX-cV-MXO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7Pu-1a-nvy">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Te5-wO-DR7">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jbw-GE-gDX">
+                                <rect key="frame" x="170" y="100" width="65" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="65" id="X6K-jV-rWa"/>
+                                    <constraint firstAttribute="height" constant="30" id="jTa-O8-M5w"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" red="0.97254901959999995" green="0.97254901959999995" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancelTapped:" destination="10c-xg-QMx" eventType="touchUpInside" id="YG2-h1-Wmg"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k8p-Uj-HbG">
+                                <rect key="frame" x="160" y="135" width="280" height="330"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kgR-7G-WJc">
+                                        <rect key="frame" x="40" y="215" width="201" height="40"/>
+                                        <string key="text">Your files are being copied
+to Infinit...</string>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                        <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2KC-7y-XXg">
+                                        <rect key="frame" x="0.0" y="280" width="280" height="50"/>
+                                        <color key="backgroundColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="fkq-mE-o1e"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="17"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" title="GOT IT">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="okTapped:" destination="10c-xg-QMx" eventType="touchUpInside" id="syj-pd-uqS"/>
+                                        </connections>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="illustration-extension" translatesAutoresizingMaskIntoConstraints="NO" id="Rkr-Zk-bmd">
+                                        <rect key="frame" x="38" y="33" width="205" height="85"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="85" id="Atk-Fk-r5K"/>
+                                            <constraint firstAttribute="width" constant="205" id="iYr-LW-MJQ"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="X9G-YU-FV0" customClass="InfinitProgressView">
+                                        <rect key="frame" x="108" y="148" width="65" height="46"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="46" id="Bpu-Rh-DMb"/>
+                                            <constraint firstAttribute="width" constant="65" id="Kf8-ie-EB6"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="330" id="ARK-f6-TwH"/>
+                                    <constraint firstAttribute="width" constant="280" id="Cgp-bb-Zz4"/>
+                                    <constraint firstAttribute="centerX" secondItem="X9G-YU-FV0" secondAttribute="centerX" id="M5J-eX-0bE"/>
+                                    <constraint firstItem="Rkr-Zk-bmd" firstAttribute="top" secondItem="k8p-Uj-HbG" secondAttribute="top" constant="33" id="ThI-jh-oi4"/>
+                                    <constraint firstAttribute="centerX" secondItem="kgR-7G-WJc" secondAttribute="centerX" id="bOu-Id-Stt"/>
+                                    <constraint firstAttribute="bottom" secondItem="2KC-7y-XXg" secondAttribute="bottom" id="bT9-qx-WWO"/>
+                                    <constraint firstItem="2KC-7y-XXg" firstAttribute="top" secondItem="kgR-7G-WJc" secondAttribute="bottom" constant="25" id="gNX-vr-X76"/>
+                                    <constraint firstAttribute="trailing" secondItem="2KC-7y-XXg" secondAttribute="trailing" id="jRm-f0-bor"/>
+                                    <constraint firstAttribute="centerX" secondItem="Rkr-Zk-bmd" secondAttribute="centerX" id="k6p-Gc-s3I"/>
+                                    <constraint firstItem="X9G-YU-FV0" firstAttribute="top" secondItem="Rkr-Zk-bmd" secondAttribute="bottom" constant="30" id="oJz-3L-5da"/>
+                                    <constraint firstItem="2KC-7y-XXg" firstAttribute="leading" secondItem="k8p-Uj-HbG" secondAttribute="leading" id="zM2-qd-MZS"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="Te5-wO-DR7" secondAttribute="bottom" id="89t-TH-K2o"/>
+                            <constraint firstItem="Te5-wO-DR7" firstAttribute="top" secondItem="7Pu-1a-nvy" secondAttribute="top" id="QfD-Ij-ejf"/>
+                            <constraint firstAttribute="centerY" secondItem="k8p-Uj-HbG" secondAttribute="centerY" id="SaR-bN-UxI"/>
+                            <constraint firstAttribute="centerX" secondItem="k8p-Uj-HbG" secondAttribute="centerX" id="V7i-X3-N24"/>
+                            <constraint firstItem="Te5-wO-DR7" firstAttribute="leading" secondItem="7Pu-1a-nvy" secondAttribute="leading" id="lfO-gL-2rm"/>
+                            <constraint firstItem="k8p-Uj-HbG" firstAttribute="leading" secondItem="jbw-GE-gDX" secondAttribute="leading" constant="-10" id="n9D-bw-39R"/>
+                            <constraint firstItem="k8p-Uj-HbG" firstAttribute="top" secondItem="jbw-GE-gDX" secondAttribute="bottom" constant="5" id="ofR-rn-jin"/>
+                            <constraint firstAttribute="trailing" secondItem="Te5-wO-DR7" secondAttribute="trailing" id="xMt-IO-9et"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="background_view" destination="Te5-wO-DR7" id="xdn-bk-Feh"/>
+                        <outlet property="cancel_button" destination="jbw-GE-gDX" id="aSi-JW-H6K"/>
+                        <outlet property="message_label" destination="kgR-7G-WJc" id="2i2-WN-eRN"/>
+                        <outlet property="message_view" destination="k8p-Uj-HbG" id="Vqk-37-rhc"/>
+                        <outlet property="ok_button" destination="2KC-7y-XXg" id="FjV-ZV-Vmy"/>
+                        <outlet property="progress_view" destination="X9G-YU-FV0" id="z8h-cl-w8E"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="m08-LU-M2l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="491" y="-77"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="illustration-extension" width="205" height="85"/>
+    </resources>
+</document>
