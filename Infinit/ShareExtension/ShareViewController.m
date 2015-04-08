@@ -183,7 +183,6 @@
 
 - (BOOL)copyFiles
 {
-  NSLog(@"xxx paths (%lu): %@", self.item_paths.count, self.item_paths);
   if ([self sizeOfFiles:self.item_paths] > self.free_space)
     return NO;
 
@@ -211,11 +210,9 @@
     [[NSFileManager defaultManager] copyItemAtPath:path toPath:destination_path error:&error];
     if (error)
     {
-      NSLog(@"xxx unable to copy file (%@): %@", path.lastPathComponent, error);
+      NSLog(@"Unable to copy %@ to %@: %@", path, destination_path, error);
     }
   }
-  NSArray* contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:self.files_path error:nil];
-  NSLog(@"xxx copied files: %@", contents);
   return YES;
 }
 
