@@ -10,6 +10,7 @@
 
 #import "InfinitApplicationSettings.h"
 #import "InfinitColor.h"
+#import "InfinitConstants.h"
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitFilesMultipleViewController.h"
 #import "InfinitFilePreviewController.h"
@@ -99,6 +100,9 @@
 @property (atomic, readwrite) BOOL background_onboarded;
 @property (atomic, readonly) NSMutableArray* onboarding_model;
 
+// Extension
+@property (nonatomic, readonly) NSString* extension_files_uuid;
+
 @end
 
 static CGSize _avatar_size = {55.0f, 55.0f};
@@ -120,6 +124,7 @@ static NSUInteger _background_onboard_size = 5 * 1000 * 1000;
 {
   [self.round_avatar_cache removeAllObjects];
   [self.round_avatar_device_cache removeAllObjects];
+  [super didReceiveMemoryWarning];
 }
 
 #pragma mark - Init
@@ -856,18 +861,14 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
   if (!peer_transaction.concerns_device || peer_transaction.archived)
     return;
   InfinitHomeItem* item = [[InfinitHomeItem alloc] initWithTransaction:peer_transaction];
-  [self performSelectorOnMainThread:@selector(addItem:) withObject:item waitUntilDone:NO];
+  [self addItem:item];
   if (self.onboarding_view != nil)
   {
-    [self performSelectorOnMainThread:@selector(removeOnboardingView)
-                           withObject:nil
-                        waitUntilDone:NO];
+    [self removeOnboardingView];
   }
   if (self.no_activity_view != nil)
   {
-    [self performSelectorOnMainThread:@selector(removeNoActivityView)
-                           withObject:nil
-                        waitUntilDone:NO];
+    [self removeNoActivityView];
   }
 }
 
@@ -946,7 +947,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
   {
     if (item.transaction != nil && [item.transaction.id_ isEqualToNumber:transaction_id])
     {
-      [self performSelectorOnMainThread:@selector(updateItem:) withObject:item waitUntilDone:NO];
+      [self updateItem:item];
       return;
     }
   }
@@ -956,7 +957,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
   if (!peer_transaction.concerns_device || peer_transaction.archived)
     return;
   InfinitHomeItem* item = [[InfinitHomeItem alloc] initWithTransaction:peer_transaction];
-  [self performSelectorOnMainThread:@selector(addItem:) withObject:item waitUntilDone:NO];
+  [self addItem:item];
 }
 
 - (void)removeOnboardingView
@@ -1330,7 +1331,7 @@ openFileTapped:(NSUInteger)file_index
 - (void)cellSendTapped:(InfinitHomePeerTransactionCell*)sender
 {
   _sending = YES;
-  [self performSegueWithIdentifier:@"home_to_send_segue" sender:sender];
+  [self performSegueWithIdentifier:@"home_card_to_send_segue" sender:sender];
 }
 
 #pragma mark - Onboarding Cell Handling
@@ -1401,6 +1402,15 @@ openFileTapped:(NSUInteger)file_index
   }
 }
 
+#pragma mark - Extension Files Handling
+
+- (void)showRecipientsForManagedFiles:(NSString*)uuid
+{
+  _sending = YES;
+  _extension_files_uuid = [uuid copy];
+  [self performSegueWithIdentifier:@"home_extension_to_send_segue" sender:self];
+}
+
 #pragma mark - Rating Cell Handling
 
 - (void)doneRating
@@ -1436,7 +1446,15 @@ openFileTapped:(NSUInteger)file_index
     case InfinitRatingCellStateRate:
     {
       [self doneRating];
-      NSString* itunes_link = @"https://itunes.apple.com/us/app/apple-store/id955849852";
+      NSString* itunes_link =
+        [kInfinitStoreRatingLink stringByReplacingOccurrencesOfString:@"APP_ID"
+                                                           withString:kInfinitAppStoreId];
+      if ([InfinitHostDevice iOSVersion] > 8.0)
+      {
+        itunes_link =
+          [kInfinitStoreRatingLinkiOS8 stringByReplacingOccurrencesOfString:@"APP_ID"
+                                                                 withString:kInfinitAppStoreId];
+      }
       [[UIApplication sharedApplication] openURL:[NSURL URLWithString:itunes_link]];
       break;
     }
@@ -1484,16 +1502,25 @@ openFileTapped:(NSUInteger)file_index
 - (void)prepareForSegue:(UIStoryboardSegue*)segue
                  sender:(id)sender
 {
-  if ([segue.identifier isEqualToString:@"home_to_send_segue"])
+  if ([segue.identifier isEqualToString:@"home_card_to_send_segue"] ||
+      [segue.identifier isEqualToString:@"home_extension_to_send_segue"])
   {
     InfinitTabBarController* tab_controller = (InfinitTabBarController*)self.tabBarController;
     [tab_controller setTabBarHidden:YES animated:NO];
-    InfinitHomePeerTransactionCell* cell = (InfinitHomePeerTransactionCell*)sender;
-    InfinitFolderModel* folder =
-      [[InfinitDownloadFolderManager sharedInstance] completedFolderForTransactionMetaId:cell.transaction.meta_id];
     InfinitSendRecipientsController* send_controller =
-      (InfinitSendRecipientsController*)segue.destinationViewController;
-    send_controller.files = folder.file_paths;
+    (InfinitSendRecipientsController*)segue.destinationViewController;
+    if ([segue.identifier isEqualToString:@"home_card_to_send_segue"])
+    {
+      InfinitHomePeerTransactionCell* cell = (InfinitHomePeerTransactionCell*)sender;
+      InfinitFolderModel* folder =
+        [[InfinitDownloadFolderManager sharedInstance] completedFolderForTransactionMetaId:cell.transaction.meta_id];
+      send_controller.files = folder.file_paths;
+    }
+    else
+    {
+      send_controller.extension_files_uuid = self.extension_files_uuid;
+      _extension_files_uuid = nil;
+    }
     [UIView animateWithDuration:0.3f
                      animations:^
     {

@@ -14,4 +14,6 @@
 
 - (void)scrollToTop;
 
+- (void)showRecipientsForManagedFiles:(NSString*)uuid;
+
 @end
