@@ -17,7 +17,7 @@
 
 + (InfinitFileTypes)fileTypeForPath:(NSString*)path
 {
-  CFStringRef extension = (__bridge CFStringRef)path.pathExtension;
+  CFStringRef extension = (__bridge_retained CFStringRef)path.pathExtension;
   CFStringRef file_uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension,
                                                                extension,
                                                                NULL);
@@ -44,6 +44,7 @@
     res = InfinitFileTypeVideo;
   }
   CFRelease(file_uti);
+  CFRelease(extension);
   return res;
 }
 
