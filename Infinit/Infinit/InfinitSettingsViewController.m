@@ -9,6 +9,7 @@
 #import "InfinitSettingsViewController.h"
 
 #import "InfinitColor.h"
+#import "InfinitConstants.h"
 #import "InfinitHostDevice.h"
 #import "InfinitLoginInvitationCodeController.h"
 #import "InfinitSettingsCell.h"
@@ -335,7 +336,15 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
     {
       case InfinitFeedbackSettingRate:
       {
-        NSString* itunes_link = @"https://itunes.apple.com/app/apple-store/id955849852";
+        NSString* itunes_link =
+          [kInfinitStoreRatingLink stringByReplacingOccurrencesOfString:@"APP_ID"
+                                                             withString:kInfinitAppStoreId];
+        if ([InfinitHostDevice iOSVersion] > 8.0)
+        {
+          itunes_link =
+            [kInfinitStoreRatingLinkiOS8 stringByReplacingOccurrencesOfString:@"APP_ID"
+                                                                   withString:kInfinitAppStoreId];
+        }
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:itunes_link]];
         break;
       }
