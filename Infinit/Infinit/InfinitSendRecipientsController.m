@@ -29,9 +29,9 @@
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitTemporaryFileManager.h>
 #import <Gap/InfinitUserManager.h>
-#import <Gap/NSString+PhoneNumber.h>
 
 #import "NSString+email.h"
+#import "NSString+PhoneNumber.h"
 #import "VENTokenField.h"
 
 @import AddressBook;
@@ -218,6 +218,10 @@
     if (section != NSNotFound && row != NSNotFound)
       [self selectIndexPath:[NSIndexPath indexPathForRow:row inSection:section]];
   }
+  else if (self.extension_files_uuid.length)
+  {
+    _managed_files_id = self.extension_files_uuid;
+  }
 }
 
 - (void)navBarTapped
@@ -230,6 +234,7 @@
   _recipient = nil;
   _files = nil;
   _assets = nil;
+  _extension_files_uuid = nil;
   [self.navigationController.navigationBar.subviews[0] removeGestureRecognizer:_nav_bar_tap];
   [super viewWillDisappear:animated];
   [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -242,6 +247,9 @@
   self.assets = nil;
   self.files = nil;
   [self.recipients removeAllObjects];
+  if (self.extension_files_uuid.length)
+    [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:self.extension_files_uuid];
+  _extension_files_uuid = nil;
 }
 
 - (void)fetchDevices
@@ -547,10 +555,26 @@
       }
     }
   }
+  else if (self.extension_files_uuid.length)
+  {
+    NSArray* files =
+      [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:self.extension_files_uuid];
+    _thumbnail_elements = [files copy];
+    NSArray* ids = [self sendFilesToCurrentRecipients:files];
+    for (NSNumber* id_ in ids)
+    {
+      if (id_.unsignedIntValue != 0)
+      {
+        [[InfinitUploadThumbnailManager sharedInstance] generateThumbnailsForFiles:_thumbnail_elements
+                                                              forTransactionWithId:id_];
+      }
+    }
+  }
   [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewSend method:InfinitUIMethodTap];
-  [self.tabBarController performSelectorOnMainThread:@selector(showMainScreen:)
-                                          withObject:self
-                                       waitUntilDone:NO];
+  dispatch_async(dispatch_get_main_queue(), ^
+  {
+    [((InfinitTabBarController*)self.tabBarController) showMainScreen:self];
+  });
 }
 
 - (void)temporaryFileManagerCallback
@@ -1042,8 +1066,11 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
 
 - (BOOL)inputsGood
 {
-  if ((self.assets.count == 0 && self.files.count == 0) || self.recipients.count == 0)
+  if ((self.assets.count == 0 && self.files.count == 0 && !self.extension_files_uuid.length) ||
+      self.recipients.count == 0)
+  {
     return NO;
+  }
   return YES;
 }
 
