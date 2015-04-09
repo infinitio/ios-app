@@ -102,6 +102,7 @@
 
 // Extension
 @property (nonatomic, readonly) NSString* extension_files_uuid;
+@property (nonatomic, readonly) NSArray* extension_internal_files;
 
 @end
 
@@ -1411,6 +1412,17 @@ openFileTapped:(NSUInteger)file_index
   [self performSegueWithIdentifier:@"home_extension_to_send_segue" sender:self];
 }
 
+- (void)showRecipientsForLocalFiles:(NSArray*)files
+{
+  _sending = YES;
+  _extension_internal_files = [files copy];
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(500 * NSEC_PER_MSEC)),
+                 dispatch_get_main_queue(), ^
+  {
+    [self performSegueWithIdentifier:@"home_extension_internal_to_send_segue" sender:self];
+  });
+}
+
 #pragma mark - Rating Cell Handling
 
 - (void)doneRating
@@ -1503,7 +1515,8 @@ openFileTapped:(NSUInteger)file_index
                  sender:(id)sender
 {
   if ([segue.identifier isEqualToString:@"home_card_to_send_segue"] ||
-      [segue.identifier isEqualToString:@"home_extension_to_send_segue"])
+      [segue.identifier isEqualToString:@"home_extension_to_send_segue"] ||
+      [segue.identifier isEqualToString:@"home_extension_internal_to_send_segue"])
   {
     InfinitTabBarController* tab_controller = (InfinitTabBarController*)self.tabBarController;
     [tab_controller setTabBarHidden:YES animated:NO];
@@ -1515,6 +1528,11 @@ openFileTapped:(NSUInteger)file_index
       InfinitFolderModel* folder =
         [[InfinitDownloadFolderManager sharedInstance] completedFolderForTransactionMetaId:cell.transaction.meta_id];
       send_controller.files = folder.file_paths;
+    }
+    else if ([segue.identifier isEqualToString:@"home_extension_internal_to_send_segue"])
+    {
+      send_controller.files = self.extension_internal_files;
+      _extension_internal_files = nil;
     }
     else
     {
