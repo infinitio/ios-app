@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7528.3" systemVersion="14D130a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Sta-NW-erU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Sta-NW-erU">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7518.3"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -1546,6 +1546,7 @@ access your phone contacts!</string>
                         <segue destination="9ZK-3B-PXo" kind="show" identifier="home_card_to_send_segue" id="hT3-x2-Ji5"/>
                         <segue destination="jvf-eB-UiL" kind="show" identifier="home_files_segue" id="Yah-cg-ZRU"/>
                         <segue destination="9ZK-3B-PXo" kind="show" identifier="home_extension_to_send_segue" id="zsD-TI-UrV"/>
+                        <segue destination="9ZK-3B-PXo" kind="show" identifier="home_extension_internal_to_send_segue" id="tAN-6J-wTh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m95-wo-hyW" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2575,11 +2576,11 @@ access your phone contacts!</string>
         <image name="schema-onboarding-infinite" width="214" height="90"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="tAN-6J-wTh"/>
         <segue reference="Yah-cg-ZRU"/>
-        <segue reference="hT3-x2-Ji5"/>
         <segue reference="0ax-4u-uN8"/>
+        <segue reference="5W2-Bn-yTj"/>
         <segue reference="mYU-YK-ihc"/>
         <segue reference="a62-sa-S8B"/>
-        <segue reference="5W2-Bn-yTj"/>
     </inferredMetricsTieBreakers>
 </document>
