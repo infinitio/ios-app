@@ -9,6 +9,7 @@
 #import "InfinitFilePreviewController.h"
 
 #import "InfinitColor.h"
+#import "InfinitExtensionInfo.h"
 #import "InfinitFileModel.h"
 #import "InfinitFilePreview.h"
 
@@ -73,14 +74,35 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(filesReceived)
+                                               name:INFINIT_EXTENSION_FILES_NOTIFICATION
+                                             object:nil];
   if ([JDStatusBarNotification isVisible])
     [JDStatusBarNotification dismiss];
   [super viewDidAppear:animated];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [super viewWillDisappear:animated];
+}
+
 - (void)backTapped:(id)sender
 {
   [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Extension Files
+
+- (void)filesReceived
+{
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(500 * NSEC_PER_MSEC)),
+                 dispatch_get_main_queue(), ^
+  {
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+  });
 }
 
 #pragma mark - Navigation Controller Delegate
