@@ -9,8 +9,9 @@
 #import "ShareViewController.h"
 
 #import "InfinitColor.h"
-#import "InfinitConstants.h"
+#import "InfinitExtensionInfo.h"
 #import "InfinitProgressView.h"
+#import "InfinitWormhole.h"
 
 @import MobileCoreServices;
 
@@ -24,18 +25,25 @@
 @property (nonatomic, weak) IBOutlet InfinitProgressView* progress_view;
 
 @property (nonatomic, readonly) NSMutableArray* item_paths;
+@property (nonatomic, readonly) BOOL own_app;
 
-@property (nonatomic, readonly) NSString* files_path;
 @property (nonatomic, readonly) uint64_t free_space;
-@property (nonatomic, readonly) NSString* root_path;
 
 @end
 
+static NSUInteger _min_delay = 2;
+
 @implementation ShareViewController
+
+- (void)dealloc
+{
+  [[InfinitWormhole sharedInstance] unregisterForWormholeNotifications:self];
+}
 
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+  [self addParallax];
   CGFloat corner_radius = 5.0f;
   self.message_view.layer.cornerRadius = corner_radius;
   self.message_view.layer.masksToBounds = NO;
@@ -47,6 +55,12 @@
     [UIBezierPath bezierPathWithRoundedRect:self.message_view.bounds cornerRadius:5.0f].CGPath;
 
   self.cancel_button.showsTouchWhenHighlighted = YES;
+  UIColor* enabled_color = [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
+  UIColor* disabled_color = [InfinitColor colorWithGray:128];
+  [self.ok_button setBackgroundImage:[self imageWithColor:enabled_color]
+                            forState:UIControlStateNormal];
+  [self.ok_button setBackgroundImage:[self imageWithColor:disabled_color]
+                            forState:UIControlStateDisabled];
 
   UIBezierPath* bottom_mask = [UIBezierPath bezierPath];
   CGFloat w = self.message_view.bounds.size.width;
@@ -77,14 +91,14 @@
 {
   [super viewWillAppear:animated];
   self.background_view.alpha = 0.0f;
-  self.ok_button.enabled = YES;
   CGFloat screen_h = [UIScreen mainScreen].bounds.size.height;
   self.message_view.transform =
     CGAffineTransformMakeTranslation(0.0f, -(screen_h * 0.1f));
   self.message_view.alpha = 0.0f;
   self.cancel_button.alpha = 0.0f;
-  self.cancel_button.enabled = NO;
-  NSString* text = NSLocalizedString(@"Your files are being copied\nto Infinit...", nil);
+  self.cancel_button.enabled = YES;
+  self.ok_button.enabled = NO;
+  NSString* text = NSLocalizedString(@"Your files are being prepared\nfor Infinit...", nil);
   NSAttributedString* message =
     [[NSAttributedString alloc] initWithString:text attributes:[self textAttributesBold:NO]];
   self.message_label.attributedText = message;
@@ -92,13 +106,30 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+  _own_app = NO;
+  [[InfinitWormhole sharedInstance] registerForWormholeNotification:INFINIT_PONG_NOTIFICATION
+                                                           observer:self
+                                                           selector:@selector(pongReceived)];
+  [[InfinitWormhole sharedInstance] sendWormholeNotification:INFINIT_PING_NOTIFICATION];
   [super viewDidAppear:animated];
   NSExtensionItem* item = self.extensionContext.inputItems.firstObject;
   if (self.item_paths == nil)
     _item_paths = [NSMutableArray array];
   for (NSItemProvider* provider in item.attachments)
   {
-    if ([provider hasItemConformingToTypeIdentifier:(NSString*)kUTTypeData])
+    if ([provider hasItemConformingToTypeIdentifier:(NSString*)kUTTypeFileURL])
+    {
+      [provider loadItemForTypeIdentifier:(NSString*)kUTTypeFileURL
+                                  options:nil
+                        completionHandler:^(NSURL* url, NSError* error)
+       {
+         if (!error)
+         {
+           [self.item_paths addObject:url.path];
+         }
+       }];
+    }
+    else if ([provider hasItemConformingToTypeIdentifier:(NSString*)kUTTypeData])
     {
       [provider loadItemForTypeIdentifier:(NSString*)kUTTypeData
                                   options:nil
@@ -135,7 +166,7 @@
      self.message_view.alpha = 1.0f;
      self.message_view.transform = CGAffineTransformIdentity;
      self.progress_view.animate_progress = YES;
-     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)),
+     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(_min_delay * NSEC_PER_SEC)),
                     dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
      {
        NSString* text = nil;
@@ -144,7 +175,10 @@
        if ([self copyFiles])
        {
          image = [UIImage imageNamed:@"icon-extension-check"];
-         text = NSLocalizedString(@"Done!\nOpen Infinit to send them.", nil);
+         if (!self.own_app)
+           text = NSLocalizedString(@"Done!\nOpen Infinit to send them.", nil);
+         else
+           text = NSLocalizedString(@"Done!", nil);
          bold_range = [text rangeOfString:NSLocalizedString(@"Done!", nil)];
        }
        else
@@ -161,11 +195,18 @@
        dispatch_async(dispatch_get_main_queue(), ^
        {
          self.progress_view.image = image;
-         self.cancel_button.enabled = YES;
+         self.ok_button.enabled = YES;
          self.message_label.attributedText = message;
        });
      });
    }];
+}
+
+#pragma mark - Pong Handling
+
+- (void)pongReceived
+{
+  _own_app = YES;
 }
 
 #pragma mark - File Handling
@@ -173,47 +214,56 @@
 - (void)deleteFiles
 {
   NSFileManager* manager = [NSFileManager defaultManager];
-  NSArray* contents = [manager contentsOfDirectoryAtPath:self.files_path error:nil];
+  NSString* files_path = [InfinitExtensionInfo sharedInstance].files_path;
+  NSArray* contents = [manager contentsOfDirectoryAtPath:files_path error:nil];
   for (NSString* file in contents)
   {
-    NSString* path = [self.files_path stringByAppendingPathComponent:file];
+    NSString* path = [files_path stringByAppendingPathComponent:file];
     [manager removeItemAtPath:path error:nil];
   }
 }
 
 - (BOOL)copyFiles
 {
-  if ([self sizeOfFiles:self.item_paths] > self.free_space)
-    return NO;
-
-  for (NSString* path in self.item_paths)
+  if (self.own_app)
   {
-    NSError* error = nil;
-    NSString* destination_path =
-      [self.files_path stringByAppendingPathComponent:path.lastPathComponent];
-    if ([path.lastPathComponent isEqualToString:@"FullSizeRender.jpg"])
-    {
-      NSString* new_filename = nil;
-      NSArray* components = [path componentsSeparatedByString:@"/"];
-      for (NSString* component in components)
-      {
-        if ([component containsString:@"IMG"])
-        {
-          new_filename = [component stringByAppendingString:@".JPG"];
-          break;
-        }
-
-      }
-      if (new_filename)
-        destination_path = [self.files_path stringByAppendingPathComponent:new_filename];
-    }
-    [[NSFileManager defaultManager] copyItemAtPath:path toPath:destination_path error:&error];
-    if (error)
-    {
-      NSLog(@"Unable to copy %@ to %@: %@", path, destination_path, error);
-    }
+    return YES;
   }
-  return YES;
+  else
+  {
+    if ([self sizeOfFiles:self.item_paths] > self.free_space)
+      return NO;
+
+    for (NSString* path in self.item_paths)
+    {
+      NSError* error = nil;
+      NSString* files_path = [InfinitExtensionInfo sharedInstance].files_path;
+      NSString* destination_path =
+        [files_path stringByAppendingPathComponent:path.lastPathComponent];
+      if ([path.lastPathComponent isEqualToString:@"FullSizeRender.jpg"])
+      {
+        NSString* new_filename = nil;
+        NSArray* components = [path componentsSeparatedByString:@"/"];
+        for (NSString* component in components)
+        {
+          if ([component containsString:@"IMG"])
+          {
+            new_filename = [component stringByAppendingString:@".JPG"];
+            break;
+          }
+
+        }
+        if (new_filename)
+          destination_path = [files_path stringByAppendingPathComponent:new_filename];
+      }
+      [[NSFileManager defaultManager] copyItemAtPath:path toPath:destination_path error:&error];
+      if (error)
+      {
+        NSLog(@"Unable to copy %@ to %@: %@", path, destination_path, error);
+      }
+    }
+    return YES;
+  }
 }
 
 #pragma mark - Button Handling
@@ -249,6 +299,11 @@
      self.background_view.alpha = 0.0f;
      if (copy)
      {
+       if (self.own_app)
+       {
+         InfinitWormhole* wormhole = [InfinitWormhole sharedInstance];
+         [wormhole sendWormholeNotification:INFINIT_EXTENSION_FILES_NOTIFICATION];
+       }
        [self.extensionContext completeRequestReturningItems:@[] completionHandler:nil];
      }
      else
@@ -268,10 +323,37 @@
 {
   self.ok_button.enabled = NO;
   self.progress_view.animate_progress = YES;
+  NSString* internal_files_path = [InfinitExtensionInfo sharedInstance].internal_files_path;
+  NSString* path = [internal_files_path stringByAppendingPathComponent:@"files"];
+  [self.item_paths writeToFile:path atomically:YES];
   [self doneAnimationWithCopy:YES];
 }
 
 #pragma mark - Helpers
+
+- (void)addParallax
+{
+  // Set vertical effect
+  UIInterpolatingMotionEffect* vertical =
+  [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y"
+                                                  type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+  vertical.minimumRelativeValue = @(-10.0f);
+  vertical.maximumRelativeValue = @(10.0f);
+
+  // Set horizontal effect
+  UIInterpolatingMotionEffect* horizontal =
+  [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x"
+                                                  type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+  horizontal.minimumRelativeValue = @(-10.0f);
+  horizontal.maximumRelativeValue = @(10.0f);
+
+  // Create group to combine both
+  UIMotionEffectGroup* group = [UIMotionEffectGroup new];
+  group.motionEffects = @[horizontal, vertical];
+
+  // Add both effects to your view
+  [self.message_view addMotionEffect:group];
+}
 
 - (NSDictionary*)textAttributesBold:(BOOL)bold
 {
@@ -285,35 +367,6 @@
   return @{NSFontAttributeName: font,
            NSParagraphStyleAttributeName: para,
            NSForegroundColorAttributeName: [InfinitColor colorWithRed:81 green:81 blue:73]};
-}
-
-- (NSString*)files_path
-{
-  NSString* res = [self.root_path stringByAppendingPathComponent:@"files"];
-  if (![[NSFileManager defaultManager] fileExistsAtPath:res])
-  {
-    [[NSFileManager defaultManager] createDirectoryAtPath:res
-                              withIntermediateDirectories:YES 
-                                               attributes:@{NSURLIsExcludedFromBackupKey: @YES}
-                                                    error:nil];
-  }
-  return res;
-}
-
-- (NSString*)root_path
-{
-  NSFileManager* manager = [NSFileManager defaultManager];
-  NSURL* shared_url =
-    [manager containerURLForSecurityApplicationGroupIdentifier:kInfinitAppGroupName];
-  NSString* res = [shared_url.path stringByAppendingPathComponent:@"extension"];
-  if (![manager fileExistsAtPath:res])
-  {
-    [manager createDirectoryAtPath:res
-       withIntermediateDirectories:YES
-                        attributes:@{NSURLIsExcludedFromBackupKey: @YES}
-                             error:nil];
-  }
-  return res;
 }
 
 - (uint64_t)sizeOfFiles:(NSArray*)files
@@ -354,6 +407,19 @@
     NSLog(@"Error Obtaining System Memory Info: Domain = %@, Code = %ld",
           error.domain, (long)error.code);
   }
+  return res;
+}
+
+- (UIImage*)imageWithColor:(UIColor*)color
+{
+  UIImage* res = nil;
+  CGRect cancel_rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+  UIGraphicsBeginImageContext(cancel_rect.size);
+  CGContextRef context = UIGraphicsGetCurrentContext();
+  CGContextSetFillColorWithColor(context, color.CGColor);
+  CGContextFillRect(context, cancel_rect);
+  res = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
   return res;
 }
 
