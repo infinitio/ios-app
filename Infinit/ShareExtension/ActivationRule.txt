@@ -1,0 +1,20 @@
+SUBQUERY
+(
+  extensionItems,
+  $extensionItem,
+  SUBQUERY
+  (
+    $extensionItem.attachments,
+    $attachment,
+    ANY $attachment.registeredTypeIdentifiers UTI-EQUALS "public.file-url" ||
+    (
+      NOT ANY $attachment.registeredTypeIdentifiers UTI-EQUALS "public.url" &&
+      (
+        ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.image" ||
+        ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.video" ||
+        ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.movie" ||
+        ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.audio"
+      )
+    )
+  ).@count >= 1
+).@count >= 1
