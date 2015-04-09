@@ -10,8 +10,8 @@
 
 #import "InfinitAccessGalleryView.h"
 #import "InfinitColor.h"
-#import "InfinitConstants.h"
 #import "InfinitContactsViewController.h"
+#import "InfinitExtensionInfo.h"
 #import "InfinitFilesNavigationController.h"
 #import "InfinitFilesViewController.h"
 #import "InfinitHomeViewController.h"
@@ -21,6 +21,7 @@
 #import "InfinitSendTabIcon.h"
 #import "InfinitSendNavigationController.h"
 #import "InfinitTabAnimator.h"
+#import "InfinitWormhole.h"
 
 #import "JDStatusBarNotification.h"
 
@@ -89,6 +90,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 
 - (void)dealloc
 {
+  [[InfinitWormhole sharedInstance] unregisterForWormholeNotifications:self];
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -124,6 +126,16 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
                                            selector:@selector(temporaryFileManagerReady)
                                                name:INFINIT_TEMPORARY_FILE_MANAGER_READY
                                              object:nil];
+  if ([InfinitHostDevice iOSVersion] >= 8.0)
+  {
+    InfinitWormhole* wormhole = [InfinitWormhole sharedInstance];
+    [wormhole registerForWormholeNotification:INFINIT_PING_NOTIFICATION
+                                     observer:self
+                                     selector:@selector(pingReceived)];
+    [wormhole registerForWormholeNotification:INFINIT_EXTENSION_FILES_NOTIFICATION
+                                     observer:self 
+                                     selector:@selector(extensionLocalFilesReceived)];
+  }
   [super viewDidLoad];
 
   self.delegate = self;
@@ -696,10 +708,7 @@ shouldSelectViewController:(UIViewController*)viewController
     if (![InfinitConnectionManager sharedInstance].connected)
       return;
 
-    NSFileManager* manager = [NSFileManager defaultManager];
-    NSURL* shared_url =
-      [manager containerURLForSecurityApplicationGroupIdentifier:kInfinitAppGroupName];
-    NSString* extension_files = [NSString stringWithFormat:@"%@/extension/files", shared_url.path];
+    NSString* extension_files = [InfinitExtensionInfo sharedInstance].files_path;
     NSArray* contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:extension_files
                                                                             error:nil];
     if (contents.count > 0)
@@ -715,13 +724,39 @@ shouldSelectViewController:(UIViewController*)viewController
       [self showMainScreen:self.viewControllers[self.selectedIndex]];
       InfinitHomeViewController* home_controller =
         (InfinitHomeViewController*)[self.viewControllers[InfinitTabBarIndexHome] topViewController];
-      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(500 * NSEC_PER_MSEC)),
+      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(600 * NSEC_PER_MSEC)),
                      dispatch_get_main_queue(), ^
       {
         [home_controller showRecipientsForManagedFiles:uuid];
       });
     }
   }
+}
+
+#pragma mark - Wormhole Handling
+
+- (void)pingReceived
+{
+  if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive)
+  {
+    [[InfinitWormhole sharedInstance] sendWormholeNotification:INFINIT_PONG_NOTIFICATION];
+  }
+}
+
+- (void)extensionLocalFilesReceived
+{
+  NSString* folder = [InfinitExtensionInfo sharedInstance].internal_files_path;
+  NSString* extension_files = [folder stringByAppendingPathComponent:@"files"];
+  NSArray* files = [NSArray arrayWithContentsOfFile:extension_files];
+  [self showMainScreen:self.viewControllers[self.selectedIndex]];
+  InfinitHomeViewController* home_controller =
+    (InfinitHomeViewController*)[self.viewControllers[InfinitTabBarIndexHome] topViewController];
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(500 * NSEC_PER_MSEC)),
+                 dispatch_get_main_queue(), ^
+  {
+    [home_controller showRecipientsForLocalFiles:files];
+  });
+  [[NSFileManager defaultManager] removeItemAtPath:extension_files error:nil];
 }
 
 #pragma mark - Helpers
