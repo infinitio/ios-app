@@ -1012,7 +1012,7 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
   if ([InfinitConnectionManager sharedInstance].network_status == InfinitNetworkStatusNotReachable)
   {
     self.login_form_view.error_label.text =
-    NSLocalizedString(@"Ensure you're connected to the Internet.", nil);
+      NSLocalizedString(@"Ensure you're connected to the Internet.", nil);
     self.login_form_view.error_label.hidden = NO;
     self.login_form_view.next_button.enabled = YES;
     return;
