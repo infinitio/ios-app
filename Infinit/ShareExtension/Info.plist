@@ -29,20 +29,26 @@
 		<key>NSExtensionAttributes</key>
 		<dict>
 			<key>NSExtensionActivationRule</key>
-			<dict>
-				<key>NSExtensionActivationSupportsFileWithMaxCount</key>
-				<integer>500</integer>
-				<key>NSExtensionActivationSupportsImageWithMaxCount</key>
-				<integer>500</integer>
-				<key>NSExtensionActivationSupportsMovieWithMaxCount</key>
-				<integer>500</integer>
-				<key>NSExtensionActivationSupportsAttachmentsWithMinCount</key>
-				<integer>1</integer>
-				<key>NSExtensionActivationSupportsAttachmentsWithMaxCount</key>
-				<integer>500</integer>
-				<key>NSExtensionActivationSupportsText</key>
-				<false/>
-			</dict>
+			<string>SUBQUERY
+(
+  extensionItems,
+  $extensionItem,
+  SUBQUERY
+  (
+    $extensionItem.attachments,
+    $attachment,
+    ANY $attachment.registeredTypeIdentifiers UTI-EQUALS &quot;public.file-url&quot; ||
+    (
+      NOT ANY $attachment.registeredTypeIdentifiers UTI-EQUALS &quot;public.url&quot; &amp;&amp;
+      (
+        ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;public.image&quot; ||
+        ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;public.video&quot; ||
+        ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;public.movie&quot; ||
+        ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;public.audio&quot;
+      )
+    )
+  ).@count &gt;= 1
+).@count &gt;= 1</string>
 		</dict>
 		<key>NSExtensionMainStoryboard</key>
 		<string>MainInterface</string>
