@@ -25,5 +25,6 @@
 - (void)showWelcomeScreen;
 
 - (void)showTransactionPreparingNotification;
+- (void)showCopyToGalleryNotification;
 
 @end

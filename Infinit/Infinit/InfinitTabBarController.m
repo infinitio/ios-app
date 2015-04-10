@@ -394,7 +394,16 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 - (void)showTransactionPreparingNotification
 {
   [JDStatusBarNotification showWithStatus:NSLocalizedString(@"Preparing your transfer...", nil)
-                             dismissAfter:2.0f
+                             dismissAfter:3.0f
+                                styleName:_status_bar_good_style_id];
+  [JDStatusBarNotification showActivityIndicator:YES
+                                  indicatorStyle:UIActivityIndicatorViewStyleWhite];
+}
+
+- (void)showCopyToGalleryNotification
+{
+  [JDStatusBarNotification showWithStatus:NSLocalizedString(@"Saving to gallery...", nil)
+                             dismissAfter:3.0f
                                 styleName:_status_bar_good_style_id];
   [JDStatusBarNotification showActivityIndicator:YES
                                   indicatorStyle:UIActivityIndicatorViewStyleWhite];
