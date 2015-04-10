@@ -12,6 +12,8 @@
 #import "InfinitColor.h"
 #import "InfinitContactsViewController.h"
 #import "InfinitExtensionInfo.h"
+#import "InfinitExtensionPopoverController.h"
+#import "InfinitFacebookManager.h"
 #import "InfinitFilesNavigationController.h"
 #import "InfinitFilesViewController.h"
 #import "InfinitHomeViewController.h"
@@ -25,6 +27,7 @@
 
 #import "JDStatusBarNotification.h"
 
+#import <FacebookSDK/FacebookSDK.h>
 #import <Gap/InfinitConnectionManager.h>
 #import <Gap/InfinitTemporaryFileManager.h>
 #import <Gap/InfinitPeerTransactionManager.h>
@@ -41,7 +44,8 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   InfinitTabBarIndexSettings,
 };
 
-@interface InfinitTabBarController () <MFMessageComposeViewControllerDelegate,
+@interface InfinitTabBarController () <InfinitExtensionPopoverProtocol,
+                                       MFMessageComposeViewControllerDelegate,
                                        UINavigationControllerDelegate,
                                        UITabBarControllerDelegate>
 
@@ -52,6 +56,9 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 @property (nonatomic, strong) InfinitSendTabIcon* send_tab_icon;
 @property (nonatomic, strong) InfinitOfflineOverlay* offline_overlay;
 @property (nonatomic) BOOL tab_bar_hidden;
+
+@property (nonatomic, strong) InfinitExtensionPopoverController* extension_popover;
+@property (nonatomic, readonly) NSString* extension_uuid;
 
 @property (nonatomic, strong) MFMessageComposeViewController* sms_controller;
 
@@ -691,6 +698,13 @@ shouldSelectViewController:(UIViewController*)viewController
   InfinitConnectionStatus* connection_status = notification.object;
   if (!connection_status.status && !connection_status.still_trying)
   {
+    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded ||
+        FBSession.activeSession.state == FBSessionStateCreatedOpening||
+        FBSession.activeSession.state == FBSessionStateOpen ||
+        FBSession.activeSession.state == FBSessionStateOpenTokenExtended)
+    {
+      [[InfinitFacebookManager sharedInstance] cleanSession];
+    }
     [self showWelcomeScreen];
   }
   else if (!connection_status.status)
@@ -723,23 +737,58 @@ shouldSelectViewController:(UIViewController*)viewController
     if (contents.count > 0)
     {
       InfinitTemporaryFileManager* manager = [InfinitTemporaryFileManager sharedInstance];
-      NSString* uuid = [manager createManagedFiles];
+      _extension_uuid = [manager createManagedFiles];
       NSMutableArray* file_paths = [NSMutableArray array];
       for (NSString* file in contents)
       {
         [file_paths addObject:[extension_files stringByAppendingPathComponent:file]];
       }
-      [manager addFiles:file_paths toManagedFiles:uuid copy:NO];
+      [manager addFiles:file_paths toManagedFiles:self.extension_uuid copy:NO];
+      UIStoryboard* board = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+      _extension_popover = [board instantiateViewControllerWithIdentifier:@"extension_popover_id"];
+      self.extension_popover.delegate = self;
+      self.extension_popover.files =
+        [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:self.extension_uuid];
       [self showMainScreen:self.viewControllers[self.selectedIndex]];
-      InfinitHomeViewController* home_controller =
-        (InfinitHomeViewController*)[self.viewControllers[InfinitTabBarIndexHome] topViewController];
-      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(600 * NSEC_PER_MSEC)),
+      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(300 * NSEC_PER_MSEC)),
                      dispatch_get_main_queue(), ^
       {
-        [home_controller showRecipientsForManagedFiles:uuid];
+        [self addChildViewController:self.extension_popover];
+        self.extension_popover.view.frame = self.view.frame;
+        [self.view addSubview:self.extension_popover.view];
+        [self.extension_popover didMoveToParentViewController:self];
+        [self.extension_popover beginAppearanceTransition:YES animated:YES];
       });
     }
   }
+}
+
+#pragma mark - Extension Popover Delegate
+
+- (void)extensionPopoverWantsCancel:(InfinitExtensionPopoverController*)sender
+{
+  [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:self.extension_uuid];
+  _extension_uuid = nil;
+  [self.extension_popover willMoveToParentViewController:nil];
+  [self.extension_popover.view removeFromSuperview];
+  [self.extension_popover removeFromParentViewController];
+  _extension_popover = nil;
+}
+
+- (void)extensionPopoverWantsSend:(InfinitExtensionPopoverController*)sender
+{
+  InfinitHomeViewController* home_controller =
+    (InfinitHomeViewController*)[self.viewControllers[InfinitTabBarIndexHome] topViewController];
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(300 * NSEC_PER_MSEC)),
+                 dispatch_get_main_queue(), ^
+  {
+    [self.extension_popover willMoveToParentViewController:nil];
+    [self.extension_popover.view removeFromSuperview];
+    [self.extension_popover removeFromParentViewController];
+    _extension_popover = nil;
+    [home_controller showRecipientsForManagedFiles:self.extension_uuid];
+    _extension_uuid = nil;
+  });
 }
 
 #pragma mark - Wormhole Handling
