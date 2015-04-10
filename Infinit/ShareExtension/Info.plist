@@ -48,7 +48,8 @@
       )
     )
   ).@count &gt;= 1
-).@count &gt;= 1</string>
+).@count &gt;= 1
+</string>
 		</dict>
 		<key>NSExtensionMainStoryboard</key>
 		<string>MainInterface</string>

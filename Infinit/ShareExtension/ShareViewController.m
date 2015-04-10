@@ -19,7 +19,9 @@
 
 @property (nonatomic, weak) IBOutlet UIView* background_view;
 @property (nonatomic, weak) IBOutlet UIButton* cancel_button;
-@property (nonatomic, weak) IBOutlet UILabel* message_label;
+@property (nonatomic, weak) IBOutlet UILabel* top_message_label;
+@property (nonatomic, weak) IBOutlet UILabel* bottom_message_label;
+@property (nonatomic, weak) IBOutlet UIImageView* bottom_icon;
 @property (nonatomic, weak) IBOutlet UIView* message_view;
 @property (nonatomic, weak) IBOutlet UIButton* ok_button;
 @property (nonatomic, weak) IBOutlet InfinitProgressView* progress_view;
@@ -89,6 +91,36 @@ static NSUInteger _min_delay = 2;
 
 - (void)viewWillAppear:(BOOL)animated
 {
+  [self deleteFiles];
+  _own_app = NO;
+  [[InfinitWormhole sharedInstance] registerForWormholeNotification:INFINIT_PONG_NOTIFICATION
+                                                           observer:self
+                                                           selector:@selector(pongReceived)];
+  [[InfinitWormhole sharedInstance] sendWormholeNotification:INFINIT_PING_NOTIFICATION];
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(100 * NSEC_PER_MSEC)),
+                 dispatch_get_main_queue(), ^
+  {
+    if (self.own_app)
+    {
+      self.top_message_label.text = NSLocalizedString(@"Preparing your files...", nil);
+      self.bottom_message_label.text = NSLocalizedString(@"Files ready!", nil);
+      [self.ok_button setTitle:NSLocalizedString(@"SEND", nil) forState:UIControlStateNormal];
+    }
+    else
+    {
+      self.top_message_label.text =
+        NSLocalizedString(@"Your files are being\ncopied to Infinit...", nil);
+      NSAttributedString* str =
+        [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Open Infinit now\nto send them!", nil)
+                                        attributes:[self textAttributesBold:NO]];
+      self.bottom_message_label.attributedText = str;
+      [self.ok_button setTitle:NSLocalizedString(@"GOT IT", nil) forState:UIControlStateNormal];
+    }
+    self.progress_view.alpha = 1.0f;
+    self.top_message_label.alpha = 1.0f;
+    self.bottom_message_label.alpha = 0.3f;
+    self.bottom_icon.alpha = 0.3f;
+  });
   [super viewWillAppear:animated];
   self.background_view.alpha = 0.0f;
   CGFloat screen_h = [UIScreen mainScreen].bounds.size.height;
@@ -98,19 +130,10 @@ static NSUInteger _min_delay = 2;
   self.cancel_button.alpha = 0.0f;
   self.cancel_button.enabled = YES;
   self.ok_button.enabled = NO;
-  NSString* text = NSLocalizedString(@"Your files are being prepared\nfor Infinit...", nil);
-  NSAttributedString* message =
-    [[NSAttributedString alloc] initWithString:text attributes:[self textAttributesBold:NO]];
-  self.message_label.attributedText = message;
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-  _own_app = NO;
-  [[InfinitWormhole sharedInstance] registerForWormholeNotification:INFINIT_PONG_NOTIFICATION
-                                                           observer:self
-                                                           selector:@selector(pongReceived)];
-  [[InfinitWormhole sharedInstance] sendWormholeNotification:INFINIT_PING_NOTIFICATION];
   [super viewDidAppear:animated];
   NSExtensionItem* item = self.extensionContext.inputItems.firstObject;
   if (self.item_paths == nil)
@@ -169,34 +192,52 @@ static NSUInteger _min_delay = 2;
      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(_min_delay * NSEC_PER_SEC)),
                     dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
      {
-       NSString* text = nil;
-       NSRange bold_range = NSMakeRange(NSNotFound, 0);
+       NSString* top_text = [self.top_message_label.text copy];
+       NSString* bottom_text = [self.bottom_message_label.text copy];
+       NSString* button_text = [self.ok_button.titleLabel.text copy];
+       NSRange top_bold_range = NSMakeRange(NSNotFound, 0);
+       NSRange bottom_bold_range = NSMakeRange(NSNotFound, 0);
        UIImage* image = nil;
-       if ([self copyFiles])
+       BOOL success = [self copyFiles];
+       if (success)
        {
          image = [UIImage imageNamed:@"icon-extension-check"];
-         if (!self.own_app)
-           text = NSLocalizedString(@"Done!\nOpen Infinit to send them.", nil);
-         else
-           text = NSLocalizedString(@"Done!", nil);
-         bold_range = [text rangeOfString:NSLocalizedString(@"Done!", nil)];
+         bottom_bold_range = [bottom_text rangeOfString:NSLocalizedString(@"Infinit", nil)];
        }
        else
        {
          image = [UIImage imageNamed:@"icon-extension-error"];
-         text = NSLocalizedString(@"Oops!\nNot enough space.", nil);
-         bold_range = [text rangeOfString:NSLocalizedString(@"Oops!", nil)];
+         top_text = NSLocalizedString(@"Oops!\nNot enough space.", nil);
+         top_bold_range = [top_text rangeOfString:NSLocalizedString(@"Oops!", nil)];
+         button_text = NSLocalizedString(@"GOT IT", nil);
        }
-       NSMutableAttributedString* message =
-         [[NSMutableAttributedString alloc] initWithString:text
+       NSMutableAttributedString* top_message =
+        [[NSMutableAttributedString alloc] initWithString:top_text
+                                               attributes:[self textAttributesBold:NO]];
+       if (top_bold_range.location != NSNotFound)
+         [top_message setAttributes:[self textAttributesBold:YES] range:top_bold_range];
+       NSMutableAttributedString* bottom_message =
+         [[NSMutableAttributedString alloc] initWithString:bottom_text
                                                 attributes:[self textAttributesBold:NO]];
-       if (bold_range.location != NSNotFound)
-         [message setAttributes:[self textAttributesBold:YES] range:bold_range];
+       if (bottom_bold_range.location != NSNotFound)
+         [bottom_message setAttributes:[self textAttributesBold:YES] range:bottom_bold_range];
        dispatch_async(dispatch_get_main_queue(), ^
        {
          self.progress_view.image = image;
+         [self.ok_button setTitle:button_text forState:UIControlStateNormal];
          self.ok_button.enabled = YES;
-         self.message_label.attributedText = message;
+         self.top_message_label.attributedText = top_message;
+         self.bottom_message_label.attributedText = bottom_message;
+         if (success)
+         {
+           self.progress_view.alpha = 0.3f;
+           [UIView animateWithDuration:0.5f animations:^
+           {
+             self.top_message_label.alpha = 0.3f;
+             self.bottom_message_label.alpha = 1.0f;
+             self.bottom_icon.alpha = 1.0f;
+           }];
+         }
        });
      });
    }];
@@ -221,6 +262,7 @@ static NSUInteger _min_delay = 2;
     NSString* path = [files_path stringByAppendingPathComponent:file];
     [manager removeItemAtPath:path error:nil];
   }
+  [manager removeItemAtPath:[InfinitExtensionInfo sharedInstance].internal_files_path error:nil];
 }
 
 - (BOOL)copyFiles
@@ -357,15 +399,13 @@ static NSUInteger _min_delay = 2;
 
 - (NSDictionary*)textAttributesBold:(BOOL)bold
 {
-  NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-  para.alignment = NSTextAlignmentCenter;
   UIFont* font = nil;
   if (bold)
     font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:17.0f];
   else
     font = [UIFont fontWithName:@"HelveticaNeue" size:17.0f];
   return @{NSFontAttributeName: font,
-           NSParagraphStyleAttributeName: para,
+           NSParagraphStyleAttributeName: [NSParagraphStyle defaultParagraphStyle],
            NSForegroundColorAttributeName: [InfinitColor colorWithRed:81 green:81 blue:73]};
 }
 

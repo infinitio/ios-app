@@ -16,7 +16,7 @@
 
 @end
 
-static float _max_size = 20.0f;
+static float _max_size = 15.0f;
 
 @implementation InfinitProgressView
 
