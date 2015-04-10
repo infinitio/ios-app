@@ -80,7 +80,7 @@
                     ofSize:(CGSize)size
                       crop:(BOOL)crop
 {
-  __block UIImage* res;
+  __block UIImage* res = nil;
   CGSize scaled_size = CGSizeMake(size.width * [InfinitHostDevice screenScale],
                                   size.height * [InfinitHostDevice screenScale]);
   InfinitFileTypes type = [InfinitFilePreview fileTypeForPath:path];
