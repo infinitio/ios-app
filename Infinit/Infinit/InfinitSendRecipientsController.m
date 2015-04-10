@@ -26,6 +26,7 @@
 #import "InfinitUploadThumbnailManager.h"
 
 #import <Gap/InfinitDeviceManager.h>
+#import <Gap/InfinitFileSystemError.h>
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitTemporaryFileManager.h>
 #import <Gap/InfinitUserManager.h>
@@ -152,6 +153,7 @@
   [self.navigationController.navigationBar setTitleTextAttributes:nav_bar_attrs];
   self.table_view.separatorStyle = UITableViewCellSeparatorStyleNone;
   self.table_view.contentInset = UIEdgeInsetsMake(-1.0f, 0.0f, 0.0f, 0.0);
+  self.navigationItem.title = NSLocalizedString(@"SEND", nil);
 }
 
 - (void)configureSearchField
@@ -221,7 +223,25 @@
   else if (self.extension_files_uuid.length)
   {
     _managed_files_id = self.extension_files_uuid;
+    InfinitTemporaryFileManager* manager = [InfinitTemporaryFileManager sharedInstance];
+    NSUInteger file_count = [manager fileCountForManagedFiles:self.extension_files_uuid];
+    NSString* title = nil;
+    if (file_count == 1)
+      title = NSLocalizedString(@"SEND 1 FILE", nil);
+    else
+      title = [NSString stringWithFormat:NSLocalizedString(@"SEND %lu FILES", nil), file_count];
+    self.navigationItem.title = title;
   }
+  else if (self.files && self.extension_send)
+  {
+    NSString* title = nil;
+    if (self.files.count == 1)
+      title = NSLocalizedString(@"SEND 1 FILE", nil);
+    else
+      title = [NSString stringWithFormat:NSLocalizedString(@"SEND %lu FILES", nil), self.files.count];
+    self.navigationItem.title = title;
+  }
+  _extension_send = NO;
 }
 
 - (void)navBarTapped
@@ -503,13 +523,59 @@
   {
     InfinitTemporaryFileManager* manager = [InfinitTemporaryFileManager sharedInstance];
     _thumbnail_elements = [self.assets copy];
+    InfinitTemporaryFileManagerCallback callback = ^void(BOOL success, NSError* error)
+    {
+      if (error)
+      {
+        NSString* title = nil;
+        NSString* message = nil;
+        switch (error.code)
+        {
+          case InfinitFileSystemErrorNoFreeSpace:
+            title = NSLocalizedString(@"Not enough space on your device.", nil);
+            message =
+              NSLocalizedString(@"Free up some space on your device and try again "
+                                "or send fewer files.", nil);
+            break;
+            
+          default:
+            title = NSLocalizedString(@"Unable to fetch files.", nil);
+            message =
+              NSLocalizedString(@"Infinit was unable to fetch the files from your gallery. "
+                                "Check that you have some free space and try again.",
+                                nil);
+            break;
+        }
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
+                                                        message:message
+                                                       delegate:nil 
+                                              cancelButtonTitle:@"OK" 
+                                              otherButtonTitles:nil];
+        [alert show];
+        [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:_managed_files_id];
+        _managed_files_id = nil;
+        return;
+      }
+      NSArray* files =
+        [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:_managed_files_id];
+      NSArray* ids = [self sendFilesToCurrentRecipients:files];
+      [[InfinitTemporaryFileManager sharedInstance] setTransactionIds:ids
+                                                      forManagedFiles:_managed_files_id];
+      for (NSNumber* id_ in ids)
+      {
+        if (id_.unsignedIntValue != 0)
+        {
+          [[InfinitUploadThumbnailManager sharedInstance] generateThumbnailsForAssets:_thumbnail_elements
+                                                                 forTransactionWithId:id_];
+        }
+      }
+    };
     BOOL show_preparing_message = NO;
     if ([PHAsset class])
     {
       [manager addPHAssetsLibraryURLList:self.assets
                           toManagedFiles:_managed_files_id
-                         performSelector:@selector(temporaryFileManagerCallback)
-                                onObject:self];
+                         completionBlock:callback];
       for (PHAsset* asset in _thumbnail_elements)
       {
         if (asset.mediaType == PHAssetMediaTypeVideo)
@@ -530,8 +596,7 @@
       }
       [manager addALAssetsLibraryURLList:asset_urls
                           toManagedFiles:_managed_files_id
-                         performSelector:@selector(temporaryFileManagerCallback)
-                                onObject:self];
+                         completionBlock:callback];
     }
     if (_thumbnail_elements.count >= 10)
       show_preparing_message = YES;
@@ -575,23 +640,6 @@
   {
     [((InfinitTabBarController*)self.tabBarController) showMainScreen:self];
   });
-}
-
-- (void)temporaryFileManagerCallback
-{
-  NSArray* files =
-    [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:_managed_files_id];
-  NSArray* ids = [self sendFilesToCurrentRecipients:files];
-  [[InfinitTemporaryFileManager sharedInstance] setTransactionIds:ids
-                                                  forManagedFiles:_managed_files_id];
-  for (NSNumber* id_ in ids)
-  {
-    if (id_.unsignedIntValue != 0)
-    {
-      [[InfinitUploadThumbnailManager sharedInstance] generateThumbnailsForAssets:_thumbnail_elements
-                                                             forTransactionWithId:id_];
-    }
-  }
 }
 
 - (NSArray*)sendFilesToCurrentRecipients:(NSArray*)files

@@ -18,6 +18,7 @@
 @property (nonatomic, copy) NSArray* files;
 /// String UUID of managed files.
 @property (nonatomic, copy) NSString* extension_files_uuid;
+@property (atomic) BOOL extension_send;
 @property (nonatomic, weak, readwrite) InfinitContact* recipient;
 
 - (void)resetView;
