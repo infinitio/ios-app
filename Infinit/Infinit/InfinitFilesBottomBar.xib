@@ -31,7 +31,7 @@
                     </state>
                 </button>
                 <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VA6-rw-Dpj">
-                    <rect key="frame" x="285" y="9" width="30" height="30"/>
+                    <rect key="frame" x="80" y="9" width="30" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="Ry2-0I-Nnm"/>
                         <constraint firstAttribute="width" constant="30" id="rba-HY-q6D"/>
@@ -56,11 +56,11 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="FW0-IA-Qjv" secondAttribute="trailing" constant="20" id="3Wu-EY-TQC"/>
                 <constraint firstAttribute="centerY" secondItem="FW0-IA-Qjv" secondAttribute="centerY" id="9se-QN-zSf"/>
+                <constraint firstItem="VA6-rw-Dpj" firstAttribute="leading" secondItem="Iyp-1t-hXd" secondAttribute="trailing" constant="30" id="Ao0-ee-LJs"/>
                 <constraint firstAttribute="trailing" secondItem="GvW-Xk-Y7u" secondAttribute="trailing" id="Dng-jy-nPy"/>
                 <constraint firstItem="Iyp-1t-hXd" firstAttribute="leading" secondItem="z7W-fk-rRI" secondAttribute="leading" constant="20" id="K2n-qW-XEe"/>
                 <constraint firstAttribute="centerY" secondItem="Iyp-1t-hXd" secondAttribute="centerY" id="SVl-MH-M7S"/>
                 <constraint firstItem="GvW-Xk-Y7u" firstAttribute="leading" secondItem="z7W-fk-rRI" secondAttribute="leading" id="X6l-lf-8mc"/>
-                <constraint firstAttribute="centerX" secondItem="VA6-rw-Dpj" secondAttribute="centerX" id="YhS-LF-5m9"/>
                 <constraint firstAttribute="centerY" secondItem="VA6-rw-Dpj" secondAttribute="centerY" id="gc6-DN-qSc"/>
                 <constraint firstItem="GvW-Xk-Y7u" firstAttribute="top" secondItem="z7W-fk-rRI" secondAttribute="top" id="gr9-L9-4BC"/>
             </constraints>
@@ -74,7 +74,7 @@
     </objects>
     <resources>
         <image name="icon-delete-red" width="19" height="22"/>
-        <image name="icon-save-red" width="24" height="29"/>
+        <image name="icon-save-red" width="22" height="27"/>
         <image name="icon-send-red" width="25" height="21"/>
     </resources>
 </document>
