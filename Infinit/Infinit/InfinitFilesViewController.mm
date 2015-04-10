@@ -359,6 +359,7 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 
 - (void)saveTapped:(id)sender
 {
+  [((InfinitTabBarController*)self.tabBarController) showCopyToGalleryNotification];
   NSMutableArray* paths = [NSMutableArray array];
   for (NSIndexPath* index in self.table_view.indexPathsForSelectedRows)
   {
