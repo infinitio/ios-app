@@ -1531,11 +1531,13 @@ openFileTapped:(NSUInteger)file_index
     }
     else if ([segue.identifier isEqualToString:@"home_extension_internal_to_send_segue"])
     {
+      send_controller.extension_send = YES;
       send_controller.files = self.extension_internal_files;
       _extension_internal_files = nil;
     }
     else
     {
+      send_controller.extension_send = YES;
       send_controller.extension_files_uuid = self.extension_files_uuid;
       _extension_files_uuid = nil;
     }
