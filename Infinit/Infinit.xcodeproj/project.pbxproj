@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 47;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -81,6 +81,9 @@
 		8384909C1A76969700969CF7 /* InfinitFilePreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 8384909B1A76969700969CF7 /* InfinitFilePreview.m */; };
 		83876AED1A77965400F79905 /* InfinitPortraitNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83876AEC1A77965400F79905 /* InfinitPortraitNavigationController.m */; };
 		83876AF31A78CCC900F79905 /* InfinitDownloadFolderManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83876AF21A78CCC900F79905 /* InfinitDownloadFolderManager.mm */; };
+		83912C5E1AD81F6000434F6A /* InfinitExtensionPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83912C5D1AD81F6000434F6A /* InfinitExtensionPopoverController.m */; };
+		83912C611AD823DE00434F6A /* InfinitExtensionFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83912C601AD823DE00434F6A /* InfinitExtensionFileCell.m */; };
+		83912C641AD827AD00434F6A /* InfinitExtensionMoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83912C631AD827AD00434F6A /* InfinitExtensionMoreCell.m */; };
 		839B813F1A6407990057E92B /* InfinitSendContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 839B813E1A6407990057E92B /* InfinitSendContactCell.m */; };
 		839B814B1A6443220057E92B /* InfinitSendAbstractCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 839B814A1A6443220057E92B /* InfinitSendAbstractCell.m */; };
 		83A0A7F21AA44D9000B8F9E8 /* WelcomeSignupFacebookView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A0A7F11AA44D9000B8F9E8 /* WelcomeSignupFacebookView.m */; };
@@ -394,6 +397,12 @@
 		83876AEC1A77965400F79905 /* InfinitPortraitNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitPortraitNavigationController.m; sourceTree = "<group>"; };
 		83876AF11A78CCC900F79905 /* InfinitDownloadFolderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitDownloadFolderManager.h; sourceTree = "<group>"; };
 		83876AF21A78CCC900F79905 /* InfinitDownloadFolderManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitDownloadFolderManager.mm; sourceTree = "<group>"; };
+		83912C5C1AD81F6000434F6A /* InfinitExtensionPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitExtensionPopoverController.h; sourceTree = "<group>"; };
+		83912C5D1AD81F6000434F6A /* InfinitExtensionPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitExtensionPopoverController.m; sourceTree = "<group>"; };
+		83912C5F1AD823DE00434F6A /* InfinitExtensionFileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitExtensionFileCell.h; sourceTree = "<group>"; };
+		83912C601AD823DE00434F6A /* InfinitExtensionFileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitExtensionFileCell.m; sourceTree = "<group>"; };
+		83912C621AD827AD00434F6A /* InfinitExtensionMoreCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitExtensionMoreCell.h; sourceTree = "<group>"; };
+		83912C631AD827AD00434F6A /* InfinitExtensionMoreCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitExtensionMoreCell.m; sourceTree = "<group>"; };
 		839B813D1A6407990057E92B /* InfinitSendContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendContactCell.h; sourceTree = "<group>"; };
 		839B813E1A6407990057E92B /* InfinitSendContactCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendContactCell.m; sourceTree = "<group>"; };
 		839B81491A6443220057E92B /* InfinitSendAbstractCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendAbstractCell.h; sourceTree = "<group>"; };
@@ -910,6 +919,19 @@
 			name = Utilities;
 			sourceTree = "<group>";
 		};
+		83912C5B1AD81F4B00434F6A /* Extension Popover */ = {
+			isa = PBXGroup;
+			children = (
+				83912C5F1AD823DE00434F6A /* InfinitExtensionFileCell.h */,
+				83912C601AD823DE00434F6A /* InfinitExtensionFileCell.m */,
+				83912C621AD827AD00434F6A /* InfinitExtensionMoreCell.h */,
+				83912C631AD827AD00434F6A /* InfinitExtensionMoreCell.m */,
+				83912C5C1AD81F6000434F6A /* InfinitExtensionPopoverController.h */,
+				83912C5D1AD81F6000434F6A /* InfinitExtensionPopoverController.m */,
+			);
+			name = "Extension Popover";
+			sourceTree = "<group>";
+		};
 		83B02E8B1A790B1D009070FB /* Preview Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -952,6 +974,7 @@
 				834FCFC11A7B93B900930BD8 /* Background Manager */,
 				8311B5AF1A7CE0CB00832FDE /* Contacts */,
 				83EBB0A11A947AF900144BC6 /* Customised Classes */,
+				83912C5B1AD81F4B00434F6A /* Extension Popover */,
 				83F5E5921AA4BCE70011E4F0 /* Facebook Manager */,
 				83EBB0B21A97308000144BC6 /* File Management */,
 				83157ED31A73D25A00F8E87F /* Files */,
@@ -1476,7 +1499,7 @@
 				};
 			};
 			buildConfigurationList = 83B32D581A136485004AB945 /* Build configuration list for PBXProject "Infinit" */;
-			compatibilityVersion = "Xcode 6.3";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -1624,6 +1647,7 @@
 				833E3ACC1A63D89B0088D3FF /* InfinitImportOverlayView.m in Sources */,
 				8311B5C61A7FAB2800832FDE /* InfinitContactsNavigationController.m in Sources */,
 				83672B901A9F4493009425E6 /* InfinitHomeNavigationController.m in Sources */,
+				83912C611AD823DE00434F6A /* InfinitExtensionFileCell.m in Sources */,
 				83F5E59D1AA4F9360011E4F0 /* InfinitLoginInvitationCodeController.m in Sources */,
 				83876AF31A78CCC900F79905 /* InfinitDownloadFolderManager.mm in Sources */,
 				83E112D91A8266090072DAE0 /* InfinitWelcomeOnboardingController.m in Sources */,
@@ -1647,6 +1671,7 @@
 				83C50FA41AB6BF8E009EBB44 /* JDStatusBarNotification.m in Sources */,
 				836080541ACEC68E00EBC4E2 /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */,
 				831237281A602C6900D5C41C /* InfinitSendTabIcon.m in Sources */,
+				83912C641AD827AD00434F6A /* InfinitExtensionMoreCell.m in Sources */,
 				835B9D611A9E61EE00FD0D54 /* InfinitFilesBottomBar.m in Sources */,
 				83B32D691A136485004AB945 /* ViewController.m in Sources */,
 				83FE65941A6E597500D3CA9A /* InfinitHomeAbstractCell.m in Sources */,
@@ -1665,6 +1690,7 @@
 				8369E8821A83BC1D00ECD519 /* InfinitHomeFeedbackViewController.m in Sources */,
 				83F962A91AAB331D003F2DE7 /* InfinitFilesOnboardingManager.m in Sources */,
 				83D370BF1AD6716C00C4C1A3 /* InfinitWormhole.m in Sources */,
+				83912C5E1AD81F6000434F6A /* InfinitExtensionPopoverController.m in Sources */,
 				836406061AB89221005CC50C /* InfinitKeychain.m in Sources */,
 				D00045BD1A499A20008DB448 /* InfinitContactImportCell.m in Sources */,
 				834FCFC41A7B93CA00930BD8 /* InfinitBackgroundManager.mm in Sources */,
