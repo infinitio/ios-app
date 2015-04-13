@@ -54,12 +54,6 @@ static dispatch_once_t _instance_token = 0;
                                              selector:@selector(transactionUpdated:) 
                                                  name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION 
                                                object:nil];
-    if (CGSizeEqualToSize(CGSizeZero, _thumbnail_scaled_size))
-    {
-      CGFloat scale = [InfinitHostDevice screenScale];
-      _thumbnail_scaled_size = CGSizeMake(_thumbnail_size.width * scale,
-                                          _thumbnail_size.height * scale);
-    }
   }
   return self;
 }
@@ -173,13 +167,18 @@ static dispatch_once_t _instance_token = 0;
   @synchronized(self.pending_thumbnails)
   {
     NSMutableArray* thumbnails = [NSMutableArray array];
+    NSUInteger count = 0;
     for (NSString* file in files)
     {
       UIImage* thumb = [InfinitFilePreview previewForPath:file
                                                    ofSize:_thumbnail_size
                                                      crop:YES];
       if (thumb != nil)
+      {
         [thumbnails addObject:thumb];
+        if (++count >= _max_thumbnails)
+          break;
+      }
     }
     InfinitPeerTransaction* transaction =
       [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
@@ -219,14 +218,17 @@ static dispatch_once_t _instance_token = 0;
       generate_thumbnails = YES;
     }
     NSString* thumb_path = nil;
-    for (NSString* thumb in contents)
+    if (!generate_thumbnails)
     {
-      thumb_path = [root_folder stringByAppendingPathComponent:thumb];
-      UIImage* thumbnail = [UIImage imageWithContentsOfFile:thumb_path];
-      if (thumbnail == nil)
-        generate_thumbnails = YES;
-      else
-        [res addObject:thumbnail];
+      for (NSString* thumb in contents)
+      {
+        thumb_path = [root_folder stringByAppendingPathComponent:thumb];
+        UIImage* thumbnail = [UIImage imageWithContentsOfFile:thumb_path];
+        if (thumbnail == nil)
+          generate_thumbnails = YES;
+        else
+          [res addObject:thumbnail];
+      }
     }
   }
 
