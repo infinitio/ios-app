@@ -626,6 +626,8 @@
       [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:self.extension_files_uuid];
     _thumbnail_elements = [files copy];
     NSArray* ids = [self sendFilesToCurrentRecipients:files];
+    [[InfinitTemporaryFileManager sharedInstance] setTransactionIds:ids
+                                                    forManagedFiles:_managed_files_id];
     for (NSNumber* id_ in ids)
     {
       if (id_.unsignedIntValue != 0)
