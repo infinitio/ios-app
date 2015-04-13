@@ -21,6 +21,7 @@
 #import "InfinitHomeOnboardingCell.h"
 #import "InfinitHomeRatingCell.h"
 #import "InfinitHostDevice.h"
+#import "InfinitMetricsManager.h"
 #import "InfinitOfflineOverlay.h"
 #import "InfinitRatingManager.h"
 #import "InfinitResizableNavigationBar.h"
@@ -1540,6 +1541,16 @@ openFileTapped:(NSUInteger)file_index
       send_controller.extension_send = YES;
       send_controller.extension_files_uuid = self.extension_files_uuid;
       _extension_files_uuid = nil;
+    }
+    if (send_controller.extension_send)
+    {
+      [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewOpen
+                                 method:InfinitUIMethodExtensionFiles];
+    }
+    else
+    {
+      [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewOpen
+                                 method:InfinitUIMethodHomeCard];
     }
     [UIView animateWithDuration:0.3f
                      animations:^
