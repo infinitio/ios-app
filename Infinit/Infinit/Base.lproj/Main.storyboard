@@ -1595,6 +1595,10 @@ access your phone contacts!</string>
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GCE-o4-tuq">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eBW-W0-9ZO">
                                 <rect key="frame" x="160" y="167" width="280" height="265"/>
                                 <subviews>
@@ -1622,20 +1626,20 @@ access your phone contacts!</string>
                                             <constraint firstAttribute="height" constant="100" id="Qtl-YV-WAb"/>
                                         </constraints>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="4" minimumInteritemSpacing="4" id="wDk-hv-Vjy">
-                                            <size key="itemSize" width="50" height="50"/>
+                                            <size key="itemSize" width="40" height="40"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="extension_file_cell_id" id="NPc-Ew-BiM" customClass="InfinitExtensionFileCell">
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" reuseIdentifier="extension_file_cell_id" id="NPc-Ew-BiM" customClass="InfinitExtensionFileCell">
                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                    <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J6j-Xh-Ypo">
+                                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="J6j-Xh-Ypo">
                                                             <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                         </imageView>
                                                     </subviews>
@@ -1647,20 +1651,20 @@ access your phone contacts!</string>
                                                     <constraint firstItem="J6j-Xh-Ypo" firstAttribute="leading" secondItem="NPc-Ew-BiM" secondAttribute="leading" id="oxd-S6-zaT"/>
                                                     <constraint firstItem="J6j-Xh-Ypo" firstAttribute="top" secondItem="NPc-Ew-BiM" secondAttribute="top" id="w1X-fN-Cg7"/>
                                                 </constraints>
-                                                <size key="customSize" width="30" height="30"/>
+                                                <size key="customSize" width="40" height="40"/>
                                                 <connections>
                                                     <outlet property="file_icon_view" destination="J6j-Xh-Ypo" id="0Ew-Pb-Q1y"/>
                                                 </connections>
                                             </collectionViewCell>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="extension_more_cell_id" id="HWx-Ju-29P" customClass="InfinitExtensionMoreCell">
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" reuseIdentifier="extension_more_cell_id" id="HWx-Ju-29P" customClass="InfinitExtensionMoreCell">
                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                    <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+5" textAlignment="center" lineBreakMode="middleTruncation" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MoH-dc-fmU">
-                                                            <rect key="frame" x="0.0" y="5" width="30" height="21"/>
+                                                            <rect key="frame" x="0.0" y="10" width="40" height="21"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
                                                             <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -1674,7 +1678,7 @@ access your phone contacts!</string>
                                                     <constraint firstItem="MoH-dc-fmU" firstAttribute="leading" secondItem="HWx-Ju-29P" secondAttribute="leading" id="WVQ-5C-TR7"/>
                                                     <constraint firstAttribute="trailing" secondItem="MoH-dc-fmU" secondAttribute="trailing" id="c9O-yu-hk2"/>
                                                 </constraints>
-                                                <size key="customSize" width="30" height="30"/>
+                                                <size key="customSize" width="40" height="40"/>
                                                 <connections>
                                                     <outlet property="files_label" destination="MoH-dc-fmU" id="i2X-Pe-2vW"/>
                                                 </connections>
@@ -1721,10 +1725,6 @@ access your phone contacts!</string>
                                     <action selector="cancelTapped:" destination="K3I-bk-VOV" eventType="touchUpInside" id="Zht-9j-qS0"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GCE-o4-tuq">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-                            </view>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="GCE-o4-tuq" secondAttribute="trailing" id="0Vd-Ji-VoJ"/>
