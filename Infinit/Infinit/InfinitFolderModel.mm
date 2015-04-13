@@ -157,8 +157,7 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
     }
     else
     {
-      CGSize thumb_size = CGSizeMake(50.0f * [InfinitHostDevice screenScale],
-                                     50.0f * [InfinitHostDevice screenScale]);
+      CGSize thumb_size = CGSizeMake(50.0f, 50.0f);
       CGRect output_rect = CGRectMake(0.0f, 0.0f, thumb_size.width, thumb_size.height);
       UIGraphicsBeginImageContextWithOptions(thumb_size, NO, 0.0f);
       if (thumbs.count == 1)
@@ -171,14 +170,19 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
         NSUInteger count = 0;
         for (UIImage* image in thumbs)
         {
-          CGRect rect = CGRectMake((thumb_size.width / 2.0f) * count,
-                                   0.0f,
-                                   thumb_size.width / 2.0f,
-                                   thumb_size.height);
-          CGImageRef image_ref = CGImageCreateWithImageInRect(image.CGImage, rect);
+          CGRect draw_rect = CGRectMake(floor(thumb_size.width / 2.0f) * count,
+                                        0.0f,
+                                        floor(thumb_size.width / 2.0f),
+                                        thumb_size.height);
+          CGFloat scale = [InfinitHostDevice screenScale];
+          CGImageRef image_ref =
+            CGImageCreateWithImageInRect(image.CGImage, CGRectMake(draw_rect.origin.x * scale,
+                                                                   draw_rect.origin.y * scale,
+                                                                   draw_rect.size.width * scale,
+                                                                   draw_rect.size.height * scale));
           UIImage* draw_image = [UIImage imageWithCGImage:image_ref];
           CGImageRelease(image_ref);
-          [draw_image drawInRect:rect];
+          [draw_image drawInRect:draw_rect];
           count++;
         }
         UIBezierPath* line = [UIBezierPath bezierPath];
