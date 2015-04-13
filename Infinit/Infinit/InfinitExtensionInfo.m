@@ -58,7 +58,7 @@ static InfinitExtensionInfo* _instance = nil;
 {
   NSFileManager* manager = [NSFileManager defaultManager];
   NSURL* shared_url =
-  [manager containerURLForSecurityApplicationGroupIdentifier:kInfinitAppGroupName];
+    [manager containerURLForSecurityApplicationGroupIdentifier:kInfinitAppGroupName];
   NSString* res = [shared_url.path stringByAppendingPathComponent:@"extension"];
   if (![manager fileExistsAtPath:res])
   {
