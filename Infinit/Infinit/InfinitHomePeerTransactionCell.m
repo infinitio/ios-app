@@ -645,26 +645,24 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 
   InfinitHomePeerTransactionFileCell* cell =
     [self.files_view dequeueReusableCellWithReuseIdentifier:_file_cell_id forIndexPath:indexPath];
+  CGSize thumb_size = CGSizeMake(45.0f, 45.0f);
+  UIImage* thumb = nil;
   if (self.folder)
   {
     cell.filename = [self.folder.files[indexPath.row] name];
-    cell.file_icon_view.contentMode = UIViewContentModeCenter;
-    cell.thumbnail =
-      [[self.folder.files[indexPath.row] thumbnail] roundedMaskOfSize:CGSizeMake(45.0f, 45.0f)
-                                                         cornerRadius:2.0f];
+    thumb = [self.folder.files[indexPath.row] thumbnail];
   }
   else if (self.upload_thumbnails)
   {
     cell.filename = self.transaction.files[indexPath.row];
-    cell.file_icon_view.contentMode = UIViewContentModeScaleAspectFit;
-    cell.thumbnail = self.upload_thumbnails[indexPath.row];
+    thumb = self.upload_thumbnails[indexPath.row];
   }
   else
   {
     cell.filename = self.transaction.files[indexPath.row];
-    cell.file_icon_view.contentMode = UIViewContentModeCenter;
-    cell.thumbnail = [InfinitFilePreview iconForFilename:self.transaction.files[indexPath.row]];
+    thumb = [InfinitFilePreview iconForFilename:self.transaction.files[indexPath.row]];
   }
+  cell.thumbnail = [thumb roundedMaskOfSize:thumb_size cornerRadius:2.0f];
   return cell;
 }
 
