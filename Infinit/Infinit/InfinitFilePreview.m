@@ -58,9 +58,6 @@
       break;
     case InfinitFileTypeDirectory:
       res = [UIImage imageNamed:@"icon-mimetype-folder-home"];
-    case InfinitFileTypeDocument:
-      res = [UIImage imageNamed:@"icon-mimetype-doc-home"];
-      break;
     case InfinitFileTypeImage:
       res = [UIImage imageNamed:@"icon-mimetype-picture-home"];
       break;
@@ -68,9 +65,10 @@
       res = [UIImage imageNamed:@"icon-mimetype-video-home"];
       break;
 
+    case InfinitFileTypeDocument:
     case InfinitFileTypeOther:
     default:
-      res = [UIImage imageNamed:@"icon-mimetype-doc-home"];
+      res = [UIImage imageNamed:@"icon-mimetype-doc"];
       break;
   }
   return res;
@@ -81,8 +79,7 @@
                       crop:(BOOL)crop
 {
   __block UIImage* res = nil;
-  CGSize scaled_size = CGSizeMake(size.width * [InfinitHostDevice screenScale],
-                                  size.height * [InfinitHostDevice screenScale]);
+  __block BOOL generated = NO;
   InfinitFileTypes type = [InfinitFilePreview fileTypeForPath:path];
   if (type == InfinitFileTypeAudio)
   {
@@ -95,6 +92,7 @@
   else if (type == InfinitFileTypeImage)
   {
     res = [UIImage imageWithContentsOfFile:path];
+    generated = YES;
   }
   else if (type == InfinitFileTypeDirectory)
   {
@@ -126,6 +124,7 @@
        else
        {
          res = [UIImage imageWithCGImage:image];
+         generated = YES;
        }
        dispatch_semaphore_signal(thumb_sema);
      }];
@@ -135,34 +134,34 @@
   {
     res = [UIImage imageNamed:@"icon-mimetype-doc"];
   }
+  if (!generated)
+    return res;
+
   CGFloat scale;
   if (crop)
   {
-    scale = MIN(res.size.width / scaled_size.width,
-                res.size.height / scaled_size.height);
+    scale = MIN(CGImageGetWidth(res.CGImage) / size.width,
+                CGImageGetHeight(res.CGImage) / size.height);
   }
   else
   {
-    scale = MAX(res.size.width / scaled_size.width,
-                res.size.height / scaled_size.height);
+    scale = MAX(CGImageGetWidth(res.CGImage) / size.width,
+                CGImageGetHeight(res.CGImage) / size.height);
   }
-  CGFloat new_w = res.size.width / scale;
-  CGFloat new_h = res.size.height / scale;
-  CGRect rect = CGRectMake(0.0f, 0.0f, new_w, new_h);
-  UIGraphicsBeginImageContext(rect.size);
+  CGSize new_size = CGSizeMake(floor(res.size.width / scale), floor(res.size.height / scale));
+  UIGraphicsBeginImageContextWithOptions(size, YES, 0.0f);
+  CGRect rect = CGRectMake(0.0f, 0.0f, new_size.width, new_size.height);
+  if (crop)
+  {
+    rect = CGRectMake(floor((size.width - new_size.width) / 2.0f),
+                      floor((size.height - new_size.height) / 2.0f),
+                      new_size.width,
+                      new_size.height);
+    UIRectClip(rect);
+  }
   [res drawInRect:rect];
   res = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
-  if (crop)
-  {
-    CGRect crop_rect = CGRectMake((res.size.width - new_w) / 2.0f,
-                                  (res.size.height - new_h) / 2.0f,
-                                  scaled_size.width,
-                                  scaled_size.height);
-    CGImageRef cropped_image = CGImageCreateWithImageInRect(res.CGImage, crop_rect);
-    res = [UIImage imageWithCGImage:cropped_image];
-    CGImageRelease(cropped_image);
-  }
   return res;
 }
 
