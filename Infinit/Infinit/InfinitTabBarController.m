@@ -215,6 +215,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 
 - (void)viewWillAppear:(BOOL)animated
 {
+  [super viewWillAppear:animated];
   [[UIApplication sharedApplication] setStatusBarHidden:NO];
   if (!_first_appear)
   {
@@ -222,14 +223,24 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
     if (![InfinitConnectionManager sharedInstance].connected)
       [self handleOffline];
     else
-      [self handleOnline];
+      [self handleOnlineInitial:YES];
   }
   else
   {
     if (![InfinitConnectionManager sharedInstance].connected)
       [self handleOffline];
   }
-  [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+  [super viewDidAppear:animated];
+  [self handleExtensionFiles];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+  [super viewWillDisappear:animated];
 }
 
 - (void)updateHomeBadge
@@ -617,8 +628,14 @@ shouldSelectViewController:(UIViewController*)viewController
 
 - (void)handleOnline
 {
+  [self handleOnlineInitial:NO];
+}
+
+- (void)handleOnlineInitial:(BOOL)initial
+{
   [self.offline_overlay removeFromSuperview];
-  [self handleExtensionFiles];
+  if (!initial)
+    [self handleExtensionFiles];
 }
 
 #pragma mark - Peer Invitation Code
@@ -728,38 +745,41 @@ shouldSelectViewController:(UIViewController*)viewController
 {
   @synchronized(self)
   {
-    if (![InfinitConnectionManager sharedInstance].connected)
+    if (![InfinitConnectionManager sharedInstance].was_logged_in ||
+        ![InfinitTemporaryFileManager sharedInstance].ready)
+    {
       return;
+    }
 
     NSString* extension_files = [InfinitExtensionInfo sharedInstance].files_path;
     NSArray* contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:extension_files
                                                                             error:nil];
-    if (contents.count > 0)
+    if (contents.count == 0)
+      return;
+
+    InfinitTemporaryFileManager* manager = [InfinitTemporaryFileManager sharedInstance];
+    _extension_uuid = [manager createManagedFiles];
+    NSMutableArray* file_paths = [NSMutableArray array];
+    for (NSString* file in contents)
+      [file_paths addObject:[extension_files stringByAppendingPathComponent:file]];
+    [manager addFiles:file_paths toManagedFiles:self.extension_uuid copy:NO];
+    [self showMainScreen:self.viewControllers[self.selectedIndex]];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(300 * NSEC_PER_MSEC)),
+                   dispatch_get_main_queue(), ^
     {
-      InfinitTemporaryFileManager* manager = [InfinitTemporaryFileManager sharedInstance];
-      _extension_uuid = [manager createManagedFiles];
-      NSMutableArray* file_paths = [NSMutableArray array];
-      for (NSString* file in contents)
-      {
-        [file_paths addObject:[extension_files stringByAppendingPathComponent:file]];
-      }
-      [manager addFiles:file_paths toManagedFiles:self.extension_uuid copy:NO];
       UIStoryboard* board = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-      _extension_popover = [board instantiateViewControllerWithIdentifier:@"extension_popover_id"];
+        _extension_popover = [board instantiateViewControllerWithIdentifier:@"extension_popover_id"];
       self.extension_popover.delegate = self;
       self.extension_popover.files =
         [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:self.extension_uuid];
-      [self showMainScreen:self.viewControllers[self.selectedIndex]];
-      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(300 * NSEC_PER_MSEC)),
-                     dispatch_get_main_queue(), ^
-      {
-        [self addChildViewController:self.extension_popover];
-        self.extension_popover.view.frame = self.view.frame;
-        [self.view addSubview:self.extension_popover.view];
-        [self.extension_popover didMoveToParentViewController:self];
-        [self.extension_popover beginAppearanceTransition:YES animated:YES];
-      });
-    }
+      UIViewController* controller = [UIApplication sharedApplication].keyWindow.rootViewController;
+      [self.extension_popover willMoveToParentViewController:controller];
+      [self addChildViewController:self.extension_popover];
+      self.extension_popover.view.frame = controller.view.frame;
+      [controller.view addSubview:self.extension_popover.view];
+      [self.extension_popover didMoveToParentViewController:controller];
+      [self.extension_popover beginAppearanceTransition:YES animated:YES];
+    });
   }
 }
 
@@ -777,15 +797,15 @@ shouldSelectViewController:(UIViewController*)viewController
 
 - (void)extensionPopoverWantsSend:(InfinitExtensionPopoverController*)sender
 {
-  InfinitHomeViewController* home_controller =
-    (InfinitHomeViewController*)[self.viewControllers[InfinitTabBarIndexHome] topViewController];
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(300 * NSEC_PER_MSEC)),
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(400 * NSEC_PER_MSEC)),
                  dispatch_get_main_queue(), ^
   {
     [self.extension_popover willMoveToParentViewController:nil];
     [self.extension_popover.view removeFromSuperview];
     [self.extension_popover removeFromParentViewController];
     _extension_popover = nil;
+    InfinitHomeViewController* home_controller =
+      (InfinitHomeViewController*)[self.viewControllers[InfinitTabBarIndexHome] topViewController];
     [home_controller showRecipientsForManagedFiles:self.extension_uuid];
     _extension_uuid = nil;
   });
