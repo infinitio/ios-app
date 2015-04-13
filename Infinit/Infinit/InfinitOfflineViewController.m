@@ -55,29 +55,12 @@
 - (void)connectionStatusChanged:(NSNotification*)notification
 {
   InfinitConnectionStatus* connection_status = notification.object;
-  if (connection_status.status)
-  {
-    [self performSelectorOnMainThread:@selector(setConnectionStatus:)
-                           withObject:@YES
-                        waitUntilDone:NO];
-  }
-  else
-  {
-    [self performSelectorOnMainThread:@selector(setConnectionStatus:)
-                           withObject:@NO
-                        waitUntilDone:NO];
-  }
-}
-
-- (void)setConnectionStatus:(NSNumber*)status_num
-{
-  BOOL status = status_num.boolValue;
-  if (self.current_status == status)
+  if (self.current_status == connection_status.status)
     return;
-  _current_status = status;
-  if (status)
+  _current_status = connection_status.status;
+  if (connection_status.status)
     [self hideOfflineOverlayAnimated:YES];
-  [self statusChangedTo:status];
+  [self statusChangedTo:self.current_status];
 }
 
 #pragma mark - Offline Overlay
