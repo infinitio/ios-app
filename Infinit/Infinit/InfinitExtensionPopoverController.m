@@ -28,8 +28,8 @@
 
 @end
 
-static CGSize _cell_size = {30.0f, 30.0f};
-static NSInteger _max_items = 7;
+static CGSize _cell_size = {40.0f, 40.0f};
+static NSInteger _max_items = 9;
 
 @implementation InfinitExtensionPopoverController
 {
