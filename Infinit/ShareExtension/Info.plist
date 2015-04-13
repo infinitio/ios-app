@@ -38,18 +38,10 @@
     $extensionItem.attachments,
     $attachment,
     ANY $attachment.registeredTypeIdentifiers UTI-EQUALS &quot;public.file-url&quot; ||
-    (
-      NOT ANY $attachment.registeredTypeIdentifiers UTI-EQUALS &quot;public.url&quot; &amp;&amp;
-      (
-        ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;public.image&quot; ||
-        ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;public.video&quot; ||
-        ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;public.movie&quot; ||
-        ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;public.audio&quot;
-      )
-    )
+    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;public.image&quot; ||
+    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;public.audiovisual-content&quot;
   ).@count &gt;= 1
-).@count &gt;= 1
-</string>
+).@count &gt;= 1</string>
 		</dict>
 		<key>NSExtensionMainStoryboard</key>
 		<string>MainInterface</string>
