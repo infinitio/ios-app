@@ -47,6 +47,7 @@ typedef NS_ENUM(NSUInteger, InfinitUIMethods)
   InfinitUIMethodTabBar,
   InfinitUIMethodSendGalleryNext,
   InfinitUIMethodExtensionFiles,
+  InfinitUIMethodHomeCard,
 };
 
 #endif

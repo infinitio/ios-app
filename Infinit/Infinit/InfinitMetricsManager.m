@@ -129,6 +129,8 @@ static InfinitMetricsManager* _instance = nil;
       return @"send gallery next";
     case InfinitUIMethodExtensionFiles:
       return @"extension files";
+    case InfinitUIMethodHomeCard:
+      return @"home card";
 
     default:
       NSCAssert(false, @"Unknown metrics method");
