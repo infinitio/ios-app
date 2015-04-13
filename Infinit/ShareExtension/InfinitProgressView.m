@@ -33,18 +33,17 @@ static float _max_size = 15.0f;
       CABasicAnimation* anim = [CABasicAnimation animationWithKeyPath:@"path"];
       CGPoint center = CGPointMake((self.bounds.size.width / 2.0f) + ((i - 1) * (_max_size + 2.0f)),
                                    self.bounds.size.height / 2.0f);
-      anim.fromValue = (__bridge id)[UIBezierPath bezierPathWithArcCenter:center
-                                                                   radius:0.0f
-                                                               startAngle:0.0f
-                                                                 endAngle:(2.0f * M_PI)
-                                                                clockwise:NO].CGPath;
-      anim.toValue = (__bridge id)[UIBezierPath bezierPathWithArcCenter:center
-                                                                 radius:(_max_size / 2.0f)
-                                                             startAngle:0.0f
-                                                               endAngle:(2.0f * M_PI)
-                                                              clockwise:NO].CGPath;
+      UIBezierPath* start_circ =
+        [UIBezierPath bezierPathWithOvalInRect:CGRectMake(center.x, center.y, 0.0f, 0.0f)];
+      anim.fromValue = (__bridge id)start_circ.CGPath;
+      UIBezierPath* end_circ =
+        [UIBezierPath bezierPathWithOvalInRect:CGRectMake(center.x - (_max_size / 2.0f),
+                                                          center.y - (_max_size / 2.0f),
+                                                          _max_size,
+                                                          _max_size)];
+      anim.toValue = (__bridge id)end_circ.CGPath;
       anim.timingFunction =
-      [CAMediaTimingFunction functionWithControlPoints:0.8f :0.0f :0.6f :1.0f];
+        [CAMediaTimingFunction functionWithControlPoints:0.8f :0.0f :0.6f :1.0f];
       anim.duration = 0.75f;
       anim.beginTime = CACurrentMediaTime() + (i * anim.duration / 4.0f);
       anim.repeatCount = HUGE_VALF;
