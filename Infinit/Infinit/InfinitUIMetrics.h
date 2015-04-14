@@ -30,6 +30,8 @@ typedef NS_ENUM(NSUInteger, InfinitUIEvents)
   // Contact view
   InfinitUIEventContactViewOpen,
   InfinitUIEventContactViewFavorite,
+  // Rating card
+  InfinitUIEventRateFromCard,
 };
 
 typedef NS_ENUM(NSUInteger, InfinitUIMethods)

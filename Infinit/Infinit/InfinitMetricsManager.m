@@ -93,6 +93,8 @@ static InfinitMetricsManager* _instance = nil;
       return @"contact open";
     case InfinitUIEventContactViewFavorite:
       return @"contact favorite";
+    case InfinitUIEventRateFromCard:
+      return @"card rating";
 
     default:
       NSCAssert(false, @"Unknown metrics event");
