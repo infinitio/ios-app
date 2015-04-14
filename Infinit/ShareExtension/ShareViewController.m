@@ -276,6 +276,7 @@ static NSUInteger _min_delay = 3;
        if (success)
        {
          image = [UIImage imageNamed:@"icon-extension-check"];
+         top_text = NSLocalizedString(@"Files copied!", nil);
          bottom_bold_range = [bottom_text rangeOfString:NSLocalizedString(@"Infinit", nil)];
        }
        else
