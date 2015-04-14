@@ -184,7 +184,7 @@ static NSUInteger _min_delay = 3;
                 NSDateFormatter* date_formatter = [[NSDateFormatter alloc] init];
                 date_formatter.dateFormat = @"yyyy-MM-DD HH:mm:ss";
                 NSString* filename =
-                  [NSString stringWithFormat:@"Image-%@.jpg", [date_formatter stringFromDate:date]];
+                  [NSString stringWithFormat:@"Image %@.jpg", [date_formatter stringFromDate:date]];
                 NSData* data = UIImageJPEGRepresentation(image, 1.0f);
                 NSString* path = [self.temp_dir stringByAppendingPathComponent:filename];
                 [data writeToFile:path atomically:NO];
