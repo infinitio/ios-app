@@ -761,7 +761,9 @@
     {
       InfinitSendUserCell* cell = [tableView dequeueReusableCellWithIdentifier:_infinit_user_cell_id
                                                                   forIndexPath:indexPath];
-      cell.contact = self.device_results[indexPath.row];
+      InfinitContact* contact = self.device_results[indexPath.row];
+      cell.contact = contact;
+      [cell setSelected:[self.recipients containsObject:contact] animated:NO];
       cell.user_type_view.hidden = NO;
       res = cell;
     }
@@ -769,7 +771,12 @@
     {
       InfinitSendDeviceCell* cell = [tableView dequeueReusableCellWithIdentifier:_device_cell_id
                                                                     forIndexPath:indexPath];
-      [cell setupForContact:self.device_results[indexPath.row]];
+      InfinitContact* contact = self.device_results[indexPath.row];
+      [cell setupForContact:contact];
+      if ([self.recipients containsObject:contact])
+        [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+      else
+        [tableView deselectRowAtIndexPath:indexPath animated:NO];
       res = cell;
     }
   }
@@ -777,8 +784,13 @@
   {
     InfinitSendUserCell* cell = [tableView dequeueReusableCellWithIdentifier:_infinit_user_cell_id
                                                                 forIndexPath:indexPath];
-    cell.contact = self.swagger_results[indexPath.row];
+    InfinitContact* contact = self.swagger_results[indexPath.row];
+    cell.contact = contact;
     cell.user_type_view.hidden = !cell.contact.infinit_user.favorite;
+    if ([self.recipients containsObject:contact])
+      [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    else
+      [tableView deselectRowAtIndexPath:indexPath animated:NO];
     res = cell;
   }
   else
@@ -805,6 +817,10 @@
         cell.letter_label.hidden = NO;
       else
         cell.letter_label.hidden = YES;
+      if ([self.recipients containsObject:contact])
+        [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+      else
+        [tableView deselectRowAtIndexPath:indexPath animated:NO];
       res = cell;
     }
   }
