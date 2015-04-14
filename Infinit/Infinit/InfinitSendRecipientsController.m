@@ -512,7 +512,10 @@
 
 - (IBAction)backButtonTapped:(id)sender
 {
-  [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:_managed_files_id];
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+  {
+    [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:_managed_files_id];
+  });
   [self.navigationController popViewControllerAnimated:YES];
 }
 
