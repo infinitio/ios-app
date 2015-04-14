@@ -12,6 +12,7 @@
 #import "InfinitExtensionInfo.h"
 #import "InfinitFileModel.h"
 #import "InfinitFilePreview.h"
+#import "InfinitMetricsManager.h"
 
 #import "JDStatusBarNotification.h"
 
@@ -48,6 +49,7 @@
   self.currentPreviewItemIndex = index;
   self.delegate = self;
   self.dataSource = self;
+  [InfinitMetricsManager sendMetric:InfinitUIEventFilePreview method:InfinitUIMethodNone];
 }
 
 - (void)viewDidLoad
@@ -123,6 +125,7 @@
                     previewItemAtIndex:(NSInteger)index
 {
   InfinitFileModel* file = self.folder.files[index];
+  NSLog(@"xxx %@", file.path.lastPathComponent);
   return [NSURL fileURLWithPath:file.path];
 }
 

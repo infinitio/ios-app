@@ -95,6 +95,8 @@ static InfinitMetricsManager* _instance = nil;
       return @"contact favorite";
     case InfinitUIEventRateFromCard:
       return @"card rating";
+    case InfinitUIEventFilePreview:
+      return @"preview file";
 
     default:
       NSCAssert(false, @"Unknown metrics event");
