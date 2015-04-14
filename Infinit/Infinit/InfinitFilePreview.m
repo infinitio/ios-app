@@ -22,7 +22,29 @@
                                                                extension,
                                                                NULL);
   InfinitFileTypes res = InfinitFileTypeOther;
-  if (UTTypeConformsTo(file_uti, kUTTypeAudio))
+  if (UTTypeConformsTo(file_uti, CFSTR("com.adobe.illustrator.ai-image")))
+  {
+    res = InfinitFileTypeIllustrator;
+  }
+  else if (UTTypeConformsTo(file_uti, CFSTR("com.adobe.photoshop-image")))
+  {
+    res = InfinitFileTypePhotoshop;
+  }
+  else if (UTTypeConformsTo(file_uti, CFSTR("com.microsoft.excel.xls")) ||
+           UTTypeConformsTo(file_uti, CFSTR("com.apple.iwork.numbers.numbers")))
+  {
+    res = InfinitFileTypeSpreadsheet;
+  }
+  else if (UTTypeConformsTo(file_uti, CFSTR("com.microsoft.powerpoint")) ||
+           UTTypeConformsTo(file_uti, CFSTR("com.apple.iwork.keynote.key")))
+  {
+    res = InfinitFileTypePresentation;
+  }
+  else if (UTTypeConformsTo(file_uti, kUTTypeArchive))
+  {
+    res = InfinitFileTypeArchive;
+  }
+  else if (UTTypeConformsTo(file_uti, kUTTypeAudio))
   {
     res = InfinitFileTypeAudio;
   }
@@ -39,7 +61,7 @@
   {
     res = InfinitFileTypeImage;
   }
-  else if (UTTypeConformsTo(file_uti, kUTTypeMovie))
+  else if (UTTypeConformsTo(file_uti, kUTTypeAudiovisualContent))
   {
     res = InfinitFileTypeVideo;
   }
@@ -50,28 +72,33 @@
 
 + (UIImage*)iconForFilename:(NSString*)filename
 {
-  UIImage* res = nil;
   switch ([InfinitFilePreview fileTypeForPath:filename])
   {
+    case InfinitFileTypeArchive:
+      return [UIImage imageNamed:@"icon-mimetype-archive-home"];
     case InfinitFileTypeAudio:
-      res = [UIImage imageNamed:@"icon-mimetype-audio-home"];
-      break;
+      return [UIImage imageNamed:@"icon-mimetype-audio-home"];
     case InfinitFileTypeDirectory:
-      res = [UIImage imageNamed:@"icon-mimetype-folder-home"];
+      return [UIImage imageNamed:@"icon-mimetype-folder-home"];
+    case InfinitFileTypeIllustrator:
+      return [UIImage imageNamed:@"icon-mimetype-illustrator-home"];
     case InfinitFileTypeImage:
-      res = [UIImage imageNamed:@"icon-mimetype-picture-home"];
-      break;
+      return [UIImage imageNamed:@"icon-mimetype-picture-home"];
+    case InfinitFileTypePhotoshop:
+      return [UIImage imageNamed:@"icon-mimetype-photoshop-home"];
+    case InfinitFileTypeSketch:
+      return [UIImage imageNamed:@"icon-mimetype-sketch-home"];
+    case InfinitFileTypeSpreadsheet:
+    case InfinitFileTypePresentation:
+      return [UIImage imageNamed:@"icon-mimetype-powerpoint-home"];
     case InfinitFileTypeVideo:
-      res = [UIImage imageNamed:@"icon-mimetype-video-home"];
-      break;
+      return [UIImage imageNamed:@"icon-mimetype-video-home"];
 
     case InfinitFileTypeDocument:
     case InfinitFileTypeOther:
     default:
-      res = [UIImage imageNamed:@"icon-mimetype-doc"];
-      break;
+      return [UIImage imageNamed:@"icon-mimetype-doc-home"];
   }
-  return res;
 }
 
 + (UIImage*)previewForPath:(NSString*)path
@@ -81,22 +108,10 @@
   __block UIImage* res = nil;
   __block BOOL generated = NO;
   InfinitFileTypes type = [InfinitFilePreview fileTypeForPath:path];
-  if (type == InfinitFileTypeAudio)
-  {
-    res = [UIImage imageNamed:@"icon-mimetype-audio"];
-  }
-  else if (type == InfinitFileTypeDocument)
-  {
-    res = [UIImage imageNamed:@"icon-mimetype-doc"];
-  }
-  else if (type == InfinitFileTypeImage)
+  if (type == InfinitFileTypeImage)
   {
     res = [UIImage imageWithContentsOfFile:path];
     generated = YES;
-  }
-  else if (type == InfinitFileTypeDirectory)
-  {
-    res = [UIImage imageNamed:@"icon-mimetype-folder"];
   }
   else if (type == InfinitFileTypeVideo)
   {
@@ -132,11 +147,10 @@
   }
   else
   {
-    res = [UIImage imageNamed:@"icon-mimetype-doc"];
+    res = [self iconForFilename:path.lastPathComponent];
   }
   if (!generated)
     return res;
-
   CGFloat scale;
   if (crop)
   {
