@@ -1459,6 +1459,7 @@ openFileTapped:(NSUInteger)file_index
     case InfinitRatingCellStateRate:
     {
       [self doneRating];
+      [InfinitMetricsManager sendMetric:InfinitUIEventRateFromCard method:InfinitUIMethodYes];
       NSString* itunes_link =
         [kInfinitStoreRatingLink stringByReplacingOccurrencesOfString:@"APP_ID"
                                                            withString:kInfinitAppStoreId];
@@ -1499,6 +1500,7 @@ openFileTapped:(NSUInteger)file_index
 
     default:
       [self doneRating];
+      [InfinitMetricsManager sendMetric:InfinitUIEventRateFromCard method:InfinitUIMethodNo];
       break;
   }
 }
