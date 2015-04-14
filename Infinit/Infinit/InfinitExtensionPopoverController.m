@@ -223,7 +223,7 @@ static NSInteger _max_items = 9;
 - (NSInteger)collectionView:(UICollectionView*)collectionView
      numberOfItemsInSection:(NSInteger)section
 {
-  return self.file_previews.count == _max_items ? _max_items + 1 : self.file_previews.count;
+  return self.file_previews.count > _max_items ? _max_items + 1 : self.file_previews.count;
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView
