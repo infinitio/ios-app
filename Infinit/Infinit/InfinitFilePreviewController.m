@@ -125,7 +125,6 @@
                     previewItemAtIndex:(NSInteger)index
 {
   InfinitFileModel* file = self.folder.files[index];
-  NSLog(@"xxx %@", file.path.lastPathComponent);
   return [NSURL fileURLWithPath:file.path];
 }
 
