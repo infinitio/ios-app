@@ -145,7 +145,7 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
       {
         UIImage* thumb = file.thumbnail;
         if (thumb == nil)
-          thumb = [UIImage imageNamed:@"icon-mimetype-folder"];
+          thumb = [UIImage imageNamed:@"icon-mimetype-folder-home"];
         [thumbs addObject:thumb];
       }
       if (thumbs.count > 3)
@@ -153,7 +153,7 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
     }
     if (thumbs.count == 0)
     {
-      _thumbnail = [UIImage imageNamed:@"icon-mimetype-folder"];
+      _thumbnail = [UIImage imageNamed:@"icon-mimetype-folder-home"];
     }
     else
     {
