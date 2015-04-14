@@ -772,11 +772,12 @@ shouldSelectViewController:(UIViewController*)viewController
       self.extension_popover.delegate = self;
       self.extension_popover.files =
         [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:self.extension_uuid];
-      UIViewController* controller = [UIApplication sharedApplication].keyWindow.rootViewController;
+      UIViewController* controller = self.viewControllers[self.selectedIndex];
+      UIView* main_view = [UIApplication sharedApplication].keyWindow;
       [self.extension_popover willMoveToParentViewController:controller];
       [self addChildViewController:self.extension_popover];
-      self.extension_popover.view.frame = controller.view.frame;
-      [controller.view addSubview:self.extension_popover.view];
+      self.extension_popover.view.frame = main_view.frame;
+      [main_view addSubview:self.extension_popover.view];
       [self.extension_popover didMoveToParentViewController:controller];
       [self.extension_popover beginAppearanceTransition:YES animated:YES];
     });
