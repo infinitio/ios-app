@@ -177,6 +177,7 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
 
 - (void)viewWillAppear:(BOOL)animated
 {
+  [[InfinitFacebookManager sharedInstance] cleanSession];
   [[UIApplication sharedApplication] setStatusBarHidden:YES
                                           withAnimation:UIStatusBarAnimationFade];
   [super viewWillAppear:animated];
@@ -474,14 +475,20 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
     return;
   [self showOverlayView:overlay_view ofHeight:height];
 }
+- (void)showOverlayView:(UIView*)overlay_view
+               ofHeight:(CGFloat)height
+{
+  [self showOverlayView:overlay_view ofHeight:height withAnimation:YES];
+}
 
 - (void)showOverlayView:(UIView*)overlay_view
                ofHeight:(CGFloat)height
+          withAnimation:(BOOL)animate
 {
   [self.view bringSubviewToFront:overlay_view];
   CGRect new_frame = CGRectMake(0.0f, self.view.frame.size.height - height,
                                 self.view.frame.size.width, overlay_view.frame.size.height);
-  [UIView animateWithDuration:0.5f
+  [UIView animateWithDuration:animate ? 0.5f : 0.0f
                         delay:0.1f
        usingSpringWithDamping:0.7f
         initialSpringVelocity:20.f
@@ -970,6 +977,11 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
 
 - (void)tryLogin
 {
+  [self tryLoginFromRegister:NO];
+}
+
+- (void)tryLoginFromRegister:(BOOL)from_register
+{
   if (_logging_in)
     return;
   if ([InfinitConnectionManager sharedInstance].network_status == InfinitNetworkStatusNotReachable)
@@ -994,9 +1006,12 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
     NSCharacterSet* white_space = [NSCharacterSet whitespaceCharacterSet];
     NSString* email =
       [self.login_form_view.email_field.text stringByTrimmingCharactersInSet:white_space];
+    SEL selector = @selector(loginCallback:);
+    if (from_register)
+      selector = @selector(loginFromRegisterCallback:);
     [[InfinitStateManager sharedInstance] login:email
                                        password:self.login_form_view.password_field.text
-                                performSelector:@selector(loginCallback:)
+                                performSelector:selector
                                        onObject:self];
   }
   else
@@ -1059,6 +1074,44 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
     if (result.status == gap_email_password_dont_match)
       self.login_form_view.forgot_button.hidden = NO;
     self.login_form_view.facebook_button.enabled = YES;
+  }
+}
+
+- (void)loginFromRegisterCallback:(InfinitStateResult*)result
+{
+  _logging_in = NO;
+  self.login_form_view.next_button.hidden = NO;
+  [self.login_form_view.activity stopAnimating];
+  [self.signup_facebook_view.activity startAnimating];
+  if (result.success)
+  {
+    [self loginCallback:result];
+    return;
+  }
+  [self setFacebookRegisterFieldsEnabled:YES];
+  self.login_form_view.email_field.enabled = YES;
+  self.login_form_view.password_field.enabled = YES;
+  self.login_form_view.back_button.enabled = YES;
+  self.login_form_view.error_label.text = [self registerLoginErrorFromStatus:result.status];
+  self.login_form_view.error_label.hidden = NO;
+  self.login_form_view.facebook_button.enabled = YES;
+  if (result.status == gap_email_password_dont_match)
+  {
+    self.login_form_view.forgot_button.hidden = NO;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(500 * NSEC_PER_MSEC)),
+                   dispatch_get_main_queue(), ^
+    {
+      NSString* title = NSLocalizedString(@"Email already registered", nil);
+      NSString* message = NSLocalizedString(@"There is already an Infinit account with this email "
+                                            "address. Enter your password to login or tap "
+                                            "\"forgot\".", nil);
+      UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
+                                                      message:message
+                                                     delegate:nil
+                                            cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                            otherButtonTitles:nil];
+      [alert show];
+    });
   }
 }
 
@@ -1201,6 +1254,31 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
     [self setFacebookRegisterFieldsEnabled:YES];
     self.signup_facebook_view.error_label.text = [self registerLoginErrorFromStatus:result.status];
     self.signup_facebook_view.error_label.hidden = NO;
+    if (result.status == gap_email_already_registered)
+    {
+      [[InfinitFacebookManager sharedInstance] cleanSession];
+      self.signup_facebook_view.error_label.hidden = YES;
+      [self hideOverlay:self.signup_facebook_view];
+      [self showOverlayView:self.login_form_view ofHeight:self.login_form_view.height];
+      self.login_form_view.email_field.text = self.signup_facebook_view.email_field.text;
+      self.login_form_view.error_label.hidden = NO;
+      self.login_form_view.error_label.text =
+        NSLocalizedString(@"Email already registered, login.", nil);
+      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(500 * NSEC_PER_MSEC)),
+                     dispatch_get_main_queue(), ^
+      {
+        NSString* title = NSLocalizedString(@"Email already registered", nil);
+        NSString* message = NSLocalizedString(@"There is already an Infinit account with this email "
+                                              "address. Enter your password to login or tap "
+                                              "\"forgot\".", nil);
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
+                                                        message:message
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                              otherButtonTitles:nil];
+        [alert show];
+      });
+    }
   }
 }
 
@@ -1271,6 +1349,17 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
     self.signup_form_view.back_button.enabled = YES;
     self.signup_form_view.error_label.text = [self registerLoginErrorFromStatus:result.status];
     self.signup_form_view.error_label.hidden = NO;
+    if (result.status == gap_email_already_registered)
+    {
+      self.signup_form_view.error_label.hidden = YES;
+      [self hideOverlay:self.signup_form_view];
+      [self showOverlayView:self.login_form_view
+                   ofHeight:self.login_form_view.height
+              withAnimation:NO];
+      self.login_form_view.email_field.text = self.signup_form_view.email_field.text;
+      self.login_form_view.password_field.text = self.signup_form_view.password_field.text;
+      [self tryLoginFromRegister:YES];
+    }
   }
 }
 
