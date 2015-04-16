@@ -9,16 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "InfinitHomeAbstractCell.h"
-
-typedef NS_ENUM(NSUInteger, InfinitHomeOnboardingCellType)
-{
-  InfinitHomeOnboardingCellSwipe = 0,
-  InfinitHomeOnboardingCellNotifications,
-  InfinitHomeOnboardingCellBackground,
-  InfinitHomeOnboardingCellPeerSent,
-  InfinitHomeOnboardingCellSelfSent,
-  InfinitHomeOnboardingCellGhostSent,
-};
+#import "InfinitHomeOnboardingItem.h"
 
 @interface InfinitHomeOnboardingCell : InfinitHomeAbstractCell
 
