@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIImage.h>
 
+#import "InfinitFilePreview.h"
+
 @interface InfinitFolderModel : NSObject
 
 @property (nonatomic, readonly) NSNumber* ctime;
@@ -28,5 +30,6 @@
 - (void)deleteFolder;
 
 - (BOOL)containsString:(NSString*)string;
+- (BOOL)hasMatchesForType:(InfinitFileTypes)type;
 
 @end

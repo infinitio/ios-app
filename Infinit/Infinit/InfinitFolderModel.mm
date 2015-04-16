@@ -348,6 +348,16 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
   return NO;
 }
 
+- (BOOL)hasMatchesForType:(InfinitFileTypes)type
+{
+  for (InfinitFileModel* file in self.files)
+  {
+    if (file.type == type)
+      return YES;
+  }
+  return NO;
+}
+
 #pragma mark - Helpers
 
 - (NSString*)meta_data_path
