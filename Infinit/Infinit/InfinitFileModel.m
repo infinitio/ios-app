@@ -18,9 +18,11 @@
 
 - (id)initWithPath:(NSString*)path
            andSize:(NSNumber*)size
+         forFolder:(InfinitFolderModel*)folder
 {
   if (self = [super init])
   {
+    _folder = folder;
     _path = path;
     _size = size;
     _type = [InfinitFilePreview fileTypeForPath:self.path];

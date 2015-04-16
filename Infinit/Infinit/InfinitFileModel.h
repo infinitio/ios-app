@@ -10,10 +10,12 @@
 #import <UIKit/UIImage.h>
 
 #import "InfinitFilePreview.h"
+#import "InfinitFolderModel.h"
 
 @interface InfinitFileModel : NSObject
 
 @property (nonatomic, readonly) NSTimeInterval duration;
+@property (nonatomic, readonly, weak) InfinitFolderModel* folder;
 @property (nonatomic, readonly) NSString* name;
 @property (nonatomic, readonly) NSString* path;
 @property (nonatomic, readonly) NSNumber* size;
@@ -21,6 +23,7 @@
 @property (nonatomic, readonly) InfinitFileTypes type;
 
 - (id)initWithPath:(NSString*)path
-           andSize:(NSNumber*)size;
+           andSize:(NSNumber*)size
+         forFolder:(InfinitFolderModel*)folder;
 
 @end
