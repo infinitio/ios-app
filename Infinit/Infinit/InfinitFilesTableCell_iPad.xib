@@ -42,6 +42,7 @@
                     <constraint firstItem="w73-ge-HcC" firstAttribute="leading" secondItem="yOO-4g-oCZ" secondAttribute="trailing" constant="19" id="nl8-K3-jOv"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="filename_label" destination="w73-ge-HcC" id="jTd-WS-dj3"/>
                 <outlet property="info_label" destination="W7j-iG-ZDe" id="Sym-u2-9C0"/>

@@ -25,12 +25,24 @@
 @property (nonatomic, weak) IBOutlet UIButton* left_button_outer;
 
 @property (nonatomic, readonly) NSMutableArray* all_folders;
+@property (atomic, readonly) BOOL editing;
+
 @property (nonatomic, weak) InfinitFilesDisplayController_iPad* current_controller;
 @property (nonatomic, strong) InfinitFilesCollectionViewController_iPad* collection_view_controller;
 @property (nonatomic, strong) InfinitFilesFolderViewController_iPad* folder_view_controller;
 @property (nonatomic, strong) InfinitFilesTableViewController_iPad* table_view_controller;
 
 @end
+
+typedef NS_ENUM(NSUInteger, InfinitFilesFilter)
+{
+  InfinitFilesFilterAll = 0,
+  InfinitFilesFilterPhotos,
+  InfinitFilesFilterVideos,
+  InfinitFilesFilterDocs,
+  InfinitFilesFilterMusic,
+  InfinitFilesFilterOther,
+};
 
 @implementation InfinitFilesViewController_iPad
 
@@ -46,13 +58,18 @@
   _table_view_controller =
     [self.storyboard instantiateViewControllerWithIdentifier:@"files_table_view_ipad"];
   self.table_view_controller.delegate = self;
+  self.main_view.clipsToBounds = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
-  _all_folders = [[InfinitDownloadFolderManager sharedInstance].completed_folders mutableCopy];
-  [self switchToViewController:self.table_view_controller];
+  static dispatch_once_t first_appear;
+  dispatch_once(&first_appear, ^
+  {
+    _all_folders = [[InfinitDownloadFolderManager sharedInstance].completed_folders mutableCopy];
+    [self switchToViewController:self.table_view_controller];
+  });
   [InfinitDownloadFolderManager sharedInstance].delegate = self;
 }
 
@@ -96,37 +113,134 @@
 
 - (IBAction)leftOuterTapped:(id)sender
 {
-  if (self.current_controller == self.folder_view_controller)
+  if (self.editing)
   {
-    [self switchToViewController:self.table_view_controller animate:YES reverse:YES];
+    // XXX send
+    self.editing = NO;
   }
   else
   {
-    if (self.current_controller == self.table_view_controller)
-      [self switchToViewController:self.collection_view_controller];
+    UIImage* left_outer_image = nil;
+    if (self.current_controller == self.folder_view_controller)
+    {
+      [self switchToViewController:self.table_view_controller animate:YES reverse:YES];
+      left_outer_image = [UIImage imageNamed:@"icon-grid"];
+      [self.left_button_outer setTitle:nil forState:UIControlStateNormal];
+    }
     else
-      [self switchToViewController:self.table_view_controller];
+    {
+      if (self.current_controller == self.table_view_controller)
+      {
+        [self switchToViewController:self.collection_view_controller];
+        left_outer_image = [UIImage imageNamed:@"icon-list"];
+      }
+      else
+      {
+        [self switchToViewController:self.table_view_controller];
+        left_outer_image = [UIImage imageNamed:@"icon-grid"];
+      }
+    }
+    [self.left_button_outer setImage:left_outer_image forState:UIControlStateNormal];
   }
 }
 
 - (IBAction)leftInnerTapped:(id)sender
 {
-
+  if (self.editing)
+  {
+    // XXX save to gallery
+    self.editing = NO;
+  }
 }
 
 - (IBAction)rightInnerTapped:(id)sender
 {
-
+  if (self.editing)
+  {
+    NSArray* items = self.current_controller.current_selection;
+    if (items.count == 0)
+      return;
+    if ([items[0] isKindOfClass:InfinitFolderModel.class])
+    {
+      for (InfinitFolderModel* folder in items)
+        [[InfinitDownloadFolderManager sharedInstance] deleteFolder:folder];
+    }
+    else if ([items[0] isKindOfClass:InfinitFileModel.class])
+    {
+      for (InfinitFileModel* file in items)
+        [file.folder deleteFileAtIndex:[file.folder.files indexOfObject:file]];
+      [self.current_controller filesDeleted];
+    }
+    self.editing = NO;
+  }
+  else
+  {
+    // XXX search
+  }
 }
 
 - (IBAction)rightOuterTapped:(id)sender
 {
-  self.current_controller.editing = !self.current_controller.editing;
+  self.editing = !self.editing;
 }
 
 - (IBAction)segmentedControlChanged:(id)sender
 {
-  
+  InfinitFileTypes type = InfinitFileTypeAll;
+  switch (self.segmented_control.selectedSegmentIndex)
+  {
+    case InfinitFilesFilterAll:
+      type = InfinitFileTypeAll;
+      break;
+    case InfinitFilesFilterPhotos:
+      type = InfinitFileTypeImage;
+      break;
+    case InfinitFilesFilterVideos:
+      type = InfinitFileTypeVideo;
+      break;
+    case InfinitFilesFilterDocs:
+      break;
+    case InfinitFilesFilterMusic:
+      break;
+
+    case InfinitFilesFilterOther:
+    default:
+      break;
+  }
+}
+
+- (void)setEditing:(BOOL)editing
+{
+  if (self.editing == editing)
+    return;
+  _editing = editing;
+  self.current_controller.editing = self.editing;
+  self.left_button_inner.hidden = !self.editing;
+  UIImage* left_outer_image = nil;
+  UIImage* right_inner_image = nil;
+  NSString* back_text = nil;
+  NSString* select_text = nil;
+  if (self.editing)
+  {
+    left_outer_image = [UIImage imageNamed:@"icon-send-red"];
+    select_text = NSLocalizedString(@"Cancel", nil);
+    right_inner_image = [UIImage imageNamed:@"icon-delete-red"];
+  }
+  else
+  {
+    if (self.current_controller == self.folder_view_controller)
+      back_text = NSLocalizedString(@"Back", nil);
+    else if (self.current_controller == self.table_view_controller)
+      left_outer_image = [UIImage imageNamed:@"icon-grid"];
+    else if (self.current_controller == self.collection_view_controller)
+      left_outer_image = [UIImage imageNamed:@"icon-list"];
+    select_text = NSLocalizedString(@"Select", nil);
+    right_inner_image = [UIImage imageNamed:@"icon-search"];
+  }
+  [self.right_button_outer setTitle:select_text forState:UIControlStateNormal];
+  [self.left_button_outer setImage:left_outer_image forState:UIControlStateNormal];
+  [self.left_button_outer setTitle:back_text forState:UIControlStateNormal];
+  [self.right_button_inner setImage:right_inner_image forState:UIControlStateNormal];
 }
 
 #pragma mark - Files Display Delegate
@@ -157,19 +271,22 @@
   {
     self.folder_view_controller.folder = folder;
     [self switchToViewController:self.folder_view_controller animate:YES reverse:NO];
+    [self.left_button_outer setImage:nil forState:UIControlStateNormal];
+    [self.left_button_outer setTitle:NSLocalizedString(@"Back", nil) forState:UIControlStateNormal];
   }
 }
 
 - (void)deleteFile:(InfinitFileModel*)file
             sender:(InfinitFilesDisplayController_iPad*)sender
 {
-
+  InfinitFolderModel* folder = file.folder;
+  [folder deleteFileAtIndex:[folder.files indexOfObject:file]];
 }
 
 - (void)deleteFolder:(InfinitFolderModel*)folder
               sender:(InfinitFilesDisplayController_iPad*)sender
 {
-
+  [[InfinitDownloadFolderManager sharedInstance] deleteFolder:folder];
 }
 
 #pragma mark - Helpers

@@ -24,6 +24,9 @@
   _searching = searching;
 }
 
+- (void)filesDeleted
+{}
+
 - (void)folderAdded:(InfinitFolderModel*)folder
 {
   NSMutableArray* temp = [self.all_folders mutableCopy];

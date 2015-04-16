@@ -23,6 +23,13 @@
   return 60.0f;
 }
 
+- (void)awakeFromNib
+{
+  UIView* background = [[UIView alloc] initWithFrame:self.bounds];
+  background.backgroundColor = [UIColor whiteColor];
+  self.selectedBackgroundView = background;
+}
+
 - (void)configureForFile:(InfinitFileModel*)file
 {
   self.thumbnail_view.image = [file.thumbnail roundedMaskOfSize:self.thumbnail_view.bounds.size

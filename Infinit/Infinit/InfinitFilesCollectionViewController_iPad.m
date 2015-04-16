@@ -40,6 +40,31 @@
   // self.clearsSelectionOnViewWillAppear = NO;
 }
 
+#pragma mark - Editing
+
+- (NSArray*)current_selection
+{
+  if (!self.editing)
+    return nil;
+  NSMutableArray* res = [NSMutableArray array];
+  for (NSIndexPath* index in self.collection_view.indexPathsForSelectedItems)
+    [res addObject:self.file_results[index.row]];
+  return res;
+}
+
+- (void)setEditing:(BOOL)editing
+{
+  if (self.editing == editing)
+    return;
+  [super setEditing:editing];
+  self.collection_view.allowsMultipleSelection = editing;
+}
+
+- (void)filesDeleted
+{
+  [self.collection_view reloadData];
+}
+
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView*)collectionView
@@ -54,7 +79,7 @@
   return self.file_results.count;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView*)collectionView
+- (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView
                   cellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
   InfinitFilesCollectionCell_iPad* cell =
@@ -66,6 +91,20 @@
 }
 
 #pragma mark <UICollectionViewDelegate>
+
+- (void)collectionView:(UICollectionView*)collectionView
+didSelectItemAtIndexPath:(NSIndexPath*)indexPath
+{
+  if (self.editing)
+  {
+
+  }
+  else
+  {
+    [self.delegate actionForFile:self.file_results[indexPath.row] sender:self];
+    [collectionView deselectItemAtIndexPath:indexPath animated:NO];
+  }
+}
 
 /*
  // Uncomment this method to specify if the specified item should be highlighted during tracking

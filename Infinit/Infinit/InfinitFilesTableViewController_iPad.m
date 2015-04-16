@@ -34,6 +34,8 @@
   UINib* cell_nib = [UINib nibWithNibName:NSStringFromClass(InfinitFilesTableCell_iPad.class)
                                    bundle:nil];
   [self.table_view registerNib:cell_nib forCellReuseIdentifier:_cell_id];
+  self.table_view.allowsMultipleSelectionDuringEditing = YES;
+  self.table_view.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -43,7 +45,23 @@
   [self.table_view reloadData];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+  [super viewWillDisappear:animated];
+  self.editing = NO;
+}
+
 #pragma mark - Editing
+
+- (NSArray*)current_selection
+{
+  if (!self.editing)
+    return nil;
+  NSMutableArray* res = [NSMutableArray array];
+  for (NSIndexPath* index in self.table_view.indexPathsForSelectedRows)
+    [res addObject:self.folder_results[index.row]];
+  return res;
+}
 
 - (void)setEditing:(BOOL)editing
 {
@@ -60,8 +78,6 @@ forRowAtIndexPath:(NSIndexPath*)indexPath
   if (editingStyle == UITableViewCellEditingStyleDelete)
   {
     [self.delegate deleteFolder:self.folder_results[indexPath.row] sender:self];
-    [tableView deleteRowsAtIndexPaths:@[indexPath]
-                     withRowAnimation:UITableViewRowAnimationAutomatic];
   }
 }
 
@@ -101,7 +117,6 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
   if (tableView.editing)
   {
-
   }
   else
   {

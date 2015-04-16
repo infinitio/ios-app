@@ -18,11 +18,14 @@
 @property (nonatomic, readwrite) id<InfinitFilesDisplayProtocol> delegate;
 
 @property (nonatomic, readwrite) NSArray* all_folders;
+@property (nonatomic, readonly) NSArray* current_selection;
 @property (nonatomic, readwrite) BOOL editing;
 @property (nonatomic, readwrite) BOOL searching;
 
 - (void)folderAdded:(InfinitFolderModel*)folder;
 - (void)folderRemoved:(InfinitFolderModel*)folder;
+
+- (void)filesDeleted;
 
 @end
 
