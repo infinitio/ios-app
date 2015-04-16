@@ -774,10 +774,9 @@ shouldSelectViewController:(UIViewController*)viewController
         [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:self.extension_uuid];
       UIViewController* controller = self.viewControllers[self.selectedIndex];
       UIView* main_view = [UIApplication sharedApplication].keyWindow;
-      [self.extension_popover willMoveToParentViewController:controller];
-      [self addChildViewController:self.extension_popover];
-      self.extension_popover.view.frame = main_view.frame;
+      self.extension_popover.view.frame = main_view.bounds;
       [main_view addSubview:self.extension_popover.view];
+      [self addChildViewController:self.extension_popover];
       [self.extension_popover didMoveToParentViewController:controller];
       [self.extension_popover beginAppearanceTransition:YES animated:YES];
     });
