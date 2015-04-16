@@ -93,7 +93,9 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
     [url getResourceValue:&file_size forKey:NSURLFileSizeKey error:nil];
     total_size += file_size.unsignedIntegerValue;
     NSString* file_path = url.path;
-    InfinitFileModel* file = [[InfinitFileModel alloc] initWithPath:file_path andSize:file_size];
+    InfinitFileModel* file = [[InfinitFileModel alloc] initWithPath:file_path
+                                                            andSize:file_size 
+                                                          forFolder:self];
     UIImage* thumbnail;
     if ([[NSFileManager defaultManager] fileExistsAtPath:[self thumbnailPathForObject:file]])
     {
