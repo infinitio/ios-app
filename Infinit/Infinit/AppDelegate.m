@@ -77,7 +77,6 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
                                              object:nil];
 
   self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
-  UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 
   if (![[[InfinitApplicationSettings sharedInstance] welcome_onboarded] isEqualToNumber:@1])
   {
@@ -85,7 +84,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
     _onboarding = YES;
     [[InfinitApplicationSettings sharedInstance] setWelcome_onboarded:@1];
     self.onboarding_controller =
-      [storyboard instantiateViewControllerWithIdentifier:@"welcome_onboarding"];
+      [self.storyboard instantiateViewControllerWithIdentifier:@"welcome_onboarding"];
     self.onboarding_controller.delegate = self;
     self.window.rootViewController = self.onboarding_controller;
   }
@@ -96,7 +95,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
     {
       _facebook_long_login = YES;
       self.window.rootViewController =
-        [storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
+        [self.storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
       [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:25.0f];
       [[NSNotificationCenter defaultCenter] addObserver:self
                                                selector:@selector(facebookSessionStateChanged:)
@@ -122,7 +121,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
     {
       _facebook_quick_login = YES;
       self.window.rootViewController =
-        [storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
+        [self.storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
       [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:15.0f];
     }
     else if ([self canAutoLogin])
@@ -131,19 +130,22 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
       if (manager.network_status != InfinitNetworkStatusNotReachable)
       {
         self.window.rootViewController =
-          [storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
+          [self.storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
         [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:15.0f];
       }
       else
       {
+        NSString* identifier = @"main_controller";
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+          identifier = @"main_controller_ipad";
         self.window.rootViewController =
-          [storyboard instantiateViewControllerWithIdentifier:@"tab_bar_controller"];
+          [self.storyboard instantiateViewControllerWithIdentifier:identifier];
       }
     }
     else
     {
       self.window.rootViewController =
-        [storyboard instantiateViewControllerWithIdentifier:@"welcome_controller"];
+        [self.storyboard instantiateViewControllerWithIdentifier:@"welcome_controller"];
     }
   }
   [self.window makeKeyAndVisible];
@@ -167,9 +169,8 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 
 - (void)tooLongToLogin
 {
-  UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
   self.window.rootViewController =
-    [storyboard instantiateViewControllerWithIdentifier:@"tab_bar_controller"];
+    [self.storyboard instantiateViewControllerWithIdentifier:@"main_controller"];
 }
 
 - (void)tryLogin
@@ -190,7 +191,6 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   [NSObject cancelPreviousPerformRequestsWithTarget:self
                                            selector:@selector(tooLongToLogin)
                                              object:nil];
-  UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
   NSString* identifier = nil;
   if (result.success)
   {
@@ -198,13 +198,17 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
     [InfinitDownloadFolderManager sharedInstance];
     [InfinitBackgroundManager sharedInstance];
     [InfinitRatingManager sharedInstance];
-    identifier = @"tab_bar_controller";
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+      identifier = @"main_controller_ipad";
+    else
+      identifier = @"main_controller";
   }
   else
   {
     identifier = @"welcome_controller";
   }
-  self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:identifier];
+  self.window.rootViewController =
+    [self.storyboard instantiateViewControllerWithIdentifier:identifier];
   [self.window makeKeyAndVisible];
 }
 
@@ -369,17 +373,16 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 
 - (void)welcomeOnboardingDone
 {
-  UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
   if ([self canAutoLogin])
   {
     [self tryLogin];
     self.window.rootViewController =
-      [storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
+      [self.storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
   }
   else
   {
     self.window.rootViewController =
-      [storyboard instantiateViewControllerWithIdentifier:@"welcome_controller"];
+      [self.storyboard instantiateViewControllerWithIdentifier:@"welcome_controller"];
   }
   [self.window makeKeyAndVisible];
   self.onboarding_controller = nil;
@@ -409,9 +412,8 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
     [NSObject cancelPreviousPerformRequestsWithTarget:self
                                              selector:@selector(tooLongToLogin)
                                                object:nil];
-    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    NSString* identifier = identifier = @"welcome_controller";
-    self.window.rootViewController = [storyboard instantiateViewControllerWithIdentifier:identifier];
+    self.window.rootViewController =
+      [self.storyboard instantiateViewControllerWithIdentifier:@"welcome_controller"];
     [self.window makeKeyAndVisible];
   }
   [[NSNotificationCenter defaultCenter] removeObserver:self
@@ -459,6 +461,13 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 - (void)archiveOldTransactions
 {
   [[InfinitPeerTransactionManager sharedInstance] archiveIrrelevantTransactions];
+}
+
+#pragma mark - Helpers
+
+- (UIStoryboard*)storyboard
+{
+  return [UIStoryboard storyboardWithName:@"Main" bundle:nil];
 }
 
 @end
