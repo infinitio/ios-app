@@ -48,12 +48,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lUz-L3-9vu">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="110"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="120"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Mf-Fs-5w9">
-                                        <rect key="frame" x="20" y="21" width="46" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Mf-Fs-5w9">
+                                        <rect key="frame" x="20" y="34" width="24" height="24"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                         <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="Button">
+                                        <state key="normal" image="icon-grid">
+                                            <color key="titleColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -61,7 +63,7 @@
                                         </connections>
                                     </button>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Fn8-5X-DLz">
-                                        <rect key="frame" x="20" y="67" width="560" height="29"/>
+                                        <rect key="frame" x="20" y="77" width="560" height="29"/>
                                         <segments>
                                             <segment title="All"/>
                                             <segment title="Photos"/>
@@ -76,23 +78,13 @@
                                         </connections>
                                     </segmentedControl>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RECEIVED FILES" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KlZ-FW-RX5">
-                                        <rect key="frame" x="241" y="25" width="119" height="22"/>
+                                        <rect key="frame" x="241" y="35" width="119" height="22"/>
                                         <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="17"/>
                                         <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fA9-fw-VaH">
-                                        <rect key="frame" x="461" y="21" width="46" height="30"/>
-                                        <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="Button">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="rightInnerTapped:" destination="hHz-xi-viG" eventType="touchUpInside" id="xVH-Xj-xNN"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gOC-Dq-oEk">
-                                        <rect key="frame" x="532" y="20" width="48" height="32"/>
+                                        <rect key="frame" x="532" y="30" width="48" height="32"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                         <state key="normal" title="Select">
                                             <color key="titleColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -102,14 +94,24 @@
                                             <action selector="rightOuterTapped:" destination="hHz-xi-viG" eventType="touchUpInside" id="8Bu-qN-xDx"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lXi-k8-j5W">
-                                        <rect key="frame" x="91" y="21" width="46" height="30"/>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lXi-k8-j5W">
+                                        <rect key="frame" x="69" y="33" width="22" height="27"/>
                                         <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="Button">
+                                        <state key="normal" image="icon-save-red">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="leftInnerTapped:" destination="hHz-xi-viG" eventType="touchUpInside" id="4bq-A4-l2l"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fA9-fw-VaH">
+                                        <rect key="frame" x="486" y="35" width="21" height="22"/>
+                                        <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" image="icon-search">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="rightInnerTapped:" destination="hHz-xi-viG" eventType="touchUpInside" id="xVH-Xj-xNN"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -120,19 +122,19 @@
                                     <constraint firstItem="Fn8-5X-DLz" firstAttribute="leading" secondItem="7Mf-Fs-5w9" secondAttribute="leading" id="C3J-yp-Svu"/>
                                     <constraint firstAttribute="centerX" secondItem="KlZ-FW-RX5" secondAttribute="centerX" id="LRD-gv-KLY"/>
                                     <constraint firstItem="7Mf-Fs-5w9" firstAttribute="centerY" secondItem="KlZ-FW-RX5" secondAttribute="centerY" id="RnN-7m-rZF"/>
-                                    <constraint firstItem="KlZ-FW-RX5" firstAttribute="top" secondItem="lUz-L3-9vu" secondAttribute="top" constant="25" id="SxN-tB-kA6"/>
+                                    <constraint firstItem="KlZ-FW-RX5" firstAttribute="top" secondItem="lUz-L3-9vu" secondAttribute="top" constant="35" id="SxN-tB-kA6"/>
                                     <constraint firstItem="gOC-Dq-oEk" firstAttribute="centerY" secondItem="KlZ-FW-RX5" secondAttribute="centerY" id="VC1-ka-gtS"/>
                                     <constraint firstItem="Fn8-5X-DLz" firstAttribute="leading" secondItem="lUz-L3-9vu" secondAttribute="leading" constant="20" id="VWP-Ij-6rR"/>
                                     <constraint firstItem="Fn8-5X-DLz" firstAttribute="top" secondItem="KlZ-FW-RX5" secondAttribute="bottom" constant="20" id="WfJ-pg-ZHy"/>
                                     <constraint firstAttribute="trailing" secondItem="Fn8-5X-DLz" secondAttribute="trailing" constant="20" id="cI3-FH-hyu"/>
-                                    <constraint firstAttribute="height" constant="110" id="pPN-xG-aZv"/>
+                                    <constraint firstAttribute="height" constant="120" id="pPN-xG-aZv"/>
                                     <constraint firstItem="KlZ-FW-RX5" firstAttribute="centerY" secondItem="fA9-fw-VaH" secondAttribute="centerY" id="qDx-d6-0e8"/>
                                     <constraint firstItem="lXi-k8-j5W" firstAttribute="leading" secondItem="7Mf-Fs-5w9" secondAttribute="trailing" constant="25" id="zGT-Cs-iD7"/>
                                     <constraint firstItem="gOC-Dq-oEk" firstAttribute="leading" secondItem="fA9-fw-VaH" secondAttribute="trailing" constant="25" id="zUw-g0-NxG"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wh0-c4-8bq">
-                                <rect key="frame" x="0.0" y="110" width="600" height="490"/>
+                                <rect key="frame" x="0.0" y="120" width="600" height="480"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
@@ -695,7 +697,7 @@
         <!--SETTINGS-->
         <scene sceneID="BgV-Sc-ZSQ">
             <objects>
-                <navigationController title="SETTINGS" extendedLayoutIncludesOpaqueBars="YES" id="rsj-6b-IS1" customClass="InfinitSettingsNavigationController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="settings_nav_controller" title="SETTINGS" extendedLayoutIncludesOpaqueBars="YES" id="rsj-6b-IS1" customClass="InfinitSettingsNavigationController" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <tabBarItem key="tabBarItem" title="" image="icon-tab-settings" id="Cd4-Ng-GSO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="New-hn-x7i">
@@ -3029,11 +3031,14 @@ access your phone contacts!</string>
         <image name="icon-facebook-white" width="21" height="21"/>
         <image name="icon-favorite-white" width="16" height="15"/>
         <image name="icon-gallery-next" width="8" height="14"/>
+        <image name="icon-grid" width="24" height="24"/>
         <image name="icon-logo-red" width="30" height="27"/>
         <image name="icon-onboarding-arrow-left-red" width="11" height="19"/>
         <image name="icon-onboarding-arrow-right-red" width="11" height="19"/>
         <image name="icon-onboarding-arrow-right-white" width="10" height="16"/>
         <image name="icon-photo-white" width="29" height="26"/>
+        <image name="icon-save-red" width="22" height="27"/>
+        <image name="icon-search" width="21" height="19"/>
         <image name="icon-send-red" width="25" height="21"/>
         <image name="icon-send-white" width="18" height="15"/>
         <image name="icon-settings-fullname" width="17" height="20"/>
