@@ -27,8 +27,12 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  [self.storyboard instantiateViewControllerWithIdentifier:@"home_nav_controller"];
   self.delegate = self;
+  UIViewController* home_controller
+    = [self.storyboard instantiateViewControllerWithIdentifier:@"home_nav_controller"];
+  UIViewController* settings_controller
+    = [self.storyboard instantiateViewControllerWithIdentifier:@"settings_nav_controller"];
+  self.viewControllers = @[home_controller, settings_controller];
   for (NSUInteger index = 0; index < self.tabBar.items.count; index++)
   {
     [self.tabBar.items[index] setImageInsets:UIEdgeInsetsMake(5.0f, 0.0f, -5.0f, 0.0f)];
@@ -40,18 +44,22 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 - (void)viewDidAppear:(BOOL)animated
 {
   [super viewDidAppear:animated];
-  CGFloat width = self.tabBar.frame.size.width;
-  [[UITabBar appearance] setBackgroundImage:[[UIImage alloc] init]];
-  self.tabBar.shadowImage = [[UIImage alloc] init];
-  UIView* shadow_line = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, width, 1.0f)];
-  shadow_line.backgroundColor = [InfinitColor colorWithGray:216.0f];
-  [self.tabBar addSubview:shadow_line];
-  NSInteger count = self.viewControllers.count;
-  _selection_indicator =
-    [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, width / count, 1.0f)];
-  self.selection_indicator.backgroundColor =
+  static dispatch_once_t first_appear;
+  dispatch_once(&first_appear, ^
+  {
+    self.tabBar.barTintColor = [UIColor whiteColor];
+    self.tabBar.shadowImage = [[UIImage alloc] init];
+    CGFloat width = self.tabBar.frame.size.width;
+    UIView* shadow_line = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, width, 1.0f)];
+    shadow_line.backgroundColor = [InfinitColor colorWithGray:216.0f];
+    [self.tabBar addSubview:shadow_line];
+    NSInteger count = self.viewControllers.count;
+    _selection_indicator =
+      [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, width / count, 1.0f)];
+    self.selection_indicator.backgroundColor =
     [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
-  [self.tabBar addSubview:self.selection_indicator];
+    [self.tabBar addSubview:self.selection_indicator];
+  });
 }
 
 #pragma mark - UITabBarController
