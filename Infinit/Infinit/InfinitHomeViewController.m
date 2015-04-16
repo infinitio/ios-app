@@ -36,32 +36,6 @@
 
 #import "UIImage+Rounded.h"
 
-@interface InfinitHomeOnboardingItem : NSObject
-
-@property (nonatomic, readonly) InfinitHomeOnboardingCellType type;
-
-+ (instancetype)initWithType:(InfinitHomeOnboardingCellType)type;
-
-@end
-
-@implementation InfinitHomeOnboardingItem
-
-- (instancetype)_initWithType:(InfinitHomeOnboardingCellType)type
-{
-  if (self = [super init])
-  {
-    _type = type;
-  }
-  return self;
-}
-
-+ (instancetype)initWithType:(InfinitHomeOnboardingCellType)type
-{
-  return [[InfinitHomeOnboardingItem alloc] _initWithType:type];
-}
-
-@end
-
 @interface InfinitHomeViewController () <InfinitHomePeerTransactionCellProtocol,
                                          UICollectionViewDataSource,
                                          UICollectionViewDelegate,
@@ -171,24 +145,27 @@ static NSUInteger _background_onboard_size = 5 * 1000 * 1000;
     [self.cell_image_view removeFromSuperview];
     _cell_image_view = nil;
   }
-  InfinitTabBarController* tab_controller = (InfinitTabBarController*)self.tabBarController;
-  if (self.sending)
-    [tab_controller setTabBarHidden:NO animated:NO];
-  else
-    [tab_controller setTabBarHidden:NO animated:YES withDelay:0.2f];
-  _sending = NO;
-  InfinitResizableNavigationBar* nav_bar =
-    (InfinitResizableNavigationBar*)self.navigationController.navigationBar;
-  if (nav_bar.large || [UIApplication sharedApplication].statusBarHidden)
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
   {
-    [UIView animateWithDuration:(animated ? 0.3f : 0.0f)
-                     animations:^
-     {
-       [[UIApplication sharedApplication] setStatusBarHidden:NO
-                                               withAnimation:UIStatusBarAnimationSlide];
-       ((InfinitResizableNavigationBar*)self.navigationController.navigationBar).large = NO;
-       nav_bar.barTintColor = [InfinitColor colorFromPalette:InfinitPaletteColorLightGray];
-     }];
+    InfinitTabBarController* tab_controller = (InfinitTabBarController*)self.tabBarController;
+    if (self.sending)
+      [tab_controller setTabBarHidden:NO animated:NO];
+    else
+      [tab_controller setTabBarHidden:NO animated:YES withDelay:0.2f];
+    _sending = NO;
+    InfinitResizableNavigationBar* nav_bar =
+      (InfinitResizableNavigationBar*)self.navigationController.navigationBar;
+    if (nav_bar.large || [UIApplication sharedApplication].statusBarHidden)
+    {
+      [UIView animateWithDuration:(animated ? 0.3f : 0.0f)
+                       animations:^
+       {
+         [[UIApplication sharedApplication] setStatusBarHidden:NO
+                                                 withAnimation:UIStatusBarAnimationSlide];
+         ((InfinitResizableNavigationBar*)self.navigationController.navigationBar).large = NO;
+         nav_bar.barTintColor = [InfinitColor colorFromPalette:InfinitPaletteColorLightGray];
+       }];
+    }
   }
   if (self.current_status && !self.previewing_files)
     [self refreshContents];
@@ -211,8 +188,11 @@ static NSUInteger _background_onboard_size = 5 * 1000 * 1000;
   NSInteger count =
     [[InfinitPeerTransactionManager sharedInstance] transactionsIncludingArchived:YES
                                                                    thisDeviceOnly:YES].count;
-  if (count == 0)
-    [self showOnboardingArrow];
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+  {
+    if (count == 0)
+      [self showOnboardingArrow];
+  }
 
   if (self.data.count == 0 && self.swipe_onboarded && self.notification_onboarded)
   {
@@ -718,7 +698,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
                   layout:(UICollectionViewLayout*)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath*)indexPath
 {
-  CGFloat width = [UIScreen mainScreen].bounds.size.width - 26.0f;
+  CGFloat width = self.view.bounds.size.width - 26.0f;
   CGFloat height = 100.0f;
   if ([self topSection] && indexPath.section == 0) // Top onboarding and/or rating
   {
