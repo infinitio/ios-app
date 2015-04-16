@@ -40,6 +40,11 @@
   {
     res = InfinitFileTypePresentation;
   }
+  else if (UTTypeConformsTo(file_uti, CFSTR("com.bohemiancoding.sketch.drawing.single")) ||
+           UTTypeConformsTo(file_uti, CFSTR("com.bohemiancoding.sketch.drawing")))
+  {
+    res = InfinitFileTypeSketch;
+  }
   else if (UTTypeConformsTo(file_uti, kUTTypeArchive))
   {
     res = InfinitFileTypeArchive;
@@ -163,7 +168,10 @@
                 CGImageGetHeight(res.CGImage) / size.height);
   }
   CGSize new_size = CGSizeMake(floor(res.size.width / scale), floor(res.size.height / scale));
-  UIGraphicsBeginImageContextWithOptions(size, YES, 0.0f);
+  if (crop)
+    UIGraphicsBeginImageContextWithOptions(size, YES, 0.0f);
+  else
+    UIGraphicsBeginImageContextWithOptions(new_size, YES, 0.0f);
   CGRect rect = CGRectMake(0.0f, 0.0f, new_size.width, new_size.height);
   if (crop)
   {
