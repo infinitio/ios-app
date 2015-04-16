@@ -45,6 +45,13 @@
   return self.path.lastPathComponent;
 }
 
+- (BOOL)matchesType:(InfinitFileTypes)type
+{
+  if (self.type == type)
+    return YES;
+  return NO;
+}
+
 #pragma mark - NSObject
 
 - (NSString*)description

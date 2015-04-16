@@ -26,4 +26,6 @@
            andSize:(NSNumber*)size
          forFolder:(InfinitFolderModel*)folder;
 
+- (BOOL)matchesType:(InfinitFileTypes)type;
+
 @end
