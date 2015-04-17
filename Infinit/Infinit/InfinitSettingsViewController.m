@@ -400,7 +400,14 @@ viewForFooterInSection:(NSInteger)section
   _logging_out = NO;
   if (result.success)
   {
-    [(InfinitTabBarController*)self.tabBarController showWelcomeScreen];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+      // XXX ipad
+    }
+    else
+    {
+      [(InfinitTabBarController*)self.tabBarController showWelcomeScreen];
+    }
   }
 }
 
