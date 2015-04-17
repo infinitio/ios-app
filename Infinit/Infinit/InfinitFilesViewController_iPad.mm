@@ -8,12 +8,20 @@
 
 #import "InfinitFilesViewController_iPad.h"
 
+#import "InfinitConstants.h"
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitFilePreviewController.h"
 #import "InfinitFilesCollectionViewController_iPad.h"
 #import "InfinitFilesFolderViewController_iPad.h"
 #import "InfinitFilesSearchPopover_iPad.h"
 #import "InfinitFilesTableViewController_iPad.h"
+#import "InfinitGallery.h"
+#import "InfinitMainSplitViewController_iPad.h"
+
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("iOS.FilesViewController_iPad");
 
 @interface InfinitFilesViewController_iPad () <InfinitDownloadFolderManagerProtocol,
                                                InfinitFilesDisplayProtocol,
@@ -133,7 +141,21 @@ typedef NS_ENUM(NSUInteger, InfinitFilesFilter)
 {
   if (self.editing)
   {
-    // XXX send
+    NSArray* items = self.current_controller.current_selection;
+    NSMutableArray* paths = [NSMutableArray array];
+    for (id item in items)
+    {
+      if ([item isKindOfClass:InfinitFolderModel.class])
+      {
+        InfinitFolderModel* folder = (InfinitFolderModel*)item;
+        [paths addObjectsFromArray:folder.file_paths];
+      }
+      else if ([item isKindOfClass:InfinitFileModel.class])
+      {
+        [paths addObject:[item path]];
+      }
+    }
+    [((InfinitMainSplitViewController_iPad*)self.splitViewController) showSendViewForFiles:paths];
     self.editing = NO;
   }
   else
@@ -166,7 +188,23 @@ typedef NS_ENUM(NSUInteger, InfinitFilesFilter)
 {
   if (self.editing)
   {
-    // XXX save to gallery
+    NSArray* items = self.current_controller.current_selection;
+    if (items.count == 0)
+      return;
+    NSMutableArray* paths = [NSMutableArray array];
+    if ([items[0] isKindOfClass:InfinitFolderModel.class])
+    {
+      for (InfinitFolderModel* folder in items)
+      {
+        [paths addObjectsFromArray:folder.file_paths];
+      }
+    }
+    else if ([items[0] isKindOfClass:InfinitFileModel.class])
+    {
+      for (InfinitFileModel* file in items)
+        [paths addObject:file.path];
+    }
+    [InfinitGallery saveToGallery:paths];
     self.editing = NO;
   }
 }
