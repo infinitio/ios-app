@@ -41,7 +41,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
-  _folder_results = [self.all_folders mutableCopy];
+  _folder_results = [self searchAndFilterResults];
   [self.table_view reloadData];
 }
 
@@ -127,24 +127,14 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 
 #pragma mark - Files Display
 
-- (void)setSearching:(BOOL)searching
-{
-  [super setSearching:searching];
-  if (!self.searching)
-  {
-    _folder_results = [self.all_folders mutableCopy];
-    [self.table_view reloadData];
-  }
-}
-
 - (void)folderAdded:(InfinitFolderModel*)folder
 {
-  @synchronized(self.all_folders)
+  @synchronized(self)
   {
     if ([self.all_folders containsObject:folder])
       return;
     [super folderAdded:folder];
-    if (!self.searching)
+    if (!self.search_string.length)
     {
       [self.table_view beginUpdates];
       [self.folder_results insertObject:folder atIndex:0];
@@ -157,12 +147,12 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 
 - (void)folderRemoved:(InfinitFolderModel*)folder
 {
-  @synchronized(self.all_folders)
+  @synchronized(self)
   {
     if (![self.all_folders containsObject:folder])
       return;
     [super folderRemoved:folder];
-    if (!self.searching)
+    if (!self.search_string.length)
     {
       [self.table_view beginUpdates];
       NSUInteger index = [self.folder_results indexOfObject:folder];
@@ -172,6 +162,47 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
       [self.table_view endUpdates];
     }
   }
+}
+
+#pragma mark - Search
+
+- (void)setFilter:(InfinitFileTypes)filter
+{
+  if (self.filter == filter)
+    return;
+  @synchronized(self)
+  {
+    [super setFilter:filter];
+    _folder_results = [self searchAndFilterResults];
+    [self.table_view reloadData];
+  }
+}
+
+- (void)setSearch_string:(NSString*)search_string
+{
+  if ([self.search_string isEqualToString:search_string])
+    return;
+  @synchronized(self)
+  {
+    [super setSearch_string:search_string];
+    if (self.search_string.length)
+      _folder_results = [self searchAndFilterResults];
+    else
+      _folder_results = [self.all_folders mutableCopy];
+
+    [self.table_view reloadData];
+  }
+}
+
+- (NSMutableArray*)searchAndFilterResults
+{
+  NSMutableArray* res = [NSMutableArray array];
+  for (InfinitFolderModel* folder in self.all_folders)
+  {
+    if ([folder hasMatchesForType:self.filter] && [folder containsString:self.search_string])
+      [res addObject:folder];
+  }
+  return res;
 }
 
 /*
