@@ -1025,7 +1025,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 - (IBAction)handleRemoveGesture:(UIGestureRecognizer*)recognizer
 {
   CGPoint location = [recognizer locationInView:self.collection_view];
-  CGPoint window_location = [self.view.window convertPoint:location fromView:self.collection_view];
+  CGPoint window_location = [self.view convertPoint:location fromView:self.collection_view];
 
   if (recognizer.state == UIGestureRecognizerStateBegan)
   {
@@ -1092,7 +1092,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
                                                  attachedToAnchor:window_location];
     self.anchor_behavior.length = 0.0f;
     [self.dynamic_animator addBehavior:self.anchor_behavior];
-    [self.view.window addSubview:self.cell_image_view];
+    [self.view addSubview:self.cell_image_view];
     cell.alpha = 0.0f;
   }
   else if (recognizer.state == UIGestureRecognizerStateChanged)
