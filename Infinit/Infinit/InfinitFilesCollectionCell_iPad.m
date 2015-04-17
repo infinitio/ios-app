@@ -13,6 +13,8 @@
 
 @import AVFoundation;
 
+static CGSize _max_size = {100.0f, 100.0f};
+
 @implementation InfinitFilesCollectionCell_iPad
 
 - (void)awakeFromNib
@@ -22,8 +24,7 @@
 
 - (void)configureForFile:(InfinitFileModel*)file
 {
-  CGSize size = self.thumbnail_view.bounds.size;
-  UIImage* thumb = [InfinitFilePreview previewForPath:file.path ofSize:size crop:NO];
+  UIImage* thumb = [InfinitFilePreview previewForPath:file.path ofSize:_max_size crop:NO];
   self.thumbnail_view.image = thumb;
   self.h_constraint.constant = thumb.size.height;
   self.w_constraint.constant = thumb.size.width;
@@ -38,6 +39,12 @@
   {
     self.video_view.hidden = YES;
   }
+}
+
+- (void)setSelected:(BOOL)selected
+{
+  [super setSelected:selected];
+  self.select_view.hidden = !selected;
 }
 
 @end

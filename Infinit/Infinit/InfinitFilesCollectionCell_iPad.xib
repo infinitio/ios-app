@@ -46,17 +46,34 @@
                                     <constraint firstAttribute="centerY" secondItem="TlG-QI-vOe" secondAttribute="centerY" id="yyB-5V-cFP"/>
                                 </constraints>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LOp-SA-z7F">
+                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-checked" translatesAutoresizingMaskIntoConstraints="NO" id="6Ca-r4-0FZ">
+                                        <rect key="frame" x="35" y="35" width="30" height="31"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="centerY" secondItem="6Ca-r4-0FZ" secondAttribute="centerY" id="SWy-Ec-Gm2"/>
+                                    <constraint firstAttribute="centerX" secondItem="6Ca-r4-0FZ" secondAttribute="centerX" id="T0q-3u-j1u"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="hYU-EB-MIB" secondAttribute="trailing" id="3Q8-Eg-MGC"/>
                             <constraint firstAttribute="bottom" secondItem="hYU-EB-MIB" secondAttribute="bottom" id="8x9-sN-Igr"/>
                             <constraint firstItem="WyZ-Uy-lyE" firstAttribute="leading" secondItem="D0c-2p-W5g" secondAttribute="leading" id="HBO-yr-Vru"/>
+                            <constraint firstItem="LOp-SA-z7F" firstAttribute="leading" secondItem="D0c-2p-W5g" secondAttribute="leading" id="J0Y-Rf-GG6"/>
                             <constraint firstItem="hYU-EB-MIB" firstAttribute="leading" secondItem="D0c-2p-W5g" secondAttribute="leading" id="OJd-b5-REM"/>
+                            <constraint firstItem="LOp-SA-z7F" firstAttribute="top" secondItem="D0c-2p-W5g" secondAttribute="top" id="PrC-TL-OTL"/>
+                            <constraint firstAttribute="bottom" secondItem="LOp-SA-z7F" secondAttribute="bottom" id="QRT-gs-acd"/>
                             <constraint firstItem="hYU-EB-MIB" firstAttribute="top" secondItem="D0c-2p-W5g" secondAttribute="top" id="V6P-5O-ptC"/>
                             <constraint firstAttribute="width" constant="100" id="XVZ-nQ-Due"/>
                             <constraint firstAttribute="trailing" secondItem="WyZ-Uy-lyE" secondAttribute="trailing" id="f0q-mo-jai"/>
                             <constraint firstAttribute="bottom" secondItem="WyZ-Uy-lyE" secondAttribute="bottom" id="gyn-h2-gj4"/>
+                            <constraint firstAttribute="trailing" secondItem="LOp-SA-z7F" secondAttribute="trailing" id="s4M-mH-SGB"/>
                             <constraint firstAttribute="height" constant="100" id="syJ-7y-uE6"/>
                         </constraints>
                     </view>
@@ -70,6 +87,7 @@
             <connections>
                 <outlet property="duration_label" destination="TlG-QI-vOe" id="EH3-4N-ieU"/>
                 <outlet property="h_constraint" destination="syJ-7y-uE6" id="rvq-xz-XSK"/>
+                <outlet property="select_view" destination="LOp-SA-z7F" id="PQe-vK-cH4"/>
                 <outlet property="thumbnail_view" destination="hYU-EB-MIB" id="4Uj-Bm-LAO"/>
                 <outlet property="video_view" destination="WyZ-Uy-lyE" id="vib-QF-nUq"/>
                 <outlet property="w_constraint" destination="XVZ-nQ-Due" id="fLU-p2-pwB"/>
@@ -77,6 +95,7 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="icon-checked" width="30" height="31"/>
         <image name="icon-send-camera" width="12" height="9"/>
     </resources>
 </document>

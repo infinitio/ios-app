@@ -12,6 +12,7 @@
 
 @interface InfinitFilesCollectionCell_iPad : UICollectionViewCell
 
+@property (nonatomic, weak) IBOutlet UIView* select_view;
 @property (nonatomic, weak) IBOutlet UIImageView* thumbnail_view;
 @property (nonatomic, weak) IBOutlet UIView* video_view;
 @property (nonatomic, weak) IBOutlet UILabel* duration_label;
