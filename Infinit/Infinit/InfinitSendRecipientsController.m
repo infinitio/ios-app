@@ -22,6 +22,7 @@
 #import "InfinitSendNoResultsCell.h"
 #import "InfinitSendToSelfOverlayView.h"
 #import "InfinitSendUserCell.h"
+#import "InfinitSplitViewOverlayViewController.h"
 #import "InfinitTabBarController.h"
 #import "InfinitUploadThumbnailManager.h"
 
@@ -643,7 +644,15 @@
   [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewSend method:InfinitUIMethodTap];
   dispatch_async(dispatch_get_main_queue(), ^
   {
-    [((InfinitTabBarController*)self.tabBarController) showMainScreen:self];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+      if (self.files.count > 0)
+        [((InfinitSplitViewOverlayViewController*)self.parentViewController) hideController];
+    }
+    else
+    {
+      [((InfinitTabBarController*)self.tabBarController) showMainScreen:self];
+    }
   });
 }
 
