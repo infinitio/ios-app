@@ -20,7 +20,8 @@
 @property (nonatomic, readwrite) NSArray* all_folders;
 @property (nonatomic, readonly) NSArray* current_selection;
 @property (nonatomic, readwrite) BOOL editing;
-@property (nonatomic, readwrite) BOOL searching;
+@property (nonatomic, readwrite) InfinitFileTypes filter;
+@property (nonatomic, readwrite) NSString* search_string;
 
 - (void)folderAdded:(InfinitFolderModel*)folder;
 - (void)folderRemoved:(InfinitFolderModel*)folder;

@@ -19,9 +19,14 @@
   _editing = editing;
 }
 
-- (void)setSearching:(BOOL)searching
+- (void)setFilter:(InfinitFileTypes)filter
 {
-  _searching = searching;
+  _filter = filter;
+}
+
+- (void)setSearch_string:(NSString*)search_string
+{
+  _search_string = search_string;
 }
 
 - (void)filesDeleted
