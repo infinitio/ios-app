@@ -109,15 +109,12 @@
   if ([InfinitHostDevice iOS7])
   {
     [self.navigationController popViewControllerAnimated:YES];
-    self.text_view.text = _place_holder_text;
   }
   else
   {
-    [self dismissViewControllerAnimated:YES completion:^
-     {
-       self.text_view.text = _place_holder_text;
-     }];
+    [self.navigationController.navigationController popToRootViewControllerAnimated:YES];
   }
+  self.text_view.text = _place_holder_text;
 }
 
 - (IBAction)backButtonTapped:(id)sender
