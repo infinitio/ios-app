@@ -525,8 +525,8 @@
                     <connections>
                         <outlet property="table_view" destination="ob9-mb-YaE" id="e8l-fY-x59"/>
                         <outlet property="view" destination="nrk-EV-IbR" id="Cad-aW-WmX"/>
-                        <segue destination="RBB-kt-vOH" kind="showDetail" identifier="settings_feedback" id="QON-zo-f6l"/>
-                        <segue destination="RBB-kt-vOH" kind="showDetail" identifier="settings_report_problem" id="0ax-4u-uN8"/>
+                        <segue destination="RBB-kt-vOH" kind="show" identifier="settings_feedback" id="QON-zo-f6l"/>
+                        <segue destination="RBB-kt-vOH" kind="show" identifier="settings_report_problem" id="0ax-4u-uN8"/>
                         <segue destination="FTm-Xp-9pf" kind="show" identifier="settings_edit_profile" id="s2s-MM-c1x"/>
                         <segue destination="FZF-o8-gIc" kind="show" identifier="settings_invite_code_segue" id="QhM-hs-oPP"/>
                     </connections>
@@ -570,7 +570,7 @@
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="REPORT A PROBLEM" id="Q7Z-b7-sHF">
-                        <barButtonItem key="leftBarButtonItem" image="icon-arrow-down-red" id="mSL-Cm-2y4">
+                        <barButtonItem key="leftBarButtonItem" image="icon-back-white" id="mSL-Cm-2y4">
                             <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="backButtonTapped:" destination="n3a-58-YZv" id="Zzy-2u-T9N"/>
@@ -850,7 +850,7 @@
         <!--SEND_RECIPIENTS-->
         <scene sceneID="05q-5G-qxd">
             <objects>
-                <viewController title="SEND_RECIPIENTS" extendedLayoutIncludesOpaqueBars="YES" id="9ZK-3B-PXo" customClass="InfinitSendRecipientsController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="send_recipients_controller" title="SEND_RECIPIENTS" extendedLayoutIncludesOpaqueBars="YES" id="9ZK-3B-PXo" customClass="InfinitSendRecipientsController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="i8F-aD-XN0"/>
                         <viewControllerLayoutGuide type="bottom" id="zqG-cb-qD6"/>
@@ -3026,7 +3026,6 @@ access your phone contacts!</string>
     </scenes>
     <resources>
         <image name="bg_balloon" width="990" height="1099"/>
-        <image name="icon-arrow-down-red" width="17" height="10"/>
         <image name="icon-back-white" width="11" height="18"/>
         <image name="icon-close" width="16" height="17"/>
         <image name="icon-contact-favorite" width="19" height="18"/>
@@ -3063,7 +3062,7 @@ access your phone contacts!</string>
         <segue reference="geu-yv-K0l"/>
         <segue reference="FIr-rc-U7J"/>
         <segue reference="Yah-cg-ZRU"/>
-        <segue reference="0ax-4u-uN8"/>
+        <segue reference="QON-zo-f6l"/>
         <segue reference="QhM-hs-oPP"/>
         <segue reference="zep-Dc-F4h"/>
         <segue reference="mYU-YK-ihc"/>
