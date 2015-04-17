@@ -15,6 +15,7 @@
 #import "InfinitFilePreview.h"
 #import "InfinitFilePreviewController.h"
 #import "InfinitFilesNavigationController.h"
+#import "InfinitGallery.h"
 #import "InfinitResizableNavigationBar.h"
 #import "InfinitSendRecipientsController.h"
 #import "InfinitTabBarController.h"
@@ -314,99 +315,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer*)otherGestureReco
   {
     [paths addObject:self.folder.file_paths[index.row]];
   }
-  if ([PHAsset class])
-  {
-    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^
-    {
-      PHFetchResult* collections = [PHCollection fetchTopLevelUserCollectionsWithOptions:nil];
-      __block PHAssetCollection* collection = nil;
-      [collections enumerateObjectsUsingBlock:^(PHAssetCollection* user_collection,
-                                                NSUInteger index, 
-                                                BOOL* stop)
-      {
-        if ([user_collection.localizedTitle isEqualToString:kInfinitAlbumName])
-          collection = user_collection;
-      }];
-      PHAssetCollectionChangeRequest* collection_request = nil;
-      if (!collection)
-      {
-        collection_request =
-          [PHAssetCollectionChangeRequest creationRequestForAssetCollectionWithTitle:kInfinitAlbumName];
-      }
-      else
-      {
-        collection_request =
-          [PHAssetCollectionChangeRequest changeRequestForAssetCollection:collection];
-      }
-      NSMutableArray* assets = [NSMutableArray array];
-      for (NSString* path in paths)
-      {
-        InfinitFileTypes type = [InfinitFilePreview fileTypeForPath:path];
-        PHAssetChangeRequest* asset_request = nil;
-        if (type == InfinitFileTypeImage)
-        {
-          UIImage* image = [UIImage imageWithContentsOfFile:path];
-          asset_request = [PHAssetChangeRequest creationRequestForAssetFromImage:image];
-          if (asset_request)
-            [assets addObject:asset_request.placeholderForCreatedAsset];
-        }
-        else if (type == InfinitFileTypeVideo)
-        {
-          NSURL* url = [NSURL URLWithString:path];
-          asset_request = [PHAssetChangeRequest creationRequestForAssetFromVideoAtFileURL:url];
-          if (asset_request)
-            [assets addObject:asset_request.placeholderForCreatedAsset];
-        }
-      }
-      [collection_request addAssets:assets];
-    } completionHandler:^(BOOL success, NSError* error)
-    {
-    }];
-  }
-  else
-  {
-    for (NSString* path in paths)
-    {
-      InfinitFileTypes type = [InfinitFilePreview fileTypeForPath:path];
-      if (type == InfinitFileTypeImage)
-      {
-        [self.library saveImageData:[NSData dataWithContentsOfFile:path]
-                            toAlbum:kInfinitAlbumName
-                           metadata:nil 
-                         completion:^(NSURL* assetURL, NSError* error)
-        {
-          if (error)
-          {
-            ELLE_ERR("%s: unable to save image: %s", self.description.UTF8String, path.UTF8String);
-          }
-        } failure:^(NSError* error)
-        {
-          if (error)
-          {
-            ELLE_ERR("%s: unable to save image: %s", self.description.UTF8String, path.UTF8String);
-          }
-        }];
-      }
-      else if (type == InfinitFileTypeVideo)
-      {
-        [self.library saveVideo:[NSURL URLWithString:path]
-                        toAlbum:kInfinitAlbumName 
-                     completion:^(NSURL* assetURL, NSError* error)
-        {
-          if (error)
-          {
-            ELLE_ERR("%s: unable to save image: %s", self.description.UTF8String, path.UTF8String);
-          }
-        } failure:^(NSError* error)
-        {
-          if (error)
-          {
-            ELLE_ERR("%s: unable to save image: %s", self.description.UTF8String, path.UTF8String);
-          }
-        }];
-      }
-    }
-  }
+  [InfinitGallery saveToGallery:paths];
   [self setTableEditing:NO animated:YES];
 }
 
