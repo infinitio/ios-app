@@ -45,9 +45,26 @@
   return self.path.lastPathComponent;
 }
 
+- (BOOL)string:(NSString*)string
+      contains:(NSString*)search
+{
+  if (!search.length)
+    return YES;
+  if ([string rangeOfString:search options:NSCaseInsensitiveSearch].location != NSNotFound)
+    return YES;
+  return NO;
+}
+
+- (BOOL)containsString:(NSString*)string
+{
+  if ([self string:self.name contains:string])
+    return YES;
+  return NO;
+}
+
 - (BOOL)matchesType:(InfinitFileTypes)type
 {
-  if (self.type == type)
+  if (self.type & type)
     return YES;
   return NO;
 }
@@ -58,6 +75,16 @@
 {
   return [NSString stringWithFormat:@"FileModel (%@): %@",
           self.name, [InfinitDataSize fileSizeStringFrom:self.size]];
+}
+
+- (BOOL)isEqual:(id)object
+{
+  if (![object isKindOfClass:InfinitFileModel.class])
+    return NO;
+  InfinitFileModel* other = (InfinitFileModel*)object;
+  if ([self.path isEqualToString:other.path])
+    return YES;
+  return NO;
 }
 
 @end
