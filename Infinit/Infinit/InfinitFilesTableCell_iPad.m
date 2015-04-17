@@ -46,6 +46,8 @@
   NSString* size_str = [InfinitDataSize fileSizeStringFrom:folder.size];
   NSString* info = [NSString stringWithFormat:@"%@ – %@", folder.sender_name, size_str];
   self.info_label.text = info;
+  if (folder.files.count > 1)
+    self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 }
 
 @end
