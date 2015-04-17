@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InfinitFilesSearchPopover_iPad"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <viewController id="mAU-ZT-Lvs" customClass="InfinitFilesSearchPopover_iPad">
+            <layoutGuides>
+                <viewControllerLayoutGuide type="top" id="J9o-8B-fFm"/>
+                <viewControllerLayoutGuide type="bottom" id="Rys-n0-Xly"/>
+            </layoutGuides>
+            <view key="view" contentMode="scaleToFill" id="3fc-HI-BKa">
+                <rect key="frame" x="0.0" y="0.0" width="250" height="44"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <searchBar contentMode="redraw" placeholder="Search..." translatesAutoresizingMaskIntoConstraints="NO" id="4AX-CG-u0l">
+                        <rect key="frame" x="0.0" y="0.0" width="250" height="44"/>
+                        <color key="tintColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <textInputTraits key="textInputTraits"/>
+                        <connections>
+                            <outlet property="delegate" destination="mAU-ZT-Lvs" id="0Cf-6v-5JW"/>
+                        </connections>
+                    </searchBar>
+                </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="4AX-CG-u0l" secondAttribute="trailing" id="526-at-aJG"/>
+                    <constraint firstItem="4AX-CG-u0l" firstAttribute="leading" secondItem="3fc-HI-BKa" secondAttribute="leading" id="6Kr-av-yDH"/>
+                    <constraint firstItem="4AX-CG-u0l" firstAttribute="top" secondItem="3fc-HI-BKa" secondAttribute="top" id="Aun-Sd-l3h"/>
+                    <constraint firstAttribute="bottom" secondItem="4AX-CG-u0l" secondAttribute="bottom" id="iMe-oI-yud"/>
+                </constraints>
+            </view>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <size key="freeformSize" width="250" height="44"/>
+            <connections>
+                <outlet property="search_bar" destination="4AX-CG-u0l" id="3jK-n0-fGD"/>
+            </connections>
+            <point key="canvasLocation" x="501" y="317"/>
+        </viewController>
+    </objects>
+</document>
