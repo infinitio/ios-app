@@ -36,8 +36,15 @@
                                    bundle:nil];
   [self.collection_view registerNib:cell_nib forCellWithReuseIdentifier:_cell_id];
   _file_results = [[self filesFromFolders:self.all_folders] mutableCopy];
-  // Uncomment the following line to preserve selection between presentations
-  // self.clearsSelectionOnViewWillAppear = NO;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+  [super viewWillAppear:animated];
+  _file_results = [self searchAndFilterResults];
+  [self.collection_view reloadData];
+  for (NSIndexPath* index in self.collection_view.indexPathsForSelectedItems)
+    [self.collection_view deselectItemAtIndexPath:index animated:NO];
 }
 
 #pragma mark - Editing
@@ -58,11 +65,30 @@
     return;
   [super setEditing:editing];
   self.collection_view.allowsMultipleSelection = editing;
+  for (NSIndexPath* index in self.collection_view.indexPathsForSelectedItems)
+    [self.collection_view deselectItemAtIndexPath:index animated:NO];
 }
 
 - (void)filesDeleted
 {
-  [self.collection_view reloadData];
+  [self.collection_view performBatchUpdates:^
+  {
+    NSMutableArray* temp = [self.file_results mutableCopy];
+    [temp removeObjectsInArray:[self searchAndFilterResults]];
+    NSMutableArray* indexes = [NSMutableArray array];
+    for (InfinitFileModel* file in temp)
+    {
+      NSUInteger index = [self.file_results indexOfObject:file];
+      if (index != NSNotFound)
+      {
+        [indexes addObject:[NSIndexPath indexPathForRow:index inSection:0]];
+        [self.file_results removeObject:file];
+      }
+    }
+    if (indexes.count > 0)
+      [self.collection_view deleteItemsAtIndexPaths:indexes];
+    self.editing = NO;
+  } completion:NULL];
 }
 
 #pragma mark <UICollectionViewDataSource>
@@ -86,7 +112,7 @@
     [collectionView dequeueReusableCellWithReuseIdentifier:_cell_id
                                               forIndexPath:indexPath];
   [cell configureForFile:self.file_results[indexPath.row]];
-
+  cell.selected = [collectionView.indexPathsForSelectedItems containsObject:indexPath];
   return cell;
 }
 
@@ -137,16 +163,6 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 
 #pragma mark - Files Display
 
-- (void)setSearching:(BOOL)searching
-{
-  [super setSearching:searching];
-  if (!self.searching)
-  {
-    _file_results = [[self filesFromFolders:self.all_folders] mutableCopy];
-    [self.collection_view reloadData];
-  }
-}
-
 - (void)folderAdded:(InfinitFolderModel*)folder
 {
   @synchronized(self.all_folders)
@@ -154,7 +170,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
     if ([self.all_folders containsObject:folder])
       return;
     [super folderAdded:folder];
-    if (!self.searching)
+    if (!self.search_string.length)
     {
       [self.collection_view performBatchUpdates:^
       {
@@ -201,6 +217,44 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
   {
     for (InfinitFileModel* file in folder.files)
       [res addObject:file];
+  }
+  return res;
+}
+
+#pragma mark - Search
+
+- (void)setFilter:(InfinitFileTypes)filter
+{
+  if (self.filter == filter)
+    return;
+  @synchronized(self)
+  {
+    [super setFilter:filter];
+    _file_results = [self searchAndFilterResults];
+    [self.collection_view reloadData];
+  }
+}
+
+- (void)setSearch_string:(NSString*)search_string
+{
+  if ([self.search_string isEqualToString:search_string])
+    return;
+  [super setSearch_string:search_string];
+  if (self.search_string.length)
+    _file_results = [self searchAndFilterResults];
+  else
+    _file_results = [[self filesFromFolders:self.all_folders] mutableCopy];
+  [self.collection_view reloadData];
+}
+
+- (NSMutableArray*)searchAndFilterResults
+{
+  NSMutableArray* res = [NSMutableArray array];
+  for (InfinitFolderModel* folder in self.all_folders)
+  {
+    for (InfinitFileModel* file in folder.files)
+      if ([file matchesType:self.filter] && [file containsString:self.search_string])
+        [res addObject:file];
   }
   return res;
 }
