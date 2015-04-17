@@ -21,6 +21,7 @@
 #import "InfinitHomeOnboardingCell.h"
 #import "InfinitHomeRatingCell.h"
 #import "InfinitHostDevice.h"
+#import "InfinitMainSplitViewController_iPad.h"
 #import "InfinitMetricsManager.h"
 #import "InfinitOfflineOverlay.h"
 #import "InfinitRatingManager.h"
@@ -312,9 +313,11 @@ static NSUInteger _background_onboard_size = 5 * 1000 * 1000;
     [self.view addSubview:self.onboarding_view];
   }
   CGFloat height = self.onboarding_view.bounds.size.height + 30.0f;
+  CGFloat y =
+  [UIScreen mainScreen].bounds.size.height - height - self.tabBarController.tabBar.bounds.size.height;
   CGRect frame =
     CGRectMake(0.0f,
-               [UIScreen mainScreen].bounds.size.height - height - self.tabBarController.tabBar.bounds.size.height,
+               y,
                self.view.bounds.size.width,
                height);
   self.onboarding_view.frame = [self.view convertRect:frame fromView:self.view.superview];
@@ -1264,7 +1267,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 - (void)cellPauseTapped:(InfinitHomePeerTransactionCell*)sender
 {
   UIAlertView* alert =
-    [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Compter says no.", nil)
+    [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Computer says no.", nil)
                                message:NSLocalizedString(@"Pause is coming soon!", nil)
                               delegate:nil 
                      cancelButtonTitle:NSLocalizedString(@"OK", nil)
@@ -1293,7 +1296,14 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
   else if (folder.files.count > 1)
   {
     self.previewing_files = YES;
-    [self performSegueWithIdentifier:@"home_files_segue" sender:folder];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+      // XXX ipad
+    }
+    else
+    {
+      [self performSegueWithIdentifier:@"home_files_segue" sender:folder];
+    }
   }
 }
 
@@ -1312,8 +1322,19 @@ openFileTapped:(NSUInteger)file_index
 
 - (void)cellSendTapped:(InfinitHomePeerTransactionCell*)sender
 {
-  _sending = YES;
-  [self performSegueWithIdentifier:@"home_card_to_send_segue" sender:sender];
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+  {
+    InfinitDownloadFolderManager* manager = [InfinitDownloadFolderManager sharedInstance];
+    InfinitFolderModel* folder =
+      [manager completedFolderForTransactionMetaId:sender.transaction.meta_id];
+    NSArray* files = folder.file_paths;
+    [((InfinitMainSplitViewController_iPad*)self.splitViewController) showSendViewForFiles:files];
+  }
+  else
+  {
+    _sending = YES;
+    [self performSegueWithIdentifier:@"home_card_to_send_segue" sender:sender];
+  }
 }
 
 #pragma mark - Onboarding Cell Handling
@@ -1504,7 +1525,7 @@ openFileTapped:(NSUInteger)file_index
     InfinitTabBarController* tab_controller = (InfinitTabBarController*)self.tabBarController;
     [tab_controller setTabBarHidden:YES animated:NO];
     InfinitSendRecipientsController* send_controller =
-    (InfinitSendRecipientsController*)segue.destinationViewController;
+      (InfinitSendRecipientsController*)segue.destinationViewController;
     if ([segue.identifier isEqualToString:@"home_card_to_send_segue"])
     {
       InfinitHomePeerTransactionCell* cell = (InfinitHomePeerTransactionCell*)sender;
