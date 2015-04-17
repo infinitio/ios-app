@@ -305,6 +305,11 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
     self.name = [self.files.firstObject name];
   else
     self.name = [NSString stringWithFormat:NSLocalizedString(@"%lu files", nil), self.files.count];
+  if (self.files.count < 4)
+  {
+    [[NSFileManager defaultManager] removeItemAtPath:[self thumbnailPathForObject:self] error:nil];
+    [self generateThumbnail];
+  }
 }
 
 - (void)deleteFolder
@@ -329,6 +334,8 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
 - (BOOL)string:(NSString*)string
       contains:(NSString*)search
 {
+  if (!search.length)
+    return YES;
   if ([string rangeOfString:search options:NSCaseInsensitiveSearch].location != NSNotFound)
     return YES;
   return NO;
@@ -342,7 +349,7 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
     return YES;
   for (InfinitFileModel* file in self.files)
   {
-    if ([self string:file.name contains:string])
+    if ([file containsString:string])
       return YES;
   }
   return NO;
@@ -352,7 +359,7 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
 {
   for (InfinitFileModel* file in self.files)
   {
-    if (file.type == type)
+    if ([file matchesType:type])
       return YES;
   }
   return NO;
