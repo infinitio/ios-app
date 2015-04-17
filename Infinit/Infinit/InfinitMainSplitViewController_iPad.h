@@ -10,4 +10,6 @@
 
 @interface InfinitMainSplitViewController_iPad : UISplitViewController
 
+- (void)showSendViewForFiles:(NSArray*)files;
+
 @end
