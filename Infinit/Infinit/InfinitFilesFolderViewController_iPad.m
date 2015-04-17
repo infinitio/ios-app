@@ -15,6 +15,8 @@
 
 @property (nonatomic, weak) IBOutlet UITableView* table_view;
 
+@property (nonatomic, readonly) NSMutableArray* file_results;
+
 @end
 
 @implementation InfinitFilesFolderViewController_iPad
@@ -37,6 +39,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
+  _file_results = [self searchAndFilterResults];
   [self.table_view reloadData];
 }
 
@@ -54,7 +57,7 @@
     return nil;
   NSMutableArray* res = [NSMutableArray array];
   for (NSIndexPath* index in self.table_view.indexPathsForSelectedRows)
-    [res addObject:self.folder.files[index.row]];
+    [res addObject:self.file_results[index.row]];
   return res;
 }
 
@@ -72,15 +75,35 @@ forRowAtIndexPath:(NSIndexPath*)indexPath
 {
   if (editingStyle == UITableViewCellEditingStyleDelete)
   {
-    [self.delegate deleteFile:self.folder.files[indexPath.row] sender:self];
+    InfinitFileModel* file = self.file_results[indexPath.row];
+    [tableView beginUpdates];
+    [self.file_results removeObjectAtIndex:indexPath.row];
     [tableView deleteRowsAtIndexPaths:@[indexPath]
                      withRowAnimation:UITableViewRowAnimationAutomatic];
+    [tableView endUpdates];
+    [self.delegate deleteFile:file sender:self];
   }
 }
 
 - (void)filesDeleted
 {
-  [self.table_view reloadData];
+  [self.table_view beginUpdates];
+  NSMutableArray* temp = [self.file_results mutableCopy];
+  [temp removeObjectsInArray:[self searchAndFilterResults]];
+  NSMutableArray* indexes = [NSMutableArray array];
+  for (InfinitFileModel* file in temp)
+  {
+    NSUInteger index = [self.file_results indexOfObject:file];
+    if (index != NSNotFound)
+      [indexes addObject:[NSIndexPath indexPathForRow:index inSection:0]];
+  }
+  _file_results = [self searchAndFilterResults];
+  if (indexes.count > 0)
+  {
+    [self.table_view deleteRowsAtIndexPaths:indexes
+                           withRowAnimation:UITableViewRowAnimationAutomatic];
+  }
+  [self.table_view endUpdates];
 }
 
 #pragma mark - Table View Data Source
@@ -99,7 +122,7 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
 - (NSInteger)tableView:(UITableView*)tableView 
  numberOfRowsInSection:(NSInteger)section
 {
-  return self.folder.files.count;
+  return self.file_results.count;
 }
 
 - (UITableViewCell*)tableView:(UITableView*)tableView
@@ -107,7 +130,7 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
   InfinitFilesTableCell_iPad* cell = [tableView dequeueReusableCellWithIdentifier:_cell_id
                                                                      forIndexPath:indexPath];
-  [cell configureForFile:self.folder.files[indexPath.row]];
+  [cell configureForFile:self.file_results[indexPath.row]];
   return cell;
 }
 
@@ -122,9 +145,49 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   }
   else
   {
-    [self.delegate actionForFile:self.folder.files[indexPath.row] sender:self];
+    [self.delegate actionForFile:self.file_results[indexPath.row] sender:self];
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
   }
+}
+
+#pragma mark - Search
+
+- (void)setFilter:(InfinitFileTypes)filter
+{
+  if (self.filter == filter)
+    return;
+  @synchronized(self)
+  {
+    [super setFilter:filter];
+    _file_results = [self searchAndFilterResults];
+    [self.table_view reloadData];
+  }
+}
+
+- (void)setSearch_string:(NSString*)search_string
+{
+  if (self.search_string == search_string)
+    return;
+  @synchronized(self)
+  {
+    [super setSearch_string:search_string];
+    if (self.search_string.length)
+      _file_results = [self searchAndFilterResults];
+    else
+      _file_results = [self.folder.files mutableCopy];
+    [self.table_view reloadData];
+  }
+}
+
+- (NSMutableArray*)searchAndFilterResults
+{
+  NSMutableArray* res = [NSMutableArray array];
+  for (InfinitFileModel* file in self.folder.files)
+  {
+    if ([file matchesType:self.filter] && [file containsString:self.search_string])
+      [res addObject:file];
+  }
+  return res;
 }
 
 @end
