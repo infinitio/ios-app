@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSUInteger, InfinitFileTypes)
+typedef NS_OPTIONS(NSUInteger, InfinitFileTypes)
 {
   InfinitFileTypeArchive      = 1 << 0,
   InfinitFileTypeAudio        = 1 << 1,
