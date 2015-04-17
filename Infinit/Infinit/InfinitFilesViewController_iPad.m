@@ -9,13 +9,15 @@
 #import "InfinitFilesViewController_iPad.h"
 
 #import "InfinitDownloadFolderManager.h"
+#import "InfinitFilePreviewController.h"
 #import "InfinitFilesCollectionViewController_iPad.h"
 #import "InfinitFilesFolderViewController_iPad.h"
-#import "InfinitFilePreviewController.h"
+#import "InfinitFilesSearchPopover_iPad.h"
 #import "InfinitFilesTableViewController_iPad.h"
 
 @interface InfinitFilesViewController_iPad () <InfinitDownloadFolderManagerProtocol,
-                                               InfinitFilesDisplayProtocol>
+                                               InfinitFilesDisplayProtocol,
+                                               InfinitFilesSearchProtocol>
 
 @property (nonatomic, weak) IBOutlet UISegmentedControl* segmented_control;
 @property (nonatomic, weak) IBOutlet UIButton* right_button_inner;
@@ -26,10 +28,13 @@
 
 @property (nonatomic, readonly) NSMutableArray* all_folders;
 @property (atomic, readonly) BOOL editing;
+@property (nonatomic, readonly) NSString* last_search_string;
 
 @property (nonatomic, weak) InfinitFilesDisplayController_iPad* current_controller;
 @property (nonatomic, strong) InfinitFilesCollectionViewController_iPad* collection_view_controller;
 @property (nonatomic, strong) InfinitFilesFolderViewController_iPad* folder_view_controller;
+@property (nonatomic, strong) UIPopoverController* search_popover_controller;
+@property (nonatomic, strong) InfinitFilesSearchPopover_iPad* search_view_controller;
 @property (nonatomic, strong) InfinitFilesTableViewController_iPad* table_view_controller;
 
 @end
@@ -59,12 +64,16 @@ typedef NS_ENUM(NSUInteger, InfinitFilesFilter)
     [self.storyboard instantiateViewControllerWithIdentifier:@"files_table_view_ipad"];
   self.table_view_controller.delegate = self;
   self.main_view.clipsToBounds = YES;
+  UINib* search_nib = [UINib nibWithNibName:NSStringFromClass(InfinitFilesSearchPopover_iPad.class)
+                                     bundle:nil];
+  _search_view_controller = [[search_nib instantiateWithOwner:self options:nil] firstObject];
+  self.search_view_controller.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
-  static dispatch_once_t first_appear;
+  static dispatch_once_t first_appear = 0;
   dispatch_once(&first_appear, ^
   {
     _all_folders = [[InfinitDownloadFolderManager sharedInstance].completed_folders mutableCopy];
@@ -77,6 +86,15 @@ typedef NS_ENUM(NSUInteger, InfinitFilesFilter)
 {
   [InfinitDownloadFolderManager sharedInstance].delegate = nil;
   [super viewWillDisappear:animated];
+}
+
+- (IBAction)screenTapped:(id)sender
+{
+  if (self.search_popover_controller.isPopoverVisible)
+  {
+    [self.search_popover_controller dismissPopoverAnimated:YES];
+    self.search_view_controller.search_string = nil;
+  }
 }
 
 #pragma mark - Download Folder Delegate
@@ -175,7 +193,17 @@ typedef NS_ENUM(NSUInteger, InfinitFilesFilter)
   }
   else
   {
-    // XXX search
+    if (self.search_popover_controller == nil)
+    {
+      _search_popover_controller =
+        [[UIPopoverController alloc] initWithContentViewController:self.search_view_controller];
+    }
+    if (self.search_popover_controller.isPopoverVisible)
+      return;
+    [self.search_popover_controller presentPopoverFromRect:self.right_button_inner.frame
+                                                    inView:self.view 
+                                  permittedArrowDirections:UIPopoverArrowDirectionUp
+                                                  animated:YES];
   }
 }
 
@@ -186,27 +214,7 @@ typedef NS_ENUM(NSUInteger, InfinitFilesFilter)
 
 - (IBAction)segmentedControlChanged:(id)sender
 {
-  InfinitFileTypes type = InfinitFileTypeAll;
-  switch (self.segmented_control.selectedSegmentIndex)
-  {
-    case InfinitFilesFilterAll:
-      type = InfinitFileTypeAll;
-      break;
-    case InfinitFilesFilterPhotos:
-      type = InfinitFileTypeImage;
-      break;
-    case InfinitFilesFilterVideos:
-      type = InfinitFileTypeVideo;
-      break;
-    case InfinitFilesFilterDocs:
-      break;
-    case InfinitFilesFilterMusic:
-      break;
-
-    case InfinitFilesFilterOther:
-    default:
-      break;
-  }
+  self.current_controller.filter = [self currentFilter];
 }
 
 - (void)setEditing:(BOOL)editing
@@ -242,6 +250,41 @@ typedef NS_ENUM(NSUInteger, InfinitFilesFilter)
   [self.left_button_outer setTitle:back_text forState:UIControlStateNormal];
   [self.right_button_inner setImage:right_inner_image forState:UIControlStateNormal];
 }
+
+- (InfinitFileTypes)currentFilter
+{
+  InfinitFileTypes filter = InfinitFileTypeAll;
+  switch (self.segmented_control.selectedSegmentIndex)
+  {
+    case InfinitFilesFilterAll:
+      filter = InfinitFileTypeAll;
+      break;
+    case InfinitFilesFilterPhotos:
+      filter = InfinitFileTypeImage;
+      break;
+    case InfinitFilesFilterVideos:
+      filter = InfinitFileTypeVideo;
+      break;
+    case InfinitFilesFilterDocs:
+      filter = (InfinitFileTypeDocument | InfinitFileTypePresentation | InfinitFileTypeSpreadsheet);
+      break;
+    case InfinitFilesFilterMusic:
+      filter = InfinitFileTypeAudio;
+      break;
+
+    case InfinitFilesFilterOther:
+      filter = ~(InfinitFileTypeDocument |
+                 InfinitFileTypePresentation |
+                 InfinitFileTypeSpreadsheet |
+                 InfinitFileTypeAudio |
+                 InfinitFileTypeVideo |
+                 InfinitFileTypeImage);
+    default:
+      break;
+  }
+  return filter;
+}
+
 
 #pragma mark - Files Display Delegate
 
@@ -281,6 +324,7 @@ typedef NS_ENUM(NSUInteger, InfinitFilesFilter)
 {
   InfinitFolderModel* folder = file.folder;
   [folder deleteFileAtIndex:[folder.files indexOfObject:file]];
+  [self.current_controller filesDeleted];
 }
 
 - (void)deleteFolder:(InfinitFolderModel*)folder
@@ -288,6 +332,24 @@ typedef NS_ENUM(NSUInteger, InfinitFilesFilter)
 {
   [[InfinitDownloadFolderManager sharedInstance] deleteFolder:folder];
 }
+
+#pragma mark - Search Delegate
+
+- (void)searchView:(InfinitFilesSearchPopover_iPad*)sender
+   stringDidChange:(NSString*)string
+{
+  [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                           selector:@selector(delayedSearch:)
+                                             object:self.last_search_string];
+  [self performSelector:@selector(delayedSearch:) withObject:string afterDelay:0.2f];
+  _last_search_string = string;
+}
+
+- (void)delayedSearch:(NSString*)string
+{
+  self.current_controller.search_string = string;
+}
+
 
 #pragma mark - Helpers
 
@@ -303,7 +365,10 @@ typedef NS_ENUM(NSUInteger, InfinitFilesFilter)
   if (self.current_controller == new_controller)
     return;
   __weak InfinitFilesDisplayController_iPad* old_controller = self.current_controller;
+  self.search_view_controller.search_string = nil;
   new_controller.all_folders = [self.all_folders copy];
+  new_controller.filter = [self currentFilter];
+  new_controller.search_string = self.search_view_controller.search_string;
   new_controller.view.frame = self.main_view.bounds;
   if (old_controller == nil)
     [self.main_view addSubview:new_controller.view];
