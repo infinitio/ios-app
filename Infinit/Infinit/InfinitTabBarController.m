@@ -19,6 +19,7 @@
 #import "InfinitHomeViewController.h"
 #import "InfinitHostDevice.h"
 #import "InfinitMetricsManager.h"
+#import "InfinitOverlayViewController.h"
 #import "InfinitOfflineOverlay.h"
 #import "InfinitSendTabIcon.h"
 #import "InfinitSendNavigationController.h"
@@ -45,6 +46,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 };
 
 @interface InfinitTabBarController () <InfinitExtensionPopoverProtocol,
+                                       InfinitOverlayViewControllerProtocol,
                                        MFMessageComposeViewControllerDelegate,
                                        UINavigationControllerDelegate,
                                        UITabBarControllerDelegate>
@@ -55,6 +57,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 @property (nonatomic, strong) UIView* selection_indicator;
 @property (nonatomic, strong) InfinitSendTabIcon* send_tab_icon;
 @property (nonatomic, strong) InfinitOfflineOverlay* offline_overlay;
+@property (nonatomic, strong) InfinitOverlayViewController* overlay_controller;
 @property (nonatomic) BOOL tab_bar_hidden;
 
 @property (nonatomic, strong) InfinitExtensionPopoverController* extension_popover;
@@ -110,7 +113,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   _status_bar_warning_style_id = @"InfinitWarningStyle";
   _tab_bar_hidden = NO;
   [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(newPeerTransaction:)
+                                           selector:@selector(peerTransactionUpdated:)
                                                name:INFINIT_NEW_PEER_TRANSACTION_NOTIFICATION
                                              object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self
@@ -259,7 +262,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
     badge = [NSString stringWithFormat:@"%lu", (unsigned long)count];
   else
     badge = @"+";
-  [self.tabBar.items[0] setBadgeValue:badge];
+  [self.tabBar.items[InfinitTabBarIndexHome] setBadgeValue:badge];
 }
 
 - (UIImage*)imageForTabBarItem:(InfinitTabBarIndex)index
@@ -693,11 +696,6 @@ shouldSelectViewController:(UIViewController*)viewController
 
 #pragma mark - Peer Transaction Notifications
 
-- (void)newPeerTransaction:(NSNotification*)notification
-{
-  [self updateHomeBadge];
-}
-
 - (void)peerTransactionUpdated:(NSNotification*)notification
 {
   [self updateHomeBadge];
@@ -767,48 +765,38 @@ shouldSelectViewController:(UIViewController*)viewController
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(300 * NSEC_PER_MSEC)),
                    dispatch_get_main_queue(), ^
     {
-      UIStoryboard* board = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-        _extension_popover = [board instantiateViewControllerWithIdentifier:@"extension_popover_id"];
-      self.extension_popover.delegate = self;
       self.extension_popover.files =
         [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:self.extension_uuid];
-      UIViewController* controller = self.viewControllers[self.selectedIndex];
-      UIView* main_view = [UIApplication sharedApplication].keyWindow;
-      self.extension_popover.view.frame = main_view.bounds;
-      [main_view addSubview:self.extension_popover.view];
-      [self addChildViewController:self.extension_popover];
-      [self.extension_popover didMoveToParentViewController:controller];
-      [self.extension_popover beginAppearanceTransition:YES animated:YES];
+      [self.overlay_controller showController:self.extension_popover];
     });
   }
 }
 
 #pragma mark - Extension Popover Delegate
 
-- (void)extensionPopoverWantsCancel:(InfinitExtensionPopoverController*)sender
-{
-  [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:self.extension_uuid];
-  _extension_uuid = nil;
-  [self.extension_popover willMoveToParentViewController:nil];
-  [self.extension_popover.view removeFromSuperview];
-  [self.extension_popover removeFromParentViewController];
-  _extension_popover = nil;
-}
-
 - (void)extensionPopoverWantsSend:(InfinitExtensionPopoverController*)sender
 {
+  [self.overlay_controller hideController];
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(400 * NSEC_PER_MSEC)),
                  dispatch_get_main_queue(), ^
   {
-    [self.extension_popover willMoveToParentViewController:nil];
-    [self.extension_popover.view removeFromSuperview];
-    [self.extension_popover removeFromParentViewController];
-    _extension_popover = nil;
     InfinitHomeViewController* home_controller =
       (InfinitHomeViewController*)[self.viewControllers[InfinitTabBarIndexHome] topViewController];
     [home_controller showRecipientsForManagedFiles:self.extension_uuid];
     _extension_uuid = nil;
   });
+}
+
+#pragma mark - Overlay Delegate
+
+- (void)overlayViewController:(InfinitOverlayViewController*)sender
+      userDidCancelController:(UIViewController*)controller
+{
+  if (controller == self.extension_popover)
+  {
+    [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:self.extension_uuid];
+    _extension_uuid = nil;
+  }
 }
 
 #pragma mark - Wormhole Handling
@@ -865,6 +853,30 @@ shouldSelectViewController:(UIViewController*)viewController
 {
   return CGRectMake(old_rect.origin.x, old_rect.origin.y,
                     old_rect.size.width + width, old_rect.size.height + height);
+}
+
+- (InfinitOverlayViewController*)overlay_controller
+{
+  if (_overlay_controller == nil)
+  {
+    UINib* overlay_nib = [UINib nibWithNibName:NSStringFromClass(InfinitOverlayViewController.class)
+                                        bundle:nil];
+
+    _overlay_controller = [overlay_nib instantiateWithOwner:self options:nil].firstObject;
+    self.overlay_controller.delegate = self;
+  }
+  return _overlay_controller;
+}
+
+- (InfinitExtensionPopoverController*)extension_popover
+{
+  if (_extension_popover == nil)
+  {
+    _extension_popover =
+      [self.storyboard instantiateViewControllerWithIdentifier:@"extension_popover_id"];
+    self.extension_popover.delegate = self;
+  }
+  return _extension_popover;
 }
 
 @end
