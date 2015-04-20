@@ -62,15 +62,6 @@ typedef NS_ENUM(NSUInteger, InfinitFilesFilter)
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  _collection_view_controller =
-    [self.storyboard instantiateViewControllerWithIdentifier:@"files_collection_view_ipad"];
-  self.collection_view_controller.delegate = self;
-  _folder_view_controller =
-    [self.storyboard instantiateViewControllerWithIdentifier:@"single_folder_table_view_ipad"];
-  self.folder_view_controller.delegate = self;
-  _table_view_controller =
-    [self.storyboard instantiateViewControllerWithIdentifier:@"files_table_view_ipad"];
-  self.table_view_controller.delegate = self;
   self.main_view.clipsToBounds = YES;
   UINib* search_nib = [UINib nibWithNibName:NSStringFromClass(InfinitFilesSearchPopover_iPad.class)
                                      bundle:nil];
@@ -388,6 +379,23 @@ typedef NS_ENUM(NSUInteger, InfinitFilesFilter)
   self.current_controller.search_string = string;
 }
 
+#pragma mark - Public
+
+- (void)showFolder:(InfinitFolderModel*)folder
+{
+  if (self.current_controller == self.folder_view_controller)
+  {
+    self.folder_view_controller.folder = folder;
+    [self.folder_view_controller reload];
+  }
+  else
+  {
+    self.folder_view_controller.folder = folder;
+    [self switchToViewController:self.folder_view_controller animate:YES reverse:NO];
+    [self.left_button_outer setImage:nil forState:UIControlStateNormal];
+    [self.left_button_outer setTitle:NSLocalizedString(@"Back", nil) forState:UIControlStateNormal];
+  }
+}
 
 #pragma mark - Helpers
 
@@ -443,6 +451,39 @@ typedef NS_ENUM(NSUInteger, InfinitFilesFilter)
 - (UIStoryboard*)storyboard
 {
   return [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+}
+
+- (InfinitFilesFolderViewController_iPad*)folder_view_controller
+{
+  if (_folder_view_controller == nil)
+  {
+    _folder_view_controller =
+      [self.storyboard instantiateViewControllerWithIdentifier:@"single_folder_table_view_ipad"];
+    self.folder_view_controller.delegate = self;
+  }
+  return _folder_view_controller;
+}
+
+- (InfinitFilesCollectionViewController_iPad*)collection_view_controller
+{
+  if (_collection_view_controller == nil)
+  {
+    _collection_view_controller =
+      [self.storyboard instantiateViewControllerWithIdentifier:@"files_collection_view_ipad"];
+    self.collection_view_controller.delegate = self;
+  }
+  return _collection_view_controller;
+}
+
+- (InfinitFilesTableViewController_iPad*)table_view_controller
+{
+  if (_table_view_controller == nil)
+  {
+    _table_view_controller =
+    [self.storyboard instantiateViewControllerWithIdentifier:@"files_table_view_ipad"];
+    self.table_view_controller.delegate = self;
+  }
+  return _table_view_controller;
 }
 
 @end

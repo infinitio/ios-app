@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "InfinitFolderModel.h"
+
 @interface InfinitFilesViewController_iPad : UIViewController
+
+- (void)showFolder:(InfinitFolderModel*)folder;
 
 @end
