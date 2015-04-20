@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Sta-NW-erU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14E7f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Sta-NW-erU">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
@@ -1834,24 +1834,20 @@ access your phone contacts!</string>
         <!--Infinit Extension Popover Controller-->
         <scene sceneID="rHp-Xf-UIj">
             <objects>
-                <viewController storyboardIdentifier="extension_popover_id" id="K3I-bk-VOV" customClass="InfinitExtensionPopoverController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="extension_popover_id" modalPresentationStyle="currentContext" id="K3I-bk-VOV" customClass="InfinitExtensionPopoverController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="29e-JO-uxN"/>
                         <viewControllerLayoutGuide type="bottom" id="bsX-vG-EMW"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="JMa-ng-PBK">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="275"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GCE-o4-tuq">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eBW-W0-9ZO">
-                                <rect key="frame" x="160" y="167" width="280" height="265"/>
+                                <rect key="frame" x="0.0" y="0.0" width="400" height="275"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bqF-ty-XIH">
-                                        <rect key="frame" x="0.0" y="215" width="280" height="50"/>
+                                        <rect key="frame" x="0.0" y="225" width="400" height="50"/>
                                         <color key="backgroundColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="ub2-NG-KF2"/>
@@ -1868,11 +1864,8 @@ access your phone contacts!</string>
                                         </connections>
                                     </button>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="cMD-qM-ZW9">
-                                        <rect key="frame" x="32" y="80" width="216" height="100"/>
+                                        <rect key="frame" x="32" y="71" width="336" height="119"/>
                                         <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="100" id="Qtl-YV-WAb"/>
-                                        </constraints>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="4" minimumInteritemSpacing="4" id="wDk-hv-Vjy">
                                             <size key="itemSize" width="40" height="40"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -1887,8 +1880,8 @@ access your phone contacts!</string>
                                                     <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J6j-Xh-Ypo">
-                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="J6j-Xh-Ypo">
+                                                            <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                         </imageView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1911,8 +1904,8 @@ access your phone contacts!</string>
                                                     <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="+5" textAlignment="center" lineBreakMode="middleTruncation" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MoH-dc-fmU">
-                                                            <rect key="frame" x="0.0" y="15" width="50" height="21"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+5" textAlignment="center" lineBreakMode="middleTruncation" minimumFontSize="9" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MoH-dc-fmU">
+                                                            <rect key="frame" x="0.0" y="10" width="40" height="21"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
                                                             <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -1938,7 +1931,7 @@ access your phone contacts!</string>
                                         </connections>
                                     </collectionView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BMO-Tq-quz">
-                                        <rect key="frame" x="32" y="34" width="42" height="21"/>
+                                        <rect key="frame" x="32" y="25" width="42" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1950,45 +1943,25 @@ access your phone contacts!</string>
                                     <constraint firstAttribute="trailing" secondItem="cMD-qM-ZW9" secondAttribute="trailing" constant="32" id="Bi3-UF-oAw"/>
                                     <constraint firstItem="bqF-ty-XIH" firstAttribute="top" secondItem="cMD-qM-ZW9" secondAttribute="bottom" constant="35" id="EAT-vJ-nQM"/>
                                     <constraint firstAttribute="trailing" secondItem="bqF-ty-XIH" secondAttribute="trailing" id="Gff-cu-mxB"/>
-                                    <constraint firstAttribute="width" constant="280" id="UiF-R3-Qsk"/>
+                                    <constraint firstItem="BMO-Tq-quz" firstAttribute="top" secondItem="eBW-W0-9ZO" secondAttribute="top" constant="25" id="Hc4-we-P4I"/>
                                     <constraint firstItem="cMD-qM-ZW9" firstAttribute="leading" secondItem="BMO-Tq-quz" secondAttribute="leading" id="dGE-yg-cEd"/>
                                     <constraint firstItem="cMD-qM-ZW9" firstAttribute="leading" secondItem="eBW-W0-9ZO" secondAttribute="leading" constant="32" id="fJC-LV-7kL"/>
-                                    <constraint firstAttribute="height" constant="265" id="ioT-d3-Zc6"/>
                                     <constraint firstAttribute="bottom" secondItem="bqF-ty-XIH" secondAttribute="bottom" id="tay-nR-ukc"/>
                                     <constraint firstItem="cMD-qM-ZW9" firstAttribute="top" secondItem="BMO-Tq-quz" secondAttribute="bottom" constant="25" id="wPE-WA-kmf"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LYX-kW-7lV">
-                                <rect key="frame" x="175" y="122" width="65" height="35"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="35" id="MHh-6D-NIG"/>
-                                    <constraint firstAttribute="width" constant="65" id="xmQ-Yj-BWC"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
-                                <state key="normal" title="Cancel">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="cancelTapped:" destination="K3I-bk-VOV" eventType="touchUpInside" id="Zht-9j-qS0"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="GCE-o4-tuq" secondAttribute="trailing" id="0Vd-Ji-VoJ"/>
-                            <constraint firstAttribute="centerX" secondItem="eBW-W0-9ZO" secondAttribute="centerX" id="3U4-Fx-YcU"/>
-                            <constraint firstItem="LYX-kW-7lV" firstAttribute="leading" secondItem="eBW-W0-9ZO" secondAttribute="leading" constant="15" id="3zo-FZ-auS"/>
-                            <constraint firstAttribute="centerY" secondItem="eBW-W0-9ZO" secondAttribute="centerY" id="5WM-wr-QaD"/>
-                            <constraint firstItem="GCE-o4-tuq" firstAttribute="leading" secondItem="JMa-ng-PBK" secondAttribute="leading" id="GAl-FA-NQ1"/>
-                            <constraint firstAttribute="bottom" secondItem="GCE-o4-tuq" secondAttribute="bottom" id="O4g-t7-uPc"/>
-                            <constraint firstItem="eBW-W0-9ZO" firstAttribute="top" secondItem="LYX-kW-7lV" secondAttribute="bottom" constant="10" id="ere-vX-Rq8"/>
-                            <constraint firstItem="GCE-o4-tuq" firstAttribute="top" secondItem="JMa-ng-PBK" secondAttribute="top" id="hsY-FE-MWd"/>
+                            <constraint firstAttribute="trailing" secondItem="eBW-W0-9ZO" secondAttribute="trailing" id="1NI-ie-Zhx"/>
+                            <constraint firstItem="eBW-W0-9ZO" firstAttribute="top" secondItem="JMa-ng-PBK" secondAttribute="top" id="4Fl-2C-naO"/>
+                            <constraint firstAttribute="bottom" secondItem="eBW-W0-9ZO" secondAttribute="bottom" id="9Yn-sm-d9P"/>
+                            <constraint firstItem="eBW-W0-9ZO" firstAttribute="leading" secondItem="JMa-ng-PBK" secondAttribute="leading" id="OYj-Us-XeV"/>
                         </constraints>
                     </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="400" height="275"/>
                     <connections>
-                        <outlet property="cancel_button" destination="LYX-kW-7lV" id="cZf-x4-BG2"/>
-                        <outlet property="container_view" destination="eBW-W0-9ZO" id="cCN-aR-ADW"/>
-                        <outlet property="dark_view" destination="GCE-o4-tuq" id="A3o-Us-Xgd"/>
+                        <outlet property="container_view" destination="eBW-W0-9ZO" id="8LJ-mA-33y"/>
                         <outlet property="files_label" destination="BMO-Tq-quz" id="hoO-Vg-Xjq"/>
                         <outlet property="files_view" destination="cMD-qM-ZW9" id="In9-FZ-Hju"/>
                         <outlet property="send_button" destination="bqF-ty-XIH" id="dFZ-oK-uQL"/>
@@ -1997,7 +1970,7 @@ access your phone contacts!</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cev-dU-R5p" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1508" y="-1657"/>
+            <point key="canvasLocation" x="-1520" y="-1706.5"/>
         </scene>
         <!--ENTER CODE-->
         <scene sceneID="UY8-S9-HhL">
