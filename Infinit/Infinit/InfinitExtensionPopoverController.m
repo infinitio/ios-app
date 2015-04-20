@@ -15,11 +15,10 @@
 #import "InfinitFilePreview.h"
 
 @interface InfinitExtensionPopoverController () <UICollectionViewDataSource,
-                                                 UICollectionViewDelegate>
+                                                 UICollectionViewDelegate,
+                                                 UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic, weak) IBOutlet UIButton* cancel_button;
 @property (nonatomic, weak) IBOutlet UIView* container_view;
-@property (nonatomic, weak) IBOutlet UIView* dark_view;
 @property (nonatomic, weak) IBOutlet UILabel* files_label;
 @property (nonatomic, weak) IBOutlet UICollectionView* files_view;
 @property (nonatomic, weak) IBOutlet UIButton* send_button;
@@ -28,7 +27,7 @@
 
 @end
 
-static CGSize _cell_size = {40.0f, 40.0f};
+static CGSize _cell_size = {0.0f, 0.0f};
 static NSInteger _max_items = 9;
 
 @implementation InfinitExtensionPopoverController
@@ -38,64 +37,35 @@ static NSInteger _max_items = 9;
   NSString* _more_cell_id;
 }
 
+- (id)initWithCoder:(NSCoder*)aDecoder
+{
+  if (self = [super initWithCoder:aDecoder])
+  {
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+      _cell_size = CGSizeMake(80.0f, 80.0f);
+    else
+      _cell_size = CGSizeMake(40.0f, 40.0f);
+  }
+  return self;
+}
+
 - (void)viewDidLoad
 {
   [super viewDidLoad];
   _file_cell_id = @"extension_file_cell_id";
   _more_cell_id = @"extension_more_cell_id";
-  [self addParallax];
-  CGFloat corner_radius = 5.0f;
-  self.container_view.layer.cornerRadius = corner_radius;
-  self.container_view.layer.masksToBounds = NO;
-  self.container_view.layer.shadowOpacity = 0.5f;
-  self.container_view.layer.shadowRadius = 5.0f;
-  self.container_view.layer.shadowColor = [UIColor blackColor].CGColor;
-  self.container_view.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
-  self.container_view.layer.shadowPath =
-  [UIBezierPath bezierPathWithRoundedRect:self.container_view.bounds cornerRadius:5.0f].CGPath;
 
-  self.cancel_button.showsTouchWhenHighlighted = YES;
   UIColor* enabled_color = [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
   UIColor* disabled_color = [InfinitColor colorWithGray:128];
   [self.send_button setBackgroundImage:[self imageWithColor:enabled_color]
                               forState:UIControlStateNormal];
   [self.send_button setBackgroundImage:[self imageWithColor:disabled_color]
                               forState:UIControlStateDisabled];
-
-  UIBezierPath* bottom_mask = [UIBezierPath bezierPath];
-  CGFloat w = self.container_view.bounds.size.width;
-  CGFloat h = 50.0f;
-  [bottom_mask moveToPoint:CGPointMake(0.0f, 0.0f)];
-  [bottom_mask addLineToPoint:CGPointMake(w, 0.0f)];
-  [bottom_mask addLineToPoint:CGPointMake(w, h - corner_radius)];
-  [bottom_mask addArcWithCenter:CGPointMake(w - corner_radius, h - corner_radius)
-                         radius:corner_radius
-                     startAngle:0.0f
-                       endAngle:M_PI_2
-                      clockwise:YES];
-  [bottom_mask addLineToPoint:CGPointMake(corner_radius, h)];
-  [bottom_mask addArcWithCenter:CGPointMake(corner_radius, h - corner_radius)
-                         radius:corner_radius
-                     startAngle:M_PI_2
-                       endAngle:M_PI
-                      clockwise:YES];
-  [bottom_mask closePath];
-  CAShapeLayer* mask_layer = [CAShapeLayer layer];
-  mask_layer.path = bottom_mask.CGPath;
-  mask_layer.fillColor = [UIColor blackColor].CGColor;
-  self.send_button.layer.mask = mask_layer;
-  [self.view sendSubviewToBack:self.dark_view];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
-  self.dark_view.alpha = 0.0f;
-  self.cancel_button.alpha = 0.0f;
-  self.container_view.alpha = 0.0f;
-  CGFloat screen_h = [UIScreen mainScreen].bounds.size.height;
-  self.container_view.transform =
-  CGAffineTransformMakeTranslation(0.0f, -(screen_h * 0.1f));
   NSString* files_text = nil;
   if (self.files.count == 1)
     files_text = NSLocalizedString(@"1 file", nil);
@@ -108,6 +78,7 @@ static NSInteger _max_items = 9;
   if (bold_range.location != NSNotFound)
     [attr_str setAttributes:[self textAttributesBold:YES] range:bold_range];
   self.files_label.attributedText = attr_str;
+  [self.files_view reloadData];
 }
 
 - (void)beginAppearanceTransition:(BOOL)isAppearing
@@ -115,36 +86,6 @@ static NSInteger _max_items = 9;
 {
   [super beginAppearanceTransition:isAppearing animated:animated];
   [self endAppearanceTransition];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-  [super viewDidAppear:animated];
-  [self.files_view reloadData];
-  [UIView animateWithDuration:0.4f
-                        delay:0.0f
-                      options:UIViewAnimationOptionCurveEaseOut
-                   animations:^
-   {
-     self.dark_view.alpha = 1.0f;
-   } completion:^(BOOL finished)
-   {
-     self.dark_view.alpha = 1.0f;
-   }];
-  [UIView animateWithDuration:0.3f
-                        delay:0.2f
-                      options:UIViewAnimationOptionCurveEaseOut
-                   animations:^
-   {
-     self.cancel_button.alpha = 1.0f;
-     self.container_view.alpha = 1.0f;
-     self.container_view.transform = CGAffineTransformIdentity;
-   } completion:^(BOOL finished)
-   {
-     self.cancel_button.alpha = 1.0f;
-     self.container_view.alpha = 1.0f;
-     self.container_view.transform = CGAffineTransformIdentity;
-   }];
 }
 
 #pragma mark - Public
@@ -169,56 +110,19 @@ static NSInteger _max_items = 9;
 
 #pragma mark - Button Handling
 
-- (void)doneAnimationWithSend:(BOOL)send
-{
-  CGFloat screen_h = [UIScreen mainScreen].bounds.size.height;
-  [UIView animateWithDuration:0.3f
-                        delay:0.0f
-                      options:UIViewAnimationOptionCurveEaseOut
-                   animations:^
-   {
-     self.cancel_button.alpha = 0.0f;
-     self.container_view.alpha = 0.0f;
-     self.container_view.transform =
-       CGAffineTransformMakeTranslation(0.0f, -(screen_h * 0.1f));
-   } completion:^(BOOL finished)
-   {
-     self.cancel_button.alpha = 0.0f;
-     self.container_view.alpha = 0.0f;
-     self.container_view.transform =
-       CGAffineTransformMakeTranslation(0.0f, -(screen_h * 0.1f));
-   }];
-  [UIView animateWithDuration:0.4f
-                        delay:0.2f
-                      options:UIViewAnimationOptionCurveEaseOut
-                   animations:^
-   {
-     self.dark_view.alpha = 0.0f;
-   } completion:^(BOOL finished)
-   {
-     self.dark_view.alpha = 0.0f;
-     if (send)
-     {
-       [self.delegate extensionPopoverWantsSend:self];
-     }
-     else
-     {
-       [self.delegate extensionPopoverWantsCancel:self];
-     }
-   }];
-}
-
-- (IBAction)cancelTapped:(id)sender
-{
-  [self doneAnimationWithSend:NO];
-}
-
 - (IBAction)sendTapped:(id)sender
 {
-  [self doneAnimationWithSend:YES];
+  [self.delegate extensionPopoverWantsSend:self];
 }
 
 #pragma mark - UICollectionView
+
+- (CGSize)collectionView:(UICollectionView*)collectionView
+                  layout:(UICollectionViewLayout*)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath*)indexPath
+{
+  return _cell_size;
+}
 
 - (NSInteger)collectionView:(UICollectionView*)collectionView
      numberOfItemsInSection:(NSInteger)section
@@ -248,30 +152,6 @@ static NSInteger _max_items = 9;
 }
 
 #pragma mark - Helpers
-
-- (void)addParallax
-{
-  // Set vertical effect
-  UIInterpolatingMotionEffect* vertical =
-  [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y"
-                                                  type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
-  vertical.minimumRelativeValue = @(-10.0f);
-  vertical.maximumRelativeValue = @(10.0f);
-
-  // Set horizontal effect
-  UIInterpolatingMotionEffect* horizontal =
-  [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x"
-                                                  type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
-  horizontal.minimumRelativeValue = @(-10.0f);
-  horizontal.maximumRelativeValue = @(10.0f);
-
-  // Create group to combine both
-  UIMotionEffectGroup* group = [UIMotionEffectGroup new];
-  group.motionEffects = @[horizontal, vertical];
-
-  // Add both effects to your view
-  [self.container_view addMotionEffect:group];
-}
 
 - (UIImage*)imageWithColor:(UIColor*)color
 {

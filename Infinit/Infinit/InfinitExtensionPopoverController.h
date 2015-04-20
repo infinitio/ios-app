@@ -19,7 +19,6 @@
 
 @protocol InfinitExtensionPopoverProtocol <NSObject>
 
-- (void)extensionPopoverWantsCancel:(InfinitExtensionPopoverController*)sender;
 - (void)extensionPopoverWantsSend:(InfinitExtensionPopoverController*)sender;
 
 @end
