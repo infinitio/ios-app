@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "InfinitFolderModel.h"
+
 @interface InfinitMainSplitViewController_iPad : UISplitViewController
 
 - (void)showSendViewForFiles:(NSArray*)files;
+- (void)showViewForFolder:(InfinitFolderModel*)folder;
 
 @end
