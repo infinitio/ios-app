@@ -10,6 +10,8 @@
 
 #import "InfinitColor.h"
 
+#import <Gap/InfinitPeerTransactionManager.h>
+
 typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 {
   InfinitTabBarIndexHome = 0,
@@ -39,6 +41,14 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
     [self.tabBar.items[index] setImage:[self imageForTabBarItem:index selected:NO]];
     [self.tabBar.items[index] setSelectedImage:[self imageForTabBarItem:index selected:YES]];
   }
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(peerTransactionUpdated:)
+                                               name:INFINIT_NEW_PEER_TRANSACTION_NOTIFICATION
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(peerTransactionUpdated:)
+                                               name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION
+                                             object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -60,6 +70,32 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
     [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
     [self.tabBar addSubview:self.selection_indicator];
   });
+}
+
+#pragma mark - Transaction Updates
+
+- (void)peerTransactionUpdated:(NSNotification*)notification
+{
+  [self updateHomeBadge];
+}
+
+- (void)updateHomeBadge
+{
+  NSArray* transactions = [[InfinitPeerTransactionManager sharedInstance] transactions];
+  NSUInteger count = 0;
+  for (InfinitPeerTransaction* transaction in transactions)
+  {
+    if (transaction.receivable)
+      count++;
+  }
+  NSString* badge;
+  if (count == 0)
+    badge = nil;
+  else if (count < 100)
+    badge = [NSString stringWithFormat:@"%lu", (unsigned long)count];
+  else
+    badge = @"+";
+  [self.tabBar.items[InfinitTabBarIndexHome] setBadgeValue:badge];
 }
 
 #pragma mark - UITabBarController
