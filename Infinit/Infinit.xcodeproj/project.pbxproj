@@ -103,8 +103,8 @@
 		83A82E3A1AE0EF2D005BAC88 /* InfinitFilesSearchPopover_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A82E381AE0EF2D005BAC88 /* InfinitFilesSearchPopover_iPad.m */; };
 		83A82E3B1AE0EF2D005BAC88 /* InfinitFilesSearchPopover_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83A82E391AE0EF2D005BAC88 /* InfinitFilesSearchPopover_iPad.xib */; };
 		83A82E401AE129F5005BAC88 /* InfinitGallery.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83A82E3F1AE129F5005BAC88 /* InfinitGallery.mm */; };
-		83A82E431AE13C00005BAC88 /* InfinitSplitViewOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A82E421AE13C00005BAC88 /* InfinitSplitViewOverlayViewController.m */; };
-		83A82E451AE1489C005BAC88 /* InfinitSplitViewOverlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83A82E441AE1489C005BAC88 /* InfinitSplitViewOverlayViewController.xib */; };
+		83A82E431AE13C00005BAC88 /* InfinitOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A82E421AE13C00005BAC88 /* InfinitOverlayViewController.m */; };
+		83A82E451AE1489C005BAC88 /* InfinitOverlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83A82E441AE1489C005BAC88 /* InfinitOverlayViewController.xib */; };
 		83A95FCD1A6A746B000B75C8 /* InfinitHomePeerTransactionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A95FCC1A6A746B000B75C8 /* InfinitHomePeerTransactionCell.m */; };
 		83A95FD21A6A78A0000B75C8 /* InfinitHomeAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A95FD11A6A78A0000B75C8 /* InfinitHomeAvatarView.m */; };
 		83B066621AD56422002ADC56 /* SourceSansPro-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D09848061A43391B002D26AC /* SourceSansPro-Bold.otf */; };
@@ -455,9 +455,9 @@
 		83A82E391AE0EF2D005BAC88 /* InfinitFilesSearchPopover_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitFilesSearchPopover_iPad.xib; sourceTree = "<group>"; };
 		83A82E3E1AE129F5005BAC88 /* InfinitGallery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitGallery.h; sourceTree = "<group>"; };
 		83A82E3F1AE129F5005BAC88 /* InfinitGallery.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitGallery.mm; sourceTree = "<group>"; };
-		83A82E411AE13C00005BAC88 /* InfinitSplitViewOverlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSplitViewOverlayViewController.h; sourceTree = "<group>"; };
-		83A82E421AE13C00005BAC88 /* InfinitSplitViewOverlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSplitViewOverlayViewController.m; sourceTree = "<group>"; };
-		83A82E441AE1489C005BAC88 /* InfinitSplitViewOverlayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitSplitViewOverlayViewController.xib; sourceTree = "<group>"; };
+		83A82E411AE13C00005BAC88 /* InfinitOverlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitOverlayViewController.h; sourceTree = "<group>"; };
+		83A82E421AE13C00005BAC88 /* InfinitOverlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitOverlayViewController.m; sourceTree = "<group>"; };
+		83A82E441AE1489C005BAC88 /* InfinitOverlayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitOverlayViewController.xib; sourceTree = "<group>"; };
 		83A95FCB1A6A746B000B75C8 /* InfinitHomePeerTransactionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitHomePeerTransactionCell.h; sourceTree = "<group>"; };
 		83A95FCC1A6A746B000B75C8 /* InfinitHomePeerTransactionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitHomePeerTransactionCell.m; sourceTree = "<group>"; };
 		83A95FD01A6A78A0000B75C8 /* InfinitHomeAvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitHomeAvatarView.h; sourceTree = "<group>"; };
@@ -886,6 +886,7 @@
 		835517FA1ADE7E5100B3EF22 /* iPad */ = {
 			isa = PBXGroup;
 			children = (
+				83A759AF1AE4FDC80026FB26 /* Extension Popover */,
 				83A0D64B1ADECE3700D9D3AD /* Files Controller */,
 				835517FE1ADE7E7400B3EF22 /* Split View Controller */,
 				83A0D6471ADEB6DF00D9D3AD /* Tab Bar Controller */,
@@ -896,9 +897,6 @@
 		835517FE1ADE7E7400B3EF22 /* Split View Controller */ = {
 			isa = PBXGroup;
 			children = (
-				83A82E411AE13C00005BAC88 /* InfinitSplitViewOverlayViewController.h */,
-				83A82E421AE13C00005BAC88 /* InfinitSplitViewOverlayViewController.m */,
-				83A82E441AE1489C005BAC88 /* InfinitSplitViewOverlayViewController.xib */,
 				835517FB1ADE7E7000B3EF22 /* InfinitMainSplitViewController_iPad.h */,
 				835517FC1ADE7E7000B3EF22 /* InfinitMainSplitViewController_iPad.m */,
 			);
@@ -1078,6 +1076,13 @@
 			name = Cells;
 			sourceTree = "<group>";
 		};
+		83A759AF1AE4FDC80026FB26 /* Extension Popover */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Extension Popover";
+			sourceTree = "<group>";
+		};
 		83A82E3C1AE0EF33005BAC88 /* Search View */ = {
 			isa = PBXGroup;
 			children = (
@@ -1242,6 +1247,9 @@
 			isa = PBXGroup;
 			children = (
 				83EBB07E1A9394D700144BC6 /* Offline Overlay */,
+				83A82E411AE13C00005BAC88 /* InfinitOverlayViewController.h */,
+				83A82E421AE13C00005BAC88 /* InfinitOverlayViewController.m */,
+				83A82E441AE1489C005BAC88 /* InfinitOverlayViewController.xib */,
 				83876AEB1A77965400F79905 /* InfinitPortraitNavigationController.h */,
 				83876AEC1A77965400F79905 /* InfinitPortraitNavigationController.m */,
 				83519B4E1A98D5F700541B5E /* InfinitResizableNavigationBar.h */,
@@ -1739,7 +1747,7 @@
 				D09848161A43391B002D26AC /* SourceSansPro-BoldIt.otf in Resources */,
 				83F5E5A51AA5C35E0011E4F0 /* Monaco.ttf in Resources */,
 				83FA72FE1A66FF1D0014B0E4 /* VENToken.xib in Resources */,
-				83A82E451AE1489C005BAC88 /* InfinitSplitViewOverlayViewController.xib in Resources */,
+				83A82E451AE1489C005BAC88 /* InfinitOverlayViewController.xib in Resources */,
 				8322850B1A794D51000893A1 /* InfinitImportOverlayView.xib in Resources */,
 				D09848181A43391B002D26AC /* SourceSansPro-ExtraLightIt.otf in Resources */,
 				83B32DF41A84DF45004088DD /* InfinitFilesNoFilesView.xib in Resources */,
@@ -1896,7 +1904,7 @@
 				D02F43331A5DA39900447E84 /* WelcomeLoginFormView.m in Sources */,
 				835517FD1ADE7E7000B3EF22 /* InfinitMainSplitViewController_iPad.m in Sources */,
 				83A95FCD1A6A746B000B75C8 /* InfinitHomePeerTransactionCell.m in Sources */,
-				83A82E431AE13C00005BAC88 /* InfinitSplitViewOverlayViewController.m in Sources */,
+				83A82E431AE13C00005BAC88 /* InfinitOverlayViewController.m in Sources */,
 				D0BC70431A41B4B7006923F2 /* InfinitTabBarController.m in Sources */,
 				835B9D5D1A9E29E400FD0D54 /* InfinitHomePeerTransactionMoreFilesCell.m in Sources */,
 				8384909C1A76969700969CF7 /* InfinitFilePreview.m in Sources */,
