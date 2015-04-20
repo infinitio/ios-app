@@ -14,4 +14,6 @@
 
 @property (nonatomic, readwrite) InfinitFolderModel* folder;
 
+- (void)reload;
+
 @end

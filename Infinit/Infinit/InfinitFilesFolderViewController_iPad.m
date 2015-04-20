@@ -49,6 +49,12 @@
   self.editing = NO;
 }
 
+- (void)reload
+{
+  _file_results = [self searchAndFilterResults];
+  [self.table_view reloadData];
+}
+
 #pragma mark - Editing
 
 - (NSArray*)current_selection
