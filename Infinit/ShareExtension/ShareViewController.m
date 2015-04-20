@@ -417,14 +417,12 @@ static NSUInteger _min_delay = 3;
    {
      self.cancel_button.alpha = 0.0f;
      self.message_view.alpha = 0.0f;
-     self.message_view.transform =
-       CGAffineTransformMakeTranslation(0.0f, -(screen_h * 0.1f));
+     self.message_view.transform = CGAffineTransformMakeTranslation(0.0f, (screen_h * 0.1f));
    } completion:^(BOOL finished)
    {
      self.cancel_button.alpha = 0.0f;
      self.message_view.alpha = 0.0f;
-     self.message_view.transform =
-       CGAffineTransformMakeTranslation(0.0f, -(screen_h * 0.1f));
+     self.message_view.transform = CGAffineTransformMakeTranslation(0.0f, (screen_h * 0.1f));
    }];
   [UIView animateWithDuration:0.4f
                         delay:0.2f
