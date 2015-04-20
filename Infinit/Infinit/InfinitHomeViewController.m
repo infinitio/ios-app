@@ -1298,7 +1298,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
     self.previewing_files = YES;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
-      // XXX ipad
+      [((InfinitMainSplitViewController_iPad*)self.splitViewController) showViewForFolder:folder];
     }
     else
     {
