@@ -135,7 +135,26 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wh0-c4-8bq">
                                 <rect key="frame" x="0.0" y="120" width="600" height="480"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JnR-bR-MVm">
+                                        <rect key="frame" x="474" y="354" width="76" height="76"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="76" id="Xkt-oP-zGF"/>
+                                            <constraint firstAttribute="height" constant="76" id="tSQ-sw-7p8"/>
+                                        </constraints>
+                                        <state key="normal" image="icon-send-ipad">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="sendButtonTapped:" destination="hHz-xi-viG" eventType="touchUpInside" id="pJA-7y-Jkb"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="JnR-bR-MVm" secondAttribute="bottom" constant="50" id="KXi-oZ-fDp"/>
+                                    <constraint firstAttribute="trailing" secondItem="JnR-bR-MVm" secondAttribute="trailing" constant="50" id="QWE-dt-WrA"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -156,6 +175,7 @@
                         <outlet property="right_button_inner" destination="fA9-fw-VaH" id="e3A-K7-MTK"/>
                         <outlet property="right_button_outer" destination="gOC-Dq-oEk" id="VIR-eF-xMs"/>
                         <outlet property="segmented_control" destination="Fn8-5X-DLz" id="3HT-xi-obZ"/>
+                        <outlet property="send_button" destination="JnR-bR-MVm" id="uWv-kv-HvL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PJQ-7p-y2D" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -774,13 +794,13 @@
         <!--SEND_GALLERY-->
         <scene sceneID="28I-PS-ga1">
             <objects>
-                <viewController title="SEND_GALLERY" extendedLayoutIncludesOpaqueBars="YES" id="Cz7-xE-6Ks" customClass="InfinitSendGalleryController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="send_gallery_controller_id" title="SEND_GALLERY" extendedLayoutIncludesOpaqueBars="YES" id="Cz7-xE-6Ks" customClass="InfinitSendGalleryController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Beg-AB-V7t"/>
                         <viewControllerLayoutGuide type="bottom" id="WOe-0g-zHE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="HT9-3T-yrz">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="556"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jCk-aB-ANg">
@@ -800,7 +820,7 @@
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="twX-us-XtL">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
-                                <color key="backgroundColor" red="0.1803921568627451" green="0.1803921568627451" blue="0.1803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.18039215689999999" green="0.18039215689999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="7" minimumInteritemSpacing="6" id="GIU-o5-Bjl">
                                     <size key="itemSize" width="100" height="100"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -814,7 +834,7 @@
                                 </connections>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.18039215689999999" green="0.18039215689999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="jCk-aB-ANg" firstAttribute="leading" secondItem="HT9-3T-yrz" secondAttribute="leading" id="3cu-Dt-FfV"/>
                             <constraint firstItem="jCk-aB-ANg" firstAttribute="top" secondItem="twX-us-XtL" secondAttribute="bottom" id="DTw-Xc-n6A"/>
@@ -846,6 +866,47 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MVo-LB-ZAT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3037" y="-219"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="jS1-jJ-Tsv">
+            <objects>
+                <navigationController id="7IR-05-VZU" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="5Nd-LT-zYQ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.18039215689999999" green="0.18039215689999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qF3-ks-ETR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3052" y="451"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="AQw-ZF-kOj">
+            <objects>
+                <navigationController id="iLD-MX-I1b" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Jq1-Nu-gZp">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.1803921568627451" green="0.1803921568627451" blue="0.1803921568627451" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="exT-xk-JEF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3054" y="1119"/>
+        </scene>
+        <!--Infinit Send Split View Controller i Pad-->
+        <scene sceneID="7q8-zE-GWj">
+            <objects>
+                <splitViewController storyboardIdentifier="ipad_send_split_view_id" id="3mF-on-Ucy" customClass="InfinitSendSplitViewController_iPad" sceneMemberID="viewController">
+                    <connections>
+                        <segue destination="7IR-05-VZU" kind="relationship" relationship="masterViewController" id="AqC-Ze-l29"/>
+                        <segue destination="iLD-MX-I1b" kind="relationship" relationship="detailViewController" id="sZQ-Ko-Oos"/>
+                    </connections>
+                </splitViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CeN-Dc-LG3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2232" y="781"/>
         </scene>
         <!--SEND_RECIPIENTS-->
         <scene sceneID="05q-5G-qxd">
@@ -1518,7 +1579,7 @@ access your phone contacts!</string>
         <!--Infinit Portrait Navigation Controller-->
         <scene sceneID="AIE-em-0TB">
             <objects>
-                <navigationController storyboardIdentifier="logging_in_controller" id="NI8-fY-CZf" customClass="InfinitPortraitNavigationController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="logging_in_controller_portrait" id="NI8-fY-CZf" customClass="InfinitPortraitNavigationController" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9A5-Od-8W8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1535,7 +1596,7 @@ access your phone contacts!</string>
         <!--Infinit Logging In View Controller-->
         <scene sceneID="FYc-qC-cpS">
             <objects>
-                <viewController id="pY1-W3-QHc" customClass="InfinitLoggingInViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="logging_in_controller" id="pY1-W3-QHc" customClass="InfinitLoggingInViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5ft-06-8ql"/>
                         <viewControllerLayoutGuide type="bottom" id="T5S-Nt-RQj"/>
@@ -1981,7 +2042,7 @@ access your phone contacts!</string>
                         <viewControllerLayoutGuide type="bottom" id="6J5-Tq-l02"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="VzX-n3-lKL">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invited by someone?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q7f-dP-Vae">
@@ -3016,6 +3077,7 @@ access your phone contacts!</string>
         <image name="icon-photo-white" width="29" height="26"/>
         <image name="icon-save-red" width="22" height="27"/>
         <image name="icon-search" width="21" height="19"/>
+        <image name="icon-send-ipad" width="76" height="76"/>
         <image name="icon-send-red" width="25" height="21"/>
         <image name="icon-send-white" width="18" height="15"/>
         <image name="icon-settings-fullname" width="17" height="20"/>
@@ -3032,12 +3094,12 @@ access your phone contacts!</string>
         <image name="schema-onboarding-infinite" width="214" height="90"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="geu-yv-K0l"/>
-        <segue reference="FIr-rc-U7J"/>
-        <segue reference="Yah-cg-ZRU"/>
-        <segue reference="QON-zo-f6l"/>
-        <segue reference="QhM-hs-oPP"/>
+        <segue reference="G1u-me-VrO"/>
+        <segue reference="iUI-7h-033"/>
         <segue reference="zep-Dc-F4h"/>
+        <segue reference="QhM-hs-oPP"/>
+        <segue reference="QON-zo-f6l"/>
+        <segue reference="Yah-cg-ZRU"/>
         <segue reference="mYU-YK-ihc"/>
         <segue reference="a62-sa-S8B"/>
     </inferredMetricsTieBreakers>
