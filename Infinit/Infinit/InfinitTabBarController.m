@@ -179,6 +179,9 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
                                           (self.tabBar.bounds.size.height / 2.0f) + delta);
   for (NSUInteger index = 0; index < self.tabBar.items.count; index++)
   {
+    if (index == InfinitTabBarIndexSend)
+      continue;
+    [self.tabBar.items[index] setImageInsets:UIEdgeInsetsMake(5.0f, 0.0f, -5.0f, 0.0f)];
     [self.tabBar.items[index] setImage:[self imageForTabBarItem:index selected:NO]];
     [self.tabBar.items[index] setSelectedImage:[self imageForTabBarItem:index selected:YES]];
   }
@@ -268,7 +271,6 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 - (UIImage*)imageForTabBarItem:(InfinitTabBarIndex)index
                       selected:(BOOL)selected
 {
-  [self.tabBar.items[index] setImageInsets:UIEdgeInsetsMake(5.0f, 0.0f, -5.0f, 0.0f)];
   NSString* image_name = nil;
   switch (index)
   {
@@ -681,10 +683,13 @@ shouldSelectViewController:(UIViewController*)viewController
   switch (result)
   {
     case MessageComposeResultCancelled:
+      [InfinitMetricsManager sendMetric:InfinitUIEventSMSInvite method:InfinitUIMethodCancel];
       break;
     case MessageComposeResultFailed:
+      [InfinitMetricsManager sendMetric:InfinitUIEventSMSInvite method:InfinitUIMethodFail];
       break;
     case MessageComposeResultSent:
+      [InfinitMetricsManager sendMetric:InfinitUIEventSMSInvite method:InfinitUIMethodSent];
       break;
   }
   [self.sms_controller dismissViewControllerAnimated:YES
