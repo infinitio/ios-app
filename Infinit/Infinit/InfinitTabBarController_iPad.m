@@ -26,6 +26,12 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 
 @implementation InfinitTabBarController_iPad
 
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+  [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+  [self selectorToPosition:self.selectedIndex];
+}
+
 - (void)viewDidLoad
 {
   [super viewDidLoad];
@@ -69,6 +75,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
     self.selection_indicator.backgroundColor =
     [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
     [self.tabBar addSubview:self.selection_indicator];
+    self.view.clipsToBounds = YES;
   });
 }
 
