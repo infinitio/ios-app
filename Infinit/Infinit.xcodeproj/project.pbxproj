@@ -50,6 +50,9 @@
 		833E3ACC1A63D89B0088D3FF /* InfinitImportOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 833E3ACB1A63D89B0088D3FF /* InfinitImportOverlayView.m */; };
 		833E3ACF1A63E8B80088D3FF /* InfinitContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 833E3ACE1A63E8B80088D3FF /* InfinitContact.m */; };
 		8343F5D61A628011006E04C0 /* InfinitTabAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8343F5D51A628011006E04C0 /* InfinitTabAnimator.m */; };
+		834595861AE6B4EC0020B25D /* InfinitFilesEmptyOverlay_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 834595851AE6B4EC0020B25D /* InfinitFilesEmptyOverlay_iPad.m */; };
+		834595891AE6B5230020B25D /* InfinitFilesEmptyOverlay_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8345958B1AE6B5230020B25D /* InfinitFilesEmptyOverlay_iPad.xib */; };
+		8345958C1AE6B5370020B25D /* InfinitFilesSearchPopover_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8345958E1AE6B5370020B25D /* InfinitFilesSearchPopover_iPad.xib */; };
 		834FCFC41A7B93CA00930BD8 /* InfinitBackgroundManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 834FCFC31A7B93CA00930BD8 /* InfinitBackgroundManager.mm */; };
 		83519B461A9793B800541B5E /* InfinitHomeTransactionStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83519B451A9793B800541B5E /* InfinitHomeTransactionStatusView.m */; };
 		83519B501A98D5F700541B5E /* InfinitResizableNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 83519B4F1A98D5F700541B5E /* InfinitResizableNavigationBar.m */; };
@@ -100,8 +103,8 @@
 		83A0D6621ADFA10000D9D3AD /* InfinitFilesCollectionCell_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83A0D6601ADFA10000D9D3AD /* InfinitFilesCollectionCell_iPad.xib */; };
 		83A0D6651ADFA30F00D9D3AD /* InfinitFilesDisplayController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A0D6641ADFA30F00D9D3AD /* InfinitFilesDisplayController_iPad.m */; };
 		83A5E4CA1A6EFCC000FB8578 /* InfinitSendNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A5E4C91A6EFCC000FB8578 /* InfinitSendNavigationBar.m */; };
+		83A759BB1AE6652C0026FB26 /* InfinitSendSplitViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A759BA1AE6652C0026FB26 /* InfinitSendSplitViewController_iPad.m */; };
 		83A82E3A1AE0EF2D005BAC88 /* InfinitFilesSearchPopover_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A82E381AE0EF2D005BAC88 /* InfinitFilesSearchPopover_iPad.m */; };
-		83A82E3B1AE0EF2D005BAC88 /* InfinitFilesSearchPopover_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83A82E391AE0EF2D005BAC88 /* InfinitFilesSearchPopover_iPad.xib */; };
 		83A82E401AE129F5005BAC88 /* InfinitGallery.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83A82E3F1AE129F5005BAC88 /* InfinitGallery.mm */; };
 		83A82E431AE13C00005BAC88 /* InfinitOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A82E421AE13C00005BAC88 /* InfinitOverlayViewController.m */; };
 		83A82E451AE1489C005BAC88 /* InfinitOverlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83A82E441AE1489C005BAC88 /* InfinitOverlayViewController.xib */; };
@@ -359,6 +362,10 @@
 		833E3ACE1A63E8B80088D3FF /* InfinitContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitContact.m; sourceTree = "<group>"; };
 		8343F5D41A628011006E04C0 /* InfinitTabAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitTabAnimator.h; sourceTree = "<group>"; };
 		8343F5D51A628011006E04C0 /* InfinitTabAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitTabAnimator.m; sourceTree = "<group>"; };
+		834595841AE6B4EC0020B25D /* InfinitFilesEmptyOverlay_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFilesEmptyOverlay_iPad.h; sourceTree = "<group>"; };
+		834595851AE6B4EC0020B25D /* InfinitFilesEmptyOverlay_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFilesEmptyOverlay_iPad.m; sourceTree = "<group>"; };
+		8345958A1AE6B5230020B25D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfinitFilesEmptyOverlay_iPad.xib; sourceTree = "<group>"; };
+		8345958D1AE6B5370020B25D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfinitFilesSearchPopover_iPad.xib; sourceTree = "<group>"; };
 		834FCFC21A7B93CA00930BD8 /* InfinitBackgroundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitBackgroundManager.h; sourceTree = "<group>"; };
 		834FCFC31A7B93CA00930BD8 /* InfinitBackgroundManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitBackgroundManager.mm; sourceTree = "<group>"; };
 		83519B441A9793B800541B5E /* InfinitHomeTransactionStatusView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitHomeTransactionStatusView.h; sourceTree = "<group>"; };
@@ -450,9 +457,10 @@
 		83A0D6641ADFA30F00D9D3AD /* InfinitFilesDisplayController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFilesDisplayController_iPad.m; sourceTree = "<group>"; };
 		83A5E4C81A6EFCC000FB8578 /* InfinitSendNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendNavigationBar.h; sourceTree = "<group>"; };
 		83A5E4C91A6EFCC000FB8578 /* InfinitSendNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendNavigationBar.m; sourceTree = "<group>"; };
+		83A759B91AE6652C0026FB26 /* InfinitSendSplitViewController_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendSplitViewController_iPad.h; sourceTree = "<group>"; };
+		83A759BA1AE6652C0026FB26 /* InfinitSendSplitViewController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendSplitViewController_iPad.m; sourceTree = "<group>"; };
 		83A82E371AE0EF2D005BAC88 /* InfinitFilesSearchPopover_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFilesSearchPopover_iPad.h; sourceTree = "<group>"; };
 		83A82E381AE0EF2D005BAC88 /* InfinitFilesSearchPopover_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFilesSearchPopover_iPad.m; sourceTree = "<group>"; };
-		83A82E391AE0EF2D005BAC88 /* InfinitFilesSearchPopover_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitFilesSearchPopover_iPad.xib; sourceTree = "<group>"; };
 		83A82E3E1AE129F5005BAC88 /* InfinitGallery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitGallery.h; sourceTree = "<group>"; };
 		83A82E3F1AE129F5005BAC88 /* InfinitGallery.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitGallery.mm; sourceTree = "<group>"; };
 		83A82E411AE13C00005BAC88 /* InfinitOverlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitOverlayViewController.h; sourceTree = "<group>"; };
@@ -888,6 +896,7 @@
 			children = (
 				83A759AF1AE4FDC80026FB26 /* Extension Popover */,
 				83A0D64B1ADECE3700D9D3AD /* Files Controller */,
+				83A759B81AE6650A0026FB26 /* Send Split View */,
 				835517FE1ADE7E7400B3EF22 /* Split View Controller */,
 				83A0D6471ADEB6DF00D9D3AD /* Tab Bar Controller */,
 			);
@@ -1024,6 +1033,7 @@
 		83A0D64B1ADECE3700D9D3AD /* Files Controller */ = {
 			isa = PBXGroup;
 			children = (
+				83E2EB491AE6AD75003E29EB /* Empty Overlay */,
 				83A82E3C1AE0EF33005BAC88 /* Search View */,
 				83A0D6591ADFA0A100D9D3AD /* Collection View */,
 				8332F9281ADFF9DC007392A4 /* Single Folder View */,
@@ -1083,12 +1093,21 @@
 			name = "Extension Popover";
 			sourceTree = "<group>";
 		};
+		83A759B81AE6650A0026FB26 /* Send Split View */ = {
+			isa = PBXGroup;
+			children = (
+				83A759B91AE6652C0026FB26 /* InfinitSendSplitViewController_iPad.h */,
+				83A759BA1AE6652C0026FB26 /* InfinitSendSplitViewController_iPad.m */,
+			);
+			name = "Send Split View";
+			sourceTree = "<group>";
+		};
 		83A82E3C1AE0EF33005BAC88 /* Search View */ = {
 			isa = PBXGroup;
 			children = (
 				83A82E371AE0EF2D005BAC88 /* InfinitFilesSearchPopover_iPad.h */,
 				83A82E381AE0EF2D005BAC88 /* InfinitFilesSearchPopover_iPad.m */,
-				83A82E391AE0EF2D005BAC88 /* InfinitFilesSearchPopover_iPad.xib */,
+				8345958E1AE6B5370020B25D /* InfinitFilesSearchPopover_iPad.xib */,
 			);
 			name = "Search View";
 			sourceTree = "<group>";
@@ -1131,8 +1150,8 @@
 		83B32D5F1A136485004AB945 /* Infinit */ = {
 			isa = PBXGroup;
 			children = (
-				835517FA1ADE7E5100B3EF22 /* iPad */,
 				831686141AD3D6D30099888D /* Infinit.entitlements */,
+				835517FA1ADE7E5100B3EF22 /* iPad */,
 				834FCFC11A7B93B900930BD8 /* Background Manager */,
 				8311B5AF1A7CE0CB00832FDE /* Contacts */,
 				83EBB0A11A947AF900144BC6 /* Customised Classes */,
@@ -1218,6 +1237,16 @@
 				83E112E21A827EAD0072DAE0 /* InfinitWelcomeOnboardingNavigationController.m */,
 			);
 			name = "Welcome Onboarding";
+			sourceTree = "<group>";
+		};
+		83E2EB491AE6AD75003E29EB /* Empty Overlay */ = {
+			isa = PBXGroup;
+			children = (
+				834595841AE6B4EC0020B25D /* InfinitFilesEmptyOverlay_iPad.h */,
+				834595851AE6B4EC0020B25D /* InfinitFilesEmptyOverlay_iPad.m */,
+				8345958B1AE6B5230020B25D /* InfinitFilesEmptyOverlay_iPad.xib */,
+			);
+			name = "Empty Overlay";
 			sourceTree = "<group>";
 		};
 		83EBB0741A93943C00144BC6 /* JDStatusBarNotification */ = {
@@ -1741,7 +1770,7 @@
 				83157ED81A73D29100F8E87F /* InfinitFilesTableCell.xib in Resources */,
 				832285021A794D2B000893A1 /* WelcomeSignupFormView.xib in Resources */,
 				83B32DF11A84DF2B004088DD /* InfinitHomeRatingCell.xib in Resources */,
-				83A82E3B1AE0EF2D005BAC88 /* InfinitFilesSearchPopover_iPad.xib in Resources */,
+				8345958C1AE6B5370020B25D /* InfinitFilesSearchPopover_iPad.xib in Resources */,
 				83EBB0AE1A966F1400144BC6 /* InfinitHomePeerTransactionFileCell.xib in Resources */,
 				D098481C1A43391B002D26AC /* SourceSansPro-Regular.otf in Resources */,
 				D09848161A43391B002D26AC /* SourceSansPro-BoldIt.otf in Resources */,
@@ -1754,6 +1783,7 @@
 				83B32DEE1A84DF27004088DD /* InfinitHomeOnboardingCell.xib in Resources */,
 				D09848171A43391B002D26AC /* SourceSansPro-ExtraLight.otf in Resources */,
 				832285081A794D4C000893A1 /* InfinitAccessContactsView.xib in Resources */,
+				834595891AE6B5230020B25D /* InfinitFilesEmptyOverlay_iPad.xib in Resources */,
 				83B32D6E1A136485004AB945 /* Images.xcassets in Resources */,
 				D09848201A43391B002D26AC /* Montserrat-Bold.ttf in Resources */,
 				832284FF1A794D25000893A1 /* WelcomeLoginFormView.xib in Resources */,
@@ -1838,7 +1868,9 @@
 				83A95FD21A6A78A0000B75C8 /* InfinitHomeAvatarView.m in Sources */,
 				83EBB0A01A9479D800144BC6 /* InfinitOfflineViewController.m in Sources */,
 				D0659F661A3E865A0001ACAE /* InfinitWelcomeController.m in Sources */,
+				834595861AE6B4EC0020B25D /* InfinitFilesEmptyOverlay_iPad.m in Sources */,
 				83A0D64E1ADECE6500D9D3AD /* InfinitFilesViewController_iPad.mm in Sources */,
+				83A759BB1AE6652C0026FB26 /* InfinitSendSplitViewController_iPad.m in Sources */,
 				838490981A767F6E00969CF7 /* InfinitFilePreviewController.m in Sources */,
 				83A0D6521ADECF6C00D9D3AD /* InfinitFilesTableViewController_iPad.m in Sources */,
 				83F7C3B51A6E96C600FA283C /* InfinitSendNoResultsCell.m in Sources */,
@@ -2013,6 +2045,22 @@
 				832A99371AD6B26400639B22 /* Base */,
 			);
 			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+		8345958B1AE6B5230020B25D /* InfinitFilesEmptyOverlay_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8345958A1AE6B5230020B25D /* Base */,
+			);
+			name = InfinitFilesEmptyOverlay_iPad.xib;
+			sourceTree = "<group>";
+		};
+		8345958E1AE6B5370020B25D /* InfinitFilesSearchPopover_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8345958D1AE6B5370020B25D /* Base */,
+			);
+			name = InfinitFilesSearchPopover_iPad.xib;
 			sourceTree = "<group>";
 		};
 		8368E8051AA992600087445D /* WelcomeSignupFacebookView.xib */ = {
