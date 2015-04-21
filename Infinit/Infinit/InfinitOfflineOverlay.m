@@ -35,6 +35,7 @@
 - (void)awakeFromNib
 {
   self.files_button.layer.cornerRadius = self.files_button.bounds.size.height / 2.0f;
+  self.files_button.hidden = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
 }
 
 - (IBAction)filesTapped:(id)sender
