@@ -8,8 +8,10 @@
 
 #import "InfinitFilesViewController_iPad.h"
 
+#import "InfinitColor.h"
 #import "InfinitConstants.h"
 #import "InfinitDownloadFolderManager.h"
+#import "InfinitFilesEmptyOverlay_iPad.h"
 #import "InfinitFilePreviewController.h"
 #import "InfinitFilesCollectionViewController_iPad.h"
 #import "InfinitFilesFolderViewController_iPad.h"
@@ -33,12 +35,14 @@ ELLE_LOG_COMPONENT("iOS.FilesViewController_iPad");
 @property (nonatomic, weak) IBOutlet UIView* main_view;
 @property (nonatomic, weak) IBOutlet UIButton* left_button_inner;
 @property (nonatomic, weak) IBOutlet UIButton* left_button_outer;
+@property (nonatomic, weak) IBOutlet UIButton* send_button;
 
 @property (nonatomic, readonly) NSMutableArray* all_folders;
 @property (atomic, readonly) BOOL editing;
 @property (nonatomic, readonly) NSString* last_search_string;
 
 @property (nonatomic, weak) InfinitFilesDisplayController_iPad* current_controller;
+@property (nonatomic, strong) InfinitFilesEmptyOverlay_iPad* empty_view;
 @property (nonatomic, strong) InfinitFilesCollectionViewController_iPad* collection_view_controller;
 @property (nonatomic, strong) InfinitFilesFolderViewController_iPad* folder_view_controller;
 @property (nonatomic, strong) UIPopoverController* search_popover_controller;
@@ -67,18 +71,27 @@ typedef NS_ENUM(NSUInteger, InfinitFilesFilter)
                                      bundle:nil];
   _search_view_controller = [[search_nib instantiateWithOwner:self options:nil] firstObject];
   self.search_view_controller.delegate = self;
+  self.send_button.layer.shadowColor = [InfinitColor colorWithGray:0].CGColor;
+  self.send_button.layer.shadowOpacity = 0.33f;
+  self.send_button.layer.shadowRadius = 5.0f;
+  self.send_button.layer.shadowOffset = CGSizeZero;
+  self.send_button.layer.masksToBounds = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
+  _all_folders = [[InfinitDownloadFolderManager sharedInstance].completed_folders mutableCopy];
+  [InfinitDownloadFolderManager sharedInstance].delegate = self;
   static dispatch_once_t first_appear = 0;
   dispatch_once(&first_appear, ^
   {
-    _all_folders = [[InfinitDownloadFolderManager sharedInstance].completed_folders mutableCopy];
     [self switchToViewController:self.table_view_controller];
   });
-  [InfinitDownloadFolderManager sharedInstance].delegate = self;
+  if (self.all_folders.count == 0)
+    [self showEmptyFilesView];
+  else
+    [self removeEmptyFilesView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -96,6 +109,35 @@ typedef NS_ENUM(NSUInteger, InfinitFilesFilter)
   }
 }
 
+- (void)showEmptyFilesView
+{
+  self.segmented_control.hidden = YES;
+  self.left_button_outer.enabled = NO;
+  self.right_button_inner.enabled = NO;
+  self.right_button_outer.enabled = NO;
+  [self.main_view insertSubview:self.empty_view belowSubview:self.send_button];
+  NSDictionary* views = @{@"view": self.empty_view};
+  NSMutableArray* constraints =
+    [NSMutableArray arrayWithArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|"
+                                                                           options:0
+                                                                           metrics:nil
+                                                                             views:views]];
+  [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|"
+                                                                           options:0
+                                                                           metrics:nil
+                                                                             views:views]];
+  [self.main_view addConstraints:constraints];
+}
+
+- (void)removeEmptyFilesView
+{
+  self.segmented_control.hidden = NO;
+  self.left_button_outer.enabled = YES;
+  self.right_button_inner.enabled = YES;
+  self.right_button_outer.enabled = YES;
+  [self.empty_view removeFromSuperview];
+}
+
 #pragma mark - Download Folder Delegate
 
 - (void)downloadFolderManager:(InfinitDownloadFolderManager*)sender
@@ -111,6 +153,8 @@ typedef NS_ENUM(NSUInteger, InfinitFilesFilter)
       return;
     [self.all_folders insertObject:folder atIndex:0];
     [self.current_controller folderAdded:folder];
+    if (self.all_folders.count > 0)
+      [self removeEmptyFilesView];
   }
 }
 
@@ -123,6 +167,8 @@ typedef NS_ENUM(NSUInteger, InfinitFilesFilter)
       return;
     [self.all_folders removeObject:folder];
     [self.current_controller folderRemoved:folder];
+    if (self.all_folders.count == 0)
+      [self showEmptyFilesView];
   }
 }
 
@@ -314,6 +360,10 @@ typedef NS_ENUM(NSUInteger, InfinitFilesFilter)
   return filter;
 }
 
+- (IBAction)sendButtonTapped:(id)sender
+{
+  [((InfinitMainSplitViewController_iPad*)self.splitViewController) showSendGalleryView];
+}
 
 #pragma mark - Files Display Delegate
 
@@ -324,7 +374,7 @@ typedef NS_ENUM(NSUInteger, InfinitFilesFilter)
     [InfinitFilePreviewController controllerWithFolder:file.folder
                                               andIndex:[file.folder.files indexOfObject:file]];
   UINavigationController* nav_controller =
-  [[UINavigationController alloc] initWithRootViewController:preview_controller];
+    [[UINavigationController alloc] initWithRootViewController:preview_controller];
   [self presentViewController:nav_controller animated:YES completion:nil];
 }
 
@@ -417,7 +467,7 @@ typedef NS_ENUM(NSUInteger, InfinitFilesFilter)
   new_controller.search_string = self.search_view_controller.search_string;
   new_controller.view.frame = self.main_view.bounds;
   if (old_controller == nil)
-    [self.main_view addSubview:new_controller.view];
+    [self.main_view insertSubview:new_controller.view belowSubview:self.send_button];
   else
     [self.main_view insertSubview:new_controller.view belowSubview:old_controller.view];
   [self addChildViewController:new_controller];
@@ -451,6 +501,18 @@ typedef NS_ENUM(NSUInteger, InfinitFilesFilter)
 - (UIStoryboard*)storyboard
 {
   return [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+}
+
+- (InfinitFilesEmptyOverlay_iPad*)empty_view
+{
+  if (_empty_view == nil)
+  {
+    UINib* nib = [UINib nibWithNibName:NSStringFromClass(InfinitFilesEmptyOverlay_iPad.class)
+                                bundle:nil];
+    _empty_view = [nib instantiateWithOwner:self options:nil].firstObject;
+    _empty_view.translatesAutoresizingMaskIntoConstraints = NO;
+  }
+  return _empty_view;
 }
 
 - (InfinitFilesFolderViewController_iPad*)folder_view_controller
