@@ -154,7 +154,15 @@
   [self.navigationController.navigationBar setTitleTextAttributes:nav_bar_attrs];
   self.table_view.separatorStyle = UITableViewCellSeparatorStyleNone;
   self.table_view.contentInset = UIEdgeInsetsMake(-1.0f, 0.0f, 0.0f, 0.0);
-  self.navigationItem.title = NSLocalizedString(@"SEND", nil);
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+  {
+    self.navigationItem.title = NSLocalizedString(@"SELECT CONTACT", nil);
+    [self.navigationItem.leftBarButtonItem setImage:[UIImage imageNamed:@"icon-close"]];
+  }
+  else
+  {
+    self.navigationItem.title = NSLocalizedString(@"SEND", nil);
+  }
 }
 
 - (void)configureSearchField
@@ -262,6 +270,14 @@
 }
 
 #pragma mark - General
+
+- (void)setAssets:(NSArray*)assets
+{
+  _assets = assets;
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    return;
+  [self updateSendButton];
+}
 
 - (void)resetView
 {
@@ -513,11 +529,14 @@
 
 - (IBAction)backButtonTapped:(id)sender
 {
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    [self.splitViewController dismissViewControllerAnimated:YES completion:NULL];
+  else
+    [self.navigationController popViewControllerAnimated:YES];
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
   {
     [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:_managed_files_id];
   });
-  [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)sendButtonTapped:(id)sender
@@ -601,6 +620,10 @@
       [manager addALAssetsLibraryURLList:asset_urls
                           toManagedFiles:_managed_files_id
                          completionBlock:callback];
+    }
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+      [self.splitViewController dismissViewControllerAnimated:YES completion:NULL];
     }
     if (_thumbnail_elements.count >= 10)
       show_preparing_message = YES;
