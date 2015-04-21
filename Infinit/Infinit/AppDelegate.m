@@ -39,6 +39,9 @@
 @property (nonatomic, readonly) BOOL facebook_quick_login; // Facebook login with valid token.
 @property (nonatomic, readonly) BOOL facebook_long_login;  // Facebook login with expired token.
 
+@property (nonatomic, readonly) NSString* logging_in_controller_id;
+@property (nonatomic, readonly) NSString* main_controller_id;
+
 @end
 
 @implementation AppDelegate
@@ -95,7 +98,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
     {
       _facebook_long_login = YES;
       self.window.rootViewController =
-        [self.storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
+        [self.storyboard instantiateViewControllerWithIdentifier:self.logging_in_controller_id];
       [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:25.0f];
       [[NSNotificationCenter defaultCenter] addObserver:self
                                                selector:@selector(facebookSessionStateChanged:)
@@ -121,7 +124,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
     {
       _facebook_quick_login = YES;
       self.window.rootViewController =
-        [self.storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
+        [self.storyboard instantiateViewControllerWithIdentifier:self.logging_in_controller_id];
       [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:15.0f];
     }
     else if ([self canAutoLogin])
@@ -130,16 +133,13 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
       if (manager.network_status != InfinitNetworkStatusNotReachable)
       {
         self.window.rootViewController =
-          [self.storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
+          [self.storyboard instantiateViewControllerWithIdentifier:self.logging_in_controller_id];
         [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:15.0f];
       }
       else
       {
-        NSString* identifier = @"main_controller";
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-          identifier = @"main_controller_ipad";
         self.window.rootViewController =
-          [self.storyboard instantiateViewControllerWithIdentifier:identifier];
+          [self.storyboard instantiateViewControllerWithIdentifier:self.main_controller_id];
       }
     }
     else
@@ -170,7 +170,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 - (void)tooLongToLogin
 {
   self.window.rootViewController =
-    [self.storyboard instantiateViewControllerWithIdentifier:@"main_controller"];
+    [self.storyboard instantiateViewControllerWithIdentifier:self.main_controller_id];
 }
 
 - (void)tryLogin
@@ -198,10 +198,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
     [InfinitDownloadFolderManager sharedInstance];
     [InfinitBackgroundManager sharedInstance];
     [InfinitRatingManager sharedInstance];
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-      identifier = @"main_controller_ipad";
-    else
-      identifier = @"main_controller";
+    identifier = self.main_controller_id;
   }
   else
   {
@@ -377,7 +374,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
   {
     [self tryLogin];
     self.window.rootViewController =
-      [self.storyboard instantiateViewControllerWithIdentifier:@"logging_in_controller"];
+      [self.storyboard instantiateViewControllerWithIdentifier:self.logging_in_controller_id];
   }
   else
   {
@@ -468,6 +465,22 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 - (UIStoryboard*)storyboard
 {
   return [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+}
+
+- (NSString*)logging_in_controller_id
+{
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    return @"logging_in_controller";
+  else
+    return @"logging_in_controller_portrait";
+}
+
+- (NSString*)main_controller_id
+{
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    return @"main_controller_ipad";
+  else
+    return @"main_controller";
 }
 
 @end
