@@ -72,6 +72,18 @@ static CGSize _asset_size;
   CGRect _previous_preheat_rect;
 }
 
+- (void)resetCellSize
+{
+  CGFloat width = self.view.bounds.size.width;
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    width -= 10.0f;
+  CGFloat diameter = diameter = floor(width / 3.0f) - 5.0f;
+  _cell_size = CGSizeMake(diameter, diameter);
+  CGFloat scale = [UIScreen mainScreen].scale;
+  _asset_size = CGSizeMake(diameter * scale, diameter * scale);
+  [self.collection_view.collectionViewLayout invalidateLayout];
+}
+
 - (id)initWithCoder:(NSCoder*)aDecoder
 {
   if (self = [super initWithCoder:aDecoder])
@@ -83,6 +95,28 @@ static CGSize _asset_size;
     self.dark = YES;
   }
   return self;
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation 
+                                duration:(NSTimeInterval)duration
+{
+  [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+  [UIView animateWithDuration:(duration > 0.2f ? 0.2f : duration)
+                   animations:^
+  {
+    self.collection_view.alpha = 0.0f;
+  }];
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+  [self resetCellSize];
+  [self resetCachedAssets];
+  [UIView animateWithDuration:0.2f
+                   animations:^
+  {
+    self.collection_view.alpha = 1.0f;
+  }];
 }
 
 - (void)viewDidLoad
@@ -103,32 +137,40 @@ static CGSize _asset_size;
                                                                        size:17.0f],
                                   NSForegroundColorAttributeName: [UIColor whiteColor]};
   [self.navigationController.navigationBar setTitleTextAttributes:nav_bar_attrs];
-  self.next_button.titleEdgeInsets =
-    UIEdgeInsetsMake(0.0f,
-                     - self.next_button.imageView.frame.size.width,
-                     0.0f,
-                     self.next_button.imageView.frame.size.width);
-  self.next_button.imageEdgeInsets =
-    UIEdgeInsetsMake(0.0f,
-                     self.next_button.titleLabel.frame.size.width + 10.0f,
-                     0.0f,
-                     - (self.next_button.titleLabel.frame.size.width + 10.0f));
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+  {
+    self.next_button.hidden = YES;
+    self.navigationItem.title = NSLocalizedString(@"SELECT FILES", nil);
+    self.navigationItem.leftBarButtonItem = nil;
+  }
+  else
+  {
+    self.next_button.titleEdgeInsets =
+      UIEdgeInsetsMake(0.0f,
+                       - self.next_button.imageView.frame.size.width,
+                       0.0f,
+                       self.next_button.imageView.frame.size.width);
+    self.next_button.imageEdgeInsets =
+      UIEdgeInsetsMake(0.0f,
+                       self.next_button.titleLabel.frame.size.width + 10.0f,
+                       0.0f,
+                       - (self.next_button.titleLabel.frame.size.width + 10.0f));
+  }
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-  CGFloat screen_width = [UIScreen mainScreen].bounds.size.width;
-  CGFloat diameter = floor(screen_width / 3.0f) - 5.0f;
-  _cell_size = CGSizeMake(diameter, diameter);
-  CGFloat scale = [UIScreen mainScreen].scale;
-  _asset_size = CGSizeMake(diameter * scale, diameter * scale);
-  self.layout.itemSize = _cell_size;
   [super viewWillAppear:animated];
-  if (self.collection_view.indexPathsForSelectedItems.count == 0)
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200 * NSEC_PER_MSEC)),
+                 dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
   {
-    [self loadAssets];
-    _selected_something = NO;
-  }
+    if (self.collection_view.indexPathsForSelectedItems.count == 0)
+    {
+      [self resetCellSize];
+      [self loadAssets];
+      _selected_something = NO;
+    }
+  });
   [self configureNextButton];
   self.collection_view.contentOffset =
     CGPointMake(0.0f, 0.0f - self.collection_view.contentInset.top);
@@ -436,6 +478,16 @@ static CGSize _asset_size;
   return _cell_size;
 }
 
+- (UIEdgeInsets)collectionView:(UICollectionView*)collectionView
+                        layout:(UICollectionViewLayout*)collectionViewLayout
+        insetForSectionAtIndex:(NSInteger)section
+{
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    return UIEdgeInsetsMake(0.0f, 5.0f, 0.0f, 5.0f);
+  else
+    return UIEdgeInsetsZero;
+}
+
 
 # pragma mark - UICollectionViewDelegate
 
@@ -487,7 +539,20 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
         }];
      }];
   }
-  [self configureNextButton];
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+  {
+    NSMutableArray* assets = [NSMutableArray array];
+    for (NSIndexPath* path in self.collection_view.indexPathsForSelectedItems)
+    {
+      id asset = self.assets[path.row];
+      [assets addObject:asset];
+    }
+    [self.delegate sendGalleryView:self selectedAssets:assets];
+  }
+  else
+  {
+    [self configureNextButton];
+  }
   if (!_selected_something)
   {
     _selected_something = YES;
@@ -524,6 +589,8 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
 
 - (void)configureNextButton
 {
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    return;
   CGFloat v_constraint = 0.0f;
   if (self.collection_view.indexPathsForSelectedItems.count == 0)
   {

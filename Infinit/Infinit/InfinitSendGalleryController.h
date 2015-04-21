@@ -10,8 +10,19 @@
 
 #import "InfinitOfflineViewController.h"
 
+@protocol InfinitSendGalleryProtocol;
+
 @interface InfinitSendGalleryController : InfinitOfflineViewController
 
+@property (nonatomic, readwrite, weak) id<InfinitSendGalleryProtocol> delegate;
+
 - (void)resetView;
+
+@end
+
+@protocol InfinitSendGalleryProtocol <NSObject>
+
+- (void)sendGalleryView:(InfinitSendGalleryController*)sender
+         selectedAssets:(NSArray*)assets;
 
 @end
