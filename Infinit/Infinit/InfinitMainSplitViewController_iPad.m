@@ -14,6 +14,7 @@
 #import "InfinitFilesViewController_iPad.h"
 #import "InfinitHostDevice.h"
 #import "InfinitHomeViewController.h"
+#import "InfinitSendGalleryController.h"
 #import "InfinitSendRecipientsController.h"
 #import "InfinitOverlayViewController.h"
 #import "InfinitWormhole.h"
@@ -23,11 +24,12 @@
 #import <Gap/InfinitTemporaryFileManager.h>
 
 @interface InfinitMainSplitViewController_iPad () <InfinitExtensionPopoverProtocol,
-                                                   InfinitOverlayViewControllerProtocol>
+                                                   InfinitOverlayViewControllerProtocol,
+                                                   UISplitViewControllerDelegate>
 
+@property (nonatomic, strong) InfinitSendGalleryController* gallery_controller;
 @property (nonatomic, strong) InfinitOverlayViewController* overlay_controller;
 @property (nonatomic, strong) InfinitSendRecipientsController* recipient_controller;
-@property (nonatomic, strong) UITabBarController* tab_controller;
 
 @property (nonatomic, readonly) NSString* extension_uuid;
 @property (nonatomic, strong) InfinitExtensionPopoverController* extension_controller;
@@ -64,8 +66,11 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+  self.delegate = self;
   if ([InfinitHostDevice iOSVersion] >= 8.0)
+  {
     self.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
+  }
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(connectionStatusChanged:)
                                                name:INFINIT_CONNECTION_STATUS_CHANGE
@@ -200,6 +205,13 @@
 
 #pragma mark - Public
 
+- (void)showSendGalleryView
+{
+  UISplitViewController* send_split_view =
+    [self.storyboard instantiateViewControllerWithIdentifier:@"ipad_send_split_view_id"];
+  [self presentViewController:send_split_view animated:YES completion:NULL];
+}
+
 - (void)showSendViewForFiles:(NSArray*)files
 {
   if (files.count == 0)
@@ -232,6 +244,16 @@
 }
 
 #pragma mark - Helpers
+
+- (InfinitSendGalleryController*)gallery_controller
+{
+  if (_gallery_controller == nil)
+  {
+    _gallery_controller =
+      [self.storyboard instantiateViewControllerWithIdentifier:@"send_gallery_controller_id"];
+  }
+  return _gallery_controller;
+}
 
 - (InfinitExtensionPopoverController*)extension_controller
 {

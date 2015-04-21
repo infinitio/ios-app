@@ -12,6 +12,7 @@
 
 @interface InfinitMainSplitViewController_iPad : UISplitViewController
 
+- (void)showSendGalleryView;
 - (void)showSendViewForFiles:(NSArray*)files;
 - (void)showViewForFolder:(InfinitFolderModel*)folder;
 
