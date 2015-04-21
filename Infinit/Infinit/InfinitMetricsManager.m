@@ -97,6 +97,8 @@ static InfinitMetricsManager* _instance = nil;
       return @"card rating";
     case InfinitUIEventFilePreview:
       return @"preview file";
+    case InfinitUIEventSMSInvite:
+      return @"sms invite";
 
     default:
       NSCAssert(false, @"Unknown metrics event");
@@ -135,6 +137,12 @@ static InfinitMetricsManager* _instance = nil;
       return @"extension files";
     case InfinitUIMethodHomeCard:
       return @"home card";
+    case InfinitUIMethodSent:
+      return @"sent";
+    case InfinitUIMethodCancel:
+      return @"cancel";
+    case InfinitUIMethodFail:
+      return @"fail";
 
     default:
       NSCAssert(false, @"Unknown metrics method");

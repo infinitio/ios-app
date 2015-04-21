@@ -34,6 +34,8 @@ typedef NS_ENUM(NSUInteger, InfinitUIEvents)
   InfinitUIEventRateFromCard,
   // Files view
   InfinitUIEventFilePreview,
+  // SMS invitation
+  InfinitUIEventSMSInvite,
 };
 
 typedef NS_ENUM(NSUInteger, InfinitUIMethods)
@@ -52,6 +54,9 @@ typedef NS_ENUM(NSUInteger, InfinitUIMethods)
   InfinitUIMethodSendGalleryNext,
   InfinitUIMethodExtensionFiles,
   InfinitUIMethodHomeCard,
+  InfinitUIMethodSent,
+  InfinitUIMethodCancel,
+  InfinitUIMethodFail,
 };
 
 #endif
