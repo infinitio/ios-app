@@ -148,43 +148,21 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   }
   [super viewDidLoad];
 
-  self.delegate = self;
-  self.tabBar.tintColor = [UIColor clearColor];
-
-  [[UITabBar appearance] setBackgroundImage:[[UIImage alloc] init]];
-  self.tabBar.shadowImage = [[UIImage alloc] init];
-
-  UIView* shadow_line =
-    [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 1.0f)];
-  shadow_line.backgroundColor = [InfinitColor colorWithGray:216.0f];
-  [self.tabBar addSubview:shadow_line];
-
-  _selection_indicator =
-    [[UIView alloc] initWithFrame:CGRectMake(0.0f,
-                                             0.0f,
-                                             self.view.frame.size.width / self.viewControllers.count,
-                                             1.0f)];
-  self.selection_indicator.backgroundColor =
-    [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
-  [self.tabBar addSubview:self.selection_indicator];
-
-  UIImage* send_icon_bg = [UIImage imageNamed:@"icon-tab-send-bg"];
-  _send_tab_icon = [[InfinitSendTabIcon alloc] initWithFrame:CGRectMake(0.0f,
-                                                                        0.0f,
-                                                                        send_icon_bg.size.width,
-                                                                        send_icon_bg.size.height)];
-  [self.tabBar addSubview:self.send_tab_icon];
-  CGFloat delta = (self.tabBar.bounds.size.height - send_icon_bg.size.height) / 2.0f;
-  self.send_tab_icon.center = CGPointMake(self.tabBar.bounds.size.width / 2.0f,
-                                          (self.tabBar.bounds.size.height / 2.0f) + delta);
-  for (NSUInteger index = 0; index < self.tabBar.items.count; index++)
-  {
-    if (index == InfinitTabBarIndexSend)
-      continue;
-    [self.tabBar.items[index] setImageInsets:UIEdgeInsetsMake(5.0f, 0.0f, -5.0f, 0.0f)];
-    [self.tabBar.items[index] setImage:[self imageForTabBarItem:index selected:NO]];
-    [self.tabBar.items[index] setSelectedImage:[self imageForTabBarItem:index selected:YES]];
-  }
+  UIViewController* home_controller =
+    [self.storyboard instantiateViewControllerWithIdentifier:@"home_navigation_controller_id"];
+  UIViewController* files_controller =
+    [self.storyboard instantiateViewControllerWithIdentifier:@"files_navigation_controller_id"];
+  UIViewController* send_controller =
+    [self.storyboard instantiateViewControllerWithIdentifier:@"send_navigation_controller_id"];
+  UIViewController* contacts_controller =
+    [self.storyboard instantiateViewControllerWithIdentifier:@"contacts_navigation_controller_id"];
+  UIViewController* settings_controller =
+    [self.storyboard instantiateViewControllerWithIdentifier:@"settings_navigation_controller_id"];
+  self.viewControllers = @[home_controller,
+                           files_controller,
+                           send_controller,
+                           contacts_controller,
+                           settings_controller];
 
   [JDStatusBarNotification addStyleNamed:_status_bar_error_style_id
                                  prepare:^JDStatusBarStyle* (JDStatusBarStyle* style)
@@ -215,8 +193,6 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
      style.animationType = JDStatusBarAnimationTypeMove;
      return style;
    }];
-
-  [self updateHomeBadge];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -230,12 +206,50 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
       [self handleOffline];
     else
       [self handleOnlineInitial:YES];
+    self.delegate = self;
+    self.tabBar.tintColor = [UIColor clearColor];
+
+    [[UITabBar appearance] setBackgroundImage:[[UIImage alloc] init]];
+    self.tabBar.shadowImage = [[UIImage alloc] init];
+
+    UIView* shadow_line =
+    [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 1.0f)];
+    shadow_line.backgroundColor = [InfinitColor colorWithGray:216.0f];
+    [self.tabBar addSubview:shadow_line];
+
+    _selection_indicator =
+    [[UIView alloc] initWithFrame:CGRectMake(0.0f,
+                                             0.0f,
+                                             self.view.frame.size.width / self.viewControllers.count,
+                                             1.0f)];
+    self.selection_indicator.backgroundColor =
+    [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
+    [self.tabBar addSubview:self.selection_indicator];
+
+    UIImage* send_icon_bg = [UIImage imageNamed:@"icon-tab-send-bg"];
+    _send_tab_icon = [[InfinitSendTabIcon alloc] initWithFrame:CGRectMake(0.0f,
+                                                                          0.0f,
+                                                                          send_icon_bg.size.width,
+                                                                          send_icon_bg.size.height)];
+    [self.tabBar addSubview:self.send_tab_icon];
+    CGFloat delta = (self.tabBar.bounds.size.height - send_icon_bg.size.height) / 2.0f;
+    self.send_tab_icon.center = CGPointMake(self.tabBar.bounds.size.width / 2.0f,
+                                            (self.tabBar.bounds.size.height / 2.0f) + delta);
+    for (NSUInteger index = 0; index < self.tabBar.items.count; index++)
+    {
+      if (index == InfinitTabBarIndexSend)
+        continue;
+      [self.tabBar.items[index] setImageInsets:UIEdgeInsetsMake(5.0f, 0.0f, -5.0f, 0.0f)];
+      [self.tabBar.items[index] setImage:[self imageForTabBarItem:index selected:NO]];
+      [self.tabBar.items[index] setSelectedImage:[self imageForTabBarItem:index selected:YES]];
+    }
   }
   else
   {
     if (![InfinitConnectionManager sharedInstance].connected)
       [self handleOffline];
   }
+  [self updateHomeBadge];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -439,17 +453,17 @@ shouldSelectViewController:(UIViewController*)viewController
 {
   if ([self.viewControllers indexOfObject:viewController] == self.selectedIndex)
   {
-    if ([viewController.title isEqualToString:@"HOME"])
+    if ([viewController.restorationIdentifier isEqualToString:@"home_navigation_controller_id"])
     {
       UINavigationController* home_nav_controller = (UINavigationController*)viewController;
       [home_nav_controller.viewControllers.firstObject scrollToTop];
     }
-    else if ([viewController.title isEqualToString:@"FILES"])
+    else if ([viewController.restorationIdentifier isEqualToString:@"files_navigation_controller_id"])
     {
       UINavigationController* files_nav_controller = (UINavigationController*)viewController;
       [files_nav_controller.viewControllers.firstObject tabIconTap];
     }
-    else if ([viewController.title isEqualToString:@"CONTACTS"])
+    else if ([viewController.restorationIdentifier isEqualToString:@"contacts_navigation_controller_id"])
     {
       UINavigationController* contacts_nav_controller = (UINavigationController*)viewController;
       [contacts_nav_controller.viewControllers.firstObject tabIconTap];
@@ -457,7 +471,7 @@ shouldSelectViewController:(UIViewController*)viewController
     return NO;
   }
   _last_index = self.selectedIndex;
-  if ([viewController.title isEqualToString:@"SEND"])
+  if ([viewController.restorationIdentifier isEqualToString:@"send_navigation_controller_id"])
   {
     if ([InfinitConnectionManager sharedInstance].was_logged_in)
     {
@@ -501,7 +515,8 @@ shouldSelectViewController:(UIViewController*)viewController
            animationControllerForTransitionFromViewController:(UIViewController*)fromVC
                                              toViewController:(UIViewController*)toVC
 {
-  if ([toVC.title isEqualToString:@"SEND"] && self.permission_view == nil)
+  if ([toVC.restorationIdentifier isEqualToString:@"send_navigation_controller_id"]
+      && self.permission_view == nil)
   {
     self.animator.reverse = NO;
     self.animator.animation = AnimateCircleCover;
@@ -509,18 +524,18 @@ shouldSelectViewController:(UIViewController*)viewController
       CGPointMake(self.view.frame.size.width / 2.0f, self.view.frame.size.height -
                   self.send_tab_icon.frame.size.height / 3.0f);
   }
-  else if ([fromVC.title isEqualToString:@"SEND"])
+  else if ([fromVC.restorationIdentifier isEqualToString:@"send_navigation_controller_id"])
   {
     InfinitSendNavigationController* send_nav_controller = (InfinitSendNavigationController*)fromVC;
     self.animator.reverse = YES;
-    if ([send_nav_controller.topViewController.title isEqualToString:@"SEND_GALLERY"])
+    if ([send_nav_controller.topViewController.restorationIdentifier isEqualToString:@"send_gallery_controller_id"])
     {
       self.animator.animation = AnimateCircleCover;
       self.animator.animation_center =
         CGPointMake(self.view.frame.size.width / 2.0f, self.view.frame.size.height -
                     self.send_tab_icon.frame.size.height / 3.0f);
     }
-    else if ([send_nav_controller.topViewController.title isEqualToString:@"SEND_RECIPIENTS"])
+    else if ([send_nav_controller.topViewController.restorationIdentifier isEqualToString:@"send_recipients_controller_id"])
     {
       self.animator.animation = AnimateDownUp;
     }
@@ -575,28 +590,32 @@ shouldSelectViewController:(UIViewController*)viewController
                          usingBlock:^(ALAssetsGroup* group, BOOL* stop)
    {
      *stop = YES;
-     CGPoint center = CGPointMake(self.view.frame.size.width / 2.0f, self.view.frame.size.height -
-                                  self.send_tab_icon.frame.size.height / 3.0f);
-     CGFloat radius = hypotf(self.view.frame.size.width, self.view.frame.size.height);
-     CGRect start_rect = CGRectMake(center.x - radius, center.y - radius,
-                                    2.0f * radius, 2.0f * radius);
-     CGRect final_rect = CGRectMake(center.x, center.y, 0.0f, 0.0f);
-     self.permission_view.layer.mask = [self animatedMaskLayerFrom:start_rect
-                                                                to:final_rect
-                                                      withDuration:0.5f
-                                                andCompletionBlock:^
-      {
-        [self.permission_view performSelector:@selector(removeFromSuperview)
-                                   withObject:nil
-                                   afterDelay:0.51f];
-        self.permission_view = nil;
-      }];
-     [self setTabBarHidden:YES animated:NO];
-     self.selectedIndex = InfinitTabBarIndexSend;
-     [InfinitMetricsManager sendMetric:InfinitUIEventAccessGallery
-                                method:InfinitUIMethodYes];
-     [InfinitMetricsManager sendMetric:InfinitUIEventSendGalleryViewOpen
-                                method:InfinitUIMethodTabBar];
+     static dispatch_once_t _gallery_access = 0;
+     dispatch_once(&_gallery_access, ^
+     {
+       CGPoint center = CGPointMake(self.view.frame.size.width / 2.0f, self.view.frame.size.height -
+                                    self.send_tab_icon.frame.size.height / 3.0f);
+       CGFloat radius = hypotf(self.view.frame.size.width, self.view.frame.size.height);
+       CGRect start_rect = CGRectMake(center.x - radius, center.y - radius,
+                                      2.0f * radius, 2.0f * radius);
+       CGRect final_rect = CGRectMake(center.x, center.y, 0.0f, 0.0f);
+       self.permission_view.layer.mask = [self animatedMaskLayerFrom:start_rect
+                                                                  to:final_rect
+                                                        withDuration:0.5f
+                                                  andCompletionBlock:^
+        {
+          [self.permission_view performSelector:@selector(removeFromSuperview)
+                                     withObject:nil
+                                     afterDelay:0.51f];
+          self.permission_view = nil;
+        }];
+       [self setTabBarHidden:YES animated:NO];
+       self.selectedIndex = InfinitTabBarIndexSend;
+       [InfinitMetricsManager sendMetric:InfinitUIEventAccessGallery
+                                  method:InfinitUIMethodYes];
+       [InfinitMetricsManager sendMetric:InfinitUIEventSendGalleryViewOpen
+                                  method:InfinitUIMethodTabBar];
+     });
    } failureBlock:^(NSError* error)
    {
      [self noGalleryAccessPopUp];
