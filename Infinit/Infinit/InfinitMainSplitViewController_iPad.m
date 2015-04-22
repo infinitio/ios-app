@@ -285,7 +285,7 @@
   if (_recipient_controller == nil)
   {
     _recipient_controller =
-      [self.storyboard instantiateViewControllerWithIdentifier:@"send_recipients_controller"];
+      [self.storyboard instantiateViewControllerWithIdentifier:@"send_recipients_controller_id"];
   }
   return _recipient_controller;
 }
