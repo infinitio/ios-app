@@ -1104,7 +1104,7 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
       NSString* title = NSLocalizedString(@"Email already registered", nil);
       NSString* message = NSLocalizedString(@"There is already an Infinit account with this email "
                                             "address. Enter your password to login or tap "
-                                            "\"forgot\".", nil);
+                                            "'forgot'.", nil);
       UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
                                                       message:message
                                                      delegate:nil
@@ -1270,7 +1270,7 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
         NSString* title = NSLocalizedString(@"Email already registered", nil);
         NSString* message = NSLocalizedString(@"There is already an Infinit account with this email "
                                               "address. Enter your password to login or tap "
-                                              "\"forgot\".", nil);
+                                              "'forgot'.", nil);
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
                                                         message:message
                                                        delegate:nil
