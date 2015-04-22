@@ -371,12 +371,9 @@
     [self.all_contacts sortUsingDescriptors:@[sort]];
     self.contact_results = [self.all_contacts mutableCopy];
     NSUInteger section = 2;
-    if (self.all_contacts.count > 0)
-    {
-      [self performSelectorOnMainThread:@selector(reloadTableSections:)
-                             withObject:[NSIndexSet indexSetWithIndex:section]
-                          waitUntilDone:NO];
-    }
+    [self performSelectorOnMainThread:@selector(reloadTableSections:)
+                           withObject:[NSIndexSet indexSetWithIndex:section]
+                        waitUntilDone:NO];
     if (self.recipient)
     {
       NSUInteger row = [self.contact_results indexOfObject:self.recipient];
