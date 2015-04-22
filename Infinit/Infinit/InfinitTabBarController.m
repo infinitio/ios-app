@@ -565,7 +565,7 @@ shouldSelectViewController:(UIViewController*)viewController
                                                                     size:20.0f],
                                NSForegroundColorAttributeName: [UIColor whiteColor]};
   self.permission_view.message_label.text =
-    NSLocalizedString(@"Tap \"OK\" to select your photos and videos.", nil);
+    NSLocalizedString(@"Tap 'OK' to select your photos and videos.", nil);
   NSMutableAttributedString* res = [self.permission_view.message_label.attributedText mutableCopy];
   NSRange bold_range = [res.string rangeOfString:@"OK"];
   [res setAttributes:bold_attrs range:bold_range];
