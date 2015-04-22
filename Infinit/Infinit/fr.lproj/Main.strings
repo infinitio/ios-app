@@ -202,8 +202,8 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "mGE-WJ-uld"; */
 "mGE-WJ-uld.text" = "Etiquette";
 
-/* Class = "UILabel"; text = "\"email@email.com\""; ObjectID = "nnb-QO-NCG"; */
-"nnb-QO-NCG.text" = "\";
+/* Class = "UILabel"; text = "email"; ObjectID = "nnb-QO-NCG"; */
+"nnb-QO-NCG.text" = "email";
 
 /* Class = "UIViewController"; title = "CONTACT"; ObjectID = "pu1-dB-tPe"; */
 "pu1-dB-tPe.title" = "CONTACT";
