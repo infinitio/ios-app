@@ -722,7 +722,7 @@
         <!--SETTINGS-->
         <scene sceneID="BgV-Sc-ZSQ">
             <objects>
-                <navigationController storyboardIdentifier="settings_nav_controller" title="SETTINGS" extendedLayoutIncludesOpaqueBars="YES" id="rsj-6b-IS1" customClass="InfinitSettingsNavigationController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="settings_navigation_controller_id" title="SETTINGS" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="rsj-6b-IS1" customClass="InfinitSettingsNavigationController" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <tabBarItem key="tabBarItem" title="" image="icon-tab-settings" id="Cd4-Ng-GSO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="New-hn-x7i">
@@ -765,7 +765,7 @@
         <!--SEND-->
         <scene sceneID="Y3y-y7-4Dd">
             <objects>
-                <navigationController storyboardIdentifier="SendNavigationController" title="SEND" extendedLayoutIncludesOpaqueBars="YES" id="18v-p7-fft" customClass="InfinitSendNavigationController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="send_navigation_controller_id" title="SEND" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="18v-p7-fft" customClass="InfinitSendNavigationController" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <tabBarItem key="tabBarItem" title="" id="KgD-ZR-jZX"/>
                     <toolbarItems/>
@@ -794,7 +794,7 @@
         <!--SEND_GALLERY-->
         <scene sceneID="28I-PS-ga1">
             <objects>
-                <viewController storyboardIdentifier="send_gallery_controller_id" title="SEND_GALLERY" extendedLayoutIncludesOpaqueBars="YES" id="Cz7-xE-6Ks" customClass="InfinitSendGalleryController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="send_gallery_controller_id" title="SEND_GALLERY" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Cz7-xE-6Ks" customClass="InfinitSendGalleryController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Beg-AB-V7t"/>
                         <viewControllerLayoutGuide type="bottom" id="WOe-0g-zHE"/>
@@ -911,7 +911,7 @@
         <!--SEND_RECIPIENTS-->
         <scene sceneID="05q-5G-qxd">
             <objects>
-                <viewController storyboardIdentifier="send_recipients_controller" title="SEND_RECIPIENTS" extendedLayoutIncludesOpaqueBars="YES" id="9ZK-3B-PXo" customClass="InfinitSendRecipientsController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="send_recipients_controller_id" title="SEND_RECIPIENTS" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9ZK-3B-PXo" customClass="InfinitSendRecipientsController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="i8F-aD-XN0"/>
                         <viewControllerLayoutGuide type="bottom" id="zqG-cb-qD6"/>
@@ -1349,7 +1349,7 @@
                                                                 </mask>
                                                             </variation>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;email@email.com&quot;" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nnb-QO-NCG">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nnb-QO-NCG">
                                                             <rect key="frame" x="70" y="20" width="469" height="22"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="200" id="1yH-sY-hsS"/>
@@ -1627,7 +1627,7 @@ access your phone contacts!</string>
         <!--FILES-->
         <scene sceneID="5o8-cN-a4g">
             <objects>
-                <navigationController title="FILES" extendedLayoutIncludesOpaqueBars="YES" id="E3A-FT-LpY" customClass="InfinitFilesNavigationController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="files_navigation_controller_id" title="FILES" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="E3A-FT-LpY" customClass="InfinitFilesNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="icon-tab-files" id="2li-2o-HFp"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="kfa-vf-1Zs" customClass="InfinitResizableNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1768,7 +1768,7 @@ access your phone contacts!</string>
         <!--CONTACTS-->
         <scene sceneID="RtZ-me-ofj">
             <objects>
-                <navigationController title="CONTACTS" extendedLayoutIncludesOpaqueBars="YES" id="1XU-dC-dIe" customClass="InfinitContactsNavigationController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="contacts_navigation_controller_id" title="CONTACTS" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1XU-dC-dIe" customClass="InfinitContactsNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="icon-tab-contacts" id="Gaj-cO-oSn"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="c6b-Kk-UxE">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1785,7 +1785,7 @@ access your phone contacts!</string>
         <!--HOME-->
         <scene sceneID="5gd-sV-tfq">
             <objects>
-                <navigationController storyboardIdentifier="home_nav_controller" title="HOME" extendedLayoutIncludesOpaqueBars="YES" id="aTr-06-n7W" customClass="InfinitHomeNavigationController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="home_navigation_controller_id" title="HOME" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="aTr-06-n7W" customClass="InfinitHomeNavigationController" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="icon-tab-home" id="9HD-Ms-g7K"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="aXc-5O-0hh"/>
