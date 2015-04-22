@@ -1,0 +1,21 @@
+/* Class = "UIButton"; normalTitle = "AVATAR"; ObjectID = "3Yt-hV-GkE"; */
+"3Yt-hV-GkE.normalTitle" = "AVATAR";
+
+/* Class = "UITextField"; placeholder = "Full Name"; ObjectID = "8Lh-Ro-fO5"; */
+"8Lh-Ro-fO5.placeholder" = "Nom et prénom";
+
+/* Class = "UITextField"; placeholder = "Email Address"; ObjectID = "CJQ-88-hro"; */
+"CJQ-88-hro.placeholder" = "Adresse email";
+
+/* Class = "UIButton"; normalTitle = "Back"; ObjectID = "O2R-nK-3jw"; */
+"O2R-nK-3jw.normalTitle" = "Précédent";
+
+/* Class = "UIButton"; normalTitle = "By signing up you accept Infinit's terms and conditions."; ObjectID = "jJS-mx-xRC"; */
+"jJS-mx-xRC.normalTitle" = "En vous inscrivant vous acceptez les termes et conditions.";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "sM6-pk-0MO"; */
+"sM6-pk-0MO.text" = "Etiquette";
+
+/* Class = "UIButton"; normalTitle = "Next"; ObjectID = "wgb-Mb-1IS"; */
+"wgb-Mb-1IS.normalTitle" = "Suivant";
+
