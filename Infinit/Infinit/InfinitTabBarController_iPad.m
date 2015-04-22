@@ -37,9 +37,9 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   [super viewDidLoad];
   self.delegate = self;
   UIViewController* home_controller
-    = [self.storyboard instantiateViewControllerWithIdentifier:@"home_nav_controller"];
+    = [self.storyboard instantiateViewControllerWithIdentifier:@"home_navigation_controller_id"];
   UIViewController* settings_controller
-    = [self.storyboard instantiateViewControllerWithIdentifier:@"settings_nav_controller"];
+    = [self.storyboard instantiateViewControllerWithIdentifier:@"settings_navigation_controller_id"];
   self.viewControllers = @[home_controller, settings_controller];
   for (NSUInteger index = 0; index < self.tabBar.items.count; index++)
   {
