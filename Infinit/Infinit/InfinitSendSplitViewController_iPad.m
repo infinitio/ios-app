@@ -8,12 +8,17 @@
 
 #import "InfinitSendSplitViewController_iPad.h"
 
+#import "InfinitAccessGalleryView.h"
 #import "InfinitHostDevice.h"
 #import "InfinitSendGalleryController.h"
 #import "InfinitSendRecipientsController.h"
 
-@interface InfinitSendSplitViewController_iPad () <InfinitSendGalleryProtocol>
+@import AssetsLibrary;
 
+@interface InfinitSendSplitViewController_iPad () <InfinitSendGalleryProtocol,
+                                                   UIAlertViewDelegate>
+
+@property (nonatomic, strong) InfinitAccessGalleryView* access_gallery_view;
 @property (nonatomic, strong) InfinitSendGalleryController* gallery_controller;
 @property (nonatomic, strong) InfinitSendRecipientsController* recipient_controller;
 
@@ -40,8 +45,53 @@
   [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
   [self.recipient_controller resetView];
   [self.gallery_controller resetView];
-  [self.viewControllers[0] pushViewController:self.recipient_controller animated:NO];
-  [self.viewControllers[1] pushViewController:self.gallery_controller animated:NO];
+  UINavigationController* master_nav_controller = self.viewControllers[0];
+  UINavigationController* detail_nav_controller = self.viewControllers[1];
+  [master_nav_controller pushViewController:self.recipient_controller animated:NO];
+  if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusNotDetermined)
+  {
+    self.access_gallery_view.translatesAutoresizingMaskIntoConstraints = NO;
+    [detail_nav_controller.view addSubview:self.access_gallery_view];
+    NSDictionary* views = @{@"view": self.access_gallery_view};
+    NSMutableArray* constraints =
+      [NSMutableArray arrayWithArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|"
+                                                                             options:0
+                                                                             metrics:nil
+                                                                               views:views]];
+    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[view]|"
+                                                                             options:0 
+                                                                             metrics:nil
+                                                                               views:views]];
+    [detail_nav_controller.view addConstraints:constraints];
+  }
+  else if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusAuthorized)
+  {
+    [detail_nav_controller pushViewController:self.gallery_controller animated:NO];
+  }
+  else
+  {
+    NSString* title = NSLocalizedString(@"No access to gallery.", nil);
+    NSString* message =
+      NSLocalizedString(@"Infinit requires access to your gallery to send photos and videos.", nil);
+    UIAlertView* alert = nil;
+    if ([InfinitHostDevice iOSVersion] >= 8.0)
+    {
+      alert = [[UIAlertView alloc] initWithTitle:title
+                                         message:message
+                                        delegate:self
+                               cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                               otherButtonTitles:NSLocalizedString(@"Settings", nil), nil];
+    }
+    else
+    {
+      alert = [[UIAlertView alloc] initWithTitle:title
+                                         message:message
+                                        delegate:self
+                               cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                               otherButtonTitles:nil];
+    }
+    [alert show];
+  }
   [super viewWillAppear:animated];
 }
 
@@ -49,6 +99,18 @@
 {
   [super viewWillDisappear:animated];
   [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+}
+
+#pragma mark - Alert Delegate
+
+- (void)alertView:(UIAlertView*)alertView
+clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+  if (alertView.cancelButtonIndex == buttonIndex)
+    return;
+  NSURL* settings_url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+  [[UIApplication sharedApplication] openURL:settings_url];
+  [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 #pragma mark - Gallery Protocol
@@ -60,6 +122,16 @@
 }
 
 #pragma mark - Helpers
+
+- (InfinitAccessGalleryView*)access_gallery_view
+{
+  if (_access_gallery_view == nil)
+  {
+    UINib* nib = [UINib nibWithNibName:@"InfinitAccessGalleryView" bundle:nil];
+    _access_gallery_view = [nib instantiateWithOwner:self options:nil].firstObject;
+  }
+  return _access_gallery_view;
+}
 
 - (InfinitSendGalleryController*)gallery_controller
 {
