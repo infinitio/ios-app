@@ -207,13 +207,10 @@
                                                          ascending:YES
                                                           selector:@selector(caseInsensitiveCompare:)];
     [self.all_contacts sortUsingDescriptors:@[sort]];
-    if (self.all_contacts.count > 0)
-    {
-      self.contact_results = [self.all_contacts mutableCopy];
-      [self performSelectorOnMainThread:@selector(reloadTableSections:)
-                             withObject:[NSIndexSet indexSetWithIndex:2]
-                          waitUntilDone:YES];
-    }
+    self.contact_results = [self.all_contacts mutableCopy];
+    [self performSelectorOnMainThread:@selector(reloadTableSections:)
+                           withObject:[NSIndexSet indexSetWithIndex:2]
+                        waitUntilDone:YES];
   }
   self.preloading_contacts = NO;
 }
