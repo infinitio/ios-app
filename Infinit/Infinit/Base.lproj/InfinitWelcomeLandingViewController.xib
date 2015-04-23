@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14E7f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="SourceSansPro-Bold.otf">
+            <string>SourceSansPro-Bold</string>
+            <string>SourceSansPro-Bold</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InfinitWelcomeLandingViewController">
+            <connections>
+                <outlet property="info_label" destination="tBX-13-sdM" id="uuh-VN-sWL"/>
+                <outlet property="no_button" destination="X9g-Ug-rfk" id="0kQ-si-hSn"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="yes_button" destination="eiV-uK-z6m" id="vK7-RR-raU"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="300"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tBX-13-sdM">
+                    <rect key="frame" x="187" y="36" width="227" height="65"/>
+                    <string key="text">Do you already have an
+Infinit account?</string>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                    <color key="textColor" red="0.35686274509803922" green="0.38823529411764707" blue="0.41568627450980389" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eiV-uK-z6m">
+                    <rect key="frame" x="50" y="148" width="500" height="56"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="56" id="OOB-Fs-Zet"/>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="OeH-T1-e9z"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="15"/>
+                    <state key="normal" title="YES">
+                        <color key="titleColor" red="0.35686274509999999" green="0.38823529410000002" blue="0.41568627450000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="yesTapped:" destination="-1" eventType="touchUpInside" id="QdP-Gz-7fJ"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X9g-Ug-rfk">
+                    <rect key="frame" x="50" y="219" width="500" height="56"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="56" id="I3Y-EH-MFt"/>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="QiN-Qm-TfR"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="15"/>
+                    <state key="normal" title="NO">
+                        <color key="titleColor" red="0.35686274509999999" green="0.38823529410000002" blue="0.41568627450000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="noTapped:" destination="-1" eventType="touchUpInside" id="GWg-ZG-Sox"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="centerX" secondItem="tBX-13-sdM" secondAttribute="centerX" id="9yy-CR-w7Z"/>
+                <constraint firstItem="eiV-uK-z6m" firstAttribute="top" secondItem="tBX-13-sdM" secondAttribute="bottom" constant="47" id="AFV-MC-SHp"/>
+                <constraint firstAttribute="centerX" secondItem="X9g-Ug-rfk" secondAttribute="centerX" id="APK-y8-U00"/>
+                <constraint firstItem="X9g-Ug-rfk" firstAttribute="top" secondItem="eiV-uK-z6m" secondAttribute="bottom" constant="15" id="E1O-3s-3pU"/>
+                <constraint firstItem="eiV-uK-z6m" firstAttribute="leading" relation="lessThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" priority="750" constant="30" id="EIH-fp-Zwl"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="X9g-Ug-rfk" secondAttribute="trailing" constant="30" id="IUc-sW-wLK"/>
+                <constraint firstItem="X9g-Ug-rfk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="KNj-II-031"/>
+                <constraint firstAttribute="bottom" secondItem="X9g-Ug-rfk" secondAttribute="bottom" constant="25" id="RT6-2E-B80"/>
+                <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="X9g-Ug-rfk" secondAttribute="trailing" priority="750" constant="30" id="WVa-Bz-FuY"/>
+                <constraint firstItem="eiV-uK-z6m" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="Xg1-WI-qCJ"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="eiV-uK-z6m" secondAttribute="trailing" constant="30" id="c4p-Gx-4aW"/>
+                <constraint firstAttribute="centerX" secondItem="eiV-uK-z6m" secondAttribute="centerX" id="c6A-Ft-NvN"/>
+                <constraint firstItem="X9g-Ug-rfk" firstAttribute="leading" relation="lessThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" priority="750" constant="30" id="f6v-BE-O6y"/>
+                <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="eiV-uK-z6m" secondAttribute="trailing" priority="750" constant="30" id="qyf-bm-kRA"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="471" y="435"/>
+        </view>
+    </objects>
+</document>

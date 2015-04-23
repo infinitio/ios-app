@@ -1576,6 +1576,62 @@ access your phone contacts!</string>
             </objects>
             <point key="canvasLocation" x="3751" y="-219"/>
         </scene>
+        <!--Infinit Welcome View Controller-->
+        <scene sceneID="ML7-zP-jiP">
+            <objects>
+                <viewController storyboardIdentifier="welcome_controller_id" useStoryboardIdentifierAsRestorationIdentifier="YES" id="aP1-zS-xWC" customClass="InfinitWelcomeViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="HXK-tN-9Ub"/>
+                        <viewControllerLayoutGuide type="bottom" id="VId-3D-bCc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3mx-IF-7tR" customClass="InfinitWelcomeGradientView">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logotype" translatesAutoresizingMaskIntoConstraints="NO" id="gco-Dp-AXg">
+                                <rect key="frame" x="208" y="100" width="184" height="102"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg-balloon" translatesAutoresizingMaskIntoConstraints="NO" id="T8C-br-Lgh">
+                                <rect key="frame" x="410" y="-20" width="210" height="196"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="210" id="m1w-Nr-jfe"/>
+                                    <constraint firstAttribute="height" constant="196" id="utu-S1-1zM"/>
+                                </constraints>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JVb-Yf-3Gl">
+                                <rect key="frame" x="0.0" y="300" width="600" height="300"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="GZN-W0-ht4"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="T8C-br-Lgh" firstAttribute="top" secondItem="3mx-IF-7tR" secondAttribute="top" constant="-20" id="9FS-vk-dj2"/>
+                            <constraint firstAttribute="centerX" secondItem="gco-Dp-AXg" secondAttribute="centerX" id="KGT-IX-GPa"/>
+                            <constraint firstItem="JVb-Yf-3Gl" firstAttribute="leading" secondItem="3mx-IF-7tR" secondAttribute="leading" id="ZfH-dJ-Tww"/>
+                            <constraint firstAttribute="bottom" secondItem="JVb-Yf-3Gl" secondAttribute="bottom" id="a0R-LE-OZS"/>
+                            <constraint firstItem="gco-Dp-AXg" firstAttribute="top" secondItem="3mx-IF-7tR" secondAttribute="top" constant="100" id="n06-Ab-7hF"/>
+                            <constraint firstAttribute="trailing" secondItem="JVb-Yf-3Gl" secondAttribute="trailing" id="vMM-8H-GTB"/>
+                            <constraint firstAttribute="trailing" secondItem="T8C-br-Lgh" secondAttribute="trailing" constant="-20" id="yJF-hF-kHm"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Pdj-ye-21t"/>
+                    <connections>
+                        <outlet property="balloon_view" destination="T8C-br-Lgh" id="AHU-Eu-WiI"/>
+                        <outlet property="content_view" destination="JVb-Yf-3Gl" id="QXk-WC-NLE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zzb-5E-bjK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="MJa-F4-eac">
+                    <connections>
+                        <action selector="viewTapped:" destination="aP1-zS-xWC" id="quY-Iv-fx0"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="1500" y="-3115"/>
+        </scene>
         <!--Infinit Portrait Navigation Controller-->
         <scene sceneID="AIE-em-0TB">
             <objects>
@@ -1878,7 +1934,7 @@ access your phone contacts!</string>
         <!--Infinit Portrait Navigation Controller-->
         <scene sceneID="X0y-L3-VI0">
             <objects>
-                <navigationController storyboardIdentifier="welcome_controller" navigationBarHidden="YES" id="KLd-O4-LRW" customClass="InfinitPortraitNavigationController" sceneMemberID="viewController">
+                <navigationController navigationBarHidden="YES" id="KLd-O4-LRW" customClass="InfinitPortraitNavigationController" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="JqY-vR-2BA">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -3057,8 +3113,27 @@ access your phone contacts!</string>
             </objects>
             <point key="canvasLocation" x="-613" y="-3290"/>
         </scene>
+        <!--Infinit Portrait Navigation Controller-->
+        <scene sceneID="zxj-KG-5bx">
+            <objects>
+                <navigationController storyboardIdentifier="welcome_nav_controller_id" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" navigationBarHidden="YES" id="6tg-mj-zIV" customClass="InfinitPortraitNavigationController" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Oba-gl-b5R">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="aP1-zS-xWC" kind="relationship" relationship="rootViewController" id="BdT-MM-eRD"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zeu-u5-ns8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="736" y="-3115"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="bg-balloon" width="210" height="196"/>
         <image name="bg_balloon" width="990" height="1099"/>
         <image name="icon-back-white" width="11" height="18"/>
         <image name="icon-close" width="16" height="17"/>

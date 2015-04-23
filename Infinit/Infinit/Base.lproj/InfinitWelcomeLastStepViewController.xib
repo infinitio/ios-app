@@ -83,7 +83,7 @@
                         <constraint firstAttribute="height" constant="1" id="58z-zR-Yjx"/>
                     </constraints>
                 </view>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ipO-57-IeG">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="●●●●●●" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ipO-57-IeG">
                     <rect key="frame" x="75" y="135" width="450" height="24"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="lessThanOrEqual" constant="450" id="J1E-Ic-sJJ"/>
