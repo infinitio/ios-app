@@ -64,6 +64,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 @property (nonatomic, readonly) NSString* extension_uuid;
 
 @property (nonatomic, strong) MFMessageComposeViewController* sms_controller;
+@property (nonatomic, readonly) NSString* sms_code;
 
 @end
 
@@ -688,6 +689,7 @@ shouldSelectViewController:(UIViewController*)viewController
      transaction.files.count, files, files, recipient.ghost_invitation_url, recipient.ghost_code];
   if (self.sms_controller == nil)
     _sms_controller = [[MFMessageComposeViewController alloc] init];
+  _sms_code = [recipient.ghost_code copy];
   self.sms_controller.recipients = @[recipient.phone_number];
   self.sms_controller.body = message;
   self.sms_controller.messageComposeDelegate = self;
@@ -699,21 +701,32 @@ shouldSelectViewController:(UIViewController*)viewController
 - (void)messageComposeViewController:(MFMessageComposeViewController*)controller
                  didFinishWithResult:(MessageComposeResult)result
 {
+
+  NSDictionary* dict = nil;
+  if (self.sms_code.length)
+    dict = @{@"code": self.sms_code};
   switch (result)
   {
     case MessageComposeResultCancelled:
-      [InfinitMetricsManager sendMetric:InfinitUIEventSMSInvite method:InfinitUIMethodCancel];
+      [InfinitMetricsManager sendMetric:InfinitUIEventSMSInvite
+                                 method:InfinitUIMethodCancel
+                             additional:dict];
       break;
     case MessageComposeResultFailed:
-      [InfinitMetricsManager sendMetric:InfinitUIEventSMSInvite method:InfinitUIMethodFail];
+      [InfinitMetricsManager sendMetric:InfinitUIEventSMSInvite
+                                 method:InfinitUIMethodFail 
+                             additional:dict];
       break;
     case MessageComposeResultSent:
-      [InfinitMetricsManager sendMetric:InfinitUIEventSMSInvite method:InfinitUIMethodSent];
+      [InfinitMetricsManager sendMetric:InfinitUIEventSMSInvite
+                                 method:InfinitUIMethodSent 
+                             additional:dict];
       break;
   }
   [self.sms_controller dismissViewControllerAnimated:YES
                                           completion:^
   {
+    _sms_code = nil;
     self.sms_controller = nil;
   }];
 }
