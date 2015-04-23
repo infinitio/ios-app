@@ -21,7 +21,6 @@ static InfinitMetricsManager* _instance = nil;
   NSCAssert(_instance == nil, @"Use sharedInstance");
   if (self = [super init])
   {
-
   }
   return self;
 }
@@ -55,6 +54,15 @@ static InfinitMetricsManager* _instance = nil;
   [[InfinitStateManager sharedInstance] sendMetricEvent:[self event:event]
                                              withMethod:[self method:method]
                                       andAdditionalData:additional];
+}
+
++ (void)sendMetricGhostSMSSent:(BOOL)success
+                          code:(NSString*)code
+                    failReason:(NSString*)fail_reason
+{
+  [[InfinitStateManager sharedInstance] sendMetricGhostSMSSent:success
+                                                          code:[code copy]
+                                                    failReason:fail_reason];
 }
 
 #pragma mark - Enums to Strings
@@ -97,8 +105,6 @@ static InfinitMetricsManager* _instance = nil;
       return @"card rating";
     case InfinitUIEventFilePreview:
       return @"preview file";
-    case InfinitUIEventSMSInvite:
-      return @"sms invite";
 
     default:
       NSCAssert(false, @"Unknown metrics event");
@@ -137,12 +143,6 @@ static InfinitMetricsManager* _instance = nil;
       return @"extension files";
     case InfinitUIMethodHomeCard:
       return @"home card";
-    case InfinitUIMethodSent:
-      return @"sent";
-    case InfinitUIMethodCancel:
-      return @"cancel";
-    case InfinitUIMethodFail:
-      return @"fail";
 
     default:
       NSCAssert(false, @"Unknown metrics method");

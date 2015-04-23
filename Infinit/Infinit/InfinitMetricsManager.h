@@ -19,4 +19,8 @@
             method:(InfinitUIMethods)method
         additional:(NSDictionary*)additional;
 
++ (void)sendMetricGhostSMSSent:(BOOL)success
+                          code:(NSString*)code
+                    failReason:(NSString*)fail_reason;
+
 @end
