@@ -522,8 +522,8 @@ shouldSelectViewController:(UIViewController*)viewController
     self.animator.reverse = NO;
     self.animator.animation = AnimateCircleCover;
     self.animator.animation_center =
-      CGPointMake(self.view.frame.size.width / 2.0f, self.view.frame.size.height -
-                  self.send_tab_icon.frame.size.height / 3.0f);
+      CGPointMake(self.view.frame.size.width / 2.0f,
+                  self.view.frame.size.height - self.send_tab_icon.frame.size.height / 3.0f);
   }
   else if ([fromVC.restorationIdentifier isEqualToString:@"send_navigation_controller_id"])
   {
@@ -683,9 +683,9 @@ shouldSelectViewController:(UIViewController*)viewController
   NSString* files = transaction.files.count == 1 ? NSLocalizedString(@"file", nil)
                                                  : NSLocalizedString(@"files", nil);
   NSString* message =
-    [NSString stringWithFormat:NSLocalizedString(@"Hi, I just sent you %lu %@ via Infinit. "
-                                                 "You can get the %@ here: %@ with "
-                                                 "invitation code: %@", nil),
+    [NSString stringWithFormat:NSLocalizedString(@"Hi, I just sent you %lu %@ via the Infinit app.\n"
+                                                 "You can get the %@ here: %@\n"
+                                                 "with this download code: %@", nil),
      transaction.files.count, files, files, recipient.ghost_invitation_url, recipient.ghost_code];
   if (self.sms_controller == nil)
     _sms_controller = [[MFMessageComposeViewController alloc] init];
@@ -708,19 +708,13 @@ shouldSelectViewController:(UIViewController*)viewController
   switch (result)
   {
     case MessageComposeResultCancelled:
-      [InfinitMetricsManager sendMetric:InfinitUIEventSMSInvite
-                                 method:InfinitUIMethodCancel
-                             additional:dict];
+      [InfinitMetricsManager sendMetricGhostSMSSent:NO code:self.sms_code failReason:@"cancel"];
       break;
     case MessageComposeResultFailed:
-      [InfinitMetricsManager sendMetric:InfinitUIEventSMSInvite
-                                 method:InfinitUIMethodFail 
-                             additional:dict];
+      [InfinitMetricsManager sendMetricGhostSMSSent:NO code:self.sms_code failReason:@"fail"];
       break;
     case MessageComposeResultSent:
-      [InfinitMetricsManager sendMetric:InfinitUIEventSMSInvite
-                                 method:InfinitUIMethodSent 
-                             additional:dict];
+      [InfinitMetricsManager sendMetricGhostSMSSent:YES code:self.sms_code failReason:nil];
       break;
   }
   [self.sms_controller dismissViewControllerAnimated:YES
