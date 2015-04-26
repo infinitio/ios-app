@@ -62,7 +62,6 @@
 - (BOOL)application:(UIApplication*)application
 didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
-  [[InfinitKeychain sharedInstance] removeAccount:@"chris@infinit.io"];
   UIViewController* view_controller = nil;
   if (![InfinitApplicationSettings sharedInstance].been_launched)
   {
