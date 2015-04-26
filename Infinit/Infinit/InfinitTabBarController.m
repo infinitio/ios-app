@@ -423,10 +423,8 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 
 - (void)showWelcomeScreen
 {
-  UIStoryboard* board = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-  UIViewController* login_controller =
-    [board instantiateViewControllerWithIdentifier:@"welcome_controller"];
-  [self presentViewController:login_controller animated:YES completion:nil];
+  self.view.window.rootViewController =
+    [self.storyboard instantiateViewControllerWithIdentifier:@"welcome_nav_controller_id"];
 }
 
 - (void)showTransactionPreparingNotification
