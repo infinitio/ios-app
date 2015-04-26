@@ -78,7 +78,10 @@ static InfinitFacebookManager* _instance = nil;
     [NSNotification notificationWithName:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
                                   object:nil
                                 userInfo:dict];
-  [[NSNotificationCenter defaultCenter] postNotification:notification];
+  dispatch_async(dispatch_get_main_queue(), ^
+  {
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
+  });
 }
 
 - (void)_cleanSession
