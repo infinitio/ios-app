@@ -22,4 +22,7 @@
 /// Application group name.
 #define kInfinitAppGroupName @"group.io.infinit.InfinitMobile"
 
+/// Forgot password.
+#define kInfinitForgotPasswordURL @"https://infinit.io/forgot_password?utm_source=app&utm_medium=ios&utm_campaign=forgot_password"
+
 #endif
