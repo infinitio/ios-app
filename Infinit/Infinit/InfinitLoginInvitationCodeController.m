@@ -167,7 +167,7 @@ replacementString:(NSString*)string
   UIStoryboard* storyboard =
   [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
   UIViewController* view_controller =
-    [storyboard instantiateViewControllerWithIdentifier:@"main_controller"];
+    [storyboard instantiateViewControllerWithIdentifier:@"main_controller_id"];
   [self presentViewController:view_controller animated:YES completion:nil];
 }
 
