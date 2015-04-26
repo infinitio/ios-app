@@ -398,17 +398,13 @@ viewForFooterInSection:(NSInteger)section
 - (void)logoutCallback:(InfinitStateResult*)result
 {
   _logging_out = NO;
-  if (result.success)
-  {
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
-      // XXX ipad
-    }
-    else
-    {
-      [(InfinitTabBarController*)self.tabBarController showWelcomeScreen];
-    }
-  }
+  NSString* identifier = nil;
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    identifier = @"welcome_controller_id";
+  else
+    identifier = @"welcome_nav_controller_id";
+  self.view.window.rootViewController =
+    [self.storyboard instantiateViewControllerWithIdentifier:identifier];
 }
 
 #pragma mark - Segue
