@@ -41,6 +41,9 @@
 
 @property (nonatomic, readonly) NSString* logging_in_controller_id;
 @property (nonatomic, readonly) NSString* main_controller_id;
+@property (nonatomic, readonly) NSString* welcome_controller_id;
+
+@property (nonatomic, readwrite) UIViewController* root_controller;
 
 @end
 
@@ -59,6 +62,8 @@
 - (BOOL)application:(UIApplication*)application
 didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
+  [[InfinitKeychain sharedInstance] removeAccount:@"chris@infinit.io"];
+  UIViewController* view_controller = nil;
   if (![InfinitApplicationSettings sharedInstance].been_launched)
   {
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -79,8 +84,6 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
                                                name:INFINIT_CONNECTION_STATUS_CHANGE
                                              object:nil];
 
-  self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
-
   if (![[[InfinitApplicationSettings sharedInstance] welcome_onboarded] isEqualToNumber:@1])
   {
     [FBSession activeSession]; // Ensure that we call FBSession on the main thread at least once.
@@ -89,7 +92,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
     self.onboarding_controller =
       [self.storyboard instantiateViewControllerWithIdentifier:@"welcome_onboarding"];
     self.onboarding_controller.delegate = self;
-    self.window.rootViewController = self.onboarding_controller;
+    view_controller = self.onboarding_controller;
   }
   else
   {
@@ -97,7 +100,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
     if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded)
     {
       _facebook_long_login = YES;
-      self.window.rootViewController =
+      view_controller =
         [self.storyboard instantiateViewControllerWithIdentifier:self.logging_in_controller_id];
       [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:25.0f];
       [[NSNotificationCenter defaultCenter] addObserver:self
@@ -123,7 +126,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
              FBSession.activeSession.state == FBSessionStateOpenTokenExtended)
     {
       _facebook_quick_login = YES;
-      self.window.rootViewController =
+      view_controller =
         [self.storyboard instantiateViewControllerWithIdentifier:self.logging_in_controller_id];
       [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:15.0f];
     }
@@ -132,24 +135,29 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
       InfinitConnectionManager* manager = [InfinitConnectionManager sharedInstance];
       if (manager.network_status != InfinitNetworkStatusNotReachable)
       {
-        self.window.rootViewController =
+        view_controller =
           [self.storyboard instantiateViewControllerWithIdentifier:self.logging_in_controller_id];
         [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:15.0f];
       }
       else
       {
-        self.window.rootViewController =
+        view_controller =
           [self.storyboard instantiateViewControllerWithIdentifier:self.main_controller_id];
       }
     }
     else
     {
-      self.window.rootViewController =
-        [self.storyboard instantiateViewControllerWithIdentifier:@"welcome_controller"];
+      view_controller =
+        [self.storyboard instantiateViewControllerWithIdentifier:self.welcome_controller_id];
     }
   }
-  [self.window makeKeyAndVisible];
-
+  if (view_controller)
+  {
+    dispatch_async(dispatch_get_main_queue(), ^
+    {
+      self.root_controller = view_controller;
+    });
+  }
   [self registerForNotifications];
 
   [InfinitMetricsManager sendMetric:InfinitUIEventAppOpen method:InfinitUIMethodNew];
@@ -169,7 +177,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 
 - (void)tooLongToLogin
 {
-  self.window.rootViewController =
+  self.root_controller =
     [self.storyboard instantiateViewControllerWithIdentifier:self.main_controller_id];
 }
 
@@ -191,22 +199,25 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   [NSObject cancelPreviousPerformRequestsWithTarget:self
                                            selector:@selector(tooLongToLogin)
                                              object:nil];
-  NSString* identifier = nil;
+  UIViewController* view_controller = nil;
   if (result.success)
   {
     [InfinitDeviceManager sharedInstance];
     [InfinitDownloadFolderManager sharedInstance];
     [InfinitBackgroundManager sharedInstance];
     [InfinitRatingManager sharedInstance];
-    identifier = self.main_controller_id;
+    view_controller =
+      [self.storyboard instantiateViewControllerWithIdentifier:self.main_controller_id];
   }
   else
   {
-    identifier = @"welcome_controller";
+    view_controller =
+      [self.storyboard instantiateViewControllerWithIdentifier:self.welcome_controller_id];
   }
-  self.window.rootViewController =
-    [self.storyboard instantiateViewControllerWithIdentifier:identifier];
-  [self.window makeKeyAndVisible];
+  dispatch_async(dispatch_get_main_queue(), ^
+  {
+    self.root_controller = view_controller;
+  });
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication*)application
@@ -370,19 +381,19 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 
 - (void)welcomeOnboardingDone
 {
+  UIViewController* view_controller = nil;
   if ([self canAutoLogin])
   {
     [self tryLogin];
-    self.window.rootViewController =
+     view_controller =
       [self.storyboard instantiateViewControllerWithIdentifier:self.logging_in_controller_id];
   }
   else
   {
-    self.window.rootViewController =
-      [self.storyboard instantiateViewControllerWithIdentifier:@"welcome_controller"];
+    view_controller =
+      [self.storyboard instantiateViewControllerWithIdentifier:self.welcome_controller_id];
   }
-  [self.window makeKeyAndVisible];
-  self.onboarding_controller = nil;
+  self.root_controller = view_controller;
 }
 
 #pragma mark - Facebok Session State Changed
@@ -409,9 +420,8 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
     [NSObject cancelPreviousPerformRequestsWithTarget:self
                                              selector:@selector(tooLongToLogin)
                                                object:nil];
-    self.window.rootViewController =
-      [self.storyboard instantiateViewControllerWithIdentifier:@"welcome_controller"];
-    [self.window makeKeyAndVisible];
+    self.root_controller =
+      [self.storyboard instantiateViewControllerWithIdentifier:self.welcome_controller_id];
   }
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
@@ -462,6 +472,16 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 
 #pragma mark - Helpers
 
+- (void)setRoot_controller:(UIViewController*)root_controller
+{
+  self.window.rootViewController = root_controller;
+}
+
+- (UIViewController*)root_controller
+{
+  return self.window.rootViewController;
+}
+
 - (UIStoryboard*)storyboard
 {
   return [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -480,7 +500,15 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
   if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     return @"main_controller_ipad";
   else
-    return @"main_controller";
+    return @"main_controller_id";
+}
+
+- (NSString*)welcome_controller_id
+{
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    return @"welcome_controller_id";
+  else
+    return @"welcome_nav_controller_id";
 }
 
 @end
