@@ -18,6 +18,7 @@
                 <outlet property="activity" destination="8Qu-aG-W4m" id="4VC-Ag-YgI"/>
                 <outlet property="code_field" destination="N7l-or-wW7" id="KbB-Bp-W7i"/>
                 <outlet property="code_line" destination="NUM-bx-wXq" id="gOp-CT-gIN"/>
+                <outlet property="info_label" destination="x0C-h1-tXS" id="4QF-vf-2kg"/>
                 <outlet property="skip_button" destination="XTS-SL-vZI" id="fUT-Ka-AlN"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -41,8 +42,8 @@
                         <action selector="skipTapped:" destination="-1" eventType="touchUpInside" id="wUK-89-8pu"/>
                     </connections>
                 </button>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="mmmmm" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="N7l-or-wW7">
-                    <rect key="frame" x="224" y="115" width="152" height="45"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="c3p0x" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="N7l-or-wW7">
+                    <rect key="frame" x="219" y="115" width="177" height="45"/>
                     <color key="textColor" red="0.18039215689999999" green="0.18039215689999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" name="Monaco" family="Monaco" pointSize="36"/>
                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
@@ -52,7 +53,7 @@
                     </connections>
                 </textField>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NUM-bx-wXq" customClass="InfinitCodeLineView">
-                    <rect key="frame" x="224" y="170" width="152" height="5"/>
+                    <rect key="frame" x="224" y="165" width="152" height="5"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tyt-cV-nX9">
                             <rect key="frame" x="0.0" y="2" width="20" height="1"/>
@@ -118,12 +119,12 @@
                         <outlet property="line_5" destination="f4Y-FS-otK" id="IoT-AS-fgy"/>
                     </connections>
                 </view>
-                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="8Qu-aG-W4m">
-                    <rect key="frame" x="290" y="195" width="20" height="20"/>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="8Qu-aG-W4m">
+                    <rect key="frame" x="290" y="190" width="20" height="20"/>
                     <color key="color" red="0.16862745100000001" green="0.74509803919999995" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
                 </activityIndicatorView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x0C-h1-tXS">
-                    <rect key="frame" x="188" y="20" width="288" height="65"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x0C-h1-tXS">
+                    <rect key="frame" x="193" y="37" width="215" height="48"/>
                     <string key="text">Enter the code from your
 SMS or email invitation.</string>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
@@ -133,16 +134,16 @@ SMS or email invitation.</string>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="NUM-bx-wXq" firstAttribute="trailing" secondItem="N7l-or-wW7" secondAttribute="trailing" id="0v9-tl-Azu"/>
-                <constraint firstAttribute="centerX" secondItem="N7l-or-wW7" secondAttribute="centerX" id="2bw-IW-gH1"/>
+                <constraint firstItem="N7l-or-wW7" firstAttribute="trailing" secondItem="NUM-bx-wXq" secondAttribute="trailing" constant="20" id="0v9-tl-Azu"/>
                 <constraint firstAttribute="centerX" secondItem="XTS-SL-vZI" secondAttribute="centerX" id="2lV-N3-UM8"/>
                 <constraint firstItem="8Qu-aG-W4m" firstAttribute="top" secondItem="NUM-bx-wXq" secondAttribute="bottom" constant="20" id="A5V-UX-u3v"/>
                 <constraint firstAttribute="centerX" secondItem="8Qu-aG-W4m" secondAttribute="centerX" id="ITL-Bg-Mxw"/>
-                <constraint firstItem="NUM-bx-wXq" firstAttribute="top" secondItem="N7l-or-wW7" secondAttribute="bottom" constant="10" id="Us6-jA-j7c"/>
+                <constraint firstItem="NUM-bx-wXq" firstAttribute="top" secondItem="N7l-or-wW7" secondAttribute="bottom" constant="5" id="Us6-jA-j7c"/>
                 <constraint firstItem="N7l-or-wW7" firstAttribute="top" secondItem="x0C-h1-tXS" secondAttribute="bottom" constant="30" id="V1V-Us-cUv"/>
                 <constraint firstAttribute="bottom" secondItem="XTS-SL-vZI" secondAttribute="bottom" constant="25" id="ZG8-b8-Sui"/>
                 <constraint firstAttribute="centerX" secondItem="x0C-h1-tXS" secondAttribute="centerX" id="dVQ-Wn-hIs"/>
-                <constraint firstItem="NUM-bx-wXq" firstAttribute="leading" secondItem="N7l-or-wW7" secondAttribute="leading" id="nSL-pm-96b"/>
+                <constraint firstAttribute="centerX" secondItem="NUM-bx-wXq" secondAttribute="centerX" id="eTW-HN-OAI"/>
+                <constraint firstItem="NUM-bx-wXq" firstAttribute="leading" secondItem="N7l-or-wW7" secondAttribute="leading" constant="5" id="nSL-pm-96b"/>
                 <constraint firstItem="XTS-SL-vZI" firstAttribute="top" secondItem="N7l-or-wW7" secondAttribute="bottom" constant="80" id="y35-jA-2h1"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

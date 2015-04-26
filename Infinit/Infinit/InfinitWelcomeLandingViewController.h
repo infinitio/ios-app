@@ -8,11 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+#import "InfinitWelcomeAbstractViewController.h"
+
 @protocol InfinitWelcomeLandingProtocol;
 
-@interface InfinitWelcomeLandingViewController : UIViewController
+@interface InfinitWelcomeLandingViewController : InfinitWelcomeAbstractViewController
 
 @property (nonatomic, weak) id<InfinitWelcomeLandingProtocol> delegate;
+
+- (void)setTextHidden:(BOOL)hidden;
 
 @end
 

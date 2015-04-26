@@ -8,30 +8,24 @@
 
 #import <UIKit/UIKit.h>
 
-#import <Gap/InfinitStateResult.h>
+#import "InfinitWelcomeAbstractViewController.h"
 
 @protocol InfinitWelcomeLastStepProtocol;
 
-typedef void(^InfinitWelcomeLastStepBlock)(InfinitStateResult* result);
-
-@interface InfinitWelcomeLastStepViewController : UIViewController
+@interface InfinitWelcomeLastStepViewController : InfinitWelcomeAbstractViewController
 
 @property (nonatomic, weak) id<InfinitWelcomeLastStepProtocol> delegate;
 
 @end
 
-@protocol InfinitWelcomeLastStepProtocol <NSObject>
+@protocol InfinitWelcomeLastStepProtocol <InfinitWelcomeAbstractProtocol>
 
 - (void)welcomeLastStepBack:(InfinitWelcomeLastStepViewController*)sender;
 - (void)welcomeLastStepRegister:(InfinitWelcomeLastStepViewController*)sender
                            name:(NSString*)name
                        password:(NSString*)password
-                completionBlock:(InfinitWelcomeLastStepBlock)completion_block;
-- (void)welcomeLastStepFacebookConnect:(InfinitWelcomeLastStepViewController*)sender
-                       completionBlock:(InfinitWelcomeLastStepBlock)completion_block;
+                completionBlock:(InfinitWelcomeResultBlock)completion_block;
+- (void)welcomeLastStepFacebookConnect:(InfinitWelcomeLastStepViewController*)sender;
 - (void)welcomeLastStepDone:(InfinitWelcomeLastStepViewController*)sender;
-
-- (NSString*)welcomeLastStep:(InfinitWelcomeLastStepViewController*)sender
-             errorFromStatus:(gap_Status)status;
 
 @end

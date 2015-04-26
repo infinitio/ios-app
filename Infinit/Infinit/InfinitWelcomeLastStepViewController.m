@@ -11,62 +11,82 @@
 @interface InfinitWelcomeLastStepViewController () <UITextFieldDelegate>
 
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView* activity;
-@property (nonatomic, weak) IBOutlet UILabel* info_label;
 @property (nonatomic, weak) IBOutlet UITextField* name_field;
+@property (nonatomic, weak) IBOutlet UIView* name_line;
 @property (nonatomic, weak) IBOutlet UITextField* password_field;
+@property (nonatomic, weak) IBOutlet UIView* password_line;
 @property (nonatomic, weak) IBOutlet UIButton* facebook_button;
 @property (nonatomic, weak) IBOutlet UIButton* back_button;
-@property (nonatomic, weak) IBOutlet UIButton* login_register_button;
+@property (nonatomic, weak) IBOutlet UIButton* register_button;
 
-@property (nonatomic, readonly) InfinitWelcomeLastStepBlock register_block;
+@property (nonatomic, readonly) InfinitWelcomeResultBlock register_block;
 
 @end
 
 @implementation InfinitWelcomeLastStepViewController
 
-- (void)viewDidLoad
+- (void)resetView
 {
-  [super viewDidLoad];
-  NSMutableAttributedString* info_text = [self.info_label.attributedText mutableCopy];
-  NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-  para.alignment = NSTextAlignmentCenter;
-  para.lineSpacing = 20.0f;
-  [info_text addAttribute:NSParagraphStyleAttributeName
-                    value:para
-                    range:NSMakeRange(0, info_text.length)];
-  self.info_label.attributedText = info_text;
-  self.view.translatesAutoresizingMaskIntoConstraints = NO;
+  self.name_field.text = @"";
+  self.name_line.backgroundColor = self.normal_color;
+  self.password_field.text = @"";
+  self.password_line.backgroundColor = self.normal_color;
+  [self setInputsEnabled:YES];
+  [self.activity stopAnimating];
+  self.register_button.hidden = NO;
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)tryRegister
 {
-  [super viewWillAppear:animated];
-  self.login_register_button.enabled = [self inputsGood];
+  [self setInputsEnabled:NO];
+  self.register_button.hidden = YES;
+  [self.activity startAnimating];
+  [self.delegate welcomeLastStepRegister:self
+                                    name:self.name_field.text
+                                password:self.password_field.text
+                         completionBlock:^(InfinitStateResult* result)
+   {
+     [self.activity stopAnimating];
+     if (result.success)
+       [self.delegate welcomeLastStepDone:self];
+     else
+       self.info_label.text = [self.delegate errorStringForGapStatus:result.status];
+     [self setInputsEnabled:YES];
+     self.register_button.hidden = NO;
+   }];
 }
 
 #pragma mark - Text Field Delegate
 
-- (BOOL)inputsGood
-{
-  if (self.password_field.text.length < 3 && self.name_field.text.length < 3)
-    return NO;
-  return YES;
-}
-
 - (IBAction)textChanged:(id)sender
 {
-  self.login_register_button.enabled = [self inputsGood];
+  if ([self nameGood] || self.name_field.text.length == 0)
+    self.name_line.backgroundColor = self.normal_color;
+  if ([self passwordGood] || self.password_field.text.length == 0)
+    self.password_line.backgroundColor = self.normal_color;
 }
 
 - (IBAction)endedEditing:(id)sender
 {
-  if (sender == self.name_field && self.name_field.text.length >= 3)
+  if (sender == self.name_field)
   {
     [self.password_field becomeFirstResponder];
+    if (![self nameGood])
+    {
+      [self shakeField:self.name_field andLine:self.name_line];
+      self.name_line.backgroundColor = self.error_color;
+    }
   }
-  else if (sender == self.password_field && [self inputsGood])
+  else if (sender == self.password_field)
   {
-    [self loginRegisterTapped:self.password_field];
+    if (![self passwordGood])
+    {
+      [self shakeField:self.password_field andLine:self.password_line];
+      self.password_line.backgroundColor = self.error_color;
+      return;
+    }
+    if ([self nameGood] && [self passwordGood])
+      [self tryRegister];
   }
 }
 
@@ -77,47 +97,39 @@
   [self.delegate welcomeLastStepBack:self];
 }
 
-- (IBAction)loginRegisterTapped:(id)sender
+- (IBAction)registerTapped:(id)sender
 {
-  [self inputsEnabled:NO];
-  [self.activity startAnimating];
-  [self.delegate welcomeLastStepRegister:self
-                                    name:self.name_field.text
-                                password:self.password_field.text 
-                         completionBlock:self.register_block];
+  [self tryRegister];
 }
 
 - (IBAction)facebookTapped:(id)sender
 {
-  [self inputsEnabled:NO];
-  [self.delegate welcomeLastStepFacebookConnect:self completionBlock:self.register_block];
+  [self setInputsEnabled:NO];
+  [self.activity startAnimating];
+  self.register_button.hidden = YES;
+  [self.delegate welcomeLastStepFacebookConnect:self];
 }
 
 #pragma mark - Helpers
 
-- (void)inputsEnabled:(BOOL)enabled
+- (BOOL)nameGood
+{
+  return (self.name_field.text.length >= 3);
+}
+
+- (BOOL)passwordGood
+{
+  return (self.password_field.text.length >= 3);
+}
+
+- (void)setInputsEnabled:(BOOL)enabled
 {
   [self.view endEditing:YES];
   self.name_field.enabled = enabled;
   self.password_field.enabled = enabled;
   self.facebook_button.enabled = enabled;
-  self.login_register_button.enabled = enabled;
-}
-
-- (InfinitWelcomeLastStepBlock)register_block
-{
-  return ^(InfinitStateResult* result)
-  {
-    dispatch_async(dispatch_get_main_queue(), ^
-    {
-      [self.activity stopAnimating];
-      if (result.success)
-        [self.delegate welcomeLastStepDone:self];
-      else
-        self.info_label.text = [self.delegate welcomeLastStep:self errorFromStatus:result.status];
-      [self inputsEnabled:YES];
-    });
-  };
+  self.register_button.enabled = enabled;
+  self.back_button.enabled = enabled;
 }
 
 @end

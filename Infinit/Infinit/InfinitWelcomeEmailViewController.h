@@ -8,11 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+#import "InfinitWelcomeAbstractViewController.h"
+
 @protocol InfinitWelcomeEmailProtocol;
 
-@interface InfinitWelcomeEmailViewController : UIViewController
+@interface InfinitWelcomeEmailViewController : InfinitWelcomeAbstractViewController
 
 @property (nonatomic, weak) id<InfinitWelcomeEmailProtocol> delegate;
+@property (nonatomic, readwrite) NSString* email;
+
+- (void)gotEmailAccountType;
 
 @end
 

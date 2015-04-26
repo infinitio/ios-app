@@ -8,20 +8,29 @@
 
 #import "InfinitWelcomeViewController.h"
 
+#import "InfinitApplicationSettings.h"
+#import "InfinitAvatarManager.h"
 #import "InfinitColor.h"
+#import "InfinitFacebookManager.h"
 #import "InfinitHostDevice.h"
+#import "InfinitKeychain.h"
 #import "InfinitWelcomeCodeViewController.h"
 #import "InfinitWelcomeEmailViewController.h"
+#import "InfinitWelcomeFacebookUser.h"
 #import "InfinitWelcomeInvitedViewController.h"
 #import "InfinitWelcomeLandingViewController.h"
 #import "InfinitWelcomeLastStepViewController.h"
+#import "InfinitWelcomeLoginViewController.h"
 #import "InfinitWelcomePasswordViewController.h"
+
+#import <Gap/InfinitStateManager.h>
 
 @interface InfinitWelcomeViewController () <InfinitWelcomeCodeProtocol,
                                             InfinitWelcomeEmailProtocol,
                                             InfinitWelcomeInvitedProtocol,
                                             InfinitWelcomeLandingProtocol,
                                             InfinitWelcomeLastStepProtocol,
+                                            InfinitWelcomeLoginProtocol,
                                             InfinitWelcomePasswordProtocol>
 
 @property (nonatomic, weak) IBOutlet UIImageView* balloon_view;
@@ -32,29 +41,79 @@
 @property (nonatomic, strong) InfinitWelcomeInvitedViewController* invited_controller;
 @property (nonatomic, strong) InfinitWelcomeLandingViewController* landing_controller;
 @property (nonatomic, strong) InfinitWelcomeLastStepViewController* last_step_controller;
+@property (nonatomic, strong) InfinitWelcomeLoginViewController* login_controller;
 @property (nonatomic, strong) InfinitWelcomePasswordViewController* password_controller;
 
-@property (nonatomic, weak) UIViewController* current_controller;
+@property (nonatomic, weak) InfinitWelcomeAbstractViewController* current_controller;
+
+@property (nonatomic, readonly) UIImage* avatar;
+@property (nonatomic, readonly) NSString* code;
+@property (nonatomic, readonly) NSString* email;
+@property (nonatomic, readonly) InfinitWelcomeFacebookUser* facebook_user;
+@property (nonatomic, readonly) NSString* name;
+@property (nonatomic, readonly) NSString* password;
 
 @end
 
+static dispatch_once_t _code_token = 0;
+static dispatch_once_t _email_token = 0;
+static dispatch_once_t _invited_token = 0;
+static dispatch_once_t _landing_token = 0;
+static dispatch_once_t _last_step_token = 0;
+static dispatch_once_t _login_token = 0;
+static dispatch_once_t _password_token = 0;
+
 @implementation InfinitWelcomeViewController
+
+- (void)dealloc
+{
+  _code_token = 0;
+  _email_token = 0;
+  _invited_token = 0;
+  _landing_token = 0;
+  _last_step_token = 0;
+  _login_token = 0;
+  _password_token = 0;
+}
 
 - (void)didReceiveMemoryWarning
 {
   [super didReceiveMemoryWarning];
   if (self.current_controller != _code_controller)
+  {
+    _code_token = 0;
     _code_controller = nil;
+  }
   if (self.current_controller != _email_controller)
+  {
+    _email_token = 0;
     _email_controller = nil;
+  }
   if (self.current_controller != _invited_controller)
+  {
+    _invited_token = 0;
     _invited_controller = nil;
+  }
   if (self.current_controller != _landing_controller)
+  {
+    _landing_token = 0;
     _landing_controller = nil;
+  }
   if (self.current_controller != _last_step_controller)
+  {
+    _last_step_token = 0;
     _last_step_controller = nil;
+  }
+  if (self.current_controller != _login_controller)
+  {
+    _login_token = 0;
+    _login_controller = nil;
+  }
   if (self.current_controller != _password_controller)
+  {
+    _password_token = 0;
     _password_controller = nil;
+  }
 }
 
 - (void)viewDidLoad
@@ -63,6 +122,9 @@
   _current_controller = nil;
   [self showViewController:self.landing_controller animated:NO reverse:NO];
   [self.balloon_view addMotionEffect:[self balloonParallax]];
+  Class this_class = InfinitWelcomeViewController.class;
+  UIColor* cursor_color = [InfinitColor colorFromPalette:InfinitPaletteColorLoginBlack];
+  [[UITextField appearanceWhenContainedIn:this_class, nil] setTintColor:cursor_color];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -81,6 +143,16 @@
                                            selector:@selector(backgroundedApp)
                                                name:UIApplicationDidEnterBackgroundNotification
                                              object:nil];
+  if (self.current_controller == nil)
+  {
+    [self showViewController:self.landing_controller animated:NO reverse:NO];
+  }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+  [super viewWillDisappear:animated];
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)backgroundedApp
@@ -93,11 +165,104 @@
   [self hideKeyboardWithAnimation:YES];
 }
 
+- (void)fetchFacebookInformation
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
+                                                object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(facebookSessionStateChanged:)
+                                               name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
+                                             object:nil];
+  _facebook_user = nil;
+  InfinitFacebookManager* manager = [InfinitFacebookManager sharedInstance];
+  [FBSession openActiveSessionWithReadPermissions:manager.permission_list
+                                     allowLoginUI:YES
+                                completionHandler:^(FBSession* session,
+                                                    FBSessionState state,
+                                                    NSError* error)
+   {
+     // Call the app delegate's sessionStateChanged:state:error method to handle session state changes
+     [manager sessionStateChanged:session state:state error:error];
+   }];
+}
+
+- (void)showMainView
+{
+  NSString* identifier = nil;
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    identifier = @"main_controller_ipad";
+  else
+    identifier = @"main_controller_id";
+  self.view.window.rootViewController =
+    [self.storyboard instantiateViewControllerWithIdentifier:identifier];
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
+                 dispatch_get_main_queue(), ^
+  {
+    [self removeFromParentViewController];
+    _avatar = nil;
+    _code = nil;
+    _email = nil;
+    _facebook_user = nil;
+    _name = nil;
+    _password = nil;
+    _code_token = 0;
+    _code_controller = nil;
+    _email_token = 0;
+    _email_controller = nil;
+    _invited_token = 0;
+    _invited_controller = nil;
+    _landing_token = 0;
+    _landing_controller = nil;
+    _last_step_token = 0;
+    _last_step_controller = nil;
+    _login_token = 0;
+    _login_controller = nil;
+    _password_token = 0;
+    _password_controller = nil;
+  });
+}
+
+#pragma mark - Abstract Protocol
+
+- (NSString*)errorStringForGapStatus:(gap_Status)status
+{
+  switch (status)
+  {
+    case gap_already_logged_in:
+      return NSLocalizedString(@"You're already logged in.", nil);
+    case gap_deprecated:
+      return NSLocalizedString(@"Please update Infinit.", nil);
+    case gap_email_already_registered:
+      return NSLocalizedString(@"Email already registered.", nil);
+    case gap_email_not_confirmed:
+      return NSLocalizedString(@"Your email has not been confirmed.", nil);
+    case gap_email_not_valid:
+      return NSLocalizedString(@"Email not valid.", nil);
+    case gap_email_password_dont_match:
+      return NSLocalizedString(@"Login/Password don't match.", nil);
+    case gap_fullname_not_valid:
+      return NSLocalizedString(@"Fullname not valid.", nil);
+    case gap_handle_already_registered:
+      return NSLocalizedString(@"This handle has already been taken.", nil);
+    case gap_handle_not_valid:
+      return NSLocalizedString(@"Handle not valid", nil);
+    case gap_meta_down_with_message:
+      return NSLocalizedString(@"Our Server is down. Thanks for being patient.", nil);
+    case gap_password_not_valid:
+      return NSLocalizedString(@"Password not valid.", nil);
+
+    default:
+      return [NSString stringWithFormat:@"%@: %d", NSLocalizedString(@"Unknown login error", nil),
+              status];
+  }
+}
+
 #pragma mark - Landing Protocol
 
 - (void)welcomeLandingHaveAccount:(InfinitWelcomeLandingViewController*)sender
 {
-  // XXX popup old login view.
+  [self showViewController:self.login_controller animated:YES reverse:NO];
 }
 
 - (void)welcomeLandingNoAccount:(InfinitWelcomeLandingViewController*)sender
@@ -105,22 +270,201 @@
   [self showViewController:self.email_controller animated:YES reverse:NO];
 }
 
+#pragma mark - Login Protocol
+
+- (void)welcomeLoginBack:(InfinitWelcomeLoginViewController*)sender
+{
+  [self showViewController:self.landing_controller animated:YES reverse:YES];
+}
+
+- (void)welcomeLoginDone:(InfinitWelcomeLoginViewController*)sender
+{
+  [self storeCredentials];
+  [self showMainView];
+}
+
+- (void)welcomeLogin:(InfinitWelcomeLoginViewController*)sender
+               email:(NSString*)email
+            password:(NSString*)password
+     completionBlock:(InfinitWelcomeResultBlock)completion_block
+{
+  _email = email;
+  _password = password;
+  [[InfinitStateManager sharedInstance] login:email
+                                     password:password
+                              completionBlock:completion_block];
+}
+
+- (void)welcomeLoginFacebook:(InfinitWelcomeLoginViewController*)sender
+{
+  [self fetchFacebookInformation];
+}
+
 #pragma mark - Email Protocol
 
 - (void)welcomeEmailBack:(InfinitWelcomeEmailViewController*)sender
 {
+  if (self.facebook_user)
+    _facebook_user = nil;
   [self showViewController:self.landing_controller animated:YES reverse:YES];
 }
 
 - (void)welcomeEmailNext:(InfinitWelcomeEmailViewController*)sender
                withEmail:(NSString*)email
 {
+  _email = email;
+  if (self.facebook_user)
+  {
+    self.facebook_user.email = email;
+    [self showViewController:self.invited_controller animated:YES reverse:NO];
+  }
+  else
+  {
+    [[InfinitStateManager sharedInstance] accountStatusForEmail:self.email
+                                                completionBlock:^(InfinitStateResult* result,
+                                                                  NSString* email,
+                                                                  AccountStatus status)
+    {
+      __weak UIViewController* view_controller = nil;
+      switch (status)
+      {
+        case gap_account_status_ghost:
+          view_controller = self.last_step_controller;
+          break;
+        case gap_account_status_registered:
+          view_controller = self.password_controller;
+          break;
 
+        case gap_account_status_new:
+        default:
+          view_controller = self.invited_controller;
+          break;
+      }
+      [self.email_controller gotEmailAccountType];
+      [self showViewController:view_controller animated:YES reverse:NO];
+    }];
+  }
 }
 
 - (void)welcomeEmailFacebook:(InfinitWelcomeEmailViewController*)sender
 {
-  
+
+}
+
+#pragma mark - Invitation Protocol
+
+- (void)welcomeInvited:(InfinitWelcomeInvitedViewController*)sender
+{
+  [self showViewController:self.code_controller animated:YES reverse:NO];
+}
+
+- (void)welcomeNotInvited:(InfinitWelcomeInvitedViewController*)sender
+{
+  if (self.facebook_user)
+    [self fetchFacebookInformation];
+  else
+    [self showViewController:self.last_step_controller animated:YES reverse:NO];
+}
+
+#pragma mark - Code Protocol
+
+- (void)welcomeCode:(InfinitWelcomeCodeViewController*)sender
+       doneWithCode:(NSString*)code
+{
+  _code = code;
+  if (self.facebook_user)
+    [self fetchFacebookInformation];
+  else
+    [self showViewController:self.last_step_controller animated:YES reverse:NO];
+}
+
+#pragma mark - Last Step Protocol
+
+- (void)welcomeLastStepBack:(InfinitWelcomeLastStepViewController*)sender
+{
+  [self.landing_controller resetView];
+  [self.login_controller resetView];
+  [self.email_controller resetView];
+  [self.invited_controller resetView];
+  [self.code_controller resetView];
+  [self showViewController:self.landing_controller animated:YES reverse:YES];
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(500 * NSEC_PER_MSEC)),
+                 dispatch_get_main_queue(), ^
+  {
+    [self.last_step_controller resetView];
+  });
+}
+
+- (void)welcomeLastStepRegister:(InfinitWelcomeLastStepViewController*)sender
+                           name:(NSString*)name
+                       password:(NSString*)password
+                completionBlock:(InfinitWelcomeResultBlock)completion_block
+{
+  _name = name;
+  _password = password;
+  [[InfinitStateManager sharedInstance] registerFullname:self.name
+                                                   email:self.email
+                                                password:self.password
+                                         completionBlock:completion_block];
+}
+
+- (void)welcomeLastStepFacebookConnect:(InfinitWelcomeLastStepViewController*)sender
+{
+  [self fetchFacebookInformation];
+}
+
+- (void)welcomeLastStepDone:(InfinitWelcomeLastStepViewController*)sender
+{
+  [self storeCredentials];
+  if (self.avatar)
+  {
+    [[InfinitAvatarManager sharedInstance] setSelfAvatar:self.avatar];
+  }
+  if (self.code)
+  {
+    [[InfinitStateManager sharedInstance] useGhostCode:self.code
+                                       completionBlock:^(InfinitStateResult* result)
+    {
+      [self showMainView];
+    }];
+  }
+  else
+  {
+    [self showMainView];
+  }
+}
+
+#pragma mark - Password Protocol
+
+- (void)welcomePasswordBack:(InfinitWelcomePasswordViewController*)sender
+{
+  [self showViewController:self.email_controller animated:YES reverse:YES];
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(500 * NSEC_PER_MSEC)),
+                 dispatch_get_main_queue(), ^
+  {
+    [self.password_controller resetView];
+  });
+}
+
+- (void)welcomePasswordDone:(InfinitWelcomePasswordViewController*)sender
+{
+  [self storeCredentials];
+  [self showMainView];
+}
+
+- (void)welcomePasswordLogin:(InfinitWelcomePasswordViewController*)sender
+                    password:(NSString*)password
+             completionBlock:(InfinitWelcomeResultBlock)completion_block
+{
+  _password = password;
+  [[InfinitStateManager sharedInstance] login:self.email
+                                     password:password
+                              completionBlock:completion_block];
+}
+
+- (void)welcomePasswordFacebook:(InfinitWelcomePasswordViewController*)sender
+{
+  [self fetchFacebookInformation];
 }
 
 #pragma mark - Keyboard
@@ -185,6 +529,17 @@
 {
   if (self.current_controller == view_controller)
     return;
+  void (^completion_block)(void) = ^()
+  {
+    if (self.current_controller)
+    {
+      [self.current_controller.view removeFromSuperview];
+      [self.current_controller removeFromParentViewController];
+      self.current_controller.view.transform = CGAffineTransformIdentity;
+      self.current_controller.view.alpha = 1.0f;
+    }
+    _current_controller = view_controller;
+  };
   [view_controller willMoveToParentViewController:self];
   [self addChildViewController:view_controller];
   CGFloat height = self.content_view.bounds.size.height;
@@ -224,19 +579,12 @@
        }
      } completion:^(BOOL finished)
      {
-       if (self.current_controller)
-       {
-         [self.current_controller.view removeFromSuperview];
-         [self.current_controller removeFromParentViewController];
-         self.current_controller.view.transform = CGAffineTransformIdentity;
-         self.current_controller.view.alpha = 1.0f;
-       }
-       _current_controller = view_controller;
+       completion_block();
      }];
   }
   else
   {
-    _current_controller = view_controller;
+    completion_block();
   }
 }
 
@@ -244,73 +592,85 @@
 
 - (InfinitWelcomeCodeViewController*)code_controller
 {
-  if (_code_controller == nil)
+  dispatch_once(&_code_token, ^
   {
     NSString* class_name = NSStringFromClass(InfinitWelcomeCodeViewController.class);
     _code_controller = [[InfinitWelcomeCodeViewController alloc] initWithNibName:class_name
                                                                           bundle:nil];
     _code_controller.delegate = self;
-  }
+  });
   return _code_controller;
 }
 
 - (InfinitWelcomeEmailViewController*)email_controller
 {
-  if (_email_controller == nil)
+  dispatch_once(&_email_token, ^
   {
     NSString* class_name = NSStringFromClass(InfinitWelcomeEmailViewController.class);
     _email_controller = [[InfinitWelcomeEmailViewController alloc] initWithNibName:class_name
                                                                             bundle:nil];
     _email_controller.delegate = self;
-  }
+  });
   return _email_controller;
 }
 
 - (InfinitWelcomeInvitedViewController*)invited_controller
 {
-  if (_invited_controller == nil)
+  dispatch_once(&_invited_token, ^
   {
     NSString* class_name = NSStringFromClass(InfinitWelcomeInvitedViewController.class);
     _invited_controller = [[InfinitWelcomeInvitedViewController alloc] initWithNibName:class_name
                                                                                 bundle:nil];
     _invited_controller.delegate = self;
-  }
+  });
   return _invited_controller;
 }
 
 - (InfinitWelcomeLandingViewController*)landing_controller
 {
-  if (_landing_controller == nil)
+  dispatch_once(&_landing_token, ^
   {
     NSString* class_name = NSStringFromClass(InfinitWelcomeLandingViewController.class);
     _landing_controller = [[InfinitWelcomeLandingViewController alloc] initWithNibName:class_name
                                                                                 bundle:nil];
     _landing_controller.delegate = self;
-  }
+  });
   return _landing_controller;
 }
 
 - (InfinitWelcomeLastStepViewController*)last_step_controller
 {
-  if (_last_step_controller == nil)
+  dispatch_once(&_last_step_token, ^
   {
     NSString* class_name = NSStringFromClass(InfinitWelcomeLastStepViewController.class);
     _last_step_controller = [[InfinitWelcomeLastStepViewController alloc] initWithNibName:class_name
                                                                                    bundle:nil];
     _last_step_controller.delegate = self;
-  }
+  });
   return _last_step_controller;
+}
+
+- (InfinitWelcomeLoginViewController*)login_controller
+{
+  dispatch_once(&_login_token, ^
+  {
+    NSString* class_name = NSStringFromClass(InfinitWelcomeLoginViewController.class);
+    _login_controller = [[InfinitWelcomeLoginViewController alloc] initWithNibName:class_name
+                                                                            bundle:nil];
+    _login_controller.delegate = self;
+  });
+  return _login_controller;
 }
 
 - (InfinitWelcomePasswordViewController*)password_controller
 {
-  if (_password_controller == nil)
+  dispatch_once(&_password_token, ^
   {
     NSString* class_name = NSStringFromClass(InfinitWelcomePasswordViewController.class);
     _password_controller = [[InfinitWelcomePasswordViewController alloc] initWithNibName:class_name
                                                                                   bundle:nil];
     _password_controller.delegate = self;
-  }
+  });
   return _password_controller;
 }
 
@@ -323,14 +683,173 @@
   v_effect.maximumRelativeValue = @(25.0f);
 
   UIInterpolatingMotionEffect* h_effect =
-  [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x"
-                                                  type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+    [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"ceXnter.x"
+                                                    type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
   h_effect.minimumRelativeValue = @(-25.0f);
   h_effect.maximumRelativeValue = @(25.0f);
 
   UIMotionEffectGroup* group = [UIMotionEffectGroup new];
   group.motionEffects = @[h_effect, v_effect];
   return group;
+}
+
+- (UIStoryboard*)storyboard
+{
+  return [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+}
+
+- (void)storeCredentials
+{
+  if (!self.email.length || !self.password.length)
+    return;
+  [InfinitApplicationSettings sharedInstance].username = self.email;
+  InfinitKeychain* keychain = [InfinitKeychain sharedInstance];
+  if ([keychain credentialsForAccountInKeychain:self.email])
+    [keychain updatePassword:self.password forAccount:self.email];
+  else
+    [keychain addPassword:self.password forAccount:self.email];
+}
+
+- (void)facebookConnect
+{
+  [[InfinitStateManager sharedInstance] facebookConnect:self.facebook_user.id_
+                                           emailAddress:self.email 
+                                        completionBlock:^(InfinitStateResult* result)
+  {
+    if (result.success)
+    {
+      if (self.facebook_user.account_status == gap_account_status_ghost ||
+          self.facebook_user.account_status == gap_account_status_new)
+      {
+        if (self.avatar)
+          [[InfinitAvatarManager sharedInstance] setSelfAvatar:self.avatar];
+        if (self.code)
+        {
+          [[InfinitStateManager sharedInstance] useGhostCode:self.code
+                                             completionBlock:^(InfinitStateResult* result)
+          {
+            [self showMainView];
+          }];
+        }
+      }
+      else
+      {
+        [self showMainView];
+      }
+    }
+    else
+    {
+      [self.current_controller resetView];
+    }
+  }];
+}
+
+- (void)determineFacebookUserType
+{
+  [[InfinitStateManager sharedInstance] userRegisteredWithFacebookId:self.facebook_user.id_
+                                                     completionBlock:^(InfinitStateResult* result,
+                                                                       BOOL registered)
+  {
+    if (result.success && registered)
+    {
+      [self facebookConnect];
+    }
+    else
+    {
+      [[InfinitStateManager sharedInstance] accountStatusForEmail:self.facebook_user.email
+                                                  completionBlock:^(InfinitStateResult* result,
+                                                                    NSString* email,
+                                                                    AccountStatus status)
+      {
+        self.facebook_user.account_status = status;
+        if (status == gap_account_status_new)
+        {
+          _name = self.facebook_user.name;
+          if (self.current_controller == self.last_step_controller)
+          {
+            [self facebookConnect];
+          }
+          else
+          {
+            if (!self.email_controller.email)
+              self.email_controller.email = self.facebook_user.email;
+            if (self.current_controller != self.email_controller)
+              [self showViewController:self.email_controller animated:YES reverse:NO];
+          }
+        }
+        else if (status == gap_account_status_ghost)
+        {
+          [self showViewController:self.code_controller animated:YES reverse:NO];
+        }
+        else if (status == gap_account_status_registered)
+        {
+          // Their Facebook email is already registered so they must do a normal login.
+          self.password_controller.hide_facebook_button = YES;
+          if (self.current_controller != self.password_controller)
+            [self showViewController:self.password_controller animated:YES reverse:NO];
+        }
+      }];
+    }
+  }];
+}
+
+- (void)facebookSessionStateChanged:(NSNotification*)notification
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
+                                                object:nil];
+  FBSessionState state = [notification.userInfo[@"state"] unsignedIntegerValue];
+  NSError* error = notification.userInfo[@"error"];
+  if (state == FBSessionStateOpen || state == FBSessionStateOpenTokenExtended)
+  {
+    [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection* connection,
+                                                           NSDictionary<FBGraphUser>* fb_user,
+                                                           NSError* error)
+     {
+       if (error)
+       {
+         [self.current_controller resetView];
+       }
+       else
+       {
+         NSData* avatar_data =
+           [NSData dataWithContentsOfURL:[self avatarURLForUserWithId:fb_user.objectID]];
+         UIImage* avatar = [UIImage imageWithData:avatar_data];
+         NSString* email = fb_user[@"email"];
+         NSString* name = fb_user.name;
+         _avatar = avatar;
+         _facebook_user = [InfinitWelcomeFacebookUser facebookUser:fb_user.objectID
+                                                             email:email
+                                                              name:name
+                                                            avatar:avatar];
+         dispatch_async(dispatch_get_main_queue(), ^
+         {
+           [self determineFacebookUserType];
+         });
+       }
+     }];
+  }
+  else if (state == FBSessionStateClosedLoginFailed || error)
+  {
+    [self.current_controller resetView];
+    NSString* title = NSLocalizedString(@"Unable to login with Facebook", nil);
+    NSString* message = nil;
+    if (error)
+      message = error.localizedDescription;
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
+                                                    message:message
+                                                   delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+  }
+}
+
+- (NSURL*)avatarURLForUserWithId:(NSString*)id_
+{
+  NSString* str =
+  [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large", id_];
+  return [NSURL URLWithString:str];
 }
 
 @end

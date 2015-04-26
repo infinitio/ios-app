@@ -8,27 +8,26 @@
 
 #import <UIKit/UIKit.h>
 
+#import "InfinitWelcomeAbstractViewController.h"
+
 #import <Gap/InfinitStateResult.h>
 
 @protocol InfinitWelcomePasswordProtocol;
 
-typedef void(^InfinitWelcomePasswordBlock)(InfinitStateResult* result);
-
-@interface InfinitWelcomePasswordViewController : UIViewController
+@interface InfinitWelcomePasswordViewController : InfinitWelcomeAbstractViewController
 
 @property (nonatomic, weak) id<InfinitWelcomePasswordProtocol> delegate;
+@property (nonatomic, readwrite) BOOL hide_facebook_button;
 
 @end
 
-@protocol InfinitWelcomePasswordProtocol <NSObject>
+@protocol InfinitWelcomePasswordProtocol <InfinitWelcomeAbstractProtocol>
 
 - (void)welcomePasswordBack:(InfinitWelcomePasswordViewController*)sender;
 - (void)welcomePasswordDone:(InfinitWelcomePasswordViewController*)sender;
 - (void)welcomePasswordLogin:(InfinitWelcomePasswordViewController*)sender
                     password:(NSString*)password
-             completionBlock:(InfinitWelcomePasswordBlock)completion_block;
-
-- (NSString*)welcomePassword:(InfinitWelcomePasswordViewController*)sender
-             errorFromStatus:(gap_Status)status;
+             completionBlock:(InfinitWelcomeResultBlock)completion_block;
+- (void)welcomePasswordFacebook:(InfinitWelcomePasswordViewController*)sender;
 
 @end

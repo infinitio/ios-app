@@ -26,6 +26,8 @@
 
 - (void)setError:(BOOL)error
 {
+  if (self.error == error)
+    return;
   _error = error;
   UIColor* color = error ? [InfinitColor colorWithRed:242 green:94 blue:90]
                          : [InfinitColor colorWithRed:91 green:99 blue:106];

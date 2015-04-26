@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "InfinitWelcomeAbstractViewController.h"
+
 @protocol InfinitWelcomeCodeProtocol;
 
-@interface InfinitWelcomeCodeViewController : UIViewController
+@interface InfinitWelcomeCodeViewController : InfinitWelcomeAbstractViewController
 
 @property (nonatomic, weak) id <InfinitWelcomeCodeProtocol> delegate;
 

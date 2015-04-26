@@ -14,9 +14,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InfinitWelcomeEmailViewController">
             <connections>
+                <outlet property="activity" destination="ZYq-me-kOw" id="Ngm-M7-8YX"/>
                 <outlet property="back_button" destination="vLx-lW-Q9m" id="pMa-K2-Wfl"/>
                 <outlet property="email_field" destination="Kzg-HF-O6N" id="iFl-1A-U19"/>
+                <outlet property="email_line" destination="tNr-dD-sgk" id="HVg-Uk-DRC"/>
                 <outlet property="facebook_button" destination="jf8-yV-2Mk" id="iGi-LG-6ae"/>
+                <outlet property="info_label" destination="7Ci-nP-Cq3" id="1Ei-Sk-i8G"/>
                 <outlet property="next_button" destination="Woj-Yb-4kb" id="5XK-Bb-0fY"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -27,7 +30,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vLx-lW-Q9m">
-                    <rect key="frame" x="25" y="245" width="60" height="30"/>
+                    <rect key="frame" x="35" y="245" width="60" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="NWc-44-TPR"/>
                         <constraint firstAttribute="width" constant="60" id="TJz-3B-1HC"/>
@@ -42,17 +45,17 @@
                     </connections>
                 </button>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="hey@johndoe.com" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kzg-HF-O6N">
-                    <rect key="frame" x="75" y="114" width="450" height="30"/>
+                    <rect key="frame" x="85" y="114" width="430" height="30"/>
                     <color key="tintColor" red="0.18039215689999999" green="0.18039215689999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="450" id="0Wi-Nz-uy5"/>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="430" id="0Wi-Nz-uy5"/>
                         <constraint firstAttribute="height" constant="30" id="vPj-c0-nzh"/>
                     </constraints>
                     <color key="textColor" red="0.18039215689999999" green="0.18039215689999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="21"/>
                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next"/>
                     <connections>
-                        <action selector="endedEditing:" destination="-1" eventType="editingDidEnd" id="o0O-la-Tm0"/>
+                        <action selector="endedEditing:" destination="-1" eventType="editingDidEndOnExit" id="VxD-Ra-r45"/>
                         <action selector="textChanged:" destination="-1" eventType="editingChanged" id="Vmn-7A-cki"/>
                         <outlet property="delegate" destination="-1" id="1Pj-Of-jQ4"/>
                     </connections>
@@ -64,21 +67,21 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tNr-dD-sgk">
-                    <rect key="frame" x="55" y="154" width="490" height="1"/>
+                    <rect key="frame" x="65" y="154" width="470" height="1"/>
                     <color key="backgroundColor" red="0.18039215689999999" green="0.18039215689999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="PDQ-zn-4BC"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Woj-Yb-4kb">
-                    <rect key="frame" x="515" y="245" width="60" height="30"/>
+                    <rect key="frame" x="505" y="245" width="60" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="6ny-0M-mne"/>
                         <constraint firstAttribute="width" constant="60" id="fOH-Me-4g8"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="17"/>
                     <state key="normal" title="Next">
-                        <color key="titleColor" red="0.16862745100000001" green="0.74509803919999995" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleColor" red="0.16862745098039217" green="0.74509803921568629" blue="0.74117647058823533" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -102,26 +105,31 @@
                         <action selector="facebookTapped:" destination="-1" eventType="touchUpInside" id="aGU-gu-t2m"/>
                     </connections>
                 </button>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ZYq-me-kOw">
+                    <rect key="frame" x="525" y="250" width="20" height="20"/>
+                    <color key="color" red="0.16862745100000001" green="0.74509803919999995" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="Kzg-HF-O6N" secondAttribute="centerX" id="0V8-Mf-2vr"/>
-                <constraint firstItem="vLx-lW-Q9m" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="25" id="7RS-sR-GLh"/>
                 <constraint firstAttribute="bottom" secondItem="vLx-lW-Q9m" secondAttribute="bottom" constant="25" id="AF5-bC-CQ9"/>
+                <constraint firstItem="Woj-Yb-4kb" firstAttribute="centerX" secondItem="ZYq-me-kOw" secondAttribute="centerX" id="Gxp-ZR-iLu"/>
                 <constraint firstItem="tNr-dD-sgk" firstAttribute="trailing" secondItem="Kzg-HF-O6N" secondAttribute="trailing" constant="20" id="M8i-Zq-8WN"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Kzg-HF-O6N" secondAttribute="trailing" constant="70" id="MzC-oW-PyY"/>
                 <constraint firstItem="jf8-yV-2Mk" firstAttribute="top" secondItem="tNr-dD-sgk" secondAttribute="bottom" constant="30" id="RnI-tU-0b8"/>
                 <constraint firstItem="Kzg-HF-O6N" firstAttribute="leading" secondItem="tNr-dD-sgk" secondAttribute="leading" constant="20" id="TtY-a0-kop"/>
+                <constraint firstItem="Woj-Yb-4kb" firstAttribute="centerY" secondItem="ZYq-me-kOw" secondAttribute="centerY" id="V5U-3R-Bwc"/>
                 <constraint firstItem="Kzg-HF-O6N" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="70" id="XYc-6o-dhR"/>
                 <constraint firstItem="tNr-dD-sgk" firstAttribute="top" secondItem="Kzg-HF-O6N" secondAttribute="bottom" constant="10" id="Xar-PG-rXL"/>
                 <constraint firstItem="Kzg-HF-O6N" firstAttribute="top" secondItem="7Ci-nP-Cq3" secondAttribute="bottom" constant="40" id="dFp-6a-y4D"/>
                 <constraint firstAttribute="centerX" secondItem="jf8-yV-2Mk" secondAttribute="centerX" id="im9-6t-Vtu"/>
                 <constraint firstItem="vLx-lW-Q9m" firstAttribute="centerX" secondItem="tNr-dD-sgk" secondAttribute="leading" id="mmH-uJ-fJQ"/>
                 <constraint firstAttribute="bottom" secondItem="Woj-Yb-4kb" secondAttribute="bottom" constant="25" id="n7w-xQ-KDG"/>
-                <constraint firstItem="Kzg-HF-O6N" firstAttribute="leading" relation="lessThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" priority="750" constant="70" id="o5R-od-lK9"/>
+                <constraint firstItem="Kzg-HF-O6N" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" priority="750" constant="70" id="o5R-od-lK9"/>
                 <constraint firstItem="Woj-Yb-4kb" firstAttribute="centerX" secondItem="tNr-dD-sgk" secondAttribute="trailing" id="rhg-Iv-0al"/>
                 <constraint firstItem="vLx-lW-Q9m" firstAttribute="top" secondItem="tNr-dD-sgk" secondAttribute="bottom" constant="90" id="s4g-tz-InW"/>
-                <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="Kzg-HF-O6N" secondAttribute="trailing" priority="750" constant="70" id="t1C-nj-OvN"/>
+                <constraint firstAttribute="trailing" secondItem="Kzg-HF-O6N" secondAttribute="trailing" priority="750" constant="70" id="t1C-nj-OvN"/>
                 <constraint firstAttribute="centerX" secondItem="7Ci-nP-Cq3" secondAttribute="centerX" id="xlM-mK-Y4C"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

@@ -15,7 +15,6 @@
 
 @interface InfinitWelcomeCodeViewController () <UITextFieldDelegate>
 
-@property (nonatomic, weak) IBOutlet UILabel* info_label;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView* activity;
 @property (nonatomic, weak) IBOutlet UITextField* code_field;
 @property (nonatomic, weak) IBOutlet InfinitCodeLineView* code_line;
@@ -24,6 +23,7 @@
 @end
 
 static NSDictionary* _attrs = nil;
+static NSDictionary* _placeholder_attrs = nil;
 
 @implementation InfinitWelcomeCodeViewController
 
@@ -37,18 +37,34 @@ static NSDictionary* _attrs = nil;
                NSForegroundColorAttributeName: [InfinitColor colorWithRed:91 green:99 blue:106],
                NSKernAttributeName: @13.0f};
   }
+  if (_placeholder_attrs == nil)
+  {
+    _placeholder_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"Monaco" size:36.0f],
+                           NSForegroundColorAttributeName: [InfinitColor colorWithRed:91
+                                                                                green:99
+                                                                                 blue:106 
+                                                                                alpha:0.15f],
+                           NSKernAttributeName: @13.0f};
+  }
   self.code_field.tintColor = [InfinitColor colorWithRed:91 green:99 blue:106];
   self.code_field.defaultTextAttributes = _attrs;
+  NSAttributedString* placeholder =
+    [[NSAttributedString alloc] initWithString:self.code_field.placeholder
+                                    attributes:_placeholder_attrs];
+  self.code_field.attributedPlaceholder = placeholder;
+}
+
+- (void)resetView
+{
+  self.code_field.text = @"";
   self.code_line.error = NO;
-  NSMutableAttributedString* info_text = [self.info_label.attributedText mutableCopy];
-  NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-  para.alignment = NSTextAlignmentCenter;
-  para.lineSpacing = 20.0f;
-  [info_text addAttribute:NSParagraphStyleAttributeName
-                    value:para
-                    range:NSMakeRange(0, info_text.length)];
-  self.info_label.attributedText = info_text;
-  self.view.translatesAutoresizingMaskIntoConstraints = NO;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+  [super viewWillAppear:animated];
+  self.info_label.text =
+    NSLocalizedString(@"Enter the code from your\nSMS or email invitation.", nil);
 }
 
 #pragma mark - Text Field Delegate
@@ -62,6 +78,7 @@ replacementString:(NSString*)string
 
 - (IBAction)textChanged:(id)sender
 {
+  self.code_line.error = NO;
   if (self.code_field.text.length == 5)
   {
     [self.activity startAnimating];
@@ -69,8 +86,24 @@ replacementString:(NSString*)string
     [self.code_field resignFirstResponder];
     NSString* code =
       [self.code_field.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    // XXX check code
-    (void)code;
+    [[InfinitStateManager sharedInstance] ghostCodeExists:code
+                                          completionBlock:^(InfinitStateResult* result,
+                                                            NSString* code,
+                                                            BOOL valid)
+    {
+      [self.activity stopAnimating];
+      self.code_field.enabled = YES;
+      if (valid)
+      {
+        [self.delegate welcomeCode:self doneWithCode:code];
+      }
+      else
+      {
+        self.info_label.text = NSLocalizedString(@"Code is not valid.", nil);
+        self.code_line.error = YES;
+        [self shakeField:self.code_field andLine:self.code_line];
+      }
+    }];
   }
 }
 
