@@ -39,7 +39,7 @@
 
 - (void)configureWithUser:(InfinitUser*)user
 {
-  self.avatar_view.image = [user.avatar circularMaskOfSize:self.avatar_view.frame.size];
+  self.avatar_view.image = [user.avatar infinit_circularMaskOfSize:self.avatar_view.frame.size];
   self.name_label.text = user.fullname;
   self.background_view.image = [user.avatar applyDarkEffect];
   self.clipsToBounds = YES;
