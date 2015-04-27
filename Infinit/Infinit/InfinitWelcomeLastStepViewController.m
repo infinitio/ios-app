@@ -19,8 +19,6 @@
 @property (nonatomic, weak) IBOutlet UIButton* back_button;
 @property (nonatomic, weak) IBOutlet UIButton* register_button;
 
-@property (nonatomic, readonly) InfinitWelcomeResultBlock register_block;
-
 @end
 
 @implementation InfinitWelcomeLastStepViewController
@@ -41,19 +39,23 @@
   [self setInputsEnabled:NO];
   self.register_button.hidden = YES;
   [self.activity startAnimating];
+  __weak InfinitWelcomeLastStepViewController* weak_self = self;
   [self.delegate welcomeLastStepRegister:self
                                     name:self.name_field.text
                                 password:self.password_field.text
                          completionBlock:^(InfinitStateResult* result)
-   {
-     [self.activity stopAnimating];
-     if (result.success)
-       [self.delegate welcomeLastStepDone:self];
-     else
-       self.info_label.text = [self.delegate errorStringForGapStatus:result.status];
-     [self setInputsEnabled:YES];
-     self.register_button.hidden = NO;
-   }];
+  {
+    if (weak_self == nil)
+      return;
+    InfinitWelcomeLastStepViewController* strong_self = weak_self;
+    [strong_self.activity stopAnimating];
+    if (result.success)
+      [strong_self.delegate welcomeLastStepDone:strong_self];
+    else
+      [strong_self setInfoText:[strong_self.delegate errorStringForGapStatus:result.status]];
+    [strong_self setInputsEnabled:YES];
+    strong_self.register_button.hidden = NO;
+  }];
 }
 
 #pragma mark - Text Field Delegate
