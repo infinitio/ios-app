@@ -15,7 +15,7 @@
 
 @interface InfinitFilesDisplayController_iPad : UIViewController
 
-@property (nonatomic, readwrite) id<InfinitFilesDisplayProtocol> delegate;
+@property (nonatomic, readwrite, weak) id<InfinitFilesDisplayProtocol> delegate;
 
 @property (nonatomic, readwrite) NSArray* all_folders;
 @property (nonatomic, readonly) NSArray* current_selection;
