@@ -671,17 +671,30 @@
                                     <constraint firstAttribute="height" constant="50" id="tkB-W5-0gN"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nZU-c9-6fj">
+                                <rect key="frame" x="221" y="230" width="159" height="32"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <state key="normal" title="Go to online profile...">
+                                    <color key="titleColor" red="0.16862745098039217" green="0.74509803921568629" blue="0.74117647058823533" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="webProfileTap:" destination="UIZ-TQ-cnt" eventType="touchUpInside" id="WYB-Cb-vEz"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95294117647058818" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="BZD-yg-q6z" firstAttribute="top" secondItem="9dH-lM-NKS" secondAttribute="top" constant="36" id="04j-ep-jpH"/>
+                            <constraint firstItem="nZU-c9-6fj" firstAttribute="top" secondItem="itA-bR-YoP" secondAttribute="bottom" constant="30" id="Fxz-bs-0AM"/>
                             <constraint firstItem="BZD-yg-q6z" firstAttribute="centerX" secondItem="r3F-ek-gH8" secondAttribute="centerX" id="MN6-15-a00"/>
                             <constraint firstAttribute="centerX" secondItem="BZD-yg-q6z" secondAttribute="centerX" id="RWr-n8-Yf5"/>
                             <constraint firstAttribute="trailing" secondItem="itA-bR-YoP" secondAttribute="trailing" id="T2e-jN-38Q"/>
                             <constraint firstItem="itA-bR-YoP" firstAttribute="top" secondItem="BZD-yg-q6z" secondAttribute="bottom" constant="39" id="VjZ-n5-Hvb"/>
                             <constraint firstItem="itA-bR-YoP" firstAttribute="leading" secondItem="9dH-lM-NKS" secondAttribute="leading" id="cga-eE-KS3"/>
                             <constraint firstItem="BZD-yg-q6z" firstAttribute="centerY" secondItem="r3F-ek-gH8" secondAttribute="centerY" id="spD-lZ-TaA"/>
+                            <constraint firstAttribute="centerX" secondItem="nZU-c9-6fj" secondAttribute="centerX" id="vnE-jS-EAz"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="JjG-yq-Rq5" appends="YES" id="Wfe-Fu-uaq"/>
@@ -1621,6 +1634,7 @@ access your phone contacts!</string>
                     <connections>
                         <outlet property="balloon_view" destination="T8C-br-Lgh" id="AHU-Eu-WiI"/>
                         <outlet property="content_view" destination="JVb-Yf-3Gl" id="QXk-WC-NLE"/>
+                        <outlet property="logo_view" destination="gco-Dp-AXg" id="tsE-cV-Xcf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zzb-5E-bjK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2098,7 +2112,7 @@ access your phone contacts!</string>
                         <viewControllerLayoutGuide type="bottom" id="6J5-Tq-l02"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="VzX-n3-lKL">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invited by someone?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q7f-dP-Vae">
@@ -3187,8 +3201,8 @@ access your phone contacts!</string>
         <image name="schema-onboarding-infinite" width="214" height="90"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="G1u-me-VrO"/>
-        <segue reference="iUI-7h-033"/>
+        <segue reference="geu-yv-K0l"/>
+        <segue reference="FIr-rc-U7J"/>
         <segue reference="Yah-cg-ZRU"/>
         <segue reference="tAN-6J-wTh"/>
         <segue reference="QhM-hs-oPP"/>
