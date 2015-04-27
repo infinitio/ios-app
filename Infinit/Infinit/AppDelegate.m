@@ -18,6 +18,7 @@
 #import "InfinitMetricsManager.h"
 #import "InfinitRatingManager.h"
 #import "InfinitWelcomeOnboardingNavigationController.h"
+#import "InfinitWormhole.h"
 
 #import <Gap/InfinitAvatarManager.h>
 #import <Gap/InfinitConnectionManager.h>
@@ -328,8 +329,8 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 - (void)application:(UIApplication*)application
 didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
-  [InfinitStateManager sharedInstance].push_token = deviceToken.hexadecimalString;
-  if (deviceToken.hexadecimalString.length)
+  [InfinitStateManager sharedInstance].push_token = deviceToken.infinit_hexadecimalString;
+  if (deviceToken.infinit_hexadecimalString.length)
     [self doneRegisterNotifications:YES];
   else
     [self doneRegisterNotifications:NO];
@@ -454,6 +455,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
     if (account_email != nil)
       [[InfinitKeychain sharedInstance] removeAccount:account_email];
   }
+  [[InfinitWormhole sharedInstance] unregisterAllObservers];
 }
 
 #pragma mark - First Launch
