@@ -9,6 +9,7 @@
 #import "InfinitSettingsEditProfileViewController.h"
 
 #import "InfinitColor.h"
+#import "InfinitConstants.h"
 #import "InfinitHostDevice.h"
 #import "UIImage+Rounded.h"
 
@@ -80,7 +81,10 @@
   self.user = [InfinitUserManager sharedInstance].me;
   self.name_field.text = self.user.fullname;
   if (self.avatar_image == nil)
-    self.avatar_view.image = [self.user.avatar circularMaskOfSize:self.avatar_view.bounds.size];
+  {
+    self.avatar_view.image =
+      [self.user.avatar infinit_circularMaskOfSize:self.avatar_view.bounds.size];
+  }
   [super viewWillAppear:animated];
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(keyboardWillShow:)
@@ -166,6 +170,12 @@
   [self dismissKeyboard];
 }
 
+- (IBAction)webProfileTap:(id)sender
+{
+  NSURL* url = [NSURL URLWithString:kInfinitWebProfileURL];
+  [[UIApplication sharedApplication] openURL:url];
+}
+
 #pragma mark - Avatar Picker
 
 - (void)actionSheet:(UIActionSheet*)actionSheet
@@ -208,7 +218,8 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
 {
   _avatar_image = info[UIImagePickerControllerEditedImage];
   [self dismissViewControllerAnimated:YES completion:nil];
-  self.avatar_view.image = [self.avatar_image circularMaskOfSize:self.avatar_view.bounds.size];
+  self.avatar_view.image =
+    [self.avatar_image infinit_circularMaskOfSize:self.avatar_view.bounds.size];
   [self.avatar_view setNeedsDisplay];
 }
 
