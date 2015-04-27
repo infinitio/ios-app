@@ -12,13 +12,13 @@
 
 @interface InfinitWelcomeOnboardingNavigationController : InfinitPortraitNavigationController
 
-@property (nonatomic, readwrite) id<InfinitWelcomeOnboardingProtocol> delegate;
+@property (nonatomic, assign) id<InfinitWelcomeOnboardingProtocol> delegate;
 
 - (void)onboardingDone;
 
 @end
 
-@protocol InfinitWelcomeOnboardingProtocol <NSObject>
+@protocol InfinitWelcomeOnboardingProtocol <UINavigationControllerDelegate>
 
 - (void)welcomeOnboardingDone;
 
