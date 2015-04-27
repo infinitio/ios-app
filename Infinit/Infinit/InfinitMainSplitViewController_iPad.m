@@ -13,7 +13,6 @@
 #import "InfinitFacebookManager.h"
 #import "InfinitFilesViewController_iPad.h"
 #import "InfinitHostDevice.h"
-#import "InfinitHomeViewController.h"
 #import "InfinitSendGalleryController.h"
 #import "InfinitSendRecipientsController.h"
 #import "InfinitOverlayViewController.h"
@@ -67,10 +66,6 @@
 {
   [super viewDidLoad];
   self.delegate = self;
-  if ([InfinitHostDevice iOSVersion] >= 8.0)
-  {
-    self.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
-  }
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(connectionStatusChanged:)
                                                name:INFINIT_CONNECTION_STATUS_CHANGE
@@ -81,6 +76,7 @@
                                              object:nil];
   if ([InfinitHostDevice iOSVersion] >= 8.0)
   {
+    self.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
     InfinitWormhole* wormhole = [InfinitWormhole sharedInstance];
     [wormhole registerForWormholeNotification:INFINIT_PING_NOTIFICATION
                                      observer:self
@@ -89,6 +85,12 @@
                                      observer:self
                                      selector:@selector(extensionLocalFilesReceived)];
   }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+  [super viewWillAppear:animated];
+  [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
 }
 
 #pragma mark - Connection Handling
