@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIImage (Rounded)
+@interface UIImage (infinit_Rounded)
 
-- (UIImage*)circularMaskOfSize:(CGSize)size;
-- (UIImage*)circularMask;
-- (UIImage*)roundedMaskOfSize:(CGSize)size
-                 cornerRadius:(CGFloat)radius;
+- (UIImage*)infinit_circularMaskOfSize:(CGSize)size;
+- (UIImage*)infinit_circularMask;
+- (UIImage*)infinit_roundedMaskOfSize:(CGSize)size
+                         cornerRadius:(CGFloat)radius;
 
 @end

@@ -8,9 +8,9 @@
 
 #import "UIImage+Rounded.h"
 
-@implementation UIImage (Rounded)
+@implementation UIImage (infinit_Rounded)
 
-- (UIImage*)circularMaskOfSize:(CGSize)size
+- (UIImage*)infinit_circularMaskOfSize:(CGSize)size
 {
   CGRect image_rect = CGRectMake(0.0f, 0.0f, size.width, size.height);
   UIGraphicsBeginImageContextWithOptions(image_rect.size, NO, 0.0f);
@@ -28,13 +28,13 @@
   return masked_image;
 }
 
-- (UIImage*)circularMask
+- (UIImage*)infinit_circularMask
 {
-  return [self circularMaskOfSize:self.size];
+  return [self infinit_circularMaskOfSize:self.size];
 }
 
-- (UIImage*)roundedMaskOfSize:(CGSize)size
-                 cornerRadius:(CGFloat)radius
+- (UIImage*)infinit_roundedMaskOfSize:(CGSize)size
+                         cornerRadius:(CGFloat)radius
 {
   CGRect image_rect = CGRectMake(0.0f, 0.0f, size.width, size.height);
   UIGraphicsBeginImageContextWithOptions(image_rect.size, NO, 0.0f);
