@@ -23,6 +23,8 @@
 #import "InfinitWelcomeLoginViewController.h"
 #import "InfinitWelcomePasswordViewController.h"
 
+#import "NSString+email.h"
+
 #import <Gap/InfinitStateManager.h>
 
 @interface InfinitWelcomeViewController () <InfinitWelcomeCodeProtocol,
@@ -35,6 +37,7 @@
 
 @property (nonatomic, weak) IBOutlet UIImageView* balloon_view;
 @property (nonatomic, weak) IBOutlet UIView* content_view;
+@property (nonatomic, weak) IBOutlet UIImageView* logo_view;
 
 @property (nonatomic, strong) InfinitWelcomeCodeViewController* code_controller;
 @property (nonatomic, strong) InfinitWelcomeEmailViewController* email_controller;
@@ -311,6 +314,7 @@ static dispatch_once_t _password_token = 0;
 
 - (void)welcomeEmailNext:(InfinitWelcomeEmailViewController*)sender
                withEmail:(NSString*)email
+         completionBlock:(InfinitWelcomeEmailBlock)completion_block
 {
   _email = email;
   if (self.facebook_user)
@@ -325,7 +329,7 @@ static dispatch_once_t _password_token = 0;
                                                                   NSString* email,
                                                                   AccountStatus status)
     {
-      __weak UIViewController* view_controller = nil;
+      __weak InfinitWelcomeAbstractViewController* view_controller = nil;
       switch (status)
       {
         case gap_account_status_ghost:
@@ -342,13 +346,14 @@ static dispatch_once_t _password_token = 0;
       }
       [self.email_controller gotEmailAccountType];
       [self showViewController:view_controller animated:YES reverse:NO];
+      completion_block();
     }];
   }
 }
 
 - (void)welcomeEmailFacebook:(InfinitWelcomeEmailViewController*)sender
 {
-
+  [self fetchFacebookInformation];
 }
 
 #pragma mark - Invitation Protocol
@@ -484,16 +489,10 @@ static dispatch_once_t _password_token = 0;
   CGSize keyboard_size =
     [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
 
-  CGFloat delta = -keyboard_size.height;
-  if ([InfinitHostDevice smallScreen])
-    delta += 70.0f;
-
-  CGAffineTransform transform = CGAffineTransformMakeTranslation(0.0f, delta);
-
   [UIView animateWithDuration:0.5f
                    animations:^
    {
-     self.view.transform = transform;
+     self.view.transform = CGAffineTransformMakeTranslation(0.0f, -keyboard_size.height);
    }];
 }
 
@@ -501,9 +500,9 @@ static dispatch_once_t _password_token = 0;
 {
   [UIView animateWithDuration:0.5f
                    animations:^
-   {
-     self.view.transform = CGAffineTransformIdentity;
-   }];
+  {
+    self.view.transform = CGAffineTransformIdentity;
+  }];
 }
 
 #pragma mark - View Helpers
@@ -523,12 +522,32 @@ static dispatch_once_t _password_token = 0;
   return res;
 }
 
-- (void)showViewController:(UIViewController*)view_controller
+- (void)showViewController:(InfinitWelcomeAbstractViewController*)view_controller
                   animated:(BOOL)animate
                    reverse:(BOOL)reverse
 {
   if (self.current_controller == view_controller)
     return;
+  if ([InfinitHostDevice smallScreen])
+  {
+    BOOL hide = (view_controller == self.last_step_controller || 
+                 view_controller == self.code_controller);
+    CGFloat alpha = hide ? 0.0f : 1.0f;
+    if (self.logo_view.alpha != alpha)
+    {
+      if (animate)
+      {
+        [UIView animateWithDuration:0.3f animations:^
+        {
+          self.logo_view.alpha = alpha;
+        }];
+      }
+      else
+      {
+        self.logo_view.alpha = alpha;
+      }
+    }
+  }
   void (^completion_block)(void) = ^()
   {
     if (self.current_controller)
@@ -756,6 +775,11 @@ static dispatch_once_t _password_token = 0;
     }
     else
     {
+      if (self.current_controller == self.email_controller &&
+          self.email_controller.email.infinit_isEmail)
+      {
+        self.facebook_user.email = self.email_controller.email;
+      }
       [[InfinitStateManager sharedInstance] accountStatusForEmail:self.facebook_user.email
                                                   completionBlock:^(InfinitStateResult* result,
                                                                     NSString* email,
@@ -771,8 +795,7 @@ static dispatch_once_t _password_token = 0;
           }
           else
           {
-            if (!self.email_controller.email)
-              self.email_controller.email = self.facebook_user.email;
+            self.email_controller.email = self.facebook_user.email;
             if (self.current_controller != self.email_controller)
               [self showViewController:self.email_controller animated:YES reverse:NO];
           }
@@ -784,6 +807,8 @@ static dispatch_once_t _password_token = 0;
         else if (status == gap_account_status_registered)
         {
           // Their Facebook email is already registered so they must do a normal login.
+          _email = self.facebook_user.email;
+          _facebook_user = nil;
           self.password_controller.hide_facebook_button = YES;
           if (self.current_controller != self.password_controller)
             [self showViewController:self.password_controller animated:YES reverse:NO];
