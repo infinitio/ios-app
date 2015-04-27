@@ -13,6 +13,8 @@
 @interface InfinitWelcomeAbstractViewController ()
 
 @property (nonatomic, readonly) NSAttributedString* original_info;
+@property (nonatomic, readonly) NSParagraphStyle* spaced_style;
+@property (nonatomic, strong) UITapGestureRecognizer* tap_recognizer;
 
 @end
 
@@ -28,9 +30,37 @@
   self.info_label.attributedText = info_text;
   _original_info = [self.info_label.attributedText copy];
   self.view.translatesAutoresizingMaskIntoConstraints = NO;
+  _tap_recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                            action:@selector(viewTapped:)];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+  [super viewDidAppear:animated];
+  [self.view addGestureRecognizer:self.tap_recognizer];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+  [super viewDidDisappear:animated];
+  [self.view removeGestureRecognizer:self.tap_recognizer];
+}
+
+- (void)viewTapped:(id)sender
+{
+  [self.view endEditing:YES];
 }
 
 #pragma mark - General
+
+- (void)setInfoText:(NSString*)info_text
+{
+  NSMutableDictionary* attrs =
+    [[self.original_info attributesAtIndex:0 effectiveRange:NULL] mutableCopy];
+  attrs[NSParagraphStyleAttributeName] = self.spaced_style;
+  self.info_label.attributedText = [[NSAttributedString alloc] initWithString:info_text 
+                                                                   attributes:attrs];
+}
 
 - (void)shakeField:(UITextField*)field
            andLine:(UIView*)line
@@ -71,7 +101,7 @@
 {
   NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
   para.alignment = NSTextAlignmentCenter;
-  para.lineSpacing = 20.0f;
+  para.lineSpacing = 15.0f;
   return para;
 }
 

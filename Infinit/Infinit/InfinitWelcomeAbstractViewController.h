@@ -21,7 +21,7 @@ typedef void(^InfinitWelcomeResultBlock)(InfinitStateResult* result);
 @property (nonatomic, readonly) UIColor* normal_color;
 @property (nonatomic, readonly) UIColor* error_color;
 
-@property (nonatomic, readonly) NSParagraphStyle* spaced_style;
+- (void)setInfoText:(NSString*)info_text;
 
 - (void)shakeField:(UITextField*)field
            andLine:(UIView*)line;
