@@ -102,24 +102,28 @@
   [self.activity startAnimating];
   self.login_button.hidden = YES;
   [self setInputsEnabled:NO];
+  __weak InfinitWelcomeLoginViewController* weak_self = self;
   [self.delegate welcomeLogin:self
                         email:self.email_field.text
                      password:self.password_field.text
               completionBlock:^(InfinitStateResult* result)
   {
-    [self.activity stopAnimating];
-    self.login_button.hidden = NO;
+    if (weak_self == nil)
+      return;
+    InfinitWelcomeLoginViewController* strong_self = weak_self;
+    [strong_self.activity stopAnimating];
+    strong_self.login_button.hidden = NO;
     if (result.success)
     {
-      [self.delegate welcomeLoginDone:self];
+      [strong_self.delegate welcomeLoginDone:strong_self];
     }
     else
     {
-      self.info_label.text = [self.delegate errorStringForGapStatus:result.status];
+      [strong_self setInfoText:[strong_self.delegate errorStringForGapStatus:result.status]];
       if (result.status == gap_email_password_dont_match)
-        self.forgot_button.hidden = NO;
+        strong_self.forgot_button.hidden = NO;
     }
-    [self setInputsEnabled:YES];
+    [strong_self setInputsEnabled:YES];
   }];
 }
 
@@ -151,7 +155,7 @@
 
 - (BOOL)emailGood
 {
-  return self.email_field.text.isEmail;
+  return self.email_field.text.infinit_isEmail;
 }
 
 - (BOOL)passwordGood
