@@ -23,5 +23,6 @@
 
 - (NSString*)files_path;
 - (NSString*)internal_files_path;
+- (NSString*)use_count_path;
 
 @end

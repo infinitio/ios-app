@@ -89,6 +89,20 @@ static NSUInteger _min_delay = 3;
   mask_layer.fillColor = [UIColor blackColor].CGColor;
   self.ok_button.layer.mask = mask_layer;
   self.ok_button.showsTouchWhenHighlighted = YES;
+  NSString* use_count_path = [InfinitExtensionInfo sharedInstance].use_count_path;
+  NSMutableDictionary* use_count_dict =
+    [NSMutableDictionary dictionaryWithContentsOfFile:use_count_path];
+  if (use_count_dict == nil)
+  {
+    use_count_dict = [NSMutableDictionary dictionary];
+    use_count_dict[@"use_count"] = @(0);
+  }
+  NSUInteger use_count = [use_count_dict[@"use_count"] unsignedIntegerValue];
+  use_count += 1;
+  if (use_count >= 3)
+    _min_delay = 0;
+  use_count_dict[@"use_count"] = @(use_count);
+  [use_count_dict writeToFile:use_count_path atomically:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated

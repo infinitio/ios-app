@@ -54,6 +54,11 @@ static InfinitExtensionInfo* _instance = nil;
   }
 }
 
+- (NSString*)use_count_path
+{
+  return [self.root_path stringByAppendingPathComponent:@"use_count"];
+}
+
 - (NSString*)root_path
 {
   NSFileManager* manager = [NSFileManager defaultManager];
