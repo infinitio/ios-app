@@ -38,8 +38,8 @@
 {
   if (hidden)
   {
-    self.info_label.text =
-      NSLocalizedString(@"Account already registered for\nFacebook email address.", nil);
+    [self setInfoText:NSLocalizedString(@"Account already registered for\nFacebook email address.",
+                                        nil)];
     [self setInputsEnabled:YES];
     [self.activity stopAnimating];
     self.login_button.hidden = NO;
@@ -78,23 +78,28 @@
   self.login_button.hidden = YES;
   [self.activity startAnimating];
   [self setInputsEnabled:NO];
+  __weak InfinitWelcomePasswordViewController* weak_self = self;
   [self.delegate welcomePasswordLogin:self
                              password:self.password_field.text
                       completionBlock:^(InfinitStateResult* result)
-   {
-     [self.activity stopAnimating];
-     self.login_button.hidden = NO;
-     if (result.success)
-     {
-       [self.delegate welcomePasswordDone:self];
-     }
-     else
-     {
-       self.info_label.text = [self.delegate errorStringForGapStatus:result.status];
-       self.forgot_button.hidden = NO;
-     }
-     [self setInputsEnabled:YES];
-   }];
+  {
+    if (weak_self == nil)
+      return;
+    InfinitWelcomePasswordViewController* strong_self = weak_self;
+    [strong_self.activity stopAnimating];
+    strong_self.login_button.hidden = NO;
+    if (result.success)
+    {
+      [strong_self.delegate welcomePasswordDone:strong_self];
+    }
+    else
+    {
+      [strong_self setInfoText:[strong_self.delegate errorStringForGapStatus:result.status]];
+      [strong_self shakeField:strong_self.password_field andLine:strong_self.password_line];
+      strong_self.forgot_button.hidden = NO;
+    }
+    [strong_self setInputsEnabled:YES];
+  }];
 }
 
 - (IBAction)loginTapped:(id)sender
