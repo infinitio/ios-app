@@ -8,9 +8,9 @@
 
 #import "NSData+Conversion.h"
 
-@implementation NSData(NSData_Conversion)
+@implementation NSData (infinit_Conversion)
 
-- (NSString*)hexadecimalString
+- (NSString*)infinit_hexadecimalString
 {
   const unsigned char* buffer = (const unsigned char*)self.bytes;
   if (!buffer)

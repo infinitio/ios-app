@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSData(NSData_Conversion)
+@interface NSData (infinit_Conversion)
 
-- (NSString*)hexadecimalString;
+- (NSString*)infinit_hexadecimalString;
 
 @end
