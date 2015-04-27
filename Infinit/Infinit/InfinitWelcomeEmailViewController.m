@@ -58,17 +58,35 @@
 
 - (IBAction)endedEditing:(id)sender
 {
-  if (!self.email_field.text.isEmail)
-  {
-    self.email_line.backgroundColor = self.error_color;
-    [self shakeField:self.email_field andLine:self.email_line];
-    return;
-  }
-  [self.email_field resignFirstResponder];
-  [self.delegate welcomeEmailNext:self withEmail:self.email_field.text];
+  [self doNext];
 }
 
 #pragma mark - Button Handling
+
+- (void)doNext
+{
+  if ([self inputsGood])
+  {
+    self.next_button.hidden = YES;
+    [self.activity startAnimating];
+    [self setInputsEnabled:NO];
+    __weak InfinitWelcomeEmailViewController* weak_self = self;
+    [self.delegate welcomeEmailNext:self withEmail:self.email_field.text completionBlock:^
+    {
+      if (weak_self == nil)
+        return;
+      InfinitWelcomeEmailViewController* strong_self = weak_self;
+      [strong_self setInputsEnabled:YES];
+      [strong_self.activity stopAnimating];
+      strong_self.next_button.hidden = NO;
+    }];
+  }
+  else
+  {
+    self.email_line.backgroundColor = self.error_color;
+    [self shakeField:self.email_field andLine:self.email_line];
+  }
+}
 
 - (IBAction)backTapped:(id)sender
 {
@@ -78,18 +96,7 @@
 
 - (IBAction)nextTapped:(id)sender
 {
-  if ([self inputsGood])
-  {
-    self.next_button.hidden = YES;
-    [self.activity startAnimating];
-    [self setInputsEnabled:NO];
-    [self.delegate welcomeEmailNext:self withEmail:self.email_field.text];
-  }
-  else
-  {
-    self.email_line.backgroundColor = self.error_color;
-    [self shakeField:self.email_field andLine:self.email_line];
-  }
+  [self doNext];
 }
 
 - (IBAction)facebookTapped:(id)sender
@@ -104,7 +111,7 @@
 
 - (BOOL)inputsGood
 {
-  return self.email_field.text.isEmail;
+  return self.email_field.text.infinit_isEmail;
 }
 
 - (void)setInputsEnabled:(BOOL)enabled

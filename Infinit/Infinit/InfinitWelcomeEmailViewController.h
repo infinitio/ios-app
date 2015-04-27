@@ -12,6 +12,8 @@
 
 @protocol InfinitWelcomeEmailProtocol;
 
+typedef void(^InfinitWelcomeEmailBlock)();
+
 @interface InfinitWelcomeEmailViewController : InfinitWelcomeAbstractViewController
 
 @property (nonatomic, weak) id<InfinitWelcomeEmailProtocol> delegate;
@@ -25,7 +27,8 @@
 
 - (void)welcomeEmailBack:(InfinitWelcomeEmailViewController*)sender;
 - (void)welcomeEmailNext:(InfinitWelcomeEmailViewController*)sender
-               withEmail:(NSString*)email;
+               withEmail:(NSString*)email
+         completionBlock:(InfinitWelcomeEmailBlock)completion_block;
 - (void)welcomeEmailFacebook:(InfinitWelcomeEmailViewController*)sender;
 
 @end
