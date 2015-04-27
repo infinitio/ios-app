@@ -154,6 +154,7 @@
 		83B32E161A851623004088DD /* InfinitSettingsEditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B32E151A851623004088DD /* InfinitSettingsEditProfileViewController.m */; };
 		83B5D60E1A6663430061931F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83B5D60D1A6663430061931F /* Security.framework */; };
 		83B5D6171A66BC4E0061931F /* ALAsset+Date.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B5D6161A66BC4E0061931F /* ALAsset+Date.m */; };
+		83C06D801AEE4AF500761237 /* NSString+UUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C06D7F1AEE4AF500761237 /* NSString+UUID.m */; };
 		83C50FA41AB6BF8E009EBB44 /* JDStatusBarNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C50F9F1AB6BF8E009EBB44 /* JDStatusBarNotification.m */; };
 		83C50FA51AB6BF8E009EBB44 /* JDStatusBarStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C50FA11AB6BF8E009EBB44 /* JDStatusBarStyle.m */; };
 		83C50FA61AB6BF8E009EBB44 /* JDStatusBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83C50FA31AB6BF8E009EBB44 /* JDStatusBarView.m */; };
@@ -578,6 +579,8 @@
 		83B5D60D1A6663430061931F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		83B5D6151A66BC4E0061931F /* ALAsset+Date.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAsset+Date.h"; sourceTree = "<group>"; };
 		83B5D6161A66BC4E0061931F /* ALAsset+Date.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAsset+Date.m"; sourceTree = "<group>"; };
+		83C06D7E1AEE4AF500761237 /* NSString+UUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+UUID.h"; path = "../../../objcpp-gap/Gap/NSString+UUID.h"; sourceTree = "<group>"; };
+		83C06D7F1AEE4AF500761237 /* NSString+UUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+UUID.m"; path = "../../../objcpp-gap/Gap/NSString+UUID.m"; sourceTree = "<group>"; };
 		83C50F9E1AB6BF8E009EBB44 /* JDStatusBarNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JDStatusBarNotification.h; path = ThirdParty/JDStatusBarNotification/JDStatusBarNotification.h; sourceTree = SOURCE_ROOT; };
 		83C50F9F1AB6BF8E009EBB44 /* JDStatusBarNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JDStatusBarNotification.m; path = ThirdParty/JDStatusBarNotification/JDStatusBarNotification.m; sourceTree = SOURCE_ROOT; };
 		83C50FA01AB6BF8E009EBB44 /* JDStatusBarStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JDStatusBarStyle.h; path = ThirdParty/JDStatusBarNotification/JDStatusBarStyle.h; sourceTree = SOURCE_ROOT; };
@@ -1030,6 +1033,8 @@
 				837DC92F1AB1818300437B94 /* NSString+email.m */,
 				837DC9301AB1818300437B94 /* NSString+PhoneNumber.h */,
 				837DC9311AB1818300437B94 /* NSString+PhoneNumber.m */,
+				83C06D7E1AEE4AF500761237 /* NSString+UUID.h */,
+				83C06D7F1AEE4AF500761237 /* NSString+UUID.m */,
 				836D399F1A69409300892206 /* UIImage+Rounded.h */,
 				836D39A01A69409300892206 /* UIImage+Rounded.m */,
 				830AD1F11A6D0B6E00E2B058 /* UIImage+ImageEffects.h */,
@@ -2153,6 +2158,7 @@
 				833E3AC61A63D16C0088D3FF /* InfinitApplicationSettings.m in Sources */,
 				8311D8931AB03B1900DF31BE /* InfinitSettingsNavigationController.m in Sources */,
 				83EBB0AD1A966F1400144BC6 /* InfinitHomePeerTransactionFileCell.m in Sources */,
+				83C06D801AEE4AF500761237 /* NSString+UUID.m in Sources */,
 				83C50FA51AB6BF8E009EBB44 /* JDStatusBarStyle.m in Sources */,
 				832285141A7958A1000893A1 /* InfinitLocalNotificationManager.mm in Sources */,
 				83519B461A9793B800541B5E /* InfinitHomeTransactionStatusView.m in Sources */,
@@ -2622,7 +2628,7 @@
 				CODE_SIGN_ENTITLEMENTS = Infinit/Infinit.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2664,6 +2670,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "\"$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts/include\"";
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
@@ -2679,6 +2686,7 @@
 				CODE_SIGN_ENTITLEMENTS = Infinit/Infinit.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2720,7 +2728,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "\"$(BUILD_ROOT)/../IntermediateBuildFilesPath/UninstalledProducts/include\"";
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
