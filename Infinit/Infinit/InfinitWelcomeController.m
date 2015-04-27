@@ -644,7 +644,7 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
 
 - (BOOL)loginInputsGood
 {
-  if (self.login_form_view.email_field.text.isEmail &&
+  if (self.login_form_view.email_field.text.infinit_isEmail &&
       self.login_form_view.password_field.text.length > 0)
   {
     self.login_form_view.next_button.enabled = YES;
@@ -673,7 +673,7 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
   NSCharacterSet* white_space = [NSCharacterSet whitespaceCharacterSet];
   self.login_form_view.email_field.text =
     [self.login_form_view.email_field.text stringByTrimmingCharactersInSet:white_space];
-  if (self.login_form_view.email_field.text.isEmail)
+  if (self.login_form_view.email_field.text.infinit_isEmail)
   {
     self.login_form_view.email_image.image = [UIImage imageNamed:@"icon-email-valid"];
     self.login_form_view.error_label.hidden = YES;
@@ -725,7 +725,7 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
 
 - (BOOL)facebookInputsGood
 {
-  if (self.signup_facebook_view.email_field.text.isEmail &&
+  if (self.signup_facebook_view.email_field.text.infinit_isEmail &&
       self.signup_facebook_view.fullname_field.text.length >= 3)
   {
     self.signup_facebook_view.next_button.enabled = YES;
@@ -754,7 +754,7 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
   NSCharacterSet* white_space = [NSCharacterSet whitespaceCharacterSet];
   self.signup_facebook_view.email_field.text =
   [self.signup_facebook_view.email_field.text stringByTrimmingCharactersInSet:white_space];
-  if (self.signup_facebook_view.email_field.text.isEmail)
+  if (self.signup_facebook_view.email_field.text.infinit_isEmail)
   {
     self.signup_facebook_view.email_image.image = [UIImage imageNamed:@"icon-email-valid"];
     self.signup_facebook_view.error_label.hidden = YES;
@@ -802,7 +802,7 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
 
 - (BOOL)registerInputsGood
 {
-  if (self.signup_form_view.email_field.text.isEmail &&
+  if (self.signup_form_view.email_field.text.infinit_isEmail &&
       self.signup_form_view.fullname_field.text.length >= 3 &&
       self.signup_form_view.password_field.text.length >= 3)
   {
@@ -832,7 +832,7 @@ typedef NS_ENUM(NSUInteger, InfinitFacebookConnectType)
   NSCharacterSet* white_space = [NSCharacterSet whitespaceCharacterSet];
   self.signup_form_view.email_field.text =
     [self.signup_form_view.email_field.text stringByTrimmingCharactersInSet:white_space];
-  if (self.signup_form_view.email_field.text.isEmail)
+  if (self.signup_form_view.email_field.text.infinit_isEmail)
   {
     self.signup_form_view.email_image.image = [UIImage imageNamed:@"icon-email-valid"];
     self.signup_form_view.error_label.hidden = YES;
