@@ -16,7 +16,6 @@
 #import "InfinitSettingsExpandedCell.h"
 #import "InfinitSettingsReportProblemController.h"
 #import "InfinitSettingsUserCell.h"
-#import "InfinitTabBarController.h"
 
 #import <Gap/InfinitConnectionManager.h>
 #import <Gap/InfinitStateManager.h>
@@ -26,7 +25,6 @@
 typedef NS_ENUM(NSUInteger, InfinitSettingsSections)
 {
   InfinitSettingsSectionAccount = 0,
-  InfinitSettingsSectionOther,
   InfinitSettingsSectionFeedback,
   InfinitSettingsSectionLogout,
 
@@ -39,13 +37,6 @@ typedef NS_ENUM(NSUInteger, InfinitAccountSettings)
   InfinitAccountSettingEdit,
 
   InfinitAccountSettingsCount
-};
-
-typedef NS_ENUM(NSUInteger, InfinitOtherSettings)
-{
-  InfinitOtherSettingEnterCode = 0,
-
-  InfinitOtherSettingsCount
 };
 
 typedef NS_ENUM(NSUInteger, InfinitFeedbackSettings)
@@ -70,12 +61,13 @@ typedef NS_ENUM(NSUInteger, InfinitLogoutSettings)
 
 @property (nonatomic, weak) IBOutlet UITableView* table_view;
 
+@property (atomic, readwrite) BOOL logging_out;
+
 @end
 
 @implementation InfinitSettingsViewController
 {
 @private
-  BOOL _logging_out;
   NSString* _norm_cell_id;
   NSString* _expanded_cell_id;
   NSString* _user_cell_id;
@@ -92,7 +84,7 @@ typedef NS_ENUM(NSUInteger, InfinitLogoutSettings)
   _expanded_cell_id = @"settings_expanded_cell";
   _user_cell_id = @"settings_user_cell";
   self.table_view.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-  _logging_out = NO;
+  self.logging_out = NO;
   [super viewDidLoad];
   NSDictionary* nav_bar_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
                                                                        size:17.0f],
@@ -158,8 +150,6 @@ typedef NS_ENUM(NSUInteger, InfinitLogoutSettings)
   {
     case InfinitSettingsSectionAccount:
       return InfinitAccountSettingsCount;
-    case InfinitSettingsSectionOther:
-      return InfinitOtherSettingsCount;
     case InfinitSettingsSectionFeedback:
       return InfinitFeedbackSettingsCount;
     case InfinitSettingsSectionLogout:
@@ -197,21 +187,6 @@ typedef NS_ENUM(NSUInteger, InfinitLogoutSettings)
         break;
       }
     }
-  }
-  else if (indexPath.section == InfinitSettingsSectionOther)
-  {
-    InfinitSettingsExpandedCell* cell =
-      [self.table_view dequeueReusableCellWithIdentifier:_expanded_cell_id forIndexPath:indexPath];
-    switch (indexPath.row)
-    {
-      case InfinitOtherSettingEnterCode:
-        cell.icon_view.image = [UIImage imageNamed:@"icon-code"];
-        cell.title_label.text = NSLocalizedString(@"Enter a code", nil);
-        cell.info_label.text = NSLocalizedString(@"Retrieve files from an invitation", nil);
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        break;
-    }
-    res = cell;
   }
   else if (indexPath.section == InfinitSettingsSectionFeedback)
   {
@@ -268,10 +243,6 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
         return 50.0f;
     }
   }
-  else if (indexPath.section == InfinitSettingsSectionOther)
-  {
-    return 68.0f;
-  }
   else if (indexPath.section == InfinitSettingsSectionFeedback)
   {
     return 50.0f;
@@ -286,7 +257,7 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
 - (void)tableView:(UITableView*)tableView
 didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
-  if (_logging_out)
+  if (self.logging_out)
     return;
 
   if (indexPath.section == InfinitSettingsSectionAccount)
@@ -311,20 +282,8 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
         {
           [self performSegueWithIdentifier:@"settings_edit_profile" sender:self];
         }
+        break;
       }
-        break;
-
-      default:
-        break;
-    }
-  }
-  else if (indexPath.section == InfinitSettingsSectionOther)
-  {
-    switch (indexPath.row)
-    {
-      case InfinitOtherSettingEnterCode:
-        [self performSegueWithIdentifier:@"settings_invite_code_segue" sender:self];
-        break;
 
       default:
         break;
@@ -362,9 +321,22 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   else if (indexPath.section == InfinitSettingsSectionLogout &&
            indexPath.row == InfinitLogoutSettingLogout)
   {
-    _logging_out = YES;
-    [[InfinitStateManager sharedInstance] logoutPerformSelector:@selector(logoutCallback:)
-                                                       onObject:self];
+    self.logging_out = YES;
+    __weak InfinitSettingsViewController* weak_self = self;
+    [[InfinitStateManager sharedInstance] logoutWithCompletionBlock:^(InfinitStateResult* result)
+    {
+      if (weak_self == nil)
+        return;
+      InfinitSettingsViewController* strong_self = weak_self;
+      strong_self.logging_out = NO;
+      NSString* identifier = nil;
+      if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        identifier = @"welcome_controller_id";
+      else
+        identifier = @"welcome_nav_controller_id";
+      strong_self.view.window.rootViewController =
+      [strong_self.storyboard instantiateViewControllerWithIdentifier:identifier];
+    }];
   }
   [self.table_view deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -391,20 +363,6 @@ viewForHeaderInSection:(NSInteger)section
 viewForFooterInSection:(NSInteger)section
 {
   return [[UIView alloc] initWithFrame:CGRectZero];
-}
-
-#pragma mark - Callbacks
-
-- (void)logoutCallback:(InfinitStateResult*)result
-{
-  _logging_out = NO;
-  NSString* identifier = nil;
-  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    identifier = @"welcome_controller_id";
-  else
-    identifier = @"welcome_nav_controller_id";
-  self.view.window.rootViewController =
-    [self.storyboard instantiateViewControllerWithIdentifier:identifier];
 }
 
 #pragma mark - Segue
