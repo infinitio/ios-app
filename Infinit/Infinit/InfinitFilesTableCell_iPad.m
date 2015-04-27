@@ -32,16 +32,16 @@
 
 - (void)configureForFile:(InfinitFileModel*)file
 {
-  self.thumbnail_view.image = [file.thumbnail roundedMaskOfSize:self.thumbnail_view.bounds.size
-                                                   cornerRadius:3.0f];
+  self.thumbnail_view.image =
+    [file.thumbnail infinit_roundedMaskOfSize:self.thumbnail_view.bounds.size cornerRadius:3.0f];
   self.filename_label.text = file.name;
   self.info_label.text = [InfinitDataSize fileSizeStringFrom:file.size];
 }
 
 - (void)configureForFolder:(InfinitFolderModel*)folder
 {
-  self.thumbnail_view.image = [folder.thumbnail roundedMaskOfSize:self.thumbnail_view.bounds.size
-                                                     cornerRadius:3.0f];
+  self.thumbnail_view.image =
+    [folder.thumbnail infinit_roundedMaskOfSize:self.thumbnail_view.bounds.size cornerRadius:3.0f];
   self.filename_label.text = folder.name;
   NSString* size_str = [InfinitDataSize fileSizeStringFrom:folder.size];
   NSString* info = [NSString stringWithFormat:@"%@ – %@", folder.sender_name, size_str];

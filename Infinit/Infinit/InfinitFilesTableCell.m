@@ -41,8 +41,8 @@
     self.duration_label.text = [self stringFromDuration:file.duration];
     self.duration_label.hidden = NO;
   }
-  self.icon_view.image = [file.thumbnail roundedMaskOfSize:self.icon_view.bounds.size
-                                              cornerRadius:3.0f];
+  self.icon_view.image = [file.thumbnail infinit_roundedMaskOfSize:self.icon_view.bounds.size
+                                                      cornerRadius:3.0f];
   self.info_label.text =
     [NSString stringWithFormat:@"%@", [InfinitDataSize fileSizeStringFrom:file.size]];
 }
@@ -52,8 +52,8 @@
   self.name_label.text = folder.name;
   NSString* file_size = [InfinitDataSize fileSizeStringFrom:folder.size];
   self.info_label.text = [NSString stringWithFormat:@"%@ – %@", folder.sender_name, file_size];
-  self.icon_view.image = [folder.thumbnail roundedMaskOfSize:self.icon_view.bounds.size
-                                                cornerRadius:3.0f];
+  self.icon_view.image = [folder.thumbnail infinit_roundedMaskOfSize:self.icon_view.bounds.size
+                                                        cornerRadius:3.0f];
   self.duration_label.hidden = YES;
   if (folder.files.count == 1)
   {
