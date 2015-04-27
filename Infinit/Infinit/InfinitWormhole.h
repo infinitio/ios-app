@@ -16,6 +16,7 @@
                                observer:(id)observer 
                                selector:(SEL)selector;
 - (void)unregisterForWormholeNotifications:(id)observer;
+- (void)unregisterAllObservers;
 
 - (void)sendWormholeNotification:(NSString*)name;
 

@@ -15,6 +15,7 @@
 @end
 
 static InfinitWormhole* _instance = nil;
+static dispatch_once_t _instance_token = 0;
 
 @implementation InfinitWormhole
 
@@ -29,7 +30,12 @@ static InfinitWormhole* _instance = nil;
     NSArray* observers = self.notifications_map[notification];
     for (id observer in observers)
     {
-      [[NSNotificationCenter defaultCenter] removeObserver:observer forKeyPath:notification];
+      @try
+      {
+        [[NSNotificationCenter defaultCenter] removeObserver:observer forKeyPath:notification];
+      }
+      @catch (NSException* exception)
+      {}
     }
   }
   _notifications_map = nil;
@@ -37,7 +43,6 @@ static InfinitWormhole* _instance = nil;
 
 + (instancetype)sharedInstance
 {
-  static dispatch_once_t _instance_token = 0;
   dispatch_once(&_instance_token, ^
   {
     _instance = [[InfinitWormhole alloc] init];
@@ -100,7 +105,7 @@ static InfinitWormhole* _instance = nil;
     for (NSString* notification in notifications)
     {
       [[NSNotificationCenter defaultCenter] removeObserver:observer name:notification object:nil];
-      NSMutableArray* observers = self.notifications_map[notification];
+      NSMutableArray* observers = [self.notifications_map[notification] mutableCopy];
       [observers removeObject:observer];
       if (observers.count == 0)
       {
@@ -116,6 +121,12 @@ static InfinitWormhole* _instance = nil;
       }
     }
   }
+}
+
+- (void)unregisterAllObservers
+{
+  _instance = nil;
+  _instance_token = 0;
 }
 
 - (void)sendWormholeNotification:(NSString*)name
