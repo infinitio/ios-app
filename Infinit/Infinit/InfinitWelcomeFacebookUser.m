@@ -22,6 +22,7 @@
     _name = name;
     _avatar = avatar;
   }
+  return self;
 }
 
 + (instancetype)facebookUser:(NSString*)facebook_id
