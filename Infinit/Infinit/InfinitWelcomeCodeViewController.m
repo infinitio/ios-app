@@ -30,7 +30,6 @@ static NSDictionary* _placeholder_attrs = nil;
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-
   if (_attrs == nil)
   {
     _attrs = @{NSFontAttributeName: [UIFont fontWithName:@"Monaco" size:36.0f],
@@ -63,8 +62,7 @@ static NSDictionary* _placeholder_attrs = nil;
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
-  self.info_label.text =
-    NSLocalizedString(@"Enter the code from your\nSMS or email invitation.", nil);
+  [self setInfoText:NSLocalizedString(@"Enter the code from your\nSMS or email invitation.", nil)];
 }
 
 #pragma mark - Text Field Delegate
@@ -86,22 +84,26 @@ replacementString:(NSString*)string
     [self.code_field resignFirstResponder];
     NSString* code =
       [self.code_field.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    __weak InfinitWelcomeCodeViewController* weak_self = self;
     [[InfinitStateManager sharedInstance] ghostCodeExists:code
                                           completionBlock:^(InfinitStateResult* result,
                                                             NSString* code,
                                                             BOOL valid)
     {
-      [self.activity stopAnimating];
-      self.code_field.enabled = YES;
+      if (weak_self == nil)
+        return;
+      InfinitWelcomeCodeViewController* strong_self = weak_self;
+      [strong_self.activity stopAnimating];
+      strong_self.code_field.enabled = YES;
       if (valid)
       {
-        [self.delegate welcomeCode:self doneWithCode:code];
+        [strong_self.delegate welcomeCode:strong_self doneWithCode:code];
       }
       else
       {
-        self.info_label.text = NSLocalizedString(@"Code is not valid.", nil);
-        self.code_line.error = YES;
-        [self shakeField:self.code_field andLine:self.code_line];
+        [strong_self setInfoText:NSLocalizedString(@"Code is not valid.", nil)];
+        strong_self.code_line.error = YES;
+        [strong_self shakeField:strong_self.code_field andLine:strong_self.code_line];
       }
     }];
   }
