@@ -37,7 +37,7 @@
     NSMutableArray* temp_emails = [NSMutableArray array];
     for (NSString* email in self.emails)
     {
-      if (email.isEmail)
+      if (email.infinit_isEmail)
         [temp_emails addObject:email];
     }
     _emails = [temp_emails copy];
@@ -47,7 +47,7 @@
     NSMutableArray* temp_numbers = [NSMutableArray array];
     for (NSString* number in self.phone_numbers)
     {
-      if (number.isPhoneNumber)
+      if (number.infinit_isPhoneNumber)
       {
         [temp_numbers addObject:number];
       }
@@ -55,7 +55,7 @@
       {
         NSString* new_number = [number stringByReplacingCharactersInRange:NSMakeRange(0, 2)
                                                                withString:@"+"];
-        if (new_number.isPhoneNumber)
+        if (new_number.infinit_isPhoneNumber)
           [temp_numbers addObject:new_number];
       }
     }
@@ -210,7 +210,7 @@
 {
   if (self.device == nil)
     return nil;
-  return self.device.friendly_name;
+  return self.device.name;
 }
 
 #pragma mark - Helpers
