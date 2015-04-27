@@ -10,6 +10,7 @@
 
 typedef NS_ENUM(NSUInteger, InfinitSettings)
 {
+  InfinitSettingAddressBookUploaded,
   InfinitSettingAskedNotifications,
   InfinitSettingBeenLaunched,
   InfinitSettingRatedApp,
@@ -60,35 +61,44 @@ static dispatch_once_t _instance_token = 0;
 
 #pragma mark - Settings
 
+- (BOOL)address_book_uploaded
+{
+  return [self boolForKey:InfinitSettingAddressBookUploaded];
+}
+
+- (void)setAddress_book_uploaded:(BOOL)address_book_uploaded
+{
+  [self setBool:address_book_uploaded forKey:InfinitSettingAddressBookUploaded];
+}
+
 - (BOOL)asked_notifications
 {
-  return [self boolFromNumber:[self.defaults valueForKey:[self keyForSetting:InfinitSettingAskedNotifications]]];
+  return [self boolForKey:InfinitSettingAskedNotifications];
 }
 
 - (void)setAsked_notifications:(BOOL)asked_notifications
 {
-  [self.defaults setValue:@(asked_notifications)
-                   forKey:[self keyForSetting:InfinitSettingAskedNotifications]];
+  [self setBool:asked_notifications forKey:InfinitSettingAskedNotifications];
 }
 
 - (BOOL)been_launched
 {
-  return [self boolFromNumber:[self.defaults valueForKey:[self keyForSetting:InfinitSettingBeenLaunched]]];
+  return [self boolForKey:InfinitSettingBeenLaunched];
 }
 
 - (void)setBeen_launched:(BOOL)been_launched
 {
-  [self.defaults setValue:@(been_launched) forKey:[self keyForSetting:InfinitSettingBeenLaunched]];
+  [self setBool:been_launched forKey:InfinitSettingBeenLaunched];
 }
 
 - (BOOL)rated_app
 {
-  return [self boolFromNumber:[self.defaults valueForKey:[self keyForSetting:InfinitSettingRatedApp]]];
+  return [self boolForKey:InfinitSettingRatedApp];
 }
 
 - (void)setRated_app:(BOOL)rated_app
 {
-  [self.defaults setValue:@(rated_app) forKey:[self keyForSetting:InfinitSettingRatedApp]];
+  [self setBool:rated_app forKey:InfinitSettingRatedApp];
 }
 
 - (NSNumber*)rating_transactions
@@ -120,7 +130,8 @@ static dispatch_once_t _instance_token = 0;
 
 - (void)setUsername:(NSString*)username
 {
-  [self.defaults setValue:username.lowercaseString forKey:[self keyForSetting:InfinitSettingUsername]];
+  [self.defaults setValue:username.lowercaseString
+                   forKey:[self keyForSetting:InfinitSettingUsername]];
 }
 
 - (NSNumber*)welcome_onboarded
@@ -130,75 +141,70 @@ static dispatch_once_t _instance_token = 0;
 
 - (void)setWelcome_onboarded:(NSNumber*)welcome_onboarded
 {
-  [self.defaults setValue:welcome_onboarded forKey:[self keyForSetting:InfinitSettingWelcomeOnboarded]];
+  [self.defaults setValue:welcome_onboarded
+                   forKey:[self keyForSetting:InfinitSettingWelcomeOnboarded]];
 }
 
 #pragma mark - Home Onboarding
 
 - (BOOL)home_onboarded_notifications
 {
-  return [self boolFromNumber:[self.defaults valueForKey:[self keyForSetting:InfinitSettingHomeOnboardedNotifications]]];
+  return [self boolForKey:InfinitSettingHomeOnboardedNotifications];
 }
 
 - (void)setHome_onboarded_notifications:(BOOL)home_onboarded_notifications
 {
-  [self.defaults setValue:@(home_onboarded_notifications)
-               forKey:[self keyForSetting:InfinitSettingHomeOnboardedNotifications]];
+  [self setBool:home_onboarded_notifications forKey:InfinitSettingHomeOnboardedNotifications];
 }
 
 - (BOOL)home_onboarded_swipe
 {
-  return [self boolFromNumber:[self.defaults valueForKey:[self keyForSetting:InfinitSettingHomeOnboardedSwipe]]];
+  return [self boolForKey:InfinitSettingHomeOnboardedSwipe];
 }
 
 - (void)setHome_onboarded_swipe:(BOOL)home_onboarded_swipe
 {
-  [self.defaults setValue:@(home_onboarded_swipe)
-                   forKey:[self keyForSetting:InfinitSettingHomeOnboardedSwipe]];
+  [self setBool:home_onboarded_swipe forKey:InfinitSettingHomeOnboardedSwipe];
 }
 
 - (BOOL)home_onboarded_normal_send
 {
-  return [self boolFromNumber:[self.defaults valueForKey:[self keyForSetting:InfinitSettingHomeOnboardedNormalSend]]];
+  return [self boolForKey:InfinitSettingHomeOnboardedNormalSend];
 }
 
 - (void)setHome_onboarded_normal_send:(BOOL)home_onboarded_normal_send
 {
-  [self.defaults setValue:@(home_onboarded_normal_send)
-                   forKey:[self keyForSetting:InfinitSettingHomeOnboardedNormalSend]];
+  [self setBool:home_onboarded_normal_send forKey:InfinitSettingHomeOnboardedNormalSend];
 }
 
 - (BOOL)home_onboarded_ghost_send
 {
-  return [self boolFromNumber:[self.defaults valueForKey:[self keyForSetting:InfinitSettingHomeOnboardedGhostSend]]];
+  return [self boolForKey:InfinitSettingHomeOnboardedGhostSend];
 }
 
 - (void)setHome_onboarded_ghost_send:(BOOL)home_onboarded_ghost_send
 {
-  [self.defaults setValue:@(home_onboarded_ghost_send)
-                   forKey:[self keyForSetting:InfinitSettingHomeOnboardedGhostSend]];
+  [self setBool:home_onboarded_ghost_send forKey:InfinitSettingHomeOnboardedGhostSend];
 }
 
 - (BOOL)home_onboarded_self_send
 {
-  return [self boolFromNumber:[self.defaults valueForKey:[self keyForSetting:InfinitSettingHomeOnboardedSelfSend]]];
+  return [self boolForKey:InfinitSettingHomeOnboardedSelfSend];
 }
 
 - (void)setHome_onboarded_self_send:(BOOL)home_onboarded_self_send
 {
-  [self.defaults setValue:@(home_onboarded_self_send)
-                   forKey:[self keyForSetting:InfinitSettingHomeOnboardedSelfSend]];
+  [self setBool:home_onboarded_self_send forKey:InfinitSettingHomeOnboardedSelfSend];
 }
 
 - (BOOL)home_onboarded_background
 {
-  return [self boolFromNumber:[self.defaults valueForKey:[self keyForSetting:InfinitSettingHomeOnboardedBackground]]];
+  return [self boolForKey:InfinitSettingHomeOnboardedBackground];
 }
 
 - (void)setHome_onboarded_background:(BOOL)home_onboarded_background
 {
-  [self.defaults setValue:@(home_onboarded_background)
-                   forKey:[self keyForSetting:InfinitSettingHomeOnboardedBackground]];
+  [self setBool:home_onboarded_background forKey:InfinitSettingHomeOnboardedBackground];
 }
 
 #pragma mark - Enum
@@ -207,6 +213,8 @@ static dispatch_once_t _instance_token = 0;
 {
   switch (setting)
   {
+    case InfinitSettingAddressBookUploaded:
+      return @"address_book_uploaded";
     case InfinitSettingAskedNotifications:
       return @"asked_notifications";
     case InfinitSettingBeenLaunched:
@@ -233,16 +241,25 @@ static dispatch_once_t _instance_token = 0;
       return @"home_onboarded_normal_send";
     case InfinitSettingHomeOnboardedSelfSend:
       return @"home_onboarded_self_send";
+
+    default:
+      NSCAssert(false, @"Missing application settings key.");
   }
 }
 
 #pragma mark - Helpers
 
-- (BOOL)boolFromNumber:(NSNumber*)number
+- (BOOL)boolForKey:(InfinitSettings)key
 {
-  if (number == nil)
+  NSNumber* res = [self.defaults valueForKey:[self keyForSetting:key]];
+  if (res == nil)
     return NO;
-  return  number.boolValue;
+  return res.boolValue;
+}
+
+- (void)setBool:(BOOL)value forKey:(InfinitSettings)key
+{
+  [self.defaults setValue:@(value) forKey:[self keyForSetting:key]];
 }
 
 @end

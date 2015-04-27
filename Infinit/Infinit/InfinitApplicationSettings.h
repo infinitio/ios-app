@@ -10,6 +10,7 @@
 
 @interface InfinitApplicationSettings : NSObject
 
+@property (atomic, readwrite) BOOL address_book_uploaded;
 @property (atomic, readwrite) BOOL asked_notifications;
 @property (atomic, readwrite) BOOL been_launched;
 @property (atomic, readwrite) BOOL rated_app;
