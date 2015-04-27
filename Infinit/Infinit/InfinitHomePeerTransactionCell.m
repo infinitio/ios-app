@@ -55,7 +55,7 @@
 @property (nonatomic, weak) IBOutlet UIView* button_separator_line;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* button_separator_constraint;
 
-@property (nonatomic, readonly) id<InfinitHomePeerTransactionCellProtocol> delegate;
+@property (nonatomic, readonly, weak) id<InfinitHomePeerTransactionCellProtocol> delegate;
 
 @property (nonatomic, weak) InfinitDownloadFolderManager* download_manager;
 @property (nonatomic, weak) InfinitFolderModel* folder;
@@ -224,7 +224,7 @@ static CGFloat _button_height = 45.0f;
     if (device == nil)
       other_name = NSLocalizedString(@"me", nil);
     else
-      other_name = device.friendly_name;
+      other_name = device.name;
   }
   else
   {
@@ -662,7 +662,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
     cell.filename = self.transaction.files[indexPath.row];
     thumb = [InfinitFilePreview iconForFilename:self.transaction.files[indexPath.row]];
   }
-  cell.thumbnail = [thumb roundedMaskOfSize:thumb_size cornerRadius:2.0f];
+  cell.thumbnail = [thumb infinit_roundedMaskOfSize:thumb_size cornerRadius:2.0f];
   return cell;
 }
 
