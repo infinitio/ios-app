@@ -12,7 +12,7 @@
 
 @interface InfinitFilesSearchPopover_iPad : UIViewController
 
-@property (nonatomic, readwrite) id<InfinitFilesSearchProtocol> delegate;
+@property (nonatomic, readwrite, weak) id<InfinitFilesSearchProtocol> delegate;
 @property (nonatomic, readwrite) NSString* search_string;
 
 @end
