@@ -634,18 +634,20 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
               case InfinitDeviceTypeAndroid:
                 raw_image = [UIImage imageNamed:@"icon-device-android-avatar"];
                 break;
+              case InfinitDeviceTypeiPad:
               case InfinitDeviceTypeiPhone:
+              case InfinitDeviceTypeiPod:
                 raw_image = [UIImage imageNamed:@"icon-device-ios-avatar"];
                 break;
               case InfinitDeviceTypeMacLaptop:
+              case InfinitDeviceTypeMacDesktop:
                 raw_image = [UIImage imageNamed:@"icon-device-mac-avatar"];
                 break;
-
               default:
                 raw_image = [UIImage imageNamed:@"icon-device-windows-avatar"];
                 break;
             }
-            avatar = [raw_image circularMaskOfSize:_avatar_size];
+            avatar = [raw_image infinit_circularMaskOfSize:_avatar_size];
             [self.round_avatar_device_cache setObject:avatar forKey:@(device.type)];
           }
         }
@@ -657,7 +659,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
         avatar = [self.round_avatar_cache objectForKey:peer_transaction.other_user.id_];
         if (avatar == nil)
         {
-          avatar = [peer_transaction.other_user.avatar circularMaskOfSize:_avatar_size];
+          avatar = [peer_transaction.other_user.avatar infinit_circularMaskOfSize:_avatar_size];
           [self.round_avatar_cache setObject:avatar forKey:peer_transaction.other_user.id_];
         }
       }
@@ -1009,7 +1011,8 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
       InfinitPeerTransaction* peer_transaction = (InfinitPeerTransaction*)item.transaction;
       if ([peer_transaction.other_user.id_ isEqualToNumber:user_id])
       {
-        UIImage* avatar = [peer_transaction.other_user.avatar circularMaskOfSize:_avatar_size];
+        UIImage* avatar =
+          [peer_transaction.other_user.avatar infinit_circularMaskOfSize:_avatar_size];
         [self.round_avatar_cache setObject:avatar forKey:peer_transaction.other_user.id_];
         NSIndexPath* path = [NSIndexPath indexPathForRow:row inSection:[self topSection] ? 1 : 0];
         if (![self.collection_view.indexPathsForVisibleItems containsObject:path])
