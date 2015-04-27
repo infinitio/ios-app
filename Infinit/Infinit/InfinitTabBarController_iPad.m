@@ -24,7 +24,15 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 
 @end
 
+static dispatch_once_t _first_appear = 0;
+
 @implementation InfinitTabBarController_iPad
+
+- (void)dealloc
+{
+  _first_appear = 0;
+  self.viewControllers = nil;
+}
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
@@ -60,8 +68,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 - (void)viewDidAppear:(BOOL)animated
 {
   [super viewDidAppear:animated];
-  static dispatch_once_t first_appear;
-  dispatch_once(&first_appear, ^
+  dispatch_once(&_first_appear, ^
   {
     self.tabBar.barTintColor = [UIColor whiteColor];
     self.tabBar.shadowImage = [[UIImage alloc] init];
