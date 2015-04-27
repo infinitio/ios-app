@@ -699,10 +699,6 @@ shouldSelectViewController:(UIViewController*)viewController
 - (void)messageComposeViewController:(MFMessageComposeViewController*)controller
                  didFinishWithResult:(MessageComposeResult)result
 {
-
-  NSDictionary* dict = nil;
-  if (self.sms_code.length)
-    dict = @{@"code": self.sms_code};
   switch (result)
   {
     case MessageComposeResultCancelled:
