@@ -38,14 +38,15 @@ static UIImage* _me_icon = nil;
     return;
   _contact = contact;
   self.name_label.text = contact.fullname;
-  self.avatar_view.image = [contact.avatar circularMaskOfSize:self.avatar_view.bounds.size];
+  self.avatar_view.image = [contact.avatar infinit_circularMaskOfSize:self.avatar_view.bounds.size];
   self.letter_label.text = [self.contact.fullname substringToIndex:1].uppercaseString;
 }
 
 - (void)updateAvatar
 {
   [self.contact updateAvatar];
-  self.avatar_view.image = [self.contact.avatar circularMaskOfSize:self.avatar_view.bounds.size];
+  self.avatar_view.image =
+    [self.contact.avatar infinit_circularMaskOfSize:self.avatar_view.bounds.size];
   [self setNeedsDisplay];
 }
 

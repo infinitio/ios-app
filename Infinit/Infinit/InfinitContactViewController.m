@@ -84,7 +84,8 @@ static UIImage* _infinit_icon = nil;
 - (void)configureView;
 {
   self.navigationItem.title = self.contact.fullname;
-  self.avatar_view.image = [self.contact.avatar circularMaskOfSize:self.avatar_view.bounds.size];
+  self.avatar_view.image =
+    [self.contact.avatar infinit_circularMaskOfSize:self.avatar_view.bounds.size];
   if (self.contact.infinit_user == nil)
   {
     self.icon_view.hidden = YES;
