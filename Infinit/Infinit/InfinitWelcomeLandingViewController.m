@@ -25,10 +25,10 @@
   UIColor* border_color = [InfinitColor colorWithRed:91 green:99 blue:106];
   self.yes_button.layer.cornerRadius = floor(self.yes_button.bounds.size.height / 2.0f);
   self.yes_button.layer.borderColor = border_color.CGColor;
-  self.yes_button.layer.borderWidth = 3.0f;
+  self.yes_button.layer.borderWidth = 2.0f;
   self.no_button.layer.cornerRadius = floor(self.no_button.bounds.size.height / 2.0f);
   self.no_button.layer.borderColor = border_color.CGColor;
-  self.no_button.layer.borderWidth = 3.0f;
+  self.no_button.layer.borderWidth = 2.0f;
 }
 
 - (void)setTextHidden:(BOOL)hidden
