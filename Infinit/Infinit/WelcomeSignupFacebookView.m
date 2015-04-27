@@ -46,7 +46,7 @@
 - (void)setAvatar:(UIImage*)image
 {
   CGSize size = self.avatar_button.bounds.size;
-  UIImage* res = [image roundedMaskOfSize:size cornerRadius:size.width / 2.0f];
+  UIImage* res = [image infinit_roundedMaskOfSize:size cornerRadius:size.width / 2.0f];
   [self.avatar_button setTitle:@"" forState:UIControlStateNormal];
   [self.avatar_button setImage:res forState:UIControlStateNormal];
   self.avatar_button.layer.borderWidth = 0.0f;
