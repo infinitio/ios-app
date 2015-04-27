@@ -66,7 +66,8 @@ static UIImage* _star_image = nil;
 - (void)updateAvatar
 {
   [self.contact updateAvatar];
-  self.avatar_view.image = [self.contact.avatar circularMaskOfSize:self.avatar_view.bounds.size];
+  self.avatar_view.image =
+    [self.contact.avatar infinit_circularMaskOfSize:self.avatar_view.bounds.size];
   [self setNeedsDisplay];
 }
 

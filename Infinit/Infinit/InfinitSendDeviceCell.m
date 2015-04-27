@@ -24,7 +24,9 @@
   {
     case InfinitDeviceTypeAndroid:
       return [UIImage imageNamed:@"icon-device-android"];
-    case  InfinitDeviceTypeiPhone:
+    case InfinitDeviceTypeiPad:
+    case InfinitDeviceTypeiPhone:
+    case InfinitDeviceTypeiPod:
       return [UIImage imageNamed:@"icon-device-ios"];
     case InfinitDeviceTypeMacLaptop:
       return [UIImage imageNamed:@"icon-device-mac"];
@@ -40,9 +42,12 @@
   {
     case InfinitDeviceTypeAndroid:
       return [UIImage imageNamed:@"icon-device-android-avatar"];
-    case  InfinitDeviceTypeiPhone:
+    case InfinitDeviceTypeiPad:
+    case InfinitDeviceTypeiPhone:
+    case InfinitDeviceTypeiPod:
       return [UIImage imageNamed:@"icon-device-ios-avatar"];
     case InfinitDeviceTypeMacLaptop:
+    case InfinitDeviceTypeMacDesktop:
       return [UIImage imageNamed:@"icon-device-mac-avatar"];
 
     default:

@@ -67,7 +67,7 @@ static NSDictionary* _selected_attrs = nil;
 - (void)setContact:(InfinitContact*)contact
 {
   _contact = contact;
-  self.avatar_view.image = [contact.avatar circularMaskOfSize:self.avatar_view.bounds.size];
+  self.avatar_view.image = [contact.avatar infinit_circularMaskOfSize:self.avatar_view.bounds.size];
   if (self.contact.infinit_user != nil && self.contact.infinit_user.is_self)
     self.name_label.text = NSLocalizedString(@"Me (my other devices)", nil);
   else

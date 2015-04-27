@@ -291,7 +291,8 @@
 
 - (void)fetchDevices
 {
-  InfinitUserManager* manager = [InfinitUserManager sharedInstance];
+  InfinitUser* me = [InfinitUserManager sharedInstance].me;
+  [[InfinitDeviceManager sharedInstance] updateDevices];
   NSArray* other_devices = [InfinitDeviceManager sharedInstance].other_devices;
   if (self.all_devices == nil)
     _all_devices = [NSMutableArray array];
@@ -300,14 +301,14 @@
   if (other_devices.count == 0)
   {
     _no_devices = YES;
-    [self.all_devices addObject:[[InfinitContact alloc] initWithInfinitUser:manager.me]];
+    [self.all_devices addObject:[[InfinitContact alloc] initWithInfinitUser:me]];
   }
   else
   {
     _no_devices = NO;
     for (InfinitDevice* device in [InfinitDeviceManager sharedInstance].other_devices)
     {
-      InfinitContact* contact = [[InfinitContact alloc] initWithInfinitUser:manager.me
+      InfinitContact* contact = [[InfinitContact alloc] initWithInfinitUser:me
                                                                   andDevice:device];
       [self.all_devices addObject:contact];
     }
@@ -929,7 +930,7 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
 - (BOOL)tableView:(UITableView*)tableView
 shouldHighlightRowAtIndexPath:(NSIndexPath*)indexPath
 {
-  if (([self noResults] && !_last_search.isEmail) ||
+  if (([self noResults] && !_last_search.infinit_isEmail) ||
       (![self askedForAddressBookAccess] && indexPath.section == 2))
   {
     return NO;
@@ -1195,7 +1196,7 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
 {
   NSString* trimmed_string =
     [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]].lowercaseString;
-  if (trimmed_string.isEmail)
+  if (trimmed_string.infinit_isEmail)
   {
     [self addContactFromEmailAddress:trimmed_string];
   }
@@ -1248,7 +1249,7 @@ didDeleteTokenAtIndex:(NSUInteger)index
   [NSObject cancelPreviousPerformRequestsWithTarget:self
                                            selector:@selector(updateSearchResultsWithSearchString:)
                                              object:_last_search];
-  if (_last_search.isEmail &&
+  if (_last_search.infinit_isEmail &&
       [text rangeOfString:_last_search].location != NSNotFound &&
       [text rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@" "]].location != NSNotFound)
   {
@@ -1384,11 +1385,11 @@ didDeleteTokenAtIndex:(NSUInteger)index
       self.contact_results = contacts_temp;
       [sections addIndex:2];
     }
-    if ((were_no_results || [self noResults]) && !search_string.isEmail)
+    if ((were_no_results || [self noResults]) && !search_string.infinit_isEmail)
     {
       [self.table_view reloadData];
     }
-    else if ([self noResults] && search_string.isEmail)
+    else if ([self noResults] && search_string.infinit_isEmail)
     {
       self.email_entered = YES;
       if (self.table_view.numberOfSections == 1)
