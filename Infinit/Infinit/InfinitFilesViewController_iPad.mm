@@ -61,6 +61,8 @@ typedef NS_ENUM(NSUInteger, InfinitFilesFilter)
   InfinitFilesFilterOther,
 };
 
+static dispatch_once_t _first_appear = 0;
+
 @implementation InfinitFilesViewController_iPad
 
 - (void)viewDidLoad
@@ -83,11 +85,12 @@ typedef NS_ENUM(NSUInteger, InfinitFilesFilter)
   [super viewWillAppear:animated];
   _all_folders = [[InfinitDownloadFolderManager sharedInstance].completed_folders mutableCopy];
   [InfinitDownloadFolderManager sharedInstance].delegate = self;
-  static dispatch_once_t first_appear = 0;
-  dispatch_once(&first_appear, ^
+  dispatch_once(&_first_appear, ^
   {
     [self switchToViewController:self.table_view_controller];
   });
+  if (self.current_controller == nil)
+    [self switchToViewController:self.table_view_controller];
   if (self.all_folders.count == 0)
     [self showEmptyFilesView];
   else
@@ -460,7 +463,7 @@ typedef NS_ENUM(NSUInteger, InfinitFilesFilter)
 {
   if (self.current_controller == new_controller)
     return;
-  __weak InfinitFilesDisplayController_iPad* old_controller = self.current_controller;
+  InfinitFilesDisplayController_iPad* old_controller = self.current_controller;
   self.search_view_controller.search_string = nil;
   new_controller.all_folders = [self.all_folders copy];
   new_controller.filter = [self currentFilter];
