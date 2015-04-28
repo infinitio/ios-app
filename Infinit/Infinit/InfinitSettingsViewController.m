@@ -388,12 +388,6 @@ viewForFooterInSection:(NSInteger)section
       controller = ((UINavigationController*)segue.destinationViewController).viewControllers[0];
     controller.feedback_mode = YES;
   }
-  else if ([segue.identifier isEqualToString:@"register_invitation_code_segue"])
-  {
-    InfinitLoginInvitationCodeController* dest_vc =
-      (InfinitLoginInvitationCodeController*)segue.destinationViewController;
-    dest_vc.login_mode = NO;
-  }
 }
 
 
