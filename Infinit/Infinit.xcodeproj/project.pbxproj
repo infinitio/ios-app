@@ -178,6 +178,7 @@
 		83F31BB61A9D190B00A6007C /* libc++abi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F31BB41A9D190B00A6007C /* libc++abi.a */; };
 		83F4282F1AAE048B009A1A7C /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4282E1AAE048B009A1A7C /* CoreTelephony.framework */; };
 		83F44BDA1AEF6FF50064C20C /* InfinitWelcomeOnboardingNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F44BD91AEF6FF50064C20C /* InfinitWelcomeOnboardingNavigationController.m */; };
+		83F44BDE1AEF745C0064C20C /* InfinitContactManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F44BDD1AEF745C0064C20C /* InfinitContactManager.m */; };
 		83F4D04B1A1387EF0068BEB2 /* libaws.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D04A1A1387EF0068BEB2 /* libaws.a */; };
 		83F4D0541A1388050068BEB2 /* libboost_atomic-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D04C1A1388050068BEB2 /* libboost_atomic-mt-s.a */; };
 		83F4D0551A1388050068BEB2 /* libboost_chrono-mt-s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D04D1A1388050068BEB2 /* libboost_chrono-mt-s.a */; };
@@ -622,6 +623,8 @@
 		83F4282E1AAE048B009A1A7C /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		83F44BD81AEF6FF50064C20C /* InfinitWelcomeOnboardingNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitWelcomeOnboardingNavigationController.h; sourceTree = "<group>"; };
 		83F44BD91AEF6FF50064C20C /* InfinitWelcomeOnboardingNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitWelcomeOnboardingNavigationController.m; sourceTree = "<group>"; };
+		83F44BDC1AEF745C0064C20C /* InfinitContactManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitContactManager.h; sourceTree = "<group>"; };
+		83F44BDD1AEF745C0064C20C /* InfinitContactManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitContactManager.m; sourceTree = "<group>"; };
 		83F4D0241A1374660068BEB2 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		83F4D04A1A1387EF0068BEB2 /* libaws.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libaws.a; path = ../../../_build/ios/elle/aws/lib/libaws.a; sourceTree = "<group>"; };
 		83F4D04C1A1388050068BEB2 /* libboost_atomic-mt-s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_atomic-mt-s.a"; path = "../../../_build/ios/elle/boost/lib/libboost_atomic-mt-s.a"; sourceTree = "<group>"; };
@@ -1340,6 +1343,7 @@
 				831686141AD3D6D30099888D /* Infinit.entitlements */,
 				835517FA1ADE7E5100B3EF22 /* iPad */,
 				834FCFC11A7B93B900930BD8 /* Background Manager */,
+				83F44BDB1AEF743C0064C20C /* Contact Management */,
 				8311B5AF1A7CE0CB00832FDE /* Contacts */,
 				83EBB0A11A947AF900144BC6 /* Customised Classes */,
 				83912C5B1AD81F4B00434F6A /* Extension Popover */,
@@ -1525,6 +1529,15 @@
 				83294B901AA6FEA700C6CA9A /* InfinitUploadThumbnailManager.mm */,
 			);
 			name = "File Management";
+			sourceTree = "<group>";
+		};
+		83F44BDB1AEF743C0064C20C /* Contact Management */ = {
+			isa = PBXGroup;
+			children = (
+				83F44BDC1AEF745C0064C20C /* InfinitContactManager.h */,
+				83F44BDD1AEF745C0064C20C /* InfinitContactManager.m */,
+			);
+			name = "Contact Management";
 			sourceTree = "<group>";
 		};
 		83F4D0211A13740F0068BEB2 /* Libraries */ = {
@@ -2132,6 +2145,7 @@
 				83AD68751AE902DB00EB1B53 /* InfinitWelcomeInvitedViewController.m in Sources */,
 				83F5E5951AA4BD000011E4F0 /* InfinitFacebookManager.mm in Sources */,
 				837DC9321AB1818300437B94 /* NSString+email.m in Sources */,
+				83F44BDE1AEF745C0064C20C /* InfinitContactManager.m in Sources */,
 				83157EF31A76260E00F8E87F /* InfinitFolderModel.mm in Sources */,
 				8369E87E1A83780A00ECD519 /* InfinitRatingManager.m in Sources */,
 				83B32E161A851623004088DD /* InfinitSettingsEditProfileViewController.m in Sources */,
