@@ -17,7 +17,7 @@
 #import "InfinitLocalNotificationManager.h"
 #import "InfinitMetricsManager.h"
 #import "InfinitRatingManager.h"
-#import "InfinitWelcomeOnboardingNavigationController.h"
+#import "InfinitWelcomeOnboardingController.h"
 #import "InfinitWormhole.h"
 
 #import <Gap/InfinitAvatarManager.h>
@@ -33,7 +33,6 @@
 
 @interface AppDelegate () <InfinitWelcomeOnboardingProtocol>
 
-@property (nonatomic, weak) InfinitWelcomeOnboardingNavigationController* onboarding_controller;
 @property (nonatomic, readonly) BOOL onboarding;
 
 @property (nonatomic, readonly) BOOL facebook_login;       // Doing some kind of Facebook login.
@@ -43,6 +42,7 @@
 @property (nonatomic, readonly) NSString* logging_in_controller_id;
 @property (nonatomic, readonly) NSString* main_controller_id;
 @property (nonatomic, readonly) NSString* welcome_controller_id;
+@property (nonatomic, readonly) NSString* welcome_onboarding_id;
 
 @property (nonatomic, readwrite) UIViewController* root_controller;
 
@@ -84,15 +84,15 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
                                                name:INFINIT_CONNECTION_STATUS_CHANGE
                                              object:nil];
 
-  if (![[[InfinitApplicationSettings sharedInstance] welcome_onboarded] isEqualToNumber:@1])
+  if ([[[InfinitApplicationSettings sharedInstance] welcome_onboarded] isEqualToNumber:@1])
   {
     [FBSession activeSession]; // Ensure that we call FBSession on the main thread at least once.
     _onboarding = YES;
     [[InfinitApplicationSettings sharedInstance] setWelcome_onboarded:@1];
-    self.onboarding_controller =
-      [self.storyboard instantiateViewControllerWithIdentifier:@"welcome_onboarding"];
-    self.onboarding_controller.delegate = self;
-    view_controller = self.onboarding_controller;
+    UINavigationController* nav_controller =
+      [self.storyboard instantiateViewControllerWithIdentifier:self.welcome_onboarding_id];
+    ((InfinitWelcomeOnboardingController*)nav_controller.topViewController).delegate = self;
+    view_controller = nav_controller;
   }
   else
   {
@@ -510,6 +510,11 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
     return @"welcome_controller_id";
   else
     return @"welcome_nav_controller_id";
+}
+
+- (NSString*)welcome_onboarding_id
+{
+  return @"welcome_onboarding_nav_controller_id";
 }
 
 @end
