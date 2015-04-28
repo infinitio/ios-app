@@ -57,6 +57,7 @@ static NSDictionary* _placeholder_attrs = nil;
 {
   self.code_field.text = @"";
   self.code_line.error = NO;
+  [self setInputsEnabled:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -80,7 +81,7 @@ replacementString:(NSString*)string
   if (self.code_field.text.length == 5)
   {
     [self.activity startAnimating];
-    self.code_field.enabled = NO;
+    [self setInputsEnabled:NO];
     [self.code_field resignFirstResponder];
     NSString* code =
       [self.code_field.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
@@ -94,8 +95,8 @@ replacementString:(NSString*)string
         return;
       InfinitWelcomeCodeViewController* strong_self = weak_self;
       [strong_self.activity stopAnimating];
-      strong_self.code_field.enabled = YES;
-      if (valid)
+      [self setInputsEnabled:YES];
+      if (result.success && valid)
       {
         [strong_self.delegate welcomeCode:strong_self doneWithCode:code];
       }
@@ -114,6 +115,12 @@ replacementString:(NSString*)string
 - (IBAction)skipTapped:(id)sender
 {
   [self.delegate welcomeCode:self doneWithCode:nil];
+}
+
+- (void)setInputsEnabled:(BOOL)enabled
+{
+  self.code_field.enabled = NO;
+  self.skip_button.enabled = NO;
 }
 
 @end
