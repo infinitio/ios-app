@@ -259,7 +259,7 @@ static dispatch_once_t _password_token = 0;
     case gap_handle_not_valid:
       return NSLocalizedString(@"Handle not valid", nil);
     case gap_meta_down_with_message:
-      return NSLocalizedString(@"Our Server is down. Thanks for being patient.", nil);
+      return NSLocalizedString(@"Our Server is down.\nThanks for being patient.", nil);
     case gap_password_not_valid:
       return NSLocalizedString(@"Password not valid.", nil);
 
@@ -746,7 +746,8 @@ static dispatch_once_t _password_token = 0;
     if (result.success)
     {
       if (self.facebook_user.account_status == gap_account_status_ghost ||
-          self.facebook_user.account_status == gap_account_status_new)
+          self.facebook_user.account_status == gap_account_status_new ||
+          self.facebook_user.account_status == gap_account_status_contact)
       {
         if (self.avatar)
           [[InfinitAvatarManager sharedInstance] setSelfAvatar:self.avatar];
@@ -794,7 +795,7 @@ static dispatch_once_t _password_token = 0;
                                                                     AccountStatus status)
       {
         self.facebook_user.account_status = status;
-        if (status == gap_account_status_new)
+        if (status == gap_account_status_new || status == gap_account_status_contact)
         {
           _name = self.facebook_user.name;
           if (self.current_controller == self.last_step_controller)
