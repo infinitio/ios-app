@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "icon-mimetype-illustrator-home.png"
+      "filename" : "icon-mimetype-illustrator.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "icon-mimetype-illustrator-home@2x.png"
+      "filename" : "icon-mimetype-illustrator@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "icon-mimetype-illustrator-home@3x.png"
+      "filename" : "icon-mimetype-illustrator@3x.png"
     }
   ],
   "info" : {

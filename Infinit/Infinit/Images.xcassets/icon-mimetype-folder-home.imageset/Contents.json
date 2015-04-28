@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "icon-mimetype-folder-home.png"
+      "filename" : "icon-mimetype-folder.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "icon-mimetype-folder-home@2x.png"
+      "filename" : "icon-mimetype-folder@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "icon-mimetype-folder-home@3x.png"
+      "filename" : "icon-mimetype-folder@3x.png"
     }
   ],
   "info" : {

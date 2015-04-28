@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "icon-mimetype-photoshop-home.png"
+      "filename" : "icon-mimetype-photoshop.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "icon-mimetype-photoshop-home@2x.png"
+      "filename" : "icon-mimetype-photoshop@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "icon-mimetype-photoshop-home@3x.png"
+      "filename" : "icon-mimetype-photoshop@3x.png"
     }
   ],
   "info" : {
