@@ -10,10 +10,13 @@
 
 #import "InfinitApplicationSettings.h"
 #import "InfinitAvatarManager.h"
+#import "InfinitBackgroundManager.h"
 #import "InfinitColor.h"
+#import "InfinitDownloadFolderManager.h"
 #import "InfinitFacebookManager.h"
 #import "InfinitHostDevice.h"
 #import "InfinitKeychain.h"
+#import "InfinitRatingManager.h"
 #import "InfinitWelcomeCodeViewController.h"
 #import "InfinitWelcomeEmailViewController.h"
 #import "InfinitWelcomeFacebookUser.h"
@@ -25,6 +28,7 @@
 
 #import "NSString+email.h"
 
+#import <Gap/InfinitDeviceManager.h>
 #import <Gap/InfinitStateManager.h>
 
 @interface InfinitWelcomeViewController () <InfinitWelcomeCodeProtocol,
@@ -192,6 +196,10 @@ static dispatch_once_t _password_token = 0;
 
 - (void)showMainView
 {
+  [InfinitDeviceManager sharedInstance];
+  [InfinitDownloadFolderManager sharedInstance];
+  [InfinitBackgroundManager sharedInstance];
+  [InfinitRatingManager sharedInstance];
   NSString* identifier = nil;
   if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     identifier = @"main_controller_ipad";
