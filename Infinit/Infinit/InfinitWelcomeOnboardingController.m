@@ -9,7 +9,6 @@
 #import "InfinitWelcomeOnboardingController.h"
 
 #import "InfinitHostDevice.h"
-#import "InfinitWelcomeOnboardingNavigationController.h"
 
 @interface InfinitWelcomeOnboardingController ()
 
@@ -49,16 +48,23 @@
 
 #pragma mark - Button Handling
 
-- (IBAction)backTapped:(id)sender
+- (IBAction)doneTapped:(id)sender
 {
-  [self.navigationController popViewControllerAnimated:YES];
+  [self.delegate welcomeOnboardingDone];
 }
 
-- (IBAction)nextTapped:(id)sender
+#pragma mark - Navigation
+
+- (IBAction)unwind:(UIStoryboardSegue*)unwind_segue
 {
-  InfinitWelcomeOnboardingNavigationController* nav_controller =
-    (InfinitWelcomeOnboardingNavigationController*)self.navigationController;
-  [nav_controller onboardingDone];
+
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue*)segue
+                 sender:(id)sender
+{
+  if ([segue.destinationViewController isKindOfClass:InfinitWelcomeOnboardingController.class])
+    ((InfinitWelcomeOnboardingController*)segue.destinationViewController).delegate = self.delegate;
 }
 
 @end
