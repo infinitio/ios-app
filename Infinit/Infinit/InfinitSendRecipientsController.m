@@ -12,6 +12,7 @@
 #import "InfinitApplicationSettings.h"
 #import "InfinitColor.h"
 #import "InfinitContact.h"
+#import "InfinitContactManager.h"
 #import "InfinitHostDevice.h"
 #import "InfinitImportOverlayView.h"
 #import "InfinitSendContactCell.h"
@@ -196,6 +197,7 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
     {
       [self fetchAddressBook];
+      [[InfinitContactManager sharedInstance] uploadContacts];
     });
   }
   else
