@@ -101,6 +101,18 @@
 
 - (IBAction)registerTapped:(id)sender
 {
+  if (![self nameGood])
+  {
+    [self shakeField:self.name_field andLine:self.name_line];
+    self.name_line.backgroundColor = self.error_color;
+    return;
+  }
+  if (![self passwordGood])
+  {
+    [self shakeField:self.password_field andLine:self.password_line];
+    self.password_line.backgroundColor = self.error_color;
+    return;
+  }
   [self tryRegister];
 }
 
