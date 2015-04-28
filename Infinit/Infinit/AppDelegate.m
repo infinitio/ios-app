@@ -84,7 +84,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
                                                name:INFINIT_CONNECTION_STATUS_CHANGE
                                              object:nil];
 
-  if ([[[InfinitApplicationSettings sharedInstance] welcome_onboarded] isEqualToNumber:@1])
+  if (![[[InfinitApplicationSettings sharedInstance] welcome_onboarded] isEqualToNumber:@1])
   {
     [FBSession activeSession]; // Ensure that we call FBSession on the main thread at least once.
     _onboarding = YES;
