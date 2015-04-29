@@ -13,6 +13,7 @@
 #import "InfinitFacebookManager.h"
 #import "InfinitFilesViewController_iPad.h"
 #import "InfinitHostDevice.h"
+#import "InfinitMetricsManager.h"
 #import "InfinitSendGalleryController.h"
 #import "InfinitSendRecipientsController.h"
 #import "InfinitOverlayViewController.h"
@@ -169,6 +170,8 @@
 - (void)extensionPopoverWantsSend:(InfinitExtensionPopoverController*)sender
 {
   [self showSendViewForManagedFiles:self.extension_uuid];
+  [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewOpen
+                             method:InfinitUIMethodExtensionFiles];
 }
 
 #pragma mark - Wormhole Handling
@@ -212,6 +215,10 @@
   UISplitViewController* send_split_view =
     [self.storyboard instantiateViewControllerWithIdentifier:@"ipad_send_split_view_id"];
   [self presentViewController:send_split_view animated:YES completion:NULL];
+  [InfinitMetricsManager sendMetric:InfinitUIEventSendGalleryViewOpen
+                             method:InfinitUIMethodPadMain];
+  [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewOpen
+                             method:InfinitUIMethodPadMain];
 }
 
 - (void)showSendViewForFiles:(NSArray*)files
@@ -221,6 +228,8 @@
   [self.recipient_controller resetView];
   self.recipient_controller.files = files;
   [self.overlay_controller showController:self.recipient_controller];
+  [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewOpen
+                             method:InfinitUIMethodHomeCard];
 }
 
 - (void)showSendViewForManagedFiles:(NSString*)uuid
