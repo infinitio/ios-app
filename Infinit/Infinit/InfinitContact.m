@@ -8,11 +8,12 @@
 
 #import "InfinitContact.h"
 
-#import "InfinitColor.h"
 #import "InfinitHostDevice.h"
 
-#import "NSString+email.h"
-#import "NSString+PhoneNumber.h"
+#import <Gap/NSString+email.h>
+#import <Gap/NSString+PhoneNumber.h>
+
+#import <Gap/InfinitColor.h>
 
 @interface InfinitContact ()
 

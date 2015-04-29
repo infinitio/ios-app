@@ -8,7 +8,7 @@
 
 #import "InfinitContactImportCell.h"
 
-#import "InfinitColor.h"
+#import <Gap/InfinitColor.h>
 
 static NSAttributedString* bold_str = nil;
 

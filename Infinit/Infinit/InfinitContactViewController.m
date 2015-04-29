@@ -8,11 +8,11 @@
 
 #import "InfinitContactViewController.h"
 
-#import "InfinitColor.h"
 #import "InfinitHostDevice.h"
 #import "InfinitMetricsManager.h"
 #import "InfinitTabBarController.h"
 
+#import <Gap/InfinitColor.h>
 #import <Gap/InfinitUserManager.h>
 
 #import "UIImage+Rounded.h"

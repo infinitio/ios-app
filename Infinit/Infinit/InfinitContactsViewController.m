@@ -9,7 +9,6 @@
 #import "InfinitContactsViewController.h"
 
 #import "InfinitAccessContactsView.h"
-#import "InfinitColor.h"
 #import "InfinitContactCell.h"
 #import "InfinitContactManager.h"
 #import "InfinitContactViewController.h"
@@ -18,6 +17,7 @@
 #import "InfinitImportOverlayView.h"
 #import "InfinitMetricsManager.h"
 
+#import <Gap/InfinitColor.h>
 #import <Gap/InfinitUserManager.h>
 
 @import AddressBook;
