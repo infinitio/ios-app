@@ -8,7 +8,7 @@
 
 #import "InfinitWelcomeEmailViewController.h"
 
-#import "NSString+email.h"
+#import <Gap/NSString+email.h>
 
 @interface InfinitWelcomeEmailViewController () <UITextFieldDelegate>
 
@@ -25,17 +25,26 @@
 
 - (void)resetView
 {
+  [super resetView];
   self.email_field.text = @"";
   self.email_line.backgroundColor = self.normal_color;
   [self setInputsEnabled:YES];
   [self.activity stopAnimating];
   self.next_button.hidden = NO;
+  self.facebook_button.hidden = NO;
 }
 
 - (void)gotEmailAccountType
 {
   [self.activity stopAnimating];
+  self.next_button.hidden = NO;
   [self setInputsEnabled:YES];
+}
+
+- (void)facebookNoAccount
+{
+  [self setInfoText:NSLocalizedString(@"Looks like you don't have an\naccount. Enter email.", nil)];
+  self.facebook_button.hidden = YES;
 }
 
 - (NSString*)email
@@ -45,7 +54,7 @@
 
 - (void)setEmail:(NSString*)email
 {
-  self.email_field.text = self.email;
+  self.email_field.text = email;
 }
 
 #pragma mark - Text Field Delegate

@@ -20,6 +20,7 @@ typedef void(^InfinitWelcomeEmailBlock)();
 @property (nonatomic, readwrite) NSString* email;
 
 - (void)gotEmailAccountType;
+- (void)facebookNoAccount;
 
 @end
 
