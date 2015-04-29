@@ -10,6 +10,8 @@
 
 #import "InfinitSettingsEditProfileViewController.h"
 
+#import <Gap/InfinitColor.h>
+
 @interface InfinitSettingsNavigationController ()
 
 @property (nonatomic, readwrite) BOOL editing_profile;
@@ -17,6 +19,14 @@
 @end
 
 @implementation InfinitSettingsNavigationController
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+  Class this_class = InfinitSettingsNavigationController.class;
+  [UINavigationBar appearanceWhenContainedIn:this_class, nil].tintColor =
+    [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
