@@ -1337,6 +1337,8 @@ openFileTapped:(NSUInteger)file_index
       [manager completedFolderForTransactionMetaId:sender.transaction.meta_id];
     NSArray* files = folder.file_paths;
     [((InfinitMainSplitViewController_iPad*)self.splitViewController) showSendViewForFiles:files];
+    [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewOpen
+                               method:InfinitUIMethodHomeCard];
   }
   else
   {
