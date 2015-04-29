@@ -11,7 +11,6 @@
 #import "InfinitColor.h"
 #import "InfinitConstants.h"
 #import "InfinitHostDevice.h"
-#import "InfinitLoginInvitationCodeController.h"
 #import "InfinitSettingsCell.h"
 #import "InfinitSettingsExpandedCell.h"
 #import "InfinitSettingsReportProblemController.h"
