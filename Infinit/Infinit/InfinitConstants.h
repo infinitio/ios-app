@@ -28,6 +28,9 @@
 #define kInfinitStoreRatingLinkiOS8 @"https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=APP_ID&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software"
 #define kInfinitStoreRatingLink @"https://itunes.apple.com/app/apple-store/idAPP_ID"
 
+/// URL Scheme.
+#define kInfinitURLScheme @"infinit"
+
 /// Web profile URL.
 #define kInfinitWebProfileURL @"https://infinit.io/account?utm_source=app&utm_medium=ios&utm_campaign=web_profile"
 
