@@ -8,13 +8,10 @@
 
 #import "InfinitWelcomeOnboardingController.h"
 
-#import "InfinitHostDevice.h"
-
 @interface InfinitWelcomeOnboardingController ()
 
 @property (nonatomic, weak) IBOutlet UIButton* next_button;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint* bottom_constraint;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint* image_constraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* center_image_constraint;
 
 @end
 
@@ -34,14 +31,9 @@
                      self.next_button.titleLabel.frame.size.width + 10.0f,
                      0.0f,
                      - (self.next_button.titleLabel.frame.size.width + 10.0f));
-  if ([InfinitHostDevice smallScreen])
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
   {
-    if (self.bottom_constraint != nil)
-      self.bottom_constraint.constant -= 10.0f;
-    else
-      self.image_constraint.constant -= 10.0f;
-    self.image_constraint.constant -= 40.0f;
-
+    self.center_image_constraint.constant = -30.0f;
   }
   [super viewDidLoad];
 }
