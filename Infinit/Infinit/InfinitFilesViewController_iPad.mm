@@ -18,6 +18,7 @@
 #import "InfinitFilesTableViewController_iPad.h"
 #import "InfinitGallery.h"
 #import "InfinitMainSplitViewController_iPad.h"
+#import "InfinitMetricsManager.h"
 
 #import <Gap/InfinitColor.h>
 
@@ -197,6 +198,8 @@ static dispatch_once_t _first_appear = 0;
       }
     }
     [((InfinitMainSplitViewController_iPad*)self.splitViewController) showSendViewForFiles:paths];
+    [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewOpen
+                               method:InfinitUIMethodFiles];
     self.editing = NO;
   }
   else
@@ -328,6 +331,15 @@ static dispatch_once_t _first_appear = 0;
   [self.left_button_outer setImage:left_outer_image forState:UIControlStateNormal];
   [self.left_button_outer setTitle:back_text forState:UIControlStateNormal];
   [self.right_button_inner setImage:right_inner_image forState:UIControlStateNormal];
+  if (!self.editing)
+    self.send_button.enabled = YES;
+  [UIView animateWithDuration:0.3f animations:^
+  {
+    self.send_button.alpha = self.editing ? 0.0f : 1.0f;
+  } completion:^(BOOL finished)
+  {
+    self.send_button.enabled = !self.editing;
+  }];
 }
 
 - (InfinitFileTypes)currentFilter

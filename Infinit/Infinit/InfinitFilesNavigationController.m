@@ -10,11 +10,21 @@
 
 #import "InfinitFilesMultipleViewController.h"
 
+#import <Gap/InfinitColor.h>
+
 @interface InfinitFilesNavigationController ()
 
 @end
 
 @implementation InfinitFilesNavigationController
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+  Class this_class = InfinitFilesNavigationController.class;
+  [UINavigationBar appearanceWhenContainedIn:this_class, nil].tintColor =
+    [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {

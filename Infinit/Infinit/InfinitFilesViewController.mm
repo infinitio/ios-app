@@ -16,6 +16,7 @@
 #import "InfinitFilePreviewController.h"
 #import "InfinitFilesTableCell.h"
 #import "InfinitGallery.h"
+#import "InfinitMetricsManager.h"
 #import "InfinitResizableNavigationBar.h"
 #import "InfinitSendRecipientsController.h"
 #import "InfinitTabBarController.h"
@@ -407,6 +408,8 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   self.bottom_bar_constraint.constant = 0.0f;
   self.bottom_bar.hidden = YES;
   [self performSegueWithIdentifier:@"files_to_send_segue" sender:self];
+  [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewOpen
+                             method:InfinitUIMethodFiles];
 }
 
 - (void)deleteTapped:(id)sender

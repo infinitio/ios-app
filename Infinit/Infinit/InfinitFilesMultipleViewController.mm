@@ -14,6 +14,7 @@
 #import "InfinitFilePreview.h"
 #import "InfinitFilePreviewController.h"
 #import "InfinitFilesNavigationController.h"
+#import "InfinitMetricsManager.h"
 #import "InfinitGallery.h"
 #import "InfinitResizableNavigationBar.h"
 #import "InfinitSendRecipientsController.h"
@@ -328,6 +329,8 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer*)otherGestureReco
   self.bottom_bar_constraint.constant = 0.0f;
   self.bottom_bar.hidden = YES;
   [self performSegueWithIdentifier:@"files_multi_to_send" sender:self];
+  [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewOpen
+                             method:InfinitUIMethodFiles];
 }
 
 - (void)deleteTapped:(id)sender
