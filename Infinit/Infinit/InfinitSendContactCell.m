@@ -8,8 +8,9 @@
 
 #import "InfinitSendContactCell.h"
 
-#import "InfinitColor.h"
 #import "InfinitHostDevice.h"
+
+#import <Gap/InfinitColor.h>
 
 static BOOL _checked_sms = NO;
 static BOOL _show_numbers;

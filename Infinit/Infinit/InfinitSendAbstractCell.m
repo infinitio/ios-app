@@ -8,7 +8,7 @@
 
 #import "InfinitSendAbstractCell.h"
 
-#import "InfinitColor.h"
+#import <Gap/InfinitColor.h>
 
 #import "UIImage+Rounded.h"
 

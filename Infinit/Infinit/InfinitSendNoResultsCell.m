@@ -8,7 +8,7 @@
 
 #import "InfinitSendNoResultsCell.h"
 
-#import "InfinitColor.h"
+#import <Gap/InfinitColor.h>
 
 @implementation InfinitSendNoResultsCell
 

@@ -8,7 +8,7 @@
 
 #import "InfinitSendGalleryCell.h"
 
-#import "InfinitColor.h"
+#import <Gap/InfinitColor.h>
 
 @implementation InfinitSendGalleryCell
 
