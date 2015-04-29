@@ -402,9 +402,14 @@ static dispatch_once_t _password_token = 0;
 - (void)welcomeNotInvited:(InfinitWelcomeInvitedViewController*)sender
 {
   if (self.facebook_user)
+  {
+    [self.invited_controller facebookRegister];
     [self facebookConnect];
+  }
   else
+  {
     [self showViewController:self.last_step_controller animated:YES reverse:NO];
+  }
 }
 
 #pragma mark - Code Protocol
@@ -414,9 +419,14 @@ static dispatch_once_t _password_token = 0;
 {
   _code = code;
   if (self.facebook_user)
+  {
+    [self.code_controller facebookRegister];
     [self facebookConnect];
+  }
   else
+  {
     [self showViewController:self.last_step_controller animated:YES reverse:NO];
+  }
 }
 
 #pragma mark - Last Step Protocol

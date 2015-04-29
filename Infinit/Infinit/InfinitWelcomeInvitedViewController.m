@@ -12,12 +12,21 @@
 
 @interface InfinitWelcomeInvitedViewController ()
 
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView* activity;
 @property (nonatomic, weak) IBOutlet UIButton* yes_button;
 @property (nonatomic, weak) IBOutlet UIButton* no_button;
 
 @end
 
 @implementation InfinitWelcomeInvitedViewController
+
+- (void)resetView
+{
+  [super resetView];
+  self.yes_button.hidden = NO;
+  self.no_button.hidden = NO;
+  [self.activity stopAnimating];
+}
 
 - (void)viewDidLoad
 {
@@ -29,6 +38,13 @@
   self.no_button.layer.cornerRadius = floor(self.no_button.bounds.size.height / 2.0f);
   self.no_button.layer.borderColor = border_color.CGColor;
   self.no_button.layer.borderWidth = 2.0f;
+}
+
+- (void)facebookRegister
+{
+  self.yes_button.hidden = YES;
+  self.no_button.hidden = YES;
+  [self.activity startAnimating];
 }
 
 #pragma mark - Button Handling

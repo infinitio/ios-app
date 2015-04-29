@@ -16,6 +16,8 @@
 
 @property (nonatomic, weak) id<InfinitWelcomeInvitedProtocol> delegate;
 
+- (void)facebookRegister;
+
 @end
 
 @protocol InfinitWelcomeInvitedProtocol <NSObject>

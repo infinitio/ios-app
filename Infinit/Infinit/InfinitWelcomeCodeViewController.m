@@ -59,12 +59,19 @@ static NSDictionary* _placeholder_attrs = nil;
   self.code_field.text = @"";
   self.code_line.error = NO;
   [self setInputsEnabled:YES];
+  [self.activity stopAnimating];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
   [self setInfoText:NSLocalizedString(@"Enter the code from your\nSMS or email invitation.", nil)];
+}
+
+- (void)facebookRegister
+{
+  [self setInputsEnabled:NO];
+  [self.activity startAnimating];
 }
 
 #pragma mark - Text Field Delegate
