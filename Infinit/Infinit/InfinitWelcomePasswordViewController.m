@@ -26,6 +26,7 @@
 
 - (void)resetView
 {
+  [super resetView];
   self.password_field.text = @"";
   self.password_line.backgroundColor = self.normal_color;
   self.facebook_button.hidden = NO;
