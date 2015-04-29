@@ -25,6 +25,7 @@
 
 - (void)resetView
 {
+  [super resetView];
   self.name_field.text = @"";
   self.name_line.backgroundColor = self.normal_color;
   self.password_field.text = @"";
