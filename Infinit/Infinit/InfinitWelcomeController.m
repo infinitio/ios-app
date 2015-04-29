@@ -16,19 +16,18 @@
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitFacebookManager.h"
 #import "InfinitHostDevice.h"
-#import "InfinitKeychain.h"
 #import "InfinitLoginInvitationCodeController.h"
 #import "InfinitRatingManager.h"
 #import "WelcomeLoginFormView.h"
 #import "WelcomeSignupFacebookView.h"
 #import "WelcomeSignupFormView.h"
 
-#import "NSString+email.h"
-
 #import <Gap/InfinitConnectionManager.h>
 #import <Gap/InfinitDeviceManager.h>
+#import <Gap/InfinitKeychain.h>
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitStateResult.h>
+#import <Gap/NSString+email.h>
 
 #import <FacebookSDK/FacebookSDK.h>
 
