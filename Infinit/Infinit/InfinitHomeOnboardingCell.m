@@ -8,8 +8,9 @@
 
 #import "InfinitHomeOnboardingCell.h"
 
-#import "InfinitColor.h"
 #import "InfinitHostDevice.h"
+
+#import <Gap/InfinitColor.h>
 
 @interface InfinitHomeOnboardingCell ()
 

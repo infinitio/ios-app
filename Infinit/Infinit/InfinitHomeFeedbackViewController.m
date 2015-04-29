@@ -8,9 +8,9 @@
 
 #import "InfinitHomeFeedbackViewController.h"
 
-#import "InfinitColor.h"
 #import "InfinitHostDevice.h"
 
+#import <Gap/InfinitColor.h>
 #import <Gap/InfinitCrashReporter.h>
 
 @interface InfinitHomeFeedbackViewController () <UITextViewDelegate,

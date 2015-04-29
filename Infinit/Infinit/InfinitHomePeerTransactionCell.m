@@ -8,7 +8,6 @@
 
 #import "InfinitHomePeerTransactionCell.h"
 
-#import "InfinitColor.h"
 #import "InfinitHostDevice.h"
 #import "InfinitFilePreview.h"
 #import "InfinitHomeTransactionStatusView.h"
@@ -18,6 +17,7 @@
 #import "InfinitHomePeerTransactionMoreFilesCell.h"
 #import "InfinitUploadThumbnailManager.h"
 
+#import <Gap/InfinitColor.h>
 #import <Gap/InfinitDataSize.h>
 #import <Gap/InfinitDeviceManager.h>
 #import <Gap/InfinitTime.h>

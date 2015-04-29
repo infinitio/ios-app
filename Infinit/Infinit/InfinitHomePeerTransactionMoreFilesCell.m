@@ -8,7 +8,7 @@
 
 #import "InfinitHomePeerTransactionMoreFilesCell.h"
 
-#import "InfinitColor.h"
+#import <Gap/InfinitColor.h>
 
 @interface InfinitHomePeerTransactionMoreFilesCell ()
 

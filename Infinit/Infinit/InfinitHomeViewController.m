@@ -9,7 +9,6 @@
 #import "InfinitHomeViewController.h"
 
 #import "InfinitApplicationSettings.h"
-#import "InfinitColor.h"
 #import "InfinitConstants.h"
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitFilesMultipleViewController.h"
@@ -30,6 +29,7 @@
 #import "InfinitTabBarController.h"
 #import "InfinitUploadThumbnailManager.h"
 
+#import <Gap/InfinitColor.h>
 #import <Gap/InfinitDataSize.h>
 #import <Gap/InfinitDeviceManager.h>
 #import <Gap/InfinitPeerTransactionManager.h>
@@ -1003,10 +1003,15 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 - (void)userAvatarUpdated:(NSNotification*)notification
 {
   NSNumber* user_id = notification.userInfo[@"id"];
-  NSUInteger row = 0;
-  for (InfinitHomeItem* item in self.data)
+  if ([InfinitDeviceManager sharedInstance].other_devices.count > 0 &&
+      [[InfinitUserManager sharedInstance].me.id_ isEqualToNumber:user_id])
   {
-    if (item.transaction != nil && [item.transaction isKindOfClass:InfinitPeerTransaction.class])
+    // Don't replace device avatars with our own.
+    return;
+  }
+  [self.data enumerateObjectsUsingBlock:^(InfinitHomeItem* item, NSUInteger row, BOOL* stop)
+  {
+    if (item.transaction && [item.transaction isKindOfClass:InfinitPeerTransaction.class])
     {
       InfinitPeerTransaction* peer_transaction = (InfinitPeerTransaction*)item.transaction;
       if ([peer_transaction.other_user.id_ isEqualToNumber:user_id])
@@ -1018,12 +1023,12 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
         if (![self.collection_view.indexPathsForVisibleItems containsObject:path])
           return;
         InfinitHomePeerTransactionCell* cell =
-          (InfinitHomePeerTransactionCell*)[self.collection_view cellForItemAtIndexPath:path];
+        (InfinitHomePeerTransactionCell*)[self.collection_view cellForItemAtIndexPath:path];
         [cell performSelectorOnMainThread:@selector(setAvatar:) withObject:avatar waitUntilDone:NO];
+        *stop = YES;
       }
     }
-    row++;
-  }
+  }];
 }
 
 #pragma mark - Gesture Handling

@@ -8,8 +8,9 @@
 
 #import "InfinitHomeAbstractCell.h"
 
-#import "InfinitColor.h"
 #import "InfinitHostDevice.h"
+
+#import <Gap/InfinitColor.h>
 
 @implementation InfinitHomeAbstractCell
 
