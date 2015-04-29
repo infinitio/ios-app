@@ -10,6 +10,7 @@
 
 #import "InfinitApplicationSettings.h"
 #import "InfinitBackgroundManager.h"
+#import "InfinitCodeManager.h"
 #import "InfinitConstants.h"
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitFacebookManager.h"
@@ -290,23 +291,25 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   sourceApplication:(NSString*)sourceApplication
          annotation:(id)annotation
 {
-  InfinitFacebookManager* manager = [InfinitFacebookManager sharedInstance];
-  // Note this handler block should be the exact same as the handler passed to any open calls.
   [FBSession.activeSession setStateChangeHandler:^(FBSession* session,
                                                    FBSessionState state,
                                                    NSError* error)
    {
-     // Call the app delegate's sessionStateChanged:state:error method to handle session state changes
-     [manager sessionStateChanged:session state:state error:error];
+     [[InfinitFacebookManager sharedInstance] sessionStateChanged:session state:state error:error];
    }];
 
-  // Call FBAppCall's handleOpenURL:sourceApplication to h\andle Facebook app responses
   BOOL was_handled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
-
   [Adjust appWillOpenUrl:url];
-//  UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:url.absoluteString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//  [alert show];
 
+  was_handled = [[InfinitCodeManager sharedInstance] getCodeFromURL:url];
+
+  if ([InfinitCodeManager sharedInstance].has_code &&
+      [InfinitStateManager sharedInstance].logged_in)
+  {
+    NSString* code = [[InfinitCodeManager sharedInstance].code copy];
+    [[InfinitCodeManager sharedInstance] codeConsumed];
+    [[InfinitStateManager sharedInstance] useGhostCode:code completionBlock:nil];
+  }
   return was_handled;
 }
 
