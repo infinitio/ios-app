@@ -55,6 +55,7 @@ static NSDictionary* _placeholder_attrs = nil;
 
 - (void)resetView
 {
+  [super resetView];
   self.code_field.text = @"";
   self.code_line.error = NO;
   [self setInputsEnabled:YES];
@@ -95,7 +96,7 @@ replacementString:(NSString*)string
         return;
       InfinitWelcomeCodeViewController* strong_self = weak_self;
       [strong_self.activity stopAnimating];
-      [self setInputsEnabled:YES];
+      [strong_self setInputsEnabled:YES];
       if (result.success && valid)
       {
         [strong_self.delegate welcomeCode:strong_self doneWithCode:code];
@@ -119,8 +120,8 @@ replacementString:(NSString*)string
 
 - (void)setInputsEnabled:(BOOL)enabled
 {
-  self.code_field.enabled = NO;
-  self.skip_button.enabled = NO;
+  self.code_field.enabled = enabled;
+  self.skip_button.enabled = enabled;
 }
 
 @end
