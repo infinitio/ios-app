@@ -10,7 +10,6 @@
 
 #import "InfinitAccessContactsView.h"
 #import "InfinitApplicationSettings.h"
-#import "InfinitColor.h"
 #import "InfinitContact.h"
 #import "InfinitContactManager.h"
 #import "InfinitHostDevice.h"
@@ -27,14 +26,15 @@
 #import "InfinitTabBarController.h"
 #import "InfinitUploadThumbnailManager.h"
 
+#import <Gap/InfinitColor.h>
 #import <Gap/InfinitDeviceManager.h>
 #import <Gap/InfinitFileSystemError.h>
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitTemporaryFileManager.h>
 #import <Gap/InfinitUserManager.h>
+#import <Gap/NSString+email.h>
+#import <Gap/NSString+PhoneNumber.h>
 
-#import "NSString+email.h"
-#import "NSString+PhoneNumber.h"
 #import "VENTokenField.h"
 
 @import AddressBook;
