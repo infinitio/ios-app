@@ -30,6 +30,16 @@
 				<string>fb839001662829159</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>io.infinit.infinit</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>infinit</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>53</string>
