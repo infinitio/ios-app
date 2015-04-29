@@ -8,8 +8,9 @@
 
 #import "InfinitOverlayViewController.h"
 
-#import "InfinitColor.h"
 #import "InfinitHostDevice.h"
+
+#import <Gap/InfinitColor.h>
 
 @interface InfinitOverlayViewController ()
 
