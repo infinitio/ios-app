@@ -9,9 +9,9 @@
 #import "InfinitWelcomeLoginViewController.h"
 
 #import "InfinitConstants.h"
-#import "InfinitColor.h"
 
-#import "NSString+email.h"
+#import <Gap/InfinitColor.h>
+#import <Gap/NSString+email.h>
 
 @interface InfinitWelcomeLoginViewController () <UITextFieldDelegate>
 
