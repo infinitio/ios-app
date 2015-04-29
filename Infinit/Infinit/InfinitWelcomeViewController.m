@@ -9,14 +9,13 @@
 #import "InfinitWelcomeViewController.h"
 
 #import "InfinitApplicationSettings.h"
-#import "InfinitAvatarManager.h"
 #import "InfinitBackgroundManager.h"
 #import "InfinitColor.h"
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitFacebookManager.h"
 #import "InfinitHostDevice.h"
-#import "InfinitKeychain.h"
 #import "InfinitRatingManager.h"
+#import "InfinitWelcomeAvatarViewController.h"
 #import "InfinitWelcomeCodeViewController.h"
 #import "InfinitWelcomeEmailViewController.h"
 #import "InfinitWelcomeFacebookUser.h"
@@ -26,12 +25,14 @@
 #import "InfinitWelcomeLoginViewController.h"
 #import "InfinitWelcomePasswordViewController.h"
 
-#import "NSString+email.h"
-
+#import <Gap/InfinitAvatarManager.h>
 #import <Gap/InfinitDeviceManager.h>
+#import <Gap/InfinitKeychain.h>
 #import <Gap/InfinitStateManager.h>
+#import <Gap/NSString+email.h>
 
-@interface InfinitWelcomeViewController () <InfinitWelcomeCodeProtocol,
+@interface InfinitWelcomeViewController () <InfinitWelcomeAvatarProtocol,
+                                            InfinitWelcomeCodeProtocol,
                                             InfinitWelcomeEmailProtocol,
                                             InfinitWelcomeInvitedProtocol,
                                             InfinitWelcomeLandingProtocol,
@@ -43,6 +44,9 @@
 @property (nonatomic, weak) IBOutlet UIView* content_view;
 @property (nonatomic, weak) IBOutlet UIImageView* logo_view;
 
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* top_logo_constraint;
+
+@property (nonatomic, strong) InfinitWelcomeAvatarViewController* avatar_controller;
 @property (nonatomic, strong) InfinitWelcomeCodeViewController* code_controller;
 @property (nonatomic, strong) InfinitWelcomeEmailViewController* email_controller;
 @property (nonatomic, strong) InfinitWelcomeInvitedViewController* invited_controller;
@@ -62,6 +66,7 @@
 
 @end
 
+static dispatch_once_t _avatar_token = 0;
 static dispatch_once_t _code_token = 0;
 static dispatch_once_t _email_token = 0;
 static dispatch_once_t _invited_token = 0;
@@ -74,6 +79,7 @@ static dispatch_once_t _password_token = 0;
 
 - (void)dealloc
 {
+  _avatar_token = 0;
   _code_token = 0;
   _email_token = 0;
   _invited_token = 0;
@@ -86,6 +92,11 @@ static dispatch_once_t _password_token = 0;
 - (void)didReceiveMemoryWarning
 {
   [super didReceiveMemoryWarning];
+  if (self.current_controller != _avatar_controller)
+  {
+    _avatar_token = 0;
+    _avatar_controller = nil;
+  }
   if (self.current_controller != _code_controller)
   {
     _code_token = 0;
@@ -126,6 +137,10 @@ static dispatch_once_t _password_token = 0;
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+  {
+    self.top_logo_constraint.constant = 250.0f;
+  }
   _current_controller = nil;
   [self showViewController:self.landing_controller animated:NO reverse:NO];
   [self.balloon_view addMotionEffect:[self balloonParallax]];
@@ -136,6 +151,7 @@ static dispatch_once_t _password_token = 0;
 
 - (void)viewWillAppear:(BOOL)animated
 {
+  [[InfinitFacebookManager sharedInstance] cleanSession];
   [super viewWillAppear:animated];
   [[UIApplication sharedApplication] setStatusBarHidden:YES];
   [[NSNotificationCenter defaultCenter] addObserver:self
@@ -217,6 +233,8 @@ static dispatch_once_t _password_token = 0;
     _facebook_user = nil;
     _name = nil;
     _password = nil;
+    _avatar_token = 0;
+    _avatar_controller = nil;
     _code_token = 0;
     _code_controller = nil;
     _email_token = 0;
@@ -286,6 +304,11 @@ static dispatch_once_t _password_token = 0;
 - (void)welcomeLoginBack:(InfinitWelcomeLoginViewController*)sender
 {
   [self showViewController:self.landing_controller animated:YES reverse:YES];
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(500 * NSEC_PER_MSEC)),
+                 dispatch_get_main_queue(), ^
+  {
+    [self.login_controller resetView];
+  });
 }
 
 - (void)welcomeLoginDone:(InfinitWelcomeLoginViewController*)sender
@@ -318,6 +341,11 @@ static dispatch_once_t _password_token = 0;
   if (self.facebook_user)
     _facebook_user = nil;
   [self showViewController:self.landing_controller animated:YES reverse:YES];
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(500 * NSEC_PER_MSEC)),
+                 dispatch_get_main_queue(), ^
+  {
+    [self.email_controller resetView];
+  });
 }
 
 - (void)welcomeEmailNext:(InfinitWelcomeEmailViewController*)sender
@@ -374,7 +402,7 @@ static dispatch_once_t _password_token = 0;
 - (void)welcomeNotInvited:(InfinitWelcomeInvitedViewController*)sender
 {
   if (self.facebook_user)
-    [self fetchFacebookInformation];
+    [self facebookConnect];
   else
     [self showViewController:self.last_step_controller animated:YES reverse:NO];
 }
@@ -386,7 +414,7 @@ static dispatch_once_t _password_token = 0;
 {
   _code = code;
   if (self.facebook_user)
-    [self fetchFacebookInformation];
+    [self facebookConnect];
   else
     [self showViewController:self.last_step_controller animated:YES reverse:NO];
 }
@@ -432,25 +460,40 @@ static dispatch_once_t _password_token = 0;
   if (self.avatar)
   {
     [[InfinitAvatarManager sharedInstance] setSelfAvatar:self.avatar];
+    [self showMainView];
+    return;
   }
   if (self.code)
   {
     [[InfinitStateManager sharedInstance] useGhostCode:self.code
                                        completionBlock:^(InfinitStateResult* result)
     {
-      [self showMainView];
+      [self showViewController:self.avatar_controller animated:YES reverse:NO];
     }];
   }
   else
   {
-    [self showMainView];
+    [self showViewController:self.avatar_controller animated:YES reverse:NO];
   }
+}
+
+#pragma mark - Avatar Protocol
+
+- (void)welcomeAvatarDone:(InfinitWelcomeAvatarViewController*)sender
+               withAvatar:(UIImage*)avatar
+{
+  _avatar = avatar;
+  if (self.avatar)
+    [[InfinitAvatarManager sharedInstance] setSelfAvatar:self.avatar];
+
+  [self showMainView];
 }
 
 #pragma mark - Password Protocol
 
 - (void)welcomePasswordBack:(InfinitWelcomePasswordViewController*)sender
 {
+  [self.email_controller resetView];
   [self showViewController:self.email_controller animated:YES reverse:YES];
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(500 * NSEC_PER_MSEC)),
                  dispatch_get_main_queue(), ^
@@ -536,10 +579,21 @@ static dispatch_once_t _password_token = 0;
 {
   if (self.current_controller == view_controller)
     return;
+  if (view_controller == self.landing_controller)
+  {
+    _avatar = nil;
+    _code = nil;
+    _email = nil;
+    _facebook_user = nil;
+    _name = nil;
+    _password = nil;
+    [[InfinitFacebookManager sharedInstance] cleanSession];
+  }
   if ([InfinitHostDevice smallScreen])
   {
     BOOL hide = (view_controller == self.last_step_controller || 
-                 view_controller == self.code_controller);
+                 view_controller == self.code_controller ||
+                 view_controller == self.avatar_controller);
     CGFloat alpha = hide ? 0.0f : 1.0f;
     if (self.logo_view.alpha != alpha)
     {
@@ -616,6 +670,18 @@ static dispatch_once_t _password_token = 0;
 }
 
 #pragma mark - Lazy Loading
+
+- (InfinitWelcomeAvatarViewController*)avatar_controller
+{
+  dispatch_once(&_avatar_token, ^
+  {
+    NSString* class_name = NSStringFromClass(InfinitWelcomeAvatarViewController.class);
+    _avatar_controller = [[InfinitWelcomeAvatarViewController alloc] initWithNibName:class_name
+                                                                              bundle:nil];
+    _avatar_controller.delegate = self;
+  });
+  return _avatar_controller;
+}
 
 - (InfinitWelcomeCodeViewController*)code_controller
 {
@@ -739,7 +805,8 @@ static dispatch_once_t _password_token = 0;
 
 - (void)facebookConnect
 {
-  [[InfinitStateManager sharedInstance] facebookConnect:self.facebook_user.id_
+  NSString* token = FBSession.activeSession.accessTokenData.accessToken;
+  [[InfinitStateManager sharedInstance] facebookConnect:token
                                            emailAddress:self.email 
                                         completionBlock:^(InfinitStateResult* result)
   {
@@ -759,6 +826,10 @@ static dispatch_once_t _password_token = 0;
             [self showMainView];
           }];
         }
+        else
+        {
+          [self showMainView];
+        }
       }
       else
       {
@@ -767,6 +838,7 @@ static dispatch_once_t _password_token = 0;
     }
     else
     {
+      [[InfinitFacebookManager sharedInstance] cleanSession];
       [self.current_controller resetView];
     }
   }];
@@ -802,11 +874,19 @@ static dispatch_once_t _password_token = 0;
           {
             [self facebookConnect];
           }
+          else if (self.current_controller == self.login_controller)
+          {
+            [self showViewController:self.email_controller animated:YES reverse:NO];
+            self.email_controller.email = self.facebook_user.email;
+            [self.email_controller facebookNoAccount];
+          }
           else
           {
-            self.email_controller.email = self.facebook_user.email;
             if (self.current_controller != self.email_controller)
               [self showViewController:self.email_controller animated:YES reverse:NO];
+            else
+              [self.email_controller gotEmailAccountType];
+            self.email_controller.email = self.facebook_user.email;
           }
         }
         else if (status == gap_account_status_ghost)
@@ -882,7 +962,7 @@ static dispatch_once_t _password_token = 0;
 - (NSURL*)avatarURLForUserWithId:(NSString*)id_
 {
   NSString* str =
-  [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large", id_];
+    [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large", id_];
   return [NSURL URLWithString:str];
 }
 
