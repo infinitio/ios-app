@@ -10,10 +10,10 @@
 
 #import "InfinitApplicationSettings.h"
 #import "InfinitBackgroundManager.h"
+#import "InfinitConstants.h"
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitFacebookManager.h"
 #import "InfinitFilesOnboardingManager.h"
-#import "InfinitKeychain.h"
 #import "InfinitLocalNotificationManager.h"
 #import "InfinitMetricsManager.h"
 #import "InfinitRatingManager.h"
@@ -23,15 +23,18 @@
 #import <Gap/InfinitAvatarManager.h>
 #import <Gap/InfinitConnectionManager.h>
 #import <Gap/InfinitDeviceManager.h>
+#import <Gap/InfinitKeychain.h>
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitStateResult.h>
 
 #import "NSData+Conversion.h"
 
+#import <Adjust/Adjust.h>
 #import <FacebookSDK/FacebookSDK.h>
 
-@interface AppDelegate () <InfinitWelcomeOnboardingProtocol>
+@interface AppDelegate () <AdjustDelegate,
+                           InfinitWelcomeOnboardingProtocol>
 
 @property (nonatomic, readonly) BOOL onboarding;
 
@@ -48,6 +51,8 @@
 
 @end
 
+#define ADJUST_TEST
+
 @implementation AppDelegate
 
 - (BOOL)facebook_login
@@ -60,9 +65,25 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)configureAdjust
+{
+#if defined(DEBUG) || defined(ADJUST_TEST)
+  NSString* environment = ADJEnvironmentSandbox;
+  ADJLogLevel log_level = ADJLogLevelInfo;
+#else
+  NSString* environment = ADJEnvironmentProduction;
+  ADJLogLevel log_level = ADJLogLevelWarn;
+#endif
+  ADJConfig* config = [ADJConfig configWithAppToken:kInfinitAdjustToken environment:environment];
+  config.logLevel = log_level;
+  config.delegate = self;
+  [Adjust appDidLaunch:config];
+}
+
 - (BOOL)application:(UIApplication*)application
 didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
+  [self configureAdjust];
   UIViewController* view_controller = nil;
   if (![InfinitApplicationSettings sharedInstance].been_launched)
   {
@@ -102,7 +123,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
       _facebook_long_login = YES;
       view_controller =
         [self.storyboard instantiateViewControllerWithIdentifier:self.logging_in_controller_id];
-      [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:25.0f];
+      [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:20.0f];
       [[NSNotificationCenter defaultCenter] addObserver:self
                                                selector:@selector(facebookSessionStateChanged:)
                                                    name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
@@ -133,16 +154,16 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
     else if ([self canAutoLogin])
     {
       InfinitConnectionManager* manager = [InfinitConnectionManager sharedInstance];
-      if (manager.network_status != InfinitNetworkStatusNotReachable)
+      if (manager.network_status == InfinitNetworkStatusNotReachable)
       {
         view_controller =
-          [self.storyboard instantiateViewControllerWithIdentifier:self.logging_in_controller_id];
-        [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:15.0f];
+          [self.storyboard instantiateViewControllerWithIdentifier:self.main_controller_id];
       }
       else
       {
         view_controller =
-          [self.storyboard instantiateViewControllerWithIdentifier:self.main_controller_id];
+          [self.storyboard instantiateViewControllerWithIdentifier:self.logging_in_controller_id];
+        [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:15.0f];
       }
     }
     else
@@ -279,10 +300,12 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
      [manager sessionStateChanged:session state:state error:error];
    }];
 
-  // Call FBAppCall's handleOpenURL:sourceApplication to handle Facebook app responses
+  // Call FBAppCall's handleOpenURL:sourceApplication to h\andle Facebook app responses
   BOOL was_handled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
 
-  // You can add your app-specific url handling code here if needed
+  [Adjust appWillOpenUrl:url];
+//  UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil message:url.absoluteString delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//  [alert show];
 
   return was_handled;
 }
@@ -515,6 +538,18 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 - (NSString*)welcome_onboarding_id
 {
   return @"welcome_onboarding_nav_controller_id";
+}
+
+#pragma mark - Adjust Delegate
+
+- (void)adjustAttributionChanged:(ADJAttribution*)attribution
+{
+  UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
+                                                  message:attribution.description 
+                                                 delegate:self
+                                        cancelButtonTitle:@"OK"
+                                        otherButtonTitles:nil];
+  [alert show];
 }
 
 @end
