@@ -10,6 +10,7 @@
 
 #import "InfinitApplicationSettings.h"
 #import "InfinitBackgroundManager.h"
+#import "InfinitCodeManager.h"
 #import "InfinitColor.h"
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitFacebookManager.h"
@@ -356,7 +357,20 @@ static dispatch_once_t _password_token = 0;
   if (self.facebook_user)
   {
     self.facebook_user.email = email;
-    [self showViewController:self.invited_controller animated:YES reverse:NO];
+    if ([InfinitCodeManager sharedInstance].has_code)
+    {
+      _code = [[InfinitCodeManager sharedInstance].code copy];
+      [[InfinitCodeManager sharedInstance] codeConsumed];
+      [[InfinitStateManager sharedInstance] useGhostCode:self.code
+                                         completionBlock:^(InfinitStateResult* result)
+      {
+        [self showMainView];
+      }];
+    }
+    else
+    {
+      [self showViewController:self.invited_controller animated:YES reverse:NO];
+    }
   }
   else
   {
@@ -377,7 +391,16 @@ static dispatch_once_t _password_token = 0;
 
         case gap_account_status_new:
         default:
-          view_controller = self.invited_controller;
+          if ([InfinitCodeManager sharedInstance].has_code)
+          {
+            _code = [[InfinitCodeManager sharedInstance].code copy];
+            [[InfinitCodeManager sharedInstance] codeConsumed];
+            view_controller = self.last_step_controller;
+          }
+          else
+          {
+            view_controller = self.invited_controller;
+          }
           break;
       }
       [self.email_controller gotEmailAccountType];
