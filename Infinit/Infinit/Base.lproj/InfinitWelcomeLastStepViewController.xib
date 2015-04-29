@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14E7f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
@@ -120,10 +120,8 @@
                         <action selector="textChanged:" destination="-1" eventType="editingChanged" id="eDv-sb-LEd"/>
                     </connections>
                 </textField>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CYa-ax-CQN">
-                    <rect key="frame" x="184" y="0.0" width="233" height="48"/>
-                    <string key="text">Last step. Enter your name
-and a password.</string>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your name and a password." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CYa-ax-CQN">
+                    <rect key="frame" x="154" y="10" width="292" height="24"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
                     <color key="textColor" red="0.18039215689999999" green="0.18039215689999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -163,7 +161,7 @@ and a password.</string>
                 <constraint firstItem="S1r-rv-APp" firstAttribute="trailing" secondItem="WnP-4q-Uhq" secondAttribute="trailing" constant="20" id="pT5-V4-Rxp"/>
                 <constraint firstItem="ipO-57-IeG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" priority="750" constant="70" id="uA0-k4-yIY"/>
                 <constraint firstAttribute="bottom" secondItem="N4q-7f-VP0" secondAttribute="bottom" constant="130" id="yC1-M7-3f1"/>
-                <constraint firstItem="CYa-ax-CQN" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="zfo-c6-lzC"/>
+                <constraint firstItem="CYa-ax-CQN" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="zfo-c6-lzC"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="305" y="294"/>
