@@ -8,10 +8,9 @@
 
 #import "InfinitFilesTableCell.h"
 
-#import "InfinitColor.h"
-
 #import "UIImage+Rounded.h"
 
+#import <Gap/InfinitColor.h>
 #import <Gap/InfinitDataSize.h>
 #import <Gap/InfinitUserManager.h>
 

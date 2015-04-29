@@ -8,7 +8,6 @@
 
 #import "InfinitFilesMultipleViewController.h"
 
-#import "InfinitColor.h"
 #import "InfinitConstants.h"
 #import "InfinitFilesBottomBar.h"
 #import "InfinitFilesTableCell.h"
@@ -19,6 +18,8 @@
 #import "InfinitResizableNavigationBar.h"
 #import "InfinitSendRecipientsController.h"
 #import "InfinitTabBarController.h"
+
+#import <Gap/InfinitColor.h>
 
 #import <ALAssetsLibrary+CustomPhotoAlbum.h>
 #import <Photos/Photos.h>

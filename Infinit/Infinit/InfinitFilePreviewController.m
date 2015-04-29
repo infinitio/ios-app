@@ -8,7 +8,6 @@
 
 #import "InfinitFilePreviewController.h"
 
-#import "InfinitColor.h"
 #import "InfinitExtensionInfo.h"
 #import "InfinitFileModel.h"
 #import "InfinitFilePreview.h"
@@ -16,6 +15,7 @@
 
 #import "JDStatusBarNotification.h"
 
+#import <Gap/InfinitColor.h>
 #import <Gap/InfinitConnectionManager.h>
 
 @interface InfinitFilePreviewController () <QLPreviewControllerDataSource,

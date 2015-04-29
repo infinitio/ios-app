@@ -8,8 +8,9 @@
 
 #import "InfinitFilesTableCell_iPad.h"
 
-#import "InfinitDataSize.h"
 #import "UIImage+Rounded.h"
+
+#import <Gap/InfinitDataSize.h>
 
 @implementation InfinitFilesTableCell_iPad
 

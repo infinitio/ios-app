@@ -8,7 +8,6 @@
 
 #import "InfinitFilesViewController.h"
 
-#import "InfinitColor.h"
 #import "InfinitConstants.h"
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitFilesBottomBar.h"
@@ -21,6 +20,7 @@
 #import "InfinitSendRecipientsController.h"
 #import "InfinitTabBarController.h"
 
+#import <Gap/InfinitColor.h>
 #import <Gap/InfinitDirectoryManager.h>
 
 #import <ALAssetsLibrary+CustomPhotoAlbum.h>

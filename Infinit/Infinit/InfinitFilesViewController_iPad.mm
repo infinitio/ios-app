@@ -8,7 +8,6 @@
 
 #import "InfinitFilesViewController_iPad.h"
 
-#import "InfinitColor.h"
 #import "InfinitConstants.h"
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitFilesEmptyOverlay_iPad.h"
@@ -19,6 +18,8 @@
 #import "InfinitFilesTableViewController_iPad.h"
 #import "InfinitGallery.h"
 #import "InfinitMainSplitViewController_iPad.h"
+
+#import <Gap/InfinitColor.h>
 
 #undef check
 #import <elle/log.hh>

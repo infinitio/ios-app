@@ -9,7 +9,8 @@
 #import "InfinitFilesCollectionCell_iPad.h"
 
 #import "InfinitFilePreview.h"
-#import "InfinitTime.h"
+
+#import <Gap/InfinitTime.h>
 
 @import AVFoundation;
 
