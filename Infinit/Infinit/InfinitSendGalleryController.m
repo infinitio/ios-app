@@ -161,16 +161,6 @@ static CGSize _asset_size;
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200 * NSEC_PER_MSEC)),
-                 dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
-  {
-    if (self.collection_view.indexPathsForSelectedItems.count == 0)
-    {
-      [self resetCellSize];
-      [self loadAssets];
-      _selected_something = NO;
-    }
-  });
   [self configureNextButton];
   self.collection_view.contentOffset =
     CGPointMake(0.0f, 0.0f - self.collection_view.contentInset.top);
@@ -179,6 +169,12 @@ static CGSize _asset_size;
 - (void)viewDidAppear:(BOOL)animated
 {
   [super viewDidAppear:animated];
+  if (self.collection_view.indexPathsForSelectedItems.count == 0)
+  {
+    [self resetCellSize];
+    [self loadAssets];
+    _selected_something = NO;
+  }
   [self updateCachedAssets];
   [self.navigationController.navigationBar.subviews[0] setUserInteractionEnabled:YES];
   [self.navigationController.navigationBar.subviews[0] addGestureRecognizer:_nav_bar_tap];

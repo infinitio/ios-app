@@ -12,11 +12,20 @@
 #import "InfinitSendRecipientsController.h"
 #import "InfinitTabBarController.h"
 
+#import <Gap/InfinitColor.h>
+
 @interface InfinitSendNavigationController () <UINavigationControllerDelegate>
 
 @end
 
 @implementation InfinitSendNavigationController
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+  Class this_class = InfinitSendNavigationController.class;
+    [UINavigationBar appearanceWhenContainedIn:this_class, nil].tintColor = [UIColor whiteColor];
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {

@@ -42,6 +42,8 @@
   [super viewDidLoad];
   if ([InfinitHostDevice iOSVersion] >= 8.0)
     self.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
+  Class this_class = InfinitSendSplitViewController_iPad.class;
+    [UINavigationBar appearanceWhenContainedIn:this_class, nil].tintColor = [UIColor whiteColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated
