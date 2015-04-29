@@ -8,7 +8,7 @@
 
 #import "InfinitOnboardingProgressView.h"
 
-#import "InfinitColor.h"
+#import <Gap/InfinitColor.h>
 
 @interface InfinitOnboardingProgressView ()
 
