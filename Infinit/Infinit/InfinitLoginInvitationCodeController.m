@@ -8,10 +8,10 @@
 
 #import "InfinitLoginInvitationCodeController.h"
 
-#import "InfinitColor.h"
 #import "InfinitHostDevice.h"
 #import "InfinitTabBarController.h"
 
+#import <Gap/InfinitColor.h>
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitStateResult.h>
 
