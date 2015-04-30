@@ -19,6 +19,7 @@
 #import "InfinitGallery.h"
 #import "InfinitMainSplitViewController_iPad.h"
 #import "InfinitMetricsManager.h"
+#import "InfinitStatusBarNotifier.h"
 
 #import <Gap/InfinitColor.h>
 
@@ -249,6 +250,10 @@ static dispatch_once_t _first_appear = 0;
         [paths addObject:file.path];
     }
     [InfinitGallery saveToGallery:paths];
+    NSString* message = NSLocalizedString(@"Saving to gallery...", nil);
+    [[InfinitStatusBarNotifier sharedInstance] showMessage:message
+                                                    ofType:InfinitStatusBarNotificationInfo
+                                                  duration:4.0f];
     self.editing = NO;
   }
 }
