@@ -53,7 +53,6 @@
 @property (nonatomic, weak) IBOutlet UIButton* left_button;
 @property (nonatomic, weak) IBOutlet UIButton* right_button;
 @property (nonatomic, weak) IBOutlet UIView* button_separator_line;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint* button_separator_constraint;
 
 @property (nonatomic, readonly, weak) id<InfinitHomePeerTransactionCellProtocol> delegate;
 
@@ -95,7 +94,6 @@ static CGFloat _button_height = 45.0f;
   [self setFilesViewHidden:YES];
   [self setStatusViewHidden:YES];
   [self setButtonsHidden:YES];
-  [self setLeftButtonHidden:NO];
 }
 
 - (void)awakeFromNib
@@ -301,14 +299,6 @@ static CGFloat _button_height = 45.0f;
     [self.files_view reloadData];
 }
 
-- (void)setLeftButtonHidden:(BOOL)hidden
-{
-  self.button_separator_constraint.constant = hidden ? (self.bounds.size.width / 2.0f - 1.0f)
-                                                     : 0.0f;
-  self.button_separator_line.hidden = hidden;
-  self.left_button.hidden = hidden;
-}
-
 - (void)setPauseCancelButtons
 {
   [self.left_button setImage:_pause_image forState:UIControlStateNormal];
@@ -320,7 +310,6 @@ static CGFloat _button_height = 45.0f;
   [self.right_button setImage:_cancel_image forState:UIControlStateNormal];
   self.right_button.tintColor = [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
   [self.right_button setAttributedTitle:_cancel_str forState:UIControlStateNormal];
-  [self setLeftButtonHidden:YES];
 }
 
 - (void)setAcceptRejectButtons
@@ -331,7 +320,6 @@ static CGFloat _button_height = 45.0f;
   [self.right_button setImage:_cancel_image forState:UIControlStateNormal];
   [self.right_button setAttributedTitle:_decline_str forState:UIControlStateNormal];
   self.right_button.tintColor = [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
-  [self setLeftButtonHidden:NO];
 }
 
 - (void)setOpenSendButtons
@@ -342,7 +330,6 @@ static CGFloat _button_height = 45.0f;
   [self.right_button setImage:_send_image forState:UIControlStateNormal];
   self.right_button.tintColor = [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
   [self.right_button setAttributedTitle:_send_str forState:UIControlStateNormal];
-  [self setLeftButtonHidden:NO];
 }
 
 - (void)configureCellLayoutWithShadow:(BOOL)shadow
