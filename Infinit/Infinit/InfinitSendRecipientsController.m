@@ -678,7 +678,7 @@
   {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
-      if (self.files.count > 0)
+      if (self.files.count > 0 || self.extension_files_uuid.length)
         [((InfinitOverlayViewController*)self.parentViewController) hideController];
     }
     else
