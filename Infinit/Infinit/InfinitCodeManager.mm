@@ -13,6 +13,11 @@
 
 #import <Gap/InfinitStateManager.h>
 
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("iOS.CodeManager");
+
 @interface InfinitCodeManager ()
 
 @property (atomic, readonly) BOOL valid;
@@ -70,10 +75,12 @@ static dispatch_once_t _instance_token = 0;
     {
       strong_self->_code = code;
       [InfinitMetricsManager sendMetric:InfinitUIEventGotLinkCode method:InfinitUIMethodValid];
+      ELLE_LOG("%s: got valid code: %s", strong_self.description.UTF8String, code.UTF8String);
     }
     else
     {
       [InfinitMetricsManager sendMetric:InfinitUIEventGotLinkCode method:InfinitUIMethodInvalid];
+      ELLE_LOG("%s: got invalid code: %s", strong_self.description.UTF8String, code.UTF8String);
     }
   }];
 }
