@@ -65,7 +65,8 @@ static NSDictionary* _placeholder_attrs = nil;
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
-  [self setInfoText:NSLocalizedString(@"Enter the code from your\nSMS or email invitation.", nil)];
+  [self setInfoText:NSLocalizedString(@"Enter the download code from\n"
+                                      "your SMS or email invitation.", nil)];
 }
 
 - (void)facebookRegister
@@ -110,7 +111,7 @@ replacementString:(NSString*)string
       }
       else
       {
-        [strong_self setInfoText:NSLocalizedString(@"Code is not valid.", nil)];
+        [strong_self setInfoText:NSLocalizedString(@"Download code is not valid.", nil)];
         strong_self.code_line.error = YES;
         [strong_self shakeField:strong_self.code_field andLine:strong_self.code_line];
       }
