@@ -164,6 +164,7 @@
 		83E0AC0A1A6A608B003F60C6 /* InfinitHomeItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E0AC091A6A608B003F60C6 /* InfinitHomeItem.m */; };
 		83E112D91A8266090072DAE0 /* InfinitWelcomeOnboardingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E112D71A8266090072DAE0 /* InfinitWelcomeOnboardingController.m */; };
 		83E112DD1A8266D60072DAE0 /* InfinitOnboardingProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E112DC1A8266D60072DAE0 /* InfinitOnboardingProgressView.m */; };
+		83EAE9911AF208F1009D2886 /* InfinitStatusBarNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EAE9901AF208F1009D2886 /* InfinitStatusBarNotifier.m */; };
 		83EBB0721A934B4400144BC6 /* InfinitBackgroundTask.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB0711A934B4400144BC6 /* InfinitBackgroundTask.mm */; };
 		83EBB0841A93951600144BC6 /* InfinitOfflineOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 83EBB0831A93951600144BC6 /* InfinitOfflineOverlay.m */; };
 		83EBB0871A9397F000144BC6 /* InfinitOfflineOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83EBB0891A9397F000144BC6 /* InfinitOfflineOverlay.xib */; };
@@ -586,6 +587,8 @@
 		83E112D71A8266090072DAE0 /* InfinitWelcomeOnboardingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitWelcomeOnboardingController.m; sourceTree = "<group>"; };
 		83E112DB1A8266D60072DAE0 /* InfinitOnboardingProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitOnboardingProgressView.h; sourceTree = "<group>"; };
 		83E112DC1A8266D60072DAE0 /* InfinitOnboardingProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitOnboardingProgressView.m; sourceTree = "<group>"; };
+		83EAE98F1AF208F1009D2886 /* InfinitStatusBarNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitStatusBarNotifier.h; sourceTree = "<group>"; };
+		83EAE9901AF208F1009D2886 /* InfinitStatusBarNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitStatusBarNotifier.m; sourceTree = "<group>"; };
 		83EBB0701A934B4400144BC6 /* InfinitBackgroundTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitBackgroundTask.h; sourceTree = "<group>"; };
 		83EBB0711A934B4400144BC6 /* InfinitBackgroundTask.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitBackgroundTask.mm; sourceTree = "<group>"; };
 		83EBB0821A93951600144BC6 /* InfinitOfflineOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitOfflineOverlay.h; sourceTree = "<group>"; };
@@ -1345,6 +1348,7 @@
 				8369E87B1A8377F400ECD519 /* Rating Manager */,
 				D0AFCBB41A254699003AC152 /* Send */,
 				830AD1EB1A6CF33400E2B058 /* Settings */,
+				83EAE98E1AF208D2009D2886 /* Status Bar Notifier */,
 				D04988161A59F61B008B1C24 /* Tab Bar */,
 				832285111A795884000893A1 /* User Notifications */,
 				83E112CC1A824C3E0072DAE0 /* Welcome Onboarding */,
@@ -1410,6 +1414,15 @@
 				8345958B1AE6B5230020B25D /* InfinitFilesEmptyOverlay_iPad.xib */,
 			);
 			name = "Empty Overlay";
+			sourceTree = "<group>";
+		};
+		83EAE98E1AF208D2009D2886 /* Status Bar Notifier */ = {
+			isa = PBXGroup;
+			children = (
+				83EAE98F1AF208F1009D2886 /* InfinitStatusBarNotifier.h */,
+				83EAE9901AF208F1009D2886 /* InfinitStatusBarNotifier.m */,
+			);
+			name = "Status Bar Notifier";
 			sourceTree = "<group>";
 		};
 		83EBB0741A93943C00144BC6 /* JDStatusBarNotification */ = {
@@ -2009,6 +2022,7 @@
 				D0BD35231A4245AF00AB8EF9 /* InfinitSendRecipientsController.m in Sources */,
 				8343F5D61A628011006E04C0 /* InfinitTabAnimator.m in Sources */,
 				83294B911AA6FEA700C6CA9A /* InfinitUploadThumbnailManager.mm in Sources */,
+				83EAE9911AF208F1009D2886 /* InfinitStatusBarNotifier.m in Sources */,
 				83C50FA61AB6BF8E009EBB44 /* JDStatusBarView.m in Sources */,
 				837F664A1AADCB5100EA49C4 /* InfinitSendDeviceCell.m in Sources */,
 				833E3ACC1A63D89B0088D3FF /* InfinitImportOverlayView.m in Sources */,
