@@ -22,6 +22,7 @@
 #import "InfinitSendNoResultsCell.h"
 #import "InfinitSendToSelfOverlayView.h"
 #import "InfinitSendUserCell.h"
+#import "InfinitStatusBarNotifier.h"
 #import "InfinitOverlayViewController.h"
 #import "InfinitTabBarController.h"
 #import "InfinitUploadThumbnailManager.h"
@@ -621,13 +622,21 @@
                           toManagedFiles:_managed_files_id
                          completionBlock:callback];
     }
+    if (_thumbnail_elements.count >= 10)
+      show_preparing_message = YES;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
       [self.splitViewController dismissViewControllerAnimated:YES completion:NULL];
+      if (show_preparing_message)
+      {
+        NSString* message = NSLocalizedString(@"Preparing your transfer...", nil);
+        [[InfinitStatusBarNotifier sharedInstance] showMessage:message
+                                                        ofType:InfinitStatusBarNotificationInfo
+                                                      duration:4.0f
+                                                  withActivity:YES];
+      }
     }
-    if (_thumbnail_elements.count >= 10)
-      show_preparing_message = YES;
-    if (show_preparing_message)
+    else if (show_preparing_message && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
       [self.tabBarController performSelector:@selector(showTransactionPreparingNotification)
                                   withObject:nil 
