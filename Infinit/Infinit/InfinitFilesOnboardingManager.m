@@ -18,16 +18,19 @@ static NSString* _file_2 = @"How To Send To Self";
 + (void)copyFilesForOnboarding
 {
   NSString* file_1 = [[NSBundle mainBundle] pathForResource:_file_1 ofType:@"mp4"];
+  NSString* name_1 = [NSString stringWithFormat:@"%@.mp4", _file_1];
   NSString* file_2 = [[NSBundle mainBundle] pathForResource:_file_2 ofType:@"mp4"];
+  NSString* name_2 = [NSString stringWithFormat:@"%@.mp4", _file_2];
   NSString* download_dir = [InfinitDirectoryManager sharedInstance].download_directory;
   NSString* destination_1 = [download_dir stringByAppendingPathComponent:@"onboarding_1"];
   NSString* destination_2 = [download_dir stringByAppendingPathComponent:@"onboarding_2"];
-  [self copyFile:file_1 toDestination:destination_1];
-  [self copyFile:file_2 toDestination:destination_2];
+  [self copyFile:file_1 toDestination:destination_1 withName:name_1];
+  [self copyFile:file_2 toDestination:destination_2 withName:name_2];
 }
 
 + (void)copyFile:(NSString*)path
    toDestination:(NSString*)destination
+        withName:(NSString*)name
 {
   NSDate* now = [NSDate date];
   NSError* error = nil;
@@ -40,7 +43,7 @@ static NSString* _file_2 = @"How To Send To Self";
                             withIntermediateDirectories:YES 
                                              attributes:nil
                                                   error:&error];
-  NSString* destination_path = [destination stringByAppendingPathComponent:path.lastPathComponent];
+  NSString* destination_path = [destination stringByAppendingPathComponent:name];
   [[NSFileManager defaultManager] copyItemAtPath:path toPath:destination_path error:&error];
   [meta_data writeToFile:[destination stringByAppendingPathComponent:@".meta"] atomically:NO];
 }
