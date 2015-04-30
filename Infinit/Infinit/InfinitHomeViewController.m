@@ -575,12 +575,24 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
           lines = 2;
           break;
         case InfinitHomeOnboardingCellGhostSent:
-          text =
-            [NSString stringWithFormat:NSLocalizedString(@"All set! A message will be sent\n"
-                                                         "to %@.", nil),
-             self.onboarding_ghost_name];
+          if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+          {
+            text =
+              [NSString stringWithFormat:NSLocalizedString(@"All set! A message will\n"
+                                                           "be sent to\n"
+                                                           "%@.", nil),
+               self.onboarding_ghost_name];
+            lines = 3;
+          }
+          else
+          {
+            text =
+              [NSString stringWithFormat:NSLocalizedString(@"All set! A message will be sent\n"
+                                                           "to %@.", nil),
+               self.onboarding_ghost_name];
+            lines = 2;
+          }
           gray_range = [text rangeOfString:self.onboarding_ghost_name];
-          lines = 2;
           break;
         case InfinitHomeOnboardingCellPeerSent:
           text = [NSString stringWithFormat:NSLocalizedString(@"We'll let you know\n"
@@ -682,8 +694,16 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
     if (indexPath.row == 0 && !self.notification_onboarded)
     {
       type = InfinitHomeOnboardingCellNotifications;
-      text = NSLocalizedString(@"Your current transfers and\n"
-                               "notifications will show up here.", nil);
+      if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+      {
+        text = NSLocalizedString(@"Your current transfers and\n"
+                                 "notifications will show\nup here.", nil);
+      }
+      else
+      {
+        text = NSLocalizedString(@"Your current transfers and\n"
+                                 "notifications will show up here.", nil);
+      }
     }
     else
     {
@@ -691,7 +711,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
       text = NSLocalizedString(@"Swipe the cards left or right\n"
                                "to remove them.", nil);
     }
-    [cell setType:type withText:text grayRange:NSMakeRange(NSNotFound, 0) numberOfLines:2];
+    [cell setType:type withText:text grayRange:NSMakeRange(NSNotFound, 0) numberOfLines:3];
     res = cell;
   }
   return res;
@@ -717,12 +737,13 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
       switch (item.type)
       {
         case InfinitHomeOnboardingCellBackground:
-          height = 83.0f;
+          height = 80.0f;
           break;
         case InfinitHomeOnboardingCellGhostSent:
         case InfinitHomeOnboardingCellPeerSent:
         case InfinitHomeOnboardingCellSelfSent:
           height = 100.0f;
+          break;
 
         default:
           break;
@@ -820,9 +841,11 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
     switch (indexPath.row)
     {
       case 0:
-        height = 83.0f;
+        height = 110.0f;
+        break;
       case 1:
         height = 94.0f;
+        break;
 
       default:
         break;
@@ -1274,13 +1297,11 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 
 - (void)cellPauseTapped:(InfinitHomePeerTransactionCell*)sender
 {
-  UIAlertView* alert =
-    [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Computer says no.", nil)
-                               message:NSLocalizedString(@"Pause is coming soon!", nil)
-                              delegate:nil 
-                     cancelButtonTitle:NSLocalizedString(@"OK", nil)
-                     otherButtonTitles:nil];
-  [alert show];
+  InfinitPeerTransactionManager* manager = [InfinitPeerTransactionManager sharedInstance];
+  if (sender.transaction.status == gap_transaction_paused)
+    [manager resumeTransaction:sender.transaction];
+  else
+    [manager pauseTransaction:sender.transaction];
 }
 
 - (void)cellCancelTapped:(InfinitHomePeerTransactionCell*)sender
