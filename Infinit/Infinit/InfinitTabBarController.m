@@ -681,9 +681,10 @@ shouldSelectViewController:(UIViewController*)viewController
   NSString* files = transaction.files.count == 1 ? NSLocalizedString(@"file", nil)
                                                  : NSLocalizedString(@"files", nil);
   NSString* message =
-    [NSString stringWithFormat:NSLocalizedString(@"Hi, I just sent you %lu %@ via the Infinit app.\n"
-                                                 "You can get the %@ here: %@\n"
-                                                 "with this download code: %@", nil),
+    [NSString stringWithFormat:NSLocalizedString(@"Hi, I just sent you %lu %@ over Infinit."
+                                                 "You can get the %@ here: %@\n\n"
+                                                 "Don't forget to enter the following "
+                                                 "download code: %@", nil),
      transaction.files.count, files, files, recipient.ghost_invitation_url, recipient.ghost_code];
   if (self.sms_controller == nil)
     _sms_controller = [[MFMessageComposeViewController alloc] init];
