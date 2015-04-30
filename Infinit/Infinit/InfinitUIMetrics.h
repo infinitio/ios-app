@@ -36,6 +36,8 @@ typedef NS_ENUM(NSUInteger, InfinitUIEvents)
   InfinitUIEventFilePreview,
   // Code link
   InfinitUIEventGotLinkCode,
+  // Adjust
+  InfinitUIEventAttribution,
 };
 
 typedef NS_ENUM(NSUInteger, InfinitUIMethods)
@@ -58,6 +60,8 @@ typedef NS_ENUM(NSUInteger, InfinitUIMethods)
   InfinitUIMethodValid,
   InfinitUIMethodPadMain,
   InfinitUIMethodFiles,
+  InfinitUIMethodFail,
+  InfinitUIMethodSuccess,
 };
 
 #endif

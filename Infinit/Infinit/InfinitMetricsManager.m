@@ -107,6 +107,8 @@ static InfinitMetricsManager* _instance = nil;
       return @"preview file";
     case InfinitUIEventGotLinkCode:
       return @"got link code";
+    case InfinitUIEventAttribution:
+      return @"attribution";
 
     default:
       NSCAssert(false, @"Unknown metrics event");
@@ -153,6 +155,10 @@ static InfinitMetricsManager* _instance = nil;
       return @"pad main";
     case InfinitUIMethodFiles:
       return @"files";
+    case InfinitUIMethodFail:
+      return @"fail";
+    case InfinitUIMethodSuccess:
+      return @"success";
 
     default:
       NSCAssert(false, @"Unknown metrics method");
