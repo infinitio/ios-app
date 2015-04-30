@@ -52,6 +52,7 @@
 
 @end
 
+// XXX Release
 #define ADJUST_TEST
 
 @implementation AppDelegate
@@ -85,6 +86,8 @@
 didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
   [self configureAdjust];
+  // XXX Release
+  [Adjust setEnabled:NO];
   UIViewController* view_controller = nil;
   if (![InfinitApplicationSettings sharedInstance].been_launched)
   {
@@ -93,6 +96,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
                                                  name:INFINIT_PEER_TRANSACTION_MODEL_READY_NOTIFICATION
                                                object:nil];
   }
+
   [InfinitConnectionManager sharedInstance];
   [InfinitStateManager startState];
 
@@ -547,12 +551,16 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 
 - (void)adjustAttributionChanged:(ADJAttribution*)attribution
 {
-  UIAlertView* alert = [[UIAlertView alloc] initWithTitle:nil
-                                                  message:attribution.description 
-                                                 delegate:self
-                                        cancelButtonTitle:@"OK"
-                                        otherButtonTitles:nil];
-  [alert show];
+  if (attribution.clickLabel)
+  {
+    [InfinitMetricsManager sendMetric:InfinitUIEventAttribution
+                               method:InfinitUIMethodSuccess 
+                           additional:@{@"code": attribution.clickLabel}];
+  }
+  else
+  {
+    [InfinitMetricsManager sendMetric:InfinitUIEventAttribution method:InfinitUIMethodFail];
+  }
 }
 
 @end
