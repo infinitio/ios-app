@@ -72,6 +72,8 @@
 		836024EF1A6FAC00002889DB /* InfinitHostDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 836024EE1A6FAC00002889DB /* InfinitHostDevice.m */; };
 		836080541ACEC68E00EBC4E2 /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 836080531ACEC68E00EBC4E2 /* ALAssetsLibrary+CustomPhotoAlbum.m */; };
 		83612F8E1A5D7FDB00BDF7CE /* NSData+Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = 83612F8D1A5D7FDB00BDF7CE /* NSData+Conversion.m */; };
+		8361B8351AF2827E00D5F890 /* InfinitSendButtonOboarding_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8361B8371AF2827E00D5F890 /* InfinitSendButtonOboarding_iPad.xib */; };
+		8361B8381AF2828100D5F890 /* InfinitFilesViewOnboarding_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8361B83A1AF2828100D5F890 /* InfinitFilesViewOnboarding_iPad.xib */; };
 		8363E4AF1ACE76C2005F98A2 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8363E4AE1ACE76C2005F98A2 /* FacebookSDK.framework */; };
 		83672B901A9F4493009425E6 /* InfinitHomeNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83672B8F1A9F4493009425E6 /* InfinitHomeNavigationController.m */; };
 		8369E8791A83684700ECD519 /* InfinitHomeRatingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8369E8771A83684700ECD519 /* InfinitHomeRatingCell.m */; };
@@ -432,6 +434,8 @@
 		836080531ACEC68E00EBC4E2 /* ALAssetsLibrary+CustomPhotoAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAssetsLibrary+CustomPhotoAlbum.m"; sourceTree = "<group>"; };
 		83612F8C1A5D7FDB00BDF7CE /* NSData+Conversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Conversion.h"; sourceTree = "<group>"; };
 		83612F8D1A5D7FDB00BDF7CE /* NSData+Conversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Conversion.m"; sourceTree = "<group>"; };
+		8361B8361AF2827E00D5F890 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfinitSendButtonOboarding_iPad.xib; sourceTree = "<group>"; };
+		8361B8391AF2828100D5F890 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfinitFilesViewOnboarding_iPad.xib; sourceTree = "<group>"; };
 		8363E4AE1ACE76C2005F98A2 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ThirdParty/FacebookSDK.framework; sourceTree = "<group>"; };
 		8363E4B11ACE7734005F98A2 /* InfinitConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfinitConstants.h; sourceTree = "<group>"; };
 		83672B8E1A9F4493009425E6 /* InfinitHomeNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitHomeNavigationController.h; sourceTree = "<group>"; };
@@ -1044,6 +1048,15 @@
 			path = Infinit;
 			sourceTree = "<group>";
 		};
+		8361B82F1AF27FDE00D5F890 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				8361B83A1AF2828100D5F890 /* InfinitFilesViewOnboarding_iPad.xib */,
+				8361B8371AF2827E00D5F890 /* InfinitSendButtonOboarding_iPad.xib */,
+			);
+			name = Onboarding;
+			sourceTree = "<group>";
+		};
 		8369E87B1A8377F400ECD519 /* Rating Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -1121,6 +1134,7 @@
 		83A0D64B1ADECE3700D9D3AD /* Files Controller */ = {
 			isa = PBXGroup;
 			children = (
+				8361B82F1AF27FDE00D5F890 /* Onboarding */,
 				83E2EB491AE6AD75003E29EB /* Empty Overlay */,
 				83A82E3C1AE0EF33005BAC88 /* Search View */,
 				83A0D6591ADFA0A100D9D3AD /* Collection View */,
@@ -1963,9 +1977,11 @@
 				83A82E451AE1489C005BAC88 /* InfinitOverlayViewController.xib in Resources */,
 				8322850B1A794D51000893A1 /* InfinitImportOverlayView.xib in Resources */,
 				D09848181A43391B002D26AC /* SourceSansPro-ExtraLightIt.otf in Resources */,
+				8361B8351AF2827E00D5F890 /* InfinitSendButtonOboarding_iPad.xib in Resources */,
 				83B32DF41A84DF45004088DD /* InfinitFilesNoFilesView.xib in Resources */,
 				83AD68B21AE983F400EB1B53 /* InfinitWelcomeEmailViewController.xib in Resources */,
 				83B32DEE1A84DF27004088DD /* InfinitHomeOnboardingCell.xib in Resources */,
+				8361B8381AF2828100D5F890 /* InfinitFilesViewOnboarding_iPad.xib in Resources */,
 				D09848171A43391B002D26AC /* SourceSansPro-ExtraLight.otf in Resources */,
 				832285081A794D4C000893A1 /* InfinitAccessContactsView.xib in Resources */,
 				834595891AE6B5230020B25D /* InfinitFilesEmptyOverlay_iPad.xib in Resources */,
@@ -2288,6 +2304,22 @@
 				83465F7C1AE7C8CE00B40F07 /* fr */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		8361B8371AF2827E00D5F890 /* InfinitSendButtonOboarding_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8361B8361AF2827E00D5F890 /* Base */,
+			);
+			name = InfinitSendButtonOboarding_iPad.xib;
+			sourceTree = "<group>";
+		};
+		8361B83A1AF2828100D5F890 /* InfinitFilesViewOnboarding_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8361B8391AF2828100D5F890 /* Base */,
+			);
+			name = InfinitFilesViewOnboarding_iPad.xib;
 			sourceTree = "<group>";
 		};
 		837640FA1A9D1F2A00BB2316 /* InfinitHomeEmptyOverlay.xib */ = {
