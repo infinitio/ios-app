@@ -970,7 +970,8 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
     if (![[settings send_to_self_onboarded] isEqualToNumber:@1])
     {
       [settings setSend_to_self_onboarded:@1];
-      [self showSendToSelfOverlay];
+      if ([InfinitDeviceManager sharedInstance].other_devices.count == 0)
+        [self showSendToSelfOverlay];
     }
     contact = self.device_results[indexPath.row];
   }
