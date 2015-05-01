@@ -235,7 +235,7 @@
                                     <size key="itemSize" width="100" height="100"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Dru-us-o7v">
@@ -2146,7 +2146,7 @@ access your phone contacts!</string>
         <!--REPORT A PROBLEM-->
         <scene sceneID="i5N-eB-nPV">
             <objects>
-                <navigationController title="REPORT A PROBLEM" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="RBB-kt-vOH" sceneMemberID="viewController">
+                <navigationController title="REPORT A PROBLEM" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="RBB-kt-vOH" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="fRr-8m-H3d">
@@ -2552,6 +2552,8 @@ access your phone contacts!</string>
                                     <constraint firstAttribute="height" constant="35" id="bwc-S2-Alp"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
+                                <inset key="titleEdgeInsets" minX="-25" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="105" minY="2" maxX="0.0" maxY="0.0"/>
                                 <state key="normal" title="GET STARTED" image="icon-onboarding-arrow-right-white">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -2588,7 +2590,9 @@ access your phone contacts!</string>
                     <navigationItem key="navigationItem" id="t0B-Fb-p41"/>
                     <connections>
                         <outlet property="center_image_constraint" destination="d5K-Qe-tlo" id="XNu-5e-hae"/>
+                        <outlet property="h_get_started_constraint" destination="bwc-S2-Alp" id="V8e-nl-M7H"/>
                         <outlet property="next_button" destination="97m-pM-Fe4" id="1Fi-Ol-EG3"/>
+                        <outlet property="w_get_started_constraint" destination="M6M-uk-06H" id="XhC-7h-sNO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZuL-k2-kZF" userLabel="First Responder" sceneMemberID="firstResponder"/>
