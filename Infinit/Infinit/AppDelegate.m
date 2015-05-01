@@ -302,10 +302,10 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
      [[InfinitFacebookManager sharedInstance] sessionStateChanged:session state:state error:error];
    }];
 
-  BOOL was_handled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
+  BOOL facebook_handled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
   [Adjust appWillOpenUrl:url];
 
-  was_handled = [[InfinitCodeManager sharedInstance] getCodeFromURL:url];
+  BOOL we_handled = [[InfinitCodeManager sharedInstance] getCodeFromURL:url];
 
   if ([InfinitCodeManager sharedInstance].has_code &&
       [InfinitStateManager sharedInstance].logged_in)
@@ -314,7 +314,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
     [[InfinitCodeManager sharedInstance] codeConsumed];
     [[InfinitStateManager sharedInstance] useGhostCode:code completionBlock:nil];
   }
-  return was_handled;
+  return (facebook_handled || we_handled);
 }
 
 #pragma mark - Notification Handling
