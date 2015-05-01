@@ -53,7 +53,7 @@
     if (result.success)
       [strong_self.delegate welcomeLastStepDone:strong_self];
     else
-      [strong_self setInfoText:[strong_self.delegate errorStringForGapStatus:result.status]];
+      [strong_self setErrorText:[strong_self.delegate errorStringForGapStatus:result.status]];
     [strong_self setInputsEnabled:YES];
     strong_self.register_button.hidden = NO;
   }];

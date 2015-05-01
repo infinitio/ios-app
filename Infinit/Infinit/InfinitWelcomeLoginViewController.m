@@ -119,7 +119,11 @@
     }
     else
     {
-      [strong_self setInfoText:[strong_self.delegate errorStringForGapStatus:result.status]];
+      [strong_self shakeField:strong_self.email_field andLine:strong_self.email_line];
+      strong_self.email_line.backgroundColor = self.error_color;
+      [strong_self shakeField:strong_self.password_field andLine:strong_self.password_line];
+      self.password_line.backgroundColor = self.error_color;
+      [strong_self setErrorText:[strong_self.delegate errorStringForGapStatus:result.status]];
       if (result.status == gap_email_password_dont_match)
         strong_self.forgot_button.hidden = NO;
     }

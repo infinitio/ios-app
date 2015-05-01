@@ -11,9 +11,12 @@
 @interface InfinitWelcomeOnboardingController ()
 
 @property (nonatomic, weak) IBOutlet UIButton* next_button;
+@property (nonatomic, weak) IBOutlet UILabel* title_label;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* center_image_constraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* h_get_started_constraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* w_get_started_constraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* bottom_constraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* top_constraint;
 
 @end
 
@@ -26,6 +29,7 @@
   if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
   {
     self.center_image_constraint.constant = -30.0f;
+    self.next_button.layer.cornerRadius = floor(self.next_button.bounds.size.height / 2.0f);
   }
   if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
   {
@@ -42,6 +46,15 @@
                      range:NSMakeRange(0, title.mutableString.length)];
       [self.next_button setAttributedTitle:title forState:UIControlStateNormal];
     }
+    self.bottom_constraint.constant += 20.0f;
+    self.top_constraint.constant += 35.0f;
+    self.center_image_constraint.constant = -50.0f;
+    NSDictionary* attrs = [self.title_label.attributedText attributesAtIndex:0 effectiveRange:NULL];
+    NSString* title = [self.title_label.text stringByReplacingOccurrencesOfString:@"\n"
+                                                                       withString:@" "];
+    self.title_label.numberOfLines = 1;
+    self.title_label.attributedText = [[NSAttributedString alloc] initWithString:title
+                                                                      attributes:attrs];
   }
 }
 

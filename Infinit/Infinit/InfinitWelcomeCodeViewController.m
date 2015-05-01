@@ -111,7 +111,7 @@ replacementString:(NSString*)string
       }
       else
       {
-        [strong_self setInfoText:NSLocalizedString(@"Download code is not valid.", nil)];
+        [strong_self setErrorText:NSLocalizedString(@"Download code is not valid.", nil)];
         strong_self.code_line.error = YES;
         [strong_self shakeField:strong_self.code_field andLine:strong_self.code_line];
       }

@@ -95,7 +95,7 @@
     }
     else
     {
-      [strong_self setInfoText:[strong_self.delegate errorStringForGapStatus:result.status]];
+      [strong_self setErrorText:[strong_self.delegate errorStringForGapStatus:result.status]];
       [strong_self shakeField:strong_self.password_field andLine:strong_self.password_line];
       strong_self.forgot_button.hidden = NO;
     }

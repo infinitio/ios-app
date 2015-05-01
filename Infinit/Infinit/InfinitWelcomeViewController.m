@@ -148,6 +148,10 @@ static dispatch_once_t _password_token = 0;
   Class this_class = InfinitWelcomeViewController.class;
   UIColor* cursor_color = [InfinitColor colorFromPalette:InfinitPaletteColorLoginBlack];
   [[UITextField appearanceWhenContainedIn:this_class, nil] setTintColor:cursor_color];
+  if ([InfinitHostDevice iOSVersion] < 8.0f)
+  {
+    self.content_view.clipsToBounds = YES;
+  }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -931,9 +935,9 @@ static dispatch_once_t _password_token = 0;
           // Their Facebook email is already registered so they must do a normal login.
           _email = self.facebook_user.email;
           _facebook_user = nil;
-          self.password_controller.hide_facebook_button = YES;
           if (self.current_controller != self.password_controller)
             [self showViewController:self.password_controller animated:YES reverse:NO];
+          self.password_controller.hide_facebook_button = YES;
         }
       }];
     }
