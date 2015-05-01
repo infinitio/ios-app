@@ -54,8 +54,9 @@
     animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     [self.progress_layer addAnimation:animation forKey:@"strokeEnd"];
   }
-  else
+  else if (progress > 0.0f)
   {
+    [self.progress_layer removeAllAnimations];
     self.progress_layer.strokeEnd = progress;
   }
   _progress = progress;
@@ -78,6 +79,7 @@
   }
   else
   {
+    [self.progress_layer removeAllAnimations];
     [self.circle_layer removeFromSuperlayer];
     [self.progress_layer removeFromSuperlayer];
   }
