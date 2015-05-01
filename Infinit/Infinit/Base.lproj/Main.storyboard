@@ -41,8 +41,12 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lUz-L3-9vu">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="120"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Mf-Fs-5w9">
-                                        <rect key="frame" x="20" y="34" width="24" height="24"/>
+                                    <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Mf-Fs-5w9">
+                                        <rect key="frame" x="20" y="29" width="35" height="35"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="35" id="8me-oi-gTg"/>
+                                            <constraint firstAttribute="height" constant="35" id="OUL-Td-ydS"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                         <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="icon-grid">
@@ -86,7 +90,7 @@
                                         </connections>
                                     </button>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lXi-k8-j5W">
-                                        <rect key="frame" x="69" y="33" width="22" height="27"/>
+                                        <rect key="frame" x="80" y="33" width="22" height="27"/>
                                         <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="icon-save-red">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -95,8 +99,12 @@
                                             <action selector="leftInnerTapped:" destination="hHz-xi-viG" eventType="touchUpInside" id="4bq-A4-l2l"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fA9-fw-VaH">
-                                        <rect key="frame" x="486" y="35" width="21" height="22"/>
+                                    <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fA9-fw-VaH">
+                                        <rect key="frame" x="477" y="31" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="8GX-Q2-OZa"/>
+                                            <constraint firstAttribute="width" constant="30" id="dfT-Rz-ArH"/>
+                                        </constraints>
                                         <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="icon-search">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -816,7 +824,7 @@
                                                             </variation>
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="icon-device-mac" translatesAutoresizingMaskIntoConstraints="NO" id="FCE-dg-tH6">
-                                                            <rect key="frame" x="550" y="23" width="22" height="16"/>
+                                                            <rect key="frame" x="550" y="18" width="22" height="27"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="22" id="4Bz-5S-FJQ"/>
                                                                 <constraint firstAttribute="height" constant="27" id="ubI-oJ-5LJ"/>
@@ -2228,24 +2236,18 @@ access your phone contacts!</string>
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-logo-red" translatesAutoresizingMaskIntoConstraints="NO" id="eUF-2D-V3p">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-logo-onboarding" translatesAutoresizingMaskIntoConstraints="NO" id="eUF-2D-V3p">
                                 <rect key="frame" x="285" y="17" width="30" height="27"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="27" id="IWE-tR-QdG"/>
-                                    <constraint firstAttribute="width" constant="30" id="UyJ-dy-ZCt"/>
-                                </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send any photo or video to your friends" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bbd-IZ-yiZ">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bbd-IZ-yiZ">
                                 <rect key="frame" x="160" y="74" width="280" height="70"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="280" id="5Ql-by-J9k"/>
-                                    <constraint firstAttribute="height" constant="70" id="hpt-dj-T8S"/>
-                                </constraints>
+                                <string key="text">Send any photo or video
+to your friends</string>
                                 <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="26"/>
                                 <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No limits. No waiting. No hassle. Always works!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0G6-1i-g1R">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No limits. No waiting. No hassle. Always works!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0G6-1i-g1R">
                                 <rect key="frame" x="152" y="159" width="297" height="17"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" red="0.69411764710000001" green="0.69411764710000001" blue="0.69411764710000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2337,7 +2339,10 @@ access your phone contacts!</string>
                     </view>
                     <navigationItem key="navigationItem" id="WpX-bS-Gob"/>
                     <connections>
+                        <outlet property="bottom_constraint" destination="Kub-hO-fc3" id="jpx-tX-1Ag"/>
                         <outlet property="center_image_constraint" destination="Meu-qh-3GL" id="WyX-Lj-cpd"/>
+                        <outlet property="title_label" destination="Bbd-IZ-yiZ" id="Co1-IA-IOK"/>
+                        <outlet property="top_constraint" destination="xLb-t9-zAO" id="yUe-wr-oDi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ffh-6S-aV4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2361,19 +2366,13 @@ access your phone contacts!</string>
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-logo-red" translatesAutoresizingMaskIntoConstraints="NO" id="q5c-sk-108">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-logo-onboarding" translatesAutoresizingMaskIntoConstraints="NO" id="q5c-sk-108">
                                 <rect key="frame" x="285" y="17" width="30" height="27"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="27" id="4Ys-OR-mDN"/>
-                                    <constraint firstAttribute="width" constant="30" id="FLj-Zn-RpC"/>
-                                </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send your files between your own devices" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N40-3y-JCe">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N40-3y-JCe">
                                 <rect key="frame" x="160" y="74" width="280" height="70"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="280" id="JZ9-3l-aWa"/>
-                                    <constraint firstAttribute="height" constant="70" id="fCZ-uj-xD6"/>
-                                </constraints>
+                                <string key="text">Send your files between
+your own devices</string>
                                 <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="26"/>
                                 <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -2478,7 +2477,10 @@ access your phone contacts!</string>
                     </view>
                     <navigationItem key="navigationItem" id="RaZ-eB-fMb"/>
                     <connections>
+                        <outlet property="bottom_constraint" destination="J7C-rW-a4A" id="PnR-Bj-HVj"/>
                         <outlet property="center_image_constraint" destination="FrK-FS-bHm" id="kzK-9E-GhS"/>
+                        <outlet property="title_label" destination="N40-3y-JCe" id="nrX-8u-AfS"/>
+                        <outlet property="top_constraint" destination="sfs-k2-4R2" id="3XM-UA-9FW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BTg-Hr-YSw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2508,24 +2510,18 @@ access your phone contacts!</string>
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-logo-red" translatesAutoresizingMaskIntoConstraints="NO" id="ILc-gX-FQI">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-logo-onboarding" translatesAutoresizingMaskIntoConstraints="NO" id="ILc-gX-FQI">
                                 <rect key="frame" x="285" y="17" width="30" height="27"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="30" id="DrS-Gj-a8y"/>
-                                    <constraint firstAttribute="height" constant="27" id="kvr-ub-i6A"/>
-                                </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Receive and view any type of file in Infinit" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J59-YW-qzz">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J59-YW-qzz">
                                 <rect key="frame" x="160" y="74" width="280" height="70"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="70" id="YUa-eR-Kfw"/>
-                                    <constraint firstAttribute="width" constant="280" id="r4T-e7-6IX"/>
-                                </constraints>
+                                <string key="text">Receive and view any
+type of file in Infinit</string>
                                 <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="26"/>
                                 <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Access photos, videos, music, PDFs and more" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kjb-PN-Gxr">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Access photos, videos, music, PDFs and more" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kjb-PN-Gxr">
                                 <rect key="frame" x="154" y="159" width="293" height="17"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" red="0.69411764710000001" green="0.69411764710000001" blue="0.69411764710000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2589,9 +2585,12 @@ access your phone contacts!</string>
                     </view>
                     <navigationItem key="navigationItem" id="t0B-Fb-p41"/>
                     <connections>
+                        <outlet property="bottom_constraint" destination="fM2-fb-EY9" id="nNd-Ra-hty"/>
                         <outlet property="center_image_constraint" destination="d5K-Qe-tlo" id="XNu-5e-hae"/>
                         <outlet property="h_get_started_constraint" destination="bwc-S2-Alp" id="V8e-nl-M7H"/>
                         <outlet property="next_button" destination="97m-pM-Fe4" id="1Fi-Ol-EG3"/>
+                        <outlet property="title_label" destination="J59-YW-qzz" id="km6-2J-f8g"/>
+                        <outlet property="top_constraint" destination="YlU-Y4-NW3" id="3Ti-x2-s8w"/>
                         <outlet property="w_get_started_constraint" destination="M6M-uk-06H" id="XhC-7h-sNO"/>
                     </connections>
                 </viewController>
@@ -2697,7 +2696,7 @@ access your phone contacts!</string>
         <image name="icon-favorite-white" width="16" height="15"/>
         <image name="icon-gallery-next" width="8" height="14"/>
         <image name="icon-grid" width="24" height="24"/>
-        <image name="icon-logo-red" width="30" height="27"/>
+        <image name="icon-logo-onboarding" width="30" height="27"/>
         <image name="icon-onboarding-arrow-left-red" width="11" height="19"/>
         <image name="icon-onboarding-arrow-right-red" width="11" height="19"/>
         <image name="icon-onboarding-arrow-right-white" width="10" height="16"/>
