@@ -58,7 +58,7 @@
 
 - (void)dismissKeyboard
 {
-  [self.text_view resignFirstResponder];
+  [self.view endEditing:YES];
 }
 
 #pragma mark - Text View
