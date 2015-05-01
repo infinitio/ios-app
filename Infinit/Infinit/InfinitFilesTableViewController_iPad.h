@@ -12,4 +12,6 @@
 
 @interface InfinitFilesTableViewController_iPad : InfinitFilesDisplayController_iPad
 
+@property (nonatomic, readonly) CGRect last_row_rect;
+
 @end

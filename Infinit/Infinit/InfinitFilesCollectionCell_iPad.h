@@ -20,6 +20,9 @@
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* h_constraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* w_constraint;
 
-- (void)configureForFile:(InfinitFileModel*)file;
+@property (nonatomic, copy) NSString* path;
+
+- (void)configureForFile:(InfinitFileModel*)file 
+           withThumbnail:(UIImage*)thumb;
 
 @end

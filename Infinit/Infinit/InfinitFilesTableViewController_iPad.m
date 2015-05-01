@@ -51,6 +51,14 @@
   self.editing = NO;
 }
 
+#pragma mark - Public
+
+- (CGRect)last_row_rect
+{
+  NSIndexPath* index = self.table_view.indexPathsForVisibleRows.lastObject;
+  return [self.table_view cellForRowAtIndexPath:index].frame;
+}
+
 #pragma mark - Editing
 
 - (NSArray*)current_selection
@@ -115,10 +123,7 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
 - (void)tableView:(UITableView*)tableView
 didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
-  if (tableView.editing)
-  {
-  }
-  else
+  if (!tableView.editing)
   {
     [self.delegate actionForFolder:self.folder_results[indexPath.row] sender:self];
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
@@ -204,39 +209,5 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   }
   return res;
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 @end

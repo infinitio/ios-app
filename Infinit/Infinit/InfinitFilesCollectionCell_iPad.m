@@ -14,8 +14,6 @@
 
 @import AVFoundation;
 
-static CGSize _max_size = {100.0f, 100.0f};
-
 @implementation InfinitFilesCollectionCell_iPad
 
 - (void)awakeFromNib
@@ -24,8 +22,14 @@ static CGSize _max_size = {100.0f, 100.0f};
 }
 
 - (void)configureForFile:(InfinitFileModel*)file
+           withThumbnail:(UIImage*)thumb
 {
-  UIImage* thumb = [InfinitFilePreview previewForPath:file.path ofSize:_max_size crop:NO];
+  if ([self.path isEqualToString:file.path])
+  {
+    self.thumbnail_view.image = thumb;
+    return;
+  }
+  _path = file.path;
   self.thumbnail_view.image = thumb;
   self.h_constraint.constant = thumb.size.height;
   self.w_constraint.constant = thumb.size.width;

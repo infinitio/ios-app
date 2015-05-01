@@ -22,6 +22,7 @@
 #import "InfinitStatusBarNotifier.h"
 
 #import <Gap/InfinitColor.h>
+#import <Gap/InfinitPeerTransactionManager.h>
 
 #undef check
 #import <elle/log.hh>
@@ -51,6 +52,10 @@ ELLE_LOG_COMPONENT("iOS.FilesViewController_iPad");
 @property (nonatomic, strong) UIPopoverController* search_popover_controller;
 @property (nonatomic, strong) InfinitFilesSearchPopover_iPad* search_view_controller;
 @property (nonatomic, strong) InfinitFilesTableViewController_iPad* table_view_controller;
+
+@property (nonatomic, strong) UIView* send_onboarding_view;
+@property (nonatomic, strong) UIView* receive_onboarding_view;
+@property (nonatomic, readonly) BOOL show_onboarding;
 
 @end
 
@@ -86,6 +91,10 @@ static dispatch_once_t _first_appear = 0;
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(transactionUpdated:)
+                                               name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION
+                                             object:nil];
   _all_folders = [[InfinitDownloadFolderManager sharedInstance].completed_folders mutableCopy];
   [InfinitDownloadFolderManager sharedInstance].delegate = self;
   dispatch_once(&_first_appear, ^
@@ -104,6 +113,9 @@ static dispatch_once_t _first_appear = 0;
 {
   [InfinitDownloadFolderManager sharedInstance].delegate = nil;
   [super viewWillDisappear:animated];
+  [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                  name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION 
+                                                object:nil];
 }
 
 - (IBAction)screenTapped:(id)sender
@@ -466,6 +478,75 @@ static dispatch_once_t _first_appear = 0;
     [self.left_button_outer setImage:nil forState:UIControlStateNormal];
     [self.left_button_outer setTitle:NSLocalizedString(@"Back", nil) forState:UIControlStateNormal];
   }
+  [self.view addSubview:self.receive_onboarding_view];
+  self.send_onboarding_view.frame = CGRectMake(self.send_button.center.x,
+                                               self.send_button.center.y - 50.0f,
+                                               self.send_onboarding_view.bounds.size.width,
+                                               self.send_onboarding_view.bounds.size.height);
+}
+
+- (void)hideReceiveOnboarding
+{
+  if (self.receive_onboarding_view == nil)
+    return;
+  [self.receive_onboarding_view removeFromSuperview];
+  _receive_onboarding_view = nil;
+}
+
+- (void)showReceiveOnboarding
+{
+  if (self.receive_onboarding_view == nil)
+  {
+    UINib* nib = [UINib nibWithNibName:@"InfinitFilesViewOnboarding_iPad" bundle:nil];
+    _receive_onboarding_view = [nib instantiateWithOwner:self options:nil].firstObject;
+  }
+  if (self.current_controller == self.table_view_controller)
+  {
+    CGRect frame = [self.view convertRect:self.table_view_controller.last_row_rect
+                                 fromView:self.table_view_controller.view];
+    [self.view addSubview:self.receive_onboarding_view];
+    self.receive_onboarding_view.frame =
+      CGRectMake(frame.origin.x + floor(frame.size.width / 2.0f) - 75.0f,
+                 frame.origin.y + frame.size.height + 10.0f,
+                 self.receive_onboarding_view.bounds.size.width,
+                 self.receive_onboarding_view.bounds.size.height);
+  }
+}
+
+- (void)hideSendOnboarding
+{
+  if (self.send_onboarding_view == nil)
+    return;
+  [self.send_onboarding_view removeFromSuperview];
+  _send_onboarding_view = nil;
+}
+
+- (void)showSendOnboarding
+{
+  if (self.send_onboarding_view)
+    return;
+
+  UINib* nib = [UINib nibWithNibName:@"InfinitSendButtonOboarding_iPad" bundle:nil];
+  _send_onboarding_view = [nib instantiateWithOwner:self options:nil].firstObject;
+  self.send_onboarding_view.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:self.send_onboarding_view];
+  NSLayoutConstraint* x_constraint =
+    [NSLayoutConstraint constraintWithItem:self.send_button
+                                 attribute:NSLayoutAttributeCenterX
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.send_onboarding_view
+                                 attribute:NSLayoutAttributeTrailing
+                                multiplier:1.0f
+                                  constant:220.0f];
+  NSLayoutConstraint* y_constraint =
+    [NSLayoutConstraint constraintWithItem:self.send_button
+                                 attribute:NSLayoutAttributeTop
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.send_onboarding_view
+                                 attribute:NSLayoutAttributeBottom
+                                multiplier:1.0f
+                                  constant:150.0f];
+  [self.view addConstraints:@[x_constraint, y_constraint]];
 }
 
 #pragma mark - Helpers
@@ -481,6 +562,8 @@ static dispatch_once_t _first_appear = 0;
 {
   if (self.current_controller == new_controller)
     return;
+  if (new_controller != self.table_view_controller)
+    [self hideReceiveOnboarding];
   InfinitFilesDisplayController_iPad* old_controller = self.current_controller;
   self.search_view_controller.search_string = nil;
   new_controller.all_folders = [self.all_folders copy];
@@ -516,6 +599,12 @@ static dispatch_once_t _first_appear = 0;
       old_controller.view.transform = CGAffineTransformIdentity;
     }
     _current_controller = new_controller;
+    if (self.show_onboarding)
+    {
+      if (new_controller == self.table_view_controller)
+        [self showReceiveOnboarding];
+      [self showSendOnboarding];
+    }
   }];
 }
 
@@ -567,6 +656,23 @@ static dispatch_once_t _first_appear = 0;
     self.table_view_controller.delegate = self;
   }
   return _table_view_controller;
+}
+
+
+- (void)transactionUpdated:(NSNotification*)notification
+{
+  if (self.show_onboarding)
+  {
+    NSUInteger count =
+      [[InfinitPeerTransactionManager sharedInstance] transactionsIncludingArchived:YES
+                                                                     thisDeviceOnly:YES].count;
+    _show_onboarding = (count > 0);
+  }
+  if (!self.show_onboarding)
+  {
+    [self hideReceiveOnboarding];
+    [self hideSendOnboarding];
+  }
 }
 
 @end
