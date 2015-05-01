@@ -281,7 +281,7 @@ static NSUInteger _min_delay = 3;
      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)),
                     dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
      {
-       NSString* top_text = [self.top_message_label.text copy];
+       NSString* top_text = nil;
        NSString* bottom_text = [self.bottom_message_label.text copy];
        NSString* button_text = [self.ok_button.titleLabel.text copy];
        NSRange top_bold_range = NSMakeRange(NSNotFound, 0);
