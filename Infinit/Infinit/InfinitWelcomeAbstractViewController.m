@@ -53,6 +53,16 @@
 
 #pragma mark - General
 
+- (void)setErrorText:(NSString*)error_text
+{
+  NSMutableDictionary* attrs =
+    [[self.original_info attributesAtIndex:0 effectiveRange:NULL] mutableCopy];
+  attrs[NSParagraphStyleAttributeName] = self.spaced_style;
+  attrs[NSForegroundColorAttributeName] = self.error_color;
+  self.info_label.attributedText = [[NSAttributedString alloc] initWithString:error_text
+                                                                   attributes:attrs];
+}
+
 - (void)setInfoText:(NSString*)info_text
 {
   NSMutableDictionary* attrs =

@@ -21,6 +21,7 @@ typedef void(^InfinitWelcomeResultBlock)(InfinitStateResult* result);
 @property (nonatomic, readonly) UIColor* normal_color;
 @property (nonatomic, readonly) UIColor* error_color;
 
+- (void)setErrorText:(NSString*)error_text;
 - (void)setInfoText:(NSString*)info_text;
 
 - (void)shakeField:(UITextField*)field
