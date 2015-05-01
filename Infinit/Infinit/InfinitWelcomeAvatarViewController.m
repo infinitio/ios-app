@@ -149,11 +149,11 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
   CGSize new_size = CGSizeMake(floor(image.size.width / scale), floor(image.size.height / scale));
   UIGraphicsBeginImageContext(_avatar_size);
   CGRect rect = CGRectMake(0.0f, 0.0f, new_size.width, new_size.height);
-  rect = CGRectMake(floor((_avatar_size.width - new_size.width) / 2.0f),
-                    floor((_avatar_size.height - new_size.height) / 2.0f),
-                    new_size.width,
-                    new_size.height);
-  UIRectClip(rect);
+  CGRect clip_rect = CGRectMake(floor((_avatar_size.width - new_size.width) / 2.0f),
+                                floor((_avatar_size.height - new_size.height) / 2.0f),
+                                new_size.width,
+                                new_size.height);
+  UIRectClip(clip_rect);
   [image drawInRect:rect];
   UIImage* res = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
