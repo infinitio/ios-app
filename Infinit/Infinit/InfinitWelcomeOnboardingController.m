@@ -12,6 +12,8 @@
 
 @property (nonatomic, weak) IBOutlet UIButton* next_button;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* center_image_constraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* h_get_started_constraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* w_get_started_constraint;
 
 @end
 
@@ -19,23 +21,28 @@
 
 - (void)viewDidLoad
 {
+  [super viewDidLoad];
   [[UIApplication sharedApplication] setStatusBarHidden:YES];
-  self.next_button.layer.cornerRadius = self.next_button.bounds.size.height / 2.0f;
-  self.next_button.titleEdgeInsets =
-    UIEdgeInsetsMake(0.0f,
-                     - self.next_button.imageView.frame.size.width,
-                     0.0f,
-                     self.next_button.imageView.frame.size.width);
-  self.next_button.imageEdgeInsets =
-    UIEdgeInsetsMake(0.0f,
-                     self.next_button.titleLabel.frame.size.width + 10.0f,
-                     0.0f,
-                     - (self.next_button.titleLabel.frame.size.width + 10.0f));
   if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
   {
     self.center_image_constraint.constant = -30.0f;
   }
-  [super viewDidLoad];
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+  {
+    if (self.h_get_started_constraint && self.w_get_started_constraint)
+    {
+      self.next_button.imageEdgeInsets = UIEdgeInsetsMake(2.0f, 150.0f, 0.0f, 0.0f);
+      self.next_button.titleEdgeInsets = UIEdgeInsetsMake(0.0f, -25.0f, 0.0f, 0.0f);
+      self.h_get_started_constraint.constant = 60.0f;
+      self.next_button.layer.cornerRadius = 30.0f;
+      self.w_get_started_constraint.constant = 180.0f;
+      NSMutableAttributedString* title = [self.next_button.titleLabel.attributedText mutableCopy];
+      [title setAttributes:@{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
+                                                                  size:20.0f]}
+                     range:NSMakeRange(0, title.mutableString.length)];
+      [self.next_button setAttributedTitle:title forState:UIControlStateNormal];
+    }
+  }
 }
 
 #pragma mark - Button Handling
