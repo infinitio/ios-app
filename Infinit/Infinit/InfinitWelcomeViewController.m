@@ -193,8 +193,13 @@ static dispatch_once_t _password_token = 0;
   [self hideKeyboardWithAnimation:YES];
 }
 
-- (void)fetchFacebookInformation
+- (void)openFacebookSession
 {
+  if (FB_ISSESSIONOPENWITHSTATE(FBSession.activeSession.state))
+  {
+    [self fetchFacebookMeData];
+    return;
+  }
   [[NSNotificationCenter defaultCenter] removeObserver:self
                                                   name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
                                                 object:nil];
@@ -202,7 +207,6 @@ static dispatch_once_t _password_token = 0;
                                            selector:@selector(facebookSessionStateChanged:)
                                                name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
                                              object:nil];
-  _facebook_user = nil;
   InfinitFacebookManager* manager = [InfinitFacebookManager sharedInstance];
   [FBSession openActiveSessionWithReadPermissions:manager.permission_list
                                      allowLoginUI:YES
@@ -336,7 +340,7 @@ static dispatch_once_t _password_token = 0;
 
 - (void)welcomeLoginFacebook:(InfinitWelcomeLoginViewController*)sender
 {
-  [self fetchFacebookInformation];
+  [self openFacebookSession];
 }
 
 #pragma mark - Email Protocol
@@ -416,7 +420,7 @@ static dispatch_once_t _password_token = 0;
 
 - (void)welcomeEmailFacebook:(InfinitWelcomeEmailViewController*)sender
 {
-  [self fetchFacebookInformation];
+  [self openFacebookSession];
 }
 
 #pragma mark - Invitation Protocol
@@ -488,7 +492,7 @@ static dispatch_once_t _password_token = 0;
 
 - (void)welcomeLastStepFacebookConnect:(InfinitWelcomeLastStepViewController*)sender
 {
-  [self fetchFacebookInformation];
+  [self openFacebookSession];
 }
 
 - (void)welcomeLastStepDone:(InfinitWelcomeLastStepViewController*)sender
@@ -557,7 +561,7 @@ static dispatch_once_t _password_token = 0;
 
 - (void)welcomePasswordFacebook:(InfinitWelcomePasswordViewController*)sender
 {
-  [self fetchFacebookInformation];
+  [self openFacebookSession];
 }
 
 #pragma mark - Keyboard
@@ -944,6 +948,42 @@ static dispatch_once_t _password_token = 0;
   }];
 }
 
+- (void)fetchFacebookMeData
+{
+  __weak InfinitWelcomeViewController* weak_self = self;
+  [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection* connection,
+                                                         NSDictionary<FBGraphUser>* fb_user,
+                                                         NSError* error)
+  {
+    InfinitWelcomeViewController* strong_self = weak_self;
+    if (error)
+    {
+      dispatch_async(dispatch_get_main_queue(), ^
+      {
+        [strong_self.current_controller resetView];
+      });
+    }
+    else
+    {
+      NSData* avatar_data =
+      [NSData dataWithContentsOfURL:[self avatarURLForUserWithId:fb_user.objectID]];
+      UIImage* avatar = [UIImage imageWithData:avatar_data];
+      NSString* email = fb_user[@"email"];
+      NSString* name = fb_user.name;
+      strong_self->_avatar = avatar;
+      strong_self->_facebook_user = [InfinitWelcomeFacebookUser facebookUser:fb_user.objectID
+                                                                       email:email
+                                                                        name:name
+                                                                      avatar:avatar];
+      dispatch_async(dispatch_get_main_queue(), ^
+      {
+        InfinitWelcomeViewController* strong_self = weak_self;
+        [strong_self determineFacebookUserType];
+      });
+    }
+  }];
+}
+
 - (void)facebookSessionStateChanged:(NSNotification*)notification
 {
   [[NSNotificationCenter defaultCenter] removeObserver:self
@@ -951,48 +991,28 @@ static dispatch_once_t _password_token = 0;
                                                 object:nil];
   FBSessionState state = [notification.userInfo[@"state"] unsignedIntegerValue];
   NSError* error = notification.userInfo[@"error"];
-  if (state == FBSessionStateOpen || state == FBSessionStateOpenTokenExtended)
+  if (FB_ISSESSIONOPENWITHSTATE(state))
   {
-    [[FBRequest requestForMe] startWithCompletionHandler:^(FBRequestConnection* connection,
-                                                           NSDictionary<FBGraphUser>* fb_user,
-                                                           NSError* error)
-     {
-       if (error)
-       {
-         [self.current_controller resetView];
-       }
-       else
-       {
-         NSData* avatar_data =
-           [NSData dataWithContentsOfURL:[self avatarURLForUserWithId:fb_user.objectID]];
-         UIImage* avatar = [UIImage imageWithData:avatar_data];
-         NSString* email = fb_user[@"email"];
-         NSString* name = fb_user.name;
-         _avatar = avatar;
-         _facebook_user = [InfinitWelcomeFacebookUser facebookUser:fb_user.objectID
-                                                             email:email
-                                                              name:name
-                                                            avatar:avatar];
-         dispatch_async(dispatch_get_main_queue(), ^
-         {
-           [self determineFacebookUserType];
-         });
-       }
-     }];
+    [self fetchFacebookMeData];
   }
-  else if (state == FBSessionStateClosedLoginFailed || error)
+  else if (FB_ISSESSIONSTATETERMINAL(state))
   {
-    [self.current_controller resetView];
-    NSString* title = NSLocalizedString(@"Unable to login with Facebook", nil);
-    NSString* message = nil;
-    if (error)
-      message = error.localizedDescription;
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
-                                                    message:message
-                                                   delegate:self
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [alert show];
+    __weak InfinitWelcomeViewController* weak_self = self;
+    dispatch_async(dispatch_get_main_queue(), ^
+    {
+      InfinitWelcomeViewController* strong_self = weak_self;
+      [strong_self.current_controller resetView];
+      NSString* title = NSLocalizedString(@"Unable to login with Facebook", nil);
+      NSString* message = nil;
+      if (error)
+        message = error.localizedDescription;
+      UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
+                                                      message:message
+                                                     delegate:self
+                                            cancelButtonTitle:@"OK"
+                                            otherButtonTitles:nil];
+      [alert show];
+    });
   }
 }
 
