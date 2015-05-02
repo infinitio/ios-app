@@ -57,23 +57,23 @@ static InfinitFacebookManager* _instance = nil;
                       state:(FBSessionState)state
                       error:(NSError*)error
 {
-  if (!error && state == FBSessionStateOpen)
+  if (!error && FB_ISSESSIONOPENWITHSTATE(state))
   {
     ELLE_TRACE("%s: facebook session open", self.description.UTF8String);
   }
-  else if (state == FBSessionStateClosed || state == FBSessionStateClosedLoginFailed)
+  else if (FB_ISSESSIONSTATETERMINAL(state))
   {
     ELLE_TRACE("%s: facebook session %s",
                self.description.UTF8String, state == FBSessionStateClosed ? "closed" : "failed");
   }
+  NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithDictionary:@{@"state": @(state)}];
   if (error)
   {
     ELLE_WARN("%s: got error: %s", self.description.UTF8String, error.description.UTF8String);
+    dict[@"error"] = error;
     [self cleanSession];
   }
-  NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithDictionary:@{@"state": @(state)}];
-  if (error)
-    dict[@"error"] = error;
+
   NSNotification* notification =
     [NSNotification notificationWithName:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
                                   object:nil
