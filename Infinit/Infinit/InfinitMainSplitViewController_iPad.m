@@ -8,6 +8,7 @@
 
 #import "InfinitMainSplitViewController_iPad.h"
 
+#import "InfinitContactManager.h"
 #import "InfinitExtensionInfo.h"
 #import "InfinitExtensionPopoverController.h"
 #import "InfinitFacebookManager.h"
@@ -22,6 +23,8 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import <Gap/InfinitConnectionManager.h>
 #import <Gap/InfinitTemporaryFileManager.h>
+
+@import AddressBook;
 
 @interface InfinitMainSplitViewController_iPad () <InfinitExtensionPopoverProtocol,
                                                    InfinitOverlayViewControllerProtocol,
@@ -92,6 +95,13 @@
 {
   [super viewWillAppear:animated];
   [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+  [super viewDidAppear:animated];
+  if ([InfinitConnectionManager sharedInstance].connected && [self addressBookAccessible])
+    [[InfinitContactManager sharedInstance] gotAddressBookAccess];
 }
 
 #pragma mark - Connection Handling
@@ -302,6 +312,11 @@
 - (UIStoryboard*)storyboard
 {
   return [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+}
+
+- (BOOL)addressBookAccessible
+{
+  return (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized);
 }
 
 @end
