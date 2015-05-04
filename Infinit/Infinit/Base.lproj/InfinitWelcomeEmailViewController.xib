@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -33,7 +33,7 @@
                     <rect key="frame" x="35" y="245" width="60" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="NWc-44-TPR"/>
-                        <constraint firstAttribute="width" constant="60" id="TJz-3B-1HC"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="TJz-3B-1HC"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="17"/>
                     <state key="normal" title="Back">
@@ -77,7 +77,7 @@
                     <rect key="frame" x="505" y="245" width="60" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="6ny-0M-mne"/>
-                        <constraint firstAttribute="width" constant="60" id="fOH-Me-4g8"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="fOH-Me-4g8"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="17"/>
                     <state key="normal" title="Next">
@@ -91,7 +91,7 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jf8-yV-2Mk">
                     <rect key="frame" x="200" y="185" width="200" height="25"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="200" id="ItE-dX-ZCv"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="ItE-dX-ZCv"/>
                         <constraint firstAttribute="height" constant="25" id="yK0-yf-LvK"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
@@ -113,7 +113,9 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="Kzg-HF-O6N" secondAttribute="centerX" id="0V8-Mf-2vr"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Woj-Yb-4kb" secondAttribute="trailing" constant="10" id="637-I3-llL"/>
                 <constraint firstAttribute="bottom" secondItem="vLx-lW-Q9m" secondAttribute="bottom" constant="25" id="AF5-bC-CQ9"/>
+                <constraint firstItem="vLx-lW-Q9m" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="Fx9-7c-2np"/>
                 <constraint firstItem="Woj-Yb-4kb" firstAttribute="centerX" secondItem="ZYq-me-kOw" secondAttribute="centerX" id="Gxp-ZR-iLu"/>
                 <constraint firstItem="tNr-dD-sgk" firstAttribute="trailing" secondItem="Kzg-HF-O6N" secondAttribute="trailing" constant="20" id="M8i-Zq-8WN"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Kzg-HF-O6N" secondAttribute="trailing" constant="70" id="MzC-oW-PyY"/>

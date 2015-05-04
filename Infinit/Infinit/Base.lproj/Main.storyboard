@@ -2075,7 +2075,7 @@ access your phone contacts!</string>
                                                 <color key="backgroundColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="31" id="uOk-Fk-N7j"/>
-                                                    <constraint firstAttribute="width" constant="90" id="xUU-rq-uuf"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="xUU-rq-uuf"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
                                                 <state key="normal" title="SEND" image="icon-send-white">

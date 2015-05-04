@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -35,7 +35,7 @@
                     <rect key="frame" x="35" y="245" width="60" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="SV7-rl-svO"/>
-                        <constraint firstAttribute="width" constant="60" id="fTQ-7D-BYc"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="fTQ-7D-BYc"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="17"/>
                     <state key="normal" title="Back">
@@ -49,7 +49,7 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kZJ-Mq-KUh">
                     <rect key="frame" x="495" y="245" width="80" height="30"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="80" id="QCQ-u2-P02"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="QCQ-u2-P02"/>
                         <constraint firstAttribute="height" constant="30" id="Xah-Jo-O5V"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="17"/>
@@ -138,6 +138,7 @@
                 <constraint firstItem="ipO-57-IeG" firstAttribute="leading" secondItem="N4q-7f-VP0" secondAttribute="leading" constant="20" id="22Q-Rs-1nT"/>
                 <constraint firstItem="WnP-4q-Uhq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" priority="750" constant="70" id="2OS-R6-fgv"/>
                 <constraint firstAttribute="bottom" secondItem="wFL-F1-Zle" secondAttribute="bottom" constant="25" id="68i-oi-S5M"/>
+                <constraint firstItem="wFL-F1-Zle" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="6Zf-bq-b2e"/>
                 <constraint firstAttribute="centerX" secondItem="CYa-ax-CQN" secondAttribute="centerX" id="9Jy-Td-033"/>
                 <constraint firstAttribute="centerX" secondItem="ipO-57-IeG" secondAttribute="centerX" id="EIH-9a-RAJ"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ipO-57-IeG" secondAttribute="trailing" constant="70" id="EzC-i9-vgu"/>
@@ -153,6 +154,7 @@
                 <constraint firstAttribute="trailing" secondItem="ipO-57-IeG" secondAttribute="trailing" priority="750" constant="70" id="bVh-SD-w97"/>
                 <constraint firstItem="S1r-rv-APp" firstAttribute="top" secondItem="WnP-4q-Uhq" secondAttribute="bottom" constant="10" id="c4R-QN-RNU"/>
                 <constraint firstItem="kZJ-Mq-KUh" firstAttribute="centerX" secondItem="Lfg-dI-58r" secondAttribute="centerX" id="eRo-eY-8me"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="kZJ-Mq-KUh" secondAttribute="trailing" constant="10" id="gMs-Ip-ac7"/>
                 <constraint firstAttribute="centerX" secondItem="8EL-62-1HZ" secondAttribute="centerX" id="hfm-YJ-quM"/>
                 <constraint firstItem="kZJ-Mq-KUh" firstAttribute="top" secondItem="Lfg-dI-58r" secondAttribute="bottom" constant="-25" id="iSc-1g-kxB"/>
                 <constraint firstAttribute="bottom" secondItem="Lfg-dI-58r" secondAttribute="bottom" constant="30" id="jaO-6q-Fgb"/>
