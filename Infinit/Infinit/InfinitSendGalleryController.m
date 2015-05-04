@@ -212,7 +212,7 @@ static CGSize _asset_size;
                                                options:nil];
     [collections enumerateObjectsUsingBlock:^(PHAssetCollection* collection,
                                               NSUInteger idx,
-                                              BOOL*stop)
+                                              BOOL* stop)
     {
       PHFetchResult* assets2 = [PHAsset fetchAssetsInAssetCollection:collection options:options];
       [assets2 enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL* stop)
@@ -222,9 +222,7 @@ static CGSize _asset_size;
     }];
     [temp_assets removeObjectsInArray:except_list];
     self.assets = [temp_assets copy];
-    [self.collection_view performSelectorOnMainThread:@selector(reloadData)
-                                           withObject:nil
-                                        waitUntilDone:NO];
+    [self.collection_view reloadData];
   }
   else
   {
@@ -242,9 +240,7 @@ static CGSize _asset_size;
       }];
       NSSortDescriptor* sort = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO];
       self.assets = [temp_assets sortedArrayUsingDescriptors:@[sort]];
-      [self.collection_view performSelectorOnMainThread:@selector(reloadData)
-                                             withObject:nil
-                                          waitUntilDone:NO];
+      [self.collection_view reloadData];
     } failureBlock:^(NSError* error)
     {
       NSLog(@"Error loading images %@", error);
@@ -262,6 +258,8 @@ static CGSize _asset_size;
 
 - (void)updateCachedAssets
 {
+  if (![PHAsset class])
+    return;
   BOOL visible = self.isViewLoaded && self.view.window != nil;
   if (!visible)
     return;
@@ -381,7 +379,8 @@ static CGSize _asset_size;
 {
   static dispatch_once_t pred = 0;
   static ALAssetsLibrary* library = nil;
-  dispatch_once(&pred, ^{
+  dispatch_once(&pred, ^
+  {
     library = [[ALAssetsLibrary alloc] init];
   });
   return library;
