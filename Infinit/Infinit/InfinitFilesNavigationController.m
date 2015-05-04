@@ -9,6 +9,7 @@
 #import "InfinitFilesNavigationController.h"
 
 #import "InfinitFilesMultipleViewController.h"
+#import "InfinitSendRecipientsController.h"
 
 #import <Gap/InfinitColor.h>
 
@@ -21,9 +22,7 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  Class this_class = InfinitFilesNavigationController.class;
-  [UINavigationBar appearanceWhenContainedIn:this_class, nil].tintColor =
-    [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
+  self.navigationBar.tintColor = [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -39,6 +38,22 @@
   if (!self.previewing)
     [self popToRootViewControllerAnimated:NO];
   [super viewDidDisappear:animated];
+}
+
+- (void)pushViewController:(UIViewController*)viewController
+                  animated:(BOOL)animated
+{
+  [super pushViewController:viewController animated:animated];
+  if ([viewController isKindOfClass:InfinitSendRecipientsController.class])
+    self.navigationBar.tintColor = [UIColor whiteColor];
+  else
+    self.navigationBar.tintColor = [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
+}
+
+- (UIViewController*)popViewControllerAnimated:(BOOL)animated
+{
+  self.navigationBar.tintColor = [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
+  return [super popViewControllerAnimated:animated];
 }
 
 @end
