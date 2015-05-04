@@ -130,7 +130,10 @@
 {
   NSCharacterSet* white_space = [NSCharacterSet whitespaceAndNewlineCharacterSet];
   NSString* new_name =[self.name_field.text stringByTrimmingCharactersInSet:white_space];
-  [[InfinitStateManager sharedInstance] updateDeviceName:new_name model:nil os:nil];
+  [[InfinitStateManager sharedInstance] updateDeviceName:new_name
+                                                   model:nil 
+                                                      os:nil
+                                         completionBlock:nil];
   [self goBack];
 }
 
