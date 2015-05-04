@@ -429,6 +429,10 @@ static CGFloat _button_height = 45.0f;
       self.status_view.run_transfer_animation = YES;
       break;
 
+    case gap_transaction_paused:
+      self.status_view.image = [UIImage imageNamed:@"icon-status-pause"];
+      break;
+
     case gap_transaction_canceled:
     case gap_transaction_failed:
     case gap_transaction_rejected:
