@@ -68,8 +68,6 @@
 @property (atomic, strong) NSMutableArray* contact_results;
 @property (atomic, strong) NSMutableOrderedSet* recipients;
 
-@property (atomic, readonly) InfinitContact* sms_contact;
-
 @property (atomic) BOOL preloading_contacts;
 
 @end
@@ -182,7 +180,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
   _can_send_sms = [InfinitHostDevice canSendSMS];
-  _sms_contact = nil;
   [self fetchDevices];
   [self fetchSwaggers];
   [self configureSearchField];
@@ -1000,18 +997,7 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
     }
     else if (_can_send_sms && contact.phone_numbers.count == 1 && contact.emails.count == 0)
     {
-      if (self.sms_contact)
-      {
-        [self showSendToOnePhoneMessage];
-        [self.table_view deselectRowAtIndexPath:indexPath
-                                       animated:NO];
-        contact = nil;
-      }
-      else
-      {
-        contact.selected_phone_index = 0;
-        _sms_contact = contact;
-      }
+      contact.selected_phone_index = 0;
     }
     else
     {
@@ -1040,19 +1026,6 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   [self.search_field reloadData];
   [self reloadSearchResults];
   [self.search_field resignFirstResponder];
-}
-
-- (void)showSendToOnePhoneMessage
-{
-  NSString* title = NSLocalizedString(@"Unable to add contact!", nil);
-  NSString* message =
-    NSLocalizedString(@"You can only send to one contact when sending to a phone number", nil);
-  UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
-                                                  message:message
-                                                 delegate:self
-                                        cancelButtonTitle:@"OK"
-                                        otherButtonTitles:nil];
-  [alert show];
 }
 
 - (void)actionSheetCancel:(UIActionSheet*)actionSheet
@@ -1090,21 +1063,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
     }
     else
     {
-      if (self.sms_contact)
-      {
-        [self showSendToOnePhoneMessage];
-        [self.recipients removeObject:contact];
-        [self.table_view deselectRowAtIndexPath:[NSIndexPath indexPathForRow:[self.contact_results
-                                                                              indexOfObject:contact]
-                                                                   inSection:2]
-                                       animated:YES];
-        [self.search_field reloadData];
-      }
-      else
-      {
-        contact.selected_phone_index = index - contact.emails.count;
-        _sms_contact = contact;
-      }
+      contact.selected_phone_index = index - contact.emails.count;
     }
   }
   [self updateSendButton];
@@ -1116,8 +1075,6 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
   InfinitContact* contact =
     [(InfinitSendAbstractCell*)([self.table_view cellForRowAtIndexPath:indexPath]) contact];
   [_recipients removeObject:contact];
-  if ([contact isEqual:self.sms_contact])
-    _sms_contact = nil;
   contact.selected_phone_index = NSNotFound;
   contact.selected_email_index = NSNotFound;
   contact.device = nil;
@@ -1219,8 +1176,6 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
 didDeleteTokenAtIndex:(NSUInteger)index
 {
   InfinitContact* contact = self.recipients[index];
-  if ([contact isEqual:self.sms_contact])
-    _sms_contact = nil;
   contact.selected_email_index = NSNotFound;
   contact.selected_phone_index = NSNotFound;
   if ([contact isEqual:self.me_contact])
