@@ -156,17 +156,15 @@ static NSUInteger _background_onboard_size = 5 * 1000 * 1000;
     _sending = NO;
     InfinitResizableNavigationBar* nav_bar =
       (InfinitResizableNavigationBar*)self.navigationController.navigationBar;
-    if (nav_bar.large || [UIApplication sharedApplication].statusBarHidden)
+    [UIView animateWithDuration:(animated ? 0.3f : 0.0f)
+                     animations:^
     {
-      [UIView animateWithDuration:(animated ? 0.3f : 0.0f)
-                       animations:^
-       {
-         [[UIApplication sharedApplication] setStatusBarHidden:NO
-                                                 withAnimation:UIStatusBarAnimationSlide];
-         ((InfinitResizableNavigationBar*)self.navigationController.navigationBar).large = NO;
-         nav_bar.barTintColor = [InfinitColor colorFromPalette:InfinitPaletteColorLightGray];
-       }];
-    }
+      nav_bar.large = NO;
+      nav_bar.shadowImage = [[UIImage alloc] init];
+      [[UIApplication sharedApplication] setStatusBarHidden:NO
+                                              withAnimation:UIStatusBarAnimationSlide];
+      nav_bar.barTintColor = [InfinitColor colorFromPalette:InfinitPaletteColorLightGray];
+    }];
   }
   if (self.current_status && !self.previewing_files)
     [self refreshContents];
@@ -1601,6 +1599,12 @@ openFileTapped:(NSUInteger)file_index
     InfinitFilesMultipleViewController* files_view_controller =
       (InfinitFilesMultipleViewController*)segue.destinationViewController;
     files_view_controller.folder = sender;
+    [UIView animateWithDuration:0.3f
+                     animations:^
+     {
+       self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+       self.navigationController.navigationBar.shadowImage = nil;
+     }];
   }
 }
 

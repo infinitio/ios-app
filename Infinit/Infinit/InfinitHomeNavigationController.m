@@ -32,14 +32,19 @@
   [super pushViewController:viewController animated:animated];
   if ([viewController isKindOfClass:InfinitSendRecipientsController.class])
   {
-    [UINavigationBar appearance].tintColor = [UIColor whiteColor];
+    self.navigationBar.tintColor = [UIColor whiteColor];
   }
   else if ([viewController isKindOfClass:InfinitFilesViewController.class] ||
            [viewController isKindOfClass:InfinitFilesMultipleViewController.class])
   {
-    [UINavigationBar appearance].tintColor =
-      [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
+    self.navigationBar.tintColor = [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
   }
+}
+
+- (UIViewController*)popViewControllerAnimated:(BOOL)animated
+{
+  self.navigationBar.barTintColor = [InfinitColor colorFromPalette:InfinitPaletteColorLightGray];
+  return [super popViewControllerAnimated:animated];
 }
 
 @end
