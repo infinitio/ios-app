@@ -12,9 +12,6 @@
 
 + (instancetype)sharedInstance;
 
-/** Upload contacts to Meta.
- This will only take place if we have access to the address book and if it hasn't been done before.
- */
-- (void)uploadContacts;
+- (void)gotAddressBookAccess;
 
 @end
