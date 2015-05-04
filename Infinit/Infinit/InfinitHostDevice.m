@@ -113,12 +113,19 @@
   static dispatch_once_t _can_send_sms_token = 0;
   dispatch_once(&_can_send_sms_token, ^
   {
-    CTTelephonyNetworkInfo* network_info = [[CTTelephonyNetworkInfo alloc] init];
-    CTCarrier* carrier = [network_info subscriberCellularProvider];
-    if (carrier.isoCountryCode != nil && carrier.isoCountryCode.length > 0)
-      _can_send_sms = YES;
-    else
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
       _can_send_sms = NO;
+    }
+    else
+    {
+      CTTelephonyNetworkInfo* network_info = [[CTTelephonyNetworkInfo alloc] init];
+      CTCarrier* carrier = [network_info subscriberCellularProvider];
+      if (carrier.isoCountryCode != nil && carrier.isoCountryCode.length > 0)
+        _can_send_sms = YES;
+      else
+        _can_send_sms = NO;
+    }
   });
   return _can_send_sms;
 }
