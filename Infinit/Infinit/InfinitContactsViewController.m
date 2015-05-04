@@ -10,7 +10,6 @@
 
 #import "InfinitAccessContactsView.h"
 #import "InfinitContactCell.h"
-#import "InfinitContactManager.h"
 #import "InfinitContactViewController.h"
 #import "InfinitContactImportCell.h"
 #import "InfinitHostDevice.h"
@@ -139,7 +138,6 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
     {
       [self fetchAddressBook];
-      [[InfinitContactManager sharedInstance] uploadContacts];
     });
   }
   else
@@ -161,12 +159,12 @@
   self.all_swaggers = [NSMutableArray array];
   for (InfinitUser* user in [manager favorites])
   {
-    if (!user.ghost && !user.deleted)
+    if (!user.deleted)
       [self.all_swaggers addObject:[[InfinitContact alloc] initWithInfinitUser:user]];
   }
   for (InfinitUser* user in [manager alphabetical_swaggers])
   {
-    if (!user.ghost && !user.deleted)
+    if (!user.deleted)
       [self.all_swaggers addObject:[[InfinitContact alloc] initWithInfinitUser:user]];
   }
   self.swagger_results = [self.all_swaggers mutableCopy];
@@ -195,7 +193,8 @@
         {
           InfinitContact* contact = [[InfinitContact alloc] initWithABRecord:person];
           if (contact != nil && (contact.emails.count > 0 ||
-                                 ([InfinitHostDevice canSendSMS] && contact.phone_numbers.count > 0)))
+                                 ([InfinitHostDevice canSendSMS] &&
+                                  contact.phone_numbers.count > 0)))
           {
             [self.all_contacts addObject:contact];
           }
