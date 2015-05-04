@@ -10,6 +10,7 @@
 
 #import "InfinitAccessGalleryView.h"
 #import "InfinitColor.h"
+#import "InfinitContactManager.h"
 #import "InfinitContactsViewController.h"
 #import "InfinitExtensionInfo.h"
 #import "InfinitExtensionPopoverController.h"
@@ -31,8 +32,10 @@
 
 #import <Gap/InfinitConnectionManager.h>
 #import <Gap/InfinitPeerTransactionManager.h>
+#import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitTemporaryFileManager.h>
 
+@import AddressBook;
 @import AssetsLibrary;
 @import MessageUI;
 
@@ -260,6 +263,8 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 {
   [super viewDidAppear:animated];
   [self handleExtensionFiles];
+  if ([InfinitStateManager sharedInstance].logged_in && [self addressBookAccessible])
+    [[InfinitContactManager sharedInstance] gotAddressBookAccess];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -932,6 +937,11 @@ shouldSelectViewController:(UIViewController*)viewController
     self.extension_popover.delegate = self;
   }
   return _extension_popover;
+}
+
+- (BOOL)addressBookAccessible
+{
+  return (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized);
 }
 
 @end
