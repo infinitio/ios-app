@@ -11,7 +11,6 @@
 #import "InfinitAccessContactsView.h"
 #import "InfinitApplicationSettings.h"
 #import "InfinitContact.h"
-#import "InfinitContactManager.h"
 #import "InfinitHostDevice.h"
 #import "InfinitImportOverlayView.h"
 #import "InfinitSendContactCell.h"
@@ -195,7 +194,6 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
     {
       [self fetchAddressBook];
-      [[InfinitContactManager sharedInstance] uploadContacts];
     });
   }
   else
@@ -322,12 +320,12 @@
   self.all_swaggers = [NSMutableArray array];
   for (InfinitUser* user in [manager favorites])
   {
-    if (!user.ghost && !user.deleted)
+    if (!user.deleted)
       [self.all_swaggers addObject:[[InfinitContact alloc] initWithInfinitUser:user]];
   }
   for (InfinitUser* user in [manager time_ordered_swaggers])
   {
-    if (!user.ghost && !user.deleted)
+    if (!user.deleted)
       [self.all_swaggers addObject:[[InfinitContact alloc] initWithInfinitUser:user]];
   }
   self.swagger_results = [self.all_swaggers copy];
@@ -586,8 +584,10 @@
       {
         if (id_.unsignedIntValue != 0)
         {
-          [[InfinitUploadThumbnailManager sharedInstance] generateThumbnailsForAssets:_thumbnail_elements
-                                                                 forTransactionWithId:id_];
+          InfinitUploadThumbnailManager* thumb_manager =
+            [InfinitUploadThumbnailManager sharedInstance];
+          [thumb_manager generateThumbnailsForAssets:_thumbnail_elements
+                                forTransactionWithId:id_];
         }
       }
     };
@@ -693,7 +693,10 @@
   {
     if (contact.infinit_user != nil && contact.device == nil)
     {
-      [actual_recipients addObject:contact.infinit_user];
+      if (contact.infinit_user.ghost && contact.infinit_user.phone_number.length)
+        [actual_recipients addObject:contact.infinit_user.phone_number];
+      else
+        [actual_recipients addObject:contact.infinit_user];
     }
     else if (contact.infinit_user != nil && contact.device != nil)
     {
