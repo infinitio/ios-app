@@ -51,11 +51,10 @@
 
 - (void)viewDidLoad
 {
+  UIColor* nav_color = [InfinitColor colorWithRed:81 green:81 blue:73];
   NSDictionary* nav_title_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
                                                                          size:17.0f],
-                                  NSForegroundColorAttributeName: [InfinitColor colorWithRed:81
-                                                                                       green:81
-                                                                                        blue:73]};
+                                  NSForegroundColorAttributeName: nav_color};
   [self.navigationController.navigationBar setTitleTextAttributes:nav_title_attrs];
   NSDictionary* nav_but_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
                                                                        size:18.0f],
