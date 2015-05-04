@@ -34,6 +34,7 @@ typedef NS_ENUM(NSUInteger, InfinitAccountSettings)
 {
   InfinitAccountSettingUser = 0,
   InfinitAccountSettingEdit,
+  InfinitAccountSettingDevice,
 
   InfinitAccountSettingsCount
 };
@@ -185,6 +186,16 @@ typedef NS_ENUM(NSUInteger, InfinitLogoutSettings)
         res = cell;
         break;
       }
+      case InfinitAccountSettingDevice:
+      {
+        InfinitSettingsCell* cell = [self.table_view dequeueReusableCellWithIdentifier:_norm_cell_id 
+                                                                          forIndexPath:indexPath];
+        cell.icon_view.image = [UIImage imageNamed:@"icon-rename-device-iphone"];
+        cell.title_label.text = NSLocalizedString(@"Rename device", nil);
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        res = cell;
+        break;
+      }
     }
   }
   else if (indexPath.section == InfinitSettingsSectionFeedback)
@@ -283,6 +294,9 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
         }
         break;
       }
+      case InfinitAccountSettingDevice:
+        [self performSegueWithIdentifier:@"settings_edit_device" sender:self];
+        break;
 
       default:
         break;
