@@ -27,11 +27,11 @@
 #import "InfinitWormhole.h"
 
 #import "JDStatusBarNotification.h"
-
 #import <FacebookSDK/FacebookSDK.h>
+
 #import <Gap/InfinitConnectionManager.h>
-#import <Gap/InfinitTemporaryFileManager.h>
 #import <Gap/InfinitPeerTransactionManager.h>
+#import <Gap/InfinitTemporaryFileManager.h>
 
 @import AssetsLibrary;
 @import MessageUI;
@@ -64,7 +64,8 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 @property (nonatomic, readonly) NSString* extension_uuid;
 
 @property (nonatomic, strong) MFMessageComposeViewController* sms_controller;
-@property (nonatomic, readonly) NSString* sms_code;
+@property (nonatomic, readonly) NSMutableDictionary* sms_recipients;
+@property (nonatomic, readonly) BOOL smsing;
 
 @end
 
@@ -194,6 +195,8 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
      style.animationType = JDStatusBarAnimationTypeMove;
      return style;
    }];
+  _sms_recipients = [NSMutableDictionary dictionary];
+  _smsing = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -665,30 +668,44 @@ shouldSelectViewController:(UIViewController*)viewController
 
 - (void)handlePeerInvitationCode:(NSDictionary*)dict
 {
-  if (![InfinitHostDevice canSendSMS])
-    return;
-  InfinitPeerTransaction* transaction =
-    [[InfinitPeerTransactionManager sharedInstance] transactionWithId:dict[kInfinitTransactionId]];
-  if (transaction == nil)
-    return;
-  InfinitUser* recipient = transaction.recipient;
-  if (!recipient.phone_number.length ||
-      !recipient.ghost_code.length ||
-      !recipient.ghost_invitation_url.length)
+  @synchronized(self)
   {
-    return;
+    if (![InfinitHostDevice canSendSMS])
+      return;
+    InfinitPeerTransaction* transaction =
+      [[InfinitPeerTransactionManager sharedInstance] transactionWithId:dict[kInfinitTransactionId]];
+    if (transaction == nil)
+      return;
+    InfinitUser* recipient = transaction.recipient;
+    if (!recipient.phone_number.length ||
+        !recipient.ghost_code.length ||
+        !recipient.ghost_invitation_url.length)
+    {
+      return;
+    }
+    self.sms_recipients[recipient.phone_number] = transaction;
+    if (!self.smsing)
+    {
+      _smsing = YES;
+      [self composeMessageForTransaction:transaction];
+    }
   }
+}
+
+- (void)composeMessageForTransaction:(InfinitPeerTransaction*)transaction
+{
+  _smsing = YES;
+  InfinitUser* recipient = transaction.recipient;
   NSString* files = transaction.files.count == 1 ? NSLocalizedString(@"file", nil)
                                                  : NSLocalizedString(@"files", nil);
   NSString* message =
-    [NSString stringWithFormat:NSLocalizedString(@"Hi, I just sent you %lu %@ over Infinit."
-                                                 "You can get the %@ here: %@\n\n"
-                                                 "Don't forget to enter the following "
-                                                 "download code: %@", nil),
-     transaction.files.count, files, files, recipient.ghost_invitation_url, recipient.ghost_code];
+  [NSString stringWithFormat:NSLocalizedString(@"Hi, I just sent you %lu %@ over Infinit."
+                                               "You can get the %@ here: %@\n\n"
+                                               "Don't forget to enter the following "
+                                               "download code: %@", nil),
+   transaction.files.count, files, files, recipient.ghost_invitation_url, recipient.ghost_code];
   if (self.sms_controller == nil)
     _sms_controller = [[MFMessageComposeViewController alloc] init];
-  _sms_code = [recipient.ghost_code copy];
   self.sms_controller.recipients = @[recipient.phone_number];
   self.sms_controller.body = message;
   self.sms_controller.messageComposeDelegate = self;
@@ -700,23 +717,35 @@ shouldSelectViewController:(UIViewController*)viewController
 - (void)messageComposeViewController:(MFMessageComposeViewController*)controller
                  didFinishWithResult:(MessageComposeResult)result
 {
+  InfinitPeerTransaction* transaction = self.sms_recipients[controller.recipients.firstObject];
+  InfinitUser* recipient = transaction.recipient;
   switch (result)
   {
     case MessageComposeResultCancelled:
-      [InfinitMetricsManager sendMetricGhostSMSSent:NO code:self.sms_code failReason:@"cancel"];
+      [InfinitMetricsManager sendMetricGhostSMSSent:NO
+                                               code:recipient.ghost_code
+                                         failReason:@"cancel"];
       break;
     case MessageComposeResultFailed:
-      [InfinitMetricsManager sendMetricGhostSMSSent:NO code:self.sms_code failReason:@"fail"];
+      [InfinitMetricsManager sendMetricGhostSMSSent:NO
+                                               code:recipient.ghost_code
+                                         failReason:@"fail"];
       break;
     case MessageComposeResultSent:
-      [InfinitMetricsManager sendMetricGhostSMSSent:YES code:self.sms_code failReason:nil];
+      [InfinitMetricsManager sendMetricGhostSMSSent:YES 
+                                               code:recipient.ghost_code
+                                         failReason:nil];
       break;
   }
   [self.sms_controller dismissViewControllerAnimated:YES
                                           completion:^
   {
-    _sms_code = nil;
+    [self.sms_recipients removeObjectForKey:recipient.phone_number];
     self.sms_controller = nil;
+    if (self.sms_recipients.count > 0)
+      [self composeMessageForTransaction:self.sms_recipients.allValues[0]];
+    else
+      _smsing = NO;
   }];
 }
 
