@@ -43,6 +43,9 @@
 
 - (void)facebookNoAccount
 {
+  [self.activity stopAnimating];
+  [self setInputsEnabled:YES];
+  self.next_button.hidden = NO;
   [self setInfoText:NSLocalizedString(@"Looks like you don't have an\naccount. Enter email.", nil)];
   self.facebook_button.hidden = YES;
 }
