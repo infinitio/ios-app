@@ -331,6 +331,7 @@
                         <segue destination="RBB-kt-vOH" kind="show" identifier="settings_feedback" id="QON-zo-f6l"/>
                         <segue destination="RBB-kt-vOH" kind="show" identifier="settings_report_problem" id="0ax-4u-uN8"/>
                         <segue destination="FTm-Xp-9pf" kind="show" identifier="settings_edit_profile" id="s2s-MM-c1x"/>
+                        <segue destination="myY-nW-5TG" kind="show" identifier="settings_edit_device" id="naa-LY-pCa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rBL-up-kiJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -514,6 +515,91 @@
             </objects>
             <point key="canvasLocation" x="1433" y="479"/>
         </scene>
+        <!--RENAME DEVICE-->
+        <scene sceneID="CPs-mc-Ino">
+            <objects>
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="bv7-rj-2XH" customClass="InfinitSettingsDeviceViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Np4-dJ-9G9"/>
+                        <viewControllerLayoutGuide type="bottom" id="4yr-iY-ai4"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Y3x-hu-J8L">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JIA-gz-GyD">
+                                <rect key="frame" x="0.0" y="60" width="600" height="50"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-rename-device-iphone" translatesAutoresizingMaskIntoConstraints="NO" id="ASS-Vj-mXe">
+                                        <rect key="frame" x="30" y="14" width="12" height="23"/>
+                                    </imageView>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DCx-EA-FAQ">
+                                        <rect key="frame" x="61" y="15" width="514" height="20"/>
+                                        <color key="tintColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <connections>
+                                            <action selector="textChanged" destination="bv7-rj-2XH" eventType="editingChanged" id="2ip-yK-IoI"/>
+                                            <outlet property="delegate" destination="UIZ-TQ-cnt" id="PAC-5b-BAW"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="ASS-Vj-mXe" firstAttribute="leading" secondItem="JIA-gz-GyD" secondAttribute="leading" constant="30" id="8cb-v7-heL"/>
+                                    <constraint firstAttribute="height" constant="50" id="YQH-ij-peN"/>
+                                    <constraint firstAttribute="trailing" secondItem="DCx-EA-FAQ" secondAttribute="trailing" constant="25" id="cWb-sa-QkU"/>
+                                    <constraint firstAttribute="centerY" secondItem="ASS-Vj-mXe" secondAttribute="centerY" id="hhO-DU-dq9"/>
+                                    <constraint firstItem="DCx-EA-FAQ" firstAttribute="leading" secondItem="ASS-Vj-mXe" secondAttribute="trailing" constant="19" id="tub-Zh-Lvt"/>
+                                    <constraint firstAttribute="centerY" secondItem="DCx-EA-FAQ" secondAttribute="centerY" id="xr2-tn-4PY"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95294117647058818" alpha="1" colorSpace="calibratedRGB"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="JIA-gz-GyD" firstAttribute="leading" secondItem="Y3x-hu-J8L" secondAttribute="leading" id="JCM-Ys-3CK"/>
+                            <constraint firstAttribute="trailing" secondItem="JIA-gz-GyD" secondAttribute="trailing" id="Sai-Tr-gkc"/>
+                            <constraint firstItem="JIA-gz-GyD" firstAttribute="top" secondItem="Y3x-hu-J8L" secondAttribute="top" constant="60" id="ywZ-QE-fVA"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="h8R-8d-E9E" appends="YES" id="47R-GB-ncp"/>
+                        </connections>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="RENAME DEVICE" id="rRS-HT-VPY">
+                        <barButtonItem key="leftBarButtonItem" image="icon-back-white" id="gqW-fB-dBA">
+                            <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="backTapped:" destination="bv7-rj-2XH" id="sz5-ME-j8G"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="OK" id="RBf-3C-mkH">
+                            <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="okTapped:" destination="bv7-rj-2XH" id="EnN-XQ-21k"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="name_field" destination="DCx-EA-FAQ" id="S64-L8-WRc"/>
+                        <outlet property="name_view" destination="JIA-gz-GyD" id="NBf-ek-JeI"/>
+                        <outlet property="ok_button" destination="RBf-3C-mkH" id="skF-dS-Cer"/>
+                        <outlet property="view" destination="Y3x-hu-J8L" id="RkF-3v-b68"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5CR-nW-emd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="h8R-8d-E9E">
+                    <connections>
+                        <action selector="screenTapped:" destination="bv7-rj-2XH" id="8el-Pm-mgI"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="1433" y="1175"/>
+        </scene>
         <!--SETTINGS-->
         <scene sceneID="BgV-Sc-ZSQ">
             <objects>
@@ -687,7 +773,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="exT-xk-JEF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3054" y="1119"/>
+            <point key="canvasLocation" x="3866" y="1119"/>
         </scene>
         <!--Infinit Send Split View Controller i Pad-->
         <scene sceneID="7q8-zE-GWj">
@@ -700,7 +786,7 @@
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CeN-Dc-LG3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2232" y="781"/>
+            <point key="canvasLocation" x="3044" y="781"/>
         </scene>
         <!--SEND_RECIPIENTS-->
         <scene sceneID="05q-5G-qxd">
@@ -711,7 +797,7 @@
                         <viewControllerLayoutGuide type="bottom" id="zqG-cb-qD6"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="nF7-gs-IAg">
-                        <rect key="frame" x="0.0" y="64" width="600" height="556"/>
+                        <rect key="frame" x="0.0" y="44" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B4i-MR-JeK">
@@ -744,7 +830,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z9O-hM-TV6">
-                                <rect key="frame" x="0.0" y="556" width="600" height="55"/>
+                                <rect key="frame" x="0.0" y="536" width="600" height="55"/>
                                 <color key="backgroundColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="eCK-g0-lfl"/>
@@ -765,10 +851,10 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lp7-op-Gu1">
-                                <rect key="frame" x="0.0" y="66" width="600" height="490"/>
+                                <rect key="frame" x="0.0" y="66" width="600" height="470"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="40" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Gnb-fF-2Af">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="490"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="470"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="288" id="FK0-i4-Q5v"/>
                                             <constraint firstAttribute="height" constant="400" id="MW8-zC-bIP"/>
@@ -2683,6 +2769,24 @@ type of file in Infinit</string>
             </objects>
             <point key="canvasLocation" x="1525" y="-4513"/>
         </scene>
+        <!--Infinit Portrait Navigation Controller-->
+        <scene sceneID="kL3-aS-fUS">
+            <objects>
+                <navigationController extendedLayoutIncludesOpaqueBars="YES" hidesBottomBarWhenPushed="YES" id="myY-nW-5TG" customClass="InfinitPortraitNavigationController" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="T8e-JT-aTi">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="bv7-rj-2XH" kind="relationship" relationship="rootViewController" id="ctc-c0-V28"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="r6p-j9-N7R" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="695" y="1175"/>
+        </scene>
     </scenes>
     <resources>
         <image name="bg-balloon" width="230" height="226"/>
@@ -2701,6 +2805,7 @@ type of file in Infinit</string>
         <image name="icon-onboarding-arrow-right-red" width="11" height="19"/>
         <image name="icon-onboarding-arrow-right-white" width="10" height="16"/>
         <image name="icon-photo-white" width="29" height="26"/>
+        <image name="icon-rename-device-iphone" width="12" height="23"/>
         <image name="icon-save-red" width="22" height="27"/>
         <image name="icon-search" width="21" height="19"/>
         <image name="icon-send-ipad" width="76" height="76"/>
@@ -2718,12 +2823,12 @@ type of file in Infinit</string>
         <image name="schema-onboarding-infinite" width="214" height="90"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="AkK-Qo-7Ww"/>
-        <segue reference="zep-Dc-F4h"/>
-        <segue reference="5jp-t6-Gni"/>
         <segue reference="FIr-rc-U7J"/>
         <segue reference="geu-yv-K0l"/>
         <segue reference="QON-zo-f6l"/>
+        <segue reference="zsD-TI-UrV"/>
+        <segue reference="Yah-cg-ZRU"/>
+        <segue reference="5jp-t6-Gni"/>
         <segue reference="19z-F9-Cn7"/>
     </inferredMetricsTieBreakers>
 </document>
