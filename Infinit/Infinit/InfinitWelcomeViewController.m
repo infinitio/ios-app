@@ -887,65 +887,74 @@ static dispatch_once_t _password_token = 0;
 
 - (void)determineFacebookUserType
 {
+  __weak InfinitWelcomeViewController* weak_self = self;
   [[InfinitStateManager sharedInstance] userRegisteredWithFacebookId:self.facebook_user.id_
                                                      completionBlock:^(InfinitStateResult* result,
                                                                        BOOL registered)
   {
+    InfinitWelcomeViewController* strong_self = weak_self;
     if (result.success && registered)
     {
-      [self facebookConnect];
+      [strong_self facebookConnect];
     }
     else
     {
-      if (self.current_controller == self.email_controller &&
-          self.email_controller.email.infinit_isEmail)
+      if (strong_self.current_controller == strong_self.email_controller &&
+          strong_self.email_controller.email.infinit_isEmail)
       {
-        self.facebook_user.email = self.email_controller.email;
-        _email = self.email_controller.email;
+        strong_self.facebook_user.email = strong_self.email_controller.email;
+        strong_self->_email = strong_self.email_controller.email;
       }
-      if (self.current_controller == self.last_step_controller)
-        self.facebook_user.email = self.email;
-      [[InfinitStateManager sharedInstance] accountStatusForEmail:self.facebook_user.email
+      if (strong_self.current_controller == strong_self.last_step_controller)
+        strong_self.facebook_user.email = strong_self.email;
+      if (!strong_self.facebook_user.email.length)
+      {
+        [strong_self showViewController:self.email_controller animated:YES reverse:NO];
+        [strong_self.email_controller facebookNoAccount];
+        return;
+      }
+      [[InfinitStateManager sharedInstance] accountStatusForEmail:strong_self.facebook_user.email
                                                   completionBlock:^(InfinitStateResult* result,
                                                                     NSString* email,
                                                                     AccountStatus status)
       {
-        self.facebook_user.account_status = status;
+        InfinitWelcomeViewController* strong_self = weak_self;
+        strong_self.facebook_user.account_status = status;
         if (status == gap_account_status_new || status == gap_account_status_contact)
         {
-          _name = self.facebook_user.name;
-          if (self.current_controller == self.last_step_controller)
+          _name = strong_self.facebook_user.name;
+          if (strong_self.current_controller == strong_self.last_step_controller)
           {
-            self.last_step_controller.name = self.facebook_user.name;
-            [self facebookConnect];
+            strong_self.last_step_controller.name = strong_self.facebook_user.name;
+            [strong_self facebookConnect];
           }
-          else if (self.current_controller == self.login_controller)
+          else if (strong_self.current_controller == strong_self.login_controller)
           {
-            [self showViewController:self.email_controller animated:YES reverse:NO];
-            self.email_controller.email = self.facebook_user.email;
-            [self.email_controller facebookNoAccount];
+            [strong_self showViewController:strong_self.email_controller animated:YES reverse:NO];
+            strong_self.email_controller.email = strong_self.facebook_user.email;
+            [strong_self.email_controller facebookNoAccount];
           }
           else
           {
-            if (self.current_controller != self.email_controller)
-              [self showViewController:self.email_controller animated:YES reverse:NO];
+            if (strong_self.current_controller != strong_self.email_controller)
+              [strong_self showViewController:strong_self.email_controller animated:YES reverse:NO];
             else
-              [self.email_controller gotEmailAccountType];
-            self.email_controller.email = self.facebook_user.email;
+              [strong_self.email_controller gotEmailAccountType];
+            self.email_controller.email = strong_self.facebook_user.email;
           }
         }
         else if (status == gap_account_status_ghost)
         {
-          [self showViewController:self.code_controller animated:YES reverse:NO];
+          [strong_self showViewController:strong_self.code_controller animated:YES reverse:NO];
         }
         else if (status == gap_account_status_registered)
         {
           // Their Facebook email is already registered so they must do a normal login.
-          _email = self.facebook_user.email;
+          _email = strong_self.facebook_user.email;
           _facebook_user = nil;
-          if (self.current_controller != self.password_controller)
-            [self showViewController:self.password_controller animated:YES reverse:NO];
-          self.password_controller.hide_facebook_button = YES;
+          if (strong_self.current_controller != strong_self.password_controller)
+            [strong_self showViewController:strong_self.password_controller animated:YES reverse:NO];
+          strong_self.password_controller.hide_facebook_button = YES;
         }
       }];
     }
