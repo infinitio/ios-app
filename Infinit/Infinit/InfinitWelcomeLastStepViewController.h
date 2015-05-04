@@ -16,6 +16,8 @@
 
 @property (nonatomic, weak) id<InfinitWelcomeLastStepProtocol> delegate;
 
+@property (nonatomic, readwrite) NSString* name;
+
 @end
 
 @protocol InfinitWelcomeLastStepProtocol <InfinitWelcomeAbstractProtocol>

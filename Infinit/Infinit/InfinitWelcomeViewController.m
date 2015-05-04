@@ -848,7 +848,7 @@ static dispatch_once_t _password_token = 0;
 {
   NSString* token = FBSession.activeSession.accessTokenData.accessToken;
   [[InfinitStateManager sharedInstance] facebookConnect:token
-                                           emailAddress:self.email 
+                                           emailAddress:self.email
                                         completionBlock:^(InfinitStateResult* result)
   {
     if (result.success)
@@ -901,7 +901,10 @@ static dispatch_once_t _password_token = 0;
           self.email_controller.email.infinit_isEmail)
       {
         self.facebook_user.email = self.email_controller.email;
+        _email = self.email_controller.email;
       }
+      if (self.current_controller == self.last_step_controller)
+        self.facebook_user.email = self.email;
       [[InfinitStateManager sharedInstance] accountStatusForEmail:self.facebook_user.email
                                                   completionBlock:^(InfinitStateResult* result,
                                                                     NSString* email,
@@ -913,6 +916,7 @@ static dispatch_once_t _password_token = 0;
           _name = self.facebook_user.name;
           if (self.current_controller == self.last_step_controller)
           {
+            self.last_step_controller.name = self.facebook_user.name;
             [self facebookConnect];
           }
           else if (self.current_controller == self.login_controller)
@@ -966,7 +970,7 @@ static dispatch_once_t _password_token = 0;
     else
     {
       NSData* avatar_data =
-      [NSData dataWithContentsOfURL:[self avatarURLForUserWithId:fb_user.objectID]];
+        [NSData dataWithContentsOfURL:[self avatarURLForUserWithId:fb_user.objectID]];
       UIImage* avatar = [UIImage imageWithData:avatar_data];
       NSString* email = fb_user[@"email"];
       NSString* name = fb_user.name;

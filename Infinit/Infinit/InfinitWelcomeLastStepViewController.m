@@ -59,6 +59,13 @@
   }];
 }
 
+#pragma mark - Public
+
+- (void)setName:(NSString*)name
+{
+  self.name_field.text = name;
+}
+
 #pragma mark - Text Field Delegate
 
 - (IBAction)textChanged:(id)sender
