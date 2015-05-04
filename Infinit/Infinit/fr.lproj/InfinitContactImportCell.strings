@@ -2,7 +2,7 @@
 "JJ0-ax-QO6.normalTitle" = "TROUVER DES AMIS FACEBOOK";
 
 /* Class = "UILabel"; text = "Infinit is up to 30x faster and more\nsecure if your friends are on the app."; ObjectID = "t2U-eE-XfF"; */
-"t2U-eE-XfF.text" = "Infinit est jusqu'à 30x plus rapide et plus\nsécurisé si vos amis sont sur l'app.";
+"t2U-eE-XfF.text" = "Infinit est jusqu'à 30x plus rapide et plus\nsécurisé si vos amis sont aussi sur Infinit.";
 
 /* Class = "UIButton"; normalTitle = "ACCESS PHONE CONTACTS"; ObjectID = "z52-CB-aDr"; */
 "z52-CB-aDr.normalTitle" = "ACCES AUX CONTACTS";

@@ -1,0 +1,21 @@
+/* Class = "UIButton"; normalTitle = "Back"; ObjectID = "5mc-ln-JbU"; */
+"5mc-ln-JbU.normalTitle" = "Précédent";
+
+/* Class = "UIButton"; normalTitle = "or login with Facebook"; ObjectID = "Cyx-IQ-tWr"; */
+"Cyx-IQ-tWr.normalTitle" = "ou se connecter avec Facebook";
+
+/* Class = "UIButton"; normalTitle = "forgot?"; ObjectID = "KkB-d0-Hgu"; */
+"KkB-d0-Hgu.normalTitle" = "oublié ?";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "NBs-14-iOO"; */
+"NBs-14-iOO.normalTitle" = "Connexion";
+
+/* Class = "UITextField"; placeholder = "●●●●●●"; ObjectID = "Pcp-Eb-fyv"; */
+"Pcp-Eb-fyv.placeholder" = "●●●●●●";
+
+/* Class = "UILabel"; text = "Enter your login details."; ObjectID = "PpZ-vy-5cV"; */
+"PpZ-vy-5cV.text" = "Entrez vos infos de connexion.";
+
+/* Class = "UITextField"; placeholder = "hey@johndoe.com"; ObjectID = "zcU-Iu-Kcd"; */
+"zcU-Iu-Kcd.placeholder" = "coucou@dupont.fr";
+

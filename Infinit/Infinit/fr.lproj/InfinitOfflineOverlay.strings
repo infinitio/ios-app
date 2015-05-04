@@ -1,5 +1,5 @@
 /* Class = "UIButton"; normalTitle = "GO TO MY FILES"; ObjectID = "d4i-wh-gxH"; */
-"d4i-wh-gxH.normalTitle" = "MES FICHIERS";
+"d4i-wh-gxH.normalTitle" = "ACCEDER A MES FICHIERS";
 
 /* Class = "UILabel"; text = "You're offline.\nYou can only access your files."; ObjectID = "gjd-ZU-qcc"; */
 "gjd-ZU-qcc.text" = "Vous êtes déconnecté.\nVous pouvez uniquement accéder à vos fichiers.";
