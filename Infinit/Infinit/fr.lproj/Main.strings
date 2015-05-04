@@ -1,5 +1,5 @@
 /* Class = "UILabel"; text = "No limits. No waiting. No hassle. Always works!"; ObjectID = "0G6-1i-g1R"; */
-"0G6-1i-g1R.text" = "Pas de limites. Pas d'attente. Pas de tracas. Fonctionne toujours !";
+"0G6-1i-g1R.text" = "Pas de limites. Pas d'attente. Pas de tracas.\nFonctionne toujours !";
 
 /* Class = "UILabel"; text = "Mike Dee"; ObjectID = "0RN-Xm-k4b"; */
 "0RN-Xm-k4b.text" = "Mike Dee";
@@ -35,7 +35,7 @@
 "BMO-Tq-quz.text" = "Étiquette";
 
 /* Class = "UILabel"; text = "Send any photo or video\nto your friends"; ObjectID = "Bbd-IZ-yiZ"; */
-"Bbd-IZ-yiZ.text" = "Envoyez n'importe quelle photo ou vidéo à vos amis";
+"Bbd-IZ-yiZ.text" = "Envoyez n'importe quelle\nphoto ou vidéo à vos amis";
 
 /* Class = "UIButton"; normalTitle = "ACCESS PHONE CONTACTS"; ObjectID = "CQ1-1P-kb6"; */
 "CQ1-1P-kb6.normalTitle" = "ACCÉDER À VOS CONTACTS";
@@ -86,13 +86,13 @@
 "HEy-Gq-I91.title" = "Objet";
 
 /* Class = "UILabel"; text = "Receive and view any\ntype of file in Infinit"; ObjectID = "J59-YW-qzz"; */
-"J59-YW-qzz.text" = "Recevez et ouvrez tout type de fichier dans Infinit";
+"J59-YW-qzz.text" = "Recevez et ouvrez tout\ntype de fichier dans Infinit";
 
 /* Class = "UIViewController"; title = "Files Table iPad"; ObjectID = "KNs-fB-D4y"; */
 "KNs-fB-D4y.title" = "Tableau des fichiers iPad";
 
 /* Class = "UILabel"; text = "Access photos, videos, music, PDFs and more"; ObjectID = "Kjb-PN-Gxr"; */
-"Kjb-PN-Gxr.text" = "Accédez à vos photos, vidéos, musique, PDF et plus";
+"Kjb-PN-Gxr.text" = "Accédez à vos photos, vidéos, musique,\nPDF et plus";
 
 /* Class = "UILabel"; text = "RECEIVED FILES"; ObjectID = "KlZ-FW-RX5"; */
 "KlZ-FW-RX5.text" = "FICHIERS REÇUS";
@@ -107,7 +107,7 @@
 "MoH-dc-fmU.text" = "+5";
 
 /* Class = "UILabel"; text = "Send your files between\nyour own devices"; ObjectID = "N40-3y-JCe"; */
-"N40-3y-JCe.text" = "Envoyez vos fichiers entre vos appareils";
+"N40-3y-JCe.text" = "Envoyez vos fichiers entre\nvos appareils";
 
 /* Class = "UINavigationItem"; title = "EDIT PROFILE"; ObjectID = "OWZ-ZK-qG3"; */
 "OWZ-ZK-qG3.title" = "MODIFIER LE PROFIL";
