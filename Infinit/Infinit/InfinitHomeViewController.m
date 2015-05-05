@@ -568,42 +568,34 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
       switch (item.type)
       {
         case InfinitHomeOnboardingCellBackground:
-          text = NSLocalizedString(@"Rest assured! Closing Infinit\n"
-                                   "won't stop your transfer.", nil);
+          text = NSLocalizedString(@"Rest assured! Closing Infinit\nwon't stop your transfer.", nil);
           lines = 2;
           break;
         case InfinitHomeOnboardingCellGhostSent:
           if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
           {
             text =
-              [NSString stringWithFormat:NSLocalizedString(@"All set! A message will\n"
-                                                           "be sent to\n"
-                                                           "%@.", nil),
+              [NSString stringWithFormat:NSLocalizedString(@"All set! A message will\nbe sent to\n%@.", nil),
                self.onboarding_ghost_name];
             lines = 3;
           }
           else
           {
             text =
-              [NSString stringWithFormat:NSLocalizedString(@"All set! A message will be sent\n"
-                                                           "to %@.", nil),
+              [NSString stringWithFormat:NSLocalizedString(@"All set! A message will be sent\nto %@.", nil),
                self.onboarding_ghost_name];
             lines = 2;
           }
           gray_range = [text rangeOfString:self.onboarding_ghost_name];
           break;
         case InfinitHomeOnboardingCellPeerSent:
-          text = [NSString stringWithFormat:NSLocalizedString(@"We'll let you know\n"
-                                                              "when %@\n"
-                                                              "receives your files.", nil),
+          text = [NSString stringWithFormat:NSLocalizedString(@"We'll let you know\nwhen %@\nreceives your files.", nil),
                   self.onboarding_peer_name];
           gray_range = [text rangeOfString:self.onboarding_peer_name];
           lines = 3;
           break;
         case InfinitHomeOnboardingCellSelfSent:
-          text = NSLocalizedString(@"Install Infinit on another\n"
-                                   "device to retrieve your\n"
-                                   "files.", nil);
+          text = NSLocalizedString(@"Install Infinit on another\ndevice to retrieve your\nfiles.", nil);
           lines = 3;
           break;
 
@@ -694,20 +686,17 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
       type = InfinitHomeOnboardingCellNotifications;
       if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
       {
-        text = NSLocalizedString(@"Your current transfers and\n"
-                                 "notifications will show\nup here.", nil);
+        text = NSLocalizedString(@"Your current transfers and\nnotifications will show\nup here.", nil);
       }
       else
       {
-        text = NSLocalizedString(@"Your current transfers and\n"
-                                 "notifications will show up here.", nil);
+        text = NSLocalizedString(@"Your current transfers and\nnotifications will show up here.", nil);
       }
     }
     else
     {
       type = InfinitHomeOnboardingCellSwipe;
-      text = NSLocalizedString(@"Swipe the cards left or right\n"
-                               "to remove them.", nil);
+      text = NSLocalizedString(@"Swipe the cards left or right\nto remove them.", nil);
     }
     [cell setType:type withText:text grayRange:NSMakeRange(NSNotFound, 0) numberOfLines:3];
     res = cell;
