@@ -38,6 +38,9 @@
 "Account already registered for\nFacebook email address." = "Un compte existe déjà avec\nvotre adresse mail Facebook.";
 
 /* No comment provided by engineer. */
+"All set! A message will be sent to %@." = "Parfait ! Un message va être envoyé à %@.";
+
+/* No comment provided by engineer. */
 "Back" = "Précédent";
 
 /* No comment provided by engineer. */
@@ -92,6 +95,9 @@
 "Email not valid." = "Adresse mail invalide.";
 
 /* No comment provided by engineer. */
+"Enter the download code from\nyour SMS or email invitation." = "Entrez le code de téléchargement\nde votre invitation SMS ou mail.";
+
+/* No comment provided by engineer. */
 "Error – %@ must retry" = "Erreur - %@ doit réessayer";
 
 /* No comment provided by engineer. */
@@ -107,6 +113,15 @@
 "FEEDBACK" = "SUGGESTION";
 
 /* No comment provided by engineer. */
+"Files copied!" = "Fichiers copiés !";
+
+/* No comment provided by engineer. */
+"Files ready!" = "Fichiers prêts !";
+
+/* No comment provided by engineer. */
+"Free up some space on your device and try again or send fewer files." = "Libérez de l'espace sur votre appareil ou retentez avec moins de fichiers.";
+
+/* No comment provided by engineer. */
 "From %@" = "De %@";
 
 /* No comment provided by engineer. */
@@ -116,10 +131,19 @@
 "GOOD, I LIKE IT!" = "BIEN, J'AIME ÇA !";
 
 /* No comment provided by engineer. */
+"GOT IT" = "OK";
+
+/* No comment provided by engineer. */
 "Handle not valid" = "Pseudo invalide";
 
 /* No comment provided by engineer. */
+"Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@\n\nDon't forget to enter the following download code: %@" = "Hey ! Je viens de t'envoyer %1$lu %2$@ sur Infinit. Tu peux récupérer %3$@ ici : %4$@\n\nN'oublie pas de rentrer le code de téléchargement : %5$@";
+
+/* No comment provided by engineer. */
 "How's your experience with Infinit?" = "Comment trouvez-vous Infinit ?";
+
+/* No comment provided by engineer. */
+"Infinit" = "Infinit";
 
 /* No comment provided by engineer. */
 "Infinit requires access to your camera roll" = "Infinit souhaite accéder à votre pellicule";
@@ -128,7 +152,13 @@
 "Infinit requires access to your gallery to send photos and videos." = "Infinit a besoin d'accéder à votre galerie pour envoyer des photos et vidéos.";
 
 /* No comment provided by engineer. */
-"Login/Password don't match." = "Informations de connexion invalides.";
+"Infinit was unable to fetch the files from your gallery. Check that you have some free space and try again." = "Infinit n'a pas pu récupérer les fichiers de votre galerie. Vérifiez que avez assez d'espace libre et réessayez.";
+
+/* No comment provided by engineer. */
+"Install Infinit on another device to retrieve your files." = "Installez Infinit sur un autre appareil pour récupérer vos fichiers.";
+
+/* No comment provided by engineer. */
+"Login/Password don't match." = "Informations de connexion\ninvalides.";
 
 /* No comment provided by engineer. */
 "Logout" = "Déconnexion";
@@ -176,6 +206,15 @@
 "Oh no! Infinit can't connect. Retry?" = "Infinit n'arrive pas à se connecter. Réessayer ?";
 
 /* No comment provided by engineer. */
+"Oops!" = "Oups !";
+
+/* No comment provided by engineer. */
+"Oops!\nNot enough space." = "Oups !\nPas assez d'espace disponible.";
+
+/* No comment provided by engineer. */
+"Open Infinit now\nto send them!" = "Ouvrez Infinit pour\nles envoyer !";
+
+/* No comment provided by engineer. */
 "Open Infinit to ensure your transfer continues" = "Ouvrez Infinit pour continuer votre transfert";
 
 /* No comment provided by engineer. */
@@ -206,6 +245,9 @@
 "Preparing" = "Préparation";
 
 /* No comment provided by engineer. */
+"Preparing your files..." = "Fichiers en préparation...";
+
+/* No comment provided by engineer. */
 "Preparing your transfer..." = "Préparation de votre transfert...";
 
 /* No comment provided by engineer. */
@@ -215,7 +257,7 @@
 "RESUME" = "REPRENDRE";
 
 /* No comment provided by engineer. */
-"Rate us" = "Notez nous";
+"Rate us" = "Notez-nous";
 
 /* No comment provided by engineer. */
 "Received" = "Reçu";
@@ -227,7 +269,13 @@
 "Received your files!" = "A reçu vos fichiers !";
 
 /* No comment provided by engineer. */
+"Rename device" = "Renommer cet appareil";
+
+/* No comment provided by engineer. */
 "Report a problem" = "Signaler un problème";
+
+/* No comment provided by engineer. */
+"Rest assured! Closing Infinit won't stop your transfer." = "Tout va bien ! Fermer Infinit n'interrompt pas vos transferts.";
 
 /* No comment provided by engineer. */
 "SELECT CONTACT" = "CHOISIR UN CONTACT";
@@ -272,13 +320,16 @@
 "Skip" = "Passer";
 
 /* No comment provided by engineer. */
+"Swipe the cards left or right to remove them." = "Balayez les cartes vers la gauche ou la droite pour les supprimer.";
+
+/* No comment provided by engineer. */
 "Take a new photo" = "Prendre une nouvelle photo";
 
 /* No comment provided by engineer. */
 "Take new photo" = "Prendre une nouvelle photo";
 
 /* No comment provided by engineer. */
-"Tap 'OK' so we can display\nyour contacts." = "Choisissez 'OK' pour que nous\npuissions afficher vos contacts.";
+"Tap 'OK' so we can display your contacts." = "Choisissez 'OK' pour que nous puissions afficher vos contacts.";
 
 /* No comment provided by engineer. */
 "Tap 'OK' to select your photos and videos." = "Choisissez 'OK' pour sélectionner vos photos et vidéos.";
@@ -311,16 +362,13 @@
 "Transferring on another device" = "Transfert vers un autre appareil";
 
 /* No comment provided by engineer. */
-"Type email or send to yourself..." = "Saisir un e-mail, ou envoyer à vous-même...";
+"Type email or send to yourself..." = "Envoyer à un email ou à vous-même...";
 
 /* No comment provided by engineer. */
 "UNFAVORITE" = "SUPPR FAVORI";
 
 /* No comment provided by engineer. */
 "Unable to accept!" = "Impossible d'accepter !";
-
-/* (No Commment) */
-"Unable to add contact!" = "Impossible d'ajouter le contact !";
 
 /* No comment provided by engineer. */
 "Unable to edit your profile without an Internet connection." = "Impossible d'éditer votre profil sans connexion Internet.";
@@ -344,10 +392,10 @@
 "Waiting for you to accept" = "En attente de votre acceptation.";
 
 /* No comment provided by engineer. */
-"Write your feedback here..." = "Écrivez votre avis ici...";
+"We'll let you know when %@ receives your files." = "Nous vous informerons quand %@ recevra les fichiers.";
 
-/* (No Commment) */
-"You can only send to one contact when sending to a phone number" = "Vous pouvez uniquement envoyer à un seul contact lorsque vous envoyez à un numéro";
+/* No comment provided by engineer. */
+"Write your feedback here..." = "Écrivez votre avis ici...";
 
 /* No comment provided by engineer. */
 "You declined the transfer!" = "Vous avez refusé le transfert !";
@@ -362,7 +410,13 @@
 "You're already logged in." = "Vous êtes déjà connecté.";
 
 /* No comment provided by engineer. */
+"Your current transfers and notifications will show up here." = "Vos transferts et vos notifications apparaîtront ici.";
+
+/* No comment provided by engineer. */
 "Your email has not been confirmed." = "Votre email n'est pas confirmé.";
+
+/* No comment provided by engineer. */
+"Your files are being\ncopied to Infinit..." = "Vos fichiers sont \ncopiés dans Infinit...";
 
 /* No comment provided by engineer. */
 "file" = "fichier";
@@ -372,4 +426,10 @@
 
 /* No comment provided by engineer. */
 "me" = "moi";
+
+/* No comment provided by engineer. */
+"the file" = "le fichier";
+
+/* No comment provided by engineer. */
+"the files" = "les fichiers";
 

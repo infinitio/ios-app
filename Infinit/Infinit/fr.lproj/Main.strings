@@ -35,7 +35,7 @@
 "BMO-Tq-quz.text" = "Étiquette";
 
 /* Class = "UILabel"; text = "Send any photo or video\nto your friends"; ObjectID = "Bbd-IZ-yiZ"; */
-"Bbd-IZ-yiZ.text" = "Envoyez n'importe quelle\nphoto ou vidéo à vos amis";
+"Bbd-IZ-yiZ.text" = "Envoyez n'importe quelle\n photo ou vidéo à vos amis";
 
 /* Class = "UIButton"; normalTitle = "ACCESS PHONE CONTACTS"; ObjectID = "CQ1-1P-kb6"; */
 "CQ1-1P-kb6.normalTitle" = "ACCÉDER À VOS CONTACTS";
@@ -86,7 +86,7 @@
 "HEy-Gq-I91.title" = "Objet";
 
 /* Class = "UILabel"; text = "Receive and view any\ntype of file in Infinit"; ObjectID = "J59-YW-qzz"; */
-"J59-YW-qzz.text" = "Recevez et ouvrez tout\ntype de fichier dans Infinit";
+"J59-YW-qzz.text" = "Recevez et ouvrez tout type\nde fichier dans Infinit";
 
 /* Class = "UIViewController"; title = "Files Table iPad"; ObjectID = "KNs-fB-D4y"; */
 "KNs-fB-D4y.title" = "Tableau des fichiers iPad";
@@ -107,7 +107,7 @@
 "MoH-dc-fmU.text" = "+5";
 
 /* Class = "UILabel"; text = "Send your files between\nyour own devices"; ObjectID = "N40-3y-JCe"; */
-"N40-3y-JCe.text" = "Envoyez vos fichiers entre\nvos appareils";
+"N40-3y-JCe.text" = "Envoyez vos fichiers\nentre vos appareils";
 
 /* Class = "UINavigationItem"; title = "EDIT PROFILE"; ObjectID = "OWZ-ZK-qG3"; */
 "OWZ-ZK-qG3.title" = "MODIFIER LE PROFIL";
@@ -117,6 +117,9 @@
 
 /* Class = "UINavigationController"; title = "REPORT A PROBLEM"; ObjectID = "RBB-kt-vOH"; */
 "RBB-kt-vOH.title" = "SIGNALER UN PROBLÈME";
+
+/* Class = "UIBarButtonItem"; title = "OK"; ObjectID = "RBf-3C-mkH"; */
+"RBf-3C-mkH.title" = "OK";
 
 /* Class = "UIViewController"; title = "Home View Controller"; ObjectID = "RJM-ey-XCj"; */
 "RJM-ey-XCj.title" = "Contrôleur Home View";
@@ -192,6 +195,9 @@
 
 /* Class = "UINavigationItem"; title = "FILES"; ObjectID = "qGT-HW-jdc"; */
 "qGT-HW-jdc.title" = "FICHIERS";
+
+/* Class = "UINavigationItem"; title = "RENAME DEVICE"; ObjectID = "rRS-HT-VPY"; */
+"rRS-HT-VPY.title" = "RENOMMER APPAREIL";
 
 /* Class = "UINavigationController"; title = "SETTINGS"; ObjectID = "rsj-6b-IS1"; */
 "rsj-6b-IS1.title" = "RÉGLAGES";

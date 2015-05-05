@@ -2,7 +2,7 @@
 "8EL-62-1HZ.normalTitle" = "ou s'inscrire avec Facebook";
 
 /* Class = "UILabel"; text = "Enter your name and a password."; ObjectID = "CYa-ax-CQN"; */
-"CYa-ax-CQN.text" = "Entrez votre nom et\nun mot de passe.";
+"CYa-ax-CQN.text" = "Entrez votre nom et un mot de passe.";
 
 /* Class = "UITextField"; placeholder = "John Doe"; ObjectID = "WnP-4q-Uhq"; */
 "WnP-4q-Uhq.placeholder" = "Jean Dupont";

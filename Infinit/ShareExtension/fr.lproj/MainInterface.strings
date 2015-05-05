@@ -1,11 +1,11 @@
 /* Class = "UILabel"; text = "Open Infinit now\nto send them!"; ObjectID = "0kE-iw-E6e"; */
-"0kE-iw-E6e.text" = "Ouvrez Infinit\npour les envoyer !";
+"0kE-iw-E6e.text" = "Ouvrez Infinit pour les envoyer !";
 
 /* Class = "UIButton"; normalTitle = "GOT IT"; ObjectID = "2KC-7y-XXg"; */
 "2KC-7y-XXg.normalTitle" = "OK";
 
 /* Class = "UILabel"; text = "Your files are being\ncopied to Infinit..."; ObjectID = "P2D-7H-Xof"; */
-"P2D-7H-Xof.text" = "Vos fichiers sont \ncopiés dans Infinit...";
+"P2D-7H-Xof.text" = "Vos fichiers sont copiés dans Infinit...";
 
 /* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "jbw-GE-gDX"; */
 "jbw-GE-gDX.normalTitle" = "Annuler";
