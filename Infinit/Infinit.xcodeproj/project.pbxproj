@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8301A6F71AF91ECC00E9FABF /* Gap_Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8301A6F51AF91ECC00E9FABF /* Gap_Localizable.strings */; };
 		83095D0D1AF124A300F473BB /* InfinitWelcomeAvatarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83095D0F1AF124A300F473BB /* InfinitWelcomeAvatarViewController.xib */; };
 		830A39041AD3DBF60017F258 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 830A39031AD3DBF60017F258 /* ShareViewController.m */; };
 		830A39091AD3DBF60017F258 /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 830A38FE1AD3DBF60017F258 /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -40,10 +41,7 @@
 		832285141A7958A1000893A1 /* InfinitLocalNotificationManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 832285131A7958A1000893A1 /* InfinitLocalNotificationManager.mm */; };
 		83294B911AA6FEA700C6CA9A /* InfinitUploadThumbnailManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83294B901AA6FEA700C6CA9A /* InfinitUploadThumbnailManager.mm */; };
 		832A8B001A6EB7930024A304 /* InfinitSettingsReportProblemController.m in Sources */ = {isa = PBXBuildFile; fileRef = 832A8AFF1A6EB7930024A304 /* InfinitSettingsReportProblemController.m */; };
-		832B007F1AF8D608006E5E75 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 832B00811AF8D608006E5E75 /* InfoPlist.strings */; };
-		832B008A1AF8D60A006E5E75 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 832B008C1AF8D60A006E5E75 /* InfoPlist.strings */; };
-		832B00931AF8D60D006E5E75 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 832B00951AF8D60D006E5E75 /* InfoPlist.strings */; };
-		832B00A31AF8D611006E5E75 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 832B00A51AF8D611006E5E75 /* Localizable.strings */; };
+		832C12F31AF914110014895D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 832C12F51AF914110014895D /* Localizable.strings */; };
 		8332F92B1ADFFA23007392A4 /* InfinitFilesFolderViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 8332F92A1ADFFA23007392A4 /* InfinitFilesFolderViewController_iPad.m */; };
 		83376EE81AEFB9530001A61E /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83376EE71AEFB9530001A61E /* iAd.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		83376EEA1AEFB95F0001A61E /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83376EE91AEFB95F0001A61E /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -214,7 +212,10 @@
 		83F5E5951AA4BD000011E4F0 /* InfinitFacebookManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83F5E5941AA4BD000011E4F0 /* InfinitFacebookManager.mm */; };
 		83F5E5A51AA5C35E0011E4F0 /* Monaco.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 83F5E5A41AA5C35E0011E4F0 /* Monaco.ttf */; };
 		83F71C401AF8E507004777C7 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 832A99381AD6B26400639B22 /* MainInterface.storyboard */; };
-		83F71C431AF8E645004777C7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83F71C411AF8E645004777C7 /* Localizable.strings */; };
+		83F71C911AF8FE23004777C7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83F71C931AF8FE23004777C7 /* InfoPlist.strings */; };
+		83F71C9C1AF8FE28004777C7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83F71C9E1AF8FE28004777C7 /* InfoPlist.strings */; };
+		83F71CA51AF8FE2A004777C7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83F71CA71AF8FE2A004777C7 /* InfoPlist.strings */; };
+		83F71CE41AF903EB004777C7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83F71C8E1AF8FDFF004777C7 /* Localizable.strings */; };
 		83F7C30C1AF771C600A643BC /* InfinitSettingsDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F7C30B1AF771C600A643BC /* InfinitSettingsDeviceViewController.m */; };
 		83F7C3B51A6E96C600FA283C /* InfinitSendNoResultsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F7C3B41A6E96C600FA283C /* InfinitSendNoResultsCell.m */; };
 		83F7C3BE1A6EAEDD00FA283C /* InfinitSettingsUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F7C3BD1A6EAEDD00FA283C /* InfinitSettingsUserCell.m */; };
@@ -307,6 +308,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8301A6F61AF91ECC00E9FABF /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = "../../../objcpp-gap/Gap/fr.lproj/Gap_Localizable.strings"; sourceTree = "<group>"; };
+		830475EE1AF9201D0081749F /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = "../../../objcpp-gap/Gap/Base.lproj/Gap_Localizable.strings"; sourceTree = "<group>"; };
 		83095D0E1AF124A300F473BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfinitWelcomeAvatarViewController.xib; sourceTree = "<group>"; };
 		830A38FE1AD3DBF60017F258 /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		830A39011AD3DBF60017F258 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -368,39 +371,40 @@
 		832A8AFE1A6EB7930024A304 /* InfinitSettingsReportProblemController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSettingsReportProblemController.h; sourceTree = "<group>"; };
 		832A8AFF1A6EB7930024A304 /* InfinitSettingsReportProblemController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSettingsReportProblemController.m; sourceTree = "<group>"; };
 		832A99371AD6B26400639B22 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
-		832B00801AF8D608006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		832B00821AF8D608006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitContactImportCell.strings; sourceTree = "<group>"; };
-		832B00831AF8D608006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitWelcomeLastStepViewController.strings; sourceTree = "<group>"; };
-		832B00841AF8D609006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitAccessContactsView.strings; sourceTree = "<group>"; };
-		832B00851AF8D609006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitWelcomeCodeViewController.strings; sourceTree = "<group>"; };
-		832B00861AF8D609006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitFilesSearchPopover_iPad.strings; sourceTree = "<group>"; };
-		832B00871AF8D60A006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitContactCell.strings; sourceTree = "<group>"; };
-		832B008B1AF8D60A006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		832B008D1AF8D60B006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitFilesNoFilesView.strings; sourceTree = "<group>"; };
-		832B008E1AF8D60B006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitWelcomeLandingViewController.strings; sourceTree = "<group>"; };
-		832B008F1AF8D60C006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
-		832B00901AF8D60C006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitOfflineOverlay.strings; sourceTree = "<group>"; };
-		832B00941AF8D60D006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		832B00961AF8D60D006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitHomeRatingCell.strings; sourceTree = "<group>"; };
-		832B00971AF8D60D006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitWelcomeInvitedViewController.strings; sourceTree = "<group>"; };
-		832B00981AF8D60E006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitHomeEmptyOverlay.strings; sourceTree = "<group>"; };
-		832B00991AF8D60E006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitSendButtonOboarding_iPad.strings; sourceTree = "<group>"; };
-		832B009A1AF8D60F006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitImportOverlayView.strings; sourceTree = "<group>"; };
-		832B009B1AF8D60F006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitHomeFeedbackViewController.strings; sourceTree = "<group>"; };
-		832B009C1AF8D60F006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitFilesEmptyOverlay_iPad.strings; sourceTree = "<group>"; };
-		832B009D1AF8D610006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitWelcomePasswordViewController.strings; sourceTree = "<group>"; };
-		832B009E1AF8D610006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		832B009F1AF8D610006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitWelcomeAvatarViewController.strings; sourceTree = "<group>"; };
-		832B00A01AF8D611006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitFilesViewOnboarding_iPad.strings; sourceTree = "<group>"; };
-		832B00A41AF8D611006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		832B00A61AF8D612006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitWelcomeEmailViewController.strings; sourceTree = "<group>"; };
-		832B00A71AF8D612006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitHomeOnboardingView.strings; sourceTree = "<group>"; };
-		832B00A81AF8D613006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MainInterface.strings; sourceTree = "<group>"; };
-		832B00A91AF8D613006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitAccessGalleryView.strings; sourceTree = "<group>"; };
-		832B00AA1AF8D614006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitHomeOnboardingCell.strings; sourceTree = "<group>"; };
-		832B00AB1AF8D615006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitSendToSelfOverlayView.strings; sourceTree = "<group>"; };
-		832B00AC1AF8D615006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitWelcomeLoginViewController.strings; sourceTree = "<group>"; };
-		832B00AD1AF8D615006E5E75 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitHomePeerTransactionCell.strings; sourceTree = "<group>"; };
+		832C12D11AF914000014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitContactImportCell.strings; sourceTree = "<group>"; };
+		832C12D21AF914010014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		832C12D31AF914020014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitWelcomeLastStepViewController.strings; sourceTree = "<group>"; };
+		832C12D41AF914020014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitAccessContactsView.strings; sourceTree = "<group>"; };
+		832C12D51AF914020014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitWelcomeCodeViewController.strings; sourceTree = "<group>"; };
+		832C12D61AF914030014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitFilesSearchPopover_iPad.strings; sourceTree = "<group>"; };
+		832C12D71AF914030014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitContactCell.strings; sourceTree = "<group>"; };
+		832C12D81AF914040014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		832C12D91AF914040014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitFilesNoFilesView.strings; sourceTree = "<group>"; };
+		832C12DA1AF914040014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
+		832C12DB1AF914040014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitWelcomeLandingViewController.strings; sourceTree = "<group>"; };
+		832C12DC1AF914050014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitOfflineOverlay.strings; sourceTree = "<group>"; };
+		832C12DD1AF914050014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		832C12DE1AF914050014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitHomeRatingCell.strings; sourceTree = "<group>"; };
+		832C12DF1AF914050014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitWelcomeInvitedViewController.strings; sourceTree = "<group>"; };
+		832C12E01AF914060014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitHomeEmptyOverlay.strings; sourceTree = "<group>"; };
+		832C12E11AF914060014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitSendButtonOboarding_iPad.strings; sourceTree = "<group>"; };
+		832C12E21AF914060014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitImportOverlayView.strings; sourceTree = "<group>"; };
+		832C12E31AF914070014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitHomeFeedbackViewController.strings; sourceTree = "<group>"; };
+		832C12E41AF914070014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitFilesEmptyOverlay_iPad.strings; sourceTree = "<group>"; };
+		832C12E51AF914080014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitWelcomePasswordViewController.strings; sourceTree = "<group>"; };
+		832C12E61AF914090014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		832C12E71AF914090014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitWelcomeAvatarViewController.strings; sourceTree = "<group>"; };
+		832C12E81AF9140A0014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		832C12E91AF9140A0014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitFilesViewOnboarding_iPad.strings; sourceTree = "<group>"; };
+		832C12EA1AF9140B0014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitWelcomeEmailViewController.strings; sourceTree = "<group>"; };
+		832C12EB1AF9140B0014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitHomeOnboardingView.strings; sourceTree = "<group>"; };
+		832C12EC1AF9140D0014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitAccessGalleryView.strings; sourceTree = "<group>"; };
+		832C12ED1AF9140D0014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		832C12EE1AF9140E0014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitSendToSelfOverlayView.strings; sourceTree = "<group>"; };
+		832C12EF1AF9140F0014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitHomeOnboardingCell.strings; sourceTree = "<group>"; };
+		832C12F01AF914100014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitWelcomeLoginViewController.strings; sourceTree = "<group>"; };
+		832C12F41AF914110014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		832C12F61AF914120014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitHomePeerTransactionCell.strings; sourceTree = "<group>"; };
 		8332F9291ADFFA23007392A4 /* InfinitFilesFolderViewController_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFilesFolderViewController_iPad.h; sourceTree = "<group>"; };
 		8332F92A1ADFFA23007392A4 /* InfinitFilesFolderViewController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFilesFolderViewController_iPad.m; sourceTree = "<group>"; };
 		83376EE71AEFB9530001A61E /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
@@ -582,6 +586,13 @@
 		83B5D60D1A6663430061931F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		83B5D6151A66BC4E0061931F /* ALAsset+Date.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAsset+Date.h"; sourceTree = "<group>"; };
 		83B5D6161A66BC4E0061931F /* ALAsset+Date.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAsset+Date.m"; sourceTree = "<group>"; };
+		83B5F3DF1AF9384D005BAD86 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = "../../../objcpp-gap/Gap/tr.lproj/Gap_Localizable.strings"; sourceTree = "<group>"; };
+		83B5F3E11AF93854005BAD86 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = "../../../objcpp-gap/Gap/ru.lproj/Gap_Localizable.strings"; sourceTree = "<group>"; };
+		83B5F3E21AF9385B005BAD86 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "../../../objcpp-gap/Gap/pt-BR.lproj/Gap_Localizable.strings"; sourceTree = "<group>"; };
+		83B5F3E31AF93861005BAD86 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = "../../../objcpp-gap/Gap/nl.lproj/Gap_Localizable.strings"; sourceTree = "<group>"; };
+		83B5F3E41AF93867005BAD86 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = "../../../objcpp-gap/Gap/it.lproj/Gap_Localizable.strings"; sourceTree = "<group>"; };
+		83B5F3E51AF9386C005BAD86 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = "../../../objcpp-gap/Gap/es.lproj/Gap_Localizable.strings"; sourceTree = "<group>"; };
+		83B5F3E61AF93873005BAD86 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = "../../../objcpp-gap/Gap/de.lproj/Gap_Localizable.strings"; sourceTree = "<group>"; };
 		83B8C30F1AF238D400213B45 /* InfinitWelcomeNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitWelcomeNavigationController.h; sourceTree = "<group>"; };
 		83B8C3101AF238D400213B45 /* InfinitWelcomeNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitWelcomeNavigationController.m; sourceTree = "<group>"; };
 		83C50F9E1AB6BF8E009EBB44 /* JDStatusBarNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JDStatusBarNotification.h; path = ThirdParty/JDStatusBarNotification/JDStatusBarNotification.h; sourceTree = SOURCE_ROOT; };
@@ -667,7 +678,40 @@
 		83F5E5931AA4BD000011E4F0 /* InfinitFacebookManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFacebookManager.h; sourceTree = "<group>"; };
 		83F5E5941AA4BD000011E4F0 /* InfinitFacebookManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitFacebookManager.mm; sourceTree = "<group>"; };
 		83F5E5A41AA5C35E0011E4F0 /* Monaco.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Monaco.ttf; path = "../../../fist-resources/fonts/Monaco.ttf"; sourceTree = "<group>"; };
-		83F71C421AF8E645004777C7 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		83F71C8D1AF8FDFF004777C7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		83F71C921AF8FE23004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		83F71C941AF8FE24004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfinitContactImportCell.strings"; sourceTree = "<group>"; };
+		83F71C951AF8FE24004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfinitWelcomeLastStepViewController.strings"; sourceTree = "<group>"; };
+		83F71C961AF8FE25004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfinitAccessContactsView.strings"; sourceTree = "<group>"; };
+		83F71C971AF8FE25004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfinitWelcomeCodeViewController.strings"; sourceTree = "<group>"; };
+		83F71C981AF8FE26004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfinitFilesSearchPopover_iPad.strings"; sourceTree = "<group>"; };
+		83F71C991AF8FE27004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfinitContactCell.strings"; sourceTree = "<group>"; };
+		83F71C9D1AF8FE28004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		83F71C9F1AF8FE28004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfinitFilesNoFilesView.strings"; sourceTree = "<group>"; };
+		83F71CA01AF8FE28004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfinitWelcomeLandingViewController.strings"; sourceTree = "<group>"; };
+		83F71CA11AF8FE28004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Main.strings"; sourceTree = "<group>"; };
+		83F71CA21AF8FE29004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfinitOfflineOverlay.strings"; sourceTree = "<group>"; };
+		83F71CA61AF8FE2A004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		83F71CA81AF8FE2A004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfinitHomeRatingCell.strings"; sourceTree = "<group>"; };
+		83F71CA91AF8FE2B004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfinitWelcomeInvitedViewController.strings"; sourceTree = "<group>"; };
+		83F71CAA1AF8FE2B004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfinitHomeEmptyOverlay.strings"; sourceTree = "<group>"; };
+		83F71CAB1AF8FE2B004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfinitSendButtonOboarding_iPad.strings"; sourceTree = "<group>"; };
+		83F71CAC1AF8FE2C004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfinitImportOverlayView.strings"; sourceTree = "<group>"; };
+		83F71CAD1AF8FE2C004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfinitHomeFeedbackViewController.strings"; sourceTree = "<group>"; };
+		83F71CAE1AF8FE2C004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfinitWelcomePasswordViewController.strings"; sourceTree = "<group>"; };
+		83F71CAF1AF8FE2C004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfinitFilesEmptyOverlay_iPad.strings"; sourceTree = "<group>"; };
+		83F71CB01AF8FE2D004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		83F71CB11AF8FE2E004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfinitWelcomeAvatarViewController.strings"; sourceTree = "<group>"; };
+		83F71CB21AF8FE2F004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfinitFilesViewOnboarding_iPad.strings"; sourceTree = "<group>"; };
+		83F71CB31AF8FE2F004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		83F71CB41AF8FE2F004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfinitWelcomeEmailViewController.strings"; sourceTree = "<group>"; };
+		83F71CB51AF8FE30004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfinitHomeOnboardingView.strings"; sourceTree = "<group>"; };
+		83F71CB61AF8FE31004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfinitAccessGalleryView.strings"; sourceTree = "<group>"; };
+		83F71CB71AF8FE31004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/MainInterface.strings"; sourceTree = "<group>"; };
+		83F71CB81AF8FE32004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfinitSendToSelfOverlayView.strings"; sourceTree = "<group>"; };
+		83F71CB91AF8FE33004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfinitHomeOnboardingCell.strings"; sourceTree = "<group>"; };
+		83F71CBA1AF8FE34004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfinitWelcomeLoginViewController.strings"; sourceTree = "<group>"; };
+		83F71CBC1AF8FE35004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfinitHomePeerTransactionCell.strings"; sourceTree = "<group>"; };
 		83F7C30A1AF771C600A643BC /* InfinitSettingsDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSettingsDeviceViewController.h; sourceTree = "<group>"; };
 		83F7C30B1AF771C600A643BC /* InfinitSettingsDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSettingsDeviceViewController.m; sourceTree = "<group>"; };
 		83F7C3B31A6E96C600FA283C /* InfinitSendNoResultsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendNoResultsCell.h; sourceTree = "<group>"; };
@@ -813,8 +857,8 @@
 		830A39001AD3DBF60017F258 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				83F71C411AF8E645004777C7 /* Localizable.strings */,
-				832B00811AF8D608006E5E75 /* InfoPlist.strings */,
+				832C12F51AF914110014895D /* Localizable.strings */,
+				83F71C931AF8FE23004777C7 /* InfoPlist.strings */,
 				830A39011AD3DBF60017F258 /* Info.plist */,
 				83D370C31AD68E9D00C4C1A3 /* ActivationRule.txt */,
 			);
@@ -1396,11 +1440,12 @@
 		83B32D601A136485004AB945 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				832B00A51AF8D611006E5E75 /* Localizable.strings */,
-				832B00951AF8D60D006E5E75 /* InfoPlist.strings */,
+				83F71CA71AF8FE2A004777C7 /* InfoPlist.strings */,
 				D09848021A43390D002D26AC /* Fonts */,
 				83B32D611A136485004AB945 /* Info.plist */,
 				83B32D621A136485004AB945 /* main.m */,
+				83F71C8E1AF8FDFF004777C7 /* Localizable.strings */,
+				8301A6F51AF91ECC00E9FABF /* Gap_Localizable.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1417,7 +1462,7 @@
 		83B32D7A1A136486004AB945 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				832B008C1AF8D60A006E5E75 /* InfoPlist.strings */,
+				83F71C9E1AF8FE28004777C7 /* InfoPlist.strings */,
 				83B32D7B1A136486004AB945 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -1920,6 +1965,13 @@
 				en,
 				Base,
 				fr,
+				tr,
+				ru,
+				"pt-BR",
+				nl,
+				it,
+				es,
+				de,
 			);
 			mainGroup = 83B32D541A136485004AB945;
 			productRefGroup = 83B32D5E1A136485004AB945 /* Products */;
@@ -1961,11 +2013,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				832C12F31AF914110014895D /* Localizable.strings in Resources */,
 				83B066621AD56422002ADC56 /* SourceSansPro-Bold.otf in Resources */,
-				83F71C431AF8E645004777C7 /* Localizable.strings in Resources */,
-				832B007F1AF8D608006E5E75 /* InfoPlist.strings in Resources */,
 				83B066651AD564C8002ADC56 /* Media.xcassets in Resources */,
 				83F71C401AF8E507004777C7 /* MainInterface.storyboard in Resources */,
+				83F71C911AF8FE23004777C7 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1973,6 +2025,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83F71CE41AF903EB004777C7 /* Localizable.strings in Resources */,
 				83F962A51AAB2F62003F2DE7 /* How To Send To Someone.mp4 in Resources */,
 				83F962A61AAB2F62003F2DE7 /* How To Send To Self.mp4 in Resources */,
 				83AD68AF1AE983EF00EB1B53 /* InfinitWelcomeCodeViewController.xib in Resources */,
@@ -1994,6 +2047,7 @@
 				83157ED81A73D29100F8E87F /* InfinitFilesTableCell.xib in Resources */,
 				83B32DF11A84DF2B004088DD /* InfinitHomeRatingCell.xib in Resources */,
 				8345958C1AE6B5370020B25D /* InfinitFilesSearchPopover_iPad.xib in Resources */,
+				83F71CA51AF8FE2A004777C7 /* InfoPlist.strings in Resources */,
 				83095D0D1AF124A300F473BB /* InfinitWelcomeAvatarViewController.xib in Resources */,
 				83EBB0AE1A966F1400144BC6 /* InfinitHomePeerTransactionFileCell.xib in Resources */,
 				D098481C1A43391B002D26AC /* SourceSansPro-Regular.otf in Resources */,
@@ -2004,7 +2058,6 @@
 				83A82E451AE1489C005BAC88 /* InfinitOverlayViewController.xib in Resources */,
 				8322850B1A794D51000893A1 /* InfinitImportOverlayView.xib in Resources */,
 				D09848181A43391B002D26AC /* SourceSansPro-ExtraLightIt.otf in Resources */,
-				832B00A31AF8D611006E5E75 /* Localizable.strings in Resources */,
 				8361B8351AF2827E00D5F890 /* InfinitSendButtonOboarding_iPad.xib in Resources */,
 				83B32DF41A84DF45004088DD /* InfinitFilesNoFilesView.xib in Resources */,
 				83AD68B21AE983F400EB1B53 /* InfinitWelcomeEmailViewController.xib in Resources */,
@@ -2015,6 +2068,7 @@
 				834595891AE6B5230020B25D /* InfinitFilesEmptyOverlay_iPad.xib in Resources */,
 				83B32D6E1A136485004AB945 /* Images.xcassets in Resources */,
 				D09848201A43391B002D26AC /* Montserrat-Bold.ttf in Resources */,
+				8301A6F71AF91ECC00E9FABF /* Gap_Localizable.strings in Resources */,
 				83B32DFA1A84DF62004088DD /* InfinitContactCell.xib in Resources */,
 				83B32E111A84FE54004088DD /* InfinitSettingsCell.xib in Resources */,
 				D09848131A43391B002D26AC /* SourceSansPro-Black.otf in Resources */,
@@ -2023,7 +2077,6 @@
 				8322850E1A794D65000893A1 /* InfinitHomeOnboardingView.xib in Resources */,
 				835B9D5E1A9E29E400FD0D54 /* InfinitHomePeerTransactionMoreFilesCell.xib in Resources */,
 				83A0D6581ADED1E000D9D3AD /* InfinitFilesTableCell_iPad.xib in Resources */,
-				832B00931AF8D60D006E5E75 /* InfoPlist.strings in Resources */,
 				837640F81A9D1F2A00BB2316 /* InfinitHomeEmptyOverlay.xib in Resources */,
 				83AD68801AE91E1C00EB1B53 /* InfinitHomeFeedbackViewController.xib in Resources */,
 				D098481A1A43391B002D26AC /* SourceSansPro-Light.otf in Resources */,
@@ -2041,7 +2094,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				832B008A1AF8D60A006E5E75 /* InfoPlist.strings in Resources */,
+				83F71C9C1AF8FE28004777C7 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2223,11 +2276,28 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		8301A6F51AF91ECC00E9FABF /* Gap_Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8301A6F61AF91ECC00E9FABF /* fr */,
+				830475EE1AF9201D0081749F /* Base */,
+				83B5F3DF1AF9384D005BAD86 /* tr */,
+				83B5F3E11AF93854005BAD86 /* ru */,
+				83B5F3E21AF9385B005BAD86 /* pt-BR */,
+				83B5F3E31AF93861005BAD86 /* nl */,
+				83B5F3E41AF93867005BAD86 /* it */,
+				83B5F3E51AF9386C005BAD86 /* es */,
+				83B5F3E61AF93873005BAD86 /* de */,
+			);
+			name = Gap_Localizable.strings;
+			sourceTree = "<group>";
+		};
 		83095D0F1AF124A300F473BB /* InfinitWelcomeAvatarViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				83095D0E1AF124A300F473BB /* Base */,
-				832B009F1AF8D610006E5E75 /* fr */,
+				83F71CB11AF8FE2E004777C7 /* pt-BR */,
+				832C12E71AF914090014895D /* fr */,
 			);
 			name = InfinitWelcomeAvatarViewController.xib;
 			sourceTree = "<group>";
@@ -2236,7 +2306,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				832284FD1A794C97000893A1 /* Base */,
-				832B008F1AF8D60C006E5E75 /* fr */,
+				83F71CA11AF8FE28004777C7 /* pt-BR */,
+				832C12DA1AF914040014895D /* fr */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -2245,7 +2316,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				832285061A794D47000893A1 /* Base */,
-				832B00A91AF8D613006E5E75 /* fr */,
+				83F71CB61AF8FE31004777C7 /* pt-BR */,
+				832C12EC1AF9140D0014895D /* fr */,
 			);
 			name = InfinitAccessGalleryView.xib;
 			sourceTree = "<group>";
@@ -2254,7 +2326,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				832285091A794D4C000893A1 /* Base */,
-				832B00841AF8D609006E5E75 /* fr */,
+				83F71C961AF8FE25004777C7 /* pt-BR */,
+				832C12D41AF914020014895D /* fr */,
 			);
 			name = InfinitAccessContactsView.xib;
 			sourceTree = "<group>";
@@ -2263,7 +2336,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				8322850C1A794D51000893A1 /* Base */,
-				832B009A1AF8D60F006E5E75 /* fr */,
+				83F71CAC1AF8FE2C004777C7 /* pt-BR */,
+				832C12E21AF914060014895D /* fr */,
 			);
 			name = InfinitImportOverlayView.xib;
 			sourceTree = "<group>";
@@ -2272,7 +2346,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				8322850F1A794D65000893A1 /* Base */,
-				832B00A71AF8D612006E5E75 /* fr */,
+				83F71CB51AF8FE30004777C7 /* pt-BR */,
+				832C12EB1AF9140B0014895D /* fr */,
 			);
 			name = InfinitHomeOnboardingView.xib;
 			sourceTree = "<group>";
@@ -2281,39 +2356,16 @@
 			isa = PBXVariantGroup;
 			children = (
 				832A99371AD6B26400639B22 /* Base */,
-				832B00A81AF8D613006E5E75 /* fr */,
+				83F71CB71AF8FE31004777C7 /* pt-BR */,
+				832C12ED1AF9140D0014895D /* fr */,
 			);
 			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
-		832B00811AF8D608006E5E75 /* InfoPlist.strings */ = {
+		832C12F51AF914110014895D /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				832B00801AF8D608006E5E75 /* fr */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		832B008C1AF8D60A006E5E75 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				832B008B1AF8D60A006E5E75 /* fr */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		832B00951AF8D60D006E5E75 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				832B00941AF8D60D006E5E75 /* fr */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		832B00A51AF8D611006E5E75 /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				832B00A41AF8D611006E5E75 /* fr */,
+				832C12F41AF914110014895D /* fr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -2322,7 +2374,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				8345958A1AE6B5230020B25D /* Base */,
-				832B009C1AF8D60F006E5E75 /* fr */,
+				83F71CAF1AF8FE2C004777C7 /* pt-BR */,
+				832C12E41AF914070014895D /* fr */,
 			);
 			name = InfinitFilesEmptyOverlay_iPad.xib;
 			sourceTree = "<group>";
@@ -2331,7 +2384,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				8345958D1AE6B5370020B25D /* Base */,
-				832B00861AF8D609006E5E75 /* fr */,
+				83F71C981AF8FE26004777C7 /* pt-BR */,
+				832C12D61AF914030014895D /* fr */,
 			);
 			name = InfinitFilesSearchPopover_iPad.xib;
 			sourceTree = "<group>";
@@ -2340,7 +2394,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				8361B8361AF2827E00D5F890 /* Base */,
-				832B00991AF8D60E006E5E75 /* fr */,
+				83F71CAB1AF8FE2B004777C7 /* pt-BR */,
+				832C12E11AF914060014895D /* fr */,
 			);
 			name = InfinitSendButtonOboarding_iPad.xib;
 			sourceTree = "<group>";
@@ -2349,7 +2404,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				8361B8391AF2828100D5F890 /* Base */,
-				832B00A01AF8D611006E5E75 /* fr */,
+				83F71CB21AF8FE2F004777C7 /* pt-BR */,
+				832C12E91AF9140A0014895D /* fr */,
 			);
 			name = InfinitFilesViewOnboarding_iPad.xib;
 			sourceTree = "<group>";
@@ -2358,7 +2414,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				837640F91A9D1F2A00BB2316 /* Base */,
-				832B00981AF8D60E006E5E75 /* fr */,
+				83F71CAA1AF8FE2B004777C7 /* pt-BR */,
+				832C12E01AF914060014895D /* fr */,
 			);
 			name = InfinitHomeEmptyOverlay.xib;
 			sourceTree = "<group>";
@@ -2367,7 +2424,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				83AD68781AE91DD700EB1B53 /* Base */,
-				832B008E1AF8D60B006E5E75 /* fr */,
+				83F71CA01AF8FE28004777C7 /* pt-BR */,
+				832C12DB1AF914040014895D /* fr */,
 			);
 			name = InfinitWelcomeLandingViewController.xib;
 			sourceTree = "<group>";
@@ -2376,7 +2434,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				83AD687E1AE91DEC00EB1B53 /* Base */,
-				832B00971AF8D60D006E5E75 /* fr */,
+				83F71CA91AF8FE2B004777C7 /* pt-BR */,
+				832C12DF1AF914050014895D /* fr */,
 			);
 			name = InfinitWelcomeInvitedViewController.xib;
 			sourceTree = "<group>";
@@ -2385,7 +2444,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				83AD68811AE91E1C00EB1B53 /* Base */,
-				832B009B1AF8D60F006E5E75 /* fr */,
+				83F71CAD1AF8FE2C004777C7 /* pt-BR */,
+				832C12E31AF914070014895D /* fr */,
 			);
 			name = InfinitHomeFeedbackViewController.xib;
 			sourceTree = "<group>";
@@ -2394,7 +2454,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				83AD68AA1AE983DF00EB1B53 /* Base */,
-				832B009D1AF8D610006E5E75 /* fr */,
+				83F71CAE1AF8FE2C004777C7 /* pt-BR */,
+				832C12E51AF914080014895D /* fr */,
 			);
 			name = InfinitWelcomePasswordViewController.xib;
 			sourceTree = "<group>";
@@ -2403,7 +2464,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				83AD68AD1AE983EA00EB1B53 /* Base */,
-				832B00831AF8D608006E5E75 /* fr */,
+				83F71C951AF8FE24004777C7 /* pt-BR */,
+				832C12D31AF914020014895D /* fr */,
 			);
 			name = InfinitWelcomeLastStepViewController.xib;
 			sourceTree = "<group>";
@@ -2412,7 +2474,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				83AD68B01AE983EF00EB1B53 /* Base */,
-				832B00851AF8D609006E5E75 /* fr */,
+				83F71C971AF8FE25004777C7 /* pt-BR */,
+				832C12D51AF914020014895D /* fr */,
 			);
 			name = InfinitWelcomeCodeViewController.xib;
 			sourceTree = "<group>";
@@ -2421,7 +2484,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				83AD68B31AE983F400EB1B53 /* Base */,
-				832B00A61AF8D612006E5E75 /* fr */,
+				83F71CB41AF8FE2F004777C7 /* pt-BR */,
+				832C12EA1AF9140B0014895D /* fr */,
 			);
 			name = InfinitWelcomeEmailViewController.xib;
 			sourceTree = "<group>";
@@ -2430,7 +2494,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				83AD68C01AEA4E4100EB1B53 /* Base */,
-				832B00AC1AF8D615006E5E75 /* fr */,
+				83F71CBA1AF8FE34004777C7 /* pt-BR */,
+				832C12F01AF914100014895D /* fr */,
 			);
 			name = InfinitWelcomeLoginViewController.xib;
 			sourceTree = "<group>";
@@ -2439,7 +2504,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				83B32DEB1A84DF1E004088DD /* Base */,
-				832B00AD1AF8D615006E5E75 /* fr */,
+				83F71CBC1AF8FE35004777C7 /* pt-BR */,
+				832C12F61AF914120014895D /* fr */,
 			);
 			name = InfinitHomePeerTransactionCell.xib;
 			sourceTree = "<group>";
@@ -2448,7 +2514,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				83B32DEF1A84DF27004088DD /* Base */,
-				832B00AA1AF8D614006E5E75 /* fr */,
+				83F71CB91AF8FE33004777C7 /* pt-BR */,
+				832C12EF1AF9140F0014895D /* fr */,
 			);
 			name = InfinitHomeOnboardingCell.xib;
 			sourceTree = "<group>";
@@ -2457,7 +2524,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				83B32DF21A84DF2B004088DD /* Base */,
-				832B00961AF8D60D006E5E75 /* fr */,
+				83F71CA81AF8FE2A004777C7 /* pt-BR */,
+				832C12DE1AF914050014895D /* fr */,
 			);
 			name = InfinitHomeRatingCell.xib;
 			sourceTree = "<group>";
@@ -2466,7 +2534,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				83B32DF51A84DF45004088DD /* Base */,
-				832B008D1AF8D60B006E5E75 /* fr */,
+				83F71C9F1AF8FE28004777C7 /* pt-BR */,
+				832C12D91AF914040014895D /* fr */,
 			);
 			name = InfinitFilesNoFilesView.xib;
 			sourceTree = "<group>";
@@ -2475,7 +2544,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				83B32DF81A84DF52004088DD /* Base */,
-				832B00AB1AF8D615006E5E75 /* fr */,
+				83F71CB81AF8FE32004777C7 /* pt-BR */,
+				832C12EE1AF9140E0014895D /* fr */,
 			);
 			name = InfinitSendToSelfOverlayView.xib;
 			sourceTree = "<group>";
@@ -2484,7 +2554,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				83B32DFB1A84DF62004088DD /* Base */,
-				832B00871AF8D60A006E5E75 /* fr */,
+				83F71C991AF8FE27004777C7 /* pt-BR */,
+				832C12D71AF914030014895D /* fr */,
 			);
 			name = InfinitContactCell.xib;
 			sourceTree = "<group>";
@@ -2493,7 +2564,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				83B32DFE1A84DF66004088DD /* Base */,
-				832B00821AF8D608006E5E75 /* fr */,
+				83F71C941AF8FE24004777C7 /* pt-BR */,
+				832C12D11AF914000014895D /* fr */,
 			);
 			name = InfinitContactImportCell.xib;
 			sourceTree = "<group>";
@@ -2502,7 +2574,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				83B32E011A84DF7C004088DD /* Base */,
-				832B009E1AF8D610006E5E75 /* fr */,
+				83F71CB01AF8FE2D004777C7 /* pt-BR */,
+				832C12E61AF914090014895D /* fr */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";
@@ -2511,17 +2584,47 @@
 			isa = PBXVariantGroup;
 			children = (
 				83EBB0881A9397F000144BC6 /* Base */,
-				832B00901AF8D60C006E5E75 /* fr */,
+				83F71CA21AF8FE29004777C7 /* pt-BR */,
+				832C12DC1AF914050014895D /* fr */,
 			);
 			name = InfinitOfflineOverlay.xib;
 			sourceTree = "<group>";
 		};
-		83F71C411AF8E645004777C7 /* Localizable.strings */ = {
+		83F71C8E1AF8FDFF004777C7 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				83F71C421AF8E645004777C7 /* fr */,
+				83F71C8D1AF8FDFF004777C7 /* Base */,
+				83F71CB31AF8FE2F004777C7 /* pt-BR */,
+				832C12E81AF9140A0014895D /* fr */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		83F71C931AF8FE23004777C7 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				83F71C921AF8FE23004777C7 /* pt-BR */,
+				832C12D21AF914010014895D /* fr */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		83F71C9E1AF8FE28004777C7 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				83F71C9D1AF8FE28004777C7 /* pt-BR */,
+				832C12D81AF914040014895D /* fr */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		83F71CA71AF8FE2A004777C7 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				83F71CA61AF8FE2A004777C7 /* pt-BR */,
+				832C12DD1AF914050014895D /* fr */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
