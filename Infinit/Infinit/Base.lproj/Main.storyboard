@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9lB-0z-aFR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9lB-0z-aFR">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -2657,6 +2657,7 @@ type of file in Infinit</string>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="Kjb-PN-Gxr" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="j42-0j-lRh" secondAttribute="leading" constant="5" id="7Kz-mT-VSn"/>
                             <constraint firstAttribute="centerX" secondItem="Kjb-PN-Gxr" secondAttribute="centerX" id="CkV-f2-q73"/>
                             <constraint firstAttribute="centerX" secondItem="ILc-gX-FQI" secondAttribute="centerX" id="HMx-Wv-RU6"/>
                             <constraint firstItem="Kjb-PN-Gxr" firstAttribute="top" secondItem="J59-YW-qzz" secondAttribute="bottom" constant="15" id="Kye-cY-RMP"/>
@@ -2665,6 +2666,7 @@ type of file in Infinit</string>
                             <constraint firstItem="ILc-gX-FQI" firstAttribute="top" secondItem="j42-0j-lRh" secondAttribute="top" constant="17" id="YlU-Y4-NW3"/>
                             <constraint firstItem="97m-pM-Fe4" firstAttribute="centerY" secondItem="fQg-Td-Pa5" secondAttribute="centerY" id="ZmQ-FI-wB0"/>
                             <constraint firstAttribute="trailing" secondItem="97m-pM-Fe4" secondAttribute="trailing" constant="35" id="a35-7e-rkX"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Kjb-PN-Gxr" secondAttribute="trailing" constant="5" id="cGX-Q4-iSa"/>
                             <constraint firstItem="J59-YW-qzz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="j42-0j-lRh" secondAttribute="leading" id="cT8-PS-Bsg"/>
                             <constraint firstAttribute="centerY" secondItem="UHa-O3-RPN" secondAttribute="centerY" id="d5K-Qe-tlo"/>
                             <constraint firstAttribute="bottom" secondItem="fQg-Td-Pa5" secondAttribute="bottom" constant="35" id="fM2-fb-EY9"/>

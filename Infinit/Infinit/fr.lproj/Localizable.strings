@@ -8,9 +8,6 @@
 "%@ received your files!" = "%@ a reçu vos fichiers !";
 
 /* No comment provided by engineer. */
-"%@ selected" = "%@ sélectionnés";
-
-/* No comment provided by engineer. */
 "%@ wants to send %ld %@ to you" = "%1$@ veut vous envoyer %2$ld %3$@";
 
 /* No comment provided by engineer. */
@@ -20,10 +17,16 @@
 "%lu files" = "%lu fichiers";
 
 /* No comment provided by engineer. */
+"%lu files selected" = "%lu fichiers sélectionnés";
+
+/* No comment provided by engineer. */
 "(my other devices)" = "(mes autres appareils)";
 
 /* No comment provided by engineer. */
 "1 file" = "1 fichier";
+
+/* No comment provided by engineer. */
+"1 file selected" = "1 fichier sélectionné";
 
 /* No comment provided by engineer. */
 "30x faster" = "30x plus rapide";
@@ -113,12 +116,6 @@
 "FEEDBACK" = "SUGGESTION";
 
 /* No comment provided by engineer. */
-"Files copied!" = "Fichiers copiés !";
-
-/* No comment provided by engineer. */
-"Files ready!" = "Fichiers prêts !";
-
-/* No comment provided by engineer. */
 "Free up some space on your device and try again or send fewer files." = "Libérez de l'espace sur votre appareil ou retentez avec moins de fichiers.";
 
 /* No comment provided by engineer. */
@@ -131,19 +128,19 @@
 "GOOD, I LIKE IT!" = "BIEN, J'AIME ÇA !";
 
 /* No comment provided by engineer. */
-"GOT IT" = "OK";
-
-/* No comment provided by engineer. */
 "Handle not valid" = "Pseudo invalide";
 
 /* No comment provided by engineer. */
 "Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@\n\nDon't forget to enter the following download code: %@" = "Hey ! Je viens de t'envoyer %1$lu %2$@ sur Infinit. Tu peux récupérer %3$@ ici : %4$@\n\nN'oublie pas de rentrer le code de téléchargement : %5$@";
 
 /* No comment provided by engineer. */
-"How's your experience with Infinit?" = "Comment trouvez-vous Infinit ?";
+"How To Send To Self.mp4" = "S'envoyer à soi-même.mp4";
 
 /* No comment provided by engineer. */
-"Infinit" = "Infinit";
+"How To Send To Someone.mp4" = "Envoyer à quelqu'un.mp4";
+
+/* No comment provided by engineer. */
+"How's your experience with Infinit?" = "Comment trouvez-vous Infinit ?";
 
 /* No comment provided by engineer. */
 "Infinit requires access to your camera roll" = "Infinit souhaite accéder à votre pellicule";
@@ -158,7 +155,7 @@
 "Install Infinit on another device to retrieve your files." = "Installez Infinit sur un autre appareil pour récupérer vos fichiers.";
 
 /* No comment provided by engineer. */
-"Login/Password don't match." = "Informations de connexion\ninvalides.";
+"Login/Password don't match." = "Informations de connexion invalides.";
 
 /* No comment provided by engineer. */
 "Logout" = "Déconnexion";
@@ -206,15 +203,6 @@
 "Oh no! Infinit can't connect. Retry?" = "Infinit n'arrive pas à se connecter. Réessayer ?";
 
 /* No comment provided by engineer. */
-"Oops!" = "Oups !";
-
-/* No comment provided by engineer. */
-"Oops!\nNot enough space." = "Oups !\nPas assez d'espace disponible.";
-
-/* No comment provided by engineer. */
-"Open Infinit now\nto send them!" = "Ouvrez Infinit pour\nles envoyer !";
-
-/* No comment provided by engineer. */
 "Open Infinit to ensure your transfer continues" = "Ouvrez Infinit pour continuer votre transfert";
 
 /* No comment provided by engineer. */
@@ -243,9 +231,6 @@
 
 /* No comment provided by engineer. */
 "Preparing" = "Préparation";
-
-/* No comment provided by engineer. */
-"Preparing your files..." = "Fichiers en préparation...";
 
 /* No comment provided by engineer. */
 "Preparing your transfer..." = "Préparation de votre transfert...";
@@ -414,9 +399,6 @@
 
 /* No comment provided by engineer. */
 "Your email has not been confirmed." = "Votre email n'est pas confirmé.";
-
-/* No comment provided by engineer. */
-"Your files are being\ncopied to Infinit..." = "Vos fichiers sont \ncopiés dans Infinit...";
 
 /* No comment provided by engineer. */
 "file" = "fichier";
