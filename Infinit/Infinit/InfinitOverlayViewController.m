@@ -18,6 +18,8 @@
 @property (nonatomic, weak) IBOutlet UIView* content_view;
 @property (nonatomic, weak) UIViewController* current_controller;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* w_constraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* top_constraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* bottom_constraint;
 
 @end
 
@@ -71,6 +73,11 @@ static CGFloat _content_width = 0.0f;
   else
   {
     self.view.backgroundColor = [InfinitColor colorWithGray:0 alpha:0.5f];
+  }
+  if ([InfinitHostDevice smallScreen])
+  {
+    self.top_constraint.constant -= 44.0f;
+    self.bottom_constraint.constant -= 44.0f;
   }
   self.content_view.backgroundColor = [UIColor clearColor];
   self.content_view.layer.shadowColor = [InfinitColor colorWithGray:0].CGColor;
