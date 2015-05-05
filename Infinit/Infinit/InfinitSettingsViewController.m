@@ -8,6 +8,7 @@
 
 #import "InfinitSettingsViewController.h"
 
+#import "InfinitApplicationSettings.h"
 #import "InfinitColor.h"
 #import "InfinitConstants.h"
 #import "InfinitHostDevice.h"
@@ -26,6 +27,9 @@ typedef NS_ENUM(NSUInteger, InfinitSettingsSections)
   InfinitSettingsSectionAccount = 0,
   InfinitSettingsSectionFeedback,
   InfinitSettingsSectionLogout,
+#ifdef DEBUG
+  InfinitSettingsSectionDebug,
+#endif
 
   InfinitSettingsSectionCount,
 };
@@ -53,6 +57,13 @@ typedef NS_ENUM(NSUInteger, InfinitLogoutSettings)
   InfinitLogoutSettingLogout = 0,
 
   InfinitLogoutSettingsCount,
+};
+
+typedef NS_ENUM(NSUInteger, InfinitDebugSettings)
+{
+  InfinitDebugSettingResetOnboarding = 0,
+
+  InfinitDebugSettingsCount,
 };
 
 @interface InfinitSettingsViewController () <UIAlertViewDelegate,
@@ -154,6 +165,10 @@ typedef NS_ENUM(NSUInteger, InfinitLogoutSettings)
       return InfinitFeedbackSettingsCount;
     case InfinitSettingsSectionLogout:
       return InfinitLogoutSettingsCount;
+#ifdef DEBUG
+    case InfinitSettingsSectionDebug:
+      return InfinitDebugSettingsCount;
+#endif
 
     default:
       return 0;
@@ -234,6 +249,22 @@ typedef NS_ENUM(NSUInteger, InfinitLogoutSettings)
     cell.icon_view.image = [UIImage imageNamed:@"icon-settings-logout"];
     res = cell;
   }
+#ifdef DEBUG
+  else if (indexPath.section == InfinitSettingsSectionDebug)
+  {
+    InfinitSettingsCell* cell = [self.table_view dequeueReusableCellWithIdentifier:_norm_cell_id
+                                                                      forIndexPath:indexPath];
+    switch (indexPath.row)
+    {
+      case InfinitDebugSettingResetOnboarding:
+        cell.title_label.text = @"Reset onboarding";
+        cell.icon_view.image = nil;
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        break;
+    }
+    res = cell;
+  }
+#endif
   return res;
 }
 
@@ -261,6 +292,12 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
   {
     return 50.0f;
   }
+#ifdef DEBUG
+  else if (indexPath.section == InfinitSettingsSectionDebug)
+  {
+    return 50.0f;
+  }
+#endif
   return 0.0f;
 }
 
@@ -351,6 +388,17 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
       [strong_self.storyboard instantiateViewControllerWithIdentifier:identifier];
     }];
   }
+#ifdef DEBUG
+  else if (indexPath.section == InfinitSettingsSectionDebug)
+  {
+    switch (indexPath.row)
+    {
+      case InfinitDebugSettingResetOnboarding:
+        [[InfinitApplicationSettings sharedInstance] resetOnboarding];
+        break;
+    }
+  }
+#endif
   [self.table_view deselectRowAtIndexPath:indexPath animated:YES];
 }
 
