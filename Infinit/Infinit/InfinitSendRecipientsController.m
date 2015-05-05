@@ -473,7 +473,7 @@
                                                                     size:20.0f],
                                NSForegroundColorAttributeName: [UIColor whiteColor]};
   self.contacts_overlay.message_label.text =
-    NSLocalizedString(@"Tap 'OK' so we can display\nyour contacts.", nil);
+    NSLocalizedString(@"Tap 'OK' so we can display your contacts.", nil);
   NSMutableAttributedString* res = [self.contacts_overlay.message_label.attributedText mutableCopy];
   NSRange bold_range = [res.string rangeOfString:@"OK"];
   [res setAttributes:bold_attrs range:bold_range];
