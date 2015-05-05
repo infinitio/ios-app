@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Monaco.ttf">
@@ -137,11 +137,13 @@ your SMS or email invitation.</string>
                 <constraint firstItem="N7l-or-wW7" firstAttribute="trailing" secondItem="NUM-bx-wXq" secondAttribute="trailing" constant="20" id="0v9-tl-Azu"/>
                 <constraint firstAttribute="centerX" secondItem="XTS-SL-vZI" secondAttribute="centerX" id="2lV-N3-UM8"/>
                 <constraint firstItem="8Qu-aG-W4m" firstAttribute="top" secondItem="NUM-bx-wXq" secondAttribute="bottom" constant="20" id="A5V-UX-u3v"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="x0C-h1-tXS" secondAttribute="trailing" constant="5" id="GBZ-nV-tZw"/>
                 <constraint firstAttribute="centerX" secondItem="8Qu-aG-W4m" secondAttribute="centerX" id="ITL-Bg-Mxw"/>
                 <constraint firstItem="NUM-bx-wXq" firstAttribute="top" secondItem="N7l-or-wW7" secondAttribute="bottom" constant="5" id="Us6-jA-j7c"/>
                 <constraint firstItem="N7l-or-wW7" firstAttribute="top" secondItem="x0C-h1-tXS" secondAttribute="bottom" constant="30" id="V1V-Us-cUv"/>
                 <constraint firstAttribute="bottom" secondItem="XTS-SL-vZI" secondAttribute="bottom" constant="25" id="ZG8-b8-Sui"/>
                 <constraint firstAttribute="centerX" secondItem="x0C-h1-tXS" secondAttribute="centerX" id="dVQ-Wn-hIs"/>
+                <constraint firstItem="x0C-h1-tXS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="5" id="eAD-yG-Nhd"/>
                 <constraint firstAttribute="centerX" secondItem="NUM-bx-wXq" secondAttribute="centerX" id="eTW-HN-OAI"/>
                 <constraint firstItem="NUM-bx-wXq" firstAttribute="leading" secondItem="N7l-or-wW7" secondAttribute="leading" constant="5" id="nSL-pm-96b"/>
                 <constraint firstItem="XTS-SL-vZI" firstAttribute="top" secondItem="N7l-or-wW7" secondAttribute="bottom" constant="80" id="y35-jA-2h1"/>

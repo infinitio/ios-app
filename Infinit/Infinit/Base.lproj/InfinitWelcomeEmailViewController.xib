@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -60,12 +60,6 @@
                         <outlet property="delegate" destination="-1" id="1Pj-Of-jQ4"/>
                     </connections>
                 </textField>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your email address." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ci-nP-Cq3">
-                    <rect key="frame" x="191" y="50" width="219" height="24"/>
-                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
-                    <color key="textColor" red="0.18039215689999999" green="0.18039215689999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tNr-dD-sgk">
                     <rect key="frame" x="65" y="154" width="470" height="1"/>
                     <color key="backgroundColor" red="0.18039215689999999" green="0.18039215689999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -109,6 +103,12 @@
                     <rect key="frame" x="525" y="250" width="20" height="20"/>
                     <color key="color" red="0.16862745100000001" green="0.74509803919999995" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
                 </activityIndicatorView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your email address." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ci-nP-Cq3">
+                    <rect key="frame" x="191" y="50" width="219" height="24"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                    <color key="textColor" red="0.18039215689999999" green="0.18039215689999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
@@ -124,6 +124,7 @@
                 <constraint firstItem="Woj-Yb-4kb" firstAttribute="centerY" secondItem="ZYq-me-kOw" secondAttribute="centerY" id="V5U-3R-Bwc"/>
                 <constraint firstItem="Kzg-HF-O6N" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="70" id="XYc-6o-dhR"/>
                 <constraint firstItem="tNr-dD-sgk" firstAttribute="top" secondItem="Kzg-HF-O6N" secondAttribute="bottom" constant="10" id="Xar-PG-rXL"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="7Ci-nP-Cq3" secondAttribute="trailing" constant="5" id="Zy9-kZ-2zr"/>
                 <constraint firstItem="Kzg-HF-O6N" firstAttribute="top" secondItem="7Ci-nP-Cq3" secondAttribute="bottom" constant="40" id="dFp-6a-y4D"/>
                 <constraint firstAttribute="centerX" secondItem="jf8-yV-2Mk" secondAttribute="centerX" id="im9-6t-Vtu"/>
                 <constraint firstItem="vLx-lW-Q9m" firstAttribute="centerX" secondItem="tNr-dD-sgk" secondAttribute="leading" id="mmH-uJ-fJQ"/>
@@ -132,6 +133,7 @@
                 <constraint firstItem="Woj-Yb-4kb" firstAttribute="centerX" secondItem="tNr-dD-sgk" secondAttribute="trailing" id="rhg-Iv-0al"/>
                 <constraint firstItem="vLx-lW-Q9m" firstAttribute="top" secondItem="tNr-dD-sgk" secondAttribute="bottom" constant="90" id="s4g-tz-InW"/>
                 <constraint firstAttribute="trailing" secondItem="Kzg-HF-O6N" secondAttribute="trailing" priority="750" constant="70" id="t1C-nj-OvN"/>
+                <constraint firstItem="7Ci-nP-Cq3" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="5" id="vVg-Fl-qp4"/>
                 <constraint firstAttribute="centerX" secondItem="7Ci-nP-Cq3" secondAttribute="centerX" id="xlM-mK-Y4C"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

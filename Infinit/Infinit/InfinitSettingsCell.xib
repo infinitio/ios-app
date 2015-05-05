@@ -22,7 +22,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ppe-KM-qks">
-                        <rect key="frame" x="65" y="15" width="470" height="20"/>
+                        <rect key="frame" x="65" y="15" width="500" height="20"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                         <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -32,7 +32,7 @@
                     <constraint firstAttribute="centerY" secondItem="KJP-yJ-VtA" secondAttribute="centerY" id="GdX-4y-YOR"/>
                     <constraint firstItem="ppe-KM-qks" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="65" id="Kn8-yx-AAZ"/>
                     <constraint firstItem="KJP-yJ-VtA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="27" id="OFV-kn-4b7"/>
-                    <constraint firstAttribute="trailing" secondItem="ppe-KM-qks" secondAttribute="trailing" constant="65" id="hks-c3-N5D"/>
+                    <constraint firstAttribute="trailing" secondItem="ppe-KM-qks" secondAttribute="trailing" constant="35" id="hks-c3-N5D"/>
                     <constraint firstAttribute="centerY" secondItem="ppe-KM-qks" secondAttribute="centerY" id="vdt-Ku-a2Y"/>
                 </constraints>
             </tableViewCellContentView>

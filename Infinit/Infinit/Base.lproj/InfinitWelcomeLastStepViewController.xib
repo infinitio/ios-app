@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -154,7 +154,9 @@
                 <constraint firstAttribute="trailing" secondItem="ipO-57-IeG" secondAttribute="trailing" priority="750" constant="70" id="bVh-SD-w97"/>
                 <constraint firstItem="S1r-rv-APp" firstAttribute="top" secondItem="WnP-4q-Uhq" secondAttribute="bottom" constant="10" id="c4R-QN-RNU"/>
                 <constraint firstItem="kZJ-Mq-KUh" firstAttribute="centerX" secondItem="Lfg-dI-58r" secondAttribute="centerX" id="eRo-eY-8me"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="CYa-ax-CQN" secondAttribute="trailing" constant="5" id="eT3-eN-0ZD"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="kZJ-Mq-KUh" secondAttribute="trailing" constant="10" id="gMs-Ip-ac7"/>
+                <constraint firstItem="CYa-ax-CQN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="5" id="glS-gg-Eh6"/>
                 <constraint firstAttribute="centerX" secondItem="8EL-62-1HZ" secondAttribute="centerX" id="hfm-YJ-quM"/>
                 <constraint firstItem="kZJ-Mq-KUh" firstAttribute="top" secondItem="Lfg-dI-58r" secondAttribute="bottom" constant="-25" id="iSc-1g-kxB"/>
                 <constraint firstAttribute="bottom" secondItem="Lfg-dI-58r" secondAttribute="bottom" constant="30" id="jaO-6q-Fgb"/>

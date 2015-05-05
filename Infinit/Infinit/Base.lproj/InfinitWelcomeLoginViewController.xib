@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -165,11 +165,13 @@
                 <constraint firstItem="txT-Eh-crR" firstAttribute="top" secondItem="zcU-Iu-Kcd" secondAttribute="bottom" constant="10" id="XK8-tp-bB7"/>
                 <constraint firstAttribute="bottom" secondItem="NBs-14-iOO" secondAttribute="bottom" constant="25" id="XNg-2u-tJu"/>
                 <constraint firstAttribute="centerX" secondItem="Cyx-IQ-tWr" secondAttribute="centerX" id="fHJ-61-8uX"/>
+                <constraint firstItem="PpZ-vy-5cV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="V2C-CR-9R0" secondAttribute="leading" constant="5" id="fi2-n8-UUU"/>
                 <constraint firstItem="KkB-d0-Hgu" firstAttribute="centerY" secondItem="Pcp-Eb-fyv" secondAttribute="centerY" id="gYL-pt-elb"/>
                 <constraint firstAttribute="centerX" secondItem="Pcp-Eb-fyv" secondAttribute="centerX" id="gbj-kV-O8O"/>
                 <constraint firstAttribute="trailing" secondItem="Pcp-Eb-fyv" secondAttribute="trailing" priority="999" constant="70" id="imZ-vB-2Bf"/>
                 <constraint firstAttribute="centerX" secondItem="zcU-Iu-Kcd" secondAttribute="centerX" id="j2I-E3-oOu"/>
                 <constraint firstItem="Cyx-IQ-tWr" firstAttribute="top" secondItem="gxU-KM-SYE" secondAttribute="bottom" constant="25" id="k6Q-Mo-xnD"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="PpZ-vy-5cV" secondAttribute="trailing" constant="5" id="k6S-gt-mgS"/>
                 <constraint firstAttribute="bottom" secondItem="gxU-KM-SYE" secondAttribute="bottom" constant="130" id="n4v-1P-U6P"/>
                 <constraint firstItem="Pcp-Eb-fyv" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="V2C-CR-9R0" secondAttribute="leading" constant="70" id="ndp-cE-7GJ"/>
                 <constraint firstAttribute="bottom" secondItem="5mc-ln-JbU" secondAttribute="bottom" constant="25" id="pKW-cP-ckT"/>

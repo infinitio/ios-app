@@ -24,14 +24,6 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="300"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tBX-13-sdM">
-                    <rect key="frame" x="187" y="36" width="227" height="65"/>
-                    <string key="text">Do you already have an
-Infinit account?</string>
-                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
-                    <color key="textColor" red="0.35686274509803922" green="0.38823529411764707" blue="0.41568627450980389" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eiV-uK-z6m">
                     <rect key="frame" x="50" y="148" width="500" height="56"/>
                     <constraints>
@@ -62,12 +54,21 @@ Infinit account?</string>
                         <action selector="noTapped:" destination="-1" eventType="touchUpInside" id="GWg-ZG-Sox"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tBX-13-sdM">
+                    <rect key="frame" x="187" y="36" width="227" height="65"/>
+                    <string key="text">Do you already have an
+Infinit account?</string>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                    <color key="textColor" red="0.35686274509803922" green="0.38823529411764707" blue="0.41568627450980389" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="tBX-13-sdM" secondAttribute="centerX" id="9yy-CR-w7Z"/>
                 <constraint firstItem="eiV-uK-z6m" firstAttribute="top" secondItem="tBX-13-sdM" secondAttribute="bottom" constant="47" id="AFV-MC-SHp"/>
                 <constraint firstAttribute="centerX" secondItem="X9g-Ug-rfk" secondAttribute="centerX" id="APK-y8-U00"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tBX-13-sdM" secondAttribute="trailing" constant="5" id="Cud-Fj-SKm"/>
                 <constraint firstItem="X9g-Ug-rfk" firstAttribute="top" secondItem="eiV-uK-z6m" secondAttribute="bottom" constant="15" id="E1O-3s-3pU"/>
                 <constraint firstItem="eiV-uK-z6m" firstAttribute="leading" relation="lessThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" priority="750" constant="30" id="EIH-fp-Zwl"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="X9g-Ug-rfk" secondAttribute="trailing" constant="30" id="IUc-sW-wLK"/>
@@ -79,6 +80,7 @@ Infinit account?</string>
                 <constraint firstAttribute="centerX" secondItem="eiV-uK-z6m" secondAttribute="centerX" id="c6A-Ft-NvN"/>
                 <constraint firstItem="X9g-Ug-rfk" firstAttribute="leading" relation="lessThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" priority="750" constant="30" id="f6v-BE-O6y"/>
                 <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="eiV-uK-z6m" secondAttribute="trailing" priority="750" constant="30" id="qyf-bm-kRA"/>
+                <constraint firstItem="tBX-13-sdM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="5" id="z7H-oD-Dz5"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="471" y="435"/>
