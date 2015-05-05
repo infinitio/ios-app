@@ -77,13 +77,19 @@ static NSInteger _max_items = 9;
 {
   [super viewWillAppear:animated];
   NSString* files_text = nil;
+  NSString* str = nil;
   if (self.files.count == 1)
+  {
     files_text = NSLocalizedString(@"1 file", nil);
+    str = NSLocalizedString(@"1 file selected", nil);
+  }
   else
+  {
     files_text = [NSString stringWithFormat:NSLocalizedString(@"%lu files", nil), self.files.count];
-  NSString* str = [NSString stringWithFormat:NSLocalizedString(@"%@ selected", nil), files_text];
+    str = [NSString stringWithFormat:NSLocalizedString(@"%lu files selected", nil), self.files.count];
+  }
   NSMutableAttributedString* attr_str =
-  [[NSMutableAttributedString alloc] initWithString:str attributes:[self textAttributesBold:NO]];
+    [[NSMutableAttributedString alloc] initWithString:str attributes:[self textAttributesBold:NO]];
   NSRange bold_range = [str rangeOfString:files_text];
   if (bold_range.location != NSNotFound)
     [attr_str setAttributes:[self textAttributesBold:YES] range:bold_range];
