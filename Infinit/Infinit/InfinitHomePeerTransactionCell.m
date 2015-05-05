@@ -131,15 +131,11 @@ static CGFloat _button_height = 45.0f;
 
   UIFont* font = [UIFont fontWithName:@"SourceSansPro-Bold" size:15.0f];
 
-  NSDictionary* gray_attrs = nil;
   NSDictionary* green_attrs = nil;
   NSDictionary* red_attrs = nil;
 
   if (!(_accept_str && _cancel_str && _decline_str && _open_str && _pause_str && _send_str))
   {
-    gray_attrs =
-      @{NSFontAttributeName: font,
-        NSForegroundColorAttributeName: [InfinitColor colorWithRed:81 green:81 blue:73]};
     green_attrs =
       @{NSFontAttributeName: font,
         NSForegroundColorAttributeName: [InfinitColor colorFromPalette:InfinitPaletteColorShamRock]};
@@ -171,12 +167,12 @@ static CGFloat _button_height = 45.0f;
   if (!_pause_str)
   {
     _pause_str = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"PAUSE", nil)
-                                                 attributes:gray_attrs];
+                                                 attributes:red_attrs];
   }
   if (!_resume_str)
   {
     _resume_str = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"RESUME", nil)
-                                                  attributes:gray_attrs];
+                                                  attributes:red_attrs];
   }
   if (!_send_str)
   {
@@ -302,7 +298,7 @@ static CGFloat _button_height = 45.0f;
 - (void)setPauseCancelButtons
 {
   [self.left_button setImage:_pause_image forState:UIControlStateNormal];
-  self.left_button.tintColor = [InfinitColor colorWithRed:81 green:81 blue:73];
+  self.left_button.tintColor = [InfinitColor colorFromPalette:InfinitPaletteColorShamRock];
   if (self.transaction.status == gap_transaction_paused)
     [self.left_button setAttributedTitle:_resume_str forState:UIControlStateNormal];
   else
