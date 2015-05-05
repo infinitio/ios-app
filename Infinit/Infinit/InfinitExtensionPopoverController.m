@@ -61,6 +61,16 @@ static NSInteger _max_items = 9;
                               forState:UIControlStateNormal];
   [self.send_button setBackgroundImage:[self imageWithColor:disabled_color]
                               forState:UIControlStateDisabled];
+  self.send_button.titleEdgeInsets =
+    UIEdgeInsetsMake(0.0f,
+                     - self.send_button.imageView.frame.size.width,
+                     0.0f,
+                     self.send_button.imageView.frame.size.width);
+  self.send_button.imageEdgeInsets =
+    UIEdgeInsetsMake(0.0f,
+                     self.send_button.titleLabel.frame.size.width + 10.0f,
+                     0.0f,
+                     - (self.send_button.titleLabel.frame.size.width + 10.0f));
 }
 
 - (void)viewWillAppear:(BOOL)animated
