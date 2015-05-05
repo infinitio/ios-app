@@ -468,6 +468,18 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
     if (![InfinitApplicationSettings sharedInstance].been_launched)
       [self handleFirstLaunch];
   }
+  else if (!connection_status.status && !connection_status.still_trying)
+  {
+    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded ||
+        FBSession.activeSession.state == FBSessionStateCreatedOpening||
+        FBSession.activeSession.state == FBSessionStateOpen ||
+        FBSession.activeSession.state == FBSessionStateOpenTokenExtended)
+    {
+      [[InfinitFacebookManager sharedInstance] cleanSession];
+    }
+    self.root_controller =
+      [self.storyboard instantiateViewControllerWithIdentifier:self.welcome_controller_id];
+  }
 }
 
 - (void)willLogout
