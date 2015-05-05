@@ -18,9 +18,9 @@ static NSString* _file_2 = @"How To Send To Self";
 + (void)copyFilesForOnboarding
 {
   NSString* file_1 = [[NSBundle mainBundle] pathForResource:_file_1 ofType:@"mp4"];
-  NSString* name_1 = [NSString stringWithFormat:@"%@.mp4", _file_1];
+  NSString* name_1 = NSLocalizedString(@"How To Send To Someone.mp4", nil);
   NSString* file_2 = [[NSBundle mainBundle] pathForResource:_file_2 ofType:@"mp4"];
-  NSString* name_2 = [NSString stringWithFormat:@"%@.mp4", _file_2];
+  NSString* name_2 = NSLocalizedString(@"How To Send To Self.mp4", nil);
   NSString* download_dir = [InfinitDirectoryManager sharedInstance].download_directory;
   NSString* destination_1 = [download_dir stringByAppendingPathComponent:@"onboarding_1"];
   NSString* destination_2 = [download_dir stringByAppendingPathComponent:@"onboarding_2"];
