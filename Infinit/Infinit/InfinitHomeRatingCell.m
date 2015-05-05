@@ -62,7 +62,7 @@
                             forState:UIControlStateNormal];
       [self.negative_button setTitle:NSLocalizedString(@"SO SO", nil)
                             forState:UIControlStateNormal];
-      self.negative_width.constant = 91.0f;
+      self.negative_width.constant = 105.0f;
       self.negative_button.imageEdgeInsets = UIEdgeInsetsMake(4.0f, -8.0f, 0.0f, 0.0f);
       self.negative_button.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -2.0f);
       break;
@@ -70,7 +70,7 @@
       self.info_label.text = NSLocalizedString(@"Mind rating us on the App Store?", nil);
       [self.positive_button setTitle:NSLocalizedString(@"SURE!", nil)
                             forState:UIControlStateNormal];
-      self.positive_width.constant = 90.0f;
+      self.positive_width.constant = 120.0f;
       [self.negative_button setImage:nil forState:UIControlStateNormal];
       [self.negative_button setTitle:NSLocalizedString(@"NO, THANKS", nil)
                             forState:UIControlStateNormal];
