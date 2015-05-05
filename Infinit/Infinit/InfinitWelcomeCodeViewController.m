@@ -65,8 +65,7 @@ static NSDictionary* _placeholder_attrs = nil;
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
-  [self setInfoText:NSLocalizedString(@"Enter the download code from\n"
-                                      "your SMS or email invitation.", nil)];
+  [self setInfoText:NSLocalizedString(@"Enter the download code from\nyour SMS or email invitation.", nil)];
 }
 
 - (void)facebookRegister
