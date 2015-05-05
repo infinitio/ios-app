@@ -29,4 +29,6 @@
 
 + (instancetype)sharedInstance;
 
+- (void)resetOnboarding;
+
 @end

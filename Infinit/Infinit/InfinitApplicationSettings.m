@@ -61,6 +61,20 @@ static dispatch_once_t _instance_token = 0;
 
 #pragma mark - Settings
 
+- (void)resetOnboarding
+{
+  self.home_onboarded_swipe = NO;
+  self.home_onboarded_notifications = NO;
+  self.home_onboarded_normal_send = NO;
+  self.home_onboarded_ghost_send = NO;
+  self.home_onboarded_self_send = NO;
+  self.home_onboarded_background = NO;
+  self.rated_app = NO;
+  self.rating_transactions = @2;
+  self.send_to_self_onboarded = @0;
+  self.welcome_onboarded = @0;
+}
+
 - (BOOL)address_book_uploaded
 {
   return [self boolForKey:InfinitSettingAddressBookUploaded];
