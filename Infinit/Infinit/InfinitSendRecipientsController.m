@@ -174,6 +174,7 @@
   self.search_field.maxHeight = 112.0f;
   self.search_field.delegate = self;
   self.search_field.dataSource = self;
+  [self.search_field reloadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated
