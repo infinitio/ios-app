@@ -771,18 +771,7 @@ shouldSelectViewController:(UIViewController*)viewController
 - (void)connectionStatusChanged:(NSNotification*)notification
 {
   InfinitConnectionStatus* connection_status = notification.object;
-  if (!connection_status.status && !connection_status.still_trying)
-  {
-    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded ||
-        FBSession.activeSession.state == FBSessionStateCreatedOpening||
-        FBSession.activeSession.state == FBSessionStateOpen ||
-        FBSession.activeSession.state == FBSessionStateOpenTokenExtended)
-    {
-      [[InfinitFacebookManager sharedInstance] cleanSession];
-    }
-    [self showWelcomeScreen];
-  }
-  else if (!connection_status.status)
+  if (!connection_status.status && connection_status.still_trying)
   {
     [self handleOffline];
   }
