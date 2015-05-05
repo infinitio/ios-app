@@ -100,7 +100,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fA9-fw-VaH">
-                                        <rect key="frame" x="477" y="31" width="30" height="30"/>
+                                        <rect key="frame" x="482" y="31" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="8GX-Q2-OZa"/>
                                             <constraint firstAttribute="width" constant="30" id="dfT-Rz-ArH"/>
@@ -129,7 +129,7 @@
                                     <constraint firstAttribute="height" constant="120" id="pPN-xG-aZv"/>
                                     <constraint firstItem="KlZ-FW-RX5" firstAttribute="centerY" secondItem="fA9-fw-VaH" secondAttribute="centerY" id="qDx-d6-0e8"/>
                                     <constraint firstItem="lXi-k8-j5W" firstAttribute="leading" secondItem="7Mf-Fs-5w9" secondAttribute="trailing" constant="25" id="zGT-Cs-iD7"/>
-                                    <constraint firstItem="gOC-Dq-oEk" firstAttribute="leading" secondItem="fA9-fw-VaH" secondAttribute="trailing" constant="25" id="zUw-g0-NxG"/>
+                                    <constraint firstItem="gOC-Dq-oEk" firstAttribute="leading" secondItem="fA9-fw-VaH" secondAttribute="trailing" constant="20" id="zUw-g0-NxG"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wh0-c4-8bq">
@@ -1831,7 +1831,7 @@ access your phone contacts!</string>
                                             <constraint firstAttribute="height" constant="50" id="ub2-NG-KF2"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="17"/>
-                                        <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="30" maxY="0.0"/>
+                                        <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="50" maxY="0.0"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="-100" maxY="0.0"/>
                                         <state key="normal" title="SEND" image="icon-send-white">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -2411,9 +2411,13 @@ to your friends</string>
                             <constraint firstAttribute="centerY" secondItem="6lz-BA-P1D" secondAttribute="centerY" id="Meu-qh-3GL"/>
                             <constraint firstAttribute="centerX" secondItem="Bbd-IZ-yiZ" secondAttribute="centerX" id="OTo-By-I2P"/>
                             <constraint firstItem="KDj-Jj-oWm" firstAttribute="centerY" secondItem="h0u-FP-Xj2" secondAttribute="centerY" id="RNp-W3-cwG"/>
+                            <constraint firstItem="0G6-1i-g1R" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ScG-eL-k95" secondAttribute="leading" constant="5" id="Z4h-AE-6QD"/>
                             <constraint firstAttribute="trailing" secondItem="KDj-Jj-oWm" secondAttribute="trailing" constant="35" id="acE-77-CYq"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0G6-1i-g1R" secondAttribute="trailing" constant="5" id="bfZ-O7-cJu"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Bbd-IZ-yiZ" secondAttribute="trailing" constant="5" id="gUQ-aq-b6y"/>
                             <constraint firstAttribute="centerX" secondItem="eUF-2D-V3p" secondAttribute="centerX" id="gbQ-nY-nsU"/>
                             <constraint firstAttribute="centerX" secondItem="0G6-1i-g1R" secondAttribute="centerX" id="qHT-xb-fbA"/>
+                            <constraint firstItem="Bbd-IZ-yiZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ScG-eL-k95" secondAttribute="leading" constant="5" id="qTg-XW-U8v"/>
                             <constraint firstAttribute="centerX" secondItem="6lz-BA-P1D" secondAttribute="centerX" id="r3X-qa-g7p"/>
                             <constraint firstItem="Bbd-IZ-yiZ" firstAttribute="top" secondItem="eUF-2D-V3p" secondAttribute="bottom" constant="30" id="rM3-yq-eNA"/>
                             <constraint firstItem="eUF-2D-V3p" firstAttribute="top" secondItem="ScG-eL-k95" secondAttribute="top" constant="17" id="xLb-t9-zAO"/>
@@ -2549,7 +2553,9 @@ your own devices</string>
                             <constraint firstAttribute="bottom" secondItem="zAQ-6j-Oni" secondAttribute="bottom" constant="35" id="J7C-rW-a4A"/>
                             <constraint firstAttribute="trailing" secondItem="tXH-Hc-MJF" secondAttribute="trailing" constant="35" id="Lfo-w8-eWm"/>
                             <constraint firstItem="zAQ-6j-Oni" firstAttribute="leading" secondItem="qqB-75-Bzg" secondAttribute="leading" constant="35" id="NRq-og-S8z"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="N40-3y-JCe" secondAttribute="trailing" constant="5" id="NVA-sw-RZu"/>
                             <constraint firstAttribute="centerX" secondItem="N40-3y-JCe" secondAttribute="centerX" id="Rq7-UH-5b5"/>
+                            <constraint firstItem="N40-3y-JCe" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qqB-75-Bzg" secondAttribute="leading" constant="5" id="VJ1-i0-uWo"/>
                             <constraint firstItem="tXH-Hc-MJF" firstAttribute="centerY" secondItem="zAQ-6j-Oni" secondAttribute="centerY" id="cyA-Hl-zSI"/>
                             <constraint firstAttribute="centerX" secondItem="q5c-sk-108" secondAttribute="centerX" id="fdX-Ku-XX2"/>
                             <constraint firstItem="N40-3y-JCe" firstAttribute="top" secondItem="q5c-sk-108" secondAttribute="bottom" constant="30" id="kFF-io-4Yi"/>
@@ -2659,8 +2665,10 @@ type of file in Infinit</string>
                             <constraint firstItem="ILc-gX-FQI" firstAttribute="top" secondItem="j42-0j-lRh" secondAttribute="top" constant="17" id="YlU-Y4-NW3"/>
                             <constraint firstItem="97m-pM-Fe4" firstAttribute="centerY" secondItem="fQg-Td-Pa5" secondAttribute="centerY" id="ZmQ-FI-wB0"/>
                             <constraint firstAttribute="trailing" secondItem="97m-pM-Fe4" secondAttribute="trailing" constant="35" id="a35-7e-rkX"/>
+                            <constraint firstItem="J59-YW-qzz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="j42-0j-lRh" secondAttribute="leading" id="cT8-PS-Bsg"/>
                             <constraint firstAttribute="centerY" secondItem="UHa-O3-RPN" secondAttribute="centerY" id="d5K-Qe-tlo"/>
                             <constraint firstAttribute="bottom" secondItem="fQg-Td-Pa5" secondAttribute="bottom" constant="35" id="fM2-fb-EY9"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="J59-YW-qzz" secondAttribute="trailing" id="kC8-Mu-3Uq"/>
                             <constraint firstAttribute="centerX" secondItem="UHa-O3-RPN" secondAttribute="centerX" id="tXm-7S-fq4"/>
                             <constraint firstItem="fQg-Td-Pa5" firstAttribute="leading" secondItem="j42-0j-lRh" secondAttribute="leading" constant="35" id="v5c-sX-MxO"/>
                         </constraints>

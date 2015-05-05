@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="SourceSansPro-Bold.otf">
@@ -19,12 +19,8 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="illustration-camera-roll" translatesAutoresizingMaskIntoConstraints="NO" id="vfK-md-Jc5">
                     <rect key="frame" x="164" y="236" width="272" height="127"/>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send your photos and videos without size limits!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xt0-AB-E6P">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Send your photos and videos without size limits!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xt0-AB-E6P">
                     <rect key="frame" x="155" y="90" width="290" height="65"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="65" id="CZl-Hk-j5k"/>
-                        <constraint firstAttribute="width" constant="290" id="U3Y-d9-V9Q"/>
-                    </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -51,6 +47,8 @@
                 <constraint firstAttribute="centerX" secondItem="Xt0-AB-E6P" secondAttribute="centerX" id="dVo-L6-1rA"/>
                 <constraint firstItem="vfK-md-Jc5" firstAttribute="top" secondItem="Xt0-AB-E6P" secondAttribute="bottom" constant="81" id="iaQ-QY-PTZ"/>
                 <constraint firstAttribute="centerX" secondItem="vfK-md-Jc5" secondAttribute="centerX" id="n0t-kD-RBr"/>
+                <constraint firstItem="Xt0-AB-E6P" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="qrk-Bp-tHJ"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Xt0-AB-E6P" secondAttribute="trailing" constant="20" id="uSr-fB-tC7"/>
             </constraints>
             <connections>
                 <outlet property="access_button" destination="nK8-AH-e2U" id="cvy-Hn-K5s"/>

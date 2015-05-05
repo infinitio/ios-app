@@ -17,12 +17,8 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose your recipients even faster when they're displayed in Infinit." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="de8-Xa-jKG">
-                    <rect key="frame" x="139" y="87" width="322" height="60"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="322" id="ePS-ab-Qys"/>
-                        <constraint firstAttribute="height" constant="60" id="fgQ-wZ-zFk"/>
-                    </constraints>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose your recipients even faster when they're displayed in Infinit." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="de8-Xa-jKG">
+                    <rect key="frame" x="37" y="50" width="527" height="48"/>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -53,7 +49,7 @@
                     </state>
                 </button>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-contacts-big" translatesAutoresizingMaskIntoConstraints="NO" id="vAn-VP-2P2">
-                    <rect key="frame" x="252" y="187" width="96" height="120"/>
+                    <rect key="frame" x="252" y="138" width="96" height="120"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="96" id="2cJ-WT-wxE"/>
                         <constraint firstAttribute="height" constant="120" id="KpG-ZQ-PyA"/>
@@ -64,12 +60,14 @@
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="exS-d4-4Gz" secondAttribute="bottom" constant="30" id="3M9-iy-wJV"/>
                 <constraint firstAttribute="centerX" secondItem="de8-Xa-jKG" secondAttribute="centerX" id="7zO-wn-IGR"/>
-                <constraint firstItem="de8-Xa-jKG" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="87" id="L5a-p1-zzs"/>
+                <constraint firstItem="de8-Xa-jKG" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="50" id="L5a-p1-zzs"/>
                 <constraint firstItem="vAn-VP-2P2" firstAttribute="top" secondItem="de8-Xa-jKG" secondAttribute="bottom" constant="40" id="aLD-ca-tat"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="de8-Xa-jKG" secondAttribute="trailing" constant="20" id="ect-hk-v2f"/>
                 <constraint firstAttribute="centerX" secondItem="Ovu-SQ-Jc9" secondAttribute="centerX" id="haW-Ce-bdg"/>
                 <constraint firstItem="exS-d4-4Gz" firstAttribute="top" secondItem="Ovu-SQ-Jc9" secondAttribute="bottom" constant="15" id="hrl-dY-1yd"/>
                 <constraint firstAttribute="centerX" secondItem="vAn-VP-2P2" secondAttribute="centerX" id="jmZ-XJ-f4D"/>
                 <constraint firstAttribute="centerX" secondItem="exS-d4-4Gz" secondAttribute="centerX" id="oKk-Er-woR"/>
+                <constraint firstItem="de8-Xa-jKG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="wLJ-fg-OzA"/>
             </constraints>
             <connections>
                 <outlet property="access_button" destination="Ovu-SQ-Jc9" id="Hwh-h4-G03"/>

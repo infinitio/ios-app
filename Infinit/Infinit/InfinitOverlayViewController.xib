@@ -43,8 +43,10 @@
                 </constraints>
             </view>
             <connections>
+                <outlet property="bottom_constraint" destination="RNl-ya-j3m" id="zhW-Rr-6LC"/>
                 <outlet property="close_button" destination="6aZ-fK-f9k" id="NxP-0T-NGb"/>
                 <outlet property="content_view" destination="AmR-pW-cth" id="ZT3-We-2hs"/>
+                <outlet property="top_constraint" destination="kSz-DJ-17Q" id="gqb-fQ-g96"/>
                 <outlet property="view" destination="NRP-X8-HJP" id="Icz-wR-T4N"/>
                 <outlet property="w_constraint" destination="pIE-PM-OvP" id="M2A-eh-glL"/>
             </connections>
