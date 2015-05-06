@@ -439,6 +439,8 @@
 		83519B4F1A98D5F700541B5E /* InfinitResizableNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitResizableNavigationBar.m; sourceTree = "<group>"; };
 		835517FB1ADE7E7000B3EF22 /* InfinitMainSplitViewController_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitMainSplitViewController_iPad.h; sourceTree = "<group>"; };
 		835517FC1ADE7E7000B3EF22 /* InfinitMainSplitViewController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitMainSplitViewController_iPad.m; sourceTree = "<group>"; };
+		835757291AFA132800A21AD3 /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "../../../objcpp-gap/Gap/es-ES.lproj/Gap_Localizable.strings"; sourceTree = "<group>"; };
+		8357572B1AFA133300A21AD3 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "../../../objcpp-gap/Gap/es-419.lproj/Gap_Localizable.strings"; sourceTree = "<group>"; };
 		835B9D5A1A9E29E400FD0D54 /* InfinitHomePeerTransactionMoreFilesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitHomePeerTransactionMoreFilesCell.h; sourceTree = "<group>"; };
 		835B9D5B1A9E29E400FD0D54 /* InfinitHomePeerTransactionMoreFilesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitHomePeerTransactionMoreFilesCell.m; sourceTree = "<group>"; };
 		835B9D5C1A9E29E400FD0D54 /* InfinitHomePeerTransactionMoreFilesCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitHomePeerTransactionMoreFilesCell.xib; sourceTree = "<group>"; };
@@ -455,6 +457,7 @@
 		8361B8391AF2828100D5F890 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfinitFilesViewOnboarding_iPad.xib; sourceTree = "<group>"; };
 		8363E4AE1ACE76C2005F98A2 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ThirdParty/FacebookSDK.framework; sourceTree = "<group>"; };
 		8363E4B11ACE7734005F98A2 /* InfinitConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfinitConstants.h; sourceTree = "<group>"; };
+		836463621AFA79DB009D8C00 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = "../../../objcpp-gap/Gap/sv.lproj/Gap_Localizable.strings"; sourceTree = "<group>"; };
 		83672B8E1A9F4493009425E6 /* InfinitHomeNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitHomeNavigationController.h; sourceTree = "<group>"; };
 		83672B8F1A9F4493009425E6 /* InfinitHomeNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitHomeNavigationController.m; sourceTree = "<group>"; };
 		8369E8761A83684700ECD519 /* InfinitHomeRatingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitHomeRatingCell.h; sourceTree = "<group>"; };
@@ -467,6 +470,40 @@
 		836D39A01A69409300892206 /* UIImage+Rounded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Rounded.m"; sourceTree = "<group>"; };
 		836F5C8B1A166720007C9C4E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		837640F91A9D1F2A00BB2316 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfinitHomeEmptyOverlay.xib; sourceTree = "<group>"; };
+		837719221AF9F8B30092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitContactImportCell.strings"; sourceTree = "<group>"; };
+		837719241AF9F8B30092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		837719251AF9F8B40092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitWelcomeLastStepViewController.strings"; sourceTree = "<group>"; };
+		837719261AF9F8B40092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitAccessContactsView.strings"; sourceTree = "<group>"; };
+		837719271AF9F8B40092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitWelcomeCodeViewController.strings"; sourceTree = "<group>"; };
+		837719281AF9F8B50092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitFilesSearchPopover_iPad.strings"; sourceTree = "<group>"; };
+		837719291AF9F8B50092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitContactCell.strings"; sourceTree = "<group>"; };
+		8377192A1AF9F8B50092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		8377192B1AF9F8B60092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitFilesNoFilesView.strings"; sourceTree = "<group>"; };
+		8377192C1AF9F8B60092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Main.strings"; sourceTree = "<group>"; };
+		8377192D1AF9F8B70092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitWelcomeLandingViewController.strings"; sourceTree = "<group>"; };
+		8377192E1AF9F8B70092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitOfflineOverlay.strings"; sourceTree = "<group>"; };
+		8377192F1AF9F8B80092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		837719301AF9F8B80092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitHomeRatingCell.strings"; sourceTree = "<group>"; };
+		837719311AF9F8B90092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitWelcomeInvitedViewController.strings"; sourceTree = "<group>"; };
+		837719321AF9F8B90092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitHomeEmptyOverlay.strings"; sourceTree = "<group>"; };
+		837719331AF9F8B90092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitSendButtonOboarding_iPad.strings"; sourceTree = "<group>"; };
+		837719341AF9F8BA0092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitImportOverlayView.strings"; sourceTree = "<group>"; };
+		837719351AF9F8BA0092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitHomeFeedbackViewController.strings"; sourceTree = "<group>"; };
+		837719361AF9F8BA0092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitFilesEmptyOverlay_iPad.strings"; sourceTree = "<group>"; };
+		837719371AF9F8BB0092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitWelcomePasswordViewController.strings"; sourceTree = "<group>"; };
+		837719381AF9F8BB0092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		837719391AF9F8BB0092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitWelcomeAvatarViewController.strings"; sourceTree = "<group>"; };
+		8377193A1AF9F8BC0092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		8377193B1AF9F8BC0092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitFilesViewOnboarding_iPad.strings"; sourceTree = "<group>"; };
+		8377193C1AF9F8BD0092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitWelcomeEmailViewController.strings"; sourceTree = "<group>"; };
+		8377193D1AF9F8BD0092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitHomeOnboardingView.strings"; sourceTree = "<group>"; };
+		8377193E1AF9F8BD0092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/MainInterface.strings"; sourceTree = "<group>"; };
+		8377193F1AF9F8BE0092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitAccessGalleryView.strings"; sourceTree = "<group>"; };
+		837719401AF9F8BE0092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitSendToSelfOverlayView.strings"; sourceTree = "<group>"; };
+		837719411AF9F8BF0092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitHomeOnboardingCell.strings"; sourceTree = "<group>"; };
+		837719421AF9F8BF0092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitWelcomeLoginViewController.strings"; sourceTree = "<group>"; };
+		837719431AF9F8BF0092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		837719441AF9F8C00092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitHomePeerTransactionCell.strings"; sourceTree = "<group>"; };
 		837F66481AADCB5100EA49C4 /* InfinitSendDeviceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendDeviceCell.h; sourceTree = "<group>"; };
 		837F66491AADCB5100EA49C4 /* InfinitSendDeviceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendDeviceCell.m; sourceTree = "<group>"; };
 		83825BE01A701FE900420F24 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
@@ -591,7 +628,6 @@
 		83B5F3E21AF9385B005BAD86 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "../../../objcpp-gap/Gap/pt-BR.lproj/Gap_Localizable.strings"; sourceTree = "<group>"; };
 		83B5F3E31AF93861005BAD86 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = "../../../objcpp-gap/Gap/nl.lproj/Gap_Localizable.strings"; sourceTree = "<group>"; };
 		83B5F3E41AF93867005BAD86 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = "../../../objcpp-gap/Gap/it.lproj/Gap_Localizable.strings"; sourceTree = "<group>"; };
-		83B5F3E51AF9386C005BAD86 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = "../../../objcpp-gap/Gap/es.lproj/Gap_Localizable.strings"; sourceTree = "<group>"; };
 		83B5F3E61AF93873005BAD86 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = "../../../objcpp-gap/Gap/de.lproj/Gap_Localizable.strings"; sourceTree = "<group>"; };
 		83B8C30F1AF238D400213B45 /* InfinitWelcomeNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitWelcomeNavigationController.h; sourceTree = "<group>"; };
 		83B8C3101AF238D400213B45 /* InfinitWelcomeNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitWelcomeNavigationController.m; sourceTree = "<group>"; };
@@ -603,6 +639,245 @@
 		83C50FA31AB6BF8E009EBB44 /* JDStatusBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JDStatusBarView.m; path = ThirdParty/JDStatusBarNotification/JDStatusBarView.m; sourceTree = SOURCE_ROOT; };
 		83C616361AA0B76900F68C94 /* InfinitSendEmailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendEmailCell.h; sourceTree = "<group>"; };
 		83C616371AA0B76900F68C94 /* InfinitSendEmailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendEmailCell.m; sourceTree = "<group>"; };
+		83CD84B31AF93EF800CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfinitContactImportCell.strings; sourceTree = "<group>"; };
+		83CD84B51AF93EF900CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		83CD84B61AF93EF900CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfinitWelcomeLastStepViewController.strings; sourceTree = "<group>"; };
+		83CD84B71AF93EF900CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfinitAccessContactsView.strings; sourceTree = "<group>"; };
+		83CD84B81AF93EFA00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfinitWelcomeCodeViewController.strings; sourceTree = "<group>"; };
+		83CD84B91AF93EFA00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfinitFilesSearchPopover_iPad.strings; sourceTree = "<group>"; };
+		83CD84BA1AF93EFA00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfinitContactCell.strings; sourceTree = "<group>"; };
+		83CD84BB1AF93EFA00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		83CD84BC1AF93EFB00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfinitFilesNoFilesView.strings; sourceTree = "<group>"; };
+		83CD84BD1AF93EFB00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
+		83CD84BE1AF93EFB00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfinitWelcomeLandingViewController.strings; sourceTree = "<group>"; };
+		83CD84BF1AF93EFB00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfinitOfflineOverlay.strings; sourceTree = "<group>"; };
+		83CD84C01AF93EFB00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		83CD84C11AF93EFB00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfinitHomeRatingCell.strings; sourceTree = "<group>"; };
+		83CD84C21AF93EFC00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfinitWelcomeInvitedViewController.strings; sourceTree = "<group>"; };
+		83CD84C31AF93EFC00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfinitHomeEmptyOverlay.strings; sourceTree = "<group>"; };
+		83CD84C41AF93EFD00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfinitSendButtonOboarding_iPad.strings; sourceTree = "<group>"; };
+		83CD84C51AF93EFD00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfinitImportOverlayView.strings; sourceTree = "<group>"; };
+		83CD84C61AF93EFD00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfinitHomeFeedbackViewController.strings; sourceTree = "<group>"; };
+		83CD84C71AF93EFD00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfinitWelcomePasswordViewController.strings; sourceTree = "<group>"; };
+		83CD84C81AF93EFD00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfinitFilesEmptyOverlay_iPad.strings; sourceTree = "<group>"; };
+		83CD84C91AF93EFD00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		83CD84CA1AF93EFE00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfinitWelcomeAvatarViewController.strings; sourceTree = "<group>"; };
+		83CD84CB1AF93EFE00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		83CD84CC1AF93EFE00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfinitFilesViewOnboarding_iPad.strings; sourceTree = "<group>"; };
+		83CD84CD1AF93EFE00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfinitWelcomeEmailViewController.strings; sourceTree = "<group>"; };
+		83CD84CE1AF93EFE00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfinitHomeOnboardingView.strings; sourceTree = "<group>"; };
+		83CD84CF1AF93EFE00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfinitAccessGalleryView.strings; sourceTree = "<group>"; };
+		83CD84D01AF93EFF00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		83CD84D11AF93EFF00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfinitSendToSelfOverlayView.strings; sourceTree = "<group>"; };
+		83CD84D21AF93EFF00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfinitHomeOnboardingCell.strings; sourceTree = "<group>"; };
+		83CD84D31AF93EFF00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfinitWelcomeLoginViewController.strings; sourceTree = "<group>"; };
+		83CD84D41AF93EFF00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		83CD84D51AF93EFF00CC765E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfinitHomePeerTransactionCell.strings; sourceTree = "<group>"; };
+		83CD84D61AF93F0E00CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		83CD84D71AF93F0F00CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfinitContactImportCell.strings"; sourceTree = "<group>"; };
+		83CD84D81AF93F0F00CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfinitWelcomeLastStepViewController.strings"; sourceTree = "<group>"; };
+		83CD84D91AF93F0F00CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfinitAccessContactsView.strings"; sourceTree = "<group>"; };
+		83CD84DA1AF93F0F00CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfinitWelcomeCodeViewController.strings"; sourceTree = "<group>"; };
+		83CD84DB1AF93F0F00CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfinitFilesSearchPopover_iPad.strings"; sourceTree = "<group>"; };
+		83CD84DC1AF93F1000CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfinitContactCell.strings"; sourceTree = "<group>"; };
+		83CD84DD1AF93F1000CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		83CD84DE1AF93F1000CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfinitFilesNoFilesView.strings"; sourceTree = "<group>"; };
+		83CD84DF1AF93F1000CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfinitWelcomeLandingViewController.strings"; sourceTree = "<group>"; };
+		83CD84E01AF93F1000CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/Main.strings"; sourceTree = "<group>"; };
+		83CD84E11AF93F1100CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfinitOfflineOverlay.strings"; sourceTree = "<group>"; };
+		83CD84E21AF93F1100CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		83CD84E31AF93F1100CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfinitHomeRatingCell.strings"; sourceTree = "<group>"; };
+		83CD84E41AF93F1100CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfinitWelcomeInvitedViewController.strings"; sourceTree = "<group>"; };
+		83CD84E51AF93F1100CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfinitHomeEmptyOverlay.strings"; sourceTree = "<group>"; };
+		83CD84E61AF93F1200CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfinitSendButtonOboarding_iPad.strings"; sourceTree = "<group>"; };
+		83CD84E71AF93F1200CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfinitImportOverlayView.strings"; sourceTree = "<group>"; };
+		83CD84E81AF93F1200CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfinitHomeFeedbackViewController.strings"; sourceTree = "<group>"; };
+		83CD84E91AF93F1300CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfinitWelcomePasswordViewController.strings"; sourceTree = "<group>"; };
+		83CD84EA1AF93F1300CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfinitFilesEmptyOverlay_iPad.strings"; sourceTree = "<group>"; };
+		83CD84EB1AF93F1300CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		83CD84EC1AF93F1300CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfinitWelcomeAvatarViewController.strings"; sourceTree = "<group>"; };
+		83CD84ED1AF93F1300CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfinitFilesViewOnboarding_iPad.strings"; sourceTree = "<group>"; };
+		83CD84EE1AF93F1400CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		83CD84EF1AF93F1400CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfinitHomeOnboardingView.strings"; sourceTree = "<group>"; };
+		83CD84F01AF93F1400CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfinitWelcomeEmailViewController.strings"; sourceTree = "<group>"; };
+		83CD84F11AF93F1500CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfinitAccessGalleryView.strings"; sourceTree = "<group>"; };
+		83CD84F21AF93F1500CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/MainInterface.strings"; sourceTree = "<group>"; };
+		83CD84F31AF93F1500CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfinitHomeOnboardingCell.strings"; sourceTree = "<group>"; };
+		83CD84F41AF93F1600CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfinitSendToSelfOverlayView.strings"; sourceTree = "<group>"; };
+		83CD84F51AF93F1600CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfinitWelcomeLoginViewController.strings"; sourceTree = "<group>"; };
+		83CD84F61AF93F1600CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		83CD84F71AF93F1600CC765E /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/InfinitHomePeerTransactionCell.strings"; sourceTree = "<group>"; };
+		83CD84F81AF93F3700CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfinitContactImportCell.strings; sourceTree = "<group>"; };
+		83CD84F91AF93F3700CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		83CD84FA1AF93F3700CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfinitWelcomeLastStepViewController.strings; sourceTree = "<group>"; };
+		83CD84FB1AF93F3800CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfinitAccessContactsView.strings; sourceTree = "<group>"; };
+		83CD84FC1AF93F3800CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfinitWelcomeCodeViewController.strings; sourceTree = "<group>"; };
+		83CD84FD1AF93F3800CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfinitFilesSearchPopover_iPad.strings; sourceTree = "<group>"; };
+		83CD84FE1AF93F3900CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfinitContactCell.strings; sourceTree = "<group>"; };
+		83CD84FF1AF93F3900CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		83CD85001AF93F3900CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfinitFilesNoFilesView.strings; sourceTree = "<group>"; };
+		83CD85011AF93F3900CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfinitWelcomeLandingViewController.strings; sourceTree = "<group>"; };
+		83CD85021AF93F3900CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Main.strings; sourceTree = "<group>"; };
+		83CD85031AF93F3A00CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfinitOfflineOverlay.strings; sourceTree = "<group>"; };
+		83CD85041AF93F3A00CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		83CD85051AF93F3A00CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfinitHomeRatingCell.strings; sourceTree = "<group>"; };
+		83CD85061AF93F3B00CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfinitWelcomeInvitedViewController.strings; sourceTree = "<group>"; };
+		83CD85071AF93F3B00CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfinitHomeEmptyOverlay.strings; sourceTree = "<group>"; };
+		83CD85081AF93F3B00CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfinitSendButtonOboarding_iPad.strings; sourceTree = "<group>"; };
+		83CD85091AF93F3B00CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfinitImportOverlayView.strings; sourceTree = "<group>"; };
+		83CD850A1AF93F3C00CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfinitHomeFeedbackViewController.strings; sourceTree = "<group>"; };
+		83CD850B1AF93F3C00CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfinitWelcomePasswordViewController.strings; sourceTree = "<group>"; };
+		83CD850C1AF93F3C00CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfinitFilesEmptyOverlay_iPad.strings; sourceTree = "<group>"; };
+		83CD850D1AF93F3C00CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		83CD850E1AF93F3C00CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfinitWelcomeAvatarViewController.strings; sourceTree = "<group>"; };
+		83CD850F1AF93F3D00CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		83CD85101AF93F3D00CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfinitFilesViewOnboarding_iPad.strings; sourceTree = "<group>"; };
+		83CD85111AF93F3D00CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfinitWelcomeEmailViewController.strings; sourceTree = "<group>"; };
+		83CD85121AF93F3D00CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfinitHomeOnboardingView.strings; sourceTree = "<group>"; };
+		83CD85131AF93F3E00CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		83CD85141AF93F3E00CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfinitAccessGalleryView.strings; sourceTree = "<group>"; };
+		83CD85151AF93F3E00CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfinitSendToSelfOverlayView.strings; sourceTree = "<group>"; };
+		83CD85161AF93F3E00CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfinitHomeOnboardingCell.strings; sourceTree = "<group>"; };
+		83CD85171AF93F3F00CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfinitWelcomeLoginViewController.strings; sourceTree = "<group>"; };
+		83CD85181AF93F3F00CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		83CD85191AF93F3F00CC765E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfinitHomePeerTransactionCell.strings; sourceTree = "<group>"; };
+		83CD851A1AF93F5C00CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfinitContactImportCell.strings; sourceTree = "<group>"; };
+		83CD851B1AF93F5C00CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		83CD851C1AF93F5D00CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfinitWelcomeLastStepViewController.strings; sourceTree = "<group>"; };
+		83CD851D1AF93F5D00CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfinitAccessContactsView.strings; sourceTree = "<group>"; };
+		83CD851E1AF93F5D00CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfinitWelcomeCodeViewController.strings; sourceTree = "<group>"; };
+		83CD851F1AF93F5D00CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfinitFilesSearchPopover_iPad.strings; sourceTree = "<group>"; };
+		83CD85201AF93F5D00CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfinitContactCell.strings; sourceTree = "<group>"; };
+		83CD85211AF93F5E00CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		83CD85221AF93F5E00CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfinitFilesNoFilesView.strings; sourceTree = "<group>"; };
+		83CD85231AF93F5E00CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Main.strings; sourceTree = "<group>"; };
+		83CD85241AF93F5E00CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfinitWelcomeLandingViewController.strings; sourceTree = "<group>"; };
+		83CD85251AF93F5E00CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfinitOfflineOverlay.strings; sourceTree = "<group>"; };
+		83CD85261AF93F5F00CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		83CD85271AF93F5F00CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfinitHomeRatingCell.strings; sourceTree = "<group>"; };
+		83CD85281AF93F5F00CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfinitWelcomeInvitedViewController.strings; sourceTree = "<group>"; };
+		83CD85291AF93F5F00CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfinitHomeEmptyOverlay.strings; sourceTree = "<group>"; };
+		83CD852A1AF93F6000CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfinitSendButtonOboarding_iPad.strings; sourceTree = "<group>"; };
+		83CD852B1AF93F6000CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfinitImportOverlayView.strings; sourceTree = "<group>"; };
+		83CD852C1AF93F6000CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfinitHomeFeedbackViewController.strings; sourceTree = "<group>"; };
+		83CD852D1AF93F6000CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfinitFilesEmptyOverlay_iPad.strings; sourceTree = "<group>"; };
+		83CD852E1AF93F6000CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfinitWelcomePasswordViewController.strings; sourceTree = "<group>"; };
+		83CD852F1AF93F6100CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		83CD85301AF93F6100CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfinitWelcomeAvatarViewController.strings; sourceTree = "<group>"; };
+		83CD85311AF93F6100CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfinitFilesViewOnboarding_iPad.strings; sourceTree = "<group>"; };
+		83CD85321AF93F6100CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		83CD85331AF93F6200CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfinitWelcomeEmailViewController.strings; sourceTree = "<group>"; };
+		83CD85341AF93F6200CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfinitHomeOnboardingView.strings; sourceTree = "<group>"; };
+		83CD85351AF93F6200CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfinitAccessGalleryView.strings; sourceTree = "<group>"; };
+		83CD85361AF93F6200CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		83CD85371AF93F6300CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfinitSendToSelfOverlayView.strings; sourceTree = "<group>"; };
+		83CD85381AF93F6300CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfinitHomeOnboardingCell.strings; sourceTree = "<group>"; };
+		83CD85391AF93F6300CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfinitWelcomeLoginViewController.strings; sourceTree = "<group>"; };
+		83CD853A1AF93F6300CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		83CD853B1AF93F6400CC765E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfinitHomePeerTransactionCell.strings; sourceTree = "<group>"; };
+		83CD853C1AF93F7200CC765E /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		83CD853D1AF93F8500CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		83CD853E1AF93F8600CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfinitContactImportCell.strings; sourceTree = "<group>"; };
+		83CD853F1AF93F8600CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfinitWelcomeLastStepViewController.strings; sourceTree = "<group>"; };
+		83CD85401AF93F8600CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfinitAccessContactsView.strings; sourceTree = "<group>"; };
+		83CD85411AF93F8700CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfinitWelcomeCodeViewController.strings; sourceTree = "<group>"; };
+		83CD85421AF93F8700CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfinitFilesSearchPopover_iPad.strings; sourceTree = "<group>"; };
+		83CD85431AF93F8700CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfinitContactCell.strings; sourceTree = "<group>"; };
+		83CD85441AF93F8700CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		83CD85451AF93F8700CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfinitFilesNoFilesView.strings; sourceTree = "<group>"; };
+		83CD85461AF93F8700CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
+		83CD85471AF93F8800CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfinitWelcomeLandingViewController.strings; sourceTree = "<group>"; };
+		83CD85481AF93F8800CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfinitOfflineOverlay.strings; sourceTree = "<group>"; };
+		83CD85491AF93F8800CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		83CD854A1AF93F8900CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfinitHomeRatingCell.strings; sourceTree = "<group>"; };
+		83CD854B1AF93F8900CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfinitWelcomeInvitedViewController.strings; sourceTree = "<group>"; };
+		83CD854C1AF93F8900CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfinitHomeEmptyOverlay.strings; sourceTree = "<group>"; };
+		83CD854D1AF93F8900CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfinitSendButtonOboarding_iPad.strings; sourceTree = "<group>"; };
+		83CD854E1AF93F8A00CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfinitImportOverlayView.strings; sourceTree = "<group>"; };
+		83CD854F1AF93F8A00CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfinitHomeFeedbackViewController.strings; sourceTree = "<group>"; };
+		83CD85501AF93F8A00CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfinitFilesEmptyOverlay_iPad.strings; sourceTree = "<group>"; };
+		83CD85511AF93F8A00CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfinitWelcomePasswordViewController.strings; sourceTree = "<group>"; };
+		83CD85521AF93F8A00CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		83CD85531AF93F8B00CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfinitWelcomeAvatarViewController.strings; sourceTree = "<group>"; };
+		83CD85541AF93F8B00CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		83CD85551AF93F8B00CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfinitFilesViewOnboarding_iPad.strings; sourceTree = "<group>"; };
+		83CD85561AF93F8B00CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfinitWelcomeEmailViewController.strings; sourceTree = "<group>"; };
+		83CD85571AF93F8C00CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfinitHomeOnboardingView.strings; sourceTree = "<group>"; };
+		83CD85581AF93F8C00CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfinitAccessGalleryView.strings; sourceTree = "<group>"; };
+		83CD85591AF93F8C00CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		83CD855A1AF93F8C00CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfinitSendToSelfOverlayView.strings; sourceTree = "<group>"; };
+		83CD855B1AF93F8D00CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfinitHomeOnboardingCell.strings; sourceTree = "<group>"; };
+		83CD855C1AF93F8D00CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfinitWelcomeLoginViewController.strings; sourceTree = "<group>"; };
+		83CD855D1AF93F8D00CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		83CD855E1AF93F8D00CC765E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfinitHomePeerTransactionCell.strings; sourceTree = "<group>"; };
+		83CD855F1AF93F9A00CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		83CD85601AF93F9B00CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfinitContactImportCell.strings; sourceTree = "<group>"; };
+		83CD85611AF93F9B00CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfinitWelcomeLastStepViewController.strings; sourceTree = "<group>"; };
+		83CD85621AF93F9B00CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfinitAccessContactsView.strings; sourceTree = "<group>"; };
+		83CD85631AF93F9B00CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfinitWelcomeCodeViewController.strings; sourceTree = "<group>"; };
+		83CD85641AF93F9C00CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfinitFilesSearchPopover_iPad.strings; sourceTree = "<group>"; };
+		83CD85651AF93F9C00CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfinitContactCell.strings; sourceTree = "<group>"; };
+		83CD85661AF93F9C00CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		83CD85671AF93F9C00CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfinitFilesNoFilesView.strings; sourceTree = "<group>"; };
+		83CD85681AF93F9D00CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Main.strings; sourceTree = "<group>"; };
+		83CD85691AF93F9D00CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfinitWelcomeLandingViewController.strings; sourceTree = "<group>"; };
+		83CD856A1AF93F9D00CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfinitOfflineOverlay.strings; sourceTree = "<group>"; };
+		83CD856B1AF93F9D00CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		83CD856C1AF93F9D00CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfinitHomeRatingCell.strings; sourceTree = "<group>"; };
+		83CD856D1AF93F9E00CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfinitWelcomeInvitedViewController.strings; sourceTree = "<group>"; };
+		83CD856E1AF93F9E00CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfinitHomeEmptyOverlay.strings; sourceTree = "<group>"; };
+		83CD856F1AF93F9E00CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfinitSendButtonOboarding_iPad.strings; sourceTree = "<group>"; };
+		83CD85701AF93F9E00CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfinitImportOverlayView.strings; sourceTree = "<group>"; };
+		83CD85711AF93F9F00CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfinitHomeFeedbackViewController.strings; sourceTree = "<group>"; };
+		83CD85721AF93F9F00CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfinitWelcomePasswordViewController.strings; sourceTree = "<group>"; };
+		83CD85731AF93F9F00CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfinitFilesEmptyOverlay_iPad.strings; sourceTree = "<group>"; };
+		83CD85741AF93FA000CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		83CD85751AF93FA000CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfinitWelcomeAvatarViewController.strings; sourceTree = "<group>"; };
+		83CD85761AF93FA000CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		83CD85771AF93FA100CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfinitFilesViewOnboarding_iPad.strings; sourceTree = "<group>"; };
+		83CD85781AF93FA100CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfinitWelcomeEmailViewController.strings; sourceTree = "<group>"; };
+		83CD85791AF93FA100CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfinitHomeOnboardingView.strings; sourceTree = "<group>"; };
+		83CD857A1AF93FA100CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		83CD857B1AF93FA200CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfinitAccessGalleryView.strings; sourceTree = "<group>"; };
+		83CD857C1AF93FA200CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfinitSendToSelfOverlayView.strings; sourceTree = "<group>"; };
+		83CD857D1AF93FA200CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfinitHomeOnboardingCell.strings; sourceTree = "<group>"; };
+		83CD857E1AF93FA200CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfinitWelcomeLoginViewController.strings; sourceTree = "<group>"; };
+		83CD857F1AF93FA300CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		83CD85801AF93FA300CC765E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/InfinitHomePeerTransactionCell.strings; sourceTree = "<group>"; };
+		83CD85811AF93FB100CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		83CD85821AF93FB100CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfinitContactImportCell.strings; sourceTree = "<group>"; };
+		83CD85831AF93FB100CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfinitWelcomeLastStepViewController.strings; sourceTree = "<group>"; };
+		83CD85841AF93FB200CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfinitAccessContactsView.strings; sourceTree = "<group>"; };
+		83CD85851AF93FB200CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfinitWelcomeCodeViewController.strings; sourceTree = "<group>"; };
+		83CD85861AF93FB200CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfinitFilesSearchPopover_iPad.strings; sourceTree = "<group>"; };
+		83CD85871AF93FB200CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfinitContactCell.strings; sourceTree = "<group>"; };
+		83CD85881AF93FB300CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		83CD85891AF93FB300CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Main.strings; sourceTree = "<group>"; };
+		83CD858A1AF93FB300CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfinitWelcomeLandingViewController.strings; sourceTree = "<group>"; };
+		83CD858B1AF93FB400CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfinitFilesNoFilesView.strings; sourceTree = "<group>"; };
+		83CD858C1AF93FB400CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfinitOfflineOverlay.strings; sourceTree = "<group>"; };
+		83CD858D1AF93FB400CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		83CD858E1AF93FB400CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfinitHomeRatingCell.strings; sourceTree = "<group>"; };
+		83CD858F1AF93FB400CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfinitWelcomeInvitedViewController.strings; sourceTree = "<group>"; };
+		83CD85901AF93FB500CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfinitHomeEmptyOverlay.strings; sourceTree = "<group>"; };
+		83CD85911AF93FB500CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfinitSendButtonOboarding_iPad.strings; sourceTree = "<group>"; };
+		83CD85921AF93FB500CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfinitImportOverlayView.strings; sourceTree = "<group>"; };
+		83CD85931AF93FB500CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfinitHomeFeedbackViewController.strings; sourceTree = "<group>"; };
+		83CD85941AF93FB500CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfinitWelcomePasswordViewController.strings; sourceTree = "<group>"; };
+		83CD85951AF93FB600CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfinitFilesEmptyOverlay_iPad.strings; sourceTree = "<group>"; };
+		83CD85961AF93FB600CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		83CD85971AF93FB600CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfinitWelcomeAvatarViewController.strings; sourceTree = "<group>"; };
+		83CD85981AF93FB600CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		83CD85991AF93FB700CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfinitFilesViewOnboarding_iPad.strings; sourceTree = "<group>"; };
+		83CD859A1AF93FB700CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfinitHomeOnboardingView.strings; sourceTree = "<group>"; };
+		83CD859B1AF93FB700CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfinitWelcomeEmailViewController.strings; sourceTree = "<group>"; };
+		83CD859C1AF93FB800CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		83CD859D1AF93FB800CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfinitAccessGalleryView.strings; sourceTree = "<group>"; };
+		83CD859E1AF93FB800CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfinitSendToSelfOverlayView.strings; sourceTree = "<group>"; };
+		83CD859F1AF93FB800CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfinitHomeOnboardingCell.strings; sourceTree = "<group>"; };
+		83CD85A01AF93FB900CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfinitWelcomeLoginViewController.strings; sourceTree = "<group>"; };
+		83CD85A11AF93FB900CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		83CD85A21AF93FB900CC765E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/InfinitHomePeerTransactionCell.strings; sourceTree = "<group>"; };
 		83D370BD1AD6716C00C4C1A3 /* InfinitWormhole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitWormhole.h; sourceTree = "<group>"; };
 		83D370BE1AD6716C00C4C1A3 /* InfinitWormhole.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitWormhole.m; sourceTree = "<group>"; };
 		83D370C01AD6717E00C4C1A3 /* InfinitWormhole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InfinitWormhole.h; path = Infinit/InfinitWormhole.h; sourceTree = SOURCE_ROOT; };
@@ -1970,8 +2245,10 @@
 				"pt-BR",
 				nl,
 				it,
-				es,
 				de,
+				"es-ES",
+				"es-419",
+				sv,
 			);
 			mainGroup = 83B32D541A136485004AB945;
 			productRefGroup = 83B32D5E1A136485004AB945 /* Products */;
@@ -2286,8 +2563,10 @@
 				83B5F3E21AF9385B005BAD86 /* pt-BR */,
 				83B5F3E31AF93861005BAD86 /* nl */,
 				83B5F3E41AF93867005BAD86 /* it */,
-				83B5F3E51AF9386C005BAD86 /* es */,
 				83B5F3E61AF93873005BAD86 /* de */,
+				835757291AFA132800A21AD3 /* es-ES */,
+				8357572B1AFA133300A21AD3 /* es-419 */,
+				836463621AFA79DB009D8C00 /* sv */,
 			);
 			name = Gap_Localizable.strings;
 			sourceTree = "<group>";
@@ -2298,6 +2577,14 @@
 				83095D0E1AF124A300F473BB /* Base */,
 				83F71CB11AF8FE2E004777C7 /* pt-BR */,
 				832C12E71AF914090014895D /* fr */,
+				83CD84CA1AF93EFE00CC765E /* de */,
+				83CD84EC1AF93F1300CC765E /* es-ES */,
+				83CD850E1AF93F3C00CC765E /* it */,
+				83CD85301AF93F6100CC765E /* nl */,
+				83CD85531AF93F8B00CC765E /* ru */,
+				83CD85751AF93FA000CC765E /* sv */,
+				83CD85971AF93FB600CC765E /* tr */,
+				837719391AF9F8BB0092D17A /* es-419 */,
 			);
 			name = InfinitWelcomeAvatarViewController.xib;
 			sourceTree = "<group>";
@@ -2308,6 +2595,14 @@
 				832284FD1A794C97000893A1 /* Base */,
 				83F71CA11AF8FE28004777C7 /* pt-BR */,
 				832C12DA1AF914040014895D /* fr */,
+				83CD84BD1AF93EFB00CC765E /* de */,
+				83CD84E01AF93F1000CC765E /* es-ES */,
+				83CD85021AF93F3900CC765E /* it */,
+				83CD85231AF93F5E00CC765E /* nl */,
+				83CD85461AF93F8700CC765E /* ru */,
+				83CD85681AF93F9D00CC765E /* sv */,
+				83CD85891AF93FB300CC765E /* tr */,
+				8377192C1AF9F8B60092D17A /* es-419 */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -2318,6 +2613,14 @@
 				832285061A794D47000893A1 /* Base */,
 				83F71CB61AF8FE31004777C7 /* pt-BR */,
 				832C12EC1AF9140D0014895D /* fr */,
+				83CD84CF1AF93EFE00CC765E /* de */,
+				83CD84F11AF93F1500CC765E /* es-ES */,
+				83CD85141AF93F3E00CC765E /* it */,
+				83CD85351AF93F6200CC765E /* nl */,
+				83CD85581AF93F8C00CC765E /* ru */,
+				83CD857B1AF93FA200CC765E /* sv */,
+				83CD859D1AF93FB800CC765E /* tr */,
+				8377193F1AF9F8BE0092D17A /* es-419 */,
 			);
 			name = InfinitAccessGalleryView.xib;
 			sourceTree = "<group>";
@@ -2328,6 +2631,14 @@
 				832285091A794D4C000893A1 /* Base */,
 				83F71C961AF8FE25004777C7 /* pt-BR */,
 				832C12D41AF914020014895D /* fr */,
+				83CD84B71AF93EF900CC765E /* de */,
+				83CD84D91AF93F0F00CC765E /* es-ES */,
+				83CD84FB1AF93F3800CC765E /* it */,
+				83CD851D1AF93F5D00CC765E /* nl */,
+				83CD85401AF93F8600CC765E /* ru */,
+				83CD85621AF93F9B00CC765E /* sv */,
+				83CD85841AF93FB200CC765E /* tr */,
+				837719261AF9F8B40092D17A /* es-419 */,
 			);
 			name = InfinitAccessContactsView.xib;
 			sourceTree = "<group>";
@@ -2338,6 +2649,14 @@
 				8322850C1A794D51000893A1 /* Base */,
 				83F71CAC1AF8FE2C004777C7 /* pt-BR */,
 				832C12E21AF914060014895D /* fr */,
+				83CD84C51AF93EFD00CC765E /* de */,
+				83CD84E71AF93F1200CC765E /* es-ES */,
+				83CD85091AF93F3B00CC765E /* it */,
+				83CD852B1AF93F6000CC765E /* nl */,
+				83CD854E1AF93F8A00CC765E /* ru */,
+				83CD85701AF93F9E00CC765E /* sv */,
+				83CD85921AF93FB500CC765E /* tr */,
+				837719341AF9F8BA0092D17A /* es-419 */,
 			);
 			name = InfinitImportOverlayView.xib;
 			sourceTree = "<group>";
@@ -2348,6 +2667,14 @@
 				8322850F1A794D65000893A1 /* Base */,
 				83F71CB51AF8FE30004777C7 /* pt-BR */,
 				832C12EB1AF9140B0014895D /* fr */,
+				83CD84CE1AF93EFE00CC765E /* de */,
+				83CD84EF1AF93F1400CC765E /* es-ES */,
+				83CD85121AF93F3D00CC765E /* it */,
+				83CD85341AF93F6200CC765E /* nl */,
+				83CD85571AF93F8C00CC765E /* ru */,
+				83CD85791AF93FA100CC765E /* sv */,
+				83CD859A1AF93FB700CC765E /* tr */,
+				8377193D1AF9F8BD0092D17A /* es-419 */,
 			);
 			name = InfinitHomeOnboardingView.xib;
 			sourceTree = "<group>";
@@ -2358,6 +2685,14 @@
 				832A99371AD6B26400639B22 /* Base */,
 				83F71CB71AF8FE31004777C7 /* pt-BR */,
 				832C12ED1AF9140D0014895D /* fr */,
+				83CD84D01AF93EFF00CC765E /* de */,
+				83CD84F21AF93F1500CC765E /* es-ES */,
+				83CD85131AF93F3E00CC765E /* it */,
+				83CD85361AF93F6200CC765E /* nl */,
+				83CD85591AF93F8C00CC765E /* ru */,
+				83CD857A1AF93FA100CC765E /* sv */,
+				83CD859C1AF93FB800CC765E /* tr */,
+				8377193E1AF9F8BD0092D17A /* es-419 */,
 			);
 			name = MainInterface.storyboard;
 			sourceTree = "<group>";
@@ -2366,6 +2701,15 @@
 			isa = PBXVariantGroup;
 			children = (
 				832C12F41AF914110014895D /* fr */,
+				83CD84D41AF93EFF00CC765E /* de */,
+				83CD84F61AF93F1600CC765E /* es-ES */,
+				83CD85181AF93F3F00CC765E /* it */,
+				83CD853A1AF93F6300CC765E /* nl */,
+				83CD853C1AF93F7200CC765E /* pt-BR */,
+				83CD855D1AF93F8D00CC765E /* ru */,
+				83CD857F1AF93FA300CC765E /* sv */,
+				83CD85A11AF93FB900CC765E /* tr */,
+				837719431AF9F8BF0092D17A /* es-419 */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -2376,6 +2720,14 @@
 				8345958A1AE6B5230020B25D /* Base */,
 				83F71CAF1AF8FE2C004777C7 /* pt-BR */,
 				832C12E41AF914070014895D /* fr */,
+				83CD84C81AF93EFD00CC765E /* de */,
+				83CD84EA1AF93F1300CC765E /* es-ES */,
+				83CD850C1AF93F3C00CC765E /* it */,
+				83CD852D1AF93F6000CC765E /* nl */,
+				83CD85501AF93F8A00CC765E /* ru */,
+				83CD85731AF93F9F00CC765E /* sv */,
+				83CD85951AF93FB600CC765E /* tr */,
+				837719361AF9F8BA0092D17A /* es-419 */,
 			);
 			name = InfinitFilesEmptyOverlay_iPad.xib;
 			sourceTree = "<group>";
@@ -2386,6 +2738,14 @@
 				8345958D1AE6B5370020B25D /* Base */,
 				83F71C981AF8FE26004777C7 /* pt-BR */,
 				832C12D61AF914030014895D /* fr */,
+				83CD84B91AF93EFA00CC765E /* de */,
+				83CD84DB1AF93F0F00CC765E /* es-ES */,
+				83CD84FD1AF93F3800CC765E /* it */,
+				83CD851F1AF93F5D00CC765E /* nl */,
+				83CD85421AF93F8700CC765E /* ru */,
+				83CD85641AF93F9C00CC765E /* sv */,
+				83CD85861AF93FB200CC765E /* tr */,
+				837719281AF9F8B50092D17A /* es-419 */,
 			);
 			name = InfinitFilesSearchPopover_iPad.xib;
 			sourceTree = "<group>";
@@ -2396,6 +2756,14 @@
 				8361B8361AF2827E00D5F890 /* Base */,
 				83F71CAB1AF8FE2B004777C7 /* pt-BR */,
 				832C12E11AF914060014895D /* fr */,
+				83CD84C41AF93EFD00CC765E /* de */,
+				83CD84E61AF93F1200CC765E /* es-ES */,
+				83CD85081AF93F3B00CC765E /* it */,
+				83CD852A1AF93F6000CC765E /* nl */,
+				83CD854D1AF93F8900CC765E /* ru */,
+				83CD856F1AF93F9E00CC765E /* sv */,
+				83CD85911AF93FB500CC765E /* tr */,
+				837719331AF9F8B90092D17A /* es-419 */,
 			);
 			name = InfinitSendButtonOboarding_iPad.xib;
 			sourceTree = "<group>";
@@ -2406,6 +2774,14 @@
 				8361B8391AF2828100D5F890 /* Base */,
 				83F71CB21AF8FE2F004777C7 /* pt-BR */,
 				832C12E91AF9140A0014895D /* fr */,
+				83CD84CC1AF93EFE00CC765E /* de */,
+				83CD84ED1AF93F1300CC765E /* es-ES */,
+				83CD85101AF93F3D00CC765E /* it */,
+				83CD85311AF93F6100CC765E /* nl */,
+				83CD85551AF93F8B00CC765E /* ru */,
+				83CD85771AF93FA100CC765E /* sv */,
+				83CD85991AF93FB700CC765E /* tr */,
+				8377193B1AF9F8BC0092D17A /* es-419 */,
 			);
 			name = InfinitFilesViewOnboarding_iPad.xib;
 			sourceTree = "<group>";
@@ -2416,6 +2792,14 @@
 				837640F91A9D1F2A00BB2316 /* Base */,
 				83F71CAA1AF8FE2B004777C7 /* pt-BR */,
 				832C12E01AF914060014895D /* fr */,
+				83CD84C31AF93EFC00CC765E /* de */,
+				83CD84E51AF93F1100CC765E /* es-ES */,
+				83CD85071AF93F3B00CC765E /* it */,
+				83CD85291AF93F5F00CC765E /* nl */,
+				83CD854C1AF93F8900CC765E /* ru */,
+				83CD856E1AF93F9E00CC765E /* sv */,
+				83CD85901AF93FB500CC765E /* tr */,
+				837719321AF9F8B90092D17A /* es-419 */,
 			);
 			name = InfinitHomeEmptyOverlay.xib;
 			sourceTree = "<group>";
@@ -2426,6 +2810,14 @@
 				83AD68781AE91DD700EB1B53 /* Base */,
 				83F71CA01AF8FE28004777C7 /* pt-BR */,
 				832C12DB1AF914040014895D /* fr */,
+				83CD84BE1AF93EFB00CC765E /* de */,
+				83CD84DF1AF93F1000CC765E /* es-ES */,
+				83CD85011AF93F3900CC765E /* it */,
+				83CD85241AF93F5E00CC765E /* nl */,
+				83CD85471AF93F8800CC765E /* ru */,
+				83CD85691AF93F9D00CC765E /* sv */,
+				83CD858A1AF93FB300CC765E /* tr */,
+				8377192D1AF9F8B70092D17A /* es-419 */,
 			);
 			name = InfinitWelcomeLandingViewController.xib;
 			sourceTree = "<group>";
@@ -2436,6 +2828,14 @@
 				83AD687E1AE91DEC00EB1B53 /* Base */,
 				83F71CA91AF8FE2B004777C7 /* pt-BR */,
 				832C12DF1AF914050014895D /* fr */,
+				83CD84C21AF93EFC00CC765E /* de */,
+				83CD84E41AF93F1100CC765E /* es-ES */,
+				83CD85061AF93F3B00CC765E /* it */,
+				83CD85281AF93F5F00CC765E /* nl */,
+				83CD854B1AF93F8900CC765E /* ru */,
+				83CD856D1AF93F9E00CC765E /* sv */,
+				83CD858F1AF93FB400CC765E /* tr */,
+				837719311AF9F8B90092D17A /* es-419 */,
 			);
 			name = InfinitWelcomeInvitedViewController.xib;
 			sourceTree = "<group>";
@@ -2446,6 +2846,14 @@
 				83AD68811AE91E1C00EB1B53 /* Base */,
 				83F71CAD1AF8FE2C004777C7 /* pt-BR */,
 				832C12E31AF914070014895D /* fr */,
+				83CD84C61AF93EFD00CC765E /* de */,
+				83CD84E81AF93F1200CC765E /* es-ES */,
+				83CD850A1AF93F3C00CC765E /* it */,
+				83CD852C1AF93F6000CC765E /* nl */,
+				83CD854F1AF93F8A00CC765E /* ru */,
+				83CD85711AF93F9F00CC765E /* sv */,
+				83CD85931AF93FB500CC765E /* tr */,
+				837719351AF9F8BA0092D17A /* es-419 */,
 			);
 			name = InfinitHomeFeedbackViewController.xib;
 			sourceTree = "<group>";
@@ -2456,6 +2864,14 @@
 				83AD68AA1AE983DF00EB1B53 /* Base */,
 				83F71CAE1AF8FE2C004777C7 /* pt-BR */,
 				832C12E51AF914080014895D /* fr */,
+				83CD84C71AF93EFD00CC765E /* de */,
+				83CD84E91AF93F1300CC765E /* es-ES */,
+				83CD850B1AF93F3C00CC765E /* it */,
+				83CD852E1AF93F6000CC765E /* nl */,
+				83CD85511AF93F8A00CC765E /* ru */,
+				83CD85721AF93F9F00CC765E /* sv */,
+				83CD85941AF93FB500CC765E /* tr */,
+				837719371AF9F8BB0092D17A /* es-419 */,
 			);
 			name = InfinitWelcomePasswordViewController.xib;
 			sourceTree = "<group>";
@@ -2466,6 +2882,14 @@
 				83AD68AD1AE983EA00EB1B53 /* Base */,
 				83F71C951AF8FE24004777C7 /* pt-BR */,
 				832C12D31AF914020014895D /* fr */,
+				83CD84B61AF93EF900CC765E /* de */,
+				83CD84D81AF93F0F00CC765E /* es-ES */,
+				83CD84FA1AF93F3700CC765E /* it */,
+				83CD851C1AF93F5D00CC765E /* nl */,
+				83CD853F1AF93F8600CC765E /* ru */,
+				83CD85611AF93F9B00CC765E /* sv */,
+				83CD85831AF93FB100CC765E /* tr */,
+				837719251AF9F8B40092D17A /* es-419 */,
 			);
 			name = InfinitWelcomeLastStepViewController.xib;
 			sourceTree = "<group>";
@@ -2476,6 +2900,14 @@
 				83AD68B01AE983EF00EB1B53 /* Base */,
 				83F71C971AF8FE25004777C7 /* pt-BR */,
 				832C12D51AF914020014895D /* fr */,
+				83CD84B81AF93EFA00CC765E /* de */,
+				83CD84DA1AF93F0F00CC765E /* es-ES */,
+				83CD84FC1AF93F3800CC765E /* it */,
+				83CD851E1AF93F5D00CC765E /* nl */,
+				83CD85411AF93F8700CC765E /* ru */,
+				83CD85631AF93F9B00CC765E /* sv */,
+				83CD85851AF93FB200CC765E /* tr */,
+				837719271AF9F8B40092D17A /* es-419 */,
 			);
 			name = InfinitWelcomeCodeViewController.xib;
 			sourceTree = "<group>";
@@ -2486,6 +2918,14 @@
 				83AD68B31AE983F400EB1B53 /* Base */,
 				83F71CB41AF8FE2F004777C7 /* pt-BR */,
 				832C12EA1AF9140B0014895D /* fr */,
+				83CD84CD1AF93EFE00CC765E /* de */,
+				83CD84F01AF93F1400CC765E /* es-ES */,
+				83CD85111AF93F3D00CC765E /* it */,
+				83CD85331AF93F6200CC765E /* nl */,
+				83CD85561AF93F8B00CC765E /* ru */,
+				83CD85781AF93FA100CC765E /* sv */,
+				83CD859B1AF93FB700CC765E /* tr */,
+				8377193C1AF9F8BD0092D17A /* es-419 */,
 			);
 			name = InfinitWelcomeEmailViewController.xib;
 			sourceTree = "<group>";
@@ -2496,6 +2936,14 @@
 				83AD68C01AEA4E4100EB1B53 /* Base */,
 				83F71CBA1AF8FE34004777C7 /* pt-BR */,
 				832C12F01AF914100014895D /* fr */,
+				83CD84D31AF93EFF00CC765E /* de */,
+				83CD84F51AF93F1600CC765E /* es-ES */,
+				83CD85171AF93F3F00CC765E /* it */,
+				83CD85391AF93F6300CC765E /* nl */,
+				83CD855C1AF93F8D00CC765E /* ru */,
+				83CD857E1AF93FA200CC765E /* sv */,
+				83CD85A01AF93FB900CC765E /* tr */,
+				837719421AF9F8BF0092D17A /* es-419 */,
 			);
 			name = InfinitWelcomeLoginViewController.xib;
 			sourceTree = "<group>";
@@ -2506,6 +2954,14 @@
 				83B32DEB1A84DF1E004088DD /* Base */,
 				83F71CBC1AF8FE35004777C7 /* pt-BR */,
 				832C12F61AF914120014895D /* fr */,
+				83CD84D51AF93EFF00CC765E /* de */,
+				83CD84F71AF93F1600CC765E /* es-ES */,
+				83CD85191AF93F3F00CC765E /* it */,
+				83CD853B1AF93F6400CC765E /* nl */,
+				83CD855E1AF93F8D00CC765E /* ru */,
+				83CD85801AF93FA300CC765E /* sv */,
+				83CD85A21AF93FB900CC765E /* tr */,
+				837719441AF9F8C00092D17A /* es-419 */,
 			);
 			name = InfinitHomePeerTransactionCell.xib;
 			sourceTree = "<group>";
@@ -2516,6 +2972,14 @@
 				83B32DEF1A84DF27004088DD /* Base */,
 				83F71CB91AF8FE33004777C7 /* pt-BR */,
 				832C12EF1AF9140F0014895D /* fr */,
+				83CD84D21AF93EFF00CC765E /* de */,
+				83CD84F31AF93F1500CC765E /* es-ES */,
+				83CD85161AF93F3E00CC765E /* it */,
+				83CD85381AF93F6300CC765E /* nl */,
+				83CD855B1AF93F8D00CC765E /* ru */,
+				83CD857D1AF93FA200CC765E /* sv */,
+				83CD859F1AF93FB800CC765E /* tr */,
+				837719411AF9F8BF0092D17A /* es-419 */,
 			);
 			name = InfinitHomeOnboardingCell.xib;
 			sourceTree = "<group>";
@@ -2526,6 +2990,14 @@
 				83B32DF21A84DF2B004088DD /* Base */,
 				83F71CA81AF8FE2A004777C7 /* pt-BR */,
 				832C12DE1AF914050014895D /* fr */,
+				83CD84C11AF93EFB00CC765E /* de */,
+				83CD84E31AF93F1100CC765E /* es-ES */,
+				83CD85051AF93F3A00CC765E /* it */,
+				83CD85271AF93F5F00CC765E /* nl */,
+				83CD854A1AF93F8900CC765E /* ru */,
+				83CD856C1AF93F9D00CC765E /* sv */,
+				83CD858E1AF93FB400CC765E /* tr */,
+				837719301AF9F8B80092D17A /* es-419 */,
 			);
 			name = InfinitHomeRatingCell.xib;
 			sourceTree = "<group>";
@@ -2536,6 +3008,14 @@
 				83B32DF51A84DF45004088DD /* Base */,
 				83F71C9F1AF8FE28004777C7 /* pt-BR */,
 				832C12D91AF914040014895D /* fr */,
+				83CD84BC1AF93EFB00CC765E /* de */,
+				83CD84DE1AF93F1000CC765E /* es-ES */,
+				83CD85001AF93F3900CC765E /* it */,
+				83CD85221AF93F5E00CC765E /* nl */,
+				83CD85451AF93F8700CC765E /* ru */,
+				83CD85671AF93F9C00CC765E /* sv */,
+				83CD858B1AF93FB400CC765E /* tr */,
+				8377192B1AF9F8B60092D17A /* es-419 */,
 			);
 			name = InfinitFilesNoFilesView.xib;
 			sourceTree = "<group>";
@@ -2546,6 +3026,14 @@
 				83B32DF81A84DF52004088DD /* Base */,
 				83F71CB81AF8FE32004777C7 /* pt-BR */,
 				832C12EE1AF9140E0014895D /* fr */,
+				83CD84D11AF93EFF00CC765E /* de */,
+				83CD84F41AF93F1600CC765E /* es-ES */,
+				83CD85151AF93F3E00CC765E /* it */,
+				83CD85371AF93F6300CC765E /* nl */,
+				83CD855A1AF93F8C00CC765E /* ru */,
+				83CD857C1AF93FA200CC765E /* sv */,
+				83CD859E1AF93FB800CC765E /* tr */,
+				837719401AF9F8BE0092D17A /* es-419 */,
 			);
 			name = InfinitSendToSelfOverlayView.xib;
 			sourceTree = "<group>";
@@ -2556,6 +3044,14 @@
 				83B32DFB1A84DF62004088DD /* Base */,
 				83F71C991AF8FE27004777C7 /* pt-BR */,
 				832C12D71AF914030014895D /* fr */,
+				83CD84BA1AF93EFA00CC765E /* de */,
+				83CD84DC1AF93F1000CC765E /* es-ES */,
+				83CD84FE1AF93F3900CC765E /* it */,
+				83CD85201AF93F5D00CC765E /* nl */,
+				83CD85431AF93F8700CC765E /* ru */,
+				83CD85651AF93F9C00CC765E /* sv */,
+				83CD85871AF93FB200CC765E /* tr */,
+				837719291AF9F8B50092D17A /* es-419 */,
 			);
 			name = InfinitContactCell.xib;
 			sourceTree = "<group>";
@@ -2566,6 +3062,14 @@
 				83B32DFE1A84DF66004088DD /* Base */,
 				83F71C941AF8FE24004777C7 /* pt-BR */,
 				832C12D11AF914000014895D /* fr */,
+				83CD84B31AF93EF800CC765E /* de */,
+				83CD84D71AF93F0F00CC765E /* es-ES */,
+				83CD84F81AF93F3700CC765E /* it */,
+				83CD851A1AF93F5C00CC765E /* nl */,
+				83CD853E1AF93F8600CC765E /* ru */,
+				83CD85601AF93F9B00CC765E /* sv */,
+				83CD85821AF93FB100CC765E /* tr */,
+				837719221AF9F8B30092D17A /* es-419 */,
 			);
 			name = InfinitContactImportCell.xib;
 			sourceTree = "<group>";
@@ -2576,6 +3080,14 @@
 				83B32E011A84DF7C004088DD /* Base */,
 				83F71CB01AF8FE2D004777C7 /* pt-BR */,
 				832C12E61AF914090014895D /* fr */,
+				83CD84C91AF93EFD00CC765E /* de */,
+				83CD84EB1AF93F1300CC765E /* es-ES */,
+				83CD850D1AF93F3C00CC765E /* it */,
+				83CD852F1AF93F6100CC765E /* nl */,
+				83CD85521AF93F8A00CC765E /* ru */,
+				83CD85741AF93FA000CC765E /* sv */,
+				83CD85961AF93FB600CC765E /* tr */,
+				837719381AF9F8BB0092D17A /* es-419 */,
 			);
 			name = LaunchScreen.xib;
 			sourceTree = "<group>";
@@ -2586,6 +3098,14 @@
 				83EBB0881A9397F000144BC6 /* Base */,
 				83F71CA21AF8FE29004777C7 /* pt-BR */,
 				832C12DC1AF914050014895D /* fr */,
+				83CD84BF1AF93EFB00CC765E /* de */,
+				83CD84E11AF93F1100CC765E /* es-ES */,
+				83CD85031AF93F3A00CC765E /* it */,
+				83CD85251AF93F5E00CC765E /* nl */,
+				83CD85481AF93F8800CC765E /* ru */,
+				83CD856A1AF93F9D00CC765E /* sv */,
+				83CD858C1AF93FB400CC765E /* tr */,
+				8377192E1AF9F8B70092D17A /* es-419 */,
 			);
 			name = InfinitOfflineOverlay.xib;
 			sourceTree = "<group>";
@@ -2596,6 +3116,14 @@
 				83F71C8D1AF8FDFF004777C7 /* Base */,
 				83F71CB31AF8FE2F004777C7 /* pt-BR */,
 				832C12E81AF9140A0014895D /* fr */,
+				83CD84CB1AF93EFE00CC765E /* de */,
+				83CD84EE1AF93F1400CC765E /* es-ES */,
+				83CD850F1AF93F3D00CC765E /* it */,
+				83CD85321AF93F6100CC765E /* nl */,
+				83CD85541AF93F8B00CC765E /* ru */,
+				83CD85761AF93FA000CC765E /* sv */,
+				83CD85981AF93FB600CC765E /* tr */,
+				8377193A1AF9F8BC0092D17A /* es-419 */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -2605,6 +3133,14 @@
 			children = (
 				83F71C921AF8FE23004777C7 /* pt-BR */,
 				832C12D21AF914010014895D /* fr */,
+				83CD84B51AF93EF900CC765E /* de */,
+				83CD84D61AF93F0E00CC765E /* es-ES */,
+				83CD84F91AF93F3700CC765E /* it */,
+				83CD851B1AF93F5C00CC765E /* nl */,
+				83CD853D1AF93F8500CC765E /* ru */,
+				83CD855F1AF93F9A00CC765E /* sv */,
+				83CD85811AF93FB100CC765E /* tr */,
+				837719241AF9F8B30092D17A /* es-419 */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -2614,6 +3150,14 @@
 			children = (
 				83F71C9D1AF8FE28004777C7 /* pt-BR */,
 				832C12D81AF914040014895D /* fr */,
+				83CD84BB1AF93EFA00CC765E /* de */,
+				83CD84DD1AF93F1000CC765E /* es-ES */,
+				83CD84FF1AF93F3900CC765E /* it */,
+				83CD85211AF93F5E00CC765E /* nl */,
+				83CD85441AF93F8700CC765E /* ru */,
+				83CD85661AF93F9C00CC765E /* sv */,
+				83CD85881AF93FB300CC765E /* tr */,
+				8377192A1AF9F8B50092D17A /* es-419 */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -2623,6 +3167,14 @@
 			children = (
 				83F71CA61AF8FE2A004777C7 /* pt-BR */,
 				832C12DD1AF914050014895D /* fr */,
+				83CD84C01AF93EFB00CC765E /* de */,
+				83CD84E21AF93F1100CC765E /* es-ES */,
+				83CD85041AF93F3A00CC765E /* it */,
+				83CD85261AF93F5F00CC765E /* nl */,
+				83CD85491AF93F8800CC765E /* ru */,
+				83CD856B1AF93F9D00CC765E /* sv */,
+				83CD858D1AF93FB400CC765E /* tr */,
+				8377192F1AF9F8B80092D17A /* es-419 */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
