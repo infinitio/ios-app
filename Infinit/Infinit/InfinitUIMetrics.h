@@ -38,6 +38,8 @@ typedef NS_ENUM(NSUInteger, InfinitUIEvents)
   InfinitUIEventGotLinkCode,
   // Adjust
   InfinitUIEventAttribution,
+  // Extension
+  InfinitUIEventExtensionCancel,
 };
 
 typedef NS_ENUM(NSUInteger, InfinitUIMethods)

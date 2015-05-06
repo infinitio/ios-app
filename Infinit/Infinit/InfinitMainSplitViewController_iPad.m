@@ -204,6 +204,7 @@
   if (controller == self.extension_controller)
   {
     [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:self.extension_uuid];
+    [InfinitMetricsManager sendMetric:InfinitUIEventExtensionCancel method:InfinitUIMethodNone];
   }
 }
 

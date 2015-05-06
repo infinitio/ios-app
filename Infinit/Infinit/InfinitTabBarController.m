@@ -844,6 +844,7 @@ shouldSelectViewController:(UIViewController*)viewController
   {
     [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:self.extension_uuid];
     _extension_uuid = nil;
+    [InfinitMetricsManager sendMetric:InfinitUIEventExtensionCancel method:InfinitUIMethodNone];
   }
 }
 

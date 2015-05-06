@@ -109,6 +109,8 @@ static InfinitMetricsManager* _instance = nil;
       return @"got link code";
     case InfinitUIEventAttribution:
       return @"attribution";
+    case InfinitUIEventExtensionCancel:
+      return @"cancel extension";
 
     default:
       NSCAssert(false, @"Unknown metrics event");
