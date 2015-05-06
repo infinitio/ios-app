@@ -107,6 +107,8 @@ static dispatch_once_t _first_appear = 0;
     [self showEmptyFilesView];
   else
     [self removeEmptyFilesView];
+  InfinitPeerTransactionManager* manager = [InfinitPeerTransactionManager sharedInstance];
+  _show_onboarding = ([manager transactionsIncludingArchived:YES thisDeviceOnly:YES].count == 0);
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -478,11 +480,6 @@ static dispatch_once_t _first_appear = 0;
     [self.left_button_outer setImage:nil forState:UIControlStateNormal];
     [self.left_button_outer setTitle:NSLocalizedString(@"Back", nil) forState:UIControlStateNormal];
   }
-  [self.view addSubview:self.receive_onboarding_view];
-  self.send_onboarding_view.frame = CGRectMake(self.send_button.center.x,
-                                               self.send_button.center.y - 50.0f,
-                                               self.send_onboarding_view.bounds.size.width,
-                                               self.send_onboarding_view.bounds.size.height);
 }
 
 - (void)hideReceiveOnboarding
@@ -537,7 +534,7 @@ static dispatch_once_t _first_appear = 0;
                                     toItem:self.send_onboarding_view
                                  attribute:NSLayoutAttributeTrailing
                                 multiplier:1.0f
-                                  constant:220.0f];
+                                  constant:0.0f];
   NSLayoutConstraint* y_constraint =
     [NSLayoutConstraint constraintWithItem:self.send_button
                                  attribute:NSLayoutAttributeTop
@@ -545,7 +542,7 @@ static dispatch_once_t _first_appear = 0;
                                     toItem:self.send_onboarding_view
                                  attribute:NSLayoutAttributeBottom
                                 multiplier:1.0f
-                                  constant:150.0f];
+                                  constant:0.0f];
   [self.view addConstraints:@[x_constraint, y_constraint]];
 }
 
@@ -666,7 +663,7 @@ static dispatch_once_t _first_appear = 0;
     NSUInteger count =
       [[InfinitPeerTransactionManager sharedInstance] transactionsIncludingArchived:YES
                                                                      thisDeviceOnly:YES].count;
-    _show_onboarding = (count > 0);
+    _show_onboarding = (count == 0);
   }
   if (!self.show_onboarding)
   {

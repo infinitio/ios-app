@@ -50,7 +50,7 @@ static UIImage* _grey_thumb = nil;
   _thumb_cache_queue = dispatch_queue_create(queue_name.UTF8String, DISPATCH_QUEUE_CONCURRENT);
   UIGraphicsBeginImageContextWithOptions(_thumb_size, YES, 0.0f);
   CGContextRef context = UIGraphicsGetCurrentContext();
-  CGContextSetFillColorWithColor(context, [InfinitColor colorWithGray:196].CGColor);
+  CGContextSetFillColorWithColor(context, [InfinitColor colorWithGray:224].CGColor);
   CGContextFillRect(context, CGRectMake(0.0f, 0.0f, _thumb_size.width, _thumb_size.height));
   _grey_thumb = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
