@@ -1,0 +1,417 @@
+/* No comment provided by engineer. */
+"%@ declined the transfer!" = "%@ nekade överföringen!";
+
+/* No comment provided by engineer. */
+"%@ declined your transfer!" = "%@ nekade din överföring!";
+
+/* No comment provided by engineer. */
+"%@ received your files!" = "%@ tog emot dina filer!";
+
+/* No comment provided by engineer. */
+"%@ wants to send %ld %@ to you" = "%1$@ vill skicka %2$ld %3$@ till dig";
+
+/* No comment provided by engineer. */
+"%lu FILES" = "%lu FILER";
+
+/* No comment provided by engineer. */
+"%lu files" = "%lu filer";
+
+/* No comment provided by engineer. */
+"%lu files selected" = "%lu filer markerade";
+
+/* No comment provided by engineer. */
+"(my other devices)" = "(mina andra enheter)";
+
+/* No comment provided by engineer. */
+"1 file" = "1 fil";
+
+/* No comment provided by engineer. */
+"1 file selected" = "1 fil markerad";
+
+/* No comment provided by engineer. */
+"30x faster" = "30x snabbare";
+
+/* No comment provided by engineer. */
+"ACCEPT" = "ACCEPTERA";
+
+/* No comment provided by engineer. */
+"Accept on receiving device" = "Acceptera på mottagande enhet";
+
+/* No comment provided by engineer. */
+"Account already registered for\nFacebook email address." = "Kontot är redan registrerat med\nFacebook-emailadress";
+
+/* No comment provided by engineer. */
+"All set! A message will be sent to %@." = "Färdigt! Ett meddelande har skickats till %@.";
+
+/* No comment provided by engineer. */
+"Back" = "Tillbaka";
+
+/* No comment provided by engineer. */
+"CANCEL" = "AVBRYT";
+
+/* No comment provided by engineer. */
+"Cancel" = "Avbryt";
+
+/* No comment provided by engineer. */
+"Canceled" = "Avbrutet";
+
+/* No comment provided by engineer. */
+"Canceled by %@" = "Avbröts av %@";
+
+/* No comment provided by engineer. */
+"Canceled by you" = "Avbröts av dig";
+
+/* No comment provided by engineer. */
+"Choose a photo" = "Välj en bild";
+
+/* No comment provided by engineer. */
+"Choose a photo..." = "Välj en bild...";
+
+/* No comment provided by engineer. */
+"Clear avatar" = "Ta bort avatar";
+
+/* No comment provided by engineer. */
+"Connecting" = "Ansluter";
+
+/* No comment provided by engineer. */
+"DECLINE" = "NEKA";
+
+/* No comment provided by engineer. */
+"Delivered" = "Levererat";
+
+/* No comment provided by engineer. */
+"Do you mind sharing some feedback?" = "Skulle du kunna lämna lite feedback?";
+
+/* No comment provided by engineer. */
+"Done" = "Klart";
+
+/* No comment provided by engineer. */
+"Download code is not valid." = "Nedladdningskod ej giltig.";
+
+/* No comment provided by engineer. */
+"Edit profile" = "Redigera profil";
+
+/* No comment provided by engineer. */
+"Email already registered." = "Emailadress redan registrerad.";
+
+/* No comment provided by engineer. */
+"Email not valid." = "Emailadress ej giltig.";
+
+/* No comment provided by engineer. */
+"Enter the download code from\nyour SMS or email invitation." = "Skriv in nedladdningskod från\ndin SMS- eller emailinbjudan.";
+
+/* No comment provided by engineer. */
+"Error – %@ must retry" = "Fel - %@ måste försöka igen";
+
+/* No comment provided by engineer. */
+"Error – Please retry" = "Fel - Var god försök igen";
+
+/* No comment provided by engineer. */
+"Explain your problem here..." = "Beskriv ditt problem här...";
+
+/* No comment provided by engineer. */
+"FAVORITE" = "FAVORIT";
+
+/* No comment provided by engineer. */
+"FEEDBACK" = "FEEDBACK";
+
+/* No comment provided by engineer. */
+"Free up some space on your device and try again or send fewer files." = "Frigör mer utrymme på din enhet och försök igen eller sänd färre filer.";
+
+/* No comment provided by engineer. */
+"From %@" = "Från %@";
+
+/* No comment provided by engineer. */
+"Fullname not valid." = "Fullständigt namn inte giltigt.";
+
+/* No comment provided by engineer. */
+"GOOD, I LIKE IT!" = "BRA, JAG GILLAR DET!";
+
+/* No comment provided by engineer. */
+"Handle not valid" = "Användarnamn inte giltigt";
+
+/* No comment provided by engineer. */
+"Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@\n\nDon't forget to enter the following download code: %@" = "Hej, jag skickade just %1$lu %2$@ till dig på Infinit. Du kan få tag på %3$@ här: %4$@\n\nGlöm inte att skriva in följande nedladdningskod:%5$@";
+
+/* No comment provided by engineer. */
+"How To Send To Self.mp4" = "How To Send To Self.mp4";
+
+/* No comment provided by engineer. */
+"How To Send To Someone.mp4" = "How To Send To Someone.mp4";
+
+/* No comment provided by engineer. */
+"How's your experience with Infinit?" = "Hur är din upplevelse med Infinit?";
+
+/* No comment provided by engineer. */
+"Infinit requires access to your camera roll" = "Infinit begär tillgång till din kamerarulle";
+
+/* No comment provided by engineer. */
+"Infinit requires access to your gallery to send photos and videos." = "Infinit begär tillgång till ditt galleri för att kunna skicka bilder och videor.";
+
+/* No comment provided by engineer. */
+"Infinit was unable to fetch the files from your gallery. Check that you have some free space and try again." = "Infinit kunde inte hämta filerna från ditt galleri. Se till att du har ledigt utrymme och försök igen.";
+
+/* No comment provided by engineer. */
+"Install Infinit on another device to retrieve your files." = "Installera Infinit på en annan enhet för att hämta dina filer.";
+
+/* No comment provided by engineer. */
+"Login/Password don't match." = "Användarnamn/Lösenord matchar ej.";
+
+/* No comment provided by engineer. */
+"Logout" = "Logga ut";
+
+/* No comment provided by engineer. */
+"Looks like you don't have an\naccount. Enter email." = "Det verkar som att du inte har ett\nkonto. Skriv in emailadress.";
+
+/* No comment provided by engineer. */
+"Me" = "Mig";
+
+/* No comment provided by engineer. */
+"Me (my other devices)" = "Mig (mina andra enheter)";
+
+/* No comment provided by engineer. */
+"Mind rating us on the App Store?" = "Skulle du kunna betygsätta oss på App Store?";
+
+/* No comment provided by engineer. */
+"NO, THANKS" = "NEJ TACK";
+
+/* No comment provided by engineer. */
+"Need a connection!" = "Behöver anslutning!";
+
+/* No comment provided by engineer. */
+"No access to gallery." = "Ingen tillgång till galleri.";
+
+/* No comment provided by engineer. */
+"No one here by that name.\nTry an email instead." = "Det finns ingen här med det namnet.\nFörsök med en emailadress istället.";
+
+/* No comment provided by engineer. */
+"No one here by that name.\nTry connecting your Contacts" = "Det finns ingen här med det namnet.\nFörsök att ansluta dina kontakter.";
+
+/* No comment provided by engineer. */
+"Not enough free space!" = "Inte tillräckligt med utrymme!";
+
+/* No comment provided by engineer. */
+"Not enough space on your device." = "Inte tillräckligt med utrymme på din enhet.";
+
+/* No comment provided by engineer. */
+"OK" = "OK";
+
+/* No comment provided by engineer. */
+"OPEN" = "ÖPPNA";
+
+/* No comment provided by engineer. */
+"Oh no! Infinit can't connect. Retry?" = "Oj då! Infinit kan inte ansluta. Försöka igen?";
+
+/* No comment provided by engineer. */
+"Open Infinit to ensure your transfer continues" = "Öppna Infinit för att tillåta din överföring att fortsätta";
+
+/* No comment provided by engineer. */
+"Our Server is down.\nThanks for being patient." = "Vår server ligger nere.\nTack för ditt tålamod.";
+
+/* No comment provided by engineer. */
+"PAUSE" = "PAUSA";
+
+/* No comment provided by engineer. */
+"Password not valid." = "Lösenord ej giltigt.";
+
+/* No comment provided by engineer. */
+"Paused" = "Pausad";
+
+/* No comment provided by engineer. */
+"Paused by %@" = "Pausad av %@";
+
+/* No comment provided by engineer. */
+"Paused by sending device" = "Pausad av sändande enhet";
+
+/* No comment provided by engineer. */
+"Paused – Check network" = "Pausad - Kontrollera nätverk";
+
+/* No comment provided by engineer. */
+"Please update Infinit." = "Var god uppdatera Infinit.";
+
+/* No comment provided by engineer. */
+"Preparing" = "Förbereder";
+
+/* No comment provided by engineer. */
+"Preparing your transfer..." = "Förbereder din överföring...";
+
+/* No comment provided by engineer. */
+"REPORT A PROBLEM" = "RAPPORTERA ETT PROBLEM";
+
+/* No comment provided by engineer. */
+"RESUME" = "ÅTERUPPTA";
+
+/* No comment provided by engineer. */
+"Rate us" = "Betygsätt oss";
+
+/* No comment provided by engineer. */
+"Received" = "Mottaget";
+
+/* No comment provided by engineer. */
+"Received on another device" = "Mottaget på en annan enhet";
+
+/* No comment provided by engineer. */
+"Received your files!" = "Tog emot dina filer!";
+
+/* No comment provided by engineer. */
+"Rename device" = "Ändra namn på enhet";
+
+/* No comment provided by engineer. */
+"Report a problem" = "Rapportera ett problem";
+
+/* No comment provided by engineer. */
+"Rest assured! Closing Infinit won't stop your transfer." = "Du kan vara lugn! Att stänga Infinit kommer inte att stoppa din överföring.";
+
+/* No comment provided by engineer. */
+"SELECT CONTACT" = "VÄLJ KONTAKT";
+
+/* No comment provided by engineer. */
+"SELECT FILES" = "VÄLJ FILER";
+
+/* No comment provided by engineer. */
+"SEND" = "SKICKA";
+
+/* No comment provided by engineer. */
+"SEND %lu FILES" = "SKICKA %lu FILER";
+
+/* No comment provided by engineer. */
+"SEND 1 FILE" = "SKICKA 1 FIL";
+
+/* No comment provided by engineer. */
+"SO SO" = "HALVBRA";
+
+/* No comment provided by engineer. */
+"SURE!" = "VISST!";
+
+/* No comment provided by engineer. */
+"Saving to gallery..." = "Sparar till galleri...";
+
+/* No comment provided by engineer. */
+"Search contacts by name or email..." = "Sök bland kontakter genom namn eller emailadress...";
+
+/* No comment provided by engineer. */
+"Select" = "Välj";
+
+/* No comment provided by engineer. */
+"Send feedback" = "Skicka feedback";
+
+/* No comment provided by engineer. */
+"Sent" = "Skickat";
+
+/* No comment provided by engineer. */
+"Settings" = "Inställningar";
+
+/* No comment provided by engineer. */
+"Skip" = "Hoppa över";
+
+/* No comment provided by engineer. */
+"Swipe the cards left or right to remove them." = "Dra korten till vänster eller höger för att ta bort dem.";
+
+/* No comment provided by engineer. */
+"Take a new photo" = "Ta ny bild";
+
+/* No comment provided by engineer. */
+"Take new photo" = "Ta ny bild";
+
+/* No comment provided by engineer. */
+"Tap 'OK' so we can display your contacts." = "Tryck på 'OK' så att vi kan visa dina kontakter.";
+
+/* No comment provided by engineer. */
+"Tap 'OK' to select your photos and videos." = "Tryck på 'OK' för att välja dina bilder och videor.";
+
+/* No comment provided by engineer. */
+"Thanks for reporting the problem, we'll get back to you as soon as we can." = "Tack för att du rapporterade problemet, vi återkommer så snart vi kan.";
+
+/* No comment provided by engineer. */
+"Thanks for taking the time to give us feedback." = "Tack för att du tog dig tid att ge oss feedback.";
+
+/* No comment provided by engineer. */
+"Thanks!" = "Tack!";
+
+/* No comment provided by engineer. */
+"This handle has already been taken." = "Detta användarnamn används redan.";
+
+/* No comment provided by engineer. */
+"To" = "Till";
+
+/* No comment provided by engineer. */
+"To %@" = "Till %@";
+
+/* No comment provided by engineer. */
+"To:" = "Till:";
+
+/* No comment provided by engineer. */
+"Transferring" = "Överför";
+
+/* No comment provided by engineer. */
+"Transferring on another device" = "Överför på en annan enhet";
+
+/* No comment provided by engineer. */
+"Type email or send to yourself..." = "Skriv emailadress eller skicka till dig själv...";
+
+/* No comment provided by engineer. */
+"UNFAVORITE" = "EJ FAVORIT";
+
+/* No comment provided by engineer. */
+"Unable to accept!" = "Kan ej acceptera!";
+
+/* No comment provided by engineer. */
+"Unable to edit your profile without an Internet connection." = "Kan ej redigera din profil utan internetanslutning.";
+
+/* No comment provided by engineer. */
+"Unable to fetch files." = "Kan ej hämta filer.";
+
+/* No comment provided by engineer. */
+"Unable to login with Facebook" = "Kan ej logga in med Facebook";
+
+/* No comment provided by engineer. */
+"Unknown" = "Okänd";
+
+/* No comment provided by engineer. */
+"Unknown login error" = "Okänt inloggningsfel";
+
+/* No comment provided by engineer. */
+"Waiting for %@ to accept" = "Väntar på att %@ ska acceptera";
+
+/* No comment provided by engineer. */
+"Waiting for you to accept" = "Väntar på att du ska acceptera";
+
+/* No comment provided by engineer. */
+"We'll let you know when %@ receives your files." = "Vi meddelar dig när %@ tar emot dina filer.";
+
+/* No comment provided by engineer. */
+"Write your feedback here..." = "Skriv din feedback här...";
+
+/* No comment provided by engineer. */
+"You declined the transfer!" = "Du nekade överföringen!";
+
+/* No comment provided by engineer. */
+"You need %@ of space to accept this transfer." = "Du behöver %@ utrymme för att kunna acceptera denna överföring.";
+
+/* No comment provided by engineer. */
+"You'd like to send %ld %@" = "Du vill skicka %1$ld %2$@";
+
+/* No comment provided by engineer. */
+"You're already logged in." = "Du är redan inloggad.";
+
+/* No comment provided by engineer. */
+"Your current transfers and notifications will show up here." = "Dina nuvarande överföringar och händelser kommer visas här.";
+
+/* No comment provided by engineer. */
+"Your email has not been confirmed." = "Din emailadress är ännu inte bekräftad.";
+
+/* No comment provided by engineer. */
+"file" = "fil";
+
+/* No comment provided by engineer. */
+"files" = "filer";
+
+/* No comment provided by engineer. */
+"me" = "mig";
+
+/* No comment provided by engineer. */
+"the file" = "filen";
+
+/* No comment provided by engineer. */
+"the files" = "filerna";
+

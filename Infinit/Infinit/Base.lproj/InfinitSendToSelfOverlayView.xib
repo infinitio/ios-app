@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="SourceSansPro-Bold.otf">
@@ -16,8 +16,8 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MRU-8D-Qd1">
-                    <rect key="frame" x="88" y="65" width="425" height="47"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MRU-8D-Qd1">
+                    <rect key="frame" x="88" y="60" width="425" height="47"/>
                     <string key="text">Send your files now and install the desktop app
 to receive it later.</string>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
@@ -25,7 +25,7 @@ to receive it later.</string>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="schema-send-multi-devices" translatesAutoresizingMaskIntoConstraints="NO" id="C9S-UM-PhF">
-                    <rect key="frame" x="187" y="207" width="227" height="173"/>
+                    <rect key="frame" x="187" y="202" width="227" height="173"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="173" id="6E2-X4-UZm"/>
                         <constraint firstAttribute="width" constant="227" id="VoS-yO-6A2"/>
@@ -54,7 +54,7 @@ to receive it later.</string>
                 <constraint firstItem="MRU-8D-Qd1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="X0R-9y-DRv"/>
                 <constraint firstAttribute="centerX" secondItem="C9S-UM-PhF" secondAttribute="centerX" id="YJo-gI-DXe"/>
                 <constraint firstAttribute="bottom" secondItem="2Lh-NQ-J3V" secondAttribute="bottom" constant="30" id="fhZ-vk-ZVT"/>
-                <constraint firstItem="MRU-8D-Qd1" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="65" id="zic-cz-es2"/>
+                <constraint firstItem="MRU-8D-Qd1" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="60" id="zic-cz-es2"/>
             </constraints>
             <connections>
                 <outlet property="first_image" destination="C9S-UM-PhF" id="kLp-4A-poC"/>

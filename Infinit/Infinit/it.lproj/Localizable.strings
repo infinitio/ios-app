@@ -1,0 +1,417 @@
+/* No comment provided by engineer. */
+"%@ declined the transfer!" = "%@ ha rifiutato il trasferimento!";
+
+/* No comment provided by engineer. */
+"%@ declined your transfer!" = "%@ ha rifiutato il tuo trasferimento!";
+
+/* No comment provided by engineer. */
+"%@ received your files!" = "%@ ha ricevuto i tuoi file!";
+
+/* No comment provided by engineer. */
+"%@ wants to send %ld %@ to you" = "%1$@ vuole inviarti %2$ld %3$@";
+
+/* No comment provided by engineer. */
+"%lu FILES" = "%lu FILE";
+
+/* No comment provided by engineer. */
+"%lu files" = "%lu file";
+
+/* No comment provided by engineer. */
+"%lu files selected" = "%lu file selezionati";
+
+/* No comment provided by engineer. */
+"(my other devices)" = "(altri miei dispositivi)";
+
+/* No comment provided by engineer. */
+"1 file" = "1 file";
+
+/* No comment provided by engineer. */
+"1 file selected" = "1 file selezionato";
+
+/* No comment provided by engineer. */
+"30x faster" = "30 volte più veloce";
+
+/* No comment provided by engineer. */
+"ACCEPT" = "ACCETTA";
+
+/* No comment provided by engineer. */
+"Accept on receiving device" = "Accetta sul dispositivo di destinazione";
+
+/* No comment provided by engineer. */
+"Account already registered for\nFacebook email address." = "Account già registrato per\nl'indirizzo email Facebook";
+
+/* No comment provided by engineer. */
+"All set! A message will be sent to %@." = "Tutto pronto! Un messaggio sarà inviato a %@.";
+
+/* No comment provided by engineer. */
+"Back" = "Indietro";
+
+/* No comment provided by engineer. */
+"CANCEL" = "ANNULLA";
+
+/* No comment provided by engineer. */
+"Cancel" = "Annulla";
+
+/* No comment provided by engineer. */
+"Canceled" = "Annullato";
+
+/* No comment provided by engineer. */
+"Canceled by %@" = "Annullato da %@";
+
+/* No comment provided by engineer. */
+"Canceled by you" = "Annullato da te";
+
+/* No comment provided by engineer. */
+"Choose a photo" = "Scegli una foto";
+
+/* No comment provided by engineer. */
+"Choose a photo..." = "Scegli una foto...";
+
+/* No comment provided by engineer. */
+"Clear avatar" = "Ripristina l'avatar";
+
+/* No comment provided by engineer. */
+"Connecting" = "Connessione in corso";
+
+/* No comment provided by engineer. */
+"DECLINE" = "RIFIUTA";
+
+/* No comment provided by engineer. */
+"Delivered" = "Trasferito";
+
+/* No comment provided by engineer. */
+"Do you mind sharing some feedback?" = "Ti va di darci la tua opinione?";
+
+/* No comment provided by engineer. */
+"Done" = "Fatto";
+
+/* No comment provided by engineer. */
+"Download code is not valid." = "Il codice di download non è valido.";
+
+/* No comment provided by engineer. */
+"Edit profile" = "Modifica il profilo";
+
+/* No comment provided by engineer. */
+"Email already registered." = "Email già registrata.";
+
+/* No comment provided by engineer. */
+"Email not valid." = "Email non valida.";
+
+/* No comment provided by engineer. */
+"Enter the download code from\nyour SMS or email invitation." = "Inserisci il codice di download ricevuto\nvia SMS o email d'invito.";
+
+/* No comment provided by engineer. */
+"Error – %@ must retry" = "Errore – %@ deve riprovare";
+
+/* No comment provided by engineer. */
+"Error – Please retry" = "Errore - per favore, riprova.";
+
+/* No comment provided by engineer. */
+"Explain your problem here..." = "Spiega qui il tuo problema...";
+
+/* No comment provided by engineer. */
+"FAVORITE" = "PREFERITO";
+
+/* No comment provided by engineer. */
+"FEEDBACK" = "FEEDBACK";
+
+/* No comment provided by engineer. */
+"Free up some space on your device and try again or send fewer files." = "Libera un po' di spazio sul tuo dispositivo e prova di nuovo o invia meno file.";
+
+/* No comment provided by engineer. */
+"From %@" = "Da %@";
+
+/* No comment provided by engineer. */
+"Fullname not valid." = "Nome non valido.";
+
+/* No comment provided by engineer. */
+"GOOD, I LIKE IT!" = "BUONA, MI PIACE!";
+
+/* No comment provided by engineer. */
+"Handle not valid" = "Utente non valido";
+
+/* No comment provided by engineer. */
+"Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@\n\nDon't forget to enter the following download code: %@" = "Ciao, ti ho appena inviato %1$lu %2$@ con Infinit. Puoi scaricare %3$@ qui: %4$@\n\nNon dimenticare di inserire il seguente codice di download: %5$@";
+
+/* No comment provided by engineer. */
+"How To Send To Self.mp4" = "How To Send To Self.mp4";
+
+/* No comment provided by engineer. */
+"How To Send To Someone.mp4" = "How To Send To Someone.mp4";
+
+/* No comment provided by engineer. */
+"How's your experience with Infinit?" = "Come definiresti la tua esperienza con Infinit?";
+
+/* No comment provided by engineer. */
+"Infinit requires access to your camera roll" = "Infinit richiede l'accesso al tuo rullino fotografico.";
+
+/* No comment provided by engineer. */
+"Infinit requires access to your gallery to send photos and videos." = "Infinit richiede l'accesso alla tua galleria per inviate foto e video.";
+
+/* No comment provided by engineer. */
+"Infinit was unable to fetch the files from your gallery. Check that you have some free space and try again." = "Infinit non ha potuto accedere ai file della galleria. Controlla di avere spazio a sufficienza e prova di nuovo.";
+
+/* No comment provided by engineer. */
+"Install Infinit on another device to retrieve your files." = "Installa Infinit su un altro dispositivo per ottenere i tuoi file.";
+
+/* No comment provided by engineer. */
+"Login/Password don't match." = "Login/Password non corrispondenti.";
+
+/* No comment provided by engineer. */
+"Logout" = "Esci";
+
+/* No comment provided by engineer. */
+"Looks like you don't have an\naccount. Enter email." = "Sembra che tu non abbia un\naccount. Inserisci la tua email.";
+
+/* No comment provided by engineer. */
+"Me" = "Io";
+
+/* No comment provided by engineer. */
+"Me (my other devices)" = "Io (i miei altri dispositivi)";
+
+/* No comment provided by engineer. */
+"Mind rating us on the App Store?" = "Vuoi darci una valutazione sull'App Store?";
+
+/* No comment provided by engineer. */
+"NO, THANKS" = "No, grazie";
+
+/* No comment provided by engineer. */
+"Need a connection!" = "Hai bisogno di una connessione!";
+
+/* No comment provided by engineer. */
+"No access to gallery." = "Nessun accesso alla galleria.";
+
+/* No comment provided by engineer. */
+"No one here by that name.\nTry an email instead." = "Nessuna corrispondenza con quel nome. Prova un indirizzo email.";
+
+/* No comment provided by engineer. */
+"No one here by that name.\nTry connecting your Contacts" = "Nessuna corrispondenza con quel nome. Prova a collegare i tuoi Contatti.";
+
+/* No comment provided by engineer. */
+"Not enough free space!" = "Non c'è spazio libero a sufficienza!";
+
+/* No comment provided by engineer. */
+"Not enough space on your device." = "Non c'è spazio a sufficienza sul tuo dispositivo. ";
+
+/* No comment provided by engineer. */
+"OK" = "OK";
+
+/* No comment provided by engineer. */
+"OPEN" = "Apri";
+
+/* No comment provided by engineer. */
+"Oh no! Infinit can't connect. Retry?" = "Oh no! Infinit non può collegarsi. Riprovare?";
+
+/* No comment provided by engineer. */
+"Open Infinit to ensure your transfer continues" = "Apri Infinit per assicurarti che il tuo trasferimento possa continuare. ";
+
+/* No comment provided by engineer. */
+"Our Server is down.\nThanks for being patient." = "I nostri server sono in difficoltà.\nGrazie per la tua pazienza.";
+
+/* No comment provided by engineer. */
+"PAUSE" = "Pausa";
+
+/* No comment provided by engineer. */
+"Password not valid." = "Password non valida.";
+
+/* No comment provided by engineer. */
+"Paused" = "In pausa";
+
+/* No comment provided by engineer. */
+"Paused by %@" = "Messo in pausa da %@";
+
+/* No comment provided by engineer. */
+"Paused by sending device" = "Messo in pausa dal dispositivo emittente";
+
+/* No comment provided by engineer. */
+"Paused – Check network" = "In pausa - Controlla la connessione";
+
+/* No comment provided by engineer. */
+"Please update Infinit." = "Per favore, aggiorna Infinit.";
+
+/* No comment provided by engineer. */
+"Preparing" = "Preparo";
+
+/* No comment provided by engineer. */
+"Preparing your transfer..." = "Preparo il tuo trasferimento...";
+
+/* No comment provided by engineer. */
+"REPORT A PROBLEM" = "Segnala un problema";
+
+/* No comment provided by engineer. */
+"RESUME" = "RIPRENDI";
+
+/* No comment provided by engineer. */
+"Rate us" = "Valutaci";
+
+/* No comment provided by engineer. */
+"Received" = "Ricevuto";
+
+/* No comment provided by engineer. */
+"Received on another device" = "Ricevuto su un altro dispositivo.";
+
+/* No comment provided by engineer. */
+"Received your files!" = "I tuoi files sono stati ricevuti!";
+
+/* No comment provided by engineer. */
+"Rename device" = "Rinomina il dispositivo";
+
+/* No comment provided by engineer. */
+"Report a problem" = "Segnala un problema";
+
+/* No comment provided by engineer. */
+"Rest assured! Closing Infinit won't stop your transfer." = "Tranquillo! Chiudendo Infinit non si interromperà il tuo trasferimento.";
+
+/* No comment provided by engineer. */
+"SELECT CONTACT" = "Seleziona Contatto";
+
+/* No comment provided by engineer. */
+"SELECT FILES" = "Seleziona File";
+
+/* No comment provided by engineer. */
+"SEND" = "Invia";
+
+/* No comment provided by engineer. */
+"SEND %lu FILES" = "Invia %lu file";
+
+/* No comment provided by engineer. */
+"SEND 1 FILE" = "Invia 1 file";
+
+/* No comment provided by engineer. */
+"SO SO" = "Così così";
+
+/* No comment provided by engineer. */
+"SURE!" = "Certo!";
+
+/* No comment provided by engineer. */
+"Saving to gallery..." = "Salvo nella galleria...";
+
+/* No comment provided by engineer. */
+"Search contacts by name or email..." = "Ricerca contatti per nome o email...";
+
+/* No comment provided by engineer. */
+"Select" = "Seleziona";
+
+/* No comment provided by engineer. */
+"Send feedback" = "Invia feedback";
+
+/* No comment provided by engineer. */
+"Sent" = "Inviato";
+
+/* No comment provided by engineer. */
+"Settings" = "Impostazioni";
+
+/* No comment provided by engineer. */
+"Skip" = "Salta";
+
+/* No comment provided by engineer. */
+"Swipe the cards left or right to remove them." = "Trascina le schede a destra o sinistra per rimuoverle.";
+
+/* No comment provided by engineer. */
+"Take a new photo" = "Scatta una nuova foto";
+
+/* No comment provided by engineer. */
+"Take new photo" = "Scatta una nuova foto";
+
+/* No comment provided by engineer. */
+"Tap 'OK' so we can display your contacts." = "Tocca 'OK' così potremo visualizzare i tuoi contatti.";
+
+/* No comment provided by engineer. */
+"Tap 'OK' to select your photos and videos." = "Tocca 'OK' per selezionare le tue foto e video.";
+
+/* No comment provided by engineer. */
+"Thanks for reporting the problem, we'll get back to you as soon as we can." = "Grazie per aver riportato il problema, gestiremo la tua segnalazione il prima possibile.";
+
+/* No comment provided by engineer. */
+"Thanks for taking the time to give us feedback." = "Grazie per il tempo che ci hai dedicato con la tua segnalazione.";
+
+/* No comment provided by engineer. */
+"Thanks!" = "Grazie!";
+
+/* No comment provided by engineer. */
+"This handle has already been taken." = "Questo nome utente è già assegnato.";
+
+/* No comment provided by engineer. */
+"To" = "A";
+
+/* No comment provided by engineer. */
+"To %@" = "A %@";
+
+/* No comment provided by engineer. */
+"To:" = "A:";
+
+/* No comment provided by engineer. */
+"Transferring" = "Trasferimento in corso";
+
+/* No comment provided by engineer. */
+"Transferring on another device" = "Trasferimento su un altro dispositivo";
+
+/* No comment provided by engineer. */
+"Type email or send to yourself..." = "Digita un indirizzo email o invialo a te stesso...";
+
+/* No comment provided by engineer. */
+"UNFAVORITE" = "Rimuovi preferito";
+
+/* No comment provided by engineer. */
+"Unable to accept!" = "Impossibile accettare!";
+
+/* No comment provided by engineer. */
+"Unable to edit your profile without an Internet connection." = "Impossibile modificare il tuo profilo senza una connessione di rete.";
+
+/* No comment provided by engineer. */
+"Unable to fetch files." = "Impossibile recuperare i files.";
+
+/* No comment provided by engineer. */
+"Unable to login with Facebook" = "Impossibile connettersi tramite Facebook";
+
+/* No comment provided by engineer. */
+"Unknown" = "Sconosciuto";
+
+/* No comment provided by engineer. */
+"Unknown login error" = "Errore di login sconosciuto";
+
+/* No comment provided by engineer. */
+"Waiting for %@ to accept" = "In attesa dell'approvazione di %@";
+
+/* No comment provided by engineer. */
+"Waiting for you to accept" = "In attesa della tua approvazione";
+
+/* No comment provided by engineer. */
+"We'll let you know when %@ receives your files." = "Ti daremo conferma quando %@ riceverà i tuoi file.";
+
+/* No comment provided by engineer. */
+"Write your feedback here..." = "Scrivi qui la tua opinione...";
+
+/* No comment provided by engineer. */
+"You declined the transfer!" = "Hai rifiutato il trasferimento!";
+
+/* No comment provided by engineer. */
+"You need %@ of space to accept this transfer." = "Lo spazio richiesto per questo trasferimento è di %@.";
+
+/* No comment provided by engineer. */
+"You'd like to send %ld %@" = "Vorresti inviare %1$ld %2$@";
+
+/* No comment provided by engineer. */
+"You're already logged in." = "Sei già autenticato.";
+
+/* No comment provided by engineer. */
+"Your current transfers and notifications will show up here." = "I trasferimenti in corso e le notifiche appariranno qui.";
+
+/* No comment provided by engineer. */
+"Your email has not been confirmed." = "Il tuo indirizzo email non è ancora stato confermato.";
+
+/* No comment provided by engineer. */
+"file" = "file";
+
+/* No comment provided by engineer. */
+"files" = "file";
+
+/* No comment provided by engineer. */
+"me" = "io";
+
+/* No comment provided by engineer. */
+"the file" = "il file";
+
+/* No comment provided by engineer. */
+"the files" = "i file";
+

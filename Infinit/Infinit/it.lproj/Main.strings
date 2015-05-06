@@ -1,0 +1,216 @@
+/* Class = "UILabel"; text = "No limits. No waiting. No hassle. Always works!"; ObjectID = "0G6-1i-g1R"; */
+"0G6-1i-g1R.text" = "Nessun limite. Nessuna attesa. Nessun problema. Funziona sempre!";
+
+/* Class = "UILabel"; text = "Mike Dee"; ObjectID = "0RN-Xm-k4b"; */
+"0RN-Xm-k4b.text" = "Mike Dee";
+
+/* Class = "UINavigationItem"; title = "SELECT"; ObjectID = "0rw-4j-beG"; */
+"0rw-4j-beG.title" = "SELEZIONA";
+
+/* Class = "UIButton"; normalTitle = "FAVORITE"; ObjectID = "1LK-Mw-637"; */
+"1LK-Mw-637.normalTitle" = "PREFERITI";
+
+/* Class = "UINavigationController"; title = "CONTACTS"; ObjectID = "1XU-dC-dIe"; */
+"1XU-dC-dIe.title" = "CONTATTI";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "2OQ-eh-oJ7"; */
+"2OQ-eh-oJ7.text" = "Etichetta";
+
+/* Class = "UILabel"; text = "Mike Dee"; ObjectID = "6G8-BA-BUD"; */
+"6G8-BA-BUD.text" = "Mike Dee";
+
+/* Class = "UIViewController"; title = "SEND_RECIPIENTS"; ObjectID = "9ZK-3B-PXo"; */
+"9ZK-3B-PXo.title" = "Invio_destinatari";
+
+/* Class = "UINavigationController"; title = "SEND"; ObjectID = "18v-p7-fft"; */
+"18v-p7-fft.title" = "INVIA";
+
+/* Class = "UIButton"; normalTitle = "GET STARTED"; ObjectID = "97m-pM-Fe4"; */
+"97m-pM-Fe4.normalTitle" = "INIZIA";
+
+/* Class = "UITabBarController"; title = "TAB CONTROLLER IPAD"; ObjectID = "BGv-th-9AK"; */
+"BGv-th-9AK.title" = "TAB CONTROLLER IPAD";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "BMO-Tq-quz"; */
+"BMO-Tq-quz.text" = "Etichetta";
+
+/* Class = "UILabel"; text = "Send any photo or video\nto your friends"; ObjectID = "Bbd-IZ-yiZ"; */
+"Bbd-IZ-yiZ.text" = "Invia qualunque foto o video\nai tuoi amici";
+
+/* Class = "UIButton"; normalTitle = "ACCESS PHONE CONTACTS"; ObjectID = "CQ1-1P-kb6"; */
+"CQ1-1P-kb6.normalTitle" = "ACCEDI AI CONTATTI DEL TELEFONO";
+
+/* Class = "UIViewController"; title = "SEND_GALLERY"; ObjectID = "Cz7-xE-6Ks"; */
+"Cz7-xE-6Ks.title" = "INVIA_GALLERY";
+
+/* Class = "UINavigationItem"; title = "CONTACTS"; ObjectID = "Diz-0I-QjG"; */
+"Diz-0I-QjG.title" = "CONTATTI";
+
+/* Class = "UILabel"; text = "Mike Dee"; ObjectID = "Dz8-88-hEf"; */
+"Dz8-88-hEf.text" = "Mike Dee";
+
+/* Class = "UINavigationController"; title = "FILES"; ObjectID = "E3A-FT-LpY"; */
+"E3A-FT-LpY.title" = "FILE";
+
+/* Class = "UILabel"; text = "email"; ObjectID = "ED8-ta-EAO"; */
+"ED8-ta-EAO.text" = "email";
+
+/* Class = "UITabBarItem"; title = "Item"; ObjectID = "ESf-xZ-Nqk"; */
+"ESf-xZ-Nqk.title" = "Oggetto";
+
+/* Class = "UINavigationController"; title = "EDIT PROFILE"; ObjectID = "FTm-Xp-9pf"; */
+"FTm-Xp-9pf.title" = "MODIFICA PROFILO";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Fb4-h2-ykq"; */
+"Fb4-h2-ykq.text" = "Etichetta";
+
+/* Class = "UISegmentedControl"; Fn8-5X-DLz.segmentTitles[0] = "All"; ObjectID = "Fn8-5X-DLz"; */
+"Fn8-5X-DLz.segmentTitles[0]" = "Tutto";
+
+/* Class = "UISegmentedControl"; Fn8-5X-DLz.segmentTitles[1] = "Photos"; ObjectID = "Fn8-5X-DLz"; */
+"Fn8-5X-DLz.segmentTitles[1]" = "Foto";
+
+/* Class = "UISegmentedControl"; Fn8-5X-DLz.segmentTitles[2] = "Videos"; ObjectID = "Fn8-5X-DLz"; */
+"Fn8-5X-DLz.segmentTitles[2]" = "Video";
+
+/* Class = "UISegmentedControl"; Fn8-5X-DLz.segmentTitles[3] = "Docs"; ObjectID = "Fn8-5X-DLz"; */
+"Fn8-5X-DLz.segmentTitles[3]" = "Documenti";
+
+/* Class = "UISegmentedControl"; Fn8-5X-DLz.segmentTitles[4] = "Music"; ObjectID = "Fn8-5X-DLz"; */
+"Fn8-5X-DLz.segmentTitles[4]" = "Musica";
+
+/* Class = "UISegmentedControl"; Fn8-5X-DLz.segmentTitles[5] = "Other"; ObjectID = "Fn8-5X-DLz"; */
+"Fn8-5X-DLz.segmentTitles[5]" = "Altro";
+
+/* Class = "UITabBarItem"; title = "Item"; ObjectID = "HEy-Gq-I91"; */
+"HEy-Gq-I91.title" = "Oggetto";
+
+/* Class = "UILabel"; text = "Receive and view any\ntype of file in Infinit"; ObjectID = "J59-YW-qzz"; */
+"J59-YW-qzz.text" = "Ricevi e visualizza qualunque\ntipo di file con Infinit";
+
+/* Class = "UIViewController"; title = "Files Table iPad"; ObjectID = "KNs-fB-D4y"; */
+"KNs-fB-D4y.title" = "Files Table iPad";
+
+/* Class = "UILabel"; text = "Access photos, videos, music, PDFs and more"; ObjectID = "Kjb-PN-Gxr"; */
+"Kjb-PN-Gxr.text" = "Accedi a foto, video, musica, PDF e molto altro";
+
+/* Class = "UILabel"; text = "RECEIVED FILES"; ObjectID = "KlZ-FW-RX5"; */
+"KlZ-FW-RX5.text" = "FILE RICEVUTI";
+
+/* Class = "UIViewController"; title = "Files Table iPad"; ObjectID = "LjX-qk-19E"; */
+"LjX-qk-19E.title" = "Files Table iPad";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "M8v-h9-tSJ"; */
+"M8v-h9-tSJ.text" = "Etichetta";
+
+/* Class = "UILabel"; text = "+5"; ObjectID = "MoH-dc-fmU"; */
+"MoH-dc-fmU.text" = "+5";
+
+/* Class = "UILabel"; text = "Send your files between\nyour own devices"; ObjectID = "N40-3y-JCe"; */
+"N40-3y-JCe.text" = "Condividi i tuoi file\ntra i tuoi dispositivi";
+
+/* Class = "UINavigationItem"; title = "EDIT PROFILE"; ObjectID = "OWZ-ZK-qG3"; */
+"OWZ-ZK-qG3.title" = "MODIFICA PROFILO";
+
+/* Class = "UINavigationItem"; title = "REPORT A PROBLEM"; ObjectID = "Q7Z-b7-sHF"; */
+"Q7Z-b7-sHF.title" = "SEGNALA UN PROBLEMA";
+
+/* Class = "UINavigationController"; title = "REPORT A PROBLEM"; ObjectID = "RBB-kt-vOH"; */
+"RBB-kt-vOH.title" = "SEGNALA UN PROBLEMA";
+
+/* Class = "UIBarButtonItem"; title = "OK"; ObjectID = "RBf-3C-mkH"; */
+"RBf-3C-mkH.title" = "OK";
+
+/* Class = "UIViewController"; title = "Home View Controller"; ObjectID = "RJM-ey-XCj"; */
+"RJM-ey-XCj.title" = "Home View Controller";
+
+/* Class = "UISearchBar"; placeholder = "Search"; ObjectID = "UIT-gc-l6k"; */
+"UIT-gc-l6k.placeholder" = "Cerca";
+
+/* Class = "UIButton"; normalTitle = "FIND FACEBOOK FRIENDS"; ObjectID = "YNY-lR-rkF"; */
+"YNY-lR-rkF.normalTitle" = "TROVA AMICI DI FACEBOOK";
+
+/* Class = "UINavigationItem"; title = "RECEIVED FILES"; ObjectID = "ZoT-BP-9BH"; */
+"ZoT-BP-9BH.title" = "FILE RICEVUTI";
+
+/* Class = "UINavigationController"; title = "HOME"; ObjectID = "aTr-06-n7W"; */
+"aTr-06-n7W.title" = "HOME";
+
+/* Class = "UINavigationItem"; title = "SETTINGS"; ObjectID = "auf-bJ-QRX"; */
+"auf-bJ-QRX.title" = "IMPOSTAZIONI";
+
+/* Class = "UIButton"; normalTitle = "SEND"; ObjectID = "bqF-ty-XIH"; */
+"bqF-ty-XIH.normalTitle" = "INVIA";
+
+/* Class = "UIButton"; normalTitle = "SEND"; ObjectID = "cAz-dS-fQ5"; */
+"cAz-dS-fQ5.normalTitle" = "INVIA";
+
+/* Class = "UIViewController"; title = "CONTACTS"; ObjectID = "cyR-zH-YxB"; */
+"cyR-zH-YxB.title" = "CONTATTI";
+
+/* Class = "UIBarButtonItem"; title = "Select"; ObjectID = "dDd-tw-C0S"; */
+"dDd-tw-C0S.title" = "Seleziona";
+
+/* Class = "UILabel"; text = "Send to an email address or\naccess your phone contacts!"; ObjectID = "eGc-7u-5hd"; */
+"eGc-7u-5hd.text" = "Invia ad un indirizzo email oppure accedi ai tuoi contatti telefonici!";
+
+/* Class = "UILabel"; text = "M"; ObjectID = "fjd-ZY-K2z"; */
+"fjd-ZY-K2z.text" = "M";
+
+/* Class = "UIButton"; normalTitle = "Select"; ObjectID = "gOC-Dq-oEk"; */
+"gOC-Dq-oEk.normalTitle" = "Seleziona";
+
+/* Class = "UIBarButtonItem"; title = "OK"; ObjectID = "gce-DQ-YM6"; */
+"gce-DQ-YM6.title" = "OK";
+
+/* Class = "UIViewController"; title = "SETTINGS"; ObjectID = "gyX-52-PGb"; */
+"gyX-52-PGb.title" = "IMPOSTAZIONI";
+
+/* Class = "UIBarButtonItem"; title = "Select"; ObjectID = "hHs-X5-8Rx"; */
+"hHs-X5-8Rx.title" = "Seleziona";
+
+/* Class = "UIViewController"; title = "RECEIVED FILES IPAD"; ObjectID = "hHz-xi-viG"; */
+"hHz-xi-viG.title" = "IPAD FILE RICEVUTI";
+
+/* Class = "UISearchBar"; placeholder = "Search"; ObjectID = "ijA-4P-WMS"; */
+"ijA-4P-WMS.placeholder" = "Cerca";
+
+/* Class = "UIButton"; normalTitle = "NEXT"; ObjectID = "jCk-aB-ANg"; */
+"jCk-aB-ANg.normalTitle" = "AVANTI";
+
+/* Class = "UIViewController"; title = "Files Collection iPad"; ObjectID = "kH3-GE-cwM"; */
+"kH3-GE-cwM.title" = "Collezione File su iPad";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "mGE-WJ-uld"; */
+"mGE-WJ-uld.text" = "Etichetta";
+
+/* Class = "UIButton"; normalTitle = "Go to online profile..."; ObjectID = "nZU-c9-6fj"; */
+"nZU-c9-6fj.normalTitle" = "Vai al profilo online…";
+
+/* Class = "UILabel"; text = "email"; ObjectID = "nnb-QO-NCG"; */
+"nnb-QO-NCG.text" = "email";
+
+/* Class = "UIViewController"; title = "CONTACT"; ObjectID = "pu1-dB-tPe"; */
+"pu1-dB-tPe.title" = "CONTATTO";
+
+/* Class = "UINavigationItem"; title = "FILES"; ObjectID = "qGT-HW-jdc"; */
+"qGT-HW-jdc.title" = "FILE";
+
+/* Class = "UINavigationItem"; title = "RENAME DEVICE"; ObjectID = "rRS-HT-VPY"; */
+"rRS-HT-VPY.title" = "RINOMINA DISPOSITIVO";
+
+/* Class = "UINavigationController"; title = "SETTINGS"; ObjectID = "rsj-6b-IS1"; */
+"rsj-6b-IS1.title" = "IMPOSTAZIONI";
+
+/* Class = "UILabel"; text = "phone"; ObjectID = "w7i-pX-6rC"; */
+"w7i-pX-6rC.text" = "telefono";
+
+/* Class = "UINavigationItem"; title = "CONTACT"; ObjectID = "wAF-uM-uRe"; */
+"wAF-uM-uRe.title" = "CONTATTO";
+
+/* Class = "UIButton"; normalTitle = "SEND"; ObjectID = "z9O-hM-TV6"; */
+"z9O-hM-TV6.normalTitle" = "INVIA";
+
+/* Class = "UINavigationItem"; title = "SEND"; ObjectID = "zuc-EM-7Qy"; */
+"zuc-EM-7Qy.title" = "INVIA";
+

@@ -1,0 +1,18 @@
+/* Class = "UIButton"; normalTitle = "or sign up with Facebook"; ObjectID = "8EL-62-1HZ"; */
+"8EL-62-1HZ.normalTitle" = "oder mit Facebook registrieren";
+
+/* Class = "UILabel"; text = "Enter your name and a password."; ObjectID = "CYa-ax-CQN"; */
+"CYa-ax-CQN.text" = "Gib deinen Namen und Passwort ein.";
+
+/* Class = "UITextField"; placeholder = "John Doe"; ObjectID = "WnP-4q-Uhq"; */
+"WnP-4q-Uhq.placeholder" = "Max Mustermann";
+
+/* Class = "UITextField"; placeholder = "●●●●●●"; ObjectID = "ipO-57-IeG"; */
+"ipO-57-IeG.placeholder" = "●●●●●●";
+
+/* Class = "UIButton"; normalTitle = "Register"; ObjectID = "kZJ-Mq-KUh"; */
+"kZJ-Mq-KUh.normalTitle" = "Registrieren";
+
+/* Class = "UIButton"; normalTitle = "Back"; ObjectID = "wFL-F1-Zle"; */
+"wFL-F1-Zle.normalTitle" = "Zurück";
+

@@ -1,0 +1,417 @@
+/* No comment provided by engineer. */
+"%@ declined the transfer!" = "%@ heeft uw bestandsoverdracht afgewezen!";
+
+/* No comment provided by engineer. */
+"%@ declined your transfer!" = "%@ heeft uw bestandsoverdracht afgewezen!";
+
+/* No comment provided by engineer. */
+"%@ received your files!" = "%@ heeft uw bestanden ontvangen!";
+
+/* No comment provided by engineer. */
+"%@ wants to send %ld %@ to you" = "%1$@ wilt bestand(en) naar %2$ld %3$@ jou versturen";
+
+/* No comment provided by engineer. */
+"%lu FILES" = "%lu BESTANDEN";
+
+/* No comment provided by engineer. */
+"%lu files" = "%lu bestanden";
+
+/* No comment provided by engineer. */
+"%lu files selected" = "%lu bestanden geselecteerd";
+
+/* No comment provided by engineer. */
+"(my other devices)" = "(mijn andere apparaten)";
+
+/* No comment provided by engineer. */
+"1 file" = "1 bestand";
+
+/* No comment provided by engineer. */
+"1 file selected" = "1 bestand geselecteerd";
+
+/* No comment provided by engineer. */
+"30x faster" = "30 keer sneller";
+
+/* No comment provided by engineer. */
+"ACCEPT" = "Accepteer";
+
+/* No comment provided by engineer. */
+"Accept on receiving device" = "Accepteer op het apparaat van de ontvanger.";
+
+/* No comment provided by engineer. */
+"Account already registered for\nFacebook email address." = "Account is al geregistreerd voor een\nFacebook email adres.";
+
+/* No comment provided by engineer. */
+"All set! A message will be sent to %@." = "Gereed! Een bericht zal worden verstuurd naar %@.";
+
+/* No comment provided by engineer. */
+"Back" = "Terug";
+
+/* No comment provided by engineer. */
+"CANCEL" = "ANNULEER";
+
+/* No comment provided by engineer. */
+"Cancel" = "Annuleer";
+
+/* No comment provided by engineer. */
+"Canceled" = "Geannuleerd";
+
+/* No comment provided by engineer. */
+"Canceled by %@" = "Geannuleerd door %@";
+
+/* No comment provided by engineer. */
+"Canceled by you" = "Geannuleerd door u";
+
+/* No comment provided by engineer. */
+"Choose a photo" = "Kies een foto";
+
+/* No comment provided by engineer. */
+"Choose a photo..." = "Kies een foto...";
+
+/* No comment provided by engineer. */
+"Clear avatar" = "Verwijder avatar";
+
+/* No comment provided by engineer. */
+"Connecting" = "Verbinden";
+
+/* No comment provided by engineer. */
+"DECLINE" = "AFWIJZEN";
+
+/* No comment provided by engineer. */
+"Delivered" = "Afgeleverd";
+
+/* No comment provided by engineer. */
+"Do you mind sharing some feedback?" = "Wilt u a.u.b de tijd nemen om feedback te geven?";
+
+/* No comment provided by engineer. */
+"Done" = "Klaar";
+
+/* No comment provided by engineer. */
+"Download code is not valid." = "Download code is niet geldig.";
+
+/* No comment provided by engineer. */
+"Edit profile" = "Bewerk profiel";
+
+/* No comment provided by engineer. */
+"Email already registered." = "Email is al gerigistreerd.";
+
+/* No comment provided by engineer. */
+"Email not valid." = "Email is niet geldig.";
+
+/* No comment provided by engineer. */
+"Enter the download code from\nyour SMS or email invitation." = "Voer de download code in van\nje SMS of email uitnodiging.";
+
+/* No comment provided by engineer. */
+"Error – %@ must retry" = "Fout - %@ moet het opnieuw proberen.";
+
+/* No comment provided by engineer. */
+"Error – Please retry" = "Fout - Probeer het a.u.b opnieuw.";
+
+/* No comment provided by engineer. */
+"Explain your problem here..." = "Leg uw probleem hier uit.";
+
+/* No comment provided by engineer. */
+"FAVORITE" = "FAVORIET";
+
+/* No comment provided by engineer. */
+"FEEDBACK" = "FEEDBACK";
+
+/* No comment provided by engineer. */
+"Free up some space on your device and try again or send fewer files." = "Maak wat ruimte vrij op je apparaat en probeer het opnieuw of verstuur minder bestanden.";
+
+/* No comment provided by engineer. */
+"From %@" = "Van %@";
+
+/* No comment provided by engineer. */
+"Fullname not valid." = "Volledige naam niet geldig.";
+
+/* No comment provided by engineer. */
+"GOOD, I LIKE IT!" = "GOED, HET IS GEWELDIG";
+
+/* No comment provided by engineer. */
+"Handle not valid" = "Handeling is niet geldig.";
+
+/* No comment provided by engineer. */
+"Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@\n\nDon't forget to enter the following download code: %@" = "Hallo, ik heb jou %1$lu%2$@ via Infinit. Je kunt %3$@ hier krijgen: %4$@\n\nVergeet niet om deze download code in te voeren: %5$@";
+
+/* No comment provided by engineer. */
+"How To Send To Self.mp4" = "Hoe te versturen naar jezelf.mp4";
+
+/* No comment provided by engineer. */
+"How To Send To Someone.mp4" = "Hoe te versturen naar iemand.mp4";
+
+/* No comment provided by engineer. */
+"How's your experience with Infinit?" = "Wat zijn je ervaringen met Infinit?";
+
+/* No comment provided by engineer. */
+"Infinit requires access to your camera roll" = "Om Infinit te gebruiken, moet u toestemming geven tot uw camera album.";
+
+/* No comment provided by engineer. */
+"Infinit requires access to your gallery to send photos and videos." = "Infinit moet toegang hebben tot je foto album om foto's en video's te versturen.";
+
+/* No comment provided by engineer. */
+"Infinit was unable to fetch the files from your gallery. Check that you have some free space and try again." = "Infinit kon de bestanden van je galerij niet ontvangen. Zorg dat je vrije ruimte hebt en probeer opnieuw.";
+
+/* No comment provided by engineer. */
+"Install Infinit on another device to retrieve your files." = "Installeer Infinit op een ander apparaat om je bestanden te ontvangen.";
+
+/* No comment provided by engineer. */
+"Login/Password don't match." = "De inloggegevens komen niet overeen.";
+
+/* No comment provided by engineer. */
+"Logout" = "Log uit";
+
+/* No comment provided by engineer. */
+"Looks like you don't have an\naccount. Enter email." = "Het lijkt erop dat je geen\naccount hebt. Voer je email in.";
+
+/* No comment provided by engineer. */
+"Me" = "Mij";
+
+/* No comment provided by engineer. */
+"Me (my other devices)" = "Mij (Mijn andere apparaten)";
+
+/* No comment provided by engineer. */
+"Mind rating us on the App Store?" = "Wilt u a.u.b een beoordeling geven in de App Store?";
+
+/* No comment provided by engineer. */
+"NO, THANKS" = "NEE, BEDANKT";
+
+/* No comment provided by engineer. */
+"Need a connection!" = "Moet een verbinding hebben!";
+
+/* No comment provided by engineer. */
+"No access to gallery." = "Geen toegang tot foto album.";
+
+/* No comment provided by engineer. */
+"No one here by that name.\nTry an email instead." = "Deze naam is niet in gebruik.\nProbeer inplaats van daarvan een email.";
+
+/* No comment provided by engineer. */
+"No one here by that name.\nTry connecting your Contacts" = "Niemand heeft die naam.\nProbeer je contacten te koppelen.";
+
+/* No comment provided by engineer. */
+"Not enough free space!" = "Niet genoeg vrije ruimte!";
+
+/* No comment provided by engineer. */
+"Not enough space on your device." = "Niet genoeg ruimte op je apparaat!";
+
+/* No comment provided by engineer. */
+"OK" = "OK";
+
+/* No comment provided by engineer. */
+"OPEN" = "OPEN";
+
+/* No comment provided by engineer. */
+"Oh no! Infinit can't connect. Retry?" = "O nee! Infinit kan geen verbinding maken. Opnieuw proberen?";
+
+/* No comment provided by engineer. */
+"Open Infinit to ensure your transfer continues" = "Open Infinit om er zeker van te zijn dat de uitwisseling doorgaat!";
+
+/* No comment provided by engineer. */
+"Our Server is down.\nThanks for being patient." = "Onze server ligt plat.\nBedankt voor het wachten.";
+
+/* No comment provided by engineer. */
+"PAUSE" = "PAUZE";
+
+/* No comment provided by engineer. */
+"Password not valid." = "Wachtwoord is niet geldig.";
+
+/* No comment provided by engineer. */
+"Paused" = "Gepauzeerd";
+
+/* No comment provided by engineer. */
+"Paused by %@" = "Gepauzeerd door %@";
+
+/* No comment provided by engineer. */
+"Paused by sending device" = "Gepauzeerd door de afzender.";
+
+/* No comment provided by engineer. */
+"Paused – Check network" = "Gepauzeerd - Controleer je netwerk";
+
+/* No comment provided by engineer. */
+"Please update Infinit." = "Update Infinit a.u.b.";
+
+/* No comment provided by engineer. */
+"Preparing" = "Voorbereiden";
+
+/* No comment provided by engineer. */
+"Preparing your transfer..." = "Voorbereiden van overdracht...";
+
+/* No comment provided by engineer. */
+"REPORT A PROBLEM" = "MELD EEN PROBLEEM";
+
+/* No comment provided by engineer. */
+"RESUME" = "HERVAT";
+
+/* No comment provided by engineer. */
+"Rate us" = "Beoordeel ons";
+
+/* No comment provided by engineer. */
+"Received" = "Ontvangen";
+
+/* No comment provided by engineer. */
+"Received on another device" = "Ontvangen op het andere apparaat";
+
+/* No comment provided by engineer. */
+"Received your files!" = "Je bestanden zijn ontvangen!";
+
+/* No comment provided by engineer. */
+"Rename device" = "Benoem apparaat";
+
+/* No comment provided by engineer. */
+"Report a problem" = "Meld een probleem";
+
+/* No comment provided by engineer. */
+"Rest assured! Closing Infinit won't stop your transfer." = "Geen zorgen! Het sluiten van Infinit stopt de overdracht niet.";
+
+/* No comment provided by engineer. */
+"SELECT CONTACT" = "SELECTEER EEN CONTACT";
+
+/* No comment provided by engineer. */
+"SELECT FILES" = "SELECTEER BESTANDEN";
+
+/* No comment provided by engineer. */
+"SEND" = "VERSTUUR";
+
+/* No comment provided by engineer. */
+"SEND %lu FILES" = "VERSTUUR %lu BESTANDEN";
+
+/* No comment provided by engineer. */
+"SEND 1 FILE" = "VERSTUUR 1 BESTAND";
+
+/* No comment provided by engineer. */
+"SO SO" = "DUS DUS";
+
+/* No comment provided by engineer. */
+"SURE!" = "JAZEKER!";
+
+/* No comment provided by engineer. */
+"Saving to gallery..." = "Opslaan naar foto album...";
+
+/* No comment provided by engineer. */
+"Search contacts by name or email..." = "Zoek contacten bij naam of email...";
+
+/* No comment provided by engineer. */
+"Select" = "Selecteer";
+
+/* No comment provided by engineer. */
+"Send feedback" = "Verstuur feedback";
+
+/* No comment provided by engineer. */
+"Sent" = "Verstuur";
+
+/* No comment provided by engineer. */
+"Settings" = "Instellingen";
+
+/* No comment provided by engineer. */
+"Skip" = "Sla over";
+
+/* No comment provided by engineer. */
+"Swipe the cards left or right to remove them." = "Veeg daar kaarten naar links of rechts om ze te verwijderen.";
+
+/* No comment provided by engineer. */
+"Take a new photo" = "Maak een nieuwe foto";
+
+/* No comment provided by engineer. */
+"Take new photo" = "Maak een nieuwe foto";
+
+/* No comment provided by engineer. */
+"Tap 'OK' so we can display your contacts." = "Druk op 'OK' zodat wij je contacten kunnen laten zien.";
+
+/* No comment provided by engineer. */
+"Tap 'OK' to select your photos and videos." = "Tik op 'OK' om je foto's en video's te selecteren.";
+
+/* No comment provided by engineer. */
+"Thanks for reporting the problem, we'll get back to you as soon as we can." = "Bedankt voor het rapporteren van dit probleem, we zullen z.s.m reageren.";
+
+/* No comment provided by engineer. */
+"Thanks for taking the time to give us feedback." = "Bedankt dat je de tijd genomen hebt om feedback te geven.";
+
+/* No comment provided by engineer. */
+"Thanks!" = "Bedankt!";
+
+/* No comment provided by engineer. */
+"This handle has already been taken." = "Deze handeling wordt al uitgevoerd.";
+
+/* No comment provided by engineer. */
+"To" = "Naar";
+
+/* No comment provided by engineer. */
+"To %@" = "Naar %@";
+
+/* No comment provided by engineer. */
+"To:" = "Naar:";
+
+/* No comment provided by engineer. */
+"Transferring" = "Uitwisselen";
+
+/* No comment provided by engineer. */
+"Transferring on another device" = "Uitwisselen met een ander apparaat";
+
+/* No comment provided by engineer. */
+"Type email or send to yourself..." = "Gebruik email/verstuur naar jezelf";
+
+/* No comment provided by engineer. */
+"UNFAVORITE" = "VERWIJDER FAVORIET";
+
+/* No comment provided by engineer. */
+"Unable to accept!" = "Kan niet accepteren!";
+
+/* No comment provided by engineer. */
+"Unable to edit your profile without an Internet connection." = "Je kan je profiel niet bewerken zonder een internet verbinding.";
+
+/* No comment provided by engineer. */
+"Unable to fetch files." = "Kan bestanden niet ophalen.";
+
+/* No comment provided by engineer. */
+"Unable to login with Facebook" = "Kan niet inloggen met Facebook";
+
+/* No comment provided by engineer. */
+"Unknown" = "Onbekend";
+
+/* No comment provided by engineer. */
+"Unknown login error" = "Onbekende login fout";
+
+/* No comment provided by engineer. */
+"Waiting for %@ to accept" = "Wachten tot %@ accepteert";
+
+/* No comment provided by engineer. */
+"Waiting for you to accept" = "Wachten totdat u accepteert";
+
+/* No comment provided by engineer. */
+"We'll let you know when %@ receives your files." = "We laten het je weten waneer %@ je bestanden heeft ontvangen.";
+
+/* No comment provided by engineer. */
+"Write your feedback here..." = "Typ uw feedback hier in...";
+
+/* No comment provided by engineer. */
+"You declined the transfer!" = "Je hebt de bestandsuitwisseling afgewezen.";
+
+/* No comment provided by engineer. */
+"You need %@ of space to accept this transfer." = "Je hebt %@ ruimte nodig om deze overdracht te accepteren.";
+
+/* No comment provided by engineer. */
+"You'd like to send %ld %@" = "Je wilt versturen %1$ld %2$@";
+
+/* No comment provided by engineer. */
+"You're already logged in." = "Je bent al ingelogd.";
+
+/* No comment provided by engineer. */
+"Your current transfers and notifications will show up here." = "Je huidige overdrachten en notificaties verschijnen hier.";
+
+/* No comment provided by engineer. */
+"Your email has not been confirmed." = "Je email is niet bevestigd.";
+
+/* No comment provided by engineer. */
+"file" = "bestand";
+
+/* No comment provided by engineer. */
+"files" = "bestanden";
+
+/* No comment provided by engineer. */
+"me" = "ik";
+
+/* No comment provided by engineer. */
+"the file" = "het bestand";
+
+/* No comment provided by engineer. */
+"the files" = "de bestanden";
+

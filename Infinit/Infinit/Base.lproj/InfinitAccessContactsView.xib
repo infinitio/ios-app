@@ -50,10 +50,6 @@
                 </button>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-contacts-big" translatesAutoresizingMaskIntoConstraints="NO" id="vAn-VP-2P2">
                     <rect key="frame" x="252" y="138" width="96" height="120"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="96" id="2cJ-WT-wxE"/>
-                        <constraint firstAttribute="height" constant="120" id="KpG-ZQ-PyA"/>
-                    </constraints>
                 </imageView>
             </subviews>
             <color key="backgroundColor" red="0.19215686274509805" green="0.19215686274509805" blue="0.19215686274509805" alpha="0.95000000000000007" colorSpace="custom" customColorSpace="sRGB"/>

@@ -1,0 +1,12 @@
+/* Class = "UILabel"; text = "Open Infinit now to send them!"; ObjectID = "0kE-iw-E6e"; */
+"0kE-iw-E6e.text" = "Öppna Infinit nu för att skicka!";
+
+/* Class = "UIButton"; normalTitle = "GOT IT"; ObjectID = "2KC-7y-XXg"; */
+"2KC-7y-XXg.normalTitle" = "JAG FÖRSTÅR";
+
+/* Class = "UILabel"; text = "Your files are being copied to Infinit..."; ObjectID = "P2D-7H-Xof"; */
+"P2D-7H-Xof.text" = "Dina filer kopieras till Infinit...";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "jbw-GE-gDX"; */
+"jbw-GE-gDX.normalTitle" = "Avbryt";
+

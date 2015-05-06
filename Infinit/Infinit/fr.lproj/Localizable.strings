@@ -182,10 +182,10 @@
 "No access to gallery." = "Impossible d'accéder à la galerie.";
 
 /* No comment provided by engineer. */
-"No one here by that name.\nTry an email instead." = "Pas de personne trouvée avec ce nom.\nEssayez avec une adresse mail.";
+"No one here by that name.\nTry an email instead." = "Personne n'a été trouvé avec ce nom.\nEssayez avec une adresse mail.";
 
 /* No comment provided by engineer. */
-"No one here by that name.\nTry connecting your Contacts" = "Pas de personne trouvée avec ce nom.\nEssayez d'importer vos contacts.";
+"No one here by that name.\nTry connecting your Contacts" = "Personne n'a été trouvé avec ce nom.\nEssayez d'importer vos contacts.";
 
 /* No comment provided by engineer. */
 "Not enough free space!" = "Pas assez d'espace libre !";

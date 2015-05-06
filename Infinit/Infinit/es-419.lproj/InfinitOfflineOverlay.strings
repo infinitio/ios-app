@@ -1,0 +1,6 @@
+/* Class = "UIButton"; normalTitle = "GO TO MY FILES"; ObjectID = "d4i-wh-gxH"; */
+"d4i-wh-gxH.normalTitle" = "IR A MIS ARCHIVOS";
+
+/* Class = "UILabel"; text = "You're offline.\nYou can only access your files."; ObjectID = "gjd-ZU-qcc"; */
+"gjd-ZU-qcc.text" = "No tienes conexión a Internet.\nSólo puedes acceder a tus propios archivos.";
+

@@ -1,0 +1,15 @@
+/* Class = "UILabel"; text = "Enter your email address."; ObjectID = "7Ci-nP-Cq3"; */
+"7Ci-nP-Cq3.text" = "Gib deine E-Mail-Adresse ein.";
+
+/* Class = "UITextField"; placeholder = "hey@johndoe.com"; ObjectID = "Kzg-HF-O6N"; */
+"Kzg-HF-O6N.placeholder" = "m.mustermann@xyz.de";
+
+/* Class = "UIButton"; normalTitle = "Next"; ObjectID = "Woj-Yb-4kb"; */
+"Woj-Yb-4kb.normalTitle" = "Weiter";
+
+/* Class = "UIButton"; normalTitle = "or sign up with Facebook"; ObjectID = "jf8-yV-2Mk"; */
+"jf8-yV-2Mk.normalTitle" = "oder mit Facebook registrieren";
+
+/* Class = "UIButton"; normalTitle = "Back"; ObjectID = "vLx-lW-Q9m"; */
+"vLx-lW-Q9m.normalTitle" = "Zurück";
+

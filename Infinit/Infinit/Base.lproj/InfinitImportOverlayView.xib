@@ -92,6 +92,6 @@
     </objects>
     <resources>
         <image name="icon-facebook-blue" width="20" height="20"/>
-        <image name="icon-infinit-red" width="30" height="9"/>
+        <image name="icon-infinit-red" width="96" height="120"/>
     </resources>
 </document>

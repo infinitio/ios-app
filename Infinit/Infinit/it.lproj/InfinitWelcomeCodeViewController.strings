@@ -1,0 +1,9 @@
+/* Class = "UITextField"; placeholder = "c3p0x"; ObjectID = "N7l-or-wW7"; */
+"N7l-or-wW7.placeholder" = "c3p0x";
+
+/* Class = "UIButton"; normalTitle = "I don't have a download code"; ObjectID = "XTS-SL-vZI"; */
+"XTS-SL-vZI.normalTitle" = "Non ho un codice di download";
+
+/* Class = "UILabel"; text = "Enter the download code from\nyour SMS or email invitation."; ObjectID = "x0C-h1-tXS"; */
+"x0C-h1-tXS.text" = "Inserisci il codice di download da un tuo SMS o invito email.";
+

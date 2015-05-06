@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -83,7 +83,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jf8-yV-2Mk">
-                    <rect key="frame" x="200" y="185" width="200" height="25"/>
+                    <rect key="frame" x="65" y="185" width="470" height="25"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="ItE-dX-ZCv"/>
                         <constraint firstAttribute="height" constant="25" id="yK0-yf-LvK"/>
@@ -117,11 +117,13 @@
                 <constraint firstAttribute="bottom" secondItem="vLx-lW-Q9m" secondAttribute="bottom" constant="25" id="AF5-bC-CQ9"/>
                 <constraint firstItem="vLx-lW-Q9m" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="Fx9-7c-2np"/>
                 <constraint firstItem="Woj-Yb-4kb" firstAttribute="centerX" secondItem="ZYq-me-kOw" secondAttribute="centerX" id="Gxp-ZR-iLu"/>
+                <constraint firstItem="tNr-dD-sgk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jf8-yV-2Mk" secondAttribute="leading" id="L5Z-ge-bgO"/>
                 <constraint firstItem="tNr-dD-sgk" firstAttribute="trailing" secondItem="Kzg-HF-O6N" secondAttribute="trailing" constant="20" id="M8i-Zq-8WN"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Kzg-HF-O6N" secondAttribute="trailing" constant="70" id="MzC-oW-PyY"/>
                 <constraint firstItem="jf8-yV-2Mk" firstAttribute="top" secondItem="tNr-dD-sgk" secondAttribute="bottom" constant="30" id="RnI-tU-0b8"/>
                 <constraint firstItem="Kzg-HF-O6N" firstAttribute="leading" secondItem="tNr-dD-sgk" secondAttribute="leading" constant="20" id="TtY-a0-kop"/>
                 <constraint firstItem="Woj-Yb-4kb" firstAttribute="centerY" secondItem="ZYq-me-kOw" secondAttribute="centerY" id="V5U-3R-Bwc"/>
+                <constraint firstItem="tNr-dD-sgk" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="jf8-yV-2Mk" secondAttribute="trailing" id="WHS-tG-UTs"/>
                 <constraint firstItem="Kzg-HF-O6N" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="70" id="XYc-6o-dhR"/>
                 <constraint firstItem="tNr-dD-sgk" firstAttribute="top" secondItem="Kzg-HF-O6N" secondAttribute="bottom" constant="10" id="Xar-PG-rXL"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="7Ci-nP-Cq3" secondAttribute="trailing" constant="5" id="Zy9-kZ-2zr"/>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -50,6 +50,7 @@
                     <rect key="frame" x="495" y="245" width="80" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="QCQ-u2-P02"/>
+                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="WLx-Zf-1Y8"/>
                         <constraint firstAttribute="height" constant="30" id="Xah-Jo-O5V"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="17"/>
@@ -62,10 +63,10 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8EL-62-1HZ">
-                    <rect key="frame" x="200" y="195" width="200" height="25"/>
+                    <rect key="frame" x="65" y="195" width="470" height="25"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="25" id="3Ye-dt-vYx"/>
-                        <constraint firstAttribute="width" constant="200" id="WKu-SE-dBv"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="3Ye-dt-vYx"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="lsP-nZ-NGk"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="15"/>
                     <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="3"/>
@@ -146,8 +147,9 @@
                 <constraint firstAttribute="trailing" secondItem="WnP-4q-Uhq" secondAttribute="trailing" priority="750" constant="70" id="H5Y-sW-lsW"/>
                 <constraint firstItem="wFL-F1-Zle" firstAttribute="centerX" secondItem="N4q-7f-VP0" secondAttribute="leading" id="HpQ-Vq-31g"/>
                 <constraint firstItem="ipO-57-IeG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="70" id="Hzr-eU-3X5"/>
-                <constraint firstItem="kZJ-Mq-KUh" firstAttribute="centerX" secondItem="N4q-7f-VP0" secondAttribute="trailing" id="Iin-Oj-Wxm"/>
+                <constraint firstItem="kZJ-Mq-KUh" firstAttribute="centerX" secondItem="N4q-7f-VP0" secondAttribute="trailing" priority="750" id="Iin-Oj-Wxm"/>
                 <constraint firstItem="N4q-7f-VP0" firstAttribute="top" secondItem="ipO-57-IeG" secondAttribute="bottom" constant="10" id="ONe-uC-WDz"/>
+                <constraint firstItem="S1r-rv-APp" firstAttribute="leading" secondItem="N4q-7f-VP0" secondAttribute="leading" id="POM-sO-sMx"/>
                 <constraint firstItem="WnP-4q-Uhq" firstAttribute="leading" secondItem="S1r-rv-APp" secondAttribute="leading" constant="20" id="QMX-Bo-sM2"/>
                 <constraint firstAttribute="centerX" secondItem="WnP-4q-Uhq" secondAttribute="centerX" id="Qil-hc-NLX"/>
                 <constraint firstItem="WnP-4q-Uhq" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="70" id="RGm-jT-5xi"/>
@@ -157,13 +159,16 @@
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="CYa-ax-CQN" secondAttribute="trailing" constant="5" id="eT3-eN-0ZD"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="kZJ-Mq-KUh" secondAttribute="trailing" constant="10" id="gMs-Ip-ac7"/>
                 <constraint firstItem="CYa-ax-CQN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="5" id="glS-gg-Eh6"/>
+                <constraint firstItem="N4q-7f-VP0" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="8EL-62-1HZ" secondAttribute="trailing" id="guH-5j-GVQ"/>
                 <constraint firstAttribute="centerX" secondItem="8EL-62-1HZ" secondAttribute="centerX" id="hfm-YJ-quM"/>
                 <constraint firstItem="kZJ-Mq-KUh" firstAttribute="top" secondItem="Lfg-dI-58r" secondAttribute="bottom" constant="-25" id="iSc-1g-kxB"/>
                 <constraint firstAttribute="bottom" secondItem="Lfg-dI-58r" secondAttribute="bottom" constant="30" id="jaO-6q-Fgb"/>
                 <constraint firstItem="8EL-62-1HZ" firstAttribute="top" secondItem="N4q-7f-VP0" secondAttribute="bottom" constant="25" id="mqe-xK-KhJ"/>
+                <constraint firstItem="N4q-7f-VP0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8EL-62-1HZ" secondAttribute="leading" id="ne3-0L-jnZ"/>
                 <constraint firstAttribute="bottom" secondItem="S1r-rv-APp" secondAttribute="bottom" constant="185" id="nhR-7v-FMh"/>
                 <constraint firstItem="S1r-rv-APp" firstAttribute="trailing" secondItem="WnP-4q-Uhq" secondAttribute="trailing" constant="20" id="pT5-V4-Rxp"/>
                 <constraint firstItem="ipO-57-IeG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" priority="750" constant="70" id="uA0-k4-yIY"/>
+                <constraint firstItem="S1r-rv-APp" firstAttribute="trailing" secondItem="N4q-7f-VP0" secondAttribute="trailing" id="vaf-5j-Ofs"/>
                 <constraint firstAttribute="bottom" secondItem="N4q-7f-VP0" secondAttribute="bottom" constant="130" id="yC1-M7-3f1"/>
                 <constraint firstItem="CYa-ax-CQN" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="zfo-c6-lzC"/>
             </constraints>
