@@ -171,8 +171,11 @@
 
 - (IBAction)webProfileTap:(id)sender
 {
-  NSURL* url = [NSURL URLWithString:kInfinitWebProfileURL];
-  [[UIApplication sharedApplication] openURL:url];
+  NSMutableString* url_str = [kInfinitWebProfileURL mutableCopy];
+  NSString* session_id = [InfinitStateManager sharedInstance].metaSessionId;
+  if (session_id.length)
+    [url_str appendFormat:@"&session_id=%@", session_id];
+  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url_str]];
 }
 
 #pragma mark - Avatar Picker
