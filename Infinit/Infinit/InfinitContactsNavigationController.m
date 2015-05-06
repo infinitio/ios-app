@@ -8,11 +8,19 @@
 
 #import "InfinitContactsNavigationController.h"
 
+#import <Gap/InfinitColor.h>
+
 @interface InfinitContactsNavigationController ()
 
 @end
 
 @implementation InfinitContactsNavigationController
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+  self.navigationBar.tintColor = [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {

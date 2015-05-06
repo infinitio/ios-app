@@ -61,6 +61,11 @@ static UIImage* _infinit_icon = nil;
 
   self.navigationController.interactivePopGestureRecognizer.enabled = YES;
   self.navigationController.interactivePopGestureRecognizer.delegate = self;
+
+  self.favorite_button.titleLabel.adjustsFontSizeToFitWidth = YES;
+  self.favorite_button.titleLabel.minimumScaleFactor = 0.5f;
+  self.send_invite_button.titleLabel.adjustsFontSizeToFitWidth = YES;
+  self.send_invite_button.titleLabel.minimumScaleFactor = 0.5f;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -136,7 +141,8 @@ static UIImage* _infinit_icon = nil;
 
 - (void)setFavoriteButtonHidden:(BOOL)hidden
 {
-  self.send_center_constraint.constant = hidden ? 0.0f : 61.0f;
+  CGFloat width = self.send_invite_button.bounds.size.width;
+  self.send_center_constraint.constant = hidden ? 0.0f : (width / 2.0f) + 10.0f;
   self.favorite_button.hidden = hidden;
 }
 
@@ -145,6 +151,15 @@ static UIImage* _infinit_icon = nil;
   NSString* text = favorite ? NSLocalizedString(@"UNFAVORITE", nil)
                             : NSLocalizedString(@"FAVORITE", nil);
   [self.favorite_button setTitle:text forState:UIControlStateNormal];
+  if (favorite)
+  {
+    [self.favorite_button setImage:nil forState:UIControlStateNormal];
+  }
+  else
+  {
+    [self.favorite_button setImage:[UIImage imageNamed:@"icon-favorite-white"]
+                          forState:UIControlStateNormal];
+  }
 }
 
 #pragma mark - Button Handling

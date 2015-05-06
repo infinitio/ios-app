@@ -23,6 +23,8 @@ static NSAttributedString* bold_str = nil;
   self.facebook_button.enabled = NO;
 
   [self setupButton:self.facebook_button];
+  self.phone_contacts_button.titleLabel.adjustsFontSizeToFitWidth = YES;
+  self.phone_contacts_button.titleLabel.minimumScaleFactor = 0.5f;
 }
 
 - (void)prepareForReuse
