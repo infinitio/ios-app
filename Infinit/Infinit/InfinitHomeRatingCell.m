@@ -48,8 +48,6 @@
 
 - (void)setState:(InfinitRatingCellStates)state
 {
-  if (self.state == state)
-    return;
   _state = state;
   switch (state)
   {
@@ -57,12 +55,10 @@
       self.info_label.text = NSLocalizedString(@"How's your experience with Infinit?", nil);
       [self.positive_button setTitle:NSLocalizedString(@"GOOD, I LIKE IT!", nil)
                             forState:UIControlStateNormal];
-      self.positive_width.constant = 145.0f;
       [self.negative_button setImage:[UIImage imageNamed:@"icon-thumb-down"]
                             forState:UIControlStateNormal];
       [self.negative_button setTitle:NSLocalizedString(@"SO SO", nil)
                             forState:UIControlStateNormal];
-      self.negative_width.constant = 105.0f;
       self.negative_button.imageEdgeInsets = UIEdgeInsetsMake(4.0f, -8.0f, 0.0f, 0.0f);
       self.negative_button.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -2.0f);
       break;
@@ -70,11 +66,9 @@
       self.info_label.text = NSLocalizedString(@"Mind rating us on the App Store?", nil);
       [self.positive_button setTitle:NSLocalizedString(@"SURE!", nil)
                             forState:UIControlStateNormal];
-      self.positive_width.constant = 120.0f;
       [self.negative_button setImage:nil forState:UIControlStateNormal];
       [self.negative_button setTitle:NSLocalizedString(@"NO, THANKS", nil)
                             forState:UIControlStateNormal];
-      self.negative_width.constant = 108.0f;
       self.negative_button.imageEdgeInsets = UIEdgeInsetsZero;
       self.negative_button.titleEdgeInsets = UIEdgeInsetsZero;
       break;
@@ -82,11 +76,9 @@
       self.info_label.text = NSLocalizedString(@"Do you mind sharing some feedback?", nil);
       [self.positive_button setTitle:NSLocalizedString(@"SURE!", nil)
                             forState:UIControlStateNormal];
-      self.positive_width.constant = 90.0f;
       [self.negative_button setImage:nil forState:UIControlStateNormal];
       [self.negative_button setTitle:NSLocalizedString(@"NO, THANKS", nil)
                             forState:UIControlStateNormal];
-      self.negative_width.constant = 108.0f;
       self.negative_button.imageEdgeInsets = UIEdgeInsetsZero;
       self.negative_button.titleEdgeInsets = UIEdgeInsetsZero;
       break;
@@ -95,6 +87,10 @@
     default:
       break;
   }
+  CGFloat w_positive = self.positive_button.titleLabel.attributedText.size.width + 40.0f;
+  CGFloat w_negative = self.negative_button.titleLabel.attributedText.size.width + 40.0f;
+  self.positive_width.constant = w_positive;
+  self.negative_width.constant = w_negative;
 }
 
 @end
