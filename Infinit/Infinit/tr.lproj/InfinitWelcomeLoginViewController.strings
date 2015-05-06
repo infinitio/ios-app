@@ -11,11 +11,11 @@
 "NBs-14-iOO.normalTitle" = "Giriş yap";
 
 /* Class = "UITextField"; placeholder = "●●●●●●"; ObjectID = "Pcp-Eb-fyv"; */
-"Pcp-Eb-fyv.placeholder" = "●●●●●●";
+"Pcp-Eb-fyv.placeholder" = "●●●●";
 
 /* Class = "UILabel"; text = "Enter your login details."; ObjectID = "PpZ-vy-5cV"; */
 "PpZ-vy-5cV.text" = "Giriş bilgilerinizi girin.";
 
 /* Class = "UITextField"; placeholder = "hey@johndoe.com"; ObjectID = "zcU-Iu-Kcd"; */
-"zcU-Iu-Kcd.placeholder" = "hey@jhondoe.com";
+"zcU-Iu-Kcd.placeholder" = "merhaba@mehmetaga.tr";
 

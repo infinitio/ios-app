@@ -8,10 +8,10 @@
 "IfB-v5-ff9.normalTitle" = "Кнопка";
 
 /* Class = "UILabel"; text = "x files"; ObjectID = "nv8-VG-ULd"; */
-"nv8-VG-ULd.text" = "файлов";
+"nv8-VG-ULd.text" = "n файлов";
 
 /* Class = "UILabel"; text = "x MB"; ObjectID = "qRM-ph-frX"; */
-"qRM-ph-frX.text" = "Мб";
+"qRM-ph-frX.text" = "n Мб";
 
 /* Class = "UILabel"; text = "Status"; ObjectID = "t2m-Pz-bey"; */
 "t2m-Pz-bey.text" = "Статус";

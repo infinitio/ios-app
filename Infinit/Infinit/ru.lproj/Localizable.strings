@@ -125,13 +125,19 @@
 "Fullname not valid." = "Полное имя не подходит.";
 
 /* No comment provided by engineer. */
-"GOOD, I LIKE IT!" = "ОТЛИЧНО, МНЕ НРАВИТСЯ!";
+"GOOD, I LIKE IT!" = "ОТЛИЧНО!";
 
 /* No comment provided by engineer. */
 "Handle not valid" = "Идентификатор не подходит";
 
 /* No comment provided by engineer. */
-"Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@\n\nDon't forget to enter the following download code: %@" = "Привет! Я только что послал Вам %1$lu %2$@ через Infinit. Вы можете забрать %3$@ здесь: %4$@\n\nНе забудьте ввести код для скачивания: %5$@";
+"Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@\n\nDon't forget to enter the following download code: %@" = "Привет! Я только что послал Вам %1$lu %2$@ через Infinit. Вы можете забрать %3$@ здесь: %4$@\n\nНе забудьте ввести этот код для скачивания: %5$@";
+
+/* No comment provided by engineer. */
+"How To Send To Self.mp4" = "Как Отправить Самому Себе.mp4";
+
+/* No comment provided by engineer. */
+"How To Send To Someone.mp4" = "Как Отправить Кому-Нибудь.mp4";
 
 /* No comment provided by engineer. */
 "How's your experience with Infinit?" = "Как вам Infinit?";
@@ -341,7 +347,7 @@
 "Transferring on another device" = "Передаем на другое устройство";
 
 /* No comment provided by engineer. */
-"Type email or send to yourself..." = "Введите email или отправьте себе...";
+"Type email or send to yourself..." = "введите имя или email";
 
 /* No comment provided by engineer. */
 "UNFAVORITE" = "УДАЛИТЬ ИЗ ИЗБРАННОГО";

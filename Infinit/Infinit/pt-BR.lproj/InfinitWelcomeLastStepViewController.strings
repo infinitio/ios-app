@@ -5,10 +5,10 @@
 "CYa-ax-CQN.text" = "Insira seu nome e senha.";
 
 /* Class = "UITextField"; placeholder = "John Doe"; ObjectID = "WnP-4q-Uhq"; */
-"WnP-4q-Uhq.placeholder" = "John Doe";
+"WnP-4q-Uhq.placeholder" = "José Silva";
 
 /* Class = "UITextField"; placeholder = "●●●●●●"; ObjectID = "ipO-57-IeG"; */
-"ipO-57-IeG.placeholder" = "●●●●●●";
+"ipO-57-IeG.placeholder" = "●●●●●";
 
 /* Class = "UIButton"; normalTitle = "Register"; ObjectID = "kZJ-Mq-KUh"; */
 "kZJ-Mq-KUh.normalTitle" = "Registrar";

@@ -20,7 +20,7 @@
 "6G8-BA-BUD.text" = "Майк Ди";
 
 /* Class = "UIViewController"; title = "SEND_RECIPIENTS"; ObjectID = "9ZK-3B-PXo"; */
-"9ZK-3B-PXo.title" = "ПОСЛАТЬ_ПОЛУЧАТЕЛЯМ";
+"9ZK-3B-PXo.title" = "ПОЛУЧАТЕЛИ";
 
 /* Class = "UINavigationController"; title = "SEND"; ObjectID = "18v-p7-fft"; */
 "18v-p7-fft.title" = "ОТПРАВИТЬ";
@@ -53,7 +53,7 @@
 "E3A-FT-LpY.title" = "ФАЙЛЫ";
 
 /* Class = "UILabel"; text = "email"; ObjectID = "ED8-ta-EAO"; */
-"ED8-ta-EAO.text" = "адрес электронной почты";
+"ED8-ta-EAO.text" = "email";
 
 /* Class = "UITabBarItem"; title = "Item"; ObjectID = "ESf-xZ-Nqk"; */
 "ESf-xZ-Nqk.title" = "Пункт";

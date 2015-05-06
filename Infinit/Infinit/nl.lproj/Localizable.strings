@@ -125,7 +125,7 @@
 "Fullname not valid." = "Volledige naam niet geldig.";
 
 /* No comment provided by engineer. */
-"GOOD, I LIKE IT!" = "GOED, HET IS GEWELDIG";
+"GOOD, I LIKE IT!" = "GOED!";
 
 /* No comment provided by engineer. */
 "Handle not valid" = "Handeling is niet geldig.";
@@ -347,7 +347,7 @@
 "Transferring on another device" = "Uitwisselen met een ander apparaat";
 
 /* No comment provided by engineer. */
-"Type email or send to yourself..." = "Gebruik email/verstuur naar jezelf";
+"Type email or send to yourself..." = "Kies contact of gebruik email";
 
 /* No comment provided by engineer. */
 "UNFAVORITE" = "VERWIJDER FAVORIET";
