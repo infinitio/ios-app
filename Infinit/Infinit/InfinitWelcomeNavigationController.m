@@ -14,19 +14,19 @@
 
 @implementation InfinitWelcomeNavigationController
 
-- (BOOL)shouldAutorotate
-{
-  return YES;
-}
-
-- (NSUInteger)supportedInterfaceOrientations
-{
-  return UIInterfaceOrientationMaskPortrait;
-}
-
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
-{
-  return UIInterfaceOrientationPortrait;
-}
+//- (BOOL)shouldAutorotate
+//{
+//  return YES;
+//}
+//
+//- (NSUInteger)supportedInterfaceOrientations
+//{
+//  return UIInterfaceOrientationMaskPortrait;
+//}
+//
+//- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
+//{
+//  return UIInterfaceOrientationPortrait;
+//}
 
 @end

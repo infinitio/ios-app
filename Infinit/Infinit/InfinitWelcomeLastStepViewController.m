@@ -23,6 +23,14 @@
 
 @implementation InfinitWelcomeLastStepViewController
 
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+  self.register_button.titleLabel.adjustsFontSizeToFitWidth = YES;
+  self.facebook_button.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+  self.facebook_button.titleLabel.numberOfLines = 2;
+}
+
 - (void)resetView
 {
   [super resetView];

@@ -111,7 +111,7 @@
 {
   NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
   para.alignment = NSTextAlignmentCenter;
-  para.lineSpacing = 15.0f;
+  para.lineSpacing = 8.0f;
   return para;
 }
 

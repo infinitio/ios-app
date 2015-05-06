@@ -51,6 +51,8 @@ static NSDictionary* _placeholder_attrs = nil;
     [[NSAttributedString alloc] initWithString:self.code_field.placeholder
                                     attributes:_placeholder_attrs];
   self.code_field.attributedPlaceholder = placeholder;
+  self.skip_button.titleLabel.adjustsFontSizeToFitWidth = YES;
+  self.skip_button.titleLabel.minimumScaleFactor = 0.5f;
 }
 
 - (void)resetView

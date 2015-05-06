@@ -23,6 +23,13 @@
 
 @implementation InfinitWelcomeEmailViewController
 
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+  self.facebook_button.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+  self.facebook_button.titleLabel.numberOfLines = 2;
+}
+
 - (void)resetView
 {
   [super resetView];
