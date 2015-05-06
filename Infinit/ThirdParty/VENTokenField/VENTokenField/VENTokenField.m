@@ -26,7 +26,7 @@
 #import "VENToken.h"
 #import "VENBackspaceTextField.h"
 
-#import "InfinitColor.h"
+#import <Gap/InfinitColor.h>
 
 static const CGFloat VENTokenFieldDefaultVerticalInset      = 0.0;
 static const CGFloat VENTokenFieldDefaultHorizontalInset    = 15.0;
@@ -34,6 +34,8 @@ static const CGFloat VENTokenFieldDefaultToLabelPadding     = 7.0;
 static const CGFloat VENTokenFieldDefaultTokenPadding       = 7.0;
 static const CGFloat VENTokenFieldDefaultMinInputWidth      = 100.0;
 static const CGFloat VENTokenFieldDefaultMaxHeight          = 150.0;
+
+static NSDictionary* _placeholder_attrs = nil;
 
 
 @interface VENTokenField () <VENBackspaceTextFieldDelegate>
@@ -65,6 +67,12 @@ static const CGFloat VENTokenFieldDefaultMaxHeight          = 150.0;
 - (void)awakeFromNib
 {
     [self setUpInit];
+  if (_placeholder_attrs == nil)
+  {
+    _placeholder_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:14.0f],
+                           NSForegroundColorAttributeName: [InfinitColor colorWithGray:0
+                                                                                 alpha:0.3f]};
+  }
 }
 
 - (BOOL)becomeFirstResponder
@@ -119,7 +127,9 @@ static const CGFloat VENTokenFieldDefaultMaxHeight          = 150.0;
 - (void)setPlaceholderText:(NSString *)placeholderText
 {
     _placeholderText = placeholderText;
-    self.inputTextField.placeholder = _placeholderText;
+  _attributedPlaceholderText = [[NSAttributedString alloc] initWithString:_placeholderText
+                                                               attributes:_placeholder_attrs];
+    self.inputTextField.attributedPlaceholder = self.attributedPlaceholderText;
 }
 
 -(void)setInputTextFieldAccessibilityLabel:(NSString *)inputTextFieldAccessibilityLabel {
@@ -405,7 +415,7 @@ static const CGFloat VENTokenFieldDefaultMaxHeight          = 150.0;
         _inputTextField.autocapitalizationType = self.autocapitalizationType;
         _inputTextField.tintColor = [UIColor blackColor];
         _inputTextField.delegate = self;
-        _inputTextField.placeholder = self.placeholderText;
+        _inputTextField.attributedPlaceholder = self.attributedPlaceholderText;
         _inputTextField.accessibilityLabel = self.inputTextFieldAccessibilityLabel ?: NSLocalizedString(@"To", nil);
         [_inputTextField addTarget:self action:@selector(inputTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     }
@@ -479,7 +489,7 @@ static const CGFloat VENTokenFieldDefaultMaxHeight          = 150.0;
 
 - (void)updateInputTextField
 {
-    self.inputTextField.placeholder = [self.tokens count] ? nil : self.placeholderText;
+    self.inputTextField.attributedPlaceholder = [self.tokens count] ? nil : self.attributedPlaceholderText;
 }
 
 - (void)focusInputTextField
