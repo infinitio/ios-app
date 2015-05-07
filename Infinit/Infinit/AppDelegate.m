@@ -52,9 +52,6 @@
 
 @end
 
-// XXX Release
-#define ADJUST_TEST
-
 @implementation AppDelegate
 
 - (BOOL)facebook_login
@@ -86,8 +83,6 @@
 didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
   [self configureAdjust];
-  // XXX Release
-  [Adjust setEnabled:NO];
   UIViewController* view_controller = nil;
   if (![InfinitApplicationSettings sharedInstance].been_launched)
   {
@@ -310,9 +305,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   if ([InfinitCodeManager sharedInstance].has_code &&
       [InfinitStateManager sharedInstance].logged_in)
   {
-    NSString* code = [[InfinitCodeManager sharedInstance].code copy];
-    [[InfinitCodeManager sharedInstance] codeConsumed];
-    [[InfinitStateManager sharedInstance] useGhostCode:code completionBlock:nil];
+    [[InfinitCodeManager sharedInstance] useCodeWithCompletionBlock:nil];
   }
   return (facebook_handled || we_handled);
 }
