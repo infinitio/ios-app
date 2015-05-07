@@ -59,7 +59,6 @@
 @property (nonatomic, weak) InfinitWelcomeAbstractViewController* current_controller;
 
 @property (nonatomic, readonly) UIImage* avatar;
-@property (nonatomic, readonly) NSString* code;
 @property (nonatomic, readonly) NSString* email;
 @property (nonatomic, readonly) InfinitWelcomeFacebookUser* facebook_user;
 @property (nonatomic, readonly) NSString* name;
@@ -237,7 +236,6 @@ static dispatch_once_t _password_token = 0;
   {
     [self removeFromParentViewController];
     _avatar = nil;
-    _code = nil;
     _email = nil;
     _facebook_user = nil;
     _name = nil;
@@ -365,20 +363,8 @@ static dispatch_once_t _password_token = 0;
   if (self.facebook_user)
   {
     self.facebook_user.email = email;
-    if ([InfinitCodeManager sharedInstance].has_code)
-    {
-      _code = [[InfinitCodeManager sharedInstance].code copy];
-      [[InfinitCodeManager sharedInstance] codeConsumed];
-      [[InfinitStateManager sharedInstance] useGhostCode:self.code
-                                         completionBlock:^(InfinitStateResult* result)
-      {
-        [self showMainView];
-      }];
-    }
-    else
-    {
+    if (![InfinitCodeManager sharedInstance].has_code)
       [self showViewController:self.invited_controller animated:YES reverse:NO];
-    }
   }
   else
   {
@@ -401,8 +387,6 @@ static dispatch_once_t _password_token = 0;
         default:
           if ([InfinitCodeManager sharedInstance].has_code)
           {
-            _code = [[InfinitCodeManager sharedInstance].code copy];
-            [[InfinitCodeManager sharedInstance] codeConsumed];
             view_controller = self.last_step_controller;
           }
           else
@@ -448,7 +432,7 @@ static dispatch_once_t _password_token = 0;
 - (void)welcomeCode:(InfinitWelcomeCodeViewController*)sender
        doneWithCode:(NSString*)code
 {
-  _code = code;
+  [[InfinitCodeManager sharedInstance] setManualCode:code];
   if (self.facebook_user)
   {
     [self.code_controller facebookRegister];
@@ -504,18 +488,7 @@ static dispatch_once_t _password_token = 0;
     [self showMainView];
     return;
   }
-  if (self.code)
-  {
-    [[InfinitStateManager sharedInstance] useGhostCode:self.code
-                                       completionBlock:^(InfinitStateResult* result)
-    {
-      [self showViewController:self.avatar_controller animated:YES reverse:NO];
-    }];
-  }
-  else
-  {
-    [self showViewController:self.avatar_controller animated:YES reverse:NO];
-  }
+  [self showViewController:self.avatar_controller animated:YES reverse:NO];
 }
 
 #pragma mark - Avatar Protocol
@@ -623,7 +596,6 @@ static dispatch_once_t _password_token = 0;
   if (view_controller == self.landing_controller)
   {
     _avatar = nil;
-    _code = nil;
     _email = nil;
     _facebook_user = nil;
     _name = nil;
@@ -847,40 +819,31 @@ static dispatch_once_t _password_token = 0;
 - (void)facebookConnect
 {
   NSString* token = FBSession.activeSession.accessTokenData.accessToken;
+  __weak InfinitWelcomeViewController* weak_self = self;
   [[InfinitStateManager sharedInstance] facebookConnect:token
                                            emailAddress:self.email
                                         completionBlock:^(InfinitStateResult* result)
   {
+    InfinitWelcomeViewController* strong_self = weak_self;
     if (result.success)
     {
-      if (self.facebook_user.account_status == gap_account_status_ghost ||
-          self.facebook_user.account_status == gap_account_status_new ||
-          self.facebook_user.account_status == gap_account_status_contact)
+      if (strong_self.facebook_user.account_status == gap_account_status_ghost ||
+          strong_self.facebook_user.account_status == gap_account_status_new ||
+          strong_self.facebook_user.account_status == gap_account_status_contact)
       {
-        if (self.avatar)
-          [[InfinitAvatarManager sharedInstance] setSelfAvatar:self.avatar];
-        if (self.code)
-        {
-          [[InfinitStateManager sharedInstance] useGhostCode:self.code
-                                             completionBlock:^(InfinitStateResult* result)
-          {
-            [self showMainView];
-          }];
-        }
-        else
-        {
-          [self showMainView];
-        }
+        if (strong_self.avatar)
+          [[InfinitAvatarManager sharedInstance] setSelfAvatar:strong_self.avatar];
+        [strong_self showMainView];
       }
       else
       {
-        [self showMainView];
+        [strong_self showMainView];
       }
     }
     else
     {
       [[InfinitFacebookManager sharedInstance] cleanSession];
-      [self.current_controller resetView];
+      [strong_self.current_controller resetView];
     }
   }];
 }
