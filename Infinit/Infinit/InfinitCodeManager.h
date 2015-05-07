@@ -8,16 +8,22 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void(^InfinitCodeUsedBlock)(BOOL success);
+
 @interface InfinitCodeManager : NSObject
 
-@property (nonatomic, readwrite) NSString* code;
 @property (nonatomic, readonly) BOOL has_code;
 
 + (instancetype)sharedInstance;
 
-/** Call when code manager should no longer keep code.
+/** Set the code manually.
+ Ensure that the code is valid before doing this.
  */
-- (void)codeConsumed;
+- (void)setManualCode:(NSString*)code;
+
+/** Call when code manager should use code.
+ */
+- (void)useCodeWithCompletionBlock:(InfinitCodeUsedBlock)completion_block;
 
 /** Check a URL for a code and store it if there is one.
  @param url

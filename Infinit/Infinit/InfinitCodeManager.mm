@@ -11,6 +11,7 @@
 #import "InfinitConstants.h"
 #import "InfinitMetricsManager.h"
 
+#import <Gap/InfinitConnectionManager.h>
 #import <Gap/InfinitStateManager.h>
 
 #undef check
@@ -20,6 +21,8 @@ ELLE_LOG_COMPONENT("iOS.CodeManager");
 
 @interface InfinitCodeManager ()
 
+@property (nonatomic, readwrite) NSString* code;
+@property (atomic, readonly) BOOL code_from_link;
 @property (atomic, readonly) BOOL valid;
 
 @end
@@ -29,16 +32,24 @@ static dispatch_once_t _instance_token = 0;
 
 @implementation InfinitCodeManager
 
-@synthesize code = _code;
-
 #pragma mark - Init
 
 - (instancetype)init
 {
   NSCAssert(_instance == nil, @"Use sharedInstance.");
   if (self = [super init])
-  {}
+  {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(connectionStatusChanged:)
+                                                 name:INFINIT_CONNECTION_STATUS_CHANGE
+                                               object:nil];
+  }
   return self;
+}
+
+- (void)dealloc
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 + (instancetype)sharedInstance
@@ -52,37 +63,13 @@ static dispatch_once_t _instance_token = 0;
 
 #pragma mark - General
 
-- (NSString*)code
-{
-  if (self.valid)
-    return _code;
-  return nil;
-}
-
-- (void)setCode:(NSString*)code
+- (void)setManualCode:(NSString*)code
 {
   if (code == nil)
     return;
-  __weak InfinitCodeManager* weak_self = self;
-  [[InfinitStateManager sharedInstance] ghostCodeExists:code
-                                        completionBlock:^(InfinitStateResult* result,
-                                                          NSString* code,
-                                                          BOOL valid)
-  {
-    InfinitCodeManager* strong_self = weak_self;
-    strong_self->_valid = valid;
-    if (valid)
-    {
-      strong_self->_code = code;
-      [InfinitMetricsManager sendMetric:InfinitUIEventGotLinkCode method:InfinitUIMethodValid];
-      ELLE_LOG("%s: got valid code: %s", strong_self.description.UTF8String, code.UTF8String);
-    }
-    else
-    {
-      [InfinitMetricsManager sendMetric:InfinitUIEventGotLinkCode method:InfinitUIMethodInvalid];
-      ELLE_LOG("%s: got invalid code: %s", strong_self.description.UTF8String, code.UTF8String);
-    }
-  }];
+  ELLE_DEBUG("%s: set code manually: %s", self.description.UTF8String, code.UTF8String);
+  _code_from_link = NO;
+  _code = code;
 }
 
 - (BOOL)has_code
@@ -90,32 +77,58 @@ static dispatch_once_t _instance_token = 0;
   return self.code.length;
 }
 
-- (void)codeConsumed
+- (void)useCodeWithCompletionBlock:(InfinitCodeUsedBlock)completion_block
 {
+  if (!self.code.length)
+  {
+    if (completion_block)
+      completion_block(NO);
+    return;
+  }
+  NSString* code_copy = [self.code copy];
   _code = nil;
-  _valid = NO;
+  _valid = nil;
+  __weak InfinitCodeManager* weak_self = self;
+  [[InfinitStateManager sharedInstance] useGhostCode:code_copy
+                                             wasLink:self.code_from_link
+                                     completionBlock:^(InfinitStateResult* result)
+  {
+    InfinitCodeManager* strong_self = weak_self;
+    if (completion_block)
+      completion_block(result.success);
+    strong_self->_code_from_link = NO;
+  }];
 }
 
 - (BOOL)getCodeFromURL:(NSURL*)url
 {
   if (![url.scheme isEqualToString:kInfinitURLScheme])
     return NO;
+  ELLE_DEBUG("%s: get code from URL: %s", self.description.UTF8String, url.description.UTF8String);
+  _code_from_link = NO;
   NSString* resource_specifier = [url.resourceSpecifier substringFromIndex:2];
   NSArray* components = [resource_specifier componentsSeparatedByString:@"/"];
   if ([components[0] isEqual:@"invitation"])
   {
     NSString* possible_code = nil;
     if ([components[1] rangeOfString:@"?"].location != NSNotFound)
-    {
       possible_code = [components[1] componentsSeparatedByString:@"?"][0];
-    }
     else
-    {
       possible_code = components[1];
-    }
-    self.code = possible_code;
+    _code = possible_code;
+    _code_from_link = YES;
+    return YES;
   }
   return NO;
+}
+
+#pragma mark - Connection Handling
+
+- (void)connectionStatusChanged:(NSNotification*)notification
+{
+  InfinitConnectionStatus* connection_status = notification.object;
+  if (connection_status.status && self.has_code)
+    [self useCodeWithCompletionBlock:nil];
 }
 
 @end
