@@ -186,7 +186,8 @@ static NSUInteger _background_onboard_size = 5 * 1000 * 1000;
   [self loadTransactions];
   NSInteger count =
     [[InfinitPeerTransactionManager sharedInstance] transactionsIncludingArchived:YES
-                                                                   thisDeviceOnly:YES].count;
+                                                                   thisDeviceOnly:YES
+                                                                excludeReceivable:YES].count;
   if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
   {
     if (count == 0)
