@@ -25,4 +25,6 @@
 - (void)configureForFile:(InfinitFileModel*)file 
            withThumbnail:(UIImage*)thumb;
 
+- (void)updateThumbnail:(UIImage*)thumb;
+
 @end

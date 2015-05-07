@@ -35,15 +35,25 @@
   self.w_constraint.constant = thumb.size.width;
   if (file.type == InfinitFileTypeVideo)
   {
-    AVURLAsset* asset = [AVURLAsset URLAssetWithURL:[NSURL URLWithString:file.path] 
+    AVURLAsset* asset = [AVURLAsset URLAssetWithURL:[[NSURL alloc] initFileURLWithPath:file.path]
                                             options:nil];
-    self.duration_label.text = [InfinitTime stringFromDuration:CMTimeGetSeconds(asset.duration)];
-    self.video_view.hidden = NO;
+    if (asset)
+    {
+      self.duration_label.text = [InfinitTime stringFromDuration:CMTimeGetSeconds(asset.duration)];
+      self.video_view.hidden = NO;
+    }
   }
   else
   {
     self.video_view.hidden = YES;
   }
+}
+
+- (void)updateThumbnail:(UIImage*)thumb
+{
+  self.thumbnail_view.image = thumb;
+  self.h_constraint.constant = thumb.size.height;
+  self.w_constraint.constant = thumb.size.width;
 }
 
 - (void)setSelected:(BOOL)selected
