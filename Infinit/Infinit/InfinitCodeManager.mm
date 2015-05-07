@@ -87,7 +87,7 @@ static dispatch_once_t _instance_token = 0;
   }
   NSString* code_copy = [self.code copy];
   _code = nil;
-  _valid = nil;
+  _valid = NO;
   __weak InfinitCodeManager* weak_self = self;
   [[InfinitStateManager sharedInstance] useGhostCode:code_copy
                                              wasLink:self.code_from_link
