@@ -118,7 +118,7 @@ static UIImage* _grey_thumb = nil;
     {
       dispatch_async(dispatch_get_main_queue(), ^
       {
-        [strong_self.collection_view reloadItemsAtIndexPaths:@[index]];
+        [cell updateThumbnail:generated_thumb];
       });
     }
   });
