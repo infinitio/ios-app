@@ -107,8 +107,17 @@ static dispatch_once_t _first_appear = 0;
     [self showEmptyFilesView];
   else
     [self removeEmptyFilesView];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+  [super viewDidAppear:animated];
   InfinitPeerTransactionManager* manager = [InfinitPeerTransactionManager sharedInstance];
-  _show_onboarding = ([manager transactionsIncludingArchived:YES thisDeviceOnly:YES].count == 0);
+  NSArray* transactions = [manager transactionsIncludingArchived:YES
+                                                  thisDeviceOnly:YES 
+                                               excludeReceivable:YES];
+  if (transactions.count == 0)
+    _show_onboarding = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -662,7 +671,8 @@ static dispatch_once_t _first_appear = 0;
   {
     NSUInteger count =
       [[InfinitPeerTransactionManager sharedInstance] transactionsIncludingArchived:YES
-                                                                     thisDeviceOnly:YES].count;
+                                                                     thisDeviceOnly:YES
+                                                                  excludeReceivable:YES].count;
     _show_onboarding = (count == 0);
   }
   if (!self.show_onboarding)
