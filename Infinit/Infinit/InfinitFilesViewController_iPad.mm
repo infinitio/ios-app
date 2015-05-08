@@ -81,11 +81,14 @@ static dispatch_once_t _first_appear = 0;
                                      bundle:nil];
   _search_view_controller = [[search_nib instantiateWithOwner:self options:nil] firstObject];
   self.search_view_controller.delegate = self;
-  self.send_button.layer.shadowColor = [InfinitColor colorWithGray:0].CGColor;
-  self.send_button.layer.shadowOpacity = 0.33f;
-  self.send_button.layer.shadowRadius = 5.0f;
+  self.send_button.layer.shadowColor = [UIColor blackColor].CGColor;
+  self.send_button.layer.shadowOpacity = 0.15f;
+  self.send_button.layer.shadowRadius = 2.0f;
   self.send_button.layer.shadowOffset = CGSizeZero;
   self.send_button.layer.masksToBounds = NO;
+  CGSize image_size = self.send_button.imageView.image.size;
+  CGRect shadow_rect = CGRectMake(0.0f, 0.0f, image_size.width, image_size.height);
+  self.send_button.layer.shadowPath = [UIBezierPath bezierPathWithOvalInRect:shadow_rect].CGPath;
 }
 
 - (void)viewWillAppear:(BOOL)animated
