@@ -79,11 +79,24 @@ static UIImage* _grey_thumb = nil;
   [super viewDidAppear:animated];
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
   {
-    [self cacheThumbnails];
+    [self updateCachedThumbnails];
   });
 }
 
-- (void)cacheThumbnails
+- (void)viewDidDisappear:(BOOL)animated
+{
+  [super viewDidDisappear:animated];
+  for (InfinitFolderModel* folder in self.all_folders)
+  {
+    for (NSString* path in folder.file_paths)
+    {
+      if (![self.thumb_cache.allKeys containsObject:path])
+        [self.thumb_cache removeObjectForKey:path];
+    }
+  }
+}
+
+- (void)updateCachedThumbnails
 {
   __weak InfinitFilesCollectionViewController_iPad* weak_self = self;
   [self.file_results enumerateObjectsUsingBlock:^(InfinitFileModel* file,
@@ -95,33 +108,39 @@ static UIImage* _grey_thumb = nil;
         ![strong_self.queued_thumbnails containsObject:file.path])
     {
       [strong_self.queued_thumbnails addObject:file.path];
-      [strong_self queueFileForThumbnail:file.path
-                                   index:[NSIndexPath indexPathForRow:row inSection:0]];
+      [strong_self queueFileForThumbnail:file];
     }
   }];
 }
 
-- (void)queueFileForThumbnail:(NSString*)path
-                        index:(NSIndexPath*)index
+- (void)queueFileForThumbnail:(InfinitFileModel*)file
 {
   __weak InfinitFilesCollectionViewController_iPad* weak_self = self;
   dispatch_async(self.thumb_cache_queue, ^
   {
     InfinitFilesCollectionViewController_iPad* strong_self = weak_self;
     UIImage* generated_thumb =
-      [InfinitFilePreview previewForPath:path ofSize:_thumb_size crop:NO];
-    [strong_self.thumb_cache setObject:generated_thumb forKey:path];
-    [strong_self.queued_thumbnails removeObject:path];
+      [InfinitFilePreview previewForPath:file.path ofSize:_thumb_size crop:NO];
+    [strong_self.thumb_cache setObject:generated_thumb forKey:file.path];
+    [strong_self.queued_thumbnails removeObject:file.path];
+    NSIndexPath* index = [strong_self indexForFile:file];
+    if (![strong_self.collection_view.indexPathsForVisibleItems containsObject:index])
+      return;
     InfinitFilesCollectionCell_iPad* cell =
       (InfinitFilesCollectionCell_iPad*)[strong_self.collection_view cellForItemAtIndexPath:index];
-    if ([cell.path isEqualToString:path])
+    dispatch_sync(dispatch_get_main_queue(), ^
     {
-      dispatch_async(dispatch_get_main_queue(), ^
-      {
+      if ([cell.path isEqualToString:file.path])
         [cell updateThumbnail:generated_thumb];
-      });
-    }
+      else
+        [strong_self.collection_view reloadItemsAtIndexPaths:@[index]];
+    });
   });
+}
+
+- (NSIndexPath*)indexForFile:(InfinitFileModel*)file
+{
+  return [NSIndexPath indexPathForRow:[self.file_results indexOfObject:file] inSection:0];
 }
 
 #pragma mark - Editing
@@ -194,7 +213,7 @@ static UIImage* _grey_thumb = nil;
   {
     thumbnail = _grey_thumb;
     if (![self.queued_thumbnails containsObject:file.path])
-      [self queueFileForThumbnail:file.path index:indexPath];
+      [self queueFileForThumbnail:file];
   }
   [cell configureForFile:self.file_results[indexPath.row] withThumbnail:thumbnail];
   cell.selected = [collectionView.indexPathsForSelectedItems containsObject:indexPath];
@@ -228,11 +247,13 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
       {
         NSArray* new_files = [self filesFromFolders:@[folder]];
         NSMutableArray* indexes = [NSMutableArray array];
-        for (NSInteger i = 0; i < new_files.count; i++)
+        [new_files enumerateObjectsUsingBlock:^(InfinitFileModel* file, NSUInteger idx, BOOL* stop)
         {
-          [self.file_results insertObject:new_files[i] atIndex:i];
-          [indexes addObject:[NSIndexPath indexPathForRow:i inSection:0]];
-        }
+          [self.file_results insertObject:file atIndex:idx];
+          NSIndexPath* index_path = [NSIndexPath indexPathForRow:idx inSection:0];
+          [indexes addObject:index_path];
+          [self queueFileForThumbnail:file];
+        }];
         [self.collection_view insertItemsAtIndexPaths:indexes];
       } completion:NULL];
     }
