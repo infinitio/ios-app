@@ -35,7 +35,7 @@
 
 @end
 
-static NSUInteger _min_delay = 3;
+static float _min_delay = 1.5f; // seconds
 
 @implementation ShareViewController
 
@@ -99,7 +99,7 @@ static NSUInteger _min_delay = 3;
   }
   NSUInteger use_count = [use_count_dict[@"use_count"] unsignedIntegerValue];
   use_count += 1;
-  if (use_count >= 3)
+  if (use_count > 1)
     _min_delay = 0;
   use_count_dict[@"use_count"] = @(use_count);
   [use_count_dict writeToFile:use_count_path atomically:NO];
@@ -272,14 +272,8 @@ static NSUInteger _min_delay = 3;
      self.message_view.alpha = 1.0f;
      self.message_view.transform = CGAffineTransformIdentity;
      dispatch_semaphore_wait(self.fetched_items, DISPATCH_TIME_FOREVER);
-     NSDate* start = [NSDate date];
      BOOL success = [self copyFiles];
-     NSDate* finish = [NSDate date];
-     NSInteger delay = _min_delay;
-     if ([finish timeIntervalSinceDate:start] >= (NSTimeInterval)_min_delay)
-       delay = 0;
-     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)),
-                    dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
      {
        NSString* top_text = nil;
        NSString* bottom_text = [self.bottom_message_label.text copy];
@@ -310,11 +304,15 @@ static NSUInteger _min_delay = 3;
                                                 attributes:[self textAttributesBold:NO]];
        if (bottom_bold_range.location != NSNotFound)
          [bottom_message setAttributes:[self textAttributesBold:YES] range:bottom_bold_range];
+       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(_min_delay * NSEC_PER_SEC)),
+                      dispatch_get_main_queue(), ^
+       {
+         [self.ok_button setTitle:button_text forState:UIControlStateNormal];
+         self.ok_button.enabled = YES;
+       });
        dispatch_async(dispatch_get_main_queue(), ^
        {
          self.progress_view.image = image;
-         [self.ok_button setTitle:button_text forState:UIControlStateNormal];
-         self.ok_button.enabled = YES;
          self.top_message_label.attributedText = top_message;
          self.bottom_message_label.attributedText = bottom_message;
          if (success)
