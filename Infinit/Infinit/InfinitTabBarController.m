@@ -409,17 +409,17 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 
 - (void)showSendScreenWithContact:(InfinitContact*)contact
 {
+  if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusRestricted ||
+      [ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusDenied)
+  {
+    [self noGalleryAccessPopUp];
+    return;
+  }
+   _last_index = InfinitTabBarIndexContacts;
   [self setTabBarHidden:YES animated:YES withDelay:self.animator.linear_duration];
-  _last_index = InfinitTabBarIndexContacts;
   if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusNotDetermined)
   {
     [self loadGalleryPermissionView];
-    return;
-  }
-  else if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusRestricted ||
-           [ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusDenied)
-  {
-    [self noGalleryAccessPopUp];
     return;
   }
   InfinitSendNavigationController* nav_controller = self.viewControllers[InfinitTabBarIndexSend];
@@ -625,6 +625,12 @@ shouldSelectViewController:(UIViewController*)viewController
      });
    } failureBlock:^(NSError* error)
    {
+     if (self.selectedIndex == InfinitTabBarIndexContacts)
+     {
+       [[UIApplication sharedApplication] setStatusBarHidden:NO
+                                               withAnimation:UIStatusBarAnimationFade];
+       [self setTabBarHidden:NO animated:NO];
+     }
      [self noGalleryAccessPopUp];
      [InfinitMetricsManager sendMetric:InfinitUIEventAccessGallery
                                 method:InfinitUIMethodNo];
