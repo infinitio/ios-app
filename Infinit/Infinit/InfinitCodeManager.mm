@@ -67,7 +67,7 @@ static dispatch_once_t _instance_token = 0;
 {
   if (code == nil)
     return;
-  ELLE_DEBUG("%s: set code manually: %s", self.description.UTF8String, code.UTF8String);
+  ELLE_LOG("%s: set code manually: %s", self.description.UTF8String, code.UTF8String);
   _code_from_link = NO;
   _code = code;
 }
@@ -104,7 +104,7 @@ static dispatch_once_t _instance_token = 0;
 {
   if (![url.scheme isEqualToString:kInfinitURLScheme])
     return NO;
-  ELLE_DEBUG("%s: get code from URL: %s", self.description.UTF8String, url.description.UTF8String);
+  ELLE_LOG("%s: get code from URL: %s", self.description.UTF8String, url.description.UTF8String);
   _code_from_link = NO;
   NSString* resource_specifier = [url.resourceSpecifier substringFromIndex:2];
   NSArray* components = [resource_specifier componentsSeparatedByString:@"/"];
