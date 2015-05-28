@@ -1458,11 +1458,11 @@ openFileTapped:(NSUInteger)file_index
   {
     case InfinitRatingCellStateFirst:
       self.rating_cell.state = InfinitRatingCellStateRate;
+      [InfinitMetricsManager sendMetric:InfinitUIEventExperienceCard method:InfinitUIMethodPositive];
       break;
     case InfinitRatingCellStateRate:
     {
       [self doneRating];
-      [InfinitMetricsManager sendMetric:InfinitUIEventRateFromCard method:InfinitUIMethodYes];
       NSString* itunes_link =
         [kInfinitStoreRatingLink stringByReplacingOccurrencesOfString:@"APP_ID"
                                                            withString:kInfinitAppStoreId];
@@ -1473,6 +1473,7 @@ openFileTapped:(NSUInteger)file_index
                                                                  withString:kInfinitAppStoreId];
       }
       [[UIApplication sharedApplication] openURL:[NSURL URLWithString:itunes_link]];
+      [InfinitMetricsManager sendMetric:InfinitUIEventRateFromCard method:InfinitUIMethodYes];
       break;
     }
     case InfinitRatingCellStateFeedback:
@@ -1499,6 +1500,7 @@ openFileTapped:(NSUInteger)file_index
   {
     case InfinitRatingCellStateFirst:
       self.rating_cell.state = InfinitRatingCellStateFeedback;
+      [InfinitMetricsManager sendMetric:InfinitUIEventExperienceCard method:InfinitUIMethodNegative];
       break;
 
     default:
