@@ -37,6 +37,8 @@
 @property (nonatomic, readonly) NSString* extension_uuid;
 @property (nonatomic, strong) InfinitExtensionPopoverController* extension_controller;
 
+@property (nonatomic, readonly) UIWindow* workaround_window;
+
 @end
 
 @implementation InfinitMainSplitViewController_iPad
@@ -214,7 +216,20 @@
 {
   UISplitViewController* send_split_view =
     [self.storyboard instantiateViewControllerWithIdentifier:@"ipad_send_split_view_id"];
-  [self presentViewController:send_split_view animated:YES completion:NULL];
+  if ([InfinitHostDevice iOSVersion] < 8.0f)
+  {
+    if (!self.workaround_window)
+    {
+      _workaround_window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+      self.workaround_window.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+      self.workaround_window.rootViewController = send_split_view;
+    }
+    [self.workaround_window makeKeyAndVisible];
+  }
+  else
+  {
+    [self presentViewController:send_split_view animated:YES completion:NULL];
+  }
   [InfinitMetricsManager sendMetric:InfinitUIEventSendGalleryViewOpen
                              method:InfinitUIMethodPadMain];
   [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewOpen
