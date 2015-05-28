@@ -281,8 +281,11 @@ static dispatch_once_t _instance_token = 0;
   NSString* res_folder = [self thumbnailFolderForTransactionMetaId:transaction.meta_id create:YES];
   [thumbnails enumerateObjectsUsingBlock:^(UIImage* thumbnail, NSUInteger i, BOOL* stop)
   {
-    NSString* res_path = [res_folder stringByAppendingPathComponent:transaction.files[i]];
-    [self writeImage:thumbnail toPath:res_path];
+    if (transaction.files.count < i)
+    {
+      NSString* res_path = [res_folder stringByAppendingPathComponent:transaction.files[i]];
+      [self writeImage:thumbnail toPath:res_path];
+    }
   }];
 }
 
