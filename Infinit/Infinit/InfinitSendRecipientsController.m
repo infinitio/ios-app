@@ -390,7 +390,11 @@
 
 - (void)reloadTableSections:(NSIndexSet*)set
 {
-  [self.table_view reloadSections:set withRowAnimation:UITableViewRowAnimationAutomatic];
+  NSRange section_range = NSMakeRange(0, self.table_view.numberOfSections);
+  if ([set containsIndexes:[NSIndexSet indexSetWithIndexesInRange:section_range]])
+    [self.table_view reloadSections:set withRowAnimation:UITableViewRowAnimationAutomatic];
+  else
+    [self.table_view reloadData];
 }
 
 - (void)selectIndexPath:(NSIndexPath*)index
@@ -527,9 +531,16 @@
 - (IBAction)backButtonTapped:(id)sender
 {
   if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    [self.splitViewController dismissViewControllerAnimated:YES completion:NULL];
+  {
+    if ([InfinitHostDevice iOSVersion] < 8.0f)
+      [[UIApplication sharedApplication].windows.firstObject makeKeyAndVisible];
+    else
+      [self.splitViewController dismissViewControllerAnimated:YES completion:NULL];
+  }
   else
+  {
     [self.navigationController popViewControllerAnimated:YES];
+  }
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
   {
     [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:_managed_files_id];
@@ -621,7 +632,10 @@
       show_preparing_message = YES;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
-      [self.splitViewController dismissViewControllerAnimated:YES completion:NULL];
+      if ([InfinitHostDevice iOSVersion] < 8.0f)
+        [[UIApplication sharedApplication].windows.firstObject makeKeyAndVisible];
+      else
+        [self.splitViewController dismissViewControllerAnimated:YES completion:NULL];
       if (show_preparing_message)
       {
         NSString* message = NSLocalizedString(@"Preparing your transfer...", nil);
