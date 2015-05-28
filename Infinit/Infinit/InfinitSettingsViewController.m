@@ -12,6 +12,7 @@
 #import "InfinitColor.h"
 #import "InfinitConstants.h"
 #import "InfinitHostDevice.h"
+#import "InfinitMetricsManager.h"
 #import "InfinitSettingsCell.h"
 #import "InfinitSettingsExpandedCell.h"
 #import "InfinitSettingsReportProblemController.h"
@@ -47,6 +48,7 @@ typedef NS_ENUM(NSUInteger, InfinitFeedbackSettings)
 {
   InfinitFeedbackSettingRate = 0,
   InfinitFeedbackSettingFeedback,
+  InfinitFeedbackSettingHelp,
   InfinitFeedbackSettingProblem,
 
   InfinitFeedbackSettingsCount,
@@ -231,6 +233,12 @@ typedef NS_ENUM(NSUInteger, InfinitDebugSettings)
         cell.title_label.text = NSLocalizedString(@"Send feedback", nil);
         break;
       }
+      case InfinitFeedbackSettingHelp:
+      {
+        cell.icon_view.image = [UIImage imageNamed:@"icon-help"];
+        cell.title_label.text = NSLocalizedString(@"Help", nil);
+        break;
+      }
       case InfinitFeedbackSettingProblem:
       {
         cell.icon_view.image = [UIImage imageNamed:@"icon-settings-flag"];
@@ -359,6 +367,13 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
       }
       case InfinitFeedbackSettingFeedback:
         [self performSegueWithIdentifier:@"settings_feedback" sender:self];
+        [InfinitMetricsManager sendMetric:InfinitUIEventFeedbackOpen
+                                   method:InfinitUIMethodSettingsMenu];
+        break;
+      case InfinitFeedbackSettingHelp:
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:kInfinitHelpURL]];
+        [InfinitMetricsManager sendMetric:InfinitUIEventHelpOpen
+                                   method:InfinitUIMethodSettingsMenu];
         break;
       case InfinitFeedbackSettingProblem:
         [self performSegueWithIdentifier:@"settings_report_problem" sender:self];
