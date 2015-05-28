@@ -101,6 +101,8 @@ static InfinitMetricsManager* _instance = nil;
       return @"contact open";
     case InfinitUIEventContactViewFavorite:
       return @"contact favorite";
+    case InfinitUIEventExperienceCard:
+      return @"card experience";
     case InfinitUIEventRateFromCard:
       return @"card rating";
     case InfinitUIEventFilePreview:
@@ -111,6 +113,10 @@ static InfinitMetricsManager* _instance = nil;
       return @"attribution";
     case InfinitUIEventExtensionCancel:
       return @"cancel extension";
+    case InfinitUIEventFeedbackOpen:
+      return @"feedback open";
+    case InfinitUIEventHelpOpen:
+      return @"help open";
 
     default:
       NSCAssert(false, @"Unknown metrics event");
@@ -161,6 +167,12 @@ static InfinitMetricsManager* _instance = nil;
       return @"fail";
     case InfinitUIMethodSuccess:
       return @"success";
+    case InfinitUIMethodPositive:
+      return @"positive";
+    case InfinitUIMethodNegative:
+      return @"negative";
+    case InfinitUIMethodSettingsMenu:
+      return @"settings menu";
 
     default:
       NSCAssert(false, @"Unknown metrics method");

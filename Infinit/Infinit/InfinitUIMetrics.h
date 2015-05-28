@@ -31,6 +31,7 @@ typedef NS_ENUM(NSUInteger, InfinitUIEvents)
   InfinitUIEventContactViewOpen,
   InfinitUIEventContactViewFavorite,
   // Rating card
+  InfinitUIEventExperienceCard,
   InfinitUIEventRateFromCard,
   // Files view
   InfinitUIEventFilePreview,
@@ -40,6 +41,9 @@ typedef NS_ENUM(NSUInteger, InfinitUIEvents)
   InfinitUIEventAttribution,
   // Extension
   InfinitUIEventExtensionCancel,
+  // Settings
+  InfinitUIEventFeedbackOpen,
+  InfinitUIEventHelpOpen,
 };
 
 typedef NS_ENUM(NSUInteger, InfinitUIMethods)
@@ -64,6 +68,9 @@ typedef NS_ENUM(NSUInteger, InfinitUIMethods)
   InfinitUIMethodFiles,
   InfinitUIMethodFail,
   InfinitUIMethodSuccess,
+  InfinitUIMethodPositive,
+  InfinitUIMethodNegative,
+  InfinitUIMethodSettingsMenu,
 };
 
 #endif
