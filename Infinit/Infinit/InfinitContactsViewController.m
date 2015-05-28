@@ -218,7 +218,11 @@
 
 - (void)reloadTableSections:(NSIndexSet*)set
 {
-  [self.table_view reloadSections:set withRowAnimation:UITableViewRowAnimationAutomatic];
+  NSRange section_range = NSMakeRange(0, self.table_view.numberOfSections);
+  if ([set containsIndexes:[NSIndexSet indexSetWithIndexesInRange:section_range]])
+    [self.table_view reloadSections:set withRowAnimation:UITableViewRowAnimationAutomatic];
+  else
+    [self.table_view reloadData];
 }
 
 #pragma mark - Overlays
