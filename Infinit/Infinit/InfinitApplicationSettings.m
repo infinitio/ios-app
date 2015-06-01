@@ -13,6 +13,7 @@ typedef NS_ENUM(NSUInteger, InfinitSettings)
   InfinitSettingAddressBookUploaded,
   InfinitSettingAskedNotifications,
   InfinitSettingBeenLaunched,
+  InfinitSettingLoginMethod,
   InfinitSettingRatedApp,
   InfinitSettingRatingTransactions,
   InfinitSettingSendToSelfOnboarded,
@@ -98,6 +99,20 @@ static dispatch_once_t _instance_token = 0;
 - (BOOL)been_launched
 {
   return [self boolForKey:InfinitSettingBeenLaunched];
+}
+
+- (InfinitLoginMethod)login_method
+{
+  NSNumber* res = [self.defaults valueForKey:[self keyForSetting:InfinitSettingLoginMethod]];
+  if (res)
+    return res.unsignedIntegerValue;
+  else
+    return InfinitLoginNone;
+}
+
+- (void)setLogin_method:(InfinitLoginMethod)login_method
+{
+  [self.defaults setValue:@(login_method) forKey:[self keyForSetting:InfinitSettingLoginMethod]];
 }
 
 - (void)setBeen_launched:(BOOL)been_launched
@@ -233,6 +248,8 @@ static dispatch_once_t _instance_token = 0;
       return @"asked_notifications";
     case InfinitSettingBeenLaunched:
       return @"been_launched";
+    case InfinitSettingLoginMethod:
+      return @"login_method";
     case InfinitSettingRatedApp:
       return @"rated_app";
     case InfinitSettingRatingTransactions:
