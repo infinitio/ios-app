@@ -106,6 +106,8 @@ static dispatch_once_t _got_access_token = 0;
 {
   if (ABAddressBookGetAuthorizationStatus() != kABAuthorizationStatusAuthorized)
     return;
+  if ([InfinitApplicationSettings sharedInstance].address_book_uploaded)
+    return;
   dispatch_once(&_got_access_token, ^
   {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
