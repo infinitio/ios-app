@@ -11,7 +11,6 @@
 #import "InfinitContactManager.h"
 #import "InfinitExtensionInfo.h"
 #import "InfinitExtensionPopoverController.h"
-#import "InfinitFacebookManager.h"
 #import "InfinitFilesViewController_iPad.h"
 #import "InfinitHostDevice.h"
 #import "InfinitMetricsManager.h"
@@ -20,7 +19,6 @@
 #import "InfinitOverlayViewController.h"
 #import "InfinitWormhole.h"
 
-#import <FacebookSDK/FacebookSDK.h>
 #import <Gap/InfinitConnectionManager.h>
 #import <Gap/InfinitTemporaryFileManager.h>
 
