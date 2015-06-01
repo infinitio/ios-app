@@ -25,11 +25,6 @@
 #import <ALAssetsLibrary+CustomPhotoAlbum.h>
 #import <Photos/Photos.h>
 
-#undef check
-#import <elle/log.hh>
-
-ELLE_LOG_COMPONENT("iOS.FilesMultipleViewController");
-
 @interface InfinitFilesMultipleViewController () <UIGestureRecognizerDelegate,
                                                   UITableViewDataSource,
                                                   UITableViewDelegate>

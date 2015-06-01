@@ -27,11 +27,6 @@
 #import <ALAssetsLibrary+CustomPhotoAlbum.h>
 #import <Photos/Photos.h>
 
-#undef check
-#import <elle/log.hh>
-
-ELLE_LOG_COMPONENT("iOS.FilesViewController");
-
 @interface InfinitFilesViewController () <InfinitDownloadFolderManagerProtocol,
                                           UISearchBarDelegate,
                                           UITableViewDataSource,
