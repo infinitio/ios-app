@@ -24,11 +24,6 @@
 #import <Gap/InfinitColor.h>
 #import <Gap/InfinitPeerTransactionManager.h>
 
-#undef check
-#import <elle/log.hh>
-
-ELLE_LOG_COMPONENT("iOS.FilesViewController_iPad");
-
 @interface InfinitFilesViewController_iPad () <InfinitDownloadFolderManagerProtocol,
                                                InfinitFilesDisplayProtocol,
                                                InfinitFilesSearchProtocol>
