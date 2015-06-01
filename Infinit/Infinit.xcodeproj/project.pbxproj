@@ -15,6 +15,7 @@
 		830AD1F31A6D0B6E00E2B058 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 830AD1F21A6D0B6E00E2B058 /* UIImage+ImageEffects.m */; };
 		830AD1F51A6D172200E2B058 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 830AD1F41A6D172200E2B058 /* Accelerate.framework */; };
 		830AD20E1A6D57C900E2B058 /* InfinitSendNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 830AD20D1A6D57C900E2B058 /* InfinitSendNavigationController.m */; };
+		830F48001B1C53CA009B1C53 /* InfinitWelcomeFacebookUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 830F47FF1B1C53CA009B1C53 /* InfinitWelcomeFacebookUser.m */; };
 		8311B5B31A7CE15700832FDE /* InfinitContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8311B5B21A7CE15700832FDE /* InfinitContactsViewController.m */; };
 		8311B5B91A7CE7F600832FDE /* InfinitContactCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8311B5B71A7CE7F600832FDE /* InfinitContactCell.m */; };
 		8311B5C01A7D18E500832FDE /* InfinitContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8311B5BF1A7D18E500832FDE /* InfinitContactViewController.m */; };
@@ -27,10 +28,10 @@
 		8312372F1A613A8900D5C41C /* InfinitAccessGalleryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8312372E1A613A8900D5C41C /* InfinitAccessGalleryView.m */; };
 		83157ED71A73D29100F8E87F /* InfinitFilesTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83157ED51A73D29100F8E87F /* InfinitFilesTableCell.m */; };
 		83157ED81A73D29100F8E87F /* InfinitFilesTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83157ED61A73D29100F8E87F /* InfinitFilesTableCell.xib */; };
-		83157EDB1A73D49D00F8E87F /* InfinitFilesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83157EDA1A73D49D00F8E87F /* InfinitFilesViewController.mm */; };
+		83157EDB1A73D49D00F8E87F /* InfinitFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83157EDA1A73D49D00F8E87F /* InfinitFilesViewController.m */; };
 		83157EF31A76260E00F8E87F /* InfinitFolderModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83157EF21A76260D00F8E87F /* InfinitFolderModel.mm */; };
 		83157EFA1A76422D00F8E87F /* InfinitFileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83157EF91A76422D00F8E87F /* InfinitFileModel.m */; };
-		83157F071A76702C00F8E87F /* InfinitFilesMultipleViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83157F061A76702C00F8E87F /* InfinitFilesMultipleViewController.mm */; };
+		83157F071A76702C00F8E87F /* InfinitFilesMultipleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83157F061A76702C00F8E87F /* InfinitFilesMultipleViewController.m */; };
 		831AB8601AA6054900E10E65 /* InfinitSettingsExpandedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 831AB85E1AA6054900E10E65 /* InfinitSettingsExpandedCell.m */; };
 		831AB8611AA6054900E10E65 /* InfinitSettingsExpandedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 831AB85F1AA6054900E10E65 /* InfinitSettingsExpandedCell.xib */; };
 		832284FC1A794C97000893A1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 832284FE1A794C97000893A1 /* Main.storyboard */; };
@@ -48,7 +49,6 @@
 		83376F081AEFBE640001A61E /* Adjust.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83376F071AEFBE640001A61E /* Adjust.framework */; };
 		83376F1F1AEFDF1C0001A61E /* InfinitWelcomeAvatarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83376F1D1AEFDF1C0001A61E /* InfinitWelcomeAvatarViewController.m */; };
 		83376F291AF0EE340001A61E /* InfinitLoggingInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83376F281AF0EE340001A61E /* InfinitLoggingInViewController.m */; };
-		83376F2D1AF102870001A61E /* InfinitCodeManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83376F2C1AF102870001A61E /* InfinitCodeManager.mm */; };
 		833DFCBC1A2F837400B0D213 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 833DFCBB1A2F837400B0D213 /* AssetsLibrary.framework */; };
 		833E3AC31A63CF4D0088D3FF /* InfinitAccessContactsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 833E3AC21A63CF4D0088D3FF /* InfinitAccessContactsView.m */; };
 		833E3AC61A63D16C0088D3FF /* InfinitApplicationSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 833E3AC51A63D16C0088D3FF /* InfinitApplicationSettings.m */; };
@@ -71,13 +71,15 @@
 		83612F8E1A5D7FDB00BDF7CE /* NSData+Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = 83612F8D1A5D7FDB00BDF7CE /* NSData+Conversion.m */; };
 		8361B8351AF2827E00D5F890 /* InfinitSendButtonOboarding_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8361B8371AF2827E00D5F890 /* InfinitSendButtonOboarding_iPad.xib */; };
 		8361B8381AF2828100D5F890 /* InfinitFilesViewOnboarding_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8361B83A1AF2828100D5F890 /* InfinitFilesViewOnboarding_iPad.xib */; };
-		8363E4AF1ACE76C2005F98A2 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8363E4AE1ACE76C2005F98A2 /* FacebookSDK.framework */; };
 		83672B901A9F4493009425E6 /* InfinitHomeNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83672B8F1A9F4493009425E6 /* InfinitHomeNavigationController.m */; };
 		8369E8791A83684700ECD519 /* InfinitHomeRatingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8369E8771A83684700ECD519 /* InfinitHomeRatingCell.m */; };
 		8369E87E1A83780A00ECD519 /* InfinitRatingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8369E87D1A83780A00ECD519 /* InfinitRatingManager.m */; };
 		8369E8821A83BC1D00ECD519 /* InfinitHomeFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8369E8801A83BC1D00ECD519 /* InfinitHomeFeedbackViewController.m */; };
 		836D39A11A69409300892206 /* UIImage+Rounded.m in Sources */ = {isa = PBXBuildFile; fileRef = 836D39A01A69409300892206 /* UIImage+Rounded.m */; };
 		836F5C8C1A166720007C9C4E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836F5C8B1A166720007C9C4E /* SystemConfiguration.framework */; };
+		836FCBC61B175A2F007F5CFC /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836FCBC41B17590B007F5CFC /* FBSDKCoreKit.framework */; };
+		836FCBC81B175A2F007F5CFC /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836FCBC71B175A2F007F5CFC /* FBSDKLoginKit.framework */; };
+		836FCBD61B187BF7007F5CFC /* InfinitFacebookManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 836FCBD51B187BF7007F5CFC /* InfinitFacebookManager.m */; };
 		837640F81A9D1F2A00BB2316 /* InfinitHomeEmptyOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 837640FA1A9D1F2A00BB2316 /* InfinitHomeEmptyOverlay.xib */; };
 		837F664A1AADCB5100EA49C4 /* InfinitSendDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 837F66491AADCB5100EA49C4 /* InfinitSendDeviceCell.m */; };
 		83825BE11A701FE900420F24 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83825BE01A701FE900420F24 /* Photos.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -93,7 +95,7 @@
 		839B814B1A6443220057E92B /* InfinitSendAbstractCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 839B814A1A6443220057E92B /* InfinitSendAbstractCell.m */; };
 		83A0D63E1ADE9AC000D9D3AD /* InfinitHomeOnboardingItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A0D63D1ADE9AC000D9D3AD /* InfinitHomeOnboardingItem.m */; };
 		83A0D64A1ADEB70200D9D3AD /* InfinitTabBarController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A0D6491ADEB70200D9D3AD /* InfinitTabBarController_iPad.m */; };
-		83A0D64E1ADECE6500D9D3AD /* InfinitFilesViewController_iPad.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83A0D64D1ADECE6500D9D3AD /* InfinitFilesViewController_iPad.mm */; };
+		83A0D64E1ADECE6500D9D3AD /* InfinitFilesViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A0D64D1ADECE6500D9D3AD /* InfinitFilesViewController_iPad.m */; };
 		83A0D6521ADECF6C00D9D3AD /* InfinitFilesTableViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A0D6511ADECF6C00D9D3AD /* InfinitFilesTableViewController_iPad.m */; };
 		83A0D6561ADED03A00D9D3AD /* InfinitFilesTableCell_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A0D6551ADED03A00D9D3AD /* InfinitFilesTableCell_iPad.m */; };
 		83A0D6581ADED1E000D9D3AD /* InfinitFilesTableCell_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83A0D6571ADED1E000D9D3AD /* InfinitFilesTableCell_iPad.xib */; };
@@ -129,7 +131,6 @@
 		83AD68BE1AEA2E9000EB1B53 /* InfinitWelcomeAbstractViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AD68BD1AEA2E9000EB1B53 /* InfinitWelcomeAbstractViewController.m */; };
 		83AD68BF1AEA4E4100EB1B53 /* InfinitWelcomeLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83AD68C11AEA4E4100EB1B53 /* InfinitWelcomeLoginViewController.xib */; };
 		83AD68CA1AEA690600EB1B53 /* InfinitColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AD68C91AEA690600EB1B53 /* InfinitColor.m */; };
-		83AD68CF1AED0A8200EB1B53 /* InfinitWelcomeFacebookUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 83AD68CE1AED0A8200EB1B53 /* InfinitWelcomeFacebookUser.m */; };
 		83B066621AD56422002ADC56 /* SourceSansPro-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D09848061A43391B002D26AC /* SourceSansPro-Bold.otf */; };
 		83B066651AD564C8002ADC56 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83B066641AD564C7002ADC56 /* Media.xcassets */; };
 		83B32D631A136485004AB945 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 83B32D621A136485004AB945 /* main.m */; };
@@ -209,7 +210,6 @@
 		83F4D08B1A1389430068BEB2 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D08A1A1389430068BEB2 /* libiconv.dylib */; };
 		83F4D0961A13902A0068BEB2 /* libGap-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F4D0931A1390170068BEB2 /* libGap-iOS.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		83F5C3B11A814C8900E751CD /* InfinitSendToSelfOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F5C3B01A814C8900E751CD /* InfinitSendToSelfOverlayView.m */; };
-		83F5E5951AA4BD000011E4F0 /* InfinitFacebookManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83F5E5941AA4BD000011E4F0 /* InfinitFacebookManager.mm */; };
 		83F5E5A51AA5C35E0011E4F0 /* Monaco.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 83F5E5A41AA5C35E0011E4F0 /* Monaco.ttf */; };
 		83F71C401AF8E507004777C7 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 832A99381AD6B26400639B22 /* MainInterface.storyboard */; };
 		83F71C911AF8FE23004777C7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83F71C931AF8FE23004777C7 /* InfoPlist.strings */; };
@@ -324,7 +324,8 @@
 		830AD1F41A6D172200E2B058 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		830AD20C1A6D57C900E2B058 /* InfinitSendNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendNavigationController.h; sourceTree = "<group>"; };
 		830AD20D1A6D57C900E2B058 /* InfinitSendNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendNavigationController.m; sourceTree = "<group>"; };
-		831020421AD40A3A005370BC /* InfinitConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InfinitConstants.h; path = Infinit/InfinitConstants.h; sourceTree = SOURCE_ROOT; };
+		830F47FE1B1C53CA009B1C53 /* InfinitWelcomeFacebookUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitWelcomeFacebookUser.h; sourceTree = "<group>"; };
+		830F47FF1B1C53CA009B1C53 /* InfinitWelcomeFacebookUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitWelcomeFacebookUser.m; sourceTree = "<group>"; };
 		8311B5B11A7CE15700832FDE /* InfinitContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitContactsViewController.h; sourceTree = "<group>"; };
 		8311B5B21A7CE15700832FDE /* InfinitContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitContactsViewController.m; sourceTree = "<group>"; };
 		8311B5B61A7CE7F600832FDE /* InfinitContactCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitContactCell.h; sourceTree = "<group>"; };
@@ -349,13 +350,13 @@
 		83157ED51A73D29100F8E87F /* InfinitFilesTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFilesTableCell.m; sourceTree = "<group>"; };
 		83157ED61A73D29100F8E87F /* InfinitFilesTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitFilesTableCell.xib; sourceTree = "<group>"; };
 		83157ED91A73D49D00F8E87F /* InfinitFilesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFilesViewController.h; sourceTree = "<group>"; };
-		83157EDA1A73D49D00F8E87F /* InfinitFilesViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitFilesViewController.mm; sourceTree = "<group>"; };
+		83157EDA1A73D49D00F8E87F /* InfinitFilesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFilesViewController.m; sourceTree = "<group>"; };
 		83157EF11A76260D00F8E87F /* InfinitFolderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFolderModel.h; sourceTree = "<group>"; };
 		83157EF21A76260D00F8E87F /* InfinitFolderModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitFolderModel.mm; sourceTree = "<group>"; };
 		83157EF81A76422D00F8E87F /* InfinitFileModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFileModel.h; sourceTree = "<group>"; };
 		83157EF91A76422D00F8E87F /* InfinitFileModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFileModel.m; sourceTree = "<group>"; };
 		83157F051A76702C00F8E87F /* InfinitFilesMultipleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFilesMultipleViewController.h; sourceTree = "<group>"; };
-		83157F061A76702C00F8E87F /* InfinitFilesMultipleViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitFilesMultipleViewController.mm; sourceTree = "<group>"; };
+		83157F061A76702C00F8E87F /* InfinitFilesMultipleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFilesMultipleViewController.m; sourceTree = "<group>"; };
 		831686141AD3D6D30099888D /* Infinit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Infinit.entitlements; sourceTree = "<group>"; };
 		831AB85D1AA6054900E10E65 /* InfinitSettingsExpandedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSettingsExpandedCell.h; sourceTree = "<group>"; };
 		831AB85E1AA6054900E10E65 /* InfinitSettingsExpandedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSettingsExpandedCell.m; sourceTree = "<group>"; };
@@ -415,8 +416,6 @@
 		83376F1D1AEFDF1C0001A61E /* InfinitWelcomeAvatarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitWelcomeAvatarViewController.m; sourceTree = "<group>"; };
 		83376F271AF0EE330001A61E /* InfinitLoggingInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitLoggingInViewController.h; sourceTree = "<group>"; };
 		83376F281AF0EE340001A61E /* InfinitLoggingInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitLoggingInViewController.m; sourceTree = "<group>"; };
-		83376F2B1AF102870001A61E /* InfinitCodeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitCodeManager.h; sourceTree = "<group>"; };
-		83376F2C1AF102870001A61E /* InfinitCodeManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitCodeManager.mm; sourceTree = "<group>"; };
 		833DFCBB1A2F837400B0D213 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		833E3AC11A63CF4D0088D3FF /* InfinitAccessContactsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitAccessContactsView.h; sourceTree = "<group>"; };
 		833E3AC21A63CF4D0088D3FF /* InfinitAccessContactsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitAccessContactsView.m; sourceTree = "<group>"; };
@@ -448,6 +447,7 @@
 		835B9D5F1A9E61EE00FD0D54 /* InfinitFilesBottomBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFilesBottomBar.h; sourceTree = "<group>"; };
 		835B9D601A9E61EE00FD0D54 /* InfinitFilesBottomBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFilesBottomBar.m; sourceTree = "<group>"; };
 		835B9D621A9E620900FD0D54 /* InfinitFilesBottomBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitFilesBottomBar.xib; sourceTree = "<group>"; };
+		835CAD311B05EE7600F3FD7F /* InfinitConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InfinitConstants.h; path = "../../../objcpp-gap/Gap/InfinitConstants.h"; sourceTree = "<group>"; };
 		836024ED1A6FAC00002889DB /* InfinitHostDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitHostDevice.h; sourceTree = "<group>"; };
 		836024EE1A6FAC00002889DB /* InfinitHostDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitHostDevice.m; sourceTree = "<group>"; };
 		836080521ACEC68E00EBC4E2 /* ALAssetsLibrary+CustomPhotoAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAssetsLibrary+CustomPhotoAlbum.h"; sourceTree = "<group>"; };
@@ -456,8 +456,6 @@
 		83612F8D1A5D7FDB00BDF7CE /* NSData+Conversion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Conversion.m"; sourceTree = "<group>"; };
 		8361B8361AF2827E00D5F890 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfinitSendButtonOboarding_iPad.xib; sourceTree = "<group>"; };
 		8361B8391AF2828100D5F890 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfinitFilesViewOnboarding_iPad.xib; sourceTree = "<group>"; };
-		8363E4AE1ACE76C2005F98A2 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ThirdParty/FacebookSDK.framework; sourceTree = "<group>"; };
-		8363E4B11ACE7734005F98A2 /* InfinitConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfinitConstants.h; sourceTree = "<group>"; };
 		836463621AFA79DB009D8C00 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = "../../../objcpp-gap/Gap/sv.lproj/Gap_Localizable.strings"; sourceTree = "<group>"; };
 		83672B8E1A9F4493009425E6 /* InfinitHomeNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitHomeNavigationController.h; sourceTree = "<group>"; };
 		83672B8F1A9F4493009425E6 /* InfinitHomeNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitHomeNavigationController.m; sourceTree = "<group>"; };
@@ -470,6 +468,10 @@
 		836D399F1A69409300892206 /* UIImage+Rounded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Rounded.h"; sourceTree = "<group>"; };
 		836D39A01A69409300892206 /* UIImage+Rounded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Rounded.m"; sourceTree = "<group>"; };
 		836F5C8B1A166720007C9C4E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		836FCBC41B17590B007F5CFC /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ThirdParty/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		836FCBC71B175A2F007F5CFC /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ThirdParty/FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		836FCBD41B187BF7007F5CFC /* InfinitFacebookManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFacebookManager.h; sourceTree = "<group>"; };
+		836FCBD51B187BF7007F5CFC /* InfinitFacebookManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFacebookManager.m; sourceTree = "<group>"; };
 		837640F91A9D1F2A00BB2316 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfinitHomeEmptyOverlay.xib; sourceTree = "<group>"; };
 		837719221AF9F8B30092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitContactImportCell.strings"; sourceTree = "<group>"; };
 		837719241AF9F8B30092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -507,6 +509,7 @@
 		837719441AF9F8C00092D17A /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/InfinitHomePeerTransactionCell.strings"; sourceTree = "<group>"; };
 		837F66481AADCB5100EA49C4 /* InfinitSendDeviceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendDeviceCell.h; sourceTree = "<group>"; };
 		837F66491AADCB5100EA49C4 /* InfinitSendDeviceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendDeviceCell.m; sourceTree = "<group>"; };
+		8380BDBA1B0B34520001F876 /* InfinitConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InfinitConstants.h; path = "../../../objcpp-gap/Gap/InfinitConstants.h"; sourceTree = "<group>"; };
 		83825BE01A701FE900420F24 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		8383D5D21AD5890E0073A1A0 /* InfinitProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitProgressView.h; sourceTree = "<group>"; };
 		8383D5D31AD5890E0073A1A0 /* InfinitProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitProgressView.m; sourceTree = "<group>"; };
@@ -533,7 +536,7 @@
 		83A0D6481ADEB70200D9D3AD /* InfinitTabBarController_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitTabBarController_iPad.h; sourceTree = "<group>"; };
 		83A0D6491ADEB70200D9D3AD /* InfinitTabBarController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitTabBarController_iPad.m; sourceTree = "<group>"; };
 		83A0D64C1ADECE6500D9D3AD /* InfinitFilesViewController_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFilesViewController_iPad.h; sourceTree = "<group>"; };
-		83A0D64D1ADECE6500D9D3AD /* InfinitFilesViewController_iPad.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitFilesViewController_iPad.mm; sourceTree = "<group>"; };
+		83A0D64D1ADECE6500D9D3AD /* InfinitFilesViewController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFilesViewController_iPad.m; sourceTree = "<group>"; };
 		83A0D6501ADECF6C00D9D3AD /* InfinitFilesTableViewController_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFilesTableViewController_iPad.h; sourceTree = "<group>"; };
 		83A0D6511ADECF6C00D9D3AD /* InfinitFilesTableViewController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFilesTableViewController_iPad.m; sourceTree = "<group>"; };
 		83A0D6541ADED03A00D9D3AD /* InfinitFilesTableCell_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFilesTableCell_iPad.h; sourceTree = "<group>"; };
@@ -593,8 +596,6 @@
 		83AD68C01AEA4E4100EB1B53 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfinitWelcomeLoginViewController.xib; sourceTree = "<group>"; };
 		83AD68C81AEA690600EB1B53 /* InfinitColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InfinitColor.h; path = "../../../objcpp-gap/Gap/InfinitColor.h"; sourceTree = "<group>"; };
 		83AD68C91AEA690600EB1B53 /* InfinitColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InfinitColor.m; path = "../../../objcpp-gap/Gap/InfinitColor.m"; sourceTree = "<group>"; };
-		83AD68CD1AED0A8200EB1B53 /* InfinitWelcomeFacebookUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitWelcomeFacebookUser.h; sourceTree = "<group>"; };
-		83AD68CE1AED0A8200EB1B53 /* InfinitWelcomeFacebookUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitWelcomeFacebookUser.m; sourceTree = "<group>"; };
 		83B066641AD564C7002ADC56 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		83B32D5D1A136485004AB945 /* Infinit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Infinit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83B32D611A136485004AB945 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1020,8 +1021,6 @@
 		83F4D08D1A1390160068BEB2 /* Gap.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Gap.xcodeproj; path = "../../objcpp-gap/Gap/Gap.xcodeproj"; sourceTree = "<group>"; };
 		83F5C3AF1A814C8900E751CD /* InfinitSendToSelfOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendToSelfOverlayView.h; sourceTree = "<group>"; };
 		83F5C3B01A814C8900E751CD /* InfinitSendToSelfOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendToSelfOverlayView.m; sourceTree = "<group>"; };
-		83F5E5931AA4BD000011E4F0 /* InfinitFacebookManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFacebookManager.h; sourceTree = "<group>"; };
-		83F5E5941AA4BD000011E4F0 /* InfinitFacebookManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitFacebookManager.mm; sourceTree = "<group>"; };
 		83F5E5A41AA5C35E0011E4F0 /* Monaco.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Monaco.ttf; path = "../../../fist-resources/fonts/Monaco.ttf"; sourceTree = "<group>"; };
 		83F71C8D1AF8FDFF004777C7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		83F71C921AF8FE23004777C7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -1127,6 +1126,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				836FCBC81B175A2F007F5CFC /* FBSDKLoginKit.framework in Frameworks */,
+				836FCBC61B175A2F007F5CFC /* FBSDKCoreKit.framework in Frameworks */,
 				83376EEA1AEFB95F0001A61E /* AdSupport.framework in Frameworks */,
 				83376EE81AEFB9530001A61E /* iAd.framework in Frameworks */,
 				83F4282F1AAE048B009A1A7C /* CoreTelephony.framework in Frameworks */,
@@ -1163,7 +1164,6 @@
 				83F4D06B1A13883E0068BEB2 /* libssl.a in Frameworks */,
 				83F4D0851A1389120068BEB2 /* libminiupnp.a in Frameworks */,
 				83F4D0781A1388760068BEB2 /* libfrete.a in Frameworks */,
-				8363E4AF1ACE76C2005F98A2 /* FacebookSDK.framework in Frameworks */,
 				83F4D0831A1388F40068BEB2 /* libbackend.a in Frameworks */,
 				83F4D06D1A1388500068BEB2 /* libprotocol.a in Frameworks */,
 				83F4D04B1A1387EF0068BEB2 /* libaws.a in Frameworks */,
@@ -1306,9 +1306,9 @@
 				835B9D601A9E61EE00FD0D54 /* InfinitFilesBottomBar.m */,
 				835B9D621A9E620900FD0D54 /* InfinitFilesBottomBar.xib */,
 				83157F051A76702C00F8E87F /* InfinitFilesMultipleViewController.h */,
-				83157F061A76702C00F8E87F /* InfinitFilesMultipleViewController.mm */,
+				83157F061A76702C00F8E87F /* InfinitFilesMultipleViewController.m */,
 				83157ED91A73D49D00F8E87F /* InfinitFilesViewController.h */,
-				83157EDA1A73D49D00F8E87F /* InfinitFilesViewController.mm */,
+				83157EDA1A73D49D00F8E87F /* InfinitFilesViewController.m */,
 			);
 			name = Files;
 			sourceTree = "<group>";
@@ -1358,15 +1358,6 @@
 				83376F281AF0EE340001A61E /* InfinitLoggingInViewController.m */,
 			);
 			name = "Logging in";
-			sourceTree = "<group>";
-		};
-		83376F2A1AF1026B0001A61E /* Code Manager */ = {
-			isa = PBXGroup;
-			children = (
-				83376F2B1AF102870001A61E /* InfinitCodeManager.h */,
-				83376F2C1AF102870001A61E /* InfinitCodeManager.mm */,
-			);
-			name = "Code Manager";
 			sourceTree = "<group>";
 		};
 		833E3AD31A63EF260088D3FF /* Model */ = {
@@ -1426,7 +1417,7 @@
 				83B5D6161A66BC4E0061931F /* ALAsset+Date.m */,
 				833E3AC41A63D16C0088D3FF /* InfinitApplicationSettings.h */,
 				833E3AC51A63D16C0088D3FF /* InfinitApplicationSettings.m */,
-				8363E4B11ACE7734005F98A2 /* InfinitConstants.h */,
+				835CAD311B05EE7600F3FD7F /* InfinitConstants.h */,
 				83D370C51AD6965B00C4C1A3 /* InfinitExtensionInfo.h */,
 				83D370C61AD6965B00C4C1A3 /* InfinitExtensionInfo.m */,
 				8384909A1A76969700969CF7 /* InfinitFilePreview.h */,
@@ -1486,7 +1477,8 @@
 				83376EE91AEFB95F0001A61E /* AdSupport.framework */,
 				833DFCBB1A2F837400B0D213 /* AssetsLibrary.framework */,
 				83F4282E1AAE048B009A1A7C /* CoreTelephony.framework */,
-				8363E4AE1ACE76C2005F98A2 /* FacebookSDK.framework */,
+				836FCBC41B17590B007F5CFC /* FBSDKCoreKit.framework */,
+				836FCBC71B175A2F007F5CFC /* FBSDKLoginKit.framework */,
 				83376EE71AEFB9530001A61E /* iAd.framework */,
 				83825BE01A701FE900420F24 /* Photos.framework */,
 				83B5D60D1A6663430061931F /* Security.framework */,
@@ -1495,12 +1487,21 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		836FCBD31B187BC8007F5CFC /* Facebook Manager */ = {
+			isa = PBXGroup;
+			children = (
+				836FCBD41B187BF7007F5CFC /* InfinitFacebookManager.h */,
+				836FCBD51B187BF7007F5CFC /* InfinitFacebookManager.m */,
+			);
+			name = "Facebook Manager";
+			sourceTree = "<group>";
+		};
 		8383D5D81AD58C150073A1A0 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				8380BDBA1B0B34520001F876 /* InfinitConstants.h */,
 				83AD68C81AEA690600EB1B53 /* InfinitColor.h */,
 				83AD68C91AEA690600EB1B53 /* InfinitColor.m */,
-				831020421AD40A3A005370BC /* InfinitConstants.h */,
 				83D370C81AD6969100C4C1A3 /* InfinitExtensionInfo.h */,
 				83D370C91AD6969100C4C1A3 /* InfinitExtensionInfo.m */,
 				83D370C01AD6717E00C4C1A3 /* InfinitWormhole.h */,
@@ -1543,7 +1544,7 @@
 				83A0D6631ADFA30F00D9D3AD /* InfinitFilesDisplayController_iPad.h */,
 				83A0D6641ADFA30F00D9D3AD /* InfinitFilesDisplayController_iPad.m */,
 				83A0D64C1ADECE6500D9D3AD /* InfinitFilesViewController_iPad.h */,
-				83A0D64D1ADECE6500D9D3AD /* InfinitFilesViewController_iPad.mm */,
+				83A0D64D1ADECE6500D9D3AD /* InfinitFilesViewController_iPad.m */,
 			);
 			name = "Files Controller";
 			sourceTree = "<group>";
@@ -1622,8 +1623,8 @@
 				83AD689F1AE9628500EB1B53 /* Password */,
 				83B8C30F1AF238D400213B45 /* InfinitWelcomeNavigationController.h */,
 				83B8C3101AF238D400213B45 /* InfinitWelcomeNavigationController.m */,
-				83AD68CD1AED0A8200EB1B53 /* InfinitWelcomeFacebookUser.h */,
-				83AD68CE1AED0A8200EB1B53 /* InfinitWelcomeFacebookUser.m */,
+				830F47FE1B1C53CA009B1C53 /* InfinitWelcomeFacebookUser.h */,
+				830F47FF1B1C53CA009B1C53 /* InfinitWelcomeFacebookUser.m */,
 				83AD68A61AE979F600EB1B53 /* InfinitWelcomeGradientView.h */,
 				83AD68A71AE979F600EB1B53 /* InfinitWelcomeGradientView.m */,
 				83AD68611AE8EA1900EB1B53 /* InfinitWelcomeViewController.h */,
@@ -1754,12 +1755,11 @@
 				831686141AD3D6D30099888D /* Infinit.entitlements */,
 				835517FA1ADE7E5100B3EF22 /* iPad */,
 				834FCFC11A7B93B900930BD8 /* Background Manager */,
-				83376F2A1AF1026B0001A61E /* Code Manager */,
 				83F44BDB1AEF743C0064C20C /* Contact Management */,
 				8311B5AF1A7CE0CB00832FDE /* Contacts */,
 				83EBB0A11A947AF900144BC6 /* Customised Classes */,
 				83912C5B1AD81F4B00434F6A /* Extension Popover */,
-				83F5E5921AA4BCE70011E4F0 /* Facebook Manager */,
+				836FCBD31B187BC8007F5CFC /* Facebook Manager */,
 				83EBB0B21A97308000144BC6 /* File Management */,
 				83157ED31A73D25A00F8E87F /* Files */,
 				D0BD35281A43307A00AB8EF9 /* Home */,
@@ -1997,15 +1997,6 @@
 				83F5C3B01A814C8900E751CD /* InfinitSendToSelfOverlayView.m */,
 			);
 			name = "Send to Self Overlays";
-			sourceTree = "<group>";
-		};
-		83F5E5921AA4BCE70011E4F0 /* Facebook Manager */ = {
-			isa = PBXGroup;
-			children = (
-				83F5E5931AA4BD000011E4F0 /* InfinitFacebookManager.h */,
-				83F5E5941AA4BD000011E4F0 /* InfinitFacebookManager.mm */,
-			);
-			name = "Facebook Manager";
 			sourceTree = "<group>";
 		};
 		83F7C30D1AF771CE00A643BC /* Cells */ = {
@@ -2496,7 +2487,7 @@
 				83AD68A81AE979F600EB1B53 /* InfinitWelcomeGradientView.m in Sources */,
 				836024EF1A6FAC00002889DB /* InfinitHostDevice.m in Sources */,
 				830AD1F31A6D0B6E00E2B058 /* UIImage+ImageEffects.m in Sources */,
-				83157F071A76702C00F8E87F /* InfinitFilesMultipleViewController.mm in Sources */,
+				83157F071A76702C00F8E87F /* InfinitFilesMultipleViewController.m in Sources */,
 				83A82E3A1AE0EF2D005BAC88 /* InfinitFilesSearchPopover_iPad.m in Sources */,
 				83A82E401AE129F5005BAC88 /* InfinitGallery.mm in Sources */,
 				83AD68BE1AEA2E9000EB1B53 /* InfinitWelcomeAbstractViewController.m in Sources */,
@@ -2504,7 +2495,7 @@
 				83EBB0A01A9479D800144BC6 /* InfinitOfflineViewController.m in Sources */,
 				83F44BDA1AEF6FF50064C20C /* InfinitWelcomeOnboardingNavigationController.m in Sources */,
 				834595861AE6B4EC0020B25D /* InfinitFilesEmptyOverlay_iPad.m in Sources */,
-				83A0D64E1ADECE6500D9D3AD /* InfinitFilesViewController_iPad.mm in Sources */,
+				83A0D64E1ADECE6500D9D3AD /* InfinitFilesViewController_iPad.m in Sources */,
 				83A759BB1AE6652C0026FB26 /* InfinitSendSplitViewController_iPad.m in Sources */,
 				838490981A767F6E00969CF7 /* InfinitFilePreviewController.m in Sources */,
 				83A0D6521ADECF6C00D9D3AD /* InfinitFilesTableViewController_iPad.m in Sources */,
@@ -2519,6 +2510,7 @@
 				83FE65941A6E597500D3CA9A /* InfinitHomeAbstractCell.m in Sources */,
 				839B814B1A6443220057E92B /* InfinitSendAbstractCell.m in Sources */,
 				836D39A11A69409300892206 /* UIImage+Rounded.m in Sources */,
+				836FCBD61B187BF7007F5CFC /* InfinitFacebookManager.m in Sources */,
 				83157EFA1A76422D00F8E87F /* InfinitFileModel.m in Sources */,
 				83AD68691AE8F01700EB1B53 /* InfinitWelcomeLandingViewController.m in Sources */,
 				83EBB0A51A96344D00144BC6 /* InfinitMetricsManager.m in Sources */,
@@ -2532,8 +2524,8 @@
 				83B5D6171A66BC4E0061931F /* ALAsset+Date.m in Sources */,
 				8369E8821A83BC1D00ECD519 /* InfinitHomeFeedbackViewController.m in Sources */,
 				83F962A91AAB331D003F2DE7 /* InfinitFilesOnboardingManager.m in Sources */,
+				830F48001B1C53CA009B1C53 /* InfinitWelcomeFacebookUser.m in Sources */,
 				83A0D6611ADFA10000D9D3AD /* InfinitFilesCollectionCell_iPad.m in Sources */,
-				83376F2D1AF102870001A61E /* InfinitCodeManager.mm in Sources */,
 				83D370BF1AD6716C00C4C1A3 /* InfinitWormhole.m in Sources */,
 				83AD68B91AEA291C00EB1B53 /* InfinitWelcomeLoginViewController.m in Sources */,
 				83912C5E1AD81F6000434F6A /* InfinitExtensionPopoverController.m in Sources */,
@@ -2547,7 +2539,7 @@
 				8332F92B1ADFFA23007392A4 /* InfinitFilesFolderViewController_iPad.m in Sources */,
 				83AD68981AE955F600EB1B53 /* InfinitWelcomeCodeViewController.m in Sources */,
 				83F7C3BE1A6EAEDD00FA283C /* InfinitSettingsUserCell.m in Sources */,
-				83157EDB1A73D49D00F8E87F /* InfinitFilesViewController.mm in Sources */,
+				83157EDB1A73D49D00F8E87F /* InfinitFilesViewController.m in Sources */,
 				83AD68631AE8EA1900EB1B53 /* InfinitWelcomeViewController.m in Sources */,
 				83376F291AF0EE340001A61E /* InfinitLoggingInViewController.m in Sources */,
 				833E3AC31A63CF4D0088D3FF /* InfinitAccessContactsView.m in Sources */,
@@ -2561,7 +2553,6 @@
 				83B8C3111AF238D400213B45 /* InfinitWelcomeNavigationController.m in Sources */,
 				832A8B001A6EB7930024A304 /* InfinitSettingsReportProblemController.m in Sources */,
 				83AD68751AE902DB00EB1B53 /* InfinitWelcomeInvitedViewController.m in Sources */,
-				83F5E5951AA4BD000011E4F0 /* InfinitFacebookManager.mm in Sources */,
 				83F44BDE1AEF745C0064C20C /* InfinitContactManager.m in Sources */,
 				83157EF31A76260E00F8E87F /* InfinitFolderModel.mm in Sources */,
 				8369E87E1A83780A00ECD519 /* InfinitRatingManager.m in Sources */,
@@ -2575,7 +2566,6 @@
 				839B813F1A6407990057E92B /* InfinitSendContactCell.m in Sources */,
 				8311B5B91A7CE7F600832FDE /* InfinitContactCell.m in Sources */,
 				83FA73071A66FF260014B0E4 /* ViewFrameAccessor.m in Sources */,
-				83AD68CF1AED0A8200EB1B53 /* InfinitWelcomeFacebookUser.m in Sources */,
 				8312372F1A613A8900D5C41C /* InfinitAccessGalleryView.m in Sources */,
 				835517FD1ADE7E7000B3EF22 /* InfinitMainSplitViewController_iPad.m in Sources */,
 				83A95FCD1A6A746B000B75C8 /* InfinitHomePeerTransactionCell.m in Sources */,
