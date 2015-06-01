@@ -10,7 +10,6 @@
 
 #import "InfinitApplicationSettings.h"
 #import "InfinitBackgroundManager.h"
-#import "InfinitCodeManager.h"
 #import "InfinitConstants.h"
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitFacebookManager.h"
@@ -24,15 +23,22 @@
 #import <Gap/InfinitAvatarManager.h>
 #import <Gap/InfinitConnectionManager.h>
 #import <Gap/InfinitDeviceManager.h>
+#import <Gap/InfinitGhostCodeManager.h>
 #import <Gap/InfinitKeychain.h>
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitStateResult.h>
+#import <Gap/InfinitURLParser.h>
 
 #import "NSData+Conversion.h"
 
 #import <Adjust/Adjust.h>
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+
+#ifdef DEBUG
+@import AdSupport;
+#endif
 
 @interface AppDelegate () <AdjustDelegate,
                            InfinitWelcomeOnboardingProtocol>
@@ -82,7 +88,13 @@
 - (BOOL)application:(UIApplication*)application
 didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
+#ifdef DEBUG
+  NSLog(@"Advertising identifier: %@",
+        [ASIdentifierManager sharedManager].advertisingIdentifier.UUIDString);
+#endif
   [self configureAdjust];
+  [[FBSDKApplicationDelegate sharedInstance] application:application
+                           didFinishLaunchingWithOptions:launchOptions];
   UIViewController* view_controller = nil;
   if (![InfinitApplicationSettings sharedInstance].been_launched)
   {
@@ -107,7 +119,6 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 
   if (![[[InfinitApplicationSettings sharedInstance] welcome_onboarded] isEqualToNumber:@1])
   {
-    [FBSession activeSession]; // Ensure that we call FBSession on the main thread at least once.
     _onboarding = YES;
     [[InfinitApplicationSettings sharedInstance] setWelcome_onboarded:@1];
     UINavigationController* nav_controller =
@@ -118,41 +129,63 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   else
   {
     _onboarding = NO;
-    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded)
+    if ([InfinitApplicationSettings sharedInstance].login_method == InfinitLoginFacebook)
     {
-      _facebook_long_login = YES;
-      view_controller =
-        [self.storyboard instantiateViewControllerWithIdentifier:self.logging_in_controller_id];
-      [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:20.0f];
-      [[NSNotificationCenter defaultCenter] addObserver:self
-                                               selector:@selector(facebookSessionStateChanged:)
-                                                   name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
-                                                 object:nil];
-      InfinitFacebookManager* manager = [InfinitFacebookManager sharedInstance];
-      // If there's one, just open the session silently, without showing the user the login UI
-      [FBSession openActiveSessionWithReadPermissions:manager.permission_list
-                                         allowLoginUI:NO
-                                    completionHandler:^(FBSession* session,
-                                                        FBSessionState state,
-                                                        NSError* error)
-       {
-         // Handler for session state changes
-         // Call this method EACH time the session state changes,
-         // NOT just when the session open
-         [manager sessionStateChanged:session state:state error:error];
-       }];
-    }
-    else if (FBSession.activeSession.state == FBSessionStateCreatedOpening||
-             FBSession.activeSession.state == FBSessionStateOpen ||
-             FBSession.activeSession.state == FBSessionStateOpenTokenExtended)
-    {
-      _facebook_quick_login = YES;
-      view_controller =
-        [self.storyboard instantiateViewControllerWithIdentifier:self.logging_in_controller_id];
-      [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:15.0f];
+      if ([FBSDKAccessToken currentAccessToken])
+      {
+        _facebook_quick_login = YES;
+        view_controller =
+          [self.storyboard instantiateViewControllerWithIdentifier:self.logging_in_controller_id];
+        [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:15.0f];
+      }
+      else
+      {
+        _facebook_long_login = YES;
+        view_controller =
+          [self.storyboard instantiateViewControllerWithIdentifier:self.logging_in_controller_id];
+        [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:20.0f];
+        FBSDKLoginManager* manager = [InfinitFacebookManager sharedInstance].login_manager;
+        [manager logInWithReadPermissions:kInfinitFacebookReadPermissions
+                                  handler:^(FBSDKLoginManagerLoginResult* result,
+                                            NSError* error)
+        {
+          [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                                   selector:@selector(tooLongToLogin)
+                                                     object:nil];
+          if (error)
+          {
+            UIAlertView* alert =
+              [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Facebook login error", nil)
+                                         message:error.localizedDescription
+                                        delegate:nil
+                               cancelButtonTitle:NSLocalizedString(@"OK", nil) 
+                               otherButtonTitles:nil];
+            [alert show];
+            self.root_controller =
+              [self.storyboard instantiateViewControllerWithIdentifier:self.welcome_controller_id];
+            return;
+          }
+          if (result.isCancelled)
+          {
+            UIAlertView* alert =
+              [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Facebook login canceled", nil)
+                                         message:NSLocalizedString(@"", nil)
+                                        delegate:nil 
+                               cancelButtonTitle:NSLocalizedString(@"OK", nil) 
+                               otherButtonTitles:nil];
+            [alert show];
+            self.root_controller =
+              [self.storyboard instantiateViewControllerWithIdentifier:self.welcome_controller_id];
+            return;
+          }
+          [self tryFacebookLogin];
+        }];
+      }
     }
     else if ([self canAutoLogin])
     {
+      if ([InfinitApplicationSettings sharedInstance].login_method == InfinitLoginNone)
+        [InfinitApplicationSettings sharedInstance].login_method = InfinitLoginEmail;
       InfinitConnectionManager* manager = [InfinitConnectionManager sharedInstance];
       if (manager.network_status == InfinitNetworkStatusNotReachable)
       {
@@ -188,7 +221,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 
 - (BOOL)canAutoLogin
 {
-  NSString* account = [[InfinitApplicationSettings sharedInstance] username];
+  NSString* account = [InfinitApplicationSettings sharedInstance].username;
   if ([[InfinitKeychain sharedInstance] credentialsForAccountInKeychain:account])
     return YES;
   // Ensure that credentials are removed. Fixes issue with beta users not able to auto login.
@@ -209,36 +242,46 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   if (password == nil)
     password = @"";
   [[InfinitStateManager sharedInstance] login:username
-                                     password:password
-                              performSelector:@selector(loginCallback:)
-                                     onObject:self];
-  password = nil;
+                                     password:password 
+                              completionBlock:self.login_block];
 }
 
-- (void)loginCallback:(InfinitStateResult*)result
+- (void)tryFacebookLogin
 {
-  [NSObject cancelPreviousPerformRequestsWithTarget:self
-                                           selector:@selector(tooLongToLogin)
-                                             object:nil];
-  UIViewController* view_controller = nil;
-  if (result.success)
+  NSString* email = [InfinitApplicationSettings sharedInstance].username;
+  NSString* token = [FBSDKAccessToken currentAccessToken].tokenString;
+  [[InfinitStateManager sharedInstance] facebookConnect:token
+                                           emailAddress:email 
+                                        completionBlock:self.login_block];
+}
+
+- (InfinitStateCompletionBlock)login_block
+{
+  return ^void(InfinitStateResult* result)
   {
-    [InfinitDeviceManager sharedInstance];
-    [InfinitDownloadFolderManager sharedInstance];
-    [InfinitBackgroundManager sharedInstance];
-    [InfinitRatingManager sharedInstance];
-    view_controller =
-      [self.storyboard instantiateViewControllerWithIdentifier:self.main_controller_id];
-  }
-  else
-  {
-    view_controller =
-      [self.storyboard instantiateViewControllerWithIdentifier:self.welcome_controller_id];
-  }
-  dispatch_async(dispatch_get_main_queue(), ^
-  {
-    self.root_controller = view_controller;
-  });
+    [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                             selector:@selector(tooLongToLogin)
+                                               object:nil];
+    UIViewController* view_controller = nil;
+    if (result.success)
+    {
+      [InfinitDeviceManager sharedInstance];
+      [InfinitDownloadFolderManager sharedInstance];
+      [InfinitBackgroundManager sharedInstance];
+      [InfinitRatingManager sharedInstance];
+      view_controller =
+        [self.storyboard instantiateViewControllerWithIdentifier:self.main_controller_id];
+    }
+    else
+    {
+      view_controller =
+        [self.storyboard instantiateViewControllerWithIdentifier:self.welcome_controller_id];
+    }
+    dispatch_async(dispatch_get_main_queue(), ^
+    {
+      self.root_controller = view_controller;
+    });
+  };
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication*)application
@@ -270,7 +313,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 
   // Handle the user leaving the app while the Facebook login dialog is being shown
   // For example: when the user presses the iOS "home" button while the login dialog is active
-  [FBAppCall handleDidBecomeActive];
+  [FBSDKAppEvents activateApp];
 
   [[UIApplication sharedApplication] cancelAllLocalNotifications];
   [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
@@ -279,7 +322,6 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 - (void)applicationWillTerminate:(UIApplication*)application
 {
   // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-  [[InfinitFacebookManager sharedInstance] closeSession];
   [InfinitStateManager stopState];
 }
 
@@ -290,24 +332,15 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   sourceApplication:(NSString*)sourceApplication
          annotation:(id)annotation
 {
-  [FBSession.activeSession setStateChangeHandler:^(FBSession* session,
-                                                   FBSessionState state,
-                                                   NSError* error)
-   {
-     [[InfinitFacebookManager sharedInstance] sessionStateChanged:session state:state error:error];
-   }];
-
-  BOOL facebook_handled = [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
   [Adjust appWillOpenUrl:url];
-
-  BOOL we_handled = [[InfinitCodeManager sharedInstance] getCodeFromURL:url];
-
-  if ([InfinitCodeManager sharedInstance].has_code &&
-      [InfinitStateManager sharedInstance].logged_in)
-  {
-    [[InfinitCodeManager sharedInstance] useCodeWithCompletionBlock:nil];
-  }
-  return (facebook_handled || we_handled);
+  BOOL facebook_handled = [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                                         openURL:url
+                                                               sourceApplication:sourceApplication
+                                                                      annotation:annotation];
+  NSString* ghost_code = [InfinitURLParser getGhostCodeFromURL:url];
+  if (ghost_code.length)
+    [[InfinitGhostCodeManager sharedInstance] setCode:ghost_code wasLink:YES completionBlock:nil];
+  return (facebook_handled || ghost_code.length);
 }
 
 #pragma mark - Notification Handling
@@ -411,44 +444,18 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
      view_controller =
       [self.storyboard instantiateViewControllerWithIdentifier:self.logging_in_controller_id];
   }
+  else if (self.facebook_login)
+  {
+    [self tryFacebookLogin];
+    view_controller =
+      [self.storyboard instantiateViewControllerWithIdentifier:self.logging_in_controller_id];
+  }
   else
   {
     view_controller =
       [self.storyboard instantiateViewControllerWithIdentifier:self.welcome_controller_id];
   }
   self.root_controller = view_controller;
-}
-
-#pragma mark - Facebok Session State Changed
-
-- (void)tryFacebookLogin
-{
-  NSString* email = [InfinitApplicationSettings sharedInstance].username;
-  NSString* token = FBSession.activeSession.accessTokenData.accessToken;
-  [[InfinitStateManager sharedInstance] facebookConnect:token
-                                           emailAddress:email
-                                        performSelector:@selector(loginCallback:)
-                                               onObject:self];
-}
-
-- (void)facebookSessionStateChanged:(NSNotification*)notification
-{
-  FBSessionState state = [notification.userInfo[@"state"] unsignedIntegerValue];
-  if (state == FBSessionStateOpen || state == FBSessionStateOpenTokenExtended)
-  {
-    [self tryFacebookLogin];
-  }
-  else
-  {
-    [NSObject cancelPreviousPerformRequestsWithTarget:self
-                                             selector:@selector(tooLongToLogin)
-                                               object:nil];
-    self.root_controller =
-      [self.storyboard instantiateViewControllerWithIdentifier:self.welcome_controller_id];
-  }
-  [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                  name:INFINIT_FACEBOOK_SESSION_STATE_CHANGED
-                                                object:nil];
 }
 
 #pragma mark - Login/Connection Notifications
@@ -463,13 +470,6 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
   }
   else if (!connection_status.status && !connection_status.still_trying)
   {
-    if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded ||
-        FBSession.activeSession.state == FBSessionStateCreatedOpening||
-        FBSession.activeSession.state == FBSessionStateOpen ||
-        FBSession.activeSession.state == FBSessionStateOpenTokenExtended)
-    {
-      [[InfinitFacebookManager sharedInstance] cleanSession];
-    }
     self.root_controller =
       [self.storyboard instantiateViewControllerWithIdentifier:self.welcome_controller_id];
   }
@@ -477,14 +477,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 
 - (void)willLogout
 {
-  if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded ||
-      FBSession.activeSession.state == FBSessionStateCreatedOpening||
-      FBSession.activeSession.state == FBSessionStateOpen ||
-      FBSession.activeSession.state == FBSessionStateOpenTokenExtended)
-  {
-    [[InfinitFacebookManager sharedInstance] cleanSession];
-  }
-  else
+  if ([InfinitApplicationSettings sharedInstance].login_method == InfinitLoginEmail)
   {
     NSString* account_email = [InfinitApplicationSettings sharedInstance].username;
     if (account_email != nil)
