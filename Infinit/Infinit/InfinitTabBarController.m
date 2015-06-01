@@ -14,7 +14,6 @@
 #import "InfinitContactsViewController.h"
 #import "InfinitExtensionInfo.h"
 #import "InfinitExtensionPopoverController.h"
-#import "InfinitFacebookManager.h"
 #import "InfinitFilesNavigationController.h"
 #import "InfinitFilesViewController.h"
 #import "InfinitHomeViewController.h"
@@ -28,7 +27,6 @@
 #import "InfinitWormhole.h"
 
 #import "JDStatusBarNotification.h"
-#import <FacebookSDK/FacebookSDK.h>
 
 #import <Gap/InfinitConnectionManager.h>
 #import <Gap/InfinitPeerTransactionManager.h>
