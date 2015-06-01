@@ -24,6 +24,8 @@
 
 @implementation VENBackspaceTextField
 
+@dynamic delegate;
+
 - (BOOL)keyboardInputShouldDelete:(UITextField *)textField
 {
     if (self.text.length == 0) {
