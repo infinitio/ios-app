@@ -8,6 +8,8 @@
 
 #import "InfinitWelcomeLastStepViewController.h"
 
+#import "InfinitApplicationSettings.h"
+
 @interface InfinitWelcomeLastStepViewController () <UITextFieldDelegate>
 
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView* activity;
@@ -59,9 +61,14 @@
     InfinitWelcomeLastStepViewController* strong_self = weak_self;
     [strong_self.activity stopAnimating];
     if (result.success)
+    {
       [strong_self.delegate welcomeLastStepDone:strong_self];
+      [InfinitApplicationSettings sharedInstance].login_method = InfinitLoginEmail;
+    }
     else
+    {
       [strong_self setErrorText:[strong_self.delegate errorStringForGapStatus:result.status]];
+    }
     [strong_self setInputsEnabled:YES];
     strong_self.register_button.hidden = NO;
   }];

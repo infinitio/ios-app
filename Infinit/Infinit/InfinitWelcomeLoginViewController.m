@@ -8,6 +8,7 @@
 
 #import "InfinitWelcomeLoginViewController.h"
 
+#import "InfinitApplicationSettings.h"
 #import "InfinitConstants.h"
 
 #import <Gap/InfinitColor.h>
@@ -116,6 +117,7 @@
     if (result.success)
     {
       [strong_self.delegate welcomeLoginDone:strong_self];
+      [InfinitApplicationSettings sharedInstance].login_method = InfinitLoginEmail;
     }
     else
     {

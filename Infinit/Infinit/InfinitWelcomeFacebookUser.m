@@ -25,15 +25,27 @@
   return self;
 }
 
-+ (instancetype)facebookUser:(NSString*)facebook_id
-                       email:(NSString*)email
-                        name:(NSString*)name
-                      avatar:(UIImage*)avatar
++ (instancetype)facebookUserFromGraphDictionary:(NSDictionary*)user_dict
 {
-  return [[InfinitWelcomeFacebookUser alloc] initWithFacebookUser:facebook_id
-                                                            email:email
+  NSString* user_id = user_dict[@"id"];
+  NSString* email = user_dict[@"email"];
+  NSString* name = user_dict[@"name"];
+  NSData* avatar_data =
+    [NSData dataWithContentsOfURL:[InfinitWelcomeFacebookUser avatarURLForUserWithId:user_id]];
+  UIImage* avatar = [UIImage imageWithData:avatar_data];
+  return [[InfinitWelcomeFacebookUser alloc] initWithFacebookUser:user_id
+                                                            email:email 
                                                              name:name 
                                                            avatar:avatar];
+}
+
+#pragma mark - Helpers
+
++ (NSURL*)avatarURLForUserWithId:(NSString*)id_
+{
+  NSString* str =
+    [NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large", id_];
+  return [NSURL URLWithString:str];
 }
 
 @end

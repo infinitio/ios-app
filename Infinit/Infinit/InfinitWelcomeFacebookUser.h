@@ -19,9 +19,6 @@
 @property (nonatomic, readonly) NSString* id_;
 @property (nonatomic, readonly) NSString* name;
 
-+ (instancetype)facebookUser:(NSString*)facebook_id
-                       email:(NSString*)email
-                        name:(NSString*)name
-                      avatar:(UIImage*)avatar;
++ (instancetype)facebookUserFromGraphDictionary:(NSDictionary*)user_dict;
 
 @end
