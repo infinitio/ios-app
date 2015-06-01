@@ -84,6 +84,7 @@ using TransactionStatus = infinit::oracles::TransactionStatus;
 @end
 
 static InfinitLocalNotificationManager* _instance = nil;
+static dispatch_once_t _instance_token = 0;
 
 @implementation InfinitLocalNotificationManager
 
@@ -100,8 +101,11 @@ static InfinitLocalNotificationManager* _instance = nil;
 
 + (instancetype)sharedInstance
 {
-  if (_instance == nil)
+  dispatch_once(&_instance_token, ^
+  {
+    ELLE_DUMP("%s: instatiate instance", self.description.UTF8String);
     _instance = [[InfinitLocalNotificationManager alloc] init];
+  });
   return _instance;
 }
 
