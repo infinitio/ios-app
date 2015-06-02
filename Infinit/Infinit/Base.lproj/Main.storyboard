@@ -541,7 +541,6 @@
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         <connections>
-                                            <action selector="textChanged" destination="bv7-rj-2XH" eventType="editingChanged" id="2ip-yK-IoI"/>
                                             <outlet property="delegate" destination="UIZ-TQ-cnt" id="PAC-5b-BAW"/>
                                         </connections>
                                     </textField>
