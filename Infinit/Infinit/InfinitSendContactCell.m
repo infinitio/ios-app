@@ -32,19 +32,20 @@ static BOOL _show_numbers;
   if ([self.contact isEqual:contact])
     return;
   [super setContact:contact];
+  InfinitContactAddressBook* contact_ab = (InfinitContactAddressBook*)self.contact;
   NSMutableString* res = [[NSMutableString alloc] init];
-  if (contact.emails.count > 0)
+  if (contact_ab.emails.count > 0)
   {
-    [res appendFormat:@"%@", contact.emails[0]];
-    if (contact.emails.count > 1 && contact.phone_numbers.count == 0 && _show_numbers)
+    [res appendFormat:@"%@", contact_ab.emails[0]];
+    if (contact_ab.emails.count > 1 && contact_ab.phone_numbers.count == 0 && _show_numbers)
       [res appendFormat:@"..."];
   }
-  if (contact.phone_numbers.count > 0 && _show_numbers)
+  if (contact_ab.phone_numbers.count > 0 && _show_numbers)
   {
-    if (contact.emails.count > 0)
+    if (contact_ab.emails.count > 0)
       [res appendFormat:@", "];
-    [res appendFormat:@"%@", contact.phone_numbers[0]];
-    if (contact.phone_numbers.count > 1)
+    [res appendFormat:@"%@", contact_ab.phone_numbers[0]];
+    if (contact_ab.phone_numbers.count > 1)
       [res appendFormat:@"..."];
   }
   self.details_label.text = res;

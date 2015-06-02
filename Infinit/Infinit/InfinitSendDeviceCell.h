@@ -8,13 +8,12 @@
 
 #import "InfinitSendAbstractCell.h"
 
-#import "InfinitContact.h"
-#import <Gap/InfinitDevice.h>
+#import "InfinitContactUser.h"
 
 @interface InfinitSendDeviceCell : InfinitSendAbstractCell
 
 @property (nonatomic, weak) IBOutlet UIImageView* device_type_view;
 
-- (void)setupForContact:(InfinitContact*)contact;
+- (void)setupForContact:(InfinitContactUser*)contact;
 
 @end

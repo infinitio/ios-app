@@ -68,10 +68,14 @@ static NSDictionary* _selected_attrs = nil;
 {
   _contact = contact;
   self.avatar_view.image = [contact.avatar infinit_circularMaskOfSize:self.avatar_view.bounds.size];
-  if (self.contact.infinit_user != nil && self.contact.infinit_user.is_self)
-    self.name_label.text = NSLocalizedString(@"Me (my other devices)", nil);
-  else
-    self.name_label.text = self.contact.fullname;
+  NSString* name = self.contact.fullname;
+  if ([self.contact isKindOfClass:InfinitContactUser.class])
+  {
+    InfinitContactUser* contact_user = (InfinitContactUser*)self.contact;
+    if (contact_user.infinit_user != nil && contact_user.infinit_user.is_self)
+      name = NSLocalizedString(@"Me (my other devices)", nil);
+  }
+  self.name_label.text = name;
 }
 
 - (void)setSelected:(BOOL)selected

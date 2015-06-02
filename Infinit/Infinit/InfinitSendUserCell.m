@@ -23,7 +23,8 @@ static UIImage* _star_image = nil;
   if ([self.contact isEqual:contact])
     return;
   super.contact = contact;
-  if (self.contact.infinit_user.is_self)
+  InfinitContactUser* contact_user = (InfinitContactUser*)self.contact;
+  if (contact_user.infinit_user.is_self)
   {
     if (_mac_image == nil)
       _mac_image = [UIImage imageNamed:@"icon-device-mac"];
@@ -59,13 +60,15 @@ static UIImage* _star_image = nil;
            animated:(BOOL)animated
 {
   [super setSelected:selected animated:animated];
-  if (self.contact.infinit_user.is_self && !selected)
+  InfinitContactUser* contact_user = (InfinitContactUser*)self.contact;
+  if (contact_user.infinit_user.is_self && !selected)
     [self setSelfTextColor];
 }
 
 - (void)updateAvatar
 {
-  [self.contact updateAvatar];
+  InfinitContactUser* contact_user = (InfinitContactUser*)self.contact;
+  [contact_user updateAvatar];
   self.avatar_view.image =
     [self.contact.avatar infinit_circularMaskOfSize:self.avatar_view.bounds.size];
   [self setNeedsDisplay];

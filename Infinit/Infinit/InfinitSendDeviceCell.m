@@ -10,7 +10,7 @@
 
 @implementation InfinitSendDeviceCell
 
-- (void)setupForContact:(InfinitContact*)contact
+- (void)setupForContact:(InfinitContactUser*)contact
 {
   super.contact = contact;
   self.name_label.text = contact.device_name;
