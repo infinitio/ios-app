@@ -944,7 +944,7 @@ static dispatch_once_t _password_token = 0;
 {
   __weak InfinitWelcomeViewController* weak_self = self;
   FBSDKGraphRequest* me_request =
-    [[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:nil];
+    [[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:@{@"fields": @"id,name,email"}];
   [me_request startWithCompletionHandler:^(FBSDKGraphRequestConnection* connection,
                                            id result,
                                            NSError* error)
