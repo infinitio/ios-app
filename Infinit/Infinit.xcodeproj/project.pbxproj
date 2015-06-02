@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		8301A6F71AF91ECC00E9FABF /* Gap_Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8301A6F51AF91ECC00E9FABF /* Gap_Localizable.strings */; };
+		8303307D1B1DFA2100FE2931 /* InfinitContactAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 8303307C1B1DFA2100FE2931 /* InfinitContactAddressBook.m */; };
+		830330801B1DFCA800FE2931 /* InfinitContactEmail.m in Sources */ = {isa = PBXBuildFile; fileRef = 8303307F1B1DFCA800FE2931 /* InfinitContactEmail.m */; };
+		830330841B1DFD9700FE2931 /* InfinitContactUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 830330831B1DFD9700FE2931 /* InfinitContactUser.m */; };
 		83095D0D1AF124A300F473BB /* InfinitWelcomeAvatarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83095D0F1AF124A300F473BB /* InfinitWelcomeAvatarViewController.xib */; };
 		830A39041AD3DBF60017F258 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 830A39031AD3DBF60017F258 /* ShareViewController.m */; };
 		830A39091AD3DBF60017F258 /* ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 830A38FE1AD3DBF60017F258 /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -310,6 +313,12 @@
 /* Begin PBXFileReference section */
 		83016DE71B00D499004864B9 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = "../../../objcpp-gap/Gap/es.lproj/Gap_Localizable.strings"; sourceTree = "<group>"; };
 		8301A6F61AF91ECC00E9FABF /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = "../../../objcpp-gap/Gap/fr.lproj/Gap_Localizable.strings"; sourceTree = "<group>"; };
+		8303307B1B1DFA2100FE2931 /* InfinitContactAddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitContactAddressBook.h; sourceTree = "<group>"; };
+		8303307C1B1DFA2100FE2931 /* InfinitContactAddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitContactAddressBook.m; sourceTree = "<group>"; };
+		8303307E1B1DFCA800FE2931 /* InfinitContactEmail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitContactEmail.h; sourceTree = "<group>"; };
+		8303307F1B1DFCA800FE2931 /* InfinitContactEmail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitContactEmail.m; sourceTree = "<group>"; };
+		830330821B1DFD9700FE2931 /* InfinitContactUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitContactUser.h; sourceTree = "<group>"; };
+		830330831B1DFD9700FE2931 /* InfinitContactUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitContactUser.m; sourceTree = "<group>"; };
 		830475EE1AF9201D0081749F /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = "../../../objcpp-gap/Gap/Base.lproj/Gap_Localizable.strings"; sourceTree = "<group>"; };
 		83095D0E1AF124A300F473BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfinitWelcomeAvatarViewController.xib; sourceTree = "<group>"; };
 		830A38FE1AD3DBF60017F258 /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1365,6 +1374,12 @@
 			children = (
 				833E3ACD1A63E8B80088D3FF /* InfinitContact.h */,
 				833E3ACE1A63E8B80088D3FF /* InfinitContact.m */,
+				8303307B1B1DFA2100FE2931 /* InfinitContactAddressBook.h */,
+				8303307C1B1DFA2100FE2931 /* InfinitContactAddressBook.m */,
+				8303307E1B1DFCA800FE2931 /* InfinitContactEmail.h */,
+				8303307F1B1DFCA800FE2931 /* InfinitContactEmail.m */,
+				830330821B1DFD9700FE2931 /* InfinitContactUser.h */,
+				830330831B1DFD9700FE2931 /* InfinitContactUser.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2475,6 +2490,7 @@
 				83912C611AD823DE00434F6A /* InfinitExtensionFileCell.m in Sources */,
 				83A0D6651ADFA30F00D9D3AD /* InfinitFilesDisplayController_iPad.m in Sources */,
 				83876AF31A78CCC900F79905 /* InfinitDownloadFolderManager.mm in Sources */,
+				8303307D1B1DFA2100FE2931 /* InfinitContactAddressBook.m in Sources */,
 				83E112D91A8266090072DAE0 /* InfinitWelcomeOnboardingController.m in Sources */,
 				830AD20E1A6D57C900E2B058 /* InfinitSendNavigationController.m in Sources */,
 				8311B5C01A7D18E500832FDE /* InfinitContactViewController.m in Sources */,
@@ -2509,6 +2525,7 @@
 				83B32D691A136485004AB945 /* ViewController.m in Sources */,
 				83FE65941A6E597500D3CA9A /* InfinitHomeAbstractCell.m in Sources */,
 				839B814B1A6443220057E92B /* InfinitSendAbstractCell.m in Sources */,
+				830330801B1DFCA800FE2931 /* InfinitContactEmail.m in Sources */,
 				836D39A11A69409300892206 /* UIImage+Rounded.m in Sources */,
 				836FCBD61B187BF7007F5CFC /* InfinitFacebookManager.m in Sources */,
 				83157EFA1A76422D00F8E87F /* InfinitFileModel.m in Sources */,
@@ -2549,6 +2566,7 @@
 				83FA72FF1A66FF1D0014B0E4 /* VENTokenField.m in Sources */,
 				83376F1F1AEFDF1C0001A61E /* InfinitWelcomeAvatarViewController.m in Sources */,
 				83FA72FD1A66FF1D0014B0E4 /* VENToken.m in Sources */,
+				830330841B1DFD9700FE2931 /* InfinitContactUser.m in Sources */,
 				83519B501A98D5F700541B5E /* InfinitResizableNavigationBar.m in Sources */,
 				83B8C3111AF238D400213B45 /* InfinitWelcomeNavigationController.m in Sources */,
 				832A8B001A6EB7930024A304 /* InfinitSettingsReportProblemController.m in Sources */,
