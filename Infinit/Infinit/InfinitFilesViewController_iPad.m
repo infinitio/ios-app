@@ -216,7 +216,8 @@ static dispatch_once_t _first_appear = 0;
       }
       else if ([item isKindOfClass:InfinitFileModel.class])
       {
-        [paths addObject:[item path]];
+        InfinitFileModel* file = (InfinitFileModel*)item;
+        [paths addObject:file.path];
       }
     }
     [((InfinitMainSplitViewController_iPad*)self.splitViewController) showSendViewForFiles:paths];
