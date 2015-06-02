@@ -20,7 +20,7 @@
 
 @interface InfinitContactManager ()
 
-@property (atomic, readonly) NSArray* all_contacts;
+@property (atomic, readwrite) NSArray* contact_cache;
 
 @end
 
@@ -63,13 +63,13 @@ static dispatch_once_t _got_access_token = 0;
 
 #pragma mark - Public
 
-- (void)fetchContacts
+- (NSArray*)allContacts
 {
   if (ABAddressBookGetAuthorizationStatus() != kABAuthorizationStatusAuthorized)
-    return;
+    return nil;
+  NSMutableArray* res = [NSMutableArray array];
   CFErrorRef* error = nil;
   ABAddressBookRef address_book = ABAddressBookCreateWithOptions(NULL, error);
-  NSMutableArray* res = [NSMutableArray array];
   CFArrayRef sources = ABAddressBookCopyArrayOfAllSources(address_book);
   for (int i = 0; i < CFArrayGetCount(sources); i++)
   {
@@ -83,7 +83,7 @@ static dispatch_once_t _got_access_token = 0;
       ABRecordRef person = CFArrayGetValueAtIndex(contacts, j);
       if (person)
       {
-        InfinitContact* contact = [[InfinitContact alloc] initWithABRecord:person];
+        InfinitContactAddressBook* contact = [InfinitContactAddressBook contactWithABRecord:person];
         if (contact != nil && (contact.emails.count > 0 || (contact.phone_numbers.count > 0)))
         {
           [res addObject:contact];
@@ -99,7 +99,8 @@ static dispatch_once_t _got_access_token = 0;
                                 ascending:YES
                                  selector:@selector(caseInsensitiveCompare:)];
   [res sortUsingDescriptors:@[sort]];
-  _all_contacts = [res copy];
+  self.contact_cache = [res copy];
+  return res;
 }
 
 - (void)gotAddressBookAccess
@@ -112,11 +113,11 @@ static dispatch_once_t _got_access_token = 0;
   {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
     {
-      [self fetchContacts];
+      NSArray* contacts = [self allContacts];
       NSMutableArray* upload_array = [NSMutableArray array];
-      [self.all_contacts enumerateObjectsUsingBlock:^(InfinitContact* contact,
-                                                      NSUInteger i,
-                                                      BOOL* stop)
+      [contacts enumerateObjectsUsingBlock:^(InfinitContact* contact,
+                                             NSUInteger i,
+                                             BOOL* stop)
        {
          [upload_array addObject:[self dictForContact:contact]];
        }];
@@ -137,8 +138,6 @@ static dispatch_once_t _got_access_token = 0;
     return;
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
   {
-    if (!self.all_contacts)
-      [self fetchContacts];
     NSMutableArray* ghosts = [NSMutableArray array];
     NSArray* swaggers = [InfinitUserManager sharedInstance].alphabetical_swaggers;
     for (InfinitUser* user in swaggers)
@@ -175,7 +174,7 @@ static dispatch_once_t _got_access_token = 0;
 
 #pragma mark - Helpers
 
-- (NSDictionary*)dictForContact:(InfinitContact*)contact
+- (NSDictionary*)dictForContact:(InfinitContactAddressBook*)contact
 {
   NSArray* email_addresses = contact.emails ? contact.emails : @[];
   NSArray* phone_numbers = contact.phone_numbers ? contact.phone_numbers : @[];
@@ -192,6 +191,8 @@ static dispatch_once_t _got_access_token = 0;
 
 - (void)tryUpdateGhost:(InfinitUser*)ghost
 {
+  if (!self.contact_cache)
+    [self allContacts];
   NSString* email = nil;
   NSString* phone = nil;
   if (ghost.fullname.infinit_isEmail)
@@ -204,7 +205,7 @@ static dispatch_once_t _got_access_token = 0;
   }
   if (!email && !phone)
     return;
-  for (InfinitContact* contact in self.all_contacts)
+  for (InfinitContactAddressBook* contact in self.contact_cache)
   {
     BOOL found = NO;
     if (contact.emails.count && [contact.emails containsObject:email])

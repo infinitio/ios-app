@@ -12,6 +12,14 @@
 
 + (instancetype)sharedInstance;
 
+/** Inform the users that we've got access to the Address Book.
+ The manager will try to upload the user's contacts if it has not already done so.
+ */
 - (void)gotAddressBookAccess;
+
+/** Fetch an array of all the user's contacts.
+ @return Array of InfinitContact objects or nil if no access.
+ */
+- (NSArray*)allContacts;
 
 @end
