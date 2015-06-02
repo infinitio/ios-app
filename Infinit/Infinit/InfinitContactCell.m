@@ -27,11 +27,12 @@ static UIImage* _me_icon = nil;
 
 - (void)setContact:(InfinitContact*)contact
 {
-  if (contact.infinit_user != nil) // User could've been favorited
+  if ([contact isKindOfClass:InfinitContactUser.class])
   {
-    if (contact.infinit_user.is_self)
+    InfinitContactUser* contact_user = (InfinitContactUser*)contact;
+    if (contact_user.infinit_user.is_self)
       self.icon_view.image = _me_icon;
-    else if (contact.infinit_user.favorite)
+    else if (contact_user.infinit_user.favorite)
       self.icon_view.image = _favorite_icon;
   }
   if ([self.contact isEqual:contact])
@@ -44,7 +45,8 @@ static UIImage* _me_icon = nil;
 
 - (void)updateAvatar
 {
-  [self.contact updateAvatar];
+  InfinitContactUser* contact_user = (InfinitContactUser*)self.contact;
+  [contact_user updateAvatar];
   self.avatar_view.image =
     [self.contact.avatar infinit_circularMaskOfSize:self.avatar_view.bounds.size];
   [self setNeedsDisplay];
