@@ -130,6 +130,18 @@
   return _can_send_sms;
 }
 
++ (BOOL)canSendWhatsApp
+{
+  static BOOL _can_send_whatsapp;
+  static dispatch_once_t _can_send_whatsapp_token = 0;
+  dispatch_once(&_can_send_whatsapp_token, ^
+  {
+    NSURL* url = [NSURL URLWithString:@"whatsapp://app"];
+    _can_send_whatsapp = [[UIApplication sharedApplication] canOpenURL:url];
+  });
+  return _can_send_whatsapp;
+}
+
 #pragma mark - OS Version
 
 + (BOOL)iOS7

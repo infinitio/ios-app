@@ -30,6 +30,7 @@ typedef NS_ENUM(NSUInteger, InfinitCPUTypes)
 + (BOOL)smallScreen;
 
 + (BOOL)canSendSMS;
++ (BOOL)canSendWhatsApp;
 
 + (BOOL)iOS7;
 
