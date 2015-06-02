@@ -111,14 +111,6 @@
     [self.navigationController.navigationController popToRootViewControllerAnimated:YES];
 }
 
-#pragma mark - UITextFieldDelegate
-
-- (IBAction)textChanged
-{
-  self.ok_button.enabled = (self.name_field.text.length &&
-                           ![self.name_field.text isEqualToString:self.old_name]);
-}
-
 #pragma mark - Button Handling
 
 - (IBAction)backTapped:(id)sender
@@ -129,11 +121,14 @@
 - (IBAction)okTapped:(id)sender
 {
   NSCharacterSet* white_space = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-  NSString* new_name =[self.name_field.text stringByTrimmingCharactersInSet:white_space];
-  [[InfinitStateManager sharedInstance] updateDeviceName:new_name
-                                                   model:nil 
-                                                      os:nil
-                                         completionBlock:nil];
+  NSString* new_name = [self.name_field.text stringByTrimmingCharactersInSet:white_space];
+  if (![new_name isEqualToString:self.old_name])
+  {
+    [[InfinitStateManager sharedInstance] updateDeviceName:new_name
+                                                     model:nil 
+                                                        os:nil
+                                           completionBlock:nil];
+  }
   [self goBack];
 }
 
