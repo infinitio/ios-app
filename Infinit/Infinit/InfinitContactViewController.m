@@ -77,6 +77,7 @@ static UIImage* _infinit_icon = nil;
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+  self.navigationController.interactivePopGestureRecognizer.enabled = NO;
   self.navigationController.interactivePopGestureRecognizer.delegate = nil;
   [super viewWillDisappear:animated];
 }
@@ -91,39 +92,41 @@ static UIImage* _infinit_icon = nil;
   self.navigationItem.title = self.contact.fullname;
   self.avatar_view.image =
     [self.contact.avatar infinit_circularMaskOfSize:self.avatar_view.bounds.size];
-  if (self.contact.infinit_user == nil)
+  if ([self.contact isKindOfClass:InfinitContactAddressBook.class])
   {
+    InfinitContactAddressBook* contact_ab = (InfinitContactAddressBook*)self.contact;
     self.icon_view.hidden = YES;
     [self setFavoriteButtonHidden:YES];
-    self.email_view.hidden = !(self.contact.emails.count > 0);
-    self.email_height.constant = self.contact.emails.count > 0 ? 55.0f : 0.0f;
+    self.email_view.hidden = !(contact_ab.emails.count > 0);
+    self.email_height.constant = contact_ab.emails.count > 0 ? 55.0f : 0.0f;
     self.phone_view.hidden =
-      !(self.contact.phone_numbers.count > 0) && [InfinitHostDevice canSendSMS];
-    self.phone_height.constant = self.contact.phone_numbers.count > 0 ? 55.0f : 0.0f;
+      !(contact_ab.phone_numbers.count > 0) && [InfinitHostDevice canSendSMS];
+    self.phone_height.constant = contact_ab.phone_numbers.count > 0 ? 55.0f : 0.0f;
     NSMutableString* email_str = [[NSMutableString alloc] init];
     NSUInteger count = 0;
-    for (NSString* email in self.contact.emails)
+    for (NSString* email in contact_ab.emails)
     {
       [email_str appendString:email];
-      if (++count < self.contact.emails.count)
+      if (++count < contact_ab.emails.count)
         [email_str appendString:@", "];
     }
     NSMutableString* phone_str = [[NSMutableString alloc] init];
     count = 0;
-    for (NSString* number in self.contact.phone_numbers)
+    for (NSString* number in contact_ab.phone_numbers)
     {
       [phone_str appendString:number];
-      if (++count < self.contact.phone_numbers.count)
+      if (++count < contact_ab.phone_numbers.count)
         [phone_str appendString:@", "];
     }
     self.email_address_label.text = email_str;
     self.phone_label.text = phone_str;
   }
-  else
+  else if ([self.contact isKindOfClass:InfinitContactUser.class])
   {
+    InfinitContactUser* contact_user = (InfinitContactUser*)self.contact;
     self.email_view.hidden = YES;
     self.phone_view.hidden = YES;
-    if (self.contact.infinit_user.favorite || self.contact.infinit_user.is_self)
+    if (contact_user.infinit_user.favorite || contact_user.infinit_user.is_self)
     {
       self.icon_view.image = _favorite_icon;
       [self setFavoriteButtonFavorite:YES];
@@ -134,7 +137,7 @@ static UIImage* _infinit_icon = nil;
       [self setFavoriteButtonFavorite:NO];
     }
     self.icon_view.hidden = NO;
-    [self setFavoriteButtonHidden:self.contact.infinit_user.is_self];
+    [self setFavoriteButtonHidden:contact_user.infinit_user.is_self];
   }
   self.name_label.text = self.contact.fullname;
 }
@@ -172,12 +175,13 @@ static UIImage* _infinit_icon = nil;
 
 - (IBAction)favoriteButtonTapped:(id)sender
 {
-  if (self.contact.infinit_user == nil)
+  InfinitContactUser* contact_user = (InfinitContactUser*)self.contact;
+  if (contact_user.infinit_user == nil)
     return;
-  if (self.contact.infinit_user.is_self)
+  if (contact_user.infinit_user.is_self)
     return;
   UIImage* new_icon;
-  if (self.contact.infinit_user.favorite)
+  if (contact_user.infinit_user.favorite)
   {
     new_icon = _infinit_icon;
     [self setFavoriteButtonFavorite:NO];
@@ -203,10 +207,10 @@ static UIImage* _infinit_icon = nil;
     if (!finished)
       self.icon_view.image = new_icon;
   }];
-  if (self.contact.infinit_user.favorite)
-    [[InfinitUserManager sharedInstance] removeFavorite:self.contact.infinit_user];
+  if (contact_user.infinit_user.favorite)
+    [[InfinitUserManager sharedInstance] removeFavorite:contact_user.infinit_user];
   else
-    [[InfinitUserManager sharedInstance] addFavorite:self.contact.infinit_user];
+    [[InfinitUserManager sharedInstance] addFavorite:contact_user.infinit_user];
 }
 
 @end
