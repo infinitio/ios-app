@@ -84,6 +84,20 @@
 
 #pragma mark - NSObject
 
+- (instancetype)copyWithZone:(NSZone*)zone
+{
+  InfinitContactUser* res = [[[self class] allocWithZone:zone] init];
+  res->_infinit_user = self.infinit_user;
+  res->_device = self.device;
+  return res;
+}
+
+- (NSString*)description
+{
+  return [NSString stringWithFormat:@"<%@> infinit:%@\rdevice: %@",
+          self.fullname, self.infinit_user, self.device];
+}
+
 - (BOOL)isEqual:(id)object
 {
   if (![object isKindOfClass:self.class])
@@ -102,12 +116,6 @@
     }
   }
   return NO;
-}
-
-- (NSString*)description
-{
-  return [NSString stringWithFormat:@"<%@> infinit:%@\rdevice: %@",
-          self.fullname, self.infinit_user, self.device];
 }
 
 @end
