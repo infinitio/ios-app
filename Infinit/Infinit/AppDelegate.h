@@ -10,7 +10,10 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
+@property (nonatomic, readwrite) UIViewController* root_controller;
 @property (nonatomic, strong) UIWindow* window;
+
+- (void)handleShakeEvent:(UIEvent*)event;
 
 @end
 

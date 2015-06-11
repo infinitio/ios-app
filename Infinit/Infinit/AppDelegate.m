@@ -13,6 +13,7 @@
 #import "InfinitConstants.h"
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitFacebookManager.h"
+#import "InfinitFeedbackManager.h"
 #import "InfinitFilesOnboardingManager.h"
 #import "InfinitLocalNotificationManager.h"
 #import "InfinitMetricsManager.h"
@@ -53,8 +54,6 @@
 @property (nonatomic, readonly) NSString* main_controller_id;
 @property (nonatomic, readonly) NSString* welcome_controller_id;
 @property (nonatomic, readonly) NSString* welcome_onboarding_id;
-
-@property (nonatomic, readwrite) UIViewController* root_controller;
 
 @end
 
@@ -559,6 +558,13 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
   {
     [InfinitMetricsManager sendMetric:InfinitUIEventAttribution method:InfinitUIMethodFail];
   }
+}
+
+#pragma mark - Shake Handling
+
+- (void)handleShakeEvent:(UIEvent*)event
+{
+  [[InfinitFeedbackManager sharedInstance] gotShake:event];
 }
 
 @end
