@@ -9,15 +9,22 @@
 #import "InfinitContactsViewController.h"
 
 #import "InfinitAccessContactsView.h"
+#import "InfinitConstants.h"
 #import "InfinitContactCell.h"
 #import "InfinitContactManager.h"
 #import "InfinitContactViewController.h"
 #import "InfinitContactImportCell.h"
+#import "InfinitFacebookManager.h"
 #import "InfinitHostDevice.h"
 #import "InfinitImportOverlayView.h"
 #import "InfinitMetricsManager.h"
 
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+
+#import <Gap/InfinitAccountsManager.h>
 #import <Gap/InfinitColor.h>
+#import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitUserManager.h>
 
 @import AddressBook;
@@ -33,6 +40,7 @@ typedef NS_ENUM(NSUInteger, InfinitContactsSection)
                                              UITableViewDataSource,
                                              UITableViewDelegate>
 
+@property (nonatomic, weak) IBOutlet UIBarButtonItem* add_contacts_button;
 @property (nonatomic, weak) IBOutlet UISearchBar* search_bar;
 @property (nonatomic, weak) IBOutlet UITableView* table_view;
 
@@ -113,6 +121,32 @@ static NSString* _import_cell_id = @"contact_import_cell";
                                            selector:@selector(userAvatarFetched:)
                                                name:INFINIT_USER_AVATAR_NOTIFICATION
                                              object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(newUserAdded:)
+                                               name:INFINIT_NEW_USER_NOTIFICATION
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(newUserAdded:)
+                                               name:INFINIT_CONTACT_JOINED_NOTIFICATION
+                                             object:nil];
+  [self setAddContactsButtonHidden:[InfinitAccountsManager sharedInstance].have_facebook];
+}
+
+- (void)setAddContactsButtonHidden:(BOOL)hidden
+{
+  NSArray* toolbar_items = self.navigationItem.rightBarButtonItems;
+  if (hidden && [toolbar_items containsObject:self.add_contacts_button])
+  {
+    NSMutableArray* res = [toolbar_items mutableCopy];
+    [res removeObject:self.add_contacts_button];
+    self.navigationItem.rightBarButtonItems = res;
+  }
+  else if (!hidden && ![toolbar_items containsObject:self.add_contacts_button])
+  {
+    NSMutableArray* res = [toolbar_items mutableCopy];
+    [res addObject:self.add_contacts_button];
+    self.navigationItem.rightBarButtonItems = res;
+  }
 }
 
 - (void)refreshContents
@@ -157,21 +191,28 @@ static NSString* _import_cell_id = @"contact_import_cell";
   [super viewWillDisappear:animated];
 }
 
-- (void)fetchSwaggers
+- (NSMutableArray*)swaggers
 {
+  NSMutableArray* res = [NSMutableArray array];
   InfinitUserManager* manager = [InfinitUserManager sharedInstance];
-  self.me_contact = [InfinitContactUser contactWithInfinitUser:[manager me]];
-  self.all_swaggers = [NSMutableArray array];
   for (InfinitUser* user in [manager favorites])
   {
     if (!user.deleted)
-      [self.all_swaggers addObject:[InfinitContactUser contactWithInfinitUser:user]];
+      [res addObject:[InfinitContactUser contactWithInfinitUser:user]];
   }
   for (InfinitUser* user in [manager alphabetical_swaggers])
   {
     if (!user.deleted)
-      [self.all_swaggers addObject:[InfinitContactUser contactWithInfinitUser:user]];
+      [res addObject:[InfinitContactUser contactWithInfinitUser:user]];
   }
+  return res;
+}
+
+- (void)fetchSwaggers
+{
+  InfinitUserManager* manager = [InfinitUserManager sharedInstance];
+  self.me_contact = [InfinitContactUser contactWithInfinitUser:[manager me]];
+  self.all_swaggers = [self swaggers];
   self.swagger_results = [self.all_swaggers mutableCopy];
   [self.table_view reloadData];
 }
@@ -221,9 +262,9 @@ static NSString* _import_cell_id = @"contact_import_cell";
   {
     UINib* overlay_nib = [UINib nibWithNibName:@"InfinitImportOverlayView" bundle:nil];
     self.import_overlay = [[overlay_nib instantiateWithOwner:self options:nil] firstObject];
-    [self.import_overlay.phone_contacts_button addTarget:self
-                                                  action:@selector(accessAddressBook:)
-                                        forControlEvents:UIControlEventTouchUpInside];
+    [self.import_overlay.facebook_button addTarget:self
+                                            action:@selector(addFacebookContacts:)
+                                  forControlEvents:UIControlEventTouchUpInside];
     [self.import_overlay.back_button addTarget:self
                                         action:@selector(cancelOverlayFromButton:)
                               forControlEvents:UIControlEventTouchUpInside];
@@ -237,13 +278,9 @@ static NSString* _import_cell_id = @"contact_import_cell";
   view.alpha = 0.0f;
   view.frame = [UIScreen mainScreen].bounds;
   [[UIApplication sharedApplication].keyWindow addSubview:view];
-  [UIView animateWithDuration:0.5f
-                        delay:0.0f
-                      options:UIViewAnimationOptionCurveEaseInOut
+  [UIView animateWithDuration:0.3f
                    animations:^
    {
-     [[UIApplication sharedApplication] setStatusBarHidden:YES
-                                             withAnimation:UIStatusBarAnimationFade];
      view.alpha = 1.0f;
    } completion:^(BOOL finished)
    {
@@ -267,21 +304,80 @@ static NSString* _import_cell_id = @"contact_import_cell";
   self.contacts_overlay.back_button.hidden = YES;
   self.contacts_overlay.contacts_image.hidden = YES;
   ABAddressBookRef address_book = ABAddressBookCreateWithOptions(NULL, NULL);
+  __weak InfinitContactsViewController* weak_self = self;
   ABAddressBookRequestAccessWithCompletion(address_book, ^(bool granted, CFErrorRef error)
    {
      if (granted)
      {
-       [self performSelectorOnMainThread:@selector(fetchAddressBook) withObject:nil waitUntilDone:NO];
+       dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+       {
+         [weak_self fetchAddressBook];
+       });
        [InfinitMetricsManager sendMetric:InfinitUIEventAccessContacts method:InfinitUIMethodYes];
      }
      else
      {
        [InfinitMetricsManager sendMetric:InfinitUIEventAccessContacts method:InfinitUIMethodNo];
      }
-     [self performSelectorOnMainThread:@selector(cancelOverlayFromButton:)
-                            withObject:sender
-                         waitUntilDone:NO];
+     dispatch_async(dispatch_get_main_queue(), ^
+     {
+       [weak_self cancelOverlayFromButton:sender];
+     });
    });
+}
+
+- (void)showFacebookErrorWithTitle:(NSString*)title
+                           message:(NSString*)message
+{
+  dispatch_async(dispatch_get_main_queue(), ^
+  {
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
+                                                    message:message
+                                                   delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+  });
+}
+
+- (void)addFacebookContacts:(UIButton*)button
+{
+  [self setAddContactsButtonHidden:YES];
+  __weak InfinitContactsViewController* weak_self = self;
+  InfinitFacebookManager* manager = [InfinitFacebookManager sharedInstance];
+  [manager.login_manager logInWithReadPermissions:kInfinitFacebookReadPermissions
+                                          handler:^(FBSDKLoginManagerLoginResult* result,
+                                                    NSError* error)
+  {
+    InfinitContactsViewController* strong_self = weak_self;
+    if (!error && !result.isCancelled)
+    {
+      if (![[FBSDKAccessToken currentAccessToken].permissions containsObject:@"user_friends"])
+      {
+        NSString* title = NSLocalizedString(@"Unable to get friends from Facebook", nil);
+        NSString* message =
+          NSLocalizedString(@"You need to grant permission to access your friends to find them on Infinit.", nil);
+        [strong_self showFacebookErrorWithTitle:title message:message];
+        return;
+      }
+      NSString* token = [FBSDKAccessToken currentAccessToken].tokenString;
+      [[InfinitStateManager sharedInstance] addFacebookAccount:token];
+      return;
+    }
+    dispatch_async(dispatch_get_main_queue(), ^
+    {
+      InfinitContactsViewController* strong_self = weak_self;
+      [strong_self setAddContactsButtonHidden:NO];
+      NSString* title = NSLocalizedString(@"Unable to connect with Facebook", nil);
+      NSString* message = nil;
+      if (error)
+        message = error.localizedDescription;
+      else if (result.isCancelled)
+        message = NSLocalizedString(@"Facebook login cancelled.", nil);
+      [strong_self showFacebookErrorWithTitle:title message:message];
+    });
+  }];
+  [self cancelOverlayFromButton:button];
 }
 
 - (void)cancelOverlayFromButton:(UIButton*)button
@@ -293,11 +389,7 @@ static NSString* _import_cell_id = @"contact_import_cell";
 {
   if (view == nil)
     return;
-  [[UIApplication sharedApplication] setStatusBarHidden:NO
-                                          withAnimation:UIStatusBarAnimationFade];
-  [UIView animateWithDuration:0.5f
-                        delay:0.0f
-                      options:UIViewAnimationOptionCurveEaseInOut
+  [UIView animateWithDuration:0.3f
                    animations:^
    {
      view.alpha = 0.0f;
@@ -572,6 +664,32 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 - (void)importPhoneContactsTapped:(id)sender
 {
   [self showAddressBookOverlay];
+}
+
+- (IBAction)addContactsTapped:(id)sender
+{
+  [self showImportOverlay];
+}
+
+#pragma mark - User Added
+
+- (void)newUserAdded:(NSNotification*)notification
+{
+  NSNumber* id_ = notification.userInfo[kInfinitUserId];
+  if (id_.unsignedIntegerValue == 0)
+    return;
+  InfinitContactUser* contact =
+  [InfinitContactUser contactWithInfinitUser:[InfinitUserManager userWithId:id_]];
+  self.all_swaggers = [self swaggers];
+  if (self.last_search.length)
+    return;
+  [self.table_view beginUpdates];
+  [self.swagger_results insertObject:contact atIndex:0];
+  NSIndexPath* index =
+    [NSIndexPath indexPathForRow:0 inSection:InfinitContactsSectionSwaggers];
+  [self.table_view insertRowsAtIndexPaths:@[index]
+                         withRowAnimation:UITableViewRowAnimationAutomatic];
+  [self.table_view endUpdates];
 }
 
 #pragma mark - User Avatar
