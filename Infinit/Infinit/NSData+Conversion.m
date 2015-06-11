@@ -14,7 +14,7 @@
 {
   const unsigned char* buffer = (const unsigned char*)self.bytes;
   if (!buffer)
-    return @"";
+    return nil;
 
   NSMutableString* res = [[NSMutableString alloc] init];
   for (int i = 0; i < self.length; ++i)
