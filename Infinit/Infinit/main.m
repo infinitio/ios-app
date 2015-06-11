@@ -7,12 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+
 #import "AppDelegate.h"
+#import "InfinitApplication.h"
 
 int main(int argc, char* argv[])
 {
   @autoreleasepool
   {
-    return UIApplicationMain(argc, argv, nil, NSStringFromClass(AppDelegate.class));
+    NSString* app_name = NSStringFromClass(InfinitApplication.class);
+    NSString* delegate_name = NSStringFromClass(AppDelegate.class);
+    return UIApplicationMain(argc, argv, app_name, delegate_name);
   }
 }
