@@ -10,9 +10,7 @@
 
 @interface InfinitImportOverlayView : UIView
 
-@property (nonatomic, weak) IBOutlet UIButton* phone_contacts_button;
 @property (nonatomic, weak) IBOutlet UIButton* facebook_button;
-@property (nonatomic, weak) IBOutlet UIButton* infinit_button;
 @property (nonatomic, weak) IBOutlet UIButton* back_button;
 
 @end
