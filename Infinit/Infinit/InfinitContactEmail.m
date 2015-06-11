@@ -29,6 +29,18 @@
 
 #pragma mark - NSObject
 
+- (instancetype)copyWithZone:(NSZone*)zone
+{
+  InfinitContactEmail* res = [[[self class] allocWithZone:zone] init];
+  res->_email = [self.email copy];
+  return res;
+}
+
+- (NSString*)description
+{
+  return [NSString stringWithFormat:@"<%@> email: %@", self.fullname, self.email];
+}
+
 - (BOOL)isEqual:(id)object
 {
   if (![object isKindOfClass:self.class])
@@ -37,11 +49,6 @@
   if ([self.email isEqualToString:other.email])
     return YES;
   return NO;
-}
-
-- (NSString*)description
-{
-  return [NSString stringWithFormat:@"<%@> email: %@", self.fullname, self.email];
 }
 
 #pragma mark - Helpers
