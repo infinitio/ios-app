@@ -21,11 +21,9 @@
 
 @end
 
+static NSString* _feedback_placeholder = nil;
+
 @implementation InfinitHomeFeedbackViewController
-{
-@private
-  NSString* _feedback_placeholder;
-}
 
 #pragma mark - Init
 
@@ -39,7 +37,8 @@
                                                                                         blue:73]};
   [self.navigationBar setTitleTextAttributes:nav_bar_attrs];
   self.text_view.textContainerInset = UIEdgeInsetsMake(15.0f, 15.0f, 15.0f, 15.0f);
-  _feedback_placeholder = NSLocalizedString(@"Write your feedback here...", nil);
+  if (_feedback_placeholder == nil)
+    _feedback_placeholder = NSLocalizedString(@"Write your feedback here...", nil);
   self.text_view.text = _feedback_placeholder;
   UITapGestureRecognizer* tap =
     [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
@@ -98,6 +97,8 @@
 {
   [self dismissKeyboard];
   [self dismissViewControllerAnimated:YES completion:nil];
+  if (self.delegate)
+    [self.delegate feedbackViewControllerDidHide:self];
 }
 
 - (IBAction)sendButtonTapped:(id)sender
@@ -116,6 +117,8 @@
   [self dismissKeyboard];
   [self dismissViewControllerAnimated:YES completion:nil];
   self.text_view.text = _feedback_placeholder;
+  if (self.delegate)
+    [self.delegate feedbackViewControllerDidHide:self];
 }
 
 - (void)alertView:(UIAlertView*)alertView
