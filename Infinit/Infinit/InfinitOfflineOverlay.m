@@ -36,6 +36,8 @@
 {
   self.files_button.layer.cornerRadius = self.files_button.bounds.size.height / 2.0f;
   self.files_button.hidden = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
+  self.files_button.titleLabel.adjustsFontSizeToFitWidth = YES;
+  self.files_button.titleLabel.minimumScaleFactor = 0.5f;
 }
 
 - (IBAction)filesTapped:(id)sender
