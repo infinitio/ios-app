@@ -10,9 +10,11 @@
 
 #import "InfinitAccessContactsView.h"
 #import "InfinitApplicationSettings.h"
+#import "InfinitConstants.h"
 #import "InfinitContact.h"
 #import "InfinitContactImportCell.h"
 #import "InfinitContactManager.h"
+#import "InfinitFacebookManager.h"
 #import "InfinitHostDevice.h"
 #import "InfinitImportOverlayView.h"
 #import "InfinitSendContactCell.h"
@@ -27,10 +29,15 @@
 #import "InfinitTabBarController.h"
 #import "InfinitUploadThumbnailManager.h"
 
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+
+#import <Gap/InfinitAccountsManager.h>
 #import <Gap/InfinitColor.h>
 #import <Gap/InfinitDeviceManager.h>
 #import <Gap/InfinitFileSystemError.h>
 #import <Gap/InfinitPeerTransactionManager.h>
+#import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitTemporaryFileManager.h>
 #import <Gap/InfinitUserManager.h>
 #import <Gap/NSString+email.h>
@@ -57,6 +64,7 @@ typedef NS_ENUM(NSUInteger, InfinitSendRecipientsSection)
                                                VENTokenFieldDelegate,
                                                VENTokenFieldDataSource>
 
+@property (nonatomic, weak) IBOutlet UIBarButtonItem* add_contacts_button;
 @property (nonatomic, weak) IBOutlet VENTokenField* search_field;
 @property (nonatomic, weak) IBOutlet UITableView* table_view;
 @property (nonatomic, weak) IBOutlet UIButton* send_button;
@@ -183,6 +191,14 @@ static NSUInteger _max_recipients = 10;
                                            selector:@selector(userAvatarFetched:)
                                                name:INFINIT_USER_AVATAR_NOTIFICATION
                                              object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(newUserAdded:)
+                                               name:INFINIT_NEW_USER_NOTIFICATION
+                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(newUserAdded:)
+                                               name:INFINIT_CONTACT_JOINED_NOTIFICATION
+                                             object:nil];
   _managed_files_id = [[InfinitTemporaryFileManager sharedInstance] createManagedFiles];
   if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
   {
@@ -195,6 +211,24 @@ static NSUInteger _max_recipients = 10;
   else
   {
     self.preloading_contacts = NO;
+  }
+  [self setAddContactsButtonHidden:[InfinitAccountsManager sharedInstance].have_facebook];
+}
+
+- (void)setAddContactsButtonHidden:(BOOL)hidden
+{
+  NSArray* toolbar_items = self.navigationItem.rightBarButtonItems;
+  if (hidden && [toolbar_items containsObject:self.add_contacts_button])
+  {
+    NSMutableArray* res = [toolbar_items mutableCopy];
+    [res removeObject:self.add_contacts_button];
+    self.navigationItem.rightBarButtonItems = res;
+  }
+  else if (!hidden && ![toolbar_items containsObject:self.add_contacts_button])
+  {
+    NSMutableArray* res = [toolbar_items mutableCopy];
+    [res addObject:self.add_contacts_button];
+    self.navigationItem.rightBarButtonItems = res;
   }
 }
 
@@ -310,20 +344,26 @@ static NSUInteger _max_recipients = 10;
   self.device_results = [self.all_devices copy];
 }
 
-- (void)fetchSwaggers
+- (NSMutableArray*)swaggers
 {
+  NSMutableArray* res = [NSMutableArray array];
   InfinitUserManager* manager = [InfinitUserManager sharedInstance];
-  self.all_swaggers = [NSMutableArray array];
   for (InfinitUser* user in [manager favorites])
   {
     if (!user.deleted)
-      [self.all_swaggers addObject:[InfinitContactUser contactWithInfinitUser:user]];
+      [res addObject:[InfinitContactUser contactWithInfinitUser:user]];
   }
   for (InfinitUser* user in [manager time_ordered_swaggers])
   {
     if (!user.deleted)
-      [self.all_swaggers addObject:[InfinitContactUser contactWithInfinitUser:user]];
+      [res addObject:[InfinitContactUser contactWithInfinitUser:user]];
   }
+  return res;
+}
+
+- (void)fetchSwaggers
+{
+  self.all_swaggers = [self swaggers];
   self.swagger_results = [self.all_swaggers copy];
   [self.table_view reloadData];
 }
@@ -370,6 +410,22 @@ static NSUInteger _max_recipients = 10;
 
 #pragma mark - Overlays
 
+- (void)showImportOverlay
+{
+  if (self.import_overlay == nil)
+  {
+    UINib* overlay_nib = [UINib nibWithNibName:@"InfinitImportOverlayView" bundle:nil];
+    self.import_overlay = [[overlay_nib instantiateWithOwner:self options:nil] firstObject];
+    [self.import_overlay.facebook_button addTarget:self
+                                            action:@selector(addFacebookContacts:)
+                                  forControlEvents:UIControlEventTouchUpInside];
+    [self.import_overlay.back_button addTarget:self
+                                        action:@selector(cancelOverlayFromButton:)
+                              forControlEvents:UIControlEventTouchUpInside];
+  }
+  [self showOverlayView:self.import_overlay];
+}
+
 - (void)showAddressBookOverlay
 {
   UINib* overlay_nib = [UINib nibWithNibName:NSStringFromClass(InfinitAccessContactsView.class)
@@ -383,23 +439,6 @@ static NSUInteger _max_recipients = 10;
                               forControlEvents:UIControlEventTouchUpInside];
   self.contacts_overlay.contacts_image.hidden = NO;
   [self showOverlayView:self.contacts_overlay];
-}
-
-- (void)showImportOverlay
-{
-  if (self.import_overlay == nil)
-  {
-    UINib* overlay_nib = [UINib nibWithNibName:NSStringFromClass(InfinitImportOverlayView.class)
-                                        bundle:nil];
-    self.import_overlay = [[overlay_nib instantiateWithOwner:self options:nil] firstObject];
-    [self.import_overlay.phone_contacts_button addTarget:self
-                                                  action:@selector(accessAddressBook:)
-                                        forControlEvents:UIControlEventTouchUpInside];
-    [self.import_overlay.back_button addTarget:self
-                                        action:@selector(cancelOverlayFromButton:)
-                              forControlEvents:UIControlEventTouchUpInside];
-  }
-  [self showOverlayView:self.import_overlay];
 }
 
 - (void)showSendToSelfOverlay
@@ -422,9 +461,7 @@ static NSUInteger _max_recipients = 10;
   view.alpha = 0.0f;
   view.frame = [[UIScreen mainScreen] applicationFrame];
   [[UIApplication sharedApplication].keyWindow addSubview:view];
-  [UIView animateWithDuration:0.5f
-                        delay:0.0f
-                      options:UIViewAnimationOptionCurveEaseInOut
+  [UIView animateWithDuration:0.3f
                    animations:^
    {
      view.alpha = 1.0f;
@@ -481,9 +518,7 @@ static NSUInteger _max_recipients = 10;
 {
   if (view == nil)
     return;
-  [UIView animateWithDuration:0.5f
-                        delay:0.0f
-                      options:UIViewAnimationOptionCurveEaseInOut
+  [UIView animateWithDuration:0.3f
                    animations:^
   {
     view.alpha = 0.0f;
@@ -495,6 +530,65 @@ static NSUInteger _max_recipients = 10;
 }
 
 #pragma mark - Button Handling
+
+- (void)showFacebookErrorWithTitle:(NSString*)title
+                           message:(NSString*)message
+{
+  dispatch_async(dispatch_get_main_queue(), ^
+  {
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
+                                                    message:message
+                                                   delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+  });
+}
+
+- (void)addFacebookContacts:(UIButton*)button
+{
+  [self setAddContactsButtonHidden:YES];
+  __weak InfinitSendRecipientsController* weak_self = self;
+  InfinitFacebookManager* manager = [InfinitFacebookManager sharedInstance];
+  [manager.login_manager logInWithReadPermissions:kInfinitFacebookReadPermissions
+                                          handler:^(FBSDKLoginManagerLoginResult* result,
+                                                    NSError* error)
+  {
+    InfinitSendRecipientsController* strong_self = weak_self;
+    if (!error && !result.isCancelled)
+    {
+      if (![[FBSDKAccessToken currentAccessToken].permissions containsObject:@"user_friends"])
+      {
+        NSString* title = NSLocalizedString(@"Unable to get friends from Facebook", nil);
+        NSString* message =
+        NSLocalizedString(@"You need to grant permission to access your friends to find them on Infinit.", nil);
+        [strong_self showFacebookErrorWithTitle:title message:message];
+        return;
+      }
+      NSString* token = [FBSDKAccessToken currentAccessToken].tokenString;
+      [[InfinitStateManager sharedInstance] addFacebookAccount:token];
+      return;
+    }
+    dispatch_async(dispatch_get_main_queue(), ^
+    {
+      InfinitSendRecipientsController* strong_self = weak_self;
+      [strong_self setAddContactsButtonHidden:NO];
+      NSString* title = NSLocalizedString(@"Unable to connect with Facebook", nil);
+      NSString* message = nil;
+      if (error)
+        message = error.localizedDescription;
+      else if (result.isCancelled)
+        message = NSLocalizedString(@"Facebook login cancelled.", nil);
+      [strong_self showFacebookErrorWithTitle:title message:message];
+    });
+  }];
+  [self cancelOverlayFromButton:button];
+}
+
+- (IBAction)addContactsTapped:(id)sender
+{
+  [self showImportOverlay];
+}
 
 - (IBAction)backButtonTapped:(id)sender
 {
@@ -1294,7 +1388,6 @@ didDeleteTokenAtIndex:(NSUInteger)index
 
 #pragma mark - Search
 
-
 - (void)reloadSearchResults
 {
   self.email_entered = NO;
@@ -1393,6 +1486,27 @@ didDeleteTokenAtIndex:(NSUInteger)index
   }
 }
 
+#pragma mark - New User
+
+- (void)newUserAdded:(NSNotification*)notification
+{
+  NSNumber* id_ = notification.userInfo[kInfinitUserId];
+  if (id_.unsignedIntegerValue == 0)
+    return;
+  InfinitContactUser* contact =
+    [InfinitContactUser contactWithInfinitUser:[InfinitUserManager userWithId:id_]];
+  self.all_swaggers = [self swaggers];
+  if (self.last_search.length)
+    return;
+  [self.table_view beginUpdates];
+  [self.swagger_results insertObject:contact atIndex:0];
+  NSIndexPath* index =
+    [NSIndexPath indexPathForRow:0 inSection:InfinitSendRecipientsSectionSwaggers];
+  [self.table_view insertRowsAtIndexPaths:@[index]
+                         withRowAnimation:UITableViewRowAnimationAutomatic];
+  [self.table_view endUpdates];
+}
+
 #pragma mark - User Avatar
 
 - (void)userAvatarFetched:(NSNotification*)notification
@@ -1402,22 +1516,29 @@ didDeleteTokenAtIndex:(NSUInteger)index
   {
     NSIndexPath* path = [NSIndexPath indexPathForRow:0 inSection:InfinitSendRecipientsSectionSelf];
     InfinitSendUserCell* cell = (InfinitSendUserCell*)[self.table_view cellForRowAtIndexPath:path];
-    [cell performSelectorOnMainThread:@selector(updateAvatar) withObject:nil waitUntilDone:NO];
+    dispatch_async(dispatch_get_main_queue(), ^
+    {
+      [cell updateAvatar];
+    });
     return;
   }
-  NSUInteger row = 0;
-  for (InfinitContactUser* contact in self.swagger_results)
+  [self.swagger_results enumerateObjectsUsingBlock:^(InfinitContactUser* contact,
+                                                     NSUInteger idx,
+                                                     BOOL* stop)
   {
     if ([contact.infinit_user.id_ isEqualToNumber:updated_id])
     {
-      NSIndexPath* path = [NSIndexPath indexPathForRow:row
+      NSIndexPath* path = [NSIndexPath indexPathForRow:idx
                                              inSection:InfinitSendRecipientsSectionSwaggers];
-      InfinitSendUserCell* cell = (InfinitSendUserCell*)[self.table_view cellForRowAtIndexPath:path];
-      [cell performSelectorOnMainThread:@selector(updateAvatar) withObject:nil waitUntilDone:NO];
+      InfinitSendUserCell* cell =
+        (InfinitSendUserCell*)[self.table_view cellForRowAtIndexPath:path];
+      dispatch_async(dispatch_get_main_queue(), ^
+      {
+        [cell updateAvatar];
+      });
       return;
     }
-    row++;
-  }
+  }];
 }
 
 #pragma mark - Helpers
