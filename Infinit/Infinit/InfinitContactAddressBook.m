@@ -20,6 +20,33 @@
 
 - (instancetype)initWithABRecord:(ABRecordRef)record
 {
+  ABMultiValueRef email_property = ABRecordCopyValue(record, kABPersonEmailProperty);
+  NSArray* temp_emails = (__bridge_transfer NSArray*)ABMultiValueCopyArrayOfAllValues(email_property);
+  CFRelease(email_property);
+  NSMutableArray* res_emails = [NSMutableArray array];
+  for (NSString* email in temp_emails)
+  {
+    if (email.infinit_isEmail)
+      [res_emails addObject:email];
+  }
+  ABMultiValueRef phone_property = ABRecordCopyValue(record, kABPersonPhoneProperty);
+  NSArray* temp_numbers = (__bridge_transfer NSArray*)ABMultiValueCopyArrayOfAllValues(phone_property);
+  CFRelease(phone_property);
+  NSMutableArray* res_numbers = [NSMutableArray array];
+  for (NSString* number in temp_numbers)
+  {
+    if (number.infinit_isPhoneNumber)
+    {
+      [res_numbers addObject:number];
+    }
+    else if ([number rangeOfString:@"00"].location == 0)
+    {
+      NSString* new_number = [number stringByReplacingCharactersInRange:NSMakeRange(0, 2)
+                                                             withString:@"+"];
+      if (new_number.infinit_isPhoneNumber)
+        [res_numbers addObject:new_number];
+    }
+  }
   NSString* first_name =
     (__bridge_transfer NSString*)ABRecordCopyValue(record, kABPersonFirstNameProperty);
   NSString* surname =
@@ -37,10 +64,10 @@
   }
   else
   {
-    if (self.emails.count > 0)
-      [name_str appendString:self.emails[0]];
-    else if (self.phone_numbers.count > 0)
-      [name_str appendString:self.phone_numbers[0]];
+    if (res_emails.count > 0)
+      [name_str appendString:res_emails[0]];
+    else if (res_numbers.count > 0)
+      [name_str appendString:res_numbers[0]];
     else
       [name_str appendString:NSLocalizedString(@"Unknown", nil)];
   }
@@ -53,36 +80,8 @@
   if (self = [super initWithAvatar:avatar firstName:first_name fullname:name_str])
   {
     _address_book_id = ABRecordGetRecordID(record);
-
-    ABMultiValueRef email_property = ABRecordCopyValue(record, kABPersonEmailProperty);
-    _emails = (__bridge_transfer NSArray*)ABMultiValueCopyArrayOfAllValues(email_property);
-    CFRelease(email_property);
-    NSMutableArray* temp_emails = [NSMutableArray array];
-    for (NSString* email in self.emails)
-    {
-      if (email.infinit_isEmail)
-        [temp_emails addObject:email];
-    }
-    _emails = [temp_emails copy];
-    ABMultiValueRef phone_property = ABRecordCopyValue(record, kABPersonPhoneProperty);
-    _phone_numbers = (__bridge_transfer NSArray*)ABMultiValueCopyArrayOfAllValues(phone_property);
-    CFRelease(phone_property);
-    NSMutableArray* temp_numbers = [NSMutableArray array];
-    for (NSString* number in self.phone_numbers)
-    {
-      if (number.infinit_isPhoneNumber)
-      {
-        [temp_numbers addObject:number];
-      }
-      else if ([number rangeOfString:@"00"].location == 0)
-      {
-        NSString* new_number = [number stringByReplacingCharactersInRange:NSMakeRange(0, 2)
-                                                               withString:@"+"];
-        if (new_number.infinit_isPhoneNumber)
-          [temp_numbers addObject:new_number];
-      }
-    }
-    _phone_numbers = [temp_numbers copy];
+    _emails = [res_emails copy];
+    _phone_numbers = [res_numbers copy];
     if (self.emails.count == 0 && self.phone_numbers.count == 0)
       return nil;
 
@@ -126,6 +125,23 @@
 
 #pragma mark - NSObject
 
+- (instancetype)copyWithZone:(NSZone*)zone
+{
+  InfinitContactAddressBook* res = [[[self class] allocWithZone:zone] init];
+  res->_address_book_id = self.address_book_id;
+  res->_emails = [self.emails copy];
+  res->_phone_numbers = [self.phone_numbers copy];
+  res->_selected_email_index = self.selected_email_index;
+  res->_selected_phone_index = self.selected_phone_index;
+  return res;
+}
+
+- (NSString*)description
+{
+  return [NSString stringWithFormat:@"<%@> emails: %@\rnumbers: %@",
+          self.fullname, self.emails, self.phone_numbers];
+}
+
 - (BOOL)isEqual:(id)object
 {
   if (![object isKindOfClass:self.class])
@@ -137,12 +153,6 @@
       [self.phone_numbers isEqualToArray:other.phone_numbers])
     return YES;
   return NO;
-}
-
-- (NSString*)description
-{
-  return [NSString stringWithFormat:@"<%@> emails: %@\rnumbers: %@",
-          self.fullname, self.emails, self.phone_numbers];
 }
 
 #pragma mark - Helpers
