@@ -13,7 +13,11 @@
 #import "InfinitTabBarController.h"
 
 #import <Gap/InfinitColor.h>
+#import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitUserManager.h>
+
+#import <Gap/NSString+email.h>
+#import <Gap/NSString+PhoneNumber.h>
 
 #import "UIImage+Rounded.h"
 
@@ -25,7 +29,8 @@
 @property (nonatomic, weak) IBOutlet UIButton* send_invite_button;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* send_center_constraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* send_size_constraint;
-@property (nonatomic, weak) IBOutlet UIButton* favorite_button;
+@property (nonatomic, weak) IBOutlet UIButton* left_button;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* left_size_constraint;
 @property (nonatomic, weak) IBOutlet UIView* email_view;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* email_height;
 @property (nonatomic, weak) IBOutlet UILabel* email_address_label;
@@ -37,8 +42,14 @@
 
 @end
 
-static UIImage* _favorite_icon = nil;
-static UIImage* _infinit_icon = nil;
+static UIImage* _avatar_favorite_icon = nil;
+static UIImage* _avatar_infinit_icon = nil;
+static UIImage* _button_favorite_icon = nil;
+static UIImage* _button_invite_icon = nil;
+
+static NSAttributedString* _invite_title = nil;
+static NSAttributedString* _favorite_title = nil;
+static NSAttributedString* _unfavorite_title = nil;
 
 @implementation InfinitContactViewController
 
@@ -46,26 +57,47 @@ static UIImage* _infinit_icon = nil;
 
 - (void)viewDidLoad
 {
-  if (_favorite_icon == nil)
-    _favorite_icon = [UIImage imageNamed:@"icon-badge-favorite-big"];
-  if (_infinit_icon == nil)
-    _infinit_icon = [UIImage imageNamed:@"icon-badge-infinit-big"];
+  if (_avatar_favorite_icon == nil)
+    _avatar_favorite_icon = [UIImage imageNamed:@"icon-badge-favorite-big"];
+  if (_avatar_infinit_icon == nil)
+    _avatar_infinit_icon = [UIImage imageNamed:@"icon-badge-infinit-big"];
   [super viewDidLoad];
 
   self.send_invite_button.layer.cornerRadius = self.send_invite_button.bounds.size.height / 2.0f;
-  self.favorite_button.layer.cornerRadius = self.favorite_button.bounds.size.height / 2.0f;
-  self.favorite_button.imageEdgeInsets = UIEdgeInsetsMake(0.0f, -8.0f, 0.0f, 0.0f);
-  self.favorite_button.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -2.0f);
+  self.left_button.layer.cornerRadius = self.left_button.bounds.size.height / 2.0f;
+  self.left_button.imageEdgeInsets = UIEdgeInsetsMake(0.0f, -8.0f, 0.0f, 0.0f);
+  self.left_button.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -2.0f);
   self.send_invite_button.imageEdgeInsets = UIEdgeInsetsMake(3.0f, -6.0f, 3.0f, 0.0f);
   self.send_invite_button.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -5.0f);
 
   self.navigationController.interactivePopGestureRecognizer.enabled = YES;
   self.navigationController.interactivePopGestureRecognizer.delegate = self;
 
-  self.favorite_button.titleLabel.adjustsFontSizeToFitWidth = YES;
-  self.favorite_button.titleLabel.minimumScaleFactor = 0.5f;
+  self.left_button.titleLabel.adjustsFontSizeToFitWidth = YES;
+  self.left_button.titleLabel.minimumScaleFactor = 0.25f;
   self.send_invite_button.titleLabel.adjustsFontSizeToFitWidth = YES;
-  self.send_invite_button.titleLabel.minimumScaleFactor = 0.5f;
+  self.send_invite_button.titleLabel.minimumScaleFactor = 0.25f;
+  if (_invite_title == nil)
+  {
+    UIFont* font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14.0f];
+    NSMutableParagraphStyle* para = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    para.alignment = NSTextAlignmentCenter;
+    NSDictionary* favorite_attrs =
+      @{NSFontAttributeName: font,
+        NSForegroundColorAttributeName: [UIColor whiteColor],
+        NSParagraphStyleAttributeName: para};
+    _favorite_title = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"FAVORITE", nil)
+                                                      attributes:favorite_attrs];
+    _unfavorite_title =
+      [[NSAttributedString alloc] initWithString:NSLocalizedString(@"UNFAVORITE",  nil)
+                                      attributes:favorite_attrs];
+    NSDictionary* invite_attrs =
+      @{NSFontAttributeName: font,
+        NSForegroundColorAttributeName: [InfinitColor colorWithRed:81 green:81 blue:73],
+        NSParagraphStyleAttributeName: para};
+    _invite_title = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"INVITE", nil)
+                                                    attributes:invite_attrs];
+  }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -92,11 +124,16 @@ static UIImage* _infinit_icon = nil;
   self.navigationItem.title = self.contact.fullname;
   self.avatar_view.image =
     [self.contact.avatar infinit_circularMaskOfSize:self.avatar_view.bounds.size];
+  CGFloat send_width = self.send_invite_button.titleLabel.attributedText.size.width + 10.0f;
+  send_width = send_width < 100.0f ? 100.0f : send_width;
+  send_width = send_width > 140.0f ? 140.0f : send_width;
+  self.send_size_constraint.constant = send_width;
   if ([self.contact isKindOfClass:InfinitContactAddressBook.class])
   {
     InfinitContactAddressBook* contact_ab = (InfinitContactAddressBook*)self.contact;
     self.icon_view.hidden = YES;
-    [self setFavoriteButtonHidden:YES];
+    [self setLeftButtonHidden:NO];
+    [self configureLeftButtonInvite];
     self.email_view.hidden = !(contact_ab.emails.count > 0);
     self.email_height.constant = contact_ab.emails.count > 0 ? 55.0f : 0.0f;
     self.phone_view.hidden =
@@ -128,40 +165,62 @@ static UIImage* _infinit_icon = nil;
     self.phone_view.hidden = YES;
     if (contact_user.infinit_user.favorite || contact_user.infinit_user.is_self)
     {
-      self.icon_view.image = _favorite_icon;
+      self.icon_view.image = _avatar_favorite_icon;
       [self setFavoriteButtonFavorite:YES];
     }
     else
     {
-      self.icon_view.image = _infinit_icon;
+      self.icon_view.image = _avatar_infinit_icon;
       [self setFavoriteButtonFavorite:NO];
     }
     self.icon_view.hidden = NO;
-    [self setFavoriteButtonHidden:contact_user.infinit_user.is_self];
+    BOOL is_self = contact_user.infinit_user.is_self;
+    [self setLeftButtonHidden:is_self];
   }
   self.name_label.text = self.contact.fullname;
 }
 
-- (void)setFavoriteButtonHidden:(BOOL)hidden
+- (void)configureLeftButtonInvite
 {
-  CGFloat width = self.send_invite_button.bounds.size.width;
-  self.send_center_constraint.constant = hidden ? 0.0f : (width / 2.0f) + 10.0f;
-  self.favorite_button.hidden = hidden;
+  [self.left_button setAttributedTitle:_invite_title forState:UIControlStateNormal];
+  self.left_button.layer.borderColor = [InfinitColor colorWithRed:81 green:81 blue:73].CGColor;
+  self.left_button.layer.borderWidth = 1.0f;
+  self.left_button.backgroundColor = [UIColor whiteColor];
+  if (_button_invite_icon == nil)
+    _button_invite_icon = [UIImage imageNamed:@"icon-invite-black"];
+  [self.left_button setImage:_button_invite_icon forState:UIControlStateNormal];
+  CGFloat width = self.left_button.titleLabel.attributedText.size.width + 10.0f;
+  width = width < 105.0f ? 105.0f : width;
+  width = width > 140.0f ? 140.0f : width;
+  self.left_size_constraint.constant = width;
+}
+
+- (void)setLeftButtonHidden:(BOOL)hidden
+{
+  CGFloat send_width = self.send_size_constraint.constant;
+  self.send_center_constraint.constant = hidden ? -floor(send_width / 2.0f) : 10.0f;
+  self.left_button.hidden = hidden;
 }
 
 - (void)setFavoriteButtonFavorite:(BOOL)favorite
 {
-  NSString* text = favorite ? NSLocalizedString(@"UNFAVORITE", nil)
-                            : NSLocalizedString(@"FAVORITE", nil);
-  [self.favorite_button setTitle:text forState:UIControlStateNormal];
+  self.left_button.layer.borderWidth = 0.0f;
+  NSAttributedString* text = favorite ? _unfavorite_title : _favorite_title;
+  [self.left_button setAttributedTitle:text forState:UIControlStateNormal];
+  CGFloat width = self.left_button.titleLabel.attributedText.size.width + 40.0f;
+  width = width < 115.0f ? 115.0f : width;
+  width = width > 140.0f ? 140.0f : width;
+  self.left_size_constraint.constant = width;
   if (favorite)
   {
-    [self.favorite_button setImage:nil forState:UIControlStateNormal];
+    [self.left_button setImage:nil forState:UIControlStateNormal];
   }
   else
   {
-    [self.favorite_button setImage:[UIImage imageNamed:@"icon-favorite-white"]
-                          forState:UIControlStateNormal];
+    if (_button_favorite_icon == nil)
+      _button_favorite_icon = [UIImage imageNamed:@"icon-favorite-white"];
+    [self.left_button setImage:_button_favorite_icon
+                       forState:UIControlStateNormal];
   }
 }
 
@@ -173,44 +232,81 @@ static UIImage* _infinit_icon = nil;
   [tab_controller showSendScreenWithContact:self.contact];
 }
 
-- (IBAction)favoriteButtonTapped:(id)sender
+- (IBAction)leftButtonTapped:(id)sender
 {
-  InfinitContactUser* contact_user = (InfinitContactUser*)self.contact;
-  if (contact_user.infinit_user == nil)
-    return;
-  if (contact_user.infinit_user.is_self)
-    return;
-  UIImage* new_icon;
-  if (contact_user.infinit_user.favorite)
+  if ([self.contact isKindOfClass:InfinitContactUser.class])
   {
-    new_icon = _infinit_icon;
-    [self setFavoriteButtonFavorite:NO];
-    [InfinitMetricsManager sendMetric:InfinitUIEventContactViewFavorite
-                               method:InfinitUIMethodRemove];
-  }
-  else
-  {
-    new_icon = _favorite_icon;
-    [self setFavoriteButtonFavorite:YES];
-    [InfinitMetricsManager sendMetric:InfinitUIEventContactViewFavorite
-                               method:InfinitUIMethodAdd];
-  }
+    InfinitContactUser* contact_user = (InfinitContactUser*)self.contact;
+    if (contact_user.infinit_user == nil)
+      return;
+    if (contact_user.infinit_user.is_self)
+      return;
+    UIImage* new_icon;
+    if (contact_user.infinit_user.favorite)
+    {
+      new_icon = _avatar_infinit_icon;
+      [self setFavoriteButtonFavorite:NO];
+      [InfinitMetricsManager sendMetric:InfinitUIEventContactViewFavorite
+                                 method:InfinitUIMethodRemove];
+    }
+    else
+    {
+      new_icon = _avatar_favorite_icon;
+      [self setFavoriteButtonFavorite:YES];
+      [InfinitMetricsManager sendMetric:InfinitUIEventContactViewFavorite
+                                 method:InfinitUIMethodAdd];
+    }
 
-  [UIView transitionWithView:self.icon_view
-                    duration:0.3f
-                     options:UIViewAnimationOptionTransitionCrossDissolve
-                  animations:^
-  {
-    self.icon_view.image = new_icon;
-  } completion:^(BOOL finished)
-  {
-    if (!finished)
+    [UIView transitionWithView:self.icon_view
+                      duration:0.3f
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^
+    {
       self.icon_view.image = new_icon;
-  }];
-  if (contact_user.infinit_user.favorite)
-    [[InfinitUserManager sharedInstance] removeFavorite:contact_user.infinit_user];
-  else
-    [[InfinitUserManager sharedInstance] addFavorite:contact_user.infinit_user];
+    } completion:^(BOOL finished)
+    {
+      if (!finished)
+        self.icon_view.image = new_icon;
+    }];
+    if (contact_user.infinit_user.favorite)
+      [[InfinitUserManager sharedInstance] removeFavorite:contact_user.infinit_user];
+    else
+      [[InfinitUserManager sharedInstance] addFavorite:contact_user.infinit_user];
+  }
+  else if ([self.contact isKindOfClass:InfinitContactAddressBook.class])
+  {
+    InfinitContactAddressBook* contact_ab = (InfinitContactAddressBook*)self.contact;
+    NSMutableArray* destinations = [NSMutableArray arrayWithArray:contact_ab.emails];
+    if ([InfinitHostDevice canSendSMS])
+      [destinations addObjectsFromArray:contact_ab.phone_numbers];
+    if (destinations.count == 1)
+    {
+      [[InfinitStateManager sharedInstance] plainInviteContact:destinations[0]
+                                               completionBlock:^(InfinitStateResult* result,
+                                                                 NSString* contact,
+                                                                 NSString* code,
+                                                                 NSString* url)
+      {
+        if (!result.success || !contact.length)
+          return;
+        if (contact.infinit_isEmail)
+        {
+          NSString* title = NSLocalizedString(@"Invite sent!", nil);
+          NSString* message =
+            NSLocalizedString(@"Your contact will receive an email from us inviting them to Infinit.", nil);
+          UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
+                                                          message:message
+                                                         delegate:nil
+                                                cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                                otherButtonTitles:nil];
+          [alert show];
+        }
+        else if (contact.infinit_isPhoneNumber && code.length && url.length)
+        {
+        }
+      }];
+    }
+  }
 }
 
 @end
