@@ -18,6 +18,11 @@
 #import <Gap/InfinitColor.h>
 #import <Gap/InfinitConnectionManager.h>
 
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("iOS.FilePreviewController");
+
 @interface InfinitFilePreviewController () <QLPreviewControllerDataSource,
                                             QLPreviewControllerDelegate>
 
@@ -124,6 +129,12 @@
 - (id<QLPreviewItem>)previewController:(QLPreviewController*)controller
                     previewItemAtIndex:(NSInteger)index
 {
+  if (index >= self.folder.files.count)
+  {
+    ELLE_ERR("%s: cannot preview file with index (%d) for folder: %s",
+             self.description.UTF8String, index, self.folder.description.UTF8String);
+    return nil;
+  }
   InfinitFileModel* file = self.folder.files[index];
   return [NSURL fileURLWithPath:file.path];
 }
