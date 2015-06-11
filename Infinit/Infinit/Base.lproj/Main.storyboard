@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E26a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9lB-0z-aFR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E33b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9lB-0z-aFR">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -342,7 +343,7 @@
         <!--REPORT A PROBLEM-->
         <scene sceneID="KwS-O7-QZI">
             <objects>
-                <viewController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="n3a-58-YZv" customClass="InfinitSettingsReportProblemController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="report_problem_id" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="n3a-58-YZv" customClass="InfinitSettingsReportProblemController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hCU-Vr-QBd"/>
                         <viewControllerLayoutGuide type="bottom" id="XIu-Nu-Hmk"/>
@@ -1446,8 +1447,15 @@ access your phone contacts!</string>
                                 <action selector="backButtonTapped:" destination="9ZK-3B-PXo" id="hE1-Zk-2y4"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="icon-add-red" id="xM5-Wg-gZw">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="addContactsTapped:" destination="9ZK-3B-PXo" id="Bp8-Zl-uLq"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="add_contacts_button" destination="xM5-Wg-gZw" id="30w-xw-MhL"/>
                         <outlet property="search_field" destination="KMb-F7-qcc" id="Ssx-LX-JzV"/>
                         <outlet property="send_button" destination="z9O-hM-TV6" id="a7r-GR-tDV"/>
                         <outlet property="send_constraint" destination="Yev-mx-4fl" id="hUT-Qw-6u8"/>
@@ -1690,8 +1698,16 @@ access your phone contacts!</string>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <navigationItem key="navigationItem" title="CONTACTS" id="Diz-0I-QjG"/>
+                    <navigationItem key="navigationItem" title="CONTACTS" id="Diz-0I-QjG">
+                        <barButtonItem key="rightBarButtonItem" image="icon-add-red" id="WhG-PY-7zX">
+                            <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="addContactsTapped:" destination="cyR-zH-YxB" id="YSH-yY-vUU"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="add_contacts_button" destination="WhG-PY-7zX" id="AxD-N3-DB4"/>
                         <outlet property="search_bar" destination="UIT-gc-l6k" id="OPJ-rK-0Ok"/>
                         <outlet property="table_view" destination="hYA-CQ-ZA3" id="baM-Gn-sx3"/>
                         <segue destination="pu1-dB-tPe" kind="show" identifier="contacts_to_contact_segue" id="D5C-DP-kPD"/>
@@ -2072,22 +2088,6 @@ access your phone contacts!</string>
                                                     <constraint firstAttribute="height" constant="1" id="u9O-os-5cR"/>
                                                 </constraints>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cAz-dS-fQ5">
-                                                <rect key="frame" x="169" y="208" width="91" height="31"/>
-                                                <color key="backgroundColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="31" id="uOk-Fk-N7j"/>
-                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="105" id="xUU-rq-uuf"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
-                                                <state key="normal" title="SEND" image="icon-send-white">
-                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="sendButtonTapped:" destination="pu1-dB-tPe" eventType="touchUpInside" id="Qam-Vg-LEK"/>
-                                                </connections>
-                                            </button>
                                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q4l-OY-INA">
                                                 <rect key="frame" x="20" y="287" width="510" height="50"/>
                                                 <subviews>
@@ -2143,11 +2143,11 @@ access your phone contacts!</string>
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1LK-Mw-637">
-                                                <rect key="frame" x="268" y="208" width="116" height="31"/>
+                                                <rect key="frame" x="116" y="208" width="116" height="31"/>
                                                 <color key="backgroundColor" red="0.8901960784313725" green="0.88627450980392153" blue="0.078431372549019607" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="125" id="jsN-Sg-XHZ"/>
-                                                    <constraint firstAttribute="height" constant="31" id="zP4-35-pca"/>
+                                                    <constraint firstAttribute="height" constant="31" id="bcu-Wg-hZ0"/>
+                                                    <constraint firstAttribute="width" constant="116" id="gOH-o9-6Sj"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
                                                 <state key="normal" title="FAVORITE" image="icon-favorite-white">
@@ -2155,34 +2155,50 @@ access your phone contacts!</string>
                                                     <color key="titleShadowColor" red="0.49803921568627452" green="0.49803921568627452" blue="0.49803921568627452" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="favoriteButtonTapped:" destination="pu1-dB-tPe" eventType="touchUpInside" id="128-A1-zBQ"/>
+                                                    <action selector="leftButtonTapped:" destination="pu1-dB-tPe" eventType="touchUpInside" id="wR7-5V-k4W"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cAz-dS-fQ5">
+                                                <rect key="frame" x="323" y="208" width="91" height="31"/>
+                                                <color key="backgroundColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="31" id="dsh-Xw-msZ"/>
+                                                    <constraint firstAttribute="width" constant="91" id="uMN-g1-e9e"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
+                                                <state key="normal" title="SEND" image="icon-send-white">
+                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="sendButtonTapped:" destination="pu1-dB-tPe" eventType="touchUpInside" id="Qam-Vg-LEK"/>
                                                 </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="bottom" secondItem="QNS-J9-iHx" secondAttribute="bottom" constant="35" id="1F5-Pw-OXZ"/>
+                                            <constraint firstItem="SXc-4G-LTM" firstAttribute="centerX" secondItem="1LK-Mw-637" secondAttribute="trailing" constant="10" id="8u9-Sh-2UL"/>
                                             <constraint firstAttribute="trailing" secondItem="22f-OX-yjp" secondAttribute="trailing" constant="45" id="9i5-qB-KnO"/>
-                                            <constraint firstItem="cAz-dS-fQ5" firstAttribute="centerY" secondItem="1LK-Mw-637" secondAttribute="centerY" id="BPH-XJ-Mg1"/>
+                                            <constraint firstItem="1LK-Mw-637" firstAttribute="top" secondItem="22f-OX-yjp" secondAttribute="bottom" constant="32" id="FE0-QM-aKA"/>
                                             <constraint firstItem="Fb4-h2-ykq" firstAttribute="top" secondItem="9aQ-yQ-UJE" secondAttribute="bottom" constant="3" id="FI2-jI-dGh"/>
                                             <constraint firstItem="22f-OX-yjp" firstAttribute="top" secondItem="Fb4-h2-ykq" secondAttribute="bottom" constant="30" id="P4e-rV-PSV"/>
                                             <constraint firstItem="q4l-OY-INA" firstAttribute="trailing" secondItem="9lD-iS-7NT" secondAttribute="trailing" id="VJ1-91-IUQ"/>
                                             <constraint firstItem="22f-OX-yjp" firstAttribute="leading" secondItem="VWT-t1-haC" secondAttribute="leading" constant="45" id="WFh-lF-vvU"/>
                                             <constraint firstItem="9lD-iS-7NT" firstAttribute="trailing" secondItem="22f-OX-yjp" secondAttribute="trailing" id="Wta-sv-8mq"/>
                                             <constraint firstItem="9lD-iS-7NT" firstAttribute="leading" secondItem="22f-OX-yjp" secondAttribute="leading" id="XKW-WC-3cu"/>
+                                            <constraint firstItem="cAz-dS-fQ5" firstAttribute="leading" secondItem="SXc-4G-LTM" secondAttribute="centerX" constant="10" id="Yry-m6-IGY"/>
                                             <constraint firstItem="q4l-OY-INA" firstAttribute="trailing" secondItem="QNS-J9-iHx" secondAttribute="trailing" id="Yx1-CP-WcM"/>
                                             <constraint firstItem="QNS-J9-iHx" firstAttribute="top" secondItem="q4l-OY-INA" secondAttribute="bottom" constant="5" id="Zcb-De-J9d"/>
                                             <constraint firstItem="SXc-4G-LTM" firstAttribute="top" secondItem="VWT-t1-haC" secondAttribute="top" constant="25" id="aYM-a0-v7b"/>
-                                            <constraint firstItem="SXc-4G-LTM" firstAttribute="centerX" secondItem="cAz-dS-fQ5" secondAttribute="centerX" constant="100" id="c73-hZ-8hB"/>
-                                            <constraint firstItem="cAz-dS-fQ5" firstAttribute="top" secondItem="22f-OX-yjp" secondAttribute="bottom" constant="32" id="ddJ-eM-4el"/>
                                             <constraint firstItem="9aQ-yQ-UJE" firstAttribute="leading" secondItem="SXc-4G-LTM" secondAttribute="trailing" constant="-35" id="fWv-4d-nzt"/>
+                                            <constraint firstItem="cAz-dS-fQ5" firstAttribute="centerY" secondItem="1LK-Mw-637" secondAttribute="centerY" id="fb3-Up-47P"/>
                                             <constraint firstAttribute="centerX" secondItem="Fb4-h2-ykq" secondAttribute="centerX" id="gG9-k9-pQv"/>
                                             <constraint firstItem="9aQ-yQ-UJE" firstAttribute="top" secondItem="SXc-4G-LTM" secondAttribute="bottom" constant="-21" id="ho3-2h-3bR"/>
                                             <constraint firstItem="q4l-OY-INA" firstAttribute="leading" secondItem="9lD-iS-7NT" secondAttribute="leading" id="j0t-kV-u6j"/>
                                             <constraint firstItem="q4l-OY-INA" firstAttribute="top" secondItem="9lD-iS-7NT" secondAttribute="bottom" constant="15" id="m4p-7B-zBP"/>
                                             <constraint firstItem="q4l-OY-INA" firstAttribute="leading" secondItem="QNS-J9-iHx" secondAttribute="leading" id="n9s-qD-Wdj"/>
                                             <constraint firstAttribute="centerX" secondItem="SXc-4G-LTM" secondAttribute="centerX" id="oS4-AM-BOF"/>
-                                            <constraint firstItem="1LK-Mw-637" firstAttribute="leading" secondItem="cAz-dS-fQ5" secondAttribute="trailing" constant="7" id="syb-qv-eK5"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -2224,15 +2240,16 @@ access your phone contacts!</string>
                         <outlet property="email_address_label" destination="mGE-WJ-uld" id="SQ4-ta-zaB"/>
                         <outlet property="email_height" destination="vvA-6j-3Oq" id="xtv-OI-rKV"/>
                         <outlet property="email_view" destination="q4l-OY-INA" id="Tf4-jB-HMu"/>
-                        <outlet property="favorite_button" destination="1LK-Mw-637" id="17u-hr-Y0A"/>
                         <outlet property="icon_view" destination="9aQ-yQ-UJE" id="16s-5u-CaJ"/>
+                        <outlet property="left_button" destination="1LK-Mw-637" id="agH-dL-BXT"/>
+                        <outlet property="left_size_constraint" destination="gOH-o9-6Sj" id="TzJ-EP-8Yo"/>
                         <outlet property="name_label" destination="Fb4-h2-ykq" id="TK1-PV-CxI"/>
                         <outlet property="phone_height" destination="cjl-CV-2RB" id="pfh-Zw-dP8"/>
                         <outlet property="phone_label" destination="2OQ-eh-oJ7" id="AsN-r2-VIn"/>
                         <outlet property="phone_view" destination="QNS-J9-iHx" id="hqD-W2-yIT"/>
-                        <outlet property="send_center_constraint" destination="c73-hZ-8hB" id="rYp-n4-uox"/>
+                        <outlet property="send_center_constraint" destination="Yry-m6-IGY" id="7AE-nz-4cO"/>
                         <outlet property="send_invite_button" destination="cAz-dS-fQ5" id="4S1-cu-fFh"/>
-                        <outlet property="send_size_constraint" destination="xUU-rq-uuf" id="uXN-Yl-hNI"/>
+                        <outlet property="send_size_constraint" destination="uMN-g1-e9e" id="DWi-t3-3SE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oFN-nO-BVh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2802,6 +2819,7 @@ type of file in Infinit</string>
     </scenes>
     <resources>
         <image name="bg-balloon" width="230" height="226"/>
+        <image name="icon-add-red" width="30" height="30"/>
         <image name="icon-back-white" width="11" height="18"/>
         <image name="icon-close" width="16" height="17"/>
         <image name="icon-contact-favorite" width="19" height="18"/>

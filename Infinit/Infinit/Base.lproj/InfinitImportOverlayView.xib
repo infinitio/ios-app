@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E33b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="SourceSansPro-Bold.otf">
-            <string>SourceSansPro-Bold</string>
-            <string>SourceSansPro-Bold</string>
             <string>SourceSansPro-Bold</string>
             <string>SourceSansPro-Bold</string>
         </mutableArray>
@@ -20,7 +18,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xuI-O4-o9G">
-                    <rect key="frame" x="167" y="515" width="266" height="55"/>
+                    <rect key="frame" x="167" y="508" width="266" height="55"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="266" id="UYQ-CP-7ki"/>
                         <constraint firstAttribute="height" constant="55" id="rXb-eZ-nU8"/>
@@ -31,21 +29,8 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wJg-um-5jN">
-                    <rect key="frame" x="167" y="445" width="266" height="55"/>
-                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="266" id="K0C-V7-gXz"/>
-                        <constraint firstAttribute="height" constant="55" id="bk8-iu-8DF"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
-                    <state key="normal" title="FIND PEOPLE ON INFINIT" image="icon-infinit-red">
-                        <color key="titleColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7cg-9z-iSn">
-                    <rect key="frame" x="167" y="375" width="266" height="55"/>
+                    <rect key="frame" x="167" y="438" width="266" height="55"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="266" id="2EU-zV-DC6"/>
@@ -57,41 +42,21 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XBj-2A-RAf">
-                    <rect key="frame" x="167" y="305" width="266" height="55"/>
-                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="55" id="DoA-iz-Opu"/>
-                        <constraint firstAttribute="width" constant="266" id="XQZ-9q-hUl"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
-                    <state key="normal" title="IMPORT PHONE CONTACTS">
-                        <color key="titleColor" red="0.31764705882352939" green="0.31764705882352939" blue="0.28627450980392155" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
             </subviews>
             <color key="backgroundColor" red="0.1764705882352941" green="0.1764705882352941" blue="0.19215686274509802" alpha="0.95000000000000007" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstAttribute="centerX" secondItem="wJg-um-5jN" secondAttribute="centerX" id="3wB-G2-DFv"/>
-                <constraint firstAttribute="centerX" secondItem="XBj-2A-RAf" secondAttribute="centerX" id="7u4-1o-cTL"/>
-                <constraint firstItem="wJg-um-5jN" firstAttribute="top" secondItem="7cg-9z-iSn" secondAttribute="bottom" constant="15" id="Amg-HQ-Few"/>
                 <constraint firstAttribute="centerX" secondItem="xuI-O4-o9G" secondAttribute="centerX" id="Bv6-YW-gD5"/>
-                <constraint firstItem="xuI-O4-o9G" firstAttribute="top" secondItem="wJg-um-5jN" secondAttribute="bottom" constant="15" id="TRp-Qi-736"/>
                 <constraint firstAttribute="centerX" secondItem="7cg-9z-iSn" secondAttribute="centerX" id="Xv0-sa-ODn"/>
-                <constraint firstAttribute="bottom" secondItem="xuI-O4-o9G" secondAttribute="bottom" constant="30" id="Ycc-VE-CiS"/>
-                <constraint firstItem="7cg-9z-iSn" firstAttribute="top" secondItem="XBj-2A-RAf" secondAttribute="bottom" constant="15" id="aZi-GD-DvB"/>
+                <constraint firstAttribute="bottom" secondItem="xuI-O4-o9G" secondAttribute="bottom" constant="37" id="Ycc-VE-CiS"/>
+                <constraint firstItem="xuI-O4-o9G" firstAttribute="top" secondItem="7cg-9z-iSn" secondAttribute="bottom" constant="15" id="q5s-i9-tVs"/>
             </constraints>
             <connections>
                 <outlet property="back_button" destination="xuI-O4-o9G" id="nKf-fP-XCO"/>
                 <outlet property="facebook_button" destination="7cg-9z-iSn" id="E04-t1-bhT"/>
-                <outlet property="infinit_button" destination="wJg-um-5jN" id="xZr-EY-jis"/>
-                <outlet property="phone_contacts_button" destination="XBj-2A-RAf" id="FLJ-9p-tu2"/>
             </connections>
         </view>
     </objects>
     <resources>
         <image name="icon-facebook-blue" width="20" height="20"/>
-        <image name="icon-infinit-red" width="96" height="120"/>
     </resources>
 </document>
