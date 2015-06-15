@@ -9,6 +9,9 @@
 #import "InfinitContactViewController.h"
 
 #import "InfinitHostDevice.h"
+#import "InfinitInvitationOverlayViewController.h"
+#import "InfinitMessagingManager.h"
+#import "InfinitMessagingRecipient.h"
 #import "InfinitMetricsManager.h"
 #import "InfinitTabBarController.h"
 
@@ -21,7 +24,8 @@
 
 #import "UIImage+Rounded.h"
 
-@interface InfinitContactViewController () <UIGestureRecognizerDelegate>
+@interface InfinitContactViewController () <InfinitInvitationOverlayProtocol,
+                                            UIGestureRecognizerDelegate>
 
 @property (nonatomic, weak) IBOutlet UIImageView* avatar_view;
 @property (nonatomic, weak) IBOutlet UIImageView* icon_view;
@@ -40,6 +44,9 @@
 
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* bar_width_constraint;
 
+@property (nonatomic, strong) InfinitInvitationOverlayViewController* invitation_overlay;
+@property (nonatomic, readonly) dispatch_once_t invitation_overlay_token;
+
 @end
 
 static UIImage* _avatar_favorite_icon = nil;
@@ -52,6 +59,8 @@ static NSAttributedString* _favorite_title = nil;
 static NSAttributedString* _unfavorite_title = nil;
 
 @implementation InfinitContactViewController
+
+@synthesize invitation_overlay = _invitation_overlay;
 
 #pragma mark - Init
 
@@ -112,6 +121,8 @@ static NSAttributedString* _unfavorite_title = nil;
   self.navigationController.interactivePopGestureRecognizer.enabled = NO;
   self.navigationController.interactivePopGestureRecognizer.delegate = nil;
   [super viewWillDisappear:animated];
+  _invitation_overlay = nil;
+  _invitation_overlay_token = 0;
 }
 
 - (IBAction)backButtonTapped:(id)sender
@@ -275,38 +286,158 @@ static NSAttributedString* _unfavorite_title = nil;
   }
   else if ([self.contact isKindOfClass:InfinitContactAddressBook.class])
   {
-    InfinitContactAddressBook* contact_ab = (InfinitContactAddressBook*)self.contact;
-    NSMutableArray* destinations = [NSMutableArray arrayWithArray:contact_ab.emails];
-    if ([InfinitHostDevice canSendSMS])
-      [destinations addObjectsFromArray:contact_ab.phone_numbers];
-    if (destinations.count == 1)
-    {
-      [[InfinitStateManager sharedInstance] plainInviteContact:destinations[0]
-                                               completionBlock:^(InfinitStateResult* result,
-                                                                 NSString* contact,
-                                                                 NSString* code,
-                                                                 NSString* url)
-      {
-        if (!result.success || !contact.length)
-          return;
-        if (contact.infinit_isEmail)
-        {
-          NSString* title = NSLocalizedString(@"Invite sent!", nil);
-          NSString* message =
-            NSLocalizedString(@"Your contact will receive an email from us inviting them to Infinit.", nil);
-          UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
-                                                          message:message
-                                                         delegate:nil
-                                                cancelButtonTitle:NSLocalizedString(@"OK", nil)
-                                                otherButtonTitles:nil];
-          [alert show];
-        }
-        else if (contact.infinit_isPhoneNumber && code.length && url.length)
-        {
-        }
-      }];
-    }
+    [self showInvitationOverlay];
   }
+}
+
+- (void)showInvitationOverlay
+{
+  if (![self.contact isKindOfClass:InfinitContactAddressBook.class])
+    return;
+  InfinitContactAddressBook* contact_ab = (InfinitContactAddressBook*)self.contact;
+  self.invitation_overlay.contact = contact_ab;
+  self.view.userInteractionEnabled = NO;
+  UIView* view = self.invitation_overlay.view;
+  view.alpha = 0.0f;
+  view.frame = [UIScreen mainScreen].bounds;
+  [[UIApplication sharedApplication].keyWindow addSubview:view];
+  [self.invitation_overlay awakeFromNib];
+  [[UIApplication sharedApplication].keyWindow bringSubviewToFront:view];
+  [UIView animateWithDuration:0.3f
+                   animations:^
+   {
+     view.alpha = 1.0f;
+   } completion:^(BOOL finished)
+   {
+     if (!finished)
+       view.alpha = 1.0f;
+   }];
+}
+
+- (void)removeInvitationOverlay
+{
+  UIView* view = self.invitation_overlay.view;
+  if (view == nil)
+    return;
+  [UIView animateWithDuration:0.3f
+                   animations:^
+   {
+     view.alpha = 0.0f;
+   } completion:^(BOOL finished)
+   {
+     self.view.userInteractionEnabled = YES;
+     [view removeFromSuperview];
+   }];
+}
+
+#pragma mark - InfinitInvitationOverlayProtocol
+
+- (void)invitationOverlayGotCancel:(InfinitInvitationOverlayViewController*)sender
+{
+  [self removeInvitationOverlay];
+}
+
+- (void)invitationOverlay:(InfinitInvitationOverlayViewController*)sender
+             gotRecipient:(InfinitMessagingRecipient*)recipient
+{
+  [self removeInvitationOverlay];
+  __weak InfinitContactViewController* weak_self = self;
+  [[InfinitStateManager sharedInstance] plainInviteContact:recipient.identifier
+                                           completionBlock:^(InfinitStateResult* result,
+                                                             NSString* contact,
+                                                             NSString* code,
+                                                             NSString* url)
+  {
+    InfinitContactViewController* strong_self = weak_self;
+    if (!result.success)
+    {
+      NSString* message = NSLocalizedString(@"This user is already on Infinit.", nil);
+      [strong_self showAlertWithTitle:NSLocalizedString(@"User already on Infinit", nil)
+                              message:message];
+      [self removeInvitationOverlay];
+      return;
+    }
+    if (recipient.method == InfinitMessageEmail)
+    {
+      NSString* message =
+        NSLocalizedString(@"Your contact will receive an email from us inviting them to Infinit.", nil);
+      [strong_self showAlertWithTitle:NSLocalizedString(@"Email sent!", nil) message:message];
+      return;
+    }
+    else if (recipient.method == InfinitMessageNative || recipient.method == InfinitMessageWhatsApp)
+    {
+      NSString* message =
+        [NSString stringWithFormat:NSLocalizedString(@"Hey %@. I want to send you files using Infinit. It's a free, unlimited file sharing app. You should download it here: %@", nil),
+         recipient.name, url];
+      [[InfinitMessagingManager sharedInstance] sendMessage:message
+                                                toRecipient:recipient
+                                            completionBlock:[self messageCompletionBlockForCode:code]];
+    }
+  }];
+}
+
+- (InfinitSendMessageCompletionBlock)messageCompletionBlockForCode:(NSString*)code
+{
+  __weak InfinitContactViewController* weak_self = self;
+  return ^(InfinitMessagingRecipient* recipient, NSString* message, InfinitMessageStatus status)
+  {
+    InfinitContactViewController* strong_self = weak_self;
+    [strong_self removeInvitationOverlay];
+    BOOL success = status == InfinitMessageStatusSuccess ? YES : NO;
+    gap_InviteMessageMethod method;
+    switch (recipient.method)
+    {
+      case InfinitMessageNative:
+        method = gap_invite_message_native;
+        break;
+      case InfinitMessageWhatsApp:
+        method = gap_invite_message_whatsapp;
+        break;
+      default:
+        return;
+    }
+    NSString* fail_message = @"";
+    switch (status)
+    {
+      case InfinitMessageStatusCancel:
+        fail_message = @"cancel";
+        break;
+      case InfinitMessageStatusFail:
+        fail_message = @"fail";
+        break;
+      default:
+        break;
+    }
+    [[InfinitStateManager sharedInstance] sendMetricInviteSent:success
+                                                          code:code
+                                                        method:method
+                                                    failReason:fail_message];
+  };
+}
+
+#pragma mark - Lazy Loaders
+
+- (InfinitInvitationOverlayViewController*)invitation_overlay
+{
+  dispatch_once(&_invitation_overlay_token, ^
+  {
+    _invitation_overlay = [[InfinitInvitationOverlayViewController alloc] init];
+    _invitation_overlay.delegate = self;
+  });
+  return _invitation_overlay;
+}
+
+#pragma mark - Helpers
+
+- (void)showAlertWithTitle:(NSString*)title
+                   message:(NSString*)message
+{
+  UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
+                                                  message:message
+                                                 delegate:nil
+                                        cancelButtonTitle:NSLocalizedString(@"OK", nil)
+                                        otherButtonTitles:nil];
+  [alert show];
 }
 
 @end
