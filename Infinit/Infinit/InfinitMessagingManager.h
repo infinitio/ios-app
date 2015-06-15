@@ -15,8 +15,6 @@ typedef NS_ENUM(NSUInteger, InfinitMessageStatus)
   InfinitMessageStatusSuccess,
   InfinitMessageStatusCancel,
   InfinitMessageStatusFail,
-
-  InfinitMessageStatusUnknown,
 };
 
 @interface InfinitMessagingManager : NSObject

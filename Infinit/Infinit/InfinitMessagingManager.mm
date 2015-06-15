@@ -98,7 +98,7 @@ static dispatch_once_t _instance_token = 0;
       if ([InfinitHostDevice canSendWhatsApp])
       {
         [strong_self _openWhatsAppForMessage:message
-                           contactIdentifier:[recipient.identifier intValue]];
+                           contactIdentifier:recipient.address_book_id];
       }
     }
     dispatch_semaphore_wait(strong_self.message_sent, DISPATCH_TIME_FOREVER);
@@ -106,11 +106,12 @@ static dispatch_once_t _instance_token = 0;
   });
 }
 
-- (void)_openWhatsAppForMessage:(NSString*)message
+- (void)_openWhatsAppForMessage:(NSString*)message_
               contactIdentifier:(int32_t)identifier
 {
+  NSString* message = [message_ stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
   NSString* url_str =
-    [NSString stringWithFormat:@"whatsapp://send?text=%@&abid=%d", message, identifier];
+    [NSString stringWithFormat:@"whatsapp://send?abid=%d&text=%@", identifier, message];
   NSURL* url = [NSURL URLWithString:url_str];
   [[UIApplication sharedApplication] openURL:url];
 }
@@ -120,7 +121,7 @@ static dispatch_once_t _instance_token = 0;
 - (void)_becameActiveAfterWhatsApp:(NSNotification*)notification
 {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  self.last_status = InfinitMessageStatusUnknown;
+  self.last_status = InfinitMessageStatusSuccess;
   dispatch_semaphore_signal(self.message_sent);
 }
 
