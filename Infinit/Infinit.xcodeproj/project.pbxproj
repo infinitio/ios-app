@@ -47,6 +47,9 @@
 		8322850B1A794D51000893A1 /* InfinitImportOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8322850D1A794D51000893A1 /* InfinitImportOverlayView.xib */; };
 		8322850E1A794D65000893A1 /* InfinitHomeOnboardingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 832285101A794D65000893A1 /* InfinitHomeOnboardingView.xib */; };
 		832285141A7958A1000893A1 /* InfinitLocalNotificationManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 832285131A7958A1000893A1 /* InfinitLocalNotificationManager.mm */; };
+		83257CEA1B2AD64B00B7047F /* InfinitInvitationOverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83257CE81B2AD64B00B7047F /* InfinitInvitationOverlayViewController.m */; };
+		83257CF01B2ADA2B00B7047F /* InfinitInvitationOverlayTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83257CEE1B2ADA2B00B7047F /* InfinitInvitationOverlayTableViewCell.m */; };
+		83257CF21B2ADC3900B7047F /* InfinitInvitationOverlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83257CF41B2ADC3900B7047F /* InfinitInvitationOverlayViewController.xib */; };
 		83294B911AA6FEA700C6CA9A /* InfinitUploadThumbnailManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83294B901AA6FEA700C6CA9A /* InfinitUploadThumbnailManager.mm */; };
 		832A8B001A6EB7930024A304 /* InfinitSettingsReportProblemController.m in Sources */ = {isa = PBXBuildFile; fileRef = 832A8AFF1A6EB7930024A304 /* InfinitSettingsReportProblemController.m */; };
 		832C12F31AF914110014895D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 832C12F51AF914110014895D /* Localizable.strings */; };
@@ -91,6 +94,7 @@
 		837F664A1AADCB5100EA49C4 /* InfinitSendDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 837F66491AADCB5100EA49C4 /* InfinitSendDeviceCell.m */; };
 		83825BE11A701FE900420F24 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83825BE01A701FE900420F24 /* Photos.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8383D5D41AD5890E0073A1A0 /* InfinitProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8383D5D31AD5890E0073A1A0 /* InfinitProgressView.m */; };
+		838424B51B2B30230093334A /* InfinitInvitationOverlayTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 838424B71B2B30230093334A /* InfinitInvitationOverlayTableViewCell.xib */; };
 		838490981A767F6E00969CF7 /* InfinitFilePreviewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 838490971A767F6E00969CF7 /* InfinitFilePreviewController.mm */; };
 		8384909C1A76969700969CF7 /* InfinitFilePreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 8384909B1A76969700969CF7 /* InfinitFilePreview.m */; };
 		83876AED1A77965400F79905 /* InfinitPortraitNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83876AEC1A77965400F79905 /* InfinitPortraitNavigationController.m */; };
@@ -389,6 +393,11 @@
 		8322850F1A794D65000893A1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfinitHomeOnboardingView.xib; sourceTree = "<group>"; };
 		832285121A7958A1000893A1 /* InfinitLocalNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitLocalNotificationManager.h; sourceTree = "<group>"; };
 		832285131A7958A1000893A1 /* InfinitLocalNotificationManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitLocalNotificationManager.mm; sourceTree = "<group>"; };
+		83257CE71B2AD64B00B7047F /* InfinitInvitationOverlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitInvitationOverlayViewController.h; sourceTree = "<group>"; };
+		83257CE81B2AD64B00B7047F /* InfinitInvitationOverlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitInvitationOverlayViewController.m; sourceTree = "<group>"; };
+		83257CED1B2ADA2B00B7047F /* InfinitInvitationOverlayTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitInvitationOverlayTableViewCell.h; sourceTree = "<group>"; };
+		83257CEE1B2ADA2B00B7047F /* InfinitInvitationOverlayTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitInvitationOverlayTableViewCell.m; sourceTree = "<group>"; };
+		83257CF31B2ADC3900B7047F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfinitInvitationOverlayViewController.xib; sourceTree = "<group>"; };
 		83294B8F1AA6FEA700C6CA9A /* InfinitUploadThumbnailManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitUploadThumbnailManager.h; sourceTree = "<group>"; };
 		83294B901AA6FEA700C6CA9A /* InfinitUploadThumbnailManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitUploadThumbnailManager.mm; sourceTree = "<group>"; };
 		832A8AFE1A6EB7930024A304 /* InfinitSettingsReportProblemController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSettingsReportProblemController.h; sourceTree = "<group>"; };
@@ -534,6 +543,7 @@
 		83825BE01A701FE900420F24 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		8383D5D21AD5890E0073A1A0 /* InfinitProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitProgressView.h; sourceTree = "<group>"; };
 		8383D5D31AD5890E0073A1A0 /* InfinitProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitProgressView.m; sourceTree = "<group>"; };
+		838424B61B2B30230093334A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfinitInvitationOverlayTableViewCell.xib; sourceTree = "<group>"; };
 		838490961A767F6E00969CF7 /* InfinitFilePreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFilePreviewController.h; sourceTree = "<group>"; };
 		838490971A767F6E00969CF7 /* InfinitFilePreviewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitFilePreviewController.mm; sourceTree = "<group>"; };
 		8384909A1A76969700969CF7 /* InfinitFilePreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFilePreview.h; sourceTree = "<group>"; };
@@ -1312,6 +1322,7 @@
 		8311B5BB1A7D02A500832FDE /* Overlays */ = {
 			isa = PBXGroup;
 			children = (
+				83257CEC1B2ADA0200B7047F /* Invitation Overlay */,
 				8322850A1A794D4C000893A1 /* InfinitAccessContactsView.xib */,
 				833E3AC11A63CF4D0088D3FF /* InfinitAccessContactsView.h */,
 				833E3AC21A63CF4D0088D3FF /* InfinitAccessContactsView.m */,
@@ -1371,6 +1382,19 @@
 				832285131A7958A1000893A1 /* InfinitLocalNotificationManager.mm */,
 			);
 			name = "User Notifications";
+			sourceTree = "<group>";
+		};
+		83257CEC1B2ADA0200B7047F /* Invitation Overlay */ = {
+			isa = PBXGroup;
+			children = (
+				83257CED1B2ADA2B00B7047F /* InfinitInvitationOverlayTableViewCell.h */,
+				83257CEE1B2ADA2B00B7047F /* InfinitInvitationOverlayTableViewCell.m */,
+				838424B71B2B30230093334A /* InfinitInvitationOverlayTableViewCell.xib */,
+				83257CE71B2AD64B00B7047F /* InfinitInvitationOverlayViewController.h */,
+				83257CE81B2AD64B00B7047F /* InfinitInvitationOverlayViewController.m */,
+				83257CF41B2ADC3900B7047F /* InfinitInvitationOverlayViewController.xib */,
+			);
+			name = "Invitation Overlay";
 			sourceTree = "<group>";
 		};
 		8332F9281ADFF9DC007392A4 /* Single Folder View */ = {
@@ -2431,6 +2455,7 @@
 				83AD68A91AE983DF00EB1B53 /* InfinitWelcomePasswordViewController.xib in Resources */,
 				835B9D631A9E620900FD0D54 /* InfinitFilesBottomBar.xib in Resources */,
 				83B32E131A850C9B004088DD /* InfinitSettingsUserCell.xib in Resources */,
+				83257CF21B2ADC3900B7047F /* InfinitInvitationOverlayViewController.xib in Resources */,
 				83B32DEA1A84DF1E004088DD /* InfinitHomePeerTransactionCell.xib in Resources */,
 				83B32E001A84DF7C004088DD /* LaunchScreen.xib in Resources */,
 				83FB1C771A920C9D00D4C2F8 /* InfinitSendGalleryCell.xib in Resources */,
@@ -2468,6 +2493,7 @@
 				8322850E1A794D65000893A1 /* InfinitHomeOnboardingView.xib in Resources */,
 				835B9D5E1A9E29E400FD0D54 /* InfinitHomePeerTransactionMoreFilesCell.xib in Resources */,
 				83A0D6581ADED1E000D9D3AD /* InfinitFilesTableCell_iPad.xib in Resources */,
+				838424B51B2B30230093334A /* InfinitInvitationOverlayTableViewCell.xib in Resources */,
 				837640F81A9D1F2A00BB2316 /* InfinitHomeEmptyOverlay.xib in Resources */,
 				83AD68801AE91E1C00EB1B53 /* InfinitHomeFeedbackViewController.xib in Resources */,
 				D098481A1A43391B002D26AC /* SourceSansPro-Light.otf in Resources */,
@@ -2514,6 +2540,7 @@
 				83B32E061A1365E9004AB945 /* AppDelegate.m in Sources */,
 				D0BD35231A4245AF00AB8EF9 /* InfinitSendRecipientsController.m in Sources */,
 				8343F5D61A628011006E04C0 /* InfinitTabAnimator.m in Sources */,
+				83257CEA1B2AD64B00B7047F /* InfinitInvitationOverlayViewController.m in Sources */,
 				83294B911AA6FEA700C6CA9A /* InfinitUploadThumbnailManager.mm in Sources */,
 				83EAE9911AF208F1009D2886 /* InfinitStatusBarNotifier.m in Sources */,
 				83C50FA61AB6BF8E009EBB44 /* JDStatusBarView.m in Sources */,
@@ -2526,6 +2553,7 @@
 				83912C611AD823DE00434F6A /* InfinitExtensionFileCell.m in Sources */,
 				83A0D6651ADFA30F00D9D3AD /* InfinitFilesDisplayController_iPad.m in Sources */,
 				83876AF31A78CCC900F79905 /* InfinitDownloadFolderManager.mm in Sources */,
+				83257CF01B2ADA2B00B7047F /* InfinitInvitationOverlayTableViewCell.m in Sources */,
 				8303307D1B1DFA2100FE2931 /* InfinitContactAddressBook.m in Sources */,
 				83E112D91A8266090072DAE0 /* InfinitWelcomeOnboardingController.m in Sources */,
 				830AD20E1A6D57C900E2B058 /* InfinitSendNavigationController.m in Sources */,
@@ -2813,6 +2841,14 @@
 			name = InfinitHomeOnboardingView.xib;
 			sourceTree = "<group>";
 		};
+		83257CF41B2ADC3900B7047F /* InfinitInvitationOverlayViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				83257CF31B2ADC3900B7047F /* Base */,
+			);
+			name = InfinitInvitationOverlayViewController.xib;
+			sourceTree = "<group>";
+		};
 		832A99381AD6B26400639B22 /* MainInterface.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2950,6 +2986,14 @@
 				83C113E71B00E88F0059AF22 /* pt */,
 			);
 			name = InfinitHomeEmptyOverlay.xib;
+			sourceTree = "<group>";
+		};
+		838424B71B2B30230093334A /* InfinitInvitationOverlayTableViewCell.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				838424B61B2B30230093334A /* Base */,
+			);
+			name = InfinitInvitationOverlayTableViewCell.xib;
 			sourceTree = "<group>";
 		};
 		83AD68791AE91DD700EB1B53 /* InfinitWelcomeLandingViewController.xib */ = {
