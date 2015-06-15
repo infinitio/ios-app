@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface InfinitContact : NSObject
+@interface InfinitContact : NSObject <NSCopying>
 
 @property (nonatomic, strong) UIImage* avatar;
 @property (nonatomic, strong) NSString* first_name;

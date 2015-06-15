@@ -86,7 +86,7 @@
 
 - (instancetype)copyWithZone:(NSZone*)zone
 {
-  InfinitContactUser* res = [[[self class] allocWithZone:zone] init];
+  InfinitContactUser* res = [super copyWithZone:zone];
   res->_infinit_user = self.infinit_user;
   res->_device = self.device;
   return res;

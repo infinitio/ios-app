@@ -31,7 +31,7 @@
 
 - (instancetype)copyWithZone:(NSZone*)zone
 {
-  InfinitContactEmail* res = [[[self class] allocWithZone:zone] init];
+  InfinitContactEmail* res = [super copyWithZone:zone];
   res->_email = [self.email copy];
   return res;
 }

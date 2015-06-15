@@ -127,7 +127,7 @@
 
 - (instancetype)copyWithZone:(NSZone*)zone
 {
-  InfinitContactAddressBook* res = [[[self class] allocWithZone:zone] init];
+  InfinitContactAddressBook* res = [super copyWithZone:zone];
   res->_address_book_id = self.address_book_id;
   res->_emails = [self.emails copy];
   res->_phone_numbers = [self.phone_numbers copy];
@@ -169,7 +169,7 @@
   CGContextFillRect(context, rect);
   [[UIColor whiteColor] set];
   NSMutableString* text = [[NSMutableString alloc] init];
-  if (first_name.length > 0)
+  if (first_name.length)
   {
     [text appendFormat:@"%c", [first_name characterAtIndex:0]];
     if (surname.length > 0)

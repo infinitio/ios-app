@@ -51,4 +51,15 @@ containsString:(NSString*)string
   return YES;
 }
 
+#pragma mark - NSObject
+
+- (id)copyWithZone:(NSZone*)zone
+{
+  InfinitContact* res = [[[self class] allocWithZone:zone] init];
+  res->_avatar = [self.avatar copy];
+  res->_first_name = [self.first_name copy];
+  res->_fullname = [self.fullname copy];
+  return res;
+}
+
 @end

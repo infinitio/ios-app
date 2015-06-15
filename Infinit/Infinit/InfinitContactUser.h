@@ -24,3 +24,4 @@
 - (void)updateAvatar;
 
 @end
+
