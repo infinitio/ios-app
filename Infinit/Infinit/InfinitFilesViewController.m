@@ -15,7 +15,7 @@
 #import "InfinitFilesNavigationController.h"
 #import "InfinitFilePreviewController.h"
 #import "InfinitFilesTableCell.h"
-#import "InfinitGallery.h"
+#import "InfinitGalleryManager.h"
 #import "InfinitMetricsManager.h"
 #import "InfinitResizableNavigationBar.h"
 #import "InfinitSendRecipientsController.h"
@@ -23,6 +23,7 @@
 
 #import <Gap/InfinitColor.h>
 #import <Gap/InfinitDirectoryManager.h>
+#import <Gap/InfinitTemporaryFileManager.h>
 
 #import <ALAssetsLibrary+CustomPhotoAlbum.h>
 #import <Photos/Photos.h>
@@ -364,7 +365,7 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
     for (NSString* path in folder.file_paths)
       [paths addObject:path];
   }
-  [InfinitGallery saveToGallery:paths];
+  [InfinitGalleryManager saveToGallery:paths];
   [self setTableEditing:NO animated:YES];
 }
 
@@ -508,17 +509,21 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
       [files addObjectsFromArray:folder.file_paths];
     InfinitSendRecipientsController* send_controller =
       (InfinitSendRecipientsController*)segue.destinationViewController;
-    send_controller.files = files;
+    InfinitTemporaryFileManager* manager = [InfinitTemporaryFileManager sharedInstance];
+    InfinitManagedFiles* managed_files = [manager createManagedFiles];
+    [manager addFiles:files toManagedFiles:managed_files];
+    send_controller.file_count = files.count;
+    send_controller.managed_files = managed_files;
     [self.table_view setEditing:NO animated:NO];
     [UIView animateWithDuration:0.3f
                      animations:^
-     {
-       ((InfinitResizableNavigationBar*)self.navigationController.navigationBar).large = YES;
-       [[UIApplication sharedApplication] setStatusBarHidden:YES
-                                               withAnimation:UIStatusBarAnimationSlide];
-       self.navigationController.navigationBar.barTintColor =
-       [InfinitColor colorFromPalette:InfinitPaletteColorSendBlack];
-     }];
+    {
+      ((InfinitResizableNavigationBar*)self.navigationController.navigationBar).large = YES;
+      [[UIApplication sharedApplication] setStatusBarHidden:YES
+                                              withAnimation:UIStatusBarAnimationSlide];
+      self.navigationController.navigationBar.barTintColor =
+        [InfinitColor colorFromPalette:InfinitPaletteColorSendBlack];
+    }];
   }
 }
 
