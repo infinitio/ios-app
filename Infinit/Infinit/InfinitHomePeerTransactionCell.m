@@ -108,7 +108,7 @@ static CGFloat _button_height = 45.0f;
                                                           attribute:NSLayoutAttributeNotAnAttribute 
                                                          multiplier:1.0f
                                                            constant:45.0f];
-    self.status_constraint.priority = 999;
+    self.status_constraint.priority = 999.0f;
     [self.status_container addConstraint:self.status_constraint];
     [self.files_view removeConstraint:self.files_constraint];
   }
@@ -263,7 +263,9 @@ static CGFloat _button_height = 45.0f;
   {
     InfinitUploadThumbnailManager* manager = [InfinitUploadThumbnailManager sharedInstance];
     if ([manager areThumbnailsForTransaction:self.transaction])
+    {
       _upload_thumbnails = [manager thumbnailsForTransaction:self.transaction];
+    }
   }
   self.status_label.text = [self statusString];
   if (self.transaction.size.unsignedIntegerValue == 0)
@@ -592,10 +594,10 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
   if (self.folder != nil)
   {
-    if (indexPath.row == 5)
+    if (indexPath.row == 5 && self.folder.files.count > 6)
       [self.delegate cellOpenTapped:self];
     else
-    [self.delegate cell:self openFileTapped:indexPath.row];
+      [self.delegate cell:self openFileTapped:indexPath.row];
   }
 }
 
@@ -618,7 +620,9 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView
                  cellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
-  if (indexPath.row == 5)
+  bool show_last_cell =
+    ((self.folder && self.folder.files.count > 6) || (self.transaction.files.count > 6));
+  if (indexPath.row == 5 && show_last_cell)
   {
     InfinitHomePeerTransactionMoreFilesCell* cell =
       [self.files_view dequeueReusableCellWithReuseIdentifier:_more_files_cell_id
