@@ -8,69 +8,51 @@
 
 #import "InfinitSendGalleryController.h"
 
+#import "InfinitHostDevice.h"
 #import "InfinitMetricsManager.h"
 #import "InfinitSendGalleryCell.h"
 #import "InfinitSendRecipientsController.h"
 #import "InfinitTabBarController.h"
 
 #import "ALAsset+Date.h"
+#import "UICollectionView+Convenience.h"
+
+#import <AVFoundation/AVFoundation.h>
+#import <Photos/Photos.h>
 
 #import <Gap/InfinitTemporaryFileManager.h>
 
-@import AssetsLibrary;
-@import AVFoundation;
-@import Photos;
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("iOS.SendGalleryViewController");
 
 @interface InfinitSendGalleryController () <UICollectionViewDataSource,
                                             UICollectionViewDelegate,
                                             UICollectionViewDelegateFlowLayout>
 
-@property (nonatomic, strong) NSArray* assets;
 @property (nonatomic, weak) IBOutlet UICollectionView* collection_view;
 @property (nonatomic, weak) IBOutlet UIButton* next_button;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* next_constraint;
-@property (nonatomic, strong) PHCachingImageManager* image_caching_manager;
 @property (nonatomic, weak) IBOutlet UICollectionViewFlowLayout* layout;
 
-@end
-
-@interface UICollectionView (Convenience)
-
-- (NSArray*)infinit_indexPathsForElementsInRect:(CGRect)rect;
-
-@end
-
-@implementation UICollectionView (Convenience)
-
-- (NSArray*)infinit_indexPathsForElementsInRect:(CGRect)rect
-{
-  NSArray* all_layout_attrs = [self.collectionViewLayout layoutAttributesForElementsInRect:rect];
-  if (all_layout_attrs.count == 0)
-    return nil;
-  NSMutableArray* indexes = [NSMutableArray arrayWithCapacity:all_layout_attrs.count];
-  for (UICollectionViewLayoutAttributes* attrs in all_layout_attrs)
-  {
-    NSIndexPath* index = attrs.indexPath;
-    [indexes addObject:index];
-  }
-  return indexes;
-}
+@property (nonatomic, strong) NSArray* assets;
+@property (nonatomic, strong) PHCachingImageManager* image_caching_manager;
+@property (nonatomic, readwrite, copy) NSArray* last_selection;
+@property (nonatomic, readonly) InfinitManagedFiles* managed_files;
+@property (nonatomic, strong) UITapGestureRecognizer* nav_bar_tap;
+@property (nonatomic, readwrite) CGRect previous_preheat_rect;
+@property (nonatomic, readonly) BOOL selected_something;
 
 @end
 
-static CGSize _cell_size;
-static CGSize _asset_size;
+static CGSize _asset_size = {0.0f, 0.0f};
+static CGSize _cell_size = {0.0f, 0.0f};
+static NSString* _cell_identifier = @"gallery_cell";
 
 @implementation InfinitSendGalleryController
-{
-@private
-  NSString* _cell_identifier;
-  UITapGestureRecognizer* _nav_bar_tap;
 
-  BOOL _selected_something;
-
-  CGRect _previous_preheat_rect;
-}
+@synthesize managed_files = _managed_files;
 
 - (void)resetCellSize
 {
@@ -88,7 +70,6 @@ static CGSize _asset_size;
 {
   if (self = [super initWithCoder:aDecoder])
   {
-    _cell_identifier = @"gallery_cell";
     _assets = nil;
     _nav_bar_tap = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                            action:@selector(navBarTapped)];
@@ -177,7 +158,7 @@ static CGSize _asset_size;
   }
   [self updateCachedAssets];
   [self.navigationController.navigationBar.subviews[0] setUserInteractionEnabled:YES];
-  [self.navigationController.navigationBar.subviews[0] addGestureRecognizer:_nav_bar_tap];
+  [self.navigationController.navigationBar.subviews[0] addGestureRecognizer:self.nav_bar_tap];
 }
 
 - (void)navBarTapped
@@ -187,14 +168,14 @@ static CGSize _asset_size;
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-  [self.navigationController.navigationBar.subviews[0] removeGestureRecognizer:_nav_bar_tap];
+  [self.navigationController.navigationBar.subviews[0] removeGestureRecognizer:self.nav_bar_tap];
   [self resetCachedAssets];
   [super viewWillDisappear:animated];
 }
 
 - (void)loadAssets
 {
-  if ([PHAsset class])
+  if ([InfinitHostDevice PHAssetClass])
   {
     PHFetchOptions* options = [[PHFetchOptions alloc] init];
     options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate"
@@ -253,12 +234,12 @@ static CGSize _asset_size;
 - (void)resetCachedAssets
 {
   [self.image_caching_manager stopCachingImagesForAllAssets];
-  _previous_preheat_rect = CGRectZero;
+  self.previous_preheat_rect = CGRectZero;
 }
 
 - (void)updateCachedAssets
 {
-  if (![PHAsset class])
+  if (![InfinitHostDevice PHAssetClass])
     return;
   BOOL visible = self.isViewLoaded && self.view.window != nil;
   if (!visible)
@@ -269,14 +250,14 @@ static CGSize _asset_size;
   preheat_rect = CGRectInset(preheat_rect, 0.0f, - 0.5f * CGRectGetHeight(preheat_rect));
 
   // If scrolled by a "reasonable" amount...
-  CGFloat delta = ABS(CGRectGetMidY(preheat_rect) - CGRectGetMidY(_previous_preheat_rect));
+  CGFloat delta = ABS(CGRectGetMidY(preheat_rect) - CGRectGetMidY(self.previous_preheat_rect));
   if (delta > CGRectGetHeight(self.collection_view.bounds) / 3.0f)
   {
     // Compute the assets to start caching and to stop caching.
     NSMutableArray* added_indexes = [NSMutableArray array];
     NSMutableArray* removed_indexes = [NSMutableArray array];
 
-    [self computeDifferenceBetweenRect:_previous_preheat_rect
+    [self computeDifferenceBetweenRect:self.previous_preheat_rect
                                andRect:preheat_rect
                         removedHandler:^(CGRect removed_rect)
     {
@@ -303,7 +284,7 @@ static CGSize _asset_size;
                                       contentMode:PHImageContentModeAspectFill
                                           options:nil];
 
-    _previous_preheat_rect = preheat_rect;
+    self.previous_preheat_rect = preheat_rect;
   }
 }
 
@@ -369,6 +350,7 @@ static CGSize _asset_size;
 - (void)resetView
 {
   self.assets = nil;
+  _managed_files = nil;
   for (NSIndexPath* path in self.collection_view.indexPathsForSelectedItems)
     [self.collection_view deselectItemAtIndexPath:path animated:NO];
 }
@@ -401,7 +383,7 @@ static CGSize _asset_size;
     [collectionView dequeueReusableCellWithReuseIdentifier:_cell_identifier
                                               forIndexPath:indexPath];
 
-  if ([PHAsset class])
+  if ([InfinitHostDevice PHAssetClass])
   {
     NSInteger current_tag = cell.tag + 1;
     cell.tag = current_tag;
@@ -562,9 +544,12 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
   // button show.
   self.next_constraint.constant = - 3.0f * self.next_button.bounds.size.height;
   [(InfinitTabBarController*)self.tabBarController lastSelectedIndex];
+  [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:self.managed_files];
+  _managed_files = nil;
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue*)segue sender:(id)sender
+- (void)prepareForSegue:(UIStoryboardSegue*)segue
+                 sender:(id)sender
 {
   if ([segue.identifier isEqualToString:@"send_to_segue"])
   {
@@ -574,11 +559,70 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
       id asset = self.assets[path.row];
       [assets addObject:asset];
     }
+    InfinitTemporaryFileManager* manager = [InfinitTemporaryFileManager sharedInstance];
+    if (!self.managed_files)
+      _managed_files = [manager createManagedFiles];
+    __weak InfinitSendGalleryController* weak_self = self;
+    InfinitTemporaryFileManagerCallback callback = ^(BOOL success, NSError* error)
+    {
+      InfinitSendGalleryController* strong_self = weak_self;
+      if (error)
+      {
+        NSString* title = nil;
+        NSString* message = nil;
+        switch (error.code)
+        {
+          case InfinitFileSystemErrorNoFreeSpace:
+            title = NSLocalizedString(@"Not enough space on your device.", nil);
+            message =
+            NSLocalizedString(@"Free up some space on your device and try again or send fewer files.", nil);
+            break;
+
+          default:
+            title = NSLocalizedString(@"Unable to fetch files.", nil);
+            message =
+            NSLocalizedString(@"Infinit was unable to fetch the files from your gallery. Check that you have some free space and try again.", nil);
+            break;
+        }
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
+                                                        message:message
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:strong_self.managed_files];
+        strong_self->_managed_files = nil;
+      }
+    };
+    NSMutableArray* difference = [self.last_selection mutableCopy];
+    [difference removeObjectsInArray:assets];
+    if ([InfinitHostDevice PHAssetClass])
+    {
+      [manager addPHAssetsLibraryList:assets
+                       toManagedFiles:self.managed_files
+                      completionBlock:callback];
+      for (PHAsset* asset in difference)
+        [self.managed_files.remove_assets addObject:asset.localIdentifier];
+    }
+    else
+    {
+      [manager addALAssetsLibraryList:assets
+                       toManagedFiles:self.managed_files
+                      completionBlock:callback];
+      for (ALAsset* asset in difference)
+      {
+        NSURL* asset_url = [asset valueForProperty:ALAssetPropertyAssetURL];
+        [self.managed_files.remove_assets addObject:asset_url];
+      }
+    }
+
     InfinitSendRecipientsController* view_controller =
       (InfinitSendRecipientsController*)segue.destinationViewController;
-    view_controller.assets = assets;
+    view_controller.file_count = assets.count;
+    view_controller.managed_files = self.managed_files;
     [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewOpen
                                method:InfinitUIMethodSendGalleryNext];
+    self.last_selection = assets;
   }
 }
 
