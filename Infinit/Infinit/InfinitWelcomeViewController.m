@@ -14,6 +14,7 @@
 #import "InfinitConstants.h"
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitFacebookManager.h"
+#import "InfinitGalleryManager.h"
 #import "InfinitHostDevice.h"
 #import "InfinitRatingManager.h"
 #import "InfinitWelcomeAvatarViewController.h"
@@ -239,9 +240,10 @@ static dispatch_once_t _password_token = 0;
 
 - (void)showMainView
 {
+  [InfinitBackgroundManager sharedInstance];
   [InfinitDeviceManager sharedInstance];
   [InfinitDownloadFolderManager sharedInstance];
-  [InfinitBackgroundManager sharedInstance];
+  [InfinitGalleryManager sharedInstance];
   [InfinitRatingManager sharedInstance];
   NSString* identifier = nil;
   if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
