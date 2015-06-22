@@ -33,6 +33,7 @@
 #import <Gap/InfinitDataSize.h>
 #import <Gap/InfinitDeviceManager.h>
 #import <Gap/InfinitPeerTransactionManager.h>
+#import <Gap/InfinitTemporaryFileManager.h>
 #import <Gap/InfinitUserManager.h>
 
 #import "UIImage+Rounded.h"
@@ -77,8 +78,7 @@
 @property (atomic, readonly) NSMutableArray* onboarding_model;
 
 // Extension
-@property (nonatomic, readonly) NSString* extension_files_uuid;
-@property (nonatomic, readonly) NSArray* extension_internal_files;
+@property (nonatomic, readonly) InfinitManagedFiles* managed_files;
 
 @end
 
@@ -1322,13 +1322,17 @@ openFileTapped:(NSUInteger)file_index
 
 - (void)cellSendTapped:(InfinitHomePeerTransactionCell*)sender
 {
+  InfinitDownloadFolderManager* folder_manager = [InfinitDownloadFolderManager sharedInstance];
+  InfinitFolderModel* folder =
+    [folder_manager completedFolderForTransactionMetaId:sender.transaction.meta_id];
+  NSArray* files = folder.file_paths;
+  InfinitTemporaryFileManager* temp_manager = [InfinitTemporaryFileManager sharedInstance];
+  _managed_files = [temp_manager createManagedFiles];
+  [temp_manager addFiles:files toManagedFiles:self.managed_files];
   if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
   {
-    InfinitDownloadFolderManager* manager = [InfinitDownloadFolderManager sharedInstance];
-    InfinitFolderModel* folder =
-      [manager completedFolderForTransactionMetaId:sender.transaction.meta_id];
-    NSArray* files = folder.file_paths;
-    [((InfinitMainSplitViewController_iPad*)self.splitViewController) showSendViewForFiles:files];
+
+    [((InfinitMainSplitViewController_iPad*)self.splitViewController) showSendViewForManagedFiles:self.managed_files];
     [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewOpen
                                method:InfinitUIMethodHomeCard];
   }
@@ -1409,17 +1413,19 @@ openFileTapped:(NSUInteger)file_index
 
 #pragma mark - Extension Files Handling
 
-- (void)showRecipientsForManagedFiles:(NSString*)uuid
+- (void)showRecipientsForManagedFiles:(InfinitManagedFiles*)managed_files
 {
   _sending = YES;
-  _extension_files_uuid = [uuid copy];
+  _managed_files = managed_files;
   [self performSegueWithIdentifier:@"home_extension_to_send_segue" sender:self];
 }
 
 - (void)showRecipientsForLocalFiles:(NSArray*)files
 {
   _sending = YES;
-  _extension_internal_files = [files copy];
+  InfinitTemporaryFileManager* manager = [InfinitTemporaryFileManager sharedInstance];
+  _managed_files = [manager createManagedFiles];
+  [manager addFiles:files toManagedFiles:self.managed_files];
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(500 * NSEC_PER_MSEC)),
                  dispatch_get_main_queue(), ^
   {
@@ -1532,32 +1538,26 @@ openFileTapped:(NSUInteger)file_index
       (InfinitSendRecipientsController*)segue.destinationViewController;
     if ([segue.identifier isEqualToString:@"home_card_to_send_segue"])
     {
-      InfinitHomePeerTransactionCell* cell = (InfinitHomePeerTransactionCell*)sender;
-      InfinitFolderModel* folder =
-        [[InfinitDownloadFolderManager sharedInstance] completedFolderForTransactionMetaId:cell.transaction.meta_id];
-      send_controller.files = folder.file_paths;
+      send_controller.file_count = self.managed_files.file_count;
+      send_controller.managed_files = self.managed_files;
+      [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewOpen
+                                 method:InfinitUIMethodHomeCard];
+      _managed_files = nil;
     }
     else if ([segue.identifier isEqualToString:@"home_extension_internal_to_send_segue"])
     {
-      send_controller.extension_send = YES;
-      send_controller.files = self.extension_internal_files;
-      _extension_internal_files = nil;
-    }
-    else
-    {
-      send_controller.extension_send = YES;
-      send_controller.extension_files_uuid = self.extension_files_uuid;
-      _extension_files_uuid = nil;
-    }
-    if (send_controller.extension_send)
-    {
+      send_controller.managed_files = self.managed_files;
+      _managed_files = nil;
       [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewOpen
                                  method:InfinitUIMethodExtensionFiles];
     }
     else
     {
+      send_controller.file_count = self.managed_files.file_count;
+      send_controller.managed_files = self.managed_files;
+      _managed_files = nil;
       [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewOpen
-                                 method:InfinitUIMethodHomeCard];
+                                 method:InfinitUIMethodExtensionFiles];
     }
     [UIView animateWithDuration:0.3f
                      animations:^

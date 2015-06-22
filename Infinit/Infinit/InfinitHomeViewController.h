@@ -10,11 +10,13 @@
 
 #import "InfinitOfflineViewController.h"
 
+@class InfinitManagedFiles;
+
 @interface InfinitHomeViewController : InfinitOfflineViewController
 
 - (void)scrollToTop;
 
-- (void)showRecipientsForManagedFiles:(NSString*)uuid;
+- (void)showRecipientsForManagedFiles:(InfinitManagedFiles*)uuid;
 - (void)showRecipientsForLocalFiles:(NSArray*)files;
 
 @end
