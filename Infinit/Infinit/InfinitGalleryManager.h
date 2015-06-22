@@ -1,5 +1,5 @@
 //
-//  InfinitGallery.h
+//  InfinitGalleryManager.h
 //  Infinit
 //
 //  Created by Christopher Crone on 17/04/15.
@@ -8,7 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface InfinitGallery : NSObject
+@interface InfinitGalleryManager : NSObject
+
+@property (nonatomic, readwrite) BOOL autosave;
+
++ (instancetype)sharedInstance;
 
 + (void)saveToGallery:(NSArray*)paths;
 

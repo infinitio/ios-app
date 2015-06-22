@@ -1,66 +1,102 @@
 //
-//  InfinitGallery.m
+//  InfinitGalleryManager.m
 //  Infinit
 //
 //  Created by Christopher Crone on 17/04/15.
 //  Copyright (c) 2015 Infinit. All rights reserved.
 //
 
-#import "InfinitGallery.h"
+#import "InfinitGalleryManager.h"
 
+#import "InfinitApplicationSettings.h"
 #import "InfinitConstants.h"
+#import "InfinitDownloadFolderManager.h"
 #import "InfinitFilePreview.h"
+#import "InfinitHostDevice.h"
 
 #import "ALAssetsLibrary+CustomPhotoAlbum.h"
 #import <Photos/Photos.h>
 
+#import <Gap/InfinitPeerTransactionManager.h>
+
 #undef check
 #import <elle/log.hh>
 
-ELLE_LOG_COMPONENT("iOS.Gallery");
+ELLE_LOG_COMPONENT("iOS.GalleryManager");
 
-@interface InfinitGallery ()
+@interface InfinitGalleryManager ()
 
 @property (nonatomic, strong) ALAssetsLibrary* library;
 
 @end
 
 static dispatch_once_t _instance_token = 0;
-static InfinitGallery* _instance = nil;
+static InfinitGalleryManager* _instance = nil;
 
-@implementation InfinitGallery
+@implementation InfinitGalleryManager
+
+#pragma mark - Init
 
 - (id)init
 {
   NSCAssert(_instance == nil, @"Use sharedInstance");
   if (self = [super init])
   {
-    _library = [[ALAssetsLibrary alloc] init];
+    if (![InfinitHostDevice PHAssetClass])
+      _library = [[ALAssetsLibrary alloc] init];
+    self.autosave = [InfinitApplicationSettings sharedInstance].autosave_to_gallery;
   }
   return self;
+}
+
+- (void)dealloc
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 + (instancetype)sharedInstance
 {
   dispatch_once(&_instance_token, ^
   {
-    _instance = [[InfinitGallery alloc] init];
+    _instance = [[self alloc] init];
   });
   return _instance;
 }
 
-- (BOOL)haveGalleryAccess
+#pragma mark - Public
+
+- (void)setAutosave:(BOOL)autosave
 {
-  if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusAuthorized)
-    return YES;
-  return NO;
+  @synchronized(self)
+  {
+    if (self.autosave == autosave)
+      return;
+    _autosave = autosave;
+    [InfinitApplicationSettings sharedInstance].autosave_to_gallery = autosave;
+    if (self.autosave)
+    {
+      [[NSNotificationCenter defaultCenter] addObserver:self
+                                               selector:@selector(transactionUpdated:)
+                                                   name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION
+                                                 object:nil];
+    }
+    else
+    {
+      [[NSNotificationCenter defaultCenter] removeObserver:self];
+    }
+  }
+}
+
++ (void)saveToGallery:(NSArray*)paths
+{
+  [[self sharedInstance] saveToGallery:paths];
 }
 
 - (void)saveToGallery:(NSArray*)paths
 {
   if (paths.count == 0 || ![self haveGalleryAccess])
     return;
-  if ([PHAsset class])
+  if ([InfinitHostDevice PHAssetClass])
   {
     [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^
      {
@@ -77,12 +113,12 @@ static InfinitGallery* _instance = nil;
        if (!collection)
        {
          collection_request =
-         [PHAssetCollectionChangeRequest creationRequestForAssetCollectionWithTitle:kInfinitAlbumName];
+           [PHAssetCollectionChangeRequest creationRequestForAssetCollectionWithTitle:kInfinitAlbumName];
        }
        else
        {
          collection_request =
-         [PHAssetCollectionChangeRequest changeRequestForAssetCollection:collection];
+           [PHAssetCollectionChangeRequest changeRequestForAssetCollection:collection];
        }
        NSMutableArray* assets = [NSMutableArray array];
        for (NSString* path in paths)
@@ -153,9 +189,29 @@ static InfinitGallery* _instance = nil;
   }
 }
 
-+ (void)saveToGallery:(NSArray*)paths
+#pragma mark - Transaction Updates
+
+- (void)transactionUpdated:(NSNotification*)notification
 {
-  [[InfinitGallery sharedInstance] saveToGallery:paths];
+  NSNumber* id_ = notification.userInfo[kInfinitTransactionId];
+  InfinitPeerTransaction* transaction = [InfinitPeerTransactionManager transactionWithId:id_];
+  if (!transaction)
+    return;
+  if (transaction.to_device && transaction.status == gap_transaction_finished)
+  {
+    InfinitDownloadFolderManager* manager = [InfinitDownloadFolderManager sharedInstance];
+    InfinitFolderModel* folder = [manager completedFolderForTransactionMetaId:transaction.meta_id];
+    [self saveToGallery:folder.file_paths];
+  }
+}
+
+#pragma mark - Helpers
+
+- (BOOL)haveGalleryAccess
+{
+  if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusAuthorized)
+    return YES;
+  return NO;
 }
 
 @end
