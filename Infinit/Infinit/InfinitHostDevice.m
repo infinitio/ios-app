@@ -13,6 +13,7 @@
 #import <mach/machine.h>
 
 @import CoreTelephony;
+@import Photos;
 @import UIKit;
 
 @implementation InfinitHostDevice
@@ -154,6 +155,13 @@
 + (float)iOSVersion
 {
   return [UIDevice currentDevice].systemVersion.floatValue;
+}
+
+#pragma mark - Debug
+
++ (BOOL)PHAssetClass
+{
+  return [PHAsset class];
 }
 
 @end

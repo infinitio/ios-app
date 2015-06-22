@@ -32,6 +32,9 @@ typedef NS_ENUM(NSUInteger, InfinitCPUTypes)
 + (BOOL)canSendSMS;
 + (BOOL)canSendWhatsApp;
 
+/// Used to debug iOS 7 asset handling on iOS 8.
++ (BOOL)PHAssetClass;
+
 + (BOOL)iOS7;
 
 + (float)iOSVersion;
