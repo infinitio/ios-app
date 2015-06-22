@@ -17,8 +17,12 @@
 - (BOOL)areThumbnailsForTransaction:(InfinitPeerTransaction*)transaction;
 
 - (void)generateThumbnailsForAssets:(NSArray*)assets
+             forTransactionsWithIds:(NSArray*)ids;
+- (void)generateThumbnailsForAssets:(NSArray*)assets
                forTransactionWithId:(NSNumber*)id_;
 
+- (void)generateThumbnailsForFiles:(NSArray*)files
+            forTransactionsWithIds:(NSArray*)ids;
 - (void)generateThumbnailsForFiles:(NSArray*)files
               forTransactionWithId:(NSNumber*)id_;
 
