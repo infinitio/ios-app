@@ -171,11 +171,16 @@
 
 - (IBAction)webProfileTap:(id)sender
 {
-  NSMutableString* url_str = [kInfinitWebProfileURL mutableCopy];
-  NSString* session_id = [InfinitStateManager sharedInstance].metaSessionId;
-  if (session_id.length)
-    [url_str appendFormat:@"&session_id=%@", session_id];
-  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url_str]];
+  InfinitStateManager* manager = [InfinitStateManager sharedInstance];
+  [manager webLoginTokenWithCompletionBlock:^(InfinitStateResult* result, NSString* token)
+  {
+    if (!result.success || !token.length)
+      return;
+    NSMutableString* url_str = [kInfinitWebProfileURL mutableCopy];
+    [url_str appendFormat:@"&login_token=%@",
+      [token stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url_str]];
+  }];
 }
 
 #pragma mark - Avatar Picker

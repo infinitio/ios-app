@@ -8,14 +8,8 @@
 
 #import "InfinitSettingsCell.h"
 
-#import "InfinitColor.h"
+#import <Gap/InfinitColor.h>
 
 @implementation InfinitSettingsCell
-
-- (void)prepareForReuse
-{
-  [super prepareForReuse];
-  self.title_label.textColor = [InfinitColor colorWithRed:81 green:73 blue:73];
-}
 
 @end
