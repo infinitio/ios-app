@@ -15,6 +15,7 @@
 #import "InfinitContactImportCell.h"
 #import "InfinitContactManager.h"
 #import "InfinitFacebookManager.h"
+#import "InfinitSendGalleryController.h"
 #import "InfinitHostDevice.h"
 #import "InfinitImportOverlayView.h"
 #import "InfinitSendContactCell.h"
@@ -35,7 +36,6 @@
 #import <Gap/InfinitAccountsManager.h>
 #import <Gap/InfinitColor.h>
 #import <Gap/InfinitDeviceManager.h>
-#import <Gap/InfinitFileSystemError.h>
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitTemporaryFileManager.h>
@@ -87,7 +87,6 @@ typedef NS_ENUM(NSUInteger, InfinitSendRecipientsSection)
 
 @property (nonatomic, readonly) BOOL can_send_sms;
 @property (atomic) BOOL preloading_contacts;
-@property (nonatomic, readonly) NSString* managed_files_id;
 @property (atomic, readwrite) NSString* last_search;
 @property (nonatomic, readonly) UITapGestureRecognizer* nav_bar_tap;
 @property (nonatomic, readonly) NSArray* thumbnail_elements;
@@ -105,16 +104,6 @@ static NSUInteger _max_recipients = 10;
 @implementation InfinitSendRecipientsController
 
 #pragma mark - Init
-
-- (id)initWithCoder:(NSCoder*)aDecoder
-{
-  if (self = [super initWithCoder:aDecoder])
-  {
-    _nav_bar_tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                           action:@selector(navBarTapped)];
-  }
-  return self;
-}
 
 - (void)dealloc
 {
@@ -199,14 +188,14 @@ static NSUInteger _max_recipients = 10;
                                            selector:@selector(newUserAdded:)
                                                name:INFINIT_CONTACT_JOINED_NOTIFICATION
                                              object:nil];
-  _managed_files_id = [[InfinitTemporaryFileManager sharedInstance] createManagedFiles];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(managedFilesDeleted:)
+                                               name:INFINIT_MANAGED_FILES_DELETED
+                                             object:nil];
   if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
   {
     self.preloading_contacts = YES;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
-    {
-      [self fetchAddressBook];
-    });
+    [self fetchAddressBook];
   }
   else
   {
@@ -236,6 +225,8 @@ static NSUInteger _max_recipients = 10;
 {
   [super viewDidAppear:animated];
   [self.navigationController.navigationBar.subviews[0] setUserInteractionEnabled:YES];
+  _nav_bar_tap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                         action:@selector(navBarTapped)];
   [self.navigationController.navigationBar.subviews[0] addGestureRecognizer:self.nav_bar_tap];
   if (self.recipient != nil)
   {
@@ -258,28 +249,24 @@ static NSUInteger _max_recipients = 10;
     if (section != NSNotFound && row != NSNotFound)
       [self selectIndexPath:[NSIndexPath indexPathForRow:row inSection:section]];
   }
-  else if (self.extension_files_uuid.length)
+  NSString* title = nil;
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
   {
-    _managed_files_id = self.extension_files_uuid;
-    InfinitTemporaryFileManager* manager = [InfinitTemporaryFileManager sharedInstance];
-    NSUInteger file_count = [manager fileCountForManagedFiles:self.extension_files_uuid];
-    NSString* title = nil;
-    if (file_count == 1)
+    if (self.file_count == 0)
+    {
+      title = NSLocalizedString(@"SEND", nil);
+    }
+    else if (self.file_count == 1)
+    {
       title = NSLocalizedString(@"SEND 1 FILE", nil);
+    }
     else
-      title = [NSString stringWithFormat:NSLocalizedString(@"SEND %lu FILES", nil), file_count];
+    {
+      title = [NSString stringWithFormat:NSLocalizedString(@"SEND %lu FILES", nil),
+               self.file_count];
+    }
     self.navigationItem.title = title;
   }
-  else if (self.files && self.extension_send)
-  {
-    NSString* title = nil;
-    if (self.files.count == 1)
-      title = NSLocalizedString(@"SEND 1 FILE", nil);
-    else
-      title = [NSString stringWithFormat:NSLocalizedString(@"SEND %lu FILES", nil), self.files.count];
-    self.navigationItem.title = title;
-  }
-  _extension_send = NO;
 }
 
 - (void)navBarTapped
@@ -289,33 +276,23 @@ static NSUInteger _max_recipients = 10;
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-  _recipient = nil;
-  _files = nil;
-  _assets = nil;
-  _extension_files_uuid = nil;
+  self.recipient = nil;
+  self.managed_files = nil;
   [self.navigationController.navigationBar.subviews[0] removeGestureRecognizer:self.nav_bar_tap];
-  [super viewWillDisappear:animated];
+  self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+  _nav_bar_tap = nil;
   [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [super viewWillDisappear:animated];
 }
 
 #pragma mark - General
 
-- (void)setAssets:(NSArray*)assets
-{
-  _assets = assets;
-  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-    return;
-  [self updateSendButton];
-}
-
 - (void)resetView
 {
-  self.assets = nil;
-  self.files = nil;
   [self.recipients removeAllObjects];
-  if (self.extension_files_uuid.length)
-    [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:self.extension_files_uuid];
-  _extension_files_uuid = nil;
+  if (self.managed_files)
+    [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:self.managed_files];
+  self.managed_files = nil;
 }
 
 - (void)fetchDevices
@@ -335,7 +312,7 @@ static NSUInteger _max_recipients = 10;
   else
   {
     _no_devices = NO;
-    for (InfinitDevice* device in [InfinitDeviceManager sharedInstance].other_devices)
+    for (InfinitDevice* device in other_devices)
     {
       InfinitContactUser* contact = [InfinitContactUser contactWithInfinitUser:me andDevice:device];
       [self.all_devices addObject:contact];
@@ -370,25 +347,30 @@ static NSUInteger _max_recipients = 10;
 
 - (void)fetchAddressBook
 {
-  if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
   {
-    self.all_contacts = [[[InfinitContactManager sharedInstance] allContacts] mutableCopy];
-    self.contact_results = [self.all_contacts mutableCopy];
-    dispatch_sync(dispatch_get_main_queue(), ^
+    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
     {
-      [self reloadTableSections:[NSIndexSet indexSetWithIndex:InfinitSendRecipientsSectionContacts]];
-      if (self.recipient)
+      self.all_contacts = [[[InfinitContactManager sharedInstance] allContacts] mutableCopy];
+      self.contact_results = [self.all_contacts mutableCopy];
+      dispatch_sync(dispatch_get_main_queue(), ^
       {
-        NSUInteger row = [self.contact_results indexOfObject:self.recipient];
-        if (row != NSNotFound)
+        NSIndexSet* indexes = [NSIndexSet indexSetWithIndex:InfinitSendRecipientsSectionContacts];
+        [self reloadTableSections:indexes];
+        if (self.recipient)
         {
-          [self selectIndexPath:[NSIndexPath indexPathForRow:row
-                                                   inSection:InfinitSendRecipientsSectionContacts]];
+          NSUInteger row = [self.contact_results indexOfObject:self.recipient];
+          if (row != NSNotFound)
+          {
+            NSIndexPath* index = [NSIndexPath indexPathForRow:row
+                                                    inSection:InfinitSendRecipientsSectionContacts];
+            [self selectIndexPath:index];
+          }
         }
-      }
-    });
-  }
-  self.preloading_contacts = NO;
+      });
+    }
+    self.preloading_contacts = NO;
+  });
 }
 
 - (void)reloadTableSections:(NSIndexSet*)set
@@ -492,10 +474,7 @@ static NSUInteger _max_recipients = 10;
     if (granted)
     {
       self.preloading_contacts = YES;
-      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
-      {
-        [self fetchAddressBook];
-      });
+      [self fetchAddressBook];
       [InfinitMetricsManager sendMetric:InfinitUIEventAccessContacts method:InfinitUIMethodYes];
     }
     else
@@ -598,116 +577,93 @@ static NSUInteger _max_recipients = 10;
       [[UIApplication sharedApplication].windows.firstObject makeKeyAndVisible];
     else
       [self.splitViewController dismissViewControllerAnimated:YES completion:NULL];
+    [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:self.managed_files];
+    self.managed_files = nil;
   }
   else
   {
     [self.navigationController popViewControllerAnimated:YES];
+    if (![self.navigationController.topViewController isKindOfClass:InfinitSendGalleryController.class])
+    {
+      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+      {
+        [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:self.managed_files];
+        self.managed_files = nil;
+      });
+    }
+    else
+    {
+      self.managed_files = nil;
+    }
   }
-  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+}
+
+- (void)doneSending
+{
+  self.managed_files = nil;
+  dispatch_async(dispatch_get_main_queue(), ^
   {
-    [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:_managed_files_id];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+      if ([self.parentViewController respondsToSelector:@selector(hideController)])
+        [(InfinitOverlayViewController*)self.parentViewController hideController];
+    }
+    else
+    {
+      [((InfinitTabBarController*)self.tabBarController) showMainScreen:self];
+    }
   });
 }
 
 - (IBAction)sendButtonTapped:(id)sender
 {
   [self setSendButtonHidden:YES];
-  if (self.assets.count > 0)
+
+  void (^send_block)() = ^()
   {
-    InfinitTemporaryFileManager* manager = [InfinitTemporaryFileManager sharedInstance];
-    _thumbnail_elements = [self.assets copy];
-    InfinitTemporaryFileManagerCallback callback = ^void(BOOL success, NSError* error)
+    NSArray* transaction_ids =
+      [self sendFilesToCurrentRecipients:self.managed_files.sorted_paths];
+    [[InfinitTemporaryFileManager sharedInstance] addTransactionIds:transaction_ids
+                                                    forManagedFiles:self.managed_files];
+    [[InfinitTemporaryFileManager sharedInstance] markManagedFilesAsSending:self.managed_files];
+    InfinitUploadThumbnailManager* thumb_manager = [InfinitUploadThumbnailManager sharedInstance];
+    if (self.managed_files.asset_map.count)
     {
-      if (error)
+      NSMutableArray* ordered_assets = [NSMutableArray array];
+      for (NSString* path in self.managed_files.sorted_paths)
       {
-        NSString* title = nil;
-        NSString* message = nil;
-        switch (error.code)
-        {
-          case InfinitFileSystemErrorNoFreeSpace:
-            title = NSLocalizedString(@"Not enough space on your device.", nil);
-            message =
-              NSLocalizedString(@"Free up some space on your device and try again or send fewer files.", nil);
-            break;
-            
-          default:
-            title = NSLocalizedString(@"Unable to fetch files.", nil);
-            message =
-              NSLocalizedString(@"Infinit was unable to fetch the files from your gallery. Check that you have some free space and try again.", nil);
-            break;
-        }
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
-                                                        message:message
-                                                       delegate:nil 
-                                              cancelButtonTitle:@"OK" 
-                                              otherButtonTitles:nil];
-        [alert show];
-        [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:_managed_files_id];
-        _managed_files_id = nil;
-        return;
+        id asset = [self.managed_files.asset_map allKeysForObject:path].firstObject;
+        [ordered_assets addObject:asset];
       }
-      NSArray* files =
-        [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:_managed_files_id];
-      NSArray* ids = [self sendFilesToCurrentRecipients:files];
-      [[InfinitTemporaryFileManager sharedInstance] setTransactionIds:ids
-                                                      forManagedFiles:_managed_files_id];
-      for (NSNumber* id_ in ids)
-      {
-        if (id_.unsignedIntValue != 0)
-        {
-          InfinitUploadThumbnailManager* thumb_manager =
-            [InfinitUploadThumbnailManager sharedInstance];
-          [thumb_manager generateThumbnailsForAssets:_thumbnail_elements
-                                forTransactionWithId:id_];
-        }
-      }
-    };
-    BOOL show_preparing_message = NO;
-    if ([PHAsset class])
-    {
-      [manager addPHAssetsLibraryURLList:self.assets
-                          toManagedFiles:_managed_files_id
-                         completionBlock:callback];
-      for (PHAsset* asset in _thumbnail_elements)
-      {
-        if (asset.mediaType == PHAssetMediaTypeVideo)
-        {
-          show_preparing_message = YES;
-          break;
-        }
-      }
+      [thumb_manager generateThumbnailsForAssets:ordered_assets
+                          forTransactionsWithIds:transaction_ids];
     }
     else
     {
-      NSMutableArray* asset_urls = [NSMutableArray array];
-      for (ALAsset* asset in self.assets)
-      {
-        [asset_urls addObject:asset.defaultRepresentation.url];
-        if ([asset valueForProperty:ALAssetPropertyType] == ALAssetTypeVideo)
-          show_preparing_message = YES;
-      }
-      [manager addALAssetsLibraryURLList:asset_urls
-                          toManagedFiles:_managed_files_id
-                         completionBlock:callback];
+      [thumb_manager generateThumbnailsForFiles:self.managed_files.sorted_paths
+                         forTransactionsWithIds:transaction_ids];
     }
-    if (_thumbnail_elements.count >= 10)
-      show_preparing_message = YES;
+    [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewSend
+                               method:InfinitUIMethodTap];
+    _managed_files = nil;
+    [self doneSending];
+  };
+  if (self.managed_files.copying)
+  {
+    self.managed_files.done_copying_block = send_block;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
       if ([InfinitHostDevice iOSVersion] < 8.0f)
         [[UIApplication sharedApplication].windows.firstObject makeKeyAndVisible];
       else
         [self.splitViewController dismissViewControllerAnimated:YES completion:NULL];
-      if (show_preparing_message)
-      {
-        NSString* message = NSLocalizedString(@"Preparing your transfer...", nil);
-        [[InfinitStatusBarNotifier sharedInstance] showMessage:message
-                                                        ofType:InfinitStatusBarNotificationInfo
-                                                      duration:4.0f
-                                                  withActivity:YES];
-      }
+      NSString* message = NSLocalizedString(@"Preparing your transfer...", nil);
+      [[InfinitStatusBarNotifier sharedInstance] showMessage:message
+                                                      ofType:InfinitStatusBarNotificationInfo
+                                                    duration:4.0f
+                                                withActivity:YES];
     }
-    else if (show_preparing_message && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
       SEL selector = @selector(showTransactionPreparingNotification);
       if ([self.tabBarController respondsToSelector:selector])
@@ -716,49 +672,10 @@ static NSUInteger _max_recipients = 10;
       }
     }
   }
-  else if (self.files.count > 0)
+  else
   {
-    _thumbnail_elements = [self.files copy];
-    NSArray* ids = [self sendFilesToCurrentRecipients:self.files];
-    for (NSNumber* id_ in ids)
-    {
-      if (id_.unsignedIntValue != 0)
-      {
-        [[InfinitUploadThumbnailManager sharedInstance] generateThumbnailsForFiles:_thumbnail_elements
-                                                              forTransactionWithId:id_];
-      }
-    }
+    send_block();
   }
-  else if (self.extension_files_uuid.length)
-  {
-    NSArray* files =
-      [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:self.extension_files_uuid];
-    _thumbnail_elements = [files copy];
-    NSArray* ids = [self sendFilesToCurrentRecipients:files];
-    [[InfinitTemporaryFileManager sharedInstance] setTransactionIds:ids
-                                                    forManagedFiles:_managed_files_id];
-    for (NSNumber* id_ in ids)
-    {
-      if (id_.unsignedIntValue != 0)
-      {
-        [[InfinitUploadThumbnailManager sharedInstance] generateThumbnailsForFiles:_thumbnail_elements
-                                                              forTransactionWithId:id_];
-      }
-    }
-  }
-  [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewSend method:InfinitUIMethodTap];
-  dispatch_async(dispatch_get_main_queue(), ^
-  {
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
-      if (self.files.count > 0 || self.extension_files_uuid.length)
-        [((InfinitOverlayViewController*)self.parentViewController) hideController];
-    }
-    else
-    {
-      [((InfinitTabBarController*)self.tabBarController) showMainScreen:self];
-    }
-  });
 }
 
 - (NSArray*)sendFilesToCurrentRecipients:(NSArray*)files
@@ -1086,7 +1003,9 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
     {
       contact_ab.selected_email_index = 0;
     }
-    else if (self.can_send_sms && contact_ab.phone_numbers.count == 1 && contact_ab.emails.count == 0)
+    else if (self.can_send_sms &&
+             contact_ab.phone_numbers.count == 1 &&
+             contact_ab.emails.count == 0)
     {
       contact_ab.selected_phone_index = 0;
     }
@@ -1231,11 +1150,8 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
 
 - (BOOL)inputsGood
 {
-  if ((self.assets.count == 0 && self.files.count == 0 && !self.extension_files_uuid.length) ||
-      self.recipients.count == 0)
-  {
+  if (self.managed_files.managed_paths.count == 0 || self.recipients.count == 0)
     return NO;
-  }
   return YES;
 }
 
@@ -1539,6 +1455,15 @@ didDeleteTokenAtIndex:(NSUInteger)index
       return;
     }
   }];
+}
+
+#pragma mark - Managed Files Deleted
+
+- (void)managedFilesDeleted:(NSNotification*)notification
+{
+  NSString* uuid = notification.userInfo[kInfinitManagedFilesId];
+  if ([uuid isEqualToString:self.managed_files.uuid])
+    [self doneSending];
 }
 
 #pragma mark - Helpers

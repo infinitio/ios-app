@@ -10,15 +10,12 @@
 
 #import "InfinitContact.h"
 
+@class InfinitManagedFiles;
+
 @interface InfinitSendRecipientsController : UIViewController
 
-/// List of ALAssets or PHAssets.
-@property (nonatomic, strong) NSArray* assets;
-/// List of file paths as NSStrings.
-@property (nonatomic, copy) NSArray* files;
-/// String UUID of managed files.
-@property (nonatomic, copy) NSString* extension_files_uuid;
-@property (atomic) BOOL extension_send;
+@property (nonatomic, readwrite) NSUInteger file_count;
+@property (nonatomic, weak, readwrite) InfinitManagedFiles* managed_files;
 @property (nonatomic, weak, readwrite) InfinitContact* recipient;
 
 - (void)resetView;
