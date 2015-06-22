@@ -10,10 +10,12 @@
 
 #import "InfinitFolderModel.h"
 
+@class InfinitManagedFiles;
+
 @interface InfinitMainSplitViewController_iPad : UISplitViewController
 
 - (void)showSendGalleryView;
-- (void)showSendViewForFiles:(NSArray*)files;
+- (void)showSendViewForManagedFiles:(InfinitManagedFiles*)managed_files;
 - (void)showViewForFolder:(InfinitFolderModel*)folder;
 
 @end

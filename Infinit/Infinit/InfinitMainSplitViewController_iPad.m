@@ -32,7 +32,7 @@
 @property (nonatomic, strong) InfinitOverlayViewController* overlay_controller;
 @property (nonatomic, strong) InfinitSendRecipientsController* recipient_controller;
 
-@property (nonatomic, readonly) NSString* extension_uuid;
+@property (nonatomic, readonly) InfinitManagedFiles* managed_files;
 @property (nonatomic, strong) InfinitExtensionPopoverController* extension_controller;
 
 @property (nonatomic, readonly) UIWindow* workaround_window;
@@ -151,16 +151,15 @@
       return;
 
     InfinitTemporaryFileManager* manager = [InfinitTemporaryFileManager sharedInstance];
-    _extension_uuid = [manager createManagedFiles];
+    _managed_files = [manager createManagedFiles];
     NSMutableArray* file_paths = [NSMutableArray array];
     for (NSString* file in contents)
       [file_paths addObject:[extension_files stringByAppendingPathComponent:file]];
-    [manager addFiles:file_paths toManagedFiles:self.extension_uuid copy:NO];
+    [manager addFilesByMove:file_paths toManagedFiles:self.managed_files];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(300 * NSEC_PER_MSEC)),
                    dispatch_get_main_queue(), ^
     {
-      self.extension_controller.files =
-        [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:self.extension_uuid];
+      self.extension_controller.files = self.managed_files.managed_paths.array;
       [self.overlay_controller showController:self.extension_controller];
     });
   }
@@ -168,7 +167,7 @@
 
 - (void)extensionPopoverWantsSend:(InfinitExtensionPopoverController*)sender
 {
-  [self showSendViewForManagedFiles:self.extension_uuid];
+  [self showSendViewForManagedFiles:self.managed_files];
   [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewOpen
                              method:InfinitUIMethodExtensionFiles];
 }
@@ -191,7 +190,10 @@
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(500 * NSEC_PER_MSEC)),
                  dispatch_get_main_queue(), ^
   {
-    [self showSendViewForFiles:files];
+    InfinitTemporaryFileManager* manager = [InfinitTemporaryFileManager sharedInstance];
+    _managed_files = [manager createManagedFiles];
+    [manager addFiles:files toManagedFiles:self.managed_files];
+    [self showSendViewForManagedFiles:self.managed_files];
   });
   [[NSFileManager defaultManager] removeItemAtPath:extension_files error:nil];
 }
@@ -203,7 +205,7 @@
 {
   if (controller == self.extension_controller)
   {
-    [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:self.extension_uuid];
+    [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:self.managed_files];
     [InfinitMetricsManager sendMetric:InfinitUIEventExtensionCancel method:InfinitUIMethodNone];
   }
 }
@@ -234,21 +236,11 @@
                              method:InfinitUIMethodPadMain];
 }
 
-- (void)showSendViewForFiles:(NSArray*)files
+- (void)showSendViewForManagedFiles:(InfinitManagedFiles*)managed_files
 {
-  if (files.count == 0)
-    return;
+  _managed_files = managed_files;
   [self.recipient_controller resetView];
-  self.recipient_controller.files = files;
-  [self.overlay_controller showController:self.recipient_controller];
-  [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewOpen
-                             method:InfinitUIMethodHomeCard];
-}
-
-- (void)showSendViewForManagedFiles:(NSString*)uuid
-{
-  [self.recipient_controller resetView];
-  self.recipient_controller.extension_files_uuid = uuid;
+  self.recipient_controller.managed_files = self.managed_files;
   [self.overlay_controller showController:self.recipient_controller];
 }
 
