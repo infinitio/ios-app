@@ -16,12 +16,13 @@
 #import "InfinitFilesFolderViewController_iPad.h"
 #import "InfinitFilesSearchPopover_iPad.h"
 #import "InfinitFilesTableViewController_iPad.h"
-#import "InfinitGallery.h"
+#import "InfinitGalleryManager.h"
 #import "InfinitMainSplitViewController_iPad.h"
 #import "InfinitMetricsManager.h"
 #import "InfinitStatusBarNotifier.h"
 
 #import <Gap/InfinitColor.h>
+#import <Gap/InfinitTemporaryFileManager.h>
 #import <Gap/InfinitPeerTransactionManager.h>
 
 @interface InfinitFilesViewController_iPad () <InfinitDownloadFolderManagerProtocol,
@@ -220,7 +221,10 @@ static dispatch_once_t _first_appear = 0;
         [paths addObject:file.path];
       }
     }
-    [((InfinitMainSplitViewController_iPad*)self.splitViewController) showSendViewForFiles:paths];
+    InfinitTemporaryFileManager* manager = [InfinitTemporaryFileManager sharedInstance];
+    InfinitManagedFiles* managed_files = [manager createManagedFiles];
+    [manager addFiles:paths toManagedFiles:managed_files];
+    [((InfinitMainSplitViewController_iPad*)self.splitViewController) showSendViewForManagedFiles:managed_files];
     [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewOpen
                                method:InfinitUIMethodFiles];
     self.editing = NO;
@@ -271,7 +275,7 @@ static dispatch_once_t _first_appear = 0;
       for (InfinitFileModel* file in items)
         [paths addObject:file.path];
     }
-    [InfinitGallery saveToGallery:paths];
+    [InfinitGalleryManager saveToGallery:paths];
     NSString* message = NSLocalizedString(@"Saving to gallery...", nil);
     [[InfinitStatusBarNotifier sharedInstance] showMessage:message
                                                     ofType:InfinitStatusBarNotificationInfo
