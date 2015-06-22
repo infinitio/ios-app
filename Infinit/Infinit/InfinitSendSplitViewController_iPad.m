@@ -14,7 +14,10 @@
 #import "InfinitSendGalleryController.h"
 #import "InfinitSendRecipientsController.h"
 
+#import <Gap/InfinitTemporaryFileManager.h>
+
 @import AssetsLibrary;
+@import Photos;
 
 @interface InfinitSendSplitViewController_iPad () <InfinitSendGalleryProtocol,
                                                    UIAlertViewDelegate>
@@ -25,6 +28,9 @@
 @property (nonatomic, strong) InfinitAccessGalleryView* access_gallery_view;
 @property (nonatomic, strong) InfinitSendGalleryController* gallery_controller;
 @property (nonatomic, strong) InfinitSendRecipientsController* recipient_controller;
+
+@property (nonatomic, readonly) InfinitManagedFiles* managed_files;
+@property (atomic, readwrite) NSArray* last_selection;
 
 @end
 
@@ -103,7 +109,63 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
 - (void)sendGalleryView:(InfinitSendGalleryController*)sender
          selectedAssets:(NSArray*)assets
 {
-  self.recipient_controller.assets = assets;
+  InfinitTemporaryFileManager* manager = [InfinitTemporaryFileManager sharedInstance];
+  if (!self.managed_files)
+    _managed_files = [manager createManagedFiles];
+  __weak InfinitSendSplitViewController_iPad* weak_self = self;
+  InfinitTemporaryFileManagerCallback callback = ^(BOOL success, NSError* error)
+  {
+    InfinitSendSplitViewController_iPad* strong_self = weak_self;
+    if (error)
+    {
+      NSString* title = nil;
+      NSString* message = nil;
+      switch (error.code)
+      {
+        case InfinitFileSystemErrorNoFreeSpace:
+          title = NSLocalizedString(@"Not enough space on your device.", nil);
+          message =
+          NSLocalizedString(@"Free up some space on your device and try again or send fewer files.", nil);
+          break;
+
+        default:
+          title = NSLocalizedString(@"Unable to fetch files.", nil);
+          message =
+          NSLocalizedString(@"Infinit was unable to fetch the files from your gallery. Check that you have some free space and try again.", nil);
+          break;
+      }
+      UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
+                                                      message:message
+                                                     delegate:nil
+                                            cancelButtonTitle:@"OK"
+                                            otherButtonTitles:nil];
+      [alert show];
+      [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:strong_self.managed_files];
+    }
+  };
+  NSMutableArray* difference = [assets mutableCopy];
+  [difference removeObjectsInArray:self.last_selection];
+  if ([InfinitHostDevice PHAssetClass])
+  {
+    [manager addPHAssetsLibraryList:assets
+                     toManagedFiles:self.managed_files
+                    completionBlock:callback];
+    for (PHAsset* asset in difference)
+      [self.managed_files.remove_assets addObject:asset.localIdentifier];
+  }
+  else
+  {
+    [manager addALAssetsLibraryList:assets
+                     toManagedFiles:self.managed_files
+                    completionBlock:callback];
+    for (ALAsset* asset in difference)
+    {
+      NSURL* asset_url = [asset valueForProperty:ALAssetPropertyAssetURL];
+      [self.managed_files.remove_assets addObject:asset_url];
+    }
+  }
+  self.recipient_controller.managed_files = self.managed_files;
+  self.last_selection = [assets copy];
 }
 
 #pragma mark - Gallery Access
