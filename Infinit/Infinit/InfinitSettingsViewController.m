@@ -11,11 +11,13 @@
 #import "InfinitApplicationSettings.h"
 #import "InfinitColor.h"
 #import "InfinitConstants.h"
+#import "InfinitGalleryManager.h"
 #import "InfinitHostDevice.h"
 #import "InfinitMetricsManager.h"
 #import "InfinitSettingsCell.h"
 #import "InfinitSettingsExpandedCell.h"
 #import "InfinitSettingsReportProblemController.h"
+#import "InfinitSettingsToggleCell.h"
 #import "InfinitSettingsUserCell.h"
 
 #import <Gap/InfinitConnectionManager.h>
@@ -26,6 +28,7 @@
 typedef NS_ENUM(NSUInteger, InfinitSettingsSections)
 {
   InfinitSettingsSectionAccount = 0,
+  InfinitSettingsSectionApp,
   InfinitSettingsSectionFeedback,
   InfinitSettingsSectionLogout,
 #ifdef DEBUG
@@ -41,7 +44,14 @@ typedef NS_ENUM(NSUInteger, InfinitAccountSettings)
   InfinitAccountSettingEdit,
   InfinitAccountSettingDevice,
 
-  InfinitAccountSettingsCount
+  InfinitAccountSettingsCount,
+};
+
+typedef NS_ENUM(NSUInteger, InfinitAppSettings)
+{
+  InfinitAppSettingAutoSave = 0,
+
+  InfinitAppSettingsCount,
 };
 
 typedef NS_ENUM(NSUInteger, InfinitFeedbackSettings)
@@ -78,13 +88,14 @@ typedef NS_ENUM(NSUInteger, InfinitDebugSettings)
 
 @end
 
+static UIView* _empty_view = nil;
+
+static NSString* _norm_cell_id = @"settings_cell";
+static NSString* _expanded_cell_id = @"settings_expanded_cell";
+static NSString* _toggle_cell_id = @"settings_toggle_cell";
+static NSString* _user_cell_id = @"settings_user_cell";
+
 @implementation InfinitSettingsViewController
-{
-@private
-  NSString* _norm_cell_id;
-  NSString* _expanded_cell_id;
-  NSString* _user_cell_id;
-}
 
 - (void)dealloc
 {
@@ -93,12 +104,8 @@ typedef NS_ENUM(NSUInteger, InfinitDebugSettings)
 
 - (void)viewDidLoad
 {
-  _norm_cell_id = @"settings_cell";
-  _expanded_cell_id = @"settings_expanded_cell";
-  _user_cell_id = @"settings_user_cell";
-  self.table_view.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-  self.logging_out = NO;
   [super viewDidLoad];
+  self.table_view.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
   NSDictionary* nav_bar_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
                                                                        size:17.0f],
                                   NSForegroundColorAttributeName: [InfinitColor colorWithRed:81
@@ -111,6 +118,9 @@ typedef NS_ENUM(NSUInteger, InfinitDebugSettings)
   UINib* expanded_cell_nib =
     [UINib nibWithNibName:NSStringFromClass(InfinitSettingsExpandedCell.class) bundle:nil];
   [self.table_view registerNib:expanded_cell_nib forCellReuseIdentifier:_expanded_cell_id];
+  UINib* toggle_cell_nib = [UINib nibWithNibName:NSStringFromClass(InfinitSettingsToggleCell.class)
+                                          bundle:nil];
+  [self.table_view registerNib:toggle_cell_nib forCellReuseIdentifier:_toggle_cell_id];
   UINib* user_cell_nib = [UINib nibWithNibName:NSStringFromClass(InfinitSettingsUserCell.class)
                                         bundle:nil];
   [self.table_view registerNib:user_cell_nib forCellReuseIdentifier:_user_cell_id];
@@ -118,6 +128,7 @@ typedef NS_ENUM(NSUInteger, InfinitDebugSettings)
 
 - (void)viewWillAppear:(BOOL)animated
 {
+  self.logging_out = NO;
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(avatarUpdated:)
                                                name:INFINIT_USER_AVATAR_NOTIFICATION
@@ -140,7 +151,7 @@ typedef NS_ENUM(NSUInteger, InfinitDebugSettings)
 
 - (void)avatarUpdated:(NSNotification*)notification
 {
-  InfinitUser* self_user = [[InfinitUserManager sharedInstance] me];
+  InfinitUser* self_user = [InfinitUserManager sharedInstance].me;
   if ([notification.userInfo[@"id"] isEqualToNumber:self_user.id_])
   {
     [self.table_view reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
@@ -163,6 +174,8 @@ typedef NS_ENUM(NSUInteger, InfinitDebugSettings)
   {
     case InfinitSettingsSectionAccount:
       return InfinitAccountSettingsCount;
+    case InfinitSettingsSectionApp:
+      return InfinitAppSettingsCount;
     case InfinitSettingsSectionFeedback:
       return InfinitFeedbackSettingsCount;
     case InfinitSettingsSectionLogout:
@@ -171,7 +184,6 @@ typedef NS_ENUM(NSUInteger, InfinitDebugSettings)
     case InfinitSettingsSectionDebug:
       return InfinitDebugSettingsCount;
 #endif
-
     default:
       return 0;
   }
@@ -210,6 +222,28 @@ typedef NS_ENUM(NSUInteger, InfinitDebugSettings)
         cell.icon_view.image = [UIImage imageNamed:@"icon-rename-device-iphone"];
         cell.title_label.text = NSLocalizedString(@"Rename device", nil);
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        res = cell;
+        break;
+      }
+    }
+  }
+  else if (indexPath.section == InfinitSettingsSectionApp)
+  {
+    switch (indexPath.row)
+    {
+      case InfinitAppSettingAutoSave:
+      {
+        InfinitSettingsToggleCell* cell =
+          [self.table_view dequeueReusableCellWithIdentifier:_toggle_cell_id
+                                                forIndexPath:indexPath];
+        [cell.switch_element setOn:[InfinitApplicationSettings sharedInstance].autosave_to_gallery
+                          animated:NO];
+        cell.icon_view.image = [UIImage imageNamed:@"icon-autosave"];
+        cell.title_label.text = NSLocalizedString(@"Auto-save files", nil);
+        cell.info_label.text = NSLocalizedString(@"Save files to your gallery", nil);
+        [cell.switch_element addTarget:self
+                                action:@selector(autoSaveToggled:)
+                      forControlEvents:UIControlEventValueChanged];
         res = cell;
         break;
       }
@@ -292,6 +326,10 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
         return 50.0f;
     }
   }
+  else if (indexPath.section == InfinitSettingsSectionApp)
+  {
+    return 70.0f;
+  }
   else if (indexPath.section == InfinitSettingsSectionFeedback)
   {
     return 50.0f;
@@ -307,6 +345,14 @@ heightForRowAtIndexPath:(NSIndexPath*)indexPath
   }
 #endif
   return 0.0f;
+}
+
+- (BOOL)tableView:(UITableView*)tableView
+shouldHighlightRowAtIndexPath:(NSIndexPath*)indexPath
+{
+  if (indexPath.section == InfinitSettingsSectionApp && indexPath.row == InfinitAppSettingAutoSave)
+    return NO;
+  return YES;
 }
 
 - (void)tableView:(UITableView*)tableView
@@ -346,6 +392,10 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
       default:
         break;
     }
+  }
+  else if (indexPath.section == InfinitSettingsSectionApp)
+  {
+    // Do nothing.
   }
   else if (indexPath.section == InfinitSettingsSectionFeedback)
   {
@@ -432,13 +482,24 @@ heightForFooterInSection:(NSInteger)section
 - (UIView*)tableView:(UITableView*)tableView
 viewForHeaderInSection:(NSInteger)section
 {
-  return [[UIView alloc] initWithFrame:CGRectZero];
+  if (_empty_view == nil)
+    _empty_view = [[UIView alloc] initWithFrame:CGRectZero];
+  return _empty_view;
 }
 
 - (UIView*)tableView:(UITableView*)tableView
 viewForFooterInSection:(NSInteger)section
 {
-  return [[UIView alloc] initWithFrame:CGRectZero];
+  if (_empty_view == nil)
+    _empty_view = [[UIView alloc] initWithFrame:CGRectZero];
+  return _empty_view;
+}
+
+#pragma mark - Toggle Handling
+
+- (void)autoSaveToggled:(UISwitch*)sender
+{
+  [InfinitGalleryManager sharedInstance].autosave = sender.isOn;
 }
 
 #pragma mark - Segue
