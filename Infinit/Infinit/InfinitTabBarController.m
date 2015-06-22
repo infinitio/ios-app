@@ -62,7 +62,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 @property (nonatomic) BOOL tab_bar_hidden;
 
 @property (nonatomic, strong) InfinitExtensionPopoverController* extension_popover;
-@property (nonatomic, readonly) NSString* extension_uuid;
+@property (nonatomic, readonly) InfinitManagedFiles* managed_files;
 
 @property (nonatomic, strong) MFMessageComposeViewController* sms_controller;
 @property (nonatomic, readonly) NSMutableDictionary* sms_recipients;
@@ -808,17 +808,16 @@ shouldSelectViewController:(UIViewController*)viewController
       return;
 
     InfinitTemporaryFileManager* manager = [InfinitTemporaryFileManager sharedInstance];
-    _extension_uuid = [manager createManagedFiles];
+    _managed_files = [manager createManagedFiles];
     NSMutableArray* file_paths = [NSMutableArray array];
     for (NSString* file in contents)
       [file_paths addObject:[extension_files stringByAppendingPathComponent:file]];
-    [manager addFiles:file_paths toManagedFiles:self.extension_uuid copy:NO];
+    [manager addFilesByMove:file_paths toManagedFiles:self.managed_files];
     [self showMainScreen:self.viewControllers[self.selectedIndex]];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(300 * NSEC_PER_MSEC)),
                    dispatch_get_main_queue(), ^
     {
-      self.extension_popover.files =
-        [[InfinitTemporaryFileManager sharedInstance] pathsForManagedFiles:self.extension_uuid];
+      self.extension_popover.files = self.managed_files.managed_paths.array;
       [self.overlay_controller showController:self.extension_popover];
     });
   }
@@ -834,8 +833,8 @@ shouldSelectViewController:(UIViewController*)viewController
   {
     InfinitHomeViewController* home_controller =
       (InfinitHomeViewController*)[self.viewControllers[InfinitTabBarIndexHome] topViewController];
-    [home_controller showRecipientsForManagedFiles:self.extension_uuid];
-    _extension_uuid = nil;
+    [home_controller showRecipientsForManagedFiles:self.managed_files];
+    _managed_files = nil;
   });
 }
 
@@ -846,8 +845,8 @@ shouldSelectViewController:(UIViewController*)viewController
 {
   if (controller == self.extension_popover)
   {
-    [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:self.extension_uuid];
-    _extension_uuid = nil;
+    [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:self.managed_files];
+    _managed_files = nil;
     [InfinitMetricsManager sendMetric:InfinitUIEventExtensionCancel method:InfinitUIMethodNone];
   }
 }
