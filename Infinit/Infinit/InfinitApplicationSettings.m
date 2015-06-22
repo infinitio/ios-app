@@ -12,6 +12,7 @@ typedef NS_ENUM(NSUInteger, InfinitSettings)
 {
   InfinitSettingAddressBookUploaded,
   InfinitSettingAskedNotifications,
+  InfinitSettingAutoSaveToGallery,
   InfinitSettingBeenLaunched,
   InfinitSettingLoginMethod,
   InfinitSettingRatedApp,
@@ -43,10 +44,12 @@ static dispatch_once_t _instance_token = 0;
 
 - (id)init
 {
-  NSCAssert(_instance == nil, @"Use the sharedInstance");
+  NSCAssert(_instance == nil, @"Use the sharedInstance.");
   if (self = [super init])
   {
     _defaults = [NSUserDefaults standardUserDefaults];
+    if ([self.defaults valueForKey:[self keyForSetting:InfinitSettingAutoSaveToGallery]] == nil)
+      self.autosave_to_gallery = YES;
   }
   return self;
 }
@@ -94,6 +97,16 @@ static dispatch_once_t _instance_token = 0;
 - (void)setAsked_notifications:(BOOL)asked_notifications
 {
   [self setBool:asked_notifications forKey:InfinitSettingAskedNotifications];
+}
+
+- (BOOL)autosave_to_gallery
+{
+  return [self boolForKey:InfinitSettingAutoSaveToGallery];
+}
+
+- (void)setAutosave_to_gallery:(BOOL)autosave_to_gallery
+{
+  [self setBool:autosave_to_gallery forKey:InfinitSettingAutoSaveToGallery];
 }
 
 - (BOOL)been_launched
@@ -246,6 +259,8 @@ static dispatch_once_t _instance_token = 0;
       return @"address_book_uploaded";
     case InfinitSettingAskedNotifications:
       return @"asked_notifications";
+    case InfinitSettingAutoSaveToGallery:
+      return @"autosave_to_gallery";
     case InfinitSettingBeenLaunched:
       return @"been_launched";
     case InfinitSettingLoginMethod:
