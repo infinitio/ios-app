@@ -14,6 +14,7 @@
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitFacebookManager.h"
 #import "InfinitFeedbackManager.h"
+#import "InfinitGalleryManager.h"
 #import "InfinitFilesOnboardingManager.h"
 #import "InfinitLocalNotificationManager.h"
 #import "InfinitMetricsManager.h"
@@ -264,9 +265,10 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
     UIViewController* view_controller = nil;
     if (result.success)
     {
+      [InfinitBackgroundManager sharedInstance];
       [InfinitDeviceManager sharedInstance];
       [InfinitDownloadFolderManager sharedInstance];
-      [InfinitBackgroundManager sharedInstance];
+      [InfinitGalleryManager sharedInstance];
       [InfinitRatingManager sharedInstance];
       view_controller =
         [self.storyboard instantiateViewControllerWithIdentifier:self.main_controller_id];
@@ -384,11 +386,15 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 - (void)application:(UIApplication*)application
 didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
-  [InfinitStateManager sharedInstance].push_token = deviceToken.infinit_hexadecimalString;
   if (deviceToken.infinit_hexadecimalString.length)
+  {
+    [InfinitStateManager sharedInstance].push_token = deviceToken.infinit_hexadecimalString;
     [self doneRegisterNotifications:YES];
+  }
   else
+  {
     [self doneRegisterNotifications:NO];
+  }
 }
 
 - (void)application:(UIApplication*)application
