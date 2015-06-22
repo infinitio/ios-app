@@ -15,12 +15,13 @@
 #import "InfinitFilePreviewController.h"
 #import "InfinitFilesNavigationController.h"
 #import "InfinitMetricsManager.h"
-#import "InfinitGallery.h"
+#import "InfinitGalleryManager.h"
 #import "InfinitResizableNavigationBar.h"
 #import "InfinitSendRecipientsController.h"
 #import "InfinitTabBarController.h"
 
 #import <Gap/InfinitColor.h>
+#import <Gap/InfinitTemporaryFileManager.h>
 
 #import <ALAssetsLibrary+CustomPhotoAlbum.h>
 #import <Photos/Photos.h>
@@ -312,7 +313,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer*)otherGestureReco
   {
     [paths addObject:self.folder.file_paths[index.row]];
   }
-  [InfinitGallery saveToGallery:paths];
+  [InfinitGalleryManager saveToGallery:paths];
   [self setTableEditing:NO animated:YES];
 }
 
@@ -356,7 +357,11 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer*)otherGestureReco
       [files addObject:file.path];
     InfinitSendRecipientsController* send_controller =
     (InfinitSendRecipientsController*)segue.destinationViewController;
-    send_controller.files = files;
+    InfinitTemporaryFileManager* manager = [InfinitTemporaryFileManager sharedInstance];
+    InfinitManagedFiles* managed_files = [manager createManagedFiles];
+    [manager addFiles:files toManagedFiles:managed_files];
+    send_controller.file_count = files.count;
+    send_controller.managed_files = managed_files;
     [self.table_view setEditing:NO animated:NO];
     [UIView animateWithDuration:0.3f
                      animations:^
