@@ -287,6 +287,17 @@ static NSUInteger _max_recipients = 10;
 
 #pragma mark - General
 
+- (void)setManaged_files:(InfinitManagedFiles*)managed_files
+{
+  _managed_files = managed_files;
+  if (!managed_files)
+    _file_count = 0;
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+  {
+    [self updateSendButton];
+  }
+}
+
 - (void)resetView
 {
   [self.recipients removeAllObjects];
@@ -606,7 +617,16 @@ static NSUInteger _max_recipients = 10;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
       if ([self.parentViewController respondsToSelector:@selector(hideController)])
+      {
         [(InfinitOverlayViewController*)self.parentViewController hideController];
+      }
+      else
+      {
+        if ([InfinitHostDevice iOSVersion] < 8.0f)
+          [[UIApplication sharedApplication].windows.firstObject makeKeyAndVisible];
+        else
+          [self.splitViewController dismissViewControllerAnimated:YES completion:NULL];
+      }
     }
     else
     {
@@ -1150,7 +1170,7 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
 
 - (BOOL)inputsGood
 {
-  if (self.managed_files.managed_paths.count == 0 || self.recipients.count == 0)
+  if (self.managed_files.file_count == 0 || self.recipients.count == 0)
     return NO;
   return YES;
 }
