@@ -26,7 +26,8 @@ ELLE_LOG_COMPONENT("iOS.GalleryManager");
 
 @interface InfinitGalleryManager ()
 
-@property (nonatomic, strong) ALAssetsLibrary* library;
+@property (nonatomic, readonly) ALAssetsLibrary* library;
+@property (nonatomic, readonly) dispatch_once_t library_token;
 
 @end
 
@@ -35,15 +36,15 @@ static InfinitGalleryManager* _instance = nil;
 
 @implementation InfinitGalleryManager
 
+@synthesize library = _library;
+
 #pragma mark - Init
 
 - (id)init
 {
-  NSCAssert(_instance == nil, @"Use sharedInstance");
+  NSCAssert(_instance == nil, @"Use sharedInstance.");
   if (self = [super init])
   {
-    if (![InfinitHostDevice PHAssetClass])
-      _library = [[ALAssetsLibrary alloc] init];
     self.autosave = [InfinitApplicationSettings sharedInstance].autosave_to_gallery;
   }
   return self;
@@ -73,8 +74,9 @@ static InfinitGalleryManager* _instance = nil;
       return;
     _autosave = autosave;
     [InfinitApplicationSettings sharedInstance].autosave_to_gallery = autosave;
-    if (self.autosave)
+    if (autosave)
     {
+      [[NSNotificationCenter defaultCenter] removeObserver:self];
       [[NSNotificationCenter defaultCenter] addObserver:self
                                                selector:@selector(transactionUpdated:)
                                                    name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION
@@ -175,13 +177,13 @@ static InfinitGalleryManager* _instance = nil;
          {
            if (error)
            {
-             ELLE_ERR("%s: unable to save image: %s", self.description.UTF8String, path.UTF8String);
+             ELLE_ERR("%s: unable to save video: %s", self.description.UTF8String, path.UTF8String);
            }
          } failure:^(NSError* error)
          {
            if (error)
            {
-             ELLE_ERR("%s: unable to save image: %s", self.description.UTF8String, path.UTF8String);
+             ELLE_ERR("%s: unable to save video: %s", self.description.UTF8String, path.UTF8String);
            }
          }];
       }
@@ -194,10 +196,12 @@ static InfinitGalleryManager* _instance = nil;
 - (void)transactionUpdated:(NSNotification*)notification
 {
   NSNumber* id_ = notification.userInfo[kInfinitTransactionId];
+  NSNumber* status_num = notification.userInfo[kInfinitTransactionStatus];
+  gap_TransactionStatus status = static_cast<gap_TransactionStatus>([status_num integerValue]);
   InfinitPeerTransaction* transaction = [InfinitPeerTransactionManager transactionWithId:id_];
   if (!transaction)
     return;
-  if (transaction.to_device && transaction.status == gap_transaction_finished)
+  if (transaction.to_device && status == gap_transaction_finished)
   {
     InfinitDownloadFolderManager* manager = [InfinitDownloadFolderManager sharedInstance];
     InfinitFolderModel* folder = [manager completedFolderForTransactionMetaId:transaction.meta_id];
@@ -206,6 +210,15 @@ static InfinitGalleryManager* _instance = nil;
 }
 
 #pragma mark - Helpers
+
+- (ALAssetsLibrary*)library
+{
+  dispatch_once(&_library_token, ^
+  {
+    _library = [[ALAssetsLibrary alloc] init];
+  });
+  return _library;
+}
 
 - (BOOL)haveGalleryAccess
 {
