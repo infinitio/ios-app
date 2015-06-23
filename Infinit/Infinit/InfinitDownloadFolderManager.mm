@@ -178,12 +178,14 @@ static InfinitDownloadFolderManager* _instance = nil;
 - (void)transactionUpdated:(NSNotification*)notification
 {
   NSNumber* txn_id = notification.userInfo[kInfinitTransactionId];
+  NSNumber* status_num = notification.userInfo[kInfinitTransactionStatus];
+  gap_TransactionStatus status = static_cast<gap_TransactionStatus>([status_num integerValue]);
   InfinitPeerTransaction* transaction =
     [[InfinitPeerTransactionManager sharedInstance] transactionWithId:txn_id];
   if (!transaction.to_device)
     return;
   NSString* path = [self.download_dir stringByAppendingPathComponent:transaction.meta_id];
-  switch (transaction.status)
+  switch (status)
   {
     case gap_transaction_connecting:
     case gap_transaction_transferring:
