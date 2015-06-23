@@ -131,6 +131,7 @@ static dispatch_once_t _instance_token = 0;
         [thumbnails addObject:[NSNull null]];
       PHImageManager* manager = [PHImageManager defaultManager];
       PHImageRequestOptions* options;
+      options.synchronous = YES;
       options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
       PHFetchResult* result = [PHAsset fetchAssetsWithLocalIdentifiers:fetch_assets options:nil];
       [result enumerateObjectsUsingBlock:^(PHAsset* asset, NSUInteger idx, BOOL* stop)
@@ -142,7 +143,7 @@ static dispatch_once_t _instance_token = 0;
                               options:options
                         resultHandler:^(UIImage* result, NSDictionary* info)
          {
-           if (result)
+           if (result && ![info[PHImageResultIsDegradedKey] boolValue])
            {
              CGFloat scale = MIN(result.size.width / _thumbnail_scaled_size.width,
                                  result.size.height / _thumbnail_scaled_size.height);
@@ -164,8 +165,19 @@ static dispatch_once_t _instance_token = 0;
                if (orig_index != NSNotFound)
                  [thumbnails replaceObjectAtIndex:orig_index withObject:thumbnail];
              }
+             dispatch_semaphore_signal(sema);
            }
-           dispatch_semaphore_signal(sema);
+           else if (info[PHImageErrorKey])
+           {
+             NSError* error = info[PHImageErrorKey];
+             if (error && asset.localIdentifier.length)
+             {
+               ELLE_WARN("%s: error fetching asset (%s): %s",
+                         [InfinitUploadThumbnailManager sharedInstance].description.UTF8String,
+                         asset.localIdentifier.UTF8String, error.description.UTF8String);
+             }
+             dispatch_semaphore_signal(sema);
+           }
          }];
         dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
       }];
