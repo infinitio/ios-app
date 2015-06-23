@@ -143,8 +143,8 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
       [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:strong_self.managed_files];
     }
   };
-  NSMutableArray* difference = [assets mutableCopy];
-  [difference removeObjectsInArray:self.last_selection];
+  NSMutableArray* difference = [self.last_selection mutableCopy];
+  [difference removeObjectsInArray:assets];
   if ([InfinitHostDevice PHAssetClass])
   {
     [manager addPHAssetsLibraryList:assets
@@ -164,6 +164,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
       [self.managed_files.remove_assets addObject:asset_url];
     }
   }
+  self.recipient_controller.file_count = assets.count;
   self.recipient_controller.managed_files = self.managed_files;
   self.last_selection = [assets copy];
 }
