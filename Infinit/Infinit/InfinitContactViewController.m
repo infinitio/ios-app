@@ -412,6 +412,15 @@ static NSAttributedString* _unfavorite_title = nil;
                                                           code:code
                                                         method:method
                                                     failReason:fail_message];
+    if (recipient.method == InfinitMessageNative && status != InfinitMessageStatusSuccess)
+    {
+      if ([recipient.identifier isKindOfClass:NSString.class])
+      {
+        [[InfinitStateManager sharedInstance] sendInvitation:recipient.identifier
+                                                     message:message
+                                                   ghostCode:code];
+      }
+    }
   };
 }
 
