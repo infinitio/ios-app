@@ -33,7 +33,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
-#import <Gap/InfinitAccountsManager.h>
+#import <Gap/InfinitExternalAccountsManager.h>
 #import <Gap/InfinitColor.h>
 #import <Gap/InfinitDeviceManager.h>
 #import <Gap/InfinitPeerTransactionManager.h>
@@ -201,7 +201,7 @@ static NSUInteger _max_recipients = 10;
   {
     self.preloading_contacts = NO;
   }
-  [self setAddContactsButtonHidden:[InfinitAccountsManager sharedInstance].have_facebook];
+  [self setAddContactsButtonHidden:[InfinitExternalAccountsManager sharedInstance].have_facebook];
 }
 
 - (void)setAddContactsButtonHidden:(BOOL)hidden
