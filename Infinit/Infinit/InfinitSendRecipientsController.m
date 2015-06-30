@@ -277,7 +277,6 @@ static NSUInteger _max_recipients = 10;
 - (void)viewWillDisappear:(BOOL)animated
 {
   self.recipient = nil;
-  self.managed_files = nil;
   [self.navigationController.navigationBar.subviews[0] removeGestureRecognizer:self.nav_bar_tap];
   self.navigationController.interactivePopGestureRecognizer.delegate = nil;
   _nav_bar_tap = nil;
@@ -611,7 +610,6 @@ static NSUInteger _max_recipients = 10;
 
 - (void)doneSending
 {
-  self.managed_files = nil;
   dispatch_async(dispatch_get_main_queue(), ^
   {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -638,7 +636,7 @@ static NSUInteger _max_recipients = 10;
 - (IBAction)sendButtonTapped:(id)sender
 {
   [self setSendButtonHidden:YES];
-
+  [self doneSending];
   void (^send_block)() = ^()
   {
     NSArray* transaction_ids =
@@ -666,7 +664,6 @@ static NSUInteger _max_recipients = 10;
     [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewSend
                                method:InfinitUIMethodTap];
     _managed_files = nil;
-    [self doneSending];
   };
   if (self.managed_files.copying)
   {
@@ -1483,7 +1480,10 @@ didDeleteTokenAtIndex:(NSUInteger)index
 {
   NSString* uuid = notification.userInfo[kInfinitManagedFilesId];
   if ([uuid isEqualToString:self.managed_files.uuid])
+  {
     [self doneSending];
+    _managed_files = nil;
+  }
 }
 
 #pragma mark - Helpers
