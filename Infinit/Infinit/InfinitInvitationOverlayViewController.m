@@ -106,7 +106,7 @@ static NSString* _cell_id = @"invitation_overlay_cell_id";
 {
   InfinitInvitationOverlayTableViewCell* cell =
     (InfinitInvitationOverlayTableViewCell*)[sender superview].superview;
-  InfinitMessageMethod method;
+  InfinitMessageMethod method = InfinitMessageNative;
   if (cell.email)
   {
     method = InfinitMessageEmail;
@@ -119,8 +119,7 @@ static NSString* _cell_id = @"invitation_overlay_cell_id";
     self.contact.selected_phone_index = [self.table_view indexPathForCell:cell].row;
   }
   InfinitMessagingRecipient* recipient =
-    [InfinitMessagingRecipient recipient:self.contact
-                              withMethod:method];
+    [InfinitMessagingRecipient recipient:self.contact withMethod:method];
   [self setButtonsEnabled:NO];
   [self.delegate invitationOverlay:self gotRecipient:recipient];
 }
