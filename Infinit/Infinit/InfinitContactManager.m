@@ -61,6 +61,11 @@ static dispatch_once_t _got_access_token = 0;
   _got_access_token = 0;
 }
 
+- (void)dealloc
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - Public
 
 - (NSArray*)allContacts
