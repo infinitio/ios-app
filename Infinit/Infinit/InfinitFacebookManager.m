@@ -54,6 +54,11 @@ static dispatch_once_t _instance_token = 0;
   return _instance;
 }
 
+- (void)dealloc
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 #pragma mark - Connection Changes
 
 - (void)connectionStatusChanged:(NSNotification*)notification
