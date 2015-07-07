@@ -160,9 +160,15 @@ static NSUInteger _max_recipients = 10;
 - (void)configureSearchField
 {
   if (self.swagger_results.count > 1)
-    self.search_field.placeholderText = NSLocalizedString(@"Search contacts by name or email...", nil);
+  {
+    self.search_field.placeholderText =
+      NSLocalizedString(@"Search contacts by name or email...", nil);
+  }
   else
-    self.search_field.placeholderText = NSLocalizedString(@"Type email or send to yourself...", nil);
+  {
+    self.search_field.placeholderText =
+      NSLocalizedString(@"Type email or send to yourself...", nil);
+  }
   self.search_field.toLabelTextColor = [UIColor blackColor];
   self.search_field.maxHeight = 112.0f;
   self.search_field.delegate = self;
@@ -1167,7 +1173,7 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
 
 - (BOOL)inputsGood
 {
-  if (self.managed_files.file_count == 0 || self.recipients.count == 0)
+  if (self.recipients.count == 0)
     return NO;
   return YES;
 }
