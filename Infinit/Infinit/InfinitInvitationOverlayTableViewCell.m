@@ -38,7 +38,8 @@ static UIImage* _phone_icon = nil;
   self.button.titleLabel.minimumScaleFactor = 0.5f;
   if (_detail_attrs == nil)
   {
-    _detail_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Regular" size:14.0f],
+    _detail_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Regular"
+                                                           size:14.0f],
                       NSForegroundColorAttributeName: [InfinitColor colorWithGray:172]};
   }
   if (_title_attrs == nil)
@@ -59,7 +60,10 @@ static UIImage* _phone_icon = nil;
                                                   detail:email];
   [self.button setAttributedTitle:attr_title forState:UIControlStateNormal];
   if (_email_icon == nil)
-    _email_icon = [[UIImage imageNamed:@"icon-invite-email"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+  {
+    UIImageRenderingMode orignal = UIImageRenderingModeAlwaysOriginal;
+    _email_icon = [[UIImage imageNamed:@"icon-invite-email"] imageWithRenderingMode:orignal];
+  }
   [self.button setImage:_email_icon forState:UIControlStateNormal];
 }
 
@@ -71,7 +75,10 @@ static UIImage* _phone_icon = nil;
                                                   detail:phone];
   [self.button setAttributedTitle:attr_title forState:UIControlStateNormal];
   if (_phone_icon == nil)
-    _phone_icon = [[UIImage imageNamed:@"icon-invite-sms"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+  {
+    UIImageRenderingMode orignal = UIImageRenderingModeAlwaysOriginal;
+    _phone_icon = [[UIImage imageNamed:@"icon-invite-sms"] imageWithRenderingMode:orignal];
+  }
   [self.button setImage:_phone_icon forState:UIControlStateNormal];
 }
 
