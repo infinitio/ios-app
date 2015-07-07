@@ -603,6 +603,11 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
                       completionBlock:callback];
       for (PHAsset* asset in difference)
         [self.managed_files.remove_assets addObject:asset.localIdentifier];
+      for (PHAsset* asset in assets)
+      {
+        if ([self.managed_files.remove_assets containsObject:asset.localIdentifier])
+          [self.managed_files.remove_assets removeObject:asset.localIdentifier];
+      }
     }
     else
     {
@@ -613,6 +618,12 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
       {
         NSURL* asset_url = [asset valueForProperty:ALAssetPropertyAssetURL];
         [self.managed_files.remove_assets addObject:asset_url];
+      }
+      for (ALAsset* asset in assets)
+      {
+        NSURL* asset_url = [asset valueForProperty:ALAssetPropertyAssetURL];
+        if ([self.managed_files.remove_assets containsObject:asset_url])
+          [self.managed_files.remove_assets removeObject:asset_url];
       }
     }
 
