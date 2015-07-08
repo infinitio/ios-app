@@ -1472,12 +1472,6 @@ openFileTapped:(NSUInteger)file_index
       NSString* itunes_link =
         [kInfinitStoreRatingLink stringByReplacingOccurrencesOfString:@"APP_ID"
                                                            withString:kInfinitAppStoreId];
-      if ([InfinitHostDevice iOSVersion] > 8.0)
-      {
-        itunes_link =
-          [kInfinitStoreRatingLinkiOS8 stringByReplacingOccurrencesOfString:@"APP_ID"
-                                                                 withString:kInfinitAppStoreId];
-      }
       [[UIApplication sharedApplication] openURL:[NSURL URLWithString:itunes_link]];
       [InfinitMetricsManager sendMetric:InfinitUIEventRateFromCard method:InfinitUIMethodYes];
       break;
