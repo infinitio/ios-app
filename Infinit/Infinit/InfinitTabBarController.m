@@ -48,11 +48,11 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 
 @interface InfinitTabBarController () <InfinitExtensionPopoverProtocol,
                                        InfinitOverlayViewControllerProtocol,
-                                       MFMessageComposeViewControllerDelegate,
                                        UINavigationControllerDelegate,
                                        UITabBarControllerDelegate>
 
 @property (nonatomic, strong) InfinitTabAnimator* animator;
+@property (atomic, readwrite) BOOL first_appear;
 @property (nonatomic) NSUInteger last_index;
 @property (nonatomic, strong) InfinitAccessGalleryView* permission_view;
 @property (nonatomic, strong) UIView* selection_indicator;
@@ -64,10 +64,6 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 @property (nonatomic, strong) InfinitExtensionPopoverController* extension_popover;
 @property (nonatomic, readonly) InfinitManagedFiles* managed_files;
 
-@property (nonatomic, strong) MFMessageComposeViewController* sms_controller;
-@property (nonatomic, readonly) NSMutableDictionary* sms_recipients;
-@property (nonatomic, readonly) BOOL smsing;
-
 @end
 
 @implementation InfinitTabBarController
@@ -76,8 +72,6 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   NSString* _status_bar_error_style_id;
   NSString* _status_bar_good_style_id;
   NSString* _status_bar_warning_style_id;
-
-  BOOL _first_appear;
 }
 
 #pragma mark - Rotation
@@ -109,7 +103,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 
 - (void)viewDidLoad
 {
-  _first_appear = NO;
+  self.first_appear = NO;
   _animator = [[InfinitTabAnimator alloc] init];
   _status_bar_error_style_id = @"InfinitErrorStyle";
   _status_bar_good_style_id = @"InfinitGoodStyle";
@@ -122,10 +116,6 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(peerTransactionUpdated:)
                                                name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION
-                                             object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(peerInvitationCode:)
-                                               name:INFINIT_PEER_PHONE_TRANSACTION_NOTIFICATION
                                              object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(connectionStatusChanged:)
@@ -196,17 +186,17 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
      style.animationType = JDStatusBarAnimationTypeMove;
      return style;
    }];
-  _sms_recipients = [NSMutableDictionary dictionary];
-  _smsing = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
+  if ([InfinitStateManager sharedInstance].logged_in && [self addressBookAccessible])
+    [[InfinitContactManager sharedInstance] gotAddressBookAccess];
   [[UIApplication sharedApplication] setStatusBarHidden:NO];
-  if (!_first_appear)
+  if (!self.first_appear)
   {
-    _first_appear = YES;
+    self.first_appear = YES;
     if (![InfinitConnectionManager sharedInstance].connected)
       [self handleOffline];
     else
@@ -218,7 +208,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
     self.tabBar.shadowImage = [[UIImage alloc] init];
 
     UIView* shadow_line =
-    [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 1.0f)];
+      [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 1.0f)];
     shadow_line.backgroundColor = [InfinitColor colorWithGray:216.0f];
     [self.tabBar addSubview:shadow_line];
 
@@ -261,8 +251,6 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 {
   [super viewDidAppear:animated];
   [self handleExtensionFiles];
-  if ([InfinitStateManager sharedInstance].logged_in && [self addressBookAccessible])
-    [[InfinitContactManager sharedInstance] gotAddressBookAccess];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -673,100 +661,12 @@ shouldSelectViewController:(UIViewController*)viewController
     [self handleExtensionFiles];
 }
 
-#pragma mark - Peer Invitation Code
-
-- (void)handlePeerInvitationCode:(NSDictionary*)dict
-{
-  @synchronized(self)
-  {
-    if (![InfinitHostDevice canSendSMS])
-      return;
-    InfinitPeerTransaction* transaction =
-      [[InfinitPeerTransactionManager sharedInstance] transactionWithId:dict[kInfinitTransactionId]];
-    if (transaction == nil)
-      return;
-    InfinitUser* recipient = transaction.recipient;
-    if (!recipient.phone_number.length ||
-        !recipient.ghost_code.length ||
-        !recipient.ghost_invitation_url.length)
-    {
-      return;
-    }
-    self.sms_recipients[recipient.phone_number] = transaction;
-    if (!self.smsing)
-    {
-      _smsing = YES;
-      [self composeMessageForTransaction:transaction];
-    }
-  }
-}
-
-- (void)composeMessageForTransaction:(InfinitPeerTransaction*)transaction
-{
-  _smsing = YES;
-  InfinitUser* recipient = transaction.recipient;
-  NSString* files = transaction.files.count == 1 ? NSLocalizedString(@"file", nil)
-                                                 : NSLocalizedString(@"files", nil);
-  NSString* the_files = transaction.files.count == 1 ? NSLocalizedString(@"the file", nil)
-                                                     : NSLocalizedString(@"the files", nil);
-  NSString* message =
-  [NSString stringWithFormat:NSLocalizedString(@"Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@\n\nDon't forget to enter the following download code: %@", nil),
-   transaction.files.count, files, the_files, recipient.ghost_invitation_url, recipient.ghost_code];
-  if (self.sms_controller == nil)
-    _sms_controller = [[MFMessageComposeViewController alloc] init];
-  self.sms_controller.recipients = @[recipient.phone_number];
-  self.sms_controller.body = message;
-  self.sms_controller.messageComposeDelegate = self;
-  [self presentViewController:self.sms_controller animated:YES completion:NULL];
-}
-
-#pragma mark - SMS Delegate
-
-- (void)messageComposeViewController:(MFMessageComposeViewController*)controller
-                 didFinishWithResult:(MessageComposeResult)result
-{
-  InfinitPeerTransaction* transaction = self.sms_recipients[controller.recipients.firstObject];
-  InfinitUser* recipient = transaction.recipient;
-  switch (result)
-  {
-    case MessageComposeResultCancelled:
-      [InfinitMetricsManager sendMetricGhostSMSSent:NO
-                                               code:recipient.ghost_code
-                                         failReason:@"cancel"];
-      break;
-    case MessageComposeResultFailed:
-      [InfinitMetricsManager sendMetricGhostSMSSent:NO
-                                               code:recipient.ghost_code
-                                         failReason:@"fail"];
-      break;
-    case MessageComposeResultSent:
-      [InfinitMetricsManager sendMetricGhostSMSSent:YES 
-                                               code:recipient.ghost_code
-                                         failReason:nil];
-      break;
-  }
-  [self.sms_controller dismissViewControllerAnimated:YES
-                                          completion:^
-  {
-    [self.sms_recipients removeObjectForKey:recipient.phone_number];
-    self.sms_controller = nil;
-    if (self.sms_recipients.count > 0)
-      [self composeMessageForTransaction:self.sms_recipients.allValues[0]];
-    else
-      _smsing = NO;
-  }];
-}
 
 #pragma mark - Peer Transaction Notifications
 
 - (void)peerTransactionUpdated:(NSNotification*)notification
 {
   [self updateHomeBadge];
-}
-
-- (void)peerInvitationCode:(NSNotification*)notification
-{
-  [self handlePeerInvitationCode:notification.userInfo];
 }
 
 #pragma mark - Connection Handling
