@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+@class InfinitContactAddressBook;
+@class InfinitUser;
+
 @interface InfinitContactManager : NSObject
 
 + (instancetype)sharedInstance;
@@ -21,5 +24,12 @@
  @return Array of InfinitContact objects or nil if no access.
  */
 - (NSArray*)allContacts;
+
+/** Determine address book contact for user.
+ @param user
+  InfinitUser object.
+ @return address book contact.
+ */
+- (InfinitContactAddressBook*)contactForUser:(InfinitUser*)user;
 
 @end

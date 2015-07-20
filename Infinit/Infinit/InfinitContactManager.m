@@ -112,21 +112,21 @@ static dispatch_once_t _got_access_token = 0;
 {
   if (ABAddressBookGetAuthorizationStatus() != kABAuthorizationStatusAuthorized)
     return;
-  if ([InfinitApplicationSettings sharedInstance].address_book_uploaded)
-    return;
   dispatch_once(&_got_access_token, ^
   {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
     {
       NSArray* contacts = [self allContacts];
       NSMutableArray* upload_array = [NSMutableArray array];
-      [contacts enumerateObjectsUsingBlock:^(InfinitContact* contact,
+      [contacts enumerateObjectsUsingBlock:^(InfinitContactAddressBook* contact,
                                              NSUInteger i,
                                              BOOL* stop)
        {
          [upload_array addObject:[self dictForContact:contact]];
        }];
       [[InfinitContactManager sharedInstance] fetchGhostData];
+      if ([InfinitApplicationSettings sharedInstance].address_book_uploaded)
+        return;
       [[InfinitStateManager sharedInstance] uploadContacts:upload_array
                                            completionBlock:^(InfinitStateResult* result)
       {
@@ -157,6 +157,47 @@ static dispatch_once_t _got_access_token = 0;
       [self tryUpdateGhost:ghost];
     }
   });
+}
+
+- (InfinitContactAddressBook*)contactForUser:(InfinitUser*)user
+{
+  if (!self.contact_cache)
+    [self allContacts];
+  NSString* email = nil;
+  NSString* phone = nil;
+  if (user.ghost_identifier.infinit_isEmail)
+    email = user.ghost_identifier;
+  else if (user.ghost_identifier.infinit_isPhoneNumber)
+    phone = [self strippedNumber:user.ghost_identifier];
+
+  if (!email && !phone)
+    return nil;
+
+  __block InfinitContactAddressBook* res = nil;
+  [self.contact_cache enumerateObjectsUsingBlock:^(InfinitContactAddressBook* contact,
+                                                   NSUInteger i,
+                                                   BOOL* stop)
+  {
+    if (contact.emails.count && [contact.emails containsObject:email])
+    {
+      res = contact;
+      *stop = YES;
+    }
+    else if (contact.phone_numbers.count)
+    {
+      for (NSString* contact_phone in contact.phone_numbers)
+      {
+        NSString* stripped_number = [self strippedNumber:contact_phone];
+        if ([stripped_number isEqualToString:phone])
+        {
+          res = contact;
+          *stop = YES;
+          break;
+        }
+      }
+    }
+  }];
+  return res;
 }
 
 #pragma mark - New User
@@ -198,25 +239,25 @@ static dispatch_once_t _got_access_token = 0;
 {
   if (!self.contact_cache)
     [self allContacts];
+
   NSString* email = nil;
   NSString* phone = nil;
   if (ghost.fullname.infinit_isEmail)
-  {
     email = ghost.fullname;
-  }
   else if (ghost.fullname.infinit_isPhoneNumber)
-  {
     phone = [self strippedNumber:ghost.fullname];
-  }
+
   if (!email && !phone)
     return;
-  for (InfinitContactAddressBook* contact in self.contact_cache)
+
+  [self.contact_cache enumerateObjectsUsingBlock:^(InfinitContactAddressBook* contact,
+                                                   NSUInteger i,
+                                                   BOOL* stop)
   {
-    BOOL found = NO;
     if (contact.emails.count && [contact.emails containsObject:email])
     {
       [ghost updateGhostWithFullname:contact.fullname avatar:contact.avatar];
-      found = YES;
+      *stop = YES;
     }
     else if (contact.phone_numbers.count)
     {
@@ -225,15 +266,13 @@ static dispatch_once_t _got_access_token = 0;
         NSString* stripped_number = [self strippedNumber:contact_phone];
         if ([stripped_number isEqualToString:phone])
         {
-          found = YES;
           [ghost updateGhostWithFullname:contact.fullname avatar:contact.avatar];
+          *stop = YES;
           break;
         }
       }
     }
-    if (found)
-      break;
-  }
+  }];
 }
 
 @end
