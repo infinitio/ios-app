@@ -13,7 +13,7 @@ typedef NS_ENUM(NSInteger, InfinitLoginMethod)
   InfinitLoginEmail    = 0,
   InfinitLoginFacebook = 1,
 
-  InfinitLoginNone  = -1,
+  InfinitLoginNone     = -1,
 };
 
 @interface InfinitApplicationSettings : NSObject
