@@ -8,9 +8,9 @@
 
 #import "ALAsset+Date.h"
 
-@implementation ALAsset (Date)
+@implementation ALAsset (infinit_Date)
 
-- (NSDate*) date
+- (NSDate*)date
 {
   return [self valueForProperty:ALAssetPropertyDate];
 }

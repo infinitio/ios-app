@@ -8,7 +8,7 @@
 
 #import <AssetsLibrary/AssetsLibrary.h>
 
-@interface ALAsset (Date)
+@interface ALAsset (infinit_Date)
 
 @property (nonatomic, readonly) NSDate* date;
 
