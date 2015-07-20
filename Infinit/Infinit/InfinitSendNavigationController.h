@@ -14,6 +14,7 @@
 @interface InfinitSendNavigationController : InfinitPortraitNavigationController
 
 @property (nonatomic, copy, readwrite) InfinitContact* recipient;
+@property (nonatomic, readwrite) BOOL smsing;
 
 - (void)resetSendViews;
 

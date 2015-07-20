@@ -29,25 +29,34 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-  self.delegate = self;
-  [self resetSendViews];
+  if (!self.smsing)
+  {
+    self.delegate = self;
+    [self resetSendViews];
+  }
   [super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-  self.delegate = nil;
-  [(InfinitTabBarController*)self.tabBarController setTabBarHidden:NO
-                                                          animated:animated 
-                                                         withDelay:0.4f];
+  if (!self.smsing)
+  {
+    self.delegate = nil;
+    [(InfinitTabBarController*)self.tabBarController setTabBarHidden:NO
+                                                            animated:animated 
+                                                           withDelay:0.4f];
+  }
   [super viewWillDisappear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-  [self popToRootViewControllerAnimated:NO];
+  if (!self.smsing)
+  {
+    [self popToRootViewControllerAnimated:NO];
+    _recipient = nil;
+  }
   [super viewDidDisappear:animated];
-  _recipient = nil;
 }
 
 - (void)resetSendViews
