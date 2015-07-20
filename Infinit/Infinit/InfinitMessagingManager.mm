@@ -76,7 +76,7 @@ static dispatch_once_t _instance_token = 0;
     strong_self.message_sent = dispatch_semaphore_create(0);
     if (recipient.method == InfinitMessageEmail)
     {
-      completion_block(recipient, message, InfinitMessageStatusSuccess);
+      self.last_status = InfinitMessageStatusSuccess;
       dispatch_semaphore_signal(strong_self.message_sent);
     }
     else if (recipient.method == InfinitMessageNative)
@@ -91,12 +91,12 @@ static dispatch_once_t _instance_token = 0;
     }
     else if (recipient.method == InfinitMessageWhatsApp)
     {
-      [[NSNotificationCenter defaultCenter] addObserver:strong_self
-                                               selector:@selector(_becameActiveAfterWhatsApp:)
-                                                   name:UIApplicationDidBecomeActiveNotification
-                                                 object:nil];
       if ([InfinitHostDevice canSendWhatsApp])
       {
+        [[NSNotificationCenter defaultCenter] addObserver:strong_self
+                                                 selector:@selector(_becameActiveAfterWhatsApp:)
+                                                     name:UIApplicationDidBecomeActiveNotification
+                                                   object:nil];
         [strong_self _openWhatsAppForMessage:message
                            contactIdentifier:recipient.address_book_id];
       }
