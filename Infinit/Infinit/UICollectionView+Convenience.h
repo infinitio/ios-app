@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UICollectionView (Convenience)
+@interface UICollectionView (infinit_Convenience)
 
 - (NSArray*)infinit_indexPathsForElementsInRect:(CGRect)rect;
 
