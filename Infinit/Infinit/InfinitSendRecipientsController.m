@@ -18,11 +18,14 @@
 #import "InfinitSendGalleryController.h"
 #import "InfinitHostDevice.h"
 #import "InfinitImportOverlayView.h"
-#import "InfinitSendContactCell.h"
+#import "InfinitInvitationOverlayViewController.h"
+#import "InfinitMessagingManager.h"
 #import "InfinitMetricsManager.h"
 #import "InfinitOverlayViewController.h"
+#import "InfinitSendContactCell.h"
 #import "InfinitSendDeviceCell.h"
 #import "InfinitSendEmailCell.h"
+#import "InfinitSendNavigationController.h"
 #import "InfinitSendNoResultsCell.h"
 #import "InfinitSendToSelfOverlayView.h"
 #import "InfinitSendUserCell.h"
@@ -58,7 +61,8 @@ typedef NS_ENUM(NSUInteger, InfinitSendRecipientsSection)
   InfinitSendRecipientsSectionCount,
 };
 
-@interface InfinitSendRecipientsController () <UIActionSheetDelegate,
+@interface InfinitSendRecipientsController () <InfinitInvitationOverlayProtocol,
+                                               UIActionSheetDelegate,
                                                UITextFieldDelegate,
                                                UIGestureRecognizerDelegate,
                                                VENTokenFieldDelegate,
@@ -91,6 +95,11 @@ typedef NS_ENUM(NSUInteger, InfinitSendRecipientsSection)
 @property (nonatomic, readonly) UITapGestureRecognizer* nav_bar_tap;
 @property (nonatomic, readonly) NSArray* thumbnail_elements;
 
+@property (atomic, readwrite) BOOL sent_to_contact;
+@property (atomic, readwrite) InfinitMessagingRecipient* current_message_recipient;
+@property (nonatomic, readonly) InfinitInvitationOverlayViewController* invitation_overlay;
+@property (nonatomic, readonly) dispatch_once_t invitation_overlay_token;
+
 @end
 
 static NSString* _device_cell_id = @"send_device_cell";
@@ -99,9 +108,14 @@ static NSString* _infinit_user_cell_id = @"send_user_infinit_cell";
 static NSString* _contact_cell_id = @"send_contact_cell";
 static NSString* _import_cell_id = @"contact_import_cell";
 static NSString* _no_results_cell_id = @"send_no_results_cell";
+
 static NSUInteger _max_recipients = 10;
 
+static UIImage* _send_button_image = nil;
+
 @implementation InfinitSendRecipientsController
+
+@synthesize invitation_overlay = _invitation_overlay;
 
 #pragma mark - Init
 
@@ -155,6 +169,8 @@ static NSUInteger _max_recipients = 10;
   {
     self.navigationItem.title = NSLocalizedString(@"SEND", nil);
   }
+  if (!_send_button_image)
+    _send_button_image = [UIImage imageNamed:@"icon-send-white"];
 }
 
 - (void)configureSearchField
@@ -198,6 +214,11 @@ static NSUInteger _max_recipients = 10;
                                            selector:@selector(managedFilesDeleted:)
                                                name:INFINIT_MANAGED_FILES_DELETED
                                              object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(handleGhostTransaction:)
+                                               name:INFINIT_PEER_GHOST_TRANSACTION_NOTIFICATION
+                                             object:nil];
+
   if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)
   {
     self.preloading_contacts = YES;
@@ -334,7 +355,7 @@ static NSUInteger _max_recipients = 10;
       [self.all_devices addObject:contact];
     }
   }
-  self.device_results = [self.all_devices copy];
+  self.device_results = [self.all_devices mutableCopy];
 }
 
 - (NSMutableArray*)swaggers
@@ -357,7 +378,7 @@ static NSUInteger _max_recipients = 10;
 - (void)fetchSwaggers
 {
   self.all_swaggers = [self swaggers];
-  self.swagger_results = [self.all_swaggers copy];
+  self.swagger_results = [self.all_swaggers mutableCopy];
   [self.table_view reloadData];
 }
 
@@ -556,7 +577,7 @@ static NSUInteger _max_recipients = 10;
       {
         NSString* title = NSLocalizedString(@"Unable to get friends from Facebook", nil);
         NSString* message =
-        NSLocalizedString(@"You need to grant permission to access your friends to find them on Infinit.", nil);
+          NSLocalizedString(@"You need to grant permission to access your friends to find them on Infinit.", nil);
         [strong_self showFacebookErrorWithTitle:title message:message];
         return;
       }
@@ -599,7 +620,8 @@ static NSUInteger _max_recipients = 10;
   else
   {
     [self.navigationController popViewControllerAnimated:YES];
-    if (![self.navigationController.topViewController isKindOfClass:InfinitSendGalleryController.class])
+    Class gallery_class = InfinitSendGalleryController.class;
+    if (![self.navigationController.topViewController isKindOfClass:gallery_class])
     {
       dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
       {
@@ -616,6 +638,9 @@ static NSUInteger _max_recipients = 10;
 
 - (void)doneSending
 {
+  self.sent_to_contact = NO;
+  if (self.managed_files && !self.managed_files.sending)
+    self.managed_files.sending = YES;
   dispatch_async(dispatch_get_main_queue(), ^
   {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -643,6 +668,8 @@ static NSUInteger _max_recipients = 10;
 {
   [self setSendButtonHidden:YES];
   [self doneSending];
+  if (self.recipients.count == 0)
+    return;
   void (^send_block)() = ^()
   {
     NSArray* transaction_ids =
@@ -669,7 +696,7 @@ static NSUInteger _max_recipients = 10;
     }
     [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewSend
                                method:InfinitUIMethodTap];
-    _managed_files = nil;
+    self.managed_files = nil;
   };
   if (self.managed_files.copying)
   {
@@ -712,31 +739,19 @@ static NSUInteger _max_recipients = 10;
       InfinitContactUser* contact_user = (InfinitContactUser*)contact;
       if (contact_user.infinit_user != nil && contact_user.device == nil)
       {
-        if (contact_user.infinit_user.ghost && contact_user.infinit_user.phone_number.length)
-          [actual_recipients addObject:contact_user.infinit_user.phone_number];
+        if (contact_user.infinit_user.ghost &&
+            contact_user.infinit_user.ghost_identifier.infinit_isPhoneNumber)
+        {
+          continue;
+        }
         else
+        {
           [actual_recipients addObject:contact_user.infinit_user];
+        }
       }
       else if (contact_user.infinit_user != nil && contact_user.device != nil)
       {
         [device_specific_recipients addObject:contact_user];
-      }
-    }
-    else if ([contact isKindOfClass:InfinitContactAddressBook.class])
-    {
-      InfinitContactAddressBook* contact_ab = (InfinitContactAddressBook*)contact;
-      if (contact_ab.selected_email_index != NSNotFound)
-      {
-        [actual_recipients addObject:contact_ab.emails[contact_ab.selected_email_index]];
-      }
-      else if (contact_ab.selected_phone_index != NSNotFound)
-      {
-        NSString* number = contact_ab.phone_numbers[contact_ab.selected_phone_index];
-        NSCharacterSet* whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-        number = [number stringByTrimmingCharactersInSet:whitespace];
-        NSArray* number_parts = [number componentsSeparatedByCharactersInSet:whitespace];
-        number = [number_parts componentsJoinedByString:@""];
-        [actual_recipients addObject:number];
       }
     }
     else if ([contact isKindOfClass:InfinitContactEmail.class])
@@ -844,9 +859,15 @@ static NSUInteger _max_recipients = 10;
       InfinitContactUser* contact = self.device_results[indexPath.row];
       [cell setupForContact:contact];
       if ([self.recipients containsObject:contact])
-        [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+      {
+        [tableView selectRowAtIndexPath:indexPath
+                               animated:NO
+                         scrollPosition:UITableViewScrollPositionNone];
+      }
       else
+      {
         [tableView deselectRowAtIndexPath:indexPath animated:NO];
+      }
       res = cell;
     }
   }
@@ -858,9 +879,15 @@ static NSUInteger _max_recipients = 10;
     cell.contact = contact;
     cell.user_type_view.hidden = !contact.infinit_user.favorite;
     if ([self.recipients containsObject:contact])
-      [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    {
+      [tableView selectRowAtIndexPath:indexPath
+                             animated:NO
+                       scrollPosition:UITableViewScrollPositionNone];
+    }
     else
+    {
       [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    }
     res = cell;
   }
   else
@@ -888,9 +915,15 @@ static NSUInteger _max_recipients = 10;
       else
         cell.letter_label.hidden = YES;
       if ([self.recipients containsObject:contact])
-        [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+      {
+        [tableView selectRowAtIndexPath:indexPath
+                               animated:NO 
+                         scrollPosition:UITableViewScrollPositionNone];
+      }
       else
+      {
         [tableView deselectRowAtIndexPath:indexPath animated:NO];
+      }
       res = cell;
     }
   }
@@ -936,17 +969,18 @@ heightForHeaderInSection:(NSInteger)section
 - (UIView*)tableView:(UITableView*)tableView
 viewForHeaderInSection:(NSInteger)section
 {
-  UIView* header = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f,
-                                                            tableView.bounds.size.width, 1.0f)];
+  UIView* res = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f,
+                                                          tableView.bounds.size.width, 1.0f)];
   CGFloat right = 22.0f;
   CGFloat left = 15.0f;
-  UIView* line = [[UIView alloc] initWithFrame:CGRectMake(left,
-                                                          0.0f,
-                                                          tableView.bounds.size.width - left - right,
-                                                          1.0f)];
+  UIView* line =
+    [[UIView alloc] initWithFrame:CGRectMake(left,
+                                             0.0f,
+                                             tableView.bounds.size.width - left - right,
+                                             1.0f)];
   line.backgroundColor = [InfinitColor colorWithGray:227];
-  [header addSubview:line];
-  return header;
+  [res addSubview:line];
+  return res;
 }
 
 - (CGFloat)tableView:(UITableView*)tableView
@@ -1003,8 +1037,21 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   }
   else if (indexPath.section == InfinitSendRecipientsSectionSwaggers)
   {
-    contact = self.swagger_results[indexPath.row];
-    InfinitContactUser* contact_user = (InfinitContactUser*)contact;
+    InfinitContactUser* contact_user = (InfinitContactUser*)self.swagger_results[indexPath.row];
+    if (contact_user.infinit_user.ghost &&
+        contact_user.infinit_user.ghost_identifier.infinit_isPhoneNumber)
+    {
+      InfinitContactAddressBook* contact_ab =
+        [[InfinitContactManager sharedInstance] contactForUser:contact_user.infinit_user];
+      if (contact_ab)
+        [self overlayForSendToContact:contact_ab];
+      else
+        contact = contact_user;
+    }
+    else
+    {
+      contact = contact_user;
+    }
     if (contact_user.infinit_user.favorite)
     {
       [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewSelectFavorite
@@ -1018,40 +1065,11 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   }
   else if (indexPath.section == InfinitSendRecipientsSectionContacts)
   {
-    contact = self.contact_results[indexPath.row];
-    InfinitContactAddressBook* contact_ab = (InfinitContactAddressBook*)contact;
+    InfinitContactAddressBook* contact_ab =
+      (InfinitContactAddressBook*)self.contact_results[indexPath.row];
     [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewSelectAddressBookContact
                                method:InfinitUIMethodTap];
-    if (contact_ab.emails.count == 1 && (contact_ab.phone_numbers.count == 0 || !self.can_send_sms))
-    {
-      contact_ab.selected_email_index = 0;
-    }
-    else if (self.can_send_sms &&
-             contact_ab.phone_numbers.count == 1 &&
-             contact_ab.emails.count == 0)
-    {
-      contact_ab.selected_phone_index = 0;
-    }
-    else
-    {
-      UIActionSheet* sheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                         delegate:self
-                                                cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                           destructiveButtonTitle:nil
-                                                otherButtonTitles:nil];
-      for (NSString* email in contact_ab.emails)
-      {
-        [sheet addButtonWithTitle:email];
-      }
-      if ([InfinitHostDevice canSendSMS])
-      {
-        for (NSString* phone in contact_ab.phone_numbers)
-        {
-          [sheet addButtonWithTitle:phone];
-        }
-      }
-      [sheet showFromTabBar:self.tabBarController.tabBar];
-    }
+    [self overlayForSendToContact:contact_ab];
   }
   if (contact != nil)
     [self.recipients addObject:contact];
@@ -1061,51 +1079,12 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   [self.search_field resignFirstResponder];
 }
 
-- (void)actionSheetCancel:(UIActionSheet*)actionSheet
-{
-  InfinitContact* contact = self.recipients.lastObject;
-  [self.recipients removeObject:contact];
-  NSIndexPath* index = [NSIndexPath indexPathForRow:[self.contact_results indexOfObject:contact]
-                                          inSection:InfinitSendRecipientsSectionContacts];
-  [self.table_view deselectRowAtIndexPath:index animated:NO];
-  [self.search_field reloadData];
-  [self updateSendButton];
-}
-
-- (void)actionSheet:(UIActionSheet*)actionSheet
-clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-  if (buttonIndex == actionSheet.cancelButtonIndex)
-  {
-    InfinitContact* contact = self.recipients.lastObject;
-    [self.recipients removeObject:contact];
-    NSIndexPath* index = [NSIndexPath indexPathForRow:[self.contact_results indexOfObject:contact]
-                                            inSection:InfinitSendRecipientsSectionContacts];
-    [self.table_view deselectRowAtIndexPath:index animated:YES];
-    [self.search_field reloadData];
-  }
-  else
-  {
-    NSUInteger index = buttonIndex - 1;
-    InfinitContactAddressBook* contact = self.recipients.lastObject;
-    if (index < contact.emails.count)
-    {
-      contact.selected_email_index = index;
-    }
-    else
-    {
-      contact.selected_phone_index = index - contact.emails.count;
-    }
-  }
-  [self updateSendButton];
-}
-
 - (void)tableView:(UITableView*)tableView
 didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
 {
   InfinitContact* contact =
     [(InfinitSendAbstractCell*)([self.table_view cellForRowAtIndexPath:indexPath]) contact];
-  [_recipients removeObject:contact];
+  [self.recipients removeObject:contact];
   if ([contact isKindOfClass:InfinitContactAddressBook.class])
   {
     InfinitContactAddressBook* contact_ab = (InfinitContactAddressBook*)contact;
@@ -1131,6 +1110,30 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
 }
 
 #pragma mark - Helpers
+
+- (void)setSendButtonTextToDone:(BOOL)done
+{
+  NSString* button_text = nil;
+  UIImage* button_image = nil;
+  if (done)
+  {
+    button_text = NSLocalizedString(@"DONE", nil);
+    button_image = nil;
+    self.send_button.titleEdgeInsets = UIEdgeInsetsZero;
+  }
+  else
+  {
+    button_text = NSLocalizedString(@"SEND", nil);
+    button_image = _send_button_image;
+    self.send_button.titleEdgeInsets =
+      UIEdgeInsetsMake(0.0f,
+                       - self.send_button.imageView.frame.size.width,
+                       0.0f,
+                       self.send_button.imageView.frame.size.width);
+  }
+  [self.send_button setTitle:button_text forState:UIControlStateNormal];
+  [self.send_button setImage:button_image forState:UIControlStateNormal];
+}
 
 - (void)setSendButtonHidden:(BOOL)hidden
 {
@@ -1165,10 +1168,15 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
 
 - (void)updateSendButton
 {
-  if ([self inputsGood])
+  if ([self inputsGood] || self.sent_to_contact)
+  {
+    [self setSendButtonTextToDone:(self.sent_to_contact && self.recipients.count == 0)];
     [self setSendButtonHidden:NO];
+  }
   else
+  {
     [self setSendButtonHidden:YES];
+  }
 }
 
 - (BOOL)inputsGood
@@ -1334,17 +1342,17 @@ didDeleteTokenAtIndex:(NSUInteger)index
   NSMutableIndexSet* sections = [NSMutableIndexSet indexSet];
   if (![self.device_results isEqualToArray:self.all_devices])
   {
-    self.device_results = [self.all_devices copy];
+    self.device_results = [self.all_devices mutableCopy];
     [sections addIndex:InfinitSendRecipientsSectionSelf];
   }
   if (![self.swagger_results isEqualToArray:self.all_swaggers])
   {
-    self.swagger_results = [self.all_swaggers copy];
+    self.swagger_results = [self.all_swaggers mutableCopy];
     [sections addIndex:InfinitSendRecipientsSectionSwaggers];
   }
   if (![self.contact_results isEqualToArray:self.all_contacts])
   {
-    self.contact_results = [self.all_contacts copy];
+    self.contact_results = [self.all_contacts mutableCopy];
     [sections addIndex:InfinitSendRecipientsSectionContacts];
   }
   if (were_no_results || [self noResults])
@@ -1461,6 +1469,11 @@ didDeleteTokenAtIndex:(NSUInteger)index
     });
     return;
   }
+  else if ([self.me_contact.infinit_user.id_ isEqual:updated_id])
+  {
+    // Don't need to update our avatar.
+    return;
+  }
   [self.swagger_results enumerateObjectsUsingBlock:^(InfinitContactUser* contact,
                                                      NSUInteger idx,
                                                      BOOL* stop)
@@ -1475,6 +1488,7 @@ didDeleteTokenAtIndex:(NSUInteger)index
       {
         [cell updateAvatar];
       });
+      *stop = YES;
       return;
     }
   }];
@@ -1490,6 +1504,234 @@ didDeleteTokenAtIndex:(NSUInteger)index
     [self doneSending];
     _managed_files = nil;
   }
+}
+
+#pragma mark - Handle Address Book Contact Send
+
+- (void)overlayForSendToContact:(InfinitContactAddressBook*)contact
+{
+  if (![contact isKindOfClass:InfinitContactAddressBook.class])
+    return;
+  InfinitContactAddressBook* contact_ab = (InfinitContactAddressBook*)contact;
+  self.invitation_overlay.contact = contact_ab;
+  self.view.userInteractionEnabled = NO;
+  UIView* view = self.invitation_overlay.view;
+  view.alpha = 0.0f;
+  view.frame = [UIScreen mainScreen].bounds;
+  [[UIApplication sharedApplication].keyWindow addSubview:view];
+  [self.invitation_overlay awakeFromNib];
+  [[UIApplication sharedApplication].keyWindow bringSubviewToFront:view];
+  [UIView animateWithDuration:0.3f
+                   animations:^
+   {
+     view.alpha = 1.0f;
+   } completion:^(BOOL finished)
+   {
+     if (!finished)
+       view.alpha = 1.0f;
+   }];
+}
+
+- (void)removeInvitationOverlay
+{
+  UIView* view = self.invitation_overlay.view;
+  InfinitContactAddressBook* contact_ab = self.invitation_overlay.contact;
+  NSUInteger row = [self.contact_results indexOfObject:contact_ab];
+  if (row != NSNotFound)
+  {
+    NSIndexPath* index = [NSIndexPath indexPathForRow:row
+                                            inSection:InfinitSendRecipientsSectionContacts];
+    if ([self.table_view.indexPathsForSelectedRows containsObject:index])
+      [self.table_view deselectRowAtIndexPath:index animated:NO];
+    else
+      row = NSNotFound;
+  }
+  if (row == NSNotFound)
+  {
+    [self.swagger_results enumerateObjectsUsingBlock:^(InfinitContactUser* contact_user,
+                                                       NSUInteger i,
+                                                       BOOL* stop)
+    {
+      if (contact_user.infinit_user.ghost)
+      {
+        NSString* identifier =
+          [contact_user.infinit_user.ghost_identifier stringByReplacingOccurrencesOfString:@" "
+                                                                                withString:@""];
+        if ([contact_ab.phone_numbers indexOfObject:identifier] != NSNotFound ||
+            [contact_ab.emails indexOfObject:identifier] != NSNotFound)
+        {
+          NSIndexPath* index = [NSIndexPath indexPathForRow:i
+                                                  inSection:InfinitSendRecipientsSectionSwaggers];
+          if ([self.table_view.indexPathsForSelectedRows containsObject:index])
+          {
+            [self.table_view deselectRowAtIndexPath:index animated:NO];
+            *stop = YES;
+          }
+        }
+      }
+    }];
+  }
+  if (view == nil)
+    return;
+  [UIView animateWithDuration:0.3f
+                   animations:^
+   {
+     view.alpha = 0.0f;
+   } completion:^(BOOL finished)
+   {
+     self.view.userInteractionEnabled = YES;
+     [view removeFromSuperview];
+     self.invitation_overlay.loading = NO;
+   }];
+}
+
+- (InfinitInvitationOverlayViewController*)invitation_overlay
+{
+  dispatch_once(&_invitation_overlay_token, ^
+  {
+    _invitation_overlay = [[InfinitInvitationOverlayViewController alloc] init];
+    _invitation_overlay.delegate = self;
+  });
+  return _invitation_overlay;
+}
+
+- (void)invitationOverlay:(InfinitInvitationOverlayViewController*)sender
+             gotRecipient:(InfinitMessagingRecipient*)recipient
+{
+  if (!self.invitation_overlay.loading)
+    self.invitation_overlay.loading = YES;
+  if (self.managed_files.copying)
+  {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(300 * NSEC_PER_MSEC)),
+                   dispatch_get_main_queue(), ^
+    {
+      [self invitationOverlay:sender gotRecipient:recipient];
+    });
+    return;
+  }
+  self.current_message_recipient = recipient;
+  NSArray* transaction_ids =
+    [[InfinitPeerTransactionManager sharedInstance] sendFiles:self.managed_files.sorted_paths
+                                                 toRecipients:@[recipient.identifier]
+                                                  withMessage:@""];
+  [[InfinitTemporaryFileManager sharedInstance] addTransactionIds:transaction_ids
+                                                  forManagedFiles:self.managed_files];
+  InfinitUploadThumbnailManager* thumb_manager = [InfinitUploadThumbnailManager sharedInstance];
+  if (self.managed_files.asset_map.count)
+  {
+    NSMutableArray* ordered_assets = [NSMutableArray array];
+    for (NSString* path in self.managed_files.sorted_paths)
+    {
+      id asset = [self.managed_files.asset_map allKeysForObject:path].firstObject;
+      [ordered_assets addObject:asset];
+    }
+    [thumb_manager generateThumbnailsForAssets:ordered_assets
+                        forTransactionsWithIds:transaction_ids];
+  }
+  else
+  {
+    [thumb_manager generateThumbnailsForFiles:self.managed_files.sorted_paths
+                       forTransactionsWithIds:transaction_ids];
+  }
+  [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewSend
+                             method:InfinitUIMethodTap];
+}
+
+- (void)handleGhostTransaction:(NSNotification*)notification
+{
+  @synchronized(self)
+  {
+    NSDictionary* dict = notification.userInfo;
+    InfinitPeerTransaction* transaction =
+      [[InfinitPeerTransactionManager sharedInstance] transactionWithId:dict[kInfinitTransactionId]];
+    if (transaction == nil)
+      return;
+    InfinitUser* recipient_user = transaction.recipient;
+    if (self.current_message_recipient.method == InfinitMessageEmail)
+    {
+      [self removeInvitationOverlay];
+      self.sent_to_contact = YES;
+      dispatch_async(dispatch_get_main_queue(), ^
+      {
+        [self updateSendButton];
+      });
+      return;
+    }
+    if (!recipient_user.ghost_code.length || !recipient_user.ghost_invitation_url.length)
+    {
+      [self removeInvitationOverlay];
+      return;
+    }
+    NSString* files = transaction.files.count == 1 ? NSLocalizedString(@"file", nil)
+                                                   : NSLocalizedString(@"files", nil);
+    NSString* the_files = transaction.files.count == 1 ? NSLocalizedString(@"the file", nil)
+                                                       : NSLocalizedString(@"the files", nil);
+    NSString* message =
+      [NSString stringWithFormat:NSLocalizedString(@"Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@\n\nDon't forget to enter the following download code: %@", nil),
+     transaction.files.count, files, the_files, recipient_user.ghost_invitation_url, recipient_user.ghost_code];
+    [self removeInvitationOverlay];
+    if (self.current_message_recipient.method == InfinitMessageNative &&
+        UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+      if ([self.navigationController isKindOfClass:InfinitSendNavigationController.class])
+      {
+        ((InfinitSendNavigationController*)self.navigationController).smsing = YES;
+      }
+    }
+    [[InfinitMessagingManager sharedInstance] sendMessage:message
+                                              toRecipient:self.current_message_recipient
+                                          completionBlock:^(InfinitMessagingRecipient* recipient,
+                                                            NSString* message,
+                                                            InfinitMessageStatus status)
+    {
+      if (recipient.method == InfinitMessageNative || recipient.method == InfinitMessageWhatsApp)
+      {
+        switch (status)
+        {
+          case InfinitMessageStatusCancel:
+            [InfinitMetricsManager sendMetricGhostSMSSent:NO
+                                                     code:recipient_user.ghost_code
+                                               failReason:@"cancel"];
+            break;
+          case InfinitMessageStatusFail:
+            [InfinitMetricsManager sendMetricGhostSMSSent:NO
+                                                     code:recipient_user.ghost_code
+                                               failReason:@"fail"];
+            break;
+          case InfinitMessageStatusSuccess:
+            [InfinitMetricsManager sendMetricGhostSMSSent:YES
+                                                     code:recipient_user.ghost_code
+                                               failReason:nil];
+            break;
+        }
+      }
+      if (recipient.method == InfinitMessageNative && status != InfinitMessageStatusSuccess)
+      {
+        [[InfinitStateManager sharedInstance] sendInvitation:recipient.identifier
+                                                     message:message
+                                                   ghostCode:transaction.recipient.ghost_code];
+      }
+      self.sent_to_contact = YES;
+      dispatch_async(dispatch_get_main_queue(), ^
+      {
+        [self updateSendButton];
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+        {
+          if ([self.navigationController isKindOfClass:InfinitSendNavigationController.class])
+          {
+            [[UIApplication sharedApplication] setStatusBarHidden:YES
+                                                    withAnimation:UIStatusBarAnimationSlide];
+            ((InfinitSendNavigationController*)self.navigationController).smsing = NO;
+          }
+        }
+      });
+    }];
+  }
+}
+
+- (void)invitationOverlayGotCancel:(InfinitInvitationOverlayViewController*)sender
+{
+  [self removeInvitationOverlay];
 }
 
 #pragma mark - Helpers
