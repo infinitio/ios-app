@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E33b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -13,6 +13,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="InfinitInvitationOverlayViewController">
             <connections>
+                <outlet property="activity_indicator" destination="j2T-FL-EgT" id="dK9-I5-W01"/>
                 <outlet property="cancel_button" destination="wID-Wx-Yf4" id="YNE-IZ-hz4"/>
                 <outlet property="table_bottom_constraint" destination="5dh-b6-vdu" id="Bl3-QQ-dAW"/>
                 <outlet property="table_height_constraint" destination="Hkm-ek-ZM0" id="zh9-b1-TSr"/>
@@ -70,6 +71,9 @@
                         <outlet property="delegate" destination="-1" id="4gg-QA-i96"/>
                     </connections>
                 </tableView>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="j2T-FL-EgT">
+                    <rect key="frame" x="282" y="282" width="37" height="37"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" red="0.1764705882352941" green="0.1764705882352941" blue="0.19215686274509802" alpha="0.95000000000000007" colorSpace="calibratedRGB"/>
             <constraints>
@@ -78,7 +82,9 @@
                 <constraint firstAttribute="centerX" secondItem="wID-Wx-Yf4" secondAttribute="centerX" id="NGa-Bm-6mQ"/>
                 <constraint firstAttribute="centerX" secondItem="hG9-W6-c2t" secondAttribute="centerX" id="Taz-ZY-TGa"/>
                 <constraint firstAttribute="centerX" secondItem="ihv-E4-xIZ" secondAttribute="centerX" id="cGG-1k-6iv"/>
+                <constraint firstAttribute="centerX" secondItem="j2T-FL-EgT" secondAttribute="centerX" id="dea-gG-1he"/>
                 <constraint firstItem="wID-Wx-Yf4" firstAttribute="top" secondItem="hG9-W6-c2t" secondAttribute="bottom" constant="15" id="pQM-8l-cWH"/>
+                <constraint firstAttribute="centerY" secondItem="j2T-FL-EgT" secondAttribute="centerY" id="r0i-2W-hg9"/>
                 <constraint firstAttribute="bottom" secondItem="wID-Wx-Yf4" secondAttribute="bottom" constant="37" id="swl-Rf-lwO"/>
             </constraints>
             <point key="canvasLocation" x="546" y="234"/>
