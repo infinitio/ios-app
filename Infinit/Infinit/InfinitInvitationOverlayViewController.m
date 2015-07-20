@@ -14,6 +14,7 @@
 @interface InfinitInvitationOverlayViewController () <UITableViewDataSource,
                                                       UITableViewDelegate>
 
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView* activity_indicator;
 @property (nonatomic, weak) IBOutlet UIButton* cancel_button;
 @property (nonatomic, weak) IBOutlet UITableView* table_view;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* table_height_constraint;
@@ -25,6 +26,8 @@
 static NSString* _cell_id = @"invitation_overlay_cell_id";
 
 @implementation InfinitInvitationOverlayViewController
+
+@synthesize loading = _loading;
 
 - (instancetype)init
 {
@@ -70,6 +73,31 @@ static NSString* _cell_id = @"invitation_overlay_cell_id";
     self.table_bottom_constraint.constant = -(self.whatsapp_button.bounds.size.height + 15.0f);
   }
   [self setButtonsEnabled:YES];
+}
+
+#pragma mark - General
+
+- (BOOL)loading
+{
+  @synchronized(self)
+  {
+    return _loading;
+  }
+}
+
+- (void)setLoading:(BOOL)loading
+{
+  @synchronized(self)
+  {
+    _loading = loading;
+    if (loading)
+      [self.activity_indicator startAnimating];
+    else
+      [self.activity_indicator stopAnimating];
+    self.cancel_button.hidden = loading;
+    self.whatsapp_button.hidden = ![InfinitHostDevice canSendWhatsApp] || loading;
+    self.table_view.hidden = loading;
+  }
 }
 
 #pragma mark - UITableViewDataSource

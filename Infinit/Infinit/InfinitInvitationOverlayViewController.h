@@ -17,6 +17,7 @@
 
 @property (nonatomic, copy) InfinitContactAddressBook* contact;
 @property (nonatomic, weak) id<InfinitInvitationOverlayProtocol> delegate;
+@property (atomic, readwrite) BOOL loading;
 
 @end
 
