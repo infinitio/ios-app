@@ -20,7 +20,7 @@ typedef NS_ENUM(NSUInteger, InfinitMessageMethod)
 @interface InfinitMessagingRecipient : NSObject
 
 @property (nonatomic, readonly) int32_t address_book_id;
-@property (nonatomic, readonly) id identifier;
+@property (nonatomic, readonly) NSString* identifier;
 @property (nonatomic, readonly) InfinitMessageMethod method;
 @property (nonatomic, readonly) NSString* name;
 
