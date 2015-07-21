@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E36b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F6a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -14,11 +14,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7hy-Sc-3Ve">
-                        <rect key="frame" x="28" y="8" width="266" height="55"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7hy-Sc-3Ve">
+                        <rect key="frame" x="0.0" y="7" width="320" height="55"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="266" id="W6r-Mu-OK6"/>
                             <constraint firstAttribute="height" constant="55" id="udS-EZ-Gaa"/>
                         </constraints>
                         <color key="tintColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -29,7 +28,8 @@
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="centerX" secondItem="7hy-Sc-3Ve" secondAttribute="centerX" id="3TR-op-hxB"/>
+                    <constraint firstItem="7hy-Sc-3Ve" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="C5g-c8-yXq"/>
+                    <constraint firstAttribute="trailing" secondItem="7hy-Sc-3Ve" secondAttribute="trailing" id="gmx-kU-8fV"/>
                     <constraint firstAttribute="centerY" secondItem="7hy-Sc-3Ve" secondAttribute="centerY" id="voB-fZ-Efy"/>
                 </constraints>
             </tableViewCellContentView>
