@@ -105,7 +105,10 @@ static NSString* _cell_id = @"invitation_overlay_cell_id";
 - (NSInteger)tableView:(UITableView*)tableView
  numberOfRowsInSection:(NSInteger)section
 {
-  return self.contact.phone_numbers.count + self.contact.emails.count;
+  NSInteger res = self.contact.emails.count;
+  if ([InfinitHostDevice canSendSMS])
+    res += self.contact.phone_numbers.count;
+  return res;
 }
 
 - (UITableViewCell*)tableView:(UITableView*)tableView
@@ -113,13 +116,15 @@ static NSString* _cell_id = @"invitation_overlay_cell_id";
 {
   InfinitInvitationOverlayTableViewCell* cell =
     [self.table_view dequeueReusableCellWithIdentifier:_cell_id forIndexPath:indexPath];
-  if (indexPath.row < self.contact.phone_numbers.count) // phone number
+  if ([InfinitHostDevice canSendSMS] && indexPath.row < self.contact.phone_numbers.count) // phone number
   {
     [cell setupWithPhoneNumber:self.contact.phone_numbers[indexPath.row]];
   }
   else // email
   {
-    NSUInteger index = indexPath.row - self.contact.phone_numbers.count;
+    NSUInteger index = indexPath.row;
+    if ([InfinitHostDevice canSendSMS])
+      index -= self.contact.phone_numbers.count;
     [cell setupWithEmail:self.contact.emails[index]];
   }
   [cell.button addTarget:self
@@ -138,8 +143,9 @@ static NSString* _cell_id = @"invitation_overlay_cell_id";
   if (cell.email)
   {
     method = InfinitMessageEmail;
-    self.contact.selected_email_index =
-      [self.table_view indexPathForCell:cell].row - self.contact.phone_numbers.count;
+    self.contact.selected_email_index = [self.table_view indexPathForCell:cell].row;
+    if ([InfinitHostDevice canSendSMS])
+      self.contact.selected_email_index -= self.contact.phone_numbers.count;
   }
   else if (cell.phone)
   {
