@@ -14,8 +14,8 @@
 
 @interface InfinitSendRecipientsController : UIViewController
 
-@property (nonatomic, readwrite) NSUInteger file_count;
-@property (nonatomic, weak, readwrite) InfinitManagedFiles* managed_files;
+@property (atomic, readwrite) NSUInteger file_count;
+@property (atomic, weak, readwrite) InfinitManagedFiles* managed_files;
 @property (nonatomic, weak, readwrite) InfinitContact* recipient;
 
 - (void)resetView;

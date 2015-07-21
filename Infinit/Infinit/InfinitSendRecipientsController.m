@@ -115,7 +115,9 @@ static UIImage* _send_button_image = nil;
 
 @implementation InfinitSendRecipientsController
 
+@synthesize file_count = _file_count;
 @synthesize invitation_overlay = _invitation_overlay;
+@synthesize managed_files = _managed_files;
 
 #pragma mark - Init
 
@@ -313,14 +315,41 @@ static UIImage* _send_button_image = nil;
 
 #pragma mark - General
 
+- (NSUInteger)file_count
+{
+  @synchronized(self)
+  {
+    return _file_count;
+  }
+}
+
+- (void)setFile_count:(NSUInteger)file_count
+{
+  @synchronized(self)
+  {
+    _file_count = file_count;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+      [self updateSendButton];
+  }
+}
+
+- (InfinitManagedFiles*)managed_files
+{
+  @synchronized(_managed_files)
+  {
+    return _managed_files;
+  }
+}
+
 - (void)setManaged_files:(InfinitManagedFiles*)managed_files
 {
-  _managed_files = managed_files;
-  if (!managed_files)
-    _file_count = 0;
-  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+  @synchronized(_managed_files)
   {
-    [self updateSendButton];
+    _managed_files = managed_files;
+    if (!managed_files)
+      _file_count = 0;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+      [self updateSendButton];
   }
 }
 
@@ -740,7 +769,8 @@ static UIImage* _send_button_image = nil;
       if (contact_user.infinit_user != nil && contact_user.device == nil)
       {
         if (contact_user.infinit_user.ghost &&
-            contact_user.infinit_user.ghost_identifier.infinit_isPhoneNumber)
+            contact_user.infinit_user.ghost_identifier.infinit_isPhoneNumber &&
+            [InfinitHostDevice canSendSMS])
         {
           continue;
         }
@@ -758,6 +788,11 @@ static UIImage* _send_button_image = nil;
     {
       InfinitContactEmail* contact_email = (InfinitContactEmail*)contact;
       [actual_recipients addObject:contact_email.email];
+    }
+    else if ([contact isKindOfClass:InfinitContactAddressBook.class])
+    {
+      InfinitContactAddressBook* contact_ab = (InfinitContactAddressBook*)contact;
+      [actual_recipients addObject:contact_ab.emails[contact_ab.selected_email_index]];
     }
   }
   NSMutableArray* ids =
@@ -1183,6 +1218,8 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
 {
   if (self.recipients.count == 0)
     return NO;
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && !self.file_count)
+    return NO;
   return YES;
 }
 
@@ -1600,6 +1637,14 @@ didDeleteTokenAtIndex:(NSUInteger)index
 {
   if (!self.invitation_overlay.loading)
     self.invitation_overlay.loading = YES;
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+  {
+    [self.recipients addObject:self.invitation_overlay.contact];
+    [self.search_field reloadData];
+    [self updateSendButton];
+    [self removeInvitationOverlay];
+    return;
+  }
   if (self.managed_files.copying)
   {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(300 * NSEC_PER_MSEC)),
