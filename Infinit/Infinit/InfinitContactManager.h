@@ -20,7 +20,8 @@
  */
 - (void)gotAddressBookAccess;
 
-/** Fetch an array of all the user's contacts.
+/** Fetch an array of all the user's contacts that the device can message.
+ This won't include contacts with only phone numbers on iPads.
  @return Array of InfinitContact objects or nil if no access.
  */
 - (NSArray*)allContacts;

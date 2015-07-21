@@ -10,6 +10,7 @@
 
 #import "InfinitApplicationSettings.h"
 #import "InfinitContact.h"
+#import "InfinitHostDevice.h"
 
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitUserManager.h>
@@ -104,7 +105,17 @@ static dispatch_once_t _got_access_token = 0;
                                 ascending:YES
                                  selector:@selector(caseInsensitiveCompare:)];
   [res sortUsingDescriptors:@[sort]];
-  self.contact_cache = [res copy];
+  self.contact_cache = [NSArray arrayWithArray:res];
+  NSMutableArray* exclusions = [NSMutableArray array];
+  if (![InfinitHostDevice canSendSMS])
+  {
+    for (InfinitContactAddressBook* contact in res)
+    {
+      if (!contact.emails.count)
+        [exclusions addObject:contact];
+    }
+  }
+  [res removeObjectsInArray:exclusions];
   return res;
 }
 
