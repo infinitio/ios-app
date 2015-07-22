@@ -53,6 +53,7 @@
 @property (nonatomic, weak) IBOutlet UIButton* left_button;
 @property (nonatomic, weak) IBOutlet UIButton* right_button;
 @property (nonatomic, weak) IBOutlet UIView* button_separator_line;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* button_separator_constraint;
 
 @property (nonatomic, readonly, weak) id<InfinitHomePeerTransactionCellProtocol> delegate;
 
@@ -297,8 +298,19 @@ static CGFloat _button_height = 45.0f;
     [self.files_view reloadData];
 }
 
+- (void)setCancelOnlyButton
+{
+  [self setPauseCancelButtons];
+  self.button_separator_constraint.constant = floor(self.bounds.size.width / 2.0f);
+  self.button_separator_line.hidden = YES;
+  self.left_button.hidden = YES;
+}
+
 - (void)setPauseCancelButtons
 {
+  self.button_separator_line.hidden = NO;
+  self.left_button.hidden = NO;
+  self.button_separator_constraint.constant = 0.0f;
   [self.left_button setImage:_pause_image forState:UIControlStateNormal];
   self.left_button.tintColor = [InfinitColor colorFromPalette:InfinitPaletteColorShamRock];
   if (self.transaction.status == gap_transaction_paused)
@@ -381,6 +393,14 @@ static CGFloat _button_height = 45.0f;
       break;
 
     case gap_transaction_cloud_buffered:
+      [self setButtonsHidden:!self.expanded];
+      if (self.expanded)
+        [self setCancelOnlyButton];
+      [self setStatusViewHidden:!self.expanded];
+      self.top_line.hidden = !self.expanded;
+      [self setFilesViewHidden:!self.expanded];
+      break;
+
     case gap_transaction_rejected:
     case gap_transaction_finished:
     case gap_transaction_failed:
@@ -462,7 +482,7 @@ static CGFloat _button_height = 45.0f;
 - (void)setProgress
 {
   float progress = self.transaction.progress;
-  if (!self.transaction.done &&
+  if (!self.transaction.done && self.transaction.status != gap_transaction_cloud_buffered &&
       (progress > 0.0f || self.transaction.status == gap_transaction_transferring))
   {
     self.avatar_view.progress = progress;
