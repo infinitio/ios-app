@@ -12,4 +12,9 @@
 
 @implementation InfinitSettingsCell
 
+- (void)prepareForReuse
+{
+  self.title_label.textColor = [InfinitColor colorWithRed:81 green:81 blue:73];
+}
+
 @end
