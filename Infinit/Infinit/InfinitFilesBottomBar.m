@@ -15,6 +15,7 @@
 - (void)awakeFromNib
 {
   _enabled = NO;
+  self.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 - (void)setEnabled:(BOOL)enabled
