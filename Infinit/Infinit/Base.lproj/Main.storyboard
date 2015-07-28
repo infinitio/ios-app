@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9lB-0z-aFR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F6a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9lB-0z-aFR">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -7,6 +7,29 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <mutableArray key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue-Medium</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue-Medium</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+        </mutableArray>
         <mutableArray key="SourceSansPro-Bold.otf">
             <string>SourceSansPro-Bold</string>
             <string>SourceSansPro-Bold</string>
@@ -249,7 +272,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Dru-us-o7v">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <rect key="frame" x="5" y="0.0" width="100" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
@@ -330,10 +353,10 @@
                     <connections>
                         <outlet property="table_view" destination="ob9-mb-YaE" id="e8l-fY-x59"/>
                         <outlet property="view" destination="nrk-EV-IbR" id="Cad-aW-WmX"/>
-                        <segue destination="RBB-kt-vOH" kind="show" identifier="settings_feedback" id="QON-zo-f6l"/>
-                        <segue destination="RBB-kt-vOH" kind="show" identifier="settings_report_problem" id="0ax-4u-uN8"/>
-                        <segue destination="FTm-Xp-9pf" kind="show" identifier="settings_edit_profile" id="s2s-MM-c1x"/>
-                        <segue destination="myY-nW-5TG" kind="show" identifier="settings_edit_device" id="naa-LY-pCa"/>
+                        <segue destination="bv7-rj-2XH" kind="show" identifier="settings_edit_device" id="erd-gS-oiG"/>
+                        <segue destination="UIZ-TQ-cnt" kind="show" identifier="settings_edit_profile" id="DT0-HJ-b8j"/>
+                        <segue destination="n3a-58-YZv" kind="show" identifier="settings_feedback" id="Hpk-c8-hun"/>
+                        <segue destination="n3a-58-YZv" kind="show" identifier="settings_report_problem" id="7Vb-QM-Foc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rBL-up-kiJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -349,7 +372,7 @@
                         <viewControllerLayoutGuide type="bottom" id="XIu-Nu-Hmk"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="eVk-vY-uZZ">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MIn-qN-VFn">
@@ -378,7 +401,7 @@
                         <barButtonItem key="leftBarButtonItem" image="icon-back-white" id="mSL-Cm-2y4">
                             <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <action selector="backButtonTapped:" destination="n3a-58-YZv" id="Zzy-2u-T9N"/>
+                                <segue destination="mwF-cs-0hF" kind="unwind" identifier="settings_feedback_unwind" unwindAction="unwindToSettingsViewController:" id="Z6G-Q1-pri"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="icon-send-red" id="KwR-cp-c5Q">
@@ -394,13 +417,14 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BOz-90-V2D" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="mwF-cs-0hF" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1433" y="-216"/>
+            <point key="canvasLocation" x="695" y="-216"/>
         </scene>
         <!--EDIT PROFILE-->
         <scene sceneID="IWf-NA-45O">
             <objects>
-                <viewController extendedLayoutIncludesOpaqueBars="YES" id="UIZ-TQ-cnt" customClass="InfinitSettingsEditProfileViewController" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" hidesBottomBarWhenPushed="YES" id="UIZ-TQ-cnt" customClass="InfinitSettingsEditProfileViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="NG7-Ic-Qs7"/>
                         <viewControllerLayoutGuide type="bottom" id="TBP-eW-ROw"/>
@@ -490,7 +514,7 @@
                         <barButtonItem key="leftBarButtonItem" image="icon-back-white" id="RHx-Cm-GtH">
                             <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <action selector="backTapped:" destination="UIZ-TQ-cnt" id="pFz-dz-rjv"/>
+                                <segue destination="9uf-r6-8Er" kind="unwind" identifier="settings_profile_unwind" unwindAction="unwindToSettingsViewController:" id="N0o-d0-a2l"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="OK" id="gce-DQ-YM6">
@@ -509,24 +533,25 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9LB-mq-E5U" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="9uf-r6-8Er" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer id="JjG-yq-Rq5">
                     <connections>
                         <action selector="screenTap:" destination="UIZ-TQ-cnt" id="Nwx-FF-VTp"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1433" y="479"/>
+            <point key="canvasLocation" x="695" y="521"/>
         </scene>
         <!--RENAME DEVICE-->
         <scene sceneID="CPs-mc-Ino">
             <objects>
-                <viewController extendedLayoutIncludesOpaqueBars="YES" id="bv7-rj-2XH" customClass="InfinitSettingsDeviceViewController" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" hidesBottomBarWhenPushed="YES" id="bv7-rj-2XH" customClass="InfinitSettingsDeviceViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Np4-dJ-9G9"/>
                         <viewControllerLayoutGuide type="bottom" id="4yr-iY-ai4"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Y3x-hu-J8L">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JIA-gz-GyD">
@@ -574,32 +599,33 @@
                         <barButtonItem key="leftBarButtonItem" image="icon-back-white" id="gqW-fB-dBA">
                             <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <action selector="backTapped:" destination="bv7-rj-2XH" id="sz5-ME-j8G"/>
+                                <segue destination="VWf-xk-rX4" kind="unwind" identifier="settings_device_unwind" unwindAction="unwindToSettingsViewController:" id="fC2-Rg-O8C"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="OK" id="RBf-3C-mkH">
                             <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <action selector="okTapped:" destination="bv7-rj-2XH" id="EnN-XQ-21k"/>
+                                <action selector="okTapped:" destination="bv7-rj-2XH" id="qwg-5d-wqk"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="name_field" destination="DCx-EA-FAQ" id="S64-L8-WRc"/>
                         <outlet property="name_view" destination="JIA-gz-GyD" id="NBf-ek-JeI"/>
-                        <outlet property="ok_button" destination="RBf-3C-mkH" id="skF-dS-Cer"/>
+                        <outlet property="ok_button" destination="RBf-3C-mkH" id="bf6-h1-6VB"/>
                         <outlet property="view" destination="Y3x-hu-J8L" id="RkF-3v-b68"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5CR-nW-emd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="VWf-xk-rX4" userLabel="Exit" sceneMemberID="exit"/>
                 <tapGestureRecognizer id="h8R-8d-E9E">
                     <connections>
                         <action selector="screenTapped:" destination="bv7-rj-2XH" id="8el-Pm-mgI"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1433" y="1175"/>
+            <point key="canvasLocation" x="695" y="1195"/>
         </scene>
         <!--SETTINGS-->
         <scene sceneID="BgV-Sc-ZSQ">
@@ -607,11 +633,10 @@
                 <navigationController storyboardIdentifier="settings_navigation_controller_id" title="SETTINGS" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="rsj-6b-IS1" customClass="InfinitSettingsNavigationController" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <tabBarItem key="tabBarItem" title="" image="icon-tab-settings" id="Cd4-Ng-GSO"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="New-hn-x7i">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="New-hn-x7i">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="barTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="gyX-52-PGb" kind="relationship" relationship="rootViewController" id="FdX-05-7MX"/>
@@ -670,7 +695,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNk-ik-wrE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2322" y="-216"/>
+            <point key="canvasLocation" x="1736" y="-213"/>
         </scene>
         <!--SEND_GALLERY-->
         <scene sceneID="28I-PS-ga1">
@@ -681,7 +706,7 @@
                         <viewControllerLayoutGuide type="bottom" id="WOe-0g-zHE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="HT9-3T-yrz">
-                        <rect key="frame" x="0.0" y="64" width="600" height="556"/>
+                        <rect key="frame" x="0.0" y="44" width="600" height="556"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jCk-aB-ANg">
@@ -746,7 +771,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MVo-LB-ZAT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3037" y="-219"/>
+            <point key="canvasLocation" x="2451" y="-216"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="jS1-jJ-Tsv">
@@ -760,7 +785,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qF3-ks-ETR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3052" y="451"/>
+            <point key="canvasLocation" x="2451" y="450"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="AQw-ZF-kOj">
@@ -774,7 +799,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="exT-xk-JEF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3866" y="1119"/>
+            <point key="canvasLocation" x="2451" y="1184"/>
         </scene>
         <!--Infinit Send Split View Controller i Pad-->
         <scene sceneID="7q8-zE-GWj">
@@ -787,7 +812,7 @@
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CeN-Dc-LG3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3044" y="781"/>
+            <point key="canvasLocation" x="1736" y="802"/>
         </scene>
         <!--SEND_RECIPIENTS-->
         <scene sceneID="05q-5G-qxd">
@@ -798,7 +823,7 @@
                         <viewControllerLayoutGuide type="bottom" id="zqG-cb-qD6"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="nF7-gs-IAg">
-                        <rect key="frame" x="0.0" y="44" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="44" width="600" height="556"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B4i-MR-JeK">
@@ -831,7 +856,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z9O-hM-TV6">
-                                <rect key="frame" x="0.0" y="536" width="600" height="55"/>
+                                <rect key="frame" x="0.0" y="556" width="600" height="55"/>
                                 <color key="backgroundColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="eCK-g0-lfl"/>
@@ -852,10 +877,10 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lp7-op-Gu1">
-                                <rect key="frame" x="0.0" y="66" width="600" height="470"/>
+                                <rect key="frame" x="0.0" y="66" width="600" height="490"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="40" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Gnb-fF-2Af">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="470"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="490"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="288" id="FK0-i4-Q5v"/>
                                             <constraint firstAttribute="height" constant="400" id="MW8-zC-bIP"/>
@@ -863,9 +888,10 @@
                                         </constraints>
                                         <prototypes>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="send_device_cell" rowHeight="62" id="eqh-rJ-glX" customClass="InfinitSendDeviceCell">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                                <rect key="frame" x="0.0" y="22" width="600" height="62"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eqh-rJ-glX" id="V5m-cX-0aY">
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="61"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mike Dee" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="6G8-BA-BUD">
@@ -976,9 +1002,10 @@
                                                 </connections>
                                             </tableViewCell>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="send_user_infinit_cell" rowHeight="62" id="Ct8-cb-QIX" customClass="InfinitSendUserCell">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                                <rect key="frame" x="0.0" y="84" width="600" height="62"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ct8-cb-QIX" id="Scd-3f-bhR">
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="61"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mike Dee" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="0RN-Xm-k4b">
@@ -1083,9 +1110,10 @@
                                                 </connections>
                                             </tableViewCell>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="send_contact_cell" rowHeight="62" id="PW3-2H-n3H" customClass="InfinitSendContactCell">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                                <rect key="frame" x="0.0" y="146" width="600" height="62"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PW3-2H-n3H" id="b4p-vG-One">
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="61"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zYV-ye-nPC">
@@ -1206,9 +1234,10 @@
                                                 </connections>
                                             </tableViewCell>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="send_email_cell" rowHeight="62" id="0Vs-2e-Ey6" customClass="InfinitSendEmailCell">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                                <rect key="frame" x="0.0" y="208" width="600" height="62"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0Vs-2e-Ey6" id="cKd-uP-wbh">
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="61"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-email-results" translatesAutoresizingMaskIntoConstraints="NO" id="7i2-5d-xlz">
@@ -1312,9 +1341,10 @@
                                                 </connections>
                                             </tableViewCell>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="send_no_results_cell" rowHeight="464" id="imq-4s-tH6" customClass="InfinitSendNoResultsCell">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                                <rect key="frame" x="0.0" y="270" width="600" height="464"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="imq-4s-tH6" id="aHw-qE-rXm">
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="463"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YNY-lR-rkF">
@@ -1464,7 +1494,7 @@ access your phone contacts!</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lbU-J3-lUF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3751" y="-219"/>
+            <point key="canvasLocation" x="3165" y="-216"/>
         </scene>
         <!--Infinit Welcome View Controller-->
         <scene sceneID="ML7-zP-jiP">
@@ -1594,7 +1624,7 @@ access your phone contacts!</string>
                         <viewControllerLayoutGuide type="bottom" id="qUa-Me-Bf1"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="H2k-Qi-iPx">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" placeholder="Search" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ijA-4P-WMS">
@@ -1764,7 +1794,7 @@ access your phone contacts!</string>
                         <viewControllerLayoutGuide type="bottom" id="27r-Dn-bKh"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="9ku-bS-AU6">
-                        <rect key="frame" x="0.0" y="64" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="WCF-Qo-N8t">
@@ -1870,7 +1900,7 @@ access your phone contacts!</string>
                                         </collectionViewFlowLayout>
                                         <cells>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" reuseIdentifier="extension_file_cell_id" id="NPc-Ew-BiM" customClass="InfinitExtensionFileCell">
-                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                     <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
@@ -1894,7 +1924,7 @@ access your phone contacts!</string>
                                                 </connections>
                                             </collectionViewCell>
                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" reuseIdentifier="extension_more_cell_id" id="HWx-Ju-29P" customClass="InfinitExtensionMoreCell">
-                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                <rect key="frame" x="46" y="0.0" width="40" height="40"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                     <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
@@ -1977,7 +2007,7 @@ access your phone contacts!</string>
                         <viewControllerLayoutGuide type="bottom" id="xuC-ju-so6"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="XuL-nQ-tpW">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="kr4-Ee-MVL">
@@ -2044,7 +2074,7 @@ access your phone contacts!</string>
                         <viewControllerLayoutGuide type="bottom" id="jHU-wq-Jrm"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="z4J-xO-e5w">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LHl-Q8-2Gf">
@@ -2255,41 +2285,6 @@ access your phone contacts!</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oFN-nO-BVh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3338" y="-1013"/>
-        </scene>
-        <!--REPORT A PROBLEM-->
-        <scene sceneID="i5N-eB-nPV">
-            <objects>
-                <navigationController title="REPORT A PROBLEM" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="RBB-kt-vOH" sceneMemberID="viewController">
-                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="fRr-8m-H3d">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="n3a-58-YZv" kind="relationship" relationship="rootViewController" id="H2M-GQ-svX"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="EKj-vh-mgy" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="695" y="-216"/>
-        </scene>
-        <!--EDIT PROFILE-->
-        <scene sceneID="oBR-V0-Yk1">
-            <objects>
-                <navigationController title="EDIT PROFILE" extendedLayoutIncludesOpaqueBars="YES" hidesBottomBarWhenPushed="YES" id="FTm-Xp-9pf" customClass="InfinitPortraitNavigationController" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="aJE-uG-0uz">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="UIZ-TQ-cnt" kind="relationship" relationship="rootViewController" id="13V-Yo-U0E"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bBv-18-cYg" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="695" y="479"/>
         </scene>
         <!--TAB CONTROLLER IPAD-->
         <scene sceneID="GLI-AD-eBi">
@@ -2798,24 +2793,6 @@ type of file in Infinit</string>
             </objects>
             <point key="canvasLocation" x="1525" y="-4513"/>
         </scene>
-        <!--Infinit Portrait Navigation Controller-->
-        <scene sceneID="kL3-aS-fUS">
-            <objects>
-                <navigationController extendedLayoutIncludesOpaqueBars="YES" hidesBottomBarWhenPushed="YES" id="myY-nW-5TG" customClass="InfinitPortraitNavigationController" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="T8e-JT-aTi">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="bv7-rj-2XH" kind="relationship" relationship="rootViewController" id="ctc-c0-V28"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="r6p-j9-N7R" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="695" y="1175"/>
-        </scene>
     </scenes>
     <resources>
         <image name="bg-balloon" width="230" height="226"/>
@@ -2855,10 +2832,10 @@ type of file in Infinit</string>
     <inferredMetricsTieBreakers>
         <segue reference="FIr-rc-U7J"/>
         <segue reference="geu-yv-K0l"/>
-        <segue reference="QON-zo-f6l"/>
-        <segue reference="zsD-TI-UrV"/>
         <segue reference="Yah-cg-ZRU"/>
-        <segue reference="5jp-t6-Gni"/>
+        <segue reference="7Vb-QM-Foc"/>
+        <segue reference="zep-Dc-F4h"/>
         <segue reference="19z-F9-Cn7"/>
+        <segue reference="5jp-t6-Gni"/>
     </inferredMetricsTieBreakers>
 </document>
