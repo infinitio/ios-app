@@ -53,6 +53,7 @@
 	<array>
 		<string>infinit</string>
 		<string>whatsapp</string>
+		<string>fbauth</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
