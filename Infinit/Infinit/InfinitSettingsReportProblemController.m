@@ -103,25 +103,6 @@
 
 #pragma mark - Button Handling
 
-- (void)goBack
-{
-  [self dismissKeyboard];
-  if ([InfinitHostDevice iOS7])
-  {
-    [self.navigationController popViewControllerAnimated:YES];
-  }
-  else
-  {
-    [self.navigationController.navigationController popToRootViewControllerAnimated:YES];
-  }
-  self.text_view.text = _place_holder_text;
-}
-
-- (IBAction)backButtonTapped:(id)sender
-{
-  [self goBack];
-}
-
 - (IBAction)sendButtonTapped:(id)sender
 {
   UIAlertView* alert = nil;
@@ -147,13 +128,13 @@
 
 - (void)alertViewCancel:(UIAlertView*)alertView
 {
-  [self goBack];
+  [self performSegueWithIdentifier:@"settings_feedback_unwind" sender:self];
 }
 
 - (void)alertView:(UIAlertView*)alertView
 clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-  [self goBack];
+  [self performSegueWithIdentifier:@"settings_feedback_unwind" sender:self];
 }
 
 @end

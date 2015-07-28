@@ -503,23 +503,17 @@ viewForFooterInSection:(NSInteger)section
 {
   if ([segue.identifier isEqualToString:@"settings_report_problem"])
   {
-    InfinitSettingsReportProblemController* controller = nil;
-    if ([InfinitHostDevice iOS7])
-      controller = segue.destinationViewController;
-    else
-      controller = ((UINavigationController*)segue.destinationViewController).viewControllers[0];
+    InfinitSettingsReportProblemController* controller = segue.destinationViewController;
     controller.feedback_mode = NO;
   }
   else if ([segue.identifier isEqualToString:@"settings_feedback"])
   {
-    InfinitSettingsReportProblemController* controller = nil;
-    if ([InfinitHostDevice iOS7])
-      controller = segue.destinationViewController;
-    else
-      controller = ((UINavigationController*)segue.destinationViewController).viewControllers[0];
+    InfinitSettingsReportProblemController* controller = segue.destinationViewController;
     controller.feedback_mode = YES;
   }
 }
 
+- (IBAction)unwindToSettingsViewController:(UIStoryboardSegue*)segue
+{}
 
 @end

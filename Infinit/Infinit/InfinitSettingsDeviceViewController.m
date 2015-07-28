@@ -56,7 +56,6 @@
                                            selector:@selector(keyboardWillHide)
                                                name:UIKeyboardWillHideNotification 
                                              object:nil];
-  self.ok_button.enabled = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -102,21 +101,7 @@
    }];
 }
 
-- (void)goBack
-{
-  [self.view endEditing:YES];
-  if ([InfinitHostDevice iOS7])
-    [self.navigationController popViewControllerAnimated:YES];
-  else
-    [self.navigationController.navigationController popToRootViewControllerAnimated:YES];
-}
-
 #pragma mark - Button Handling
-
-- (IBAction)backTapped:(id)sender
-{
-  [self goBack];
-}
 
 - (IBAction)okTapped:(id)sender
 {
@@ -129,7 +114,7 @@
                                                         os:nil
                                            completionBlock:nil];
   }
-  [self goBack];
+  [self performSegueWithIdentifier:@"settings_device_unwind" sender:self];
 }
 
 - (IBAction)screenTapped:(id)sender

@@ -121,16 +121,7 @@
 
 - (void)goBack
 {
-  if ([InfinitHostDevice iOS7])
-    [self.navigationController popViewControllerAnimated:YES];
-  else
-    [self.navigationController.navigationController popToRootViewControllerAnimated:YES];
-}
-
-- (IBAction)backTapped:(id)sender
-{
-  [self dismissKeyboard];
-  [self goBack];
+  [self performSegueWithIdentifier:@"settings_profile_unwind" sender:self];
 }
 
 - (IBAction)okTapped:(id)sender
@@ -189,14 +180,18 @@
 - (void)actionSheet:(UIActionSheet*)actionSheet
 didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-  NSString* choice = [actionSheet buttonTitleAtIndex:buttonIndex];
-  if([choice isEqualToString:NSLocalizedString(@"Choose a photo...", nil)])
+  switch (buttonIndex)
   {
-    [self presentImagePicker:UIImagePickerControllerSourceTypeSavedPhotosAlbum];
-  }
-  if([choice isEqualToString:NSLocalizedString(@"Take new photo", nil)])
-  {
-    [self presentImagePicker:UIImagePickerControllerSourceTypeCamera];
+    case 0:
+      [self presentImagePicker:UIImagePickerControllerSourceTypeCamera];
+      break;
+
+    case 1:
+      [self presentImagePicker:UIImagePickerControllerSourceTypeSavedPhotosAlbum];
+      break;
+
+    default:
+      break;
   }
 }
 
