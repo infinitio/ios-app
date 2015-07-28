@@ -39,7 +39,63 @@
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 #ifdef DEBUG
+
+# import <Gap/InfinitSwizzler.h>
+
 @import AdSupport;
+
+@implementation UIApplication (infinit_Debug)
+
++ (void)load
+{
+  static dispatch_once_t _uiapp_load_token = 0;
+  dispatch_once(&_uiapp_load_token, ^
+  {
+    NSLog(@"Advertising identifier: %@",
+          [ASIdentifierManager sharedManager].advertisingIdentifier.UUIDString);
+    swizzle_class_selector(self.class, @selector(openURL:), @selector(infinit_openURL:));
+  });
+}
+
+- (BOOL)infinit_openURL:(NSURL*)url
+{
+  NSLog(@"Opening URL: %@", url);
+  return [self infinit_openURL:url];
+}
+
+@end
+
+@implementation NSMutableArray (infinit_Debug)
+
++ (void)load
+{
+  static dispatch_once_t _mutablearray_load_token = 0;
+  dispatch_once(&_mutablearray_load_token, ^
+  {
+    swizzle_class_selector(NSClassFromString(@"__NSArrayM"), @selector(addObject:), @selector(infinit_addObject:));
+    swizzle_class_selector(NSClassFromString(@"__NSArrayM"),
+                           @selector(insertObject:atIndex:),
+                           @selector(infinit_insertObject:atIndex:));
+  });
+}
+
+- (void)infinit_addObject:(id)anObject
+{
+  assert(anObject != nil);
+  [self infinit_addObject:anObject];
+}
+
+#define VNAME(x) [NSString stringWithUTF8String:#x]
+
+- (void)infinit_insertObject:(id)anObject
+                     atIndex:(NSUInteger)index
+{
+  assert(anObject != nil);
+  [self infinit_insertObject:anObject atIndex:index];
+}
+
+@end
+
 #endif
 
 @interface AppDelegate () <AdjustDelegate,
@@ -88,10 +144,6 @@
 - (BOOL)application:(UIApplication*)application
 didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
-#ifdef DEBUG
-  NSLog(@"Advertising identifier: %@",
-        [ASIdentifierManager sharedManager].advertisingIdentifier.UUIDString);
-#endif
   [self configureAdjust];
   [[FBSDKApplicationDelegate sharedInstance] application:application
                            didFinishLaunchingWithOptions:launchOptions];
