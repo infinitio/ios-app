@@ -1,0 +1,483 @@
+/* No comment provided by engineer. */
+"%@ declined the transfer!" = "%@ さんが受信を辞退しました!";
+
+/* No comment provided by engineer. */
+"%@ declined your transfer!" = "%@さんが受信を辞退しました!";
+
+/* No comment provided by engineer. */
+"%@ received your files!" = "%@さんがファイルを受け取りました!";
+
+/* No comment provided by engineer. */
+"%@ wants to send %ld %@ to you" = "%1$@さんがあなたに%2$ld個の%3$@を送ろうとしています";
+
+/* No comment provided by engineer. */
+"%lu FILES" = "%lu ファイル";
+
+/* No comment provided by engineer. */
+"%lu files" = "%luファイル";
+
+/* No comment provided by engineer. */
+"%lu files selected" = "%luファイル選択済み";
+
+/* No comment provided by engineer. */
+"(my other devices)" = "(自分の他のデバイス)";
+
+/* No comment provided by engineer. */
+"1 file" = "1ファイル";
+
+/* No comment provided by engineer. */
+"1 file selected" = "1ファイル選択済み";
+
+/* No comment provided by engineer. */
+"30x faster" = "30倍高速";
+
+/* No comment provided by engineer. */
+"ACCEPT" = "受け取る";
+
+/* No comment provided by engineer. */
+"Accept on receiving device" = "受信先のデバイスで受け取る";
+
+/* No comment provided by engineer. */
+"Account already registered for\nFacebook email address." = "このアカウントはすでにFacebookの\nメールアドレスで登録されています。";
+
+/* No comment provided by engineer. */
+"All set! A message will be sent to %@." = "作業完了!  %@さんにメッセージが送信されます。";
+
+/* No comment provided by engineer. */
+"Auto-save files" = "ファイルの自動保存";
+
+/* No comment provided by engineer. */
+"Back" = "戻る";
+
+/* No comment provided by engineer. */
+"CANCEL" = "キャンセル";
+
+/* No comment provided by engineer. */
+"Cancel" = "キャンセル";
+
+/* No comment provided by engineer. */
+"Canceled" = "キャンセル済み";
+
+/* No comment provided by engineer. */
+"Canceled by %@" = "%@さんによりキャンセル済み";
+
+/* No comment provided by engineer. */
+"Canceled by you" = "あなたによりキャンセル済み";
+
+/* No comment provided by engineer. */
+"Choose a photo" = "写真を選ぶ";
+
+/* No comment provided by engineer. */
+"Choose a photo..." = "写真を選ぶ…";
+
+/* No comment provided by engineer. */
+"Clear avatar" = "アバターを消去";
+
+/* No comment provided by engineer. */
+"Connecting" = "接続中";
+
+/* No comment provided by engineer. */
+"DECLINE" = "辞退する";
+
+/* No comment provided by engineer. */
+"DONE" = "完了";
+
+/* No comment provided by engineer. */
+"Delivered" = "送信済み";
+
+/* No comment provided by engineer. */
+"Do you mind sharing some feedback?" = "ご意見の一部を公開しても構いませんか？";
+
+/* No comment provided by engineer. */
+"Done" = "完了";
+
+/* No comment provided by engineer. */
+"Download code is not valid." = "ダウンロードコードが無効です。";
+
+/* No comment provided by engineer. */
+"EMAIL" = "メール";
+
+/* No comment provided by engineer. */
+"Edit profile" = "プロフィールの編集";
+
+/* No comment provided by engineer. */
+"Email already registered." = "このメールアドレスは登録済みです。";
+
+/* No comment provided by engineer. */
+"Email not valid." = "このメールアドレスは無効です。";
+
+/* No comment provided by engineer. */
+"Email sent!" = "メール完了!";
+
+/* No comment provided by engineer. */
+"Enter the download code from\nyour SMS or email invitation." = "メッセージアプリやメールで受け取った\nダウンロード用コードを入力してください。";
+
+/* No comment provided by engineer. */
+"Error – %@ must retry" = "エラー：%@は再送が必要です";
+
+/* No comment provided by engineer. */
+"Error – Please retry" = "エラー：もう一度やり直してください";
+
+/* shake to give feedback title */
+"Everything OK?" = "すべて問題ないですか?";
+
+/* No comment provided by engineer. */
+"Explain your problem here..." = "どんな問題か記入してください…";
+
+/* No comment provided by engineer. */
+"FAVORITE" = "お気に入り";
+
+/* No comment provided by engineer. */
+"FEEDBACK" = "意見・感想";
+
+/* No comment provided by engineer. */
+"Facebook login canceled" = "Facebookでのログインを中断";
+
+/* No comment provided by engineer. */
+"Facebook login cancelled." = "Facebookでのログインを中断しました。";
+
+/* No comment provided by engineer. */
+"Facebook login error" = "Facebookログインエラー";
+
+/* No comment provided by engineer. */
+"Free up some space on your device and try again or send fewer files." = "デバイスの空き容量を増やすか、ファイルの数を減らして送り直してください。";
+
+/* No comment provided by engineer. */
+"From %@" = "%@さんより";
+
+/* No comment provided by engineer. */
+"Fullname not valid." = "名前が無効です。";
+
+/* No comment provided by engineer. */
+"GOOD, I LIKE IT!" = "いいね、気に入った!";
+
+/* No comment provided by engineer. */
+"Handle not valid" = "ハンドルが無効です";
+
+/* No comment provided by engineer. */
+"Help" = "ヘルプ";
+
+/* No comment provided by engineer. */
+"Hey %@. I want to send you files using Infinit. It's a free, unlimited file sharing app. You should download it here: %@" = "こんにちは。%1$@さんにInfinitでファイルを送ろうと思います。Infinitは、無料で制限もないファイル共有アプリです。ぜひダウンロードしてください：%2$@";
+
+/* No comment provided by engineer. */
+"Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@\n\nDon't forget to enter the following download code: %@" = "こんにちは。%1$lu個の %2$@ をInfinitで送りました。%3$@ の受け取りはこちらです: %4$@\n\nこのダウンロードコードを忘れずに入力してください: %5$@";
+
+/* No comment provided by engineer. */
+"How To Send To Self.mp4" = "自分にファイルを送る方法.mp4";
+
+/* No comment provided by engineer. */
+"How To Send To Someone.mp4" = "知人にファイルを送る方法.mp4";
+
+/* No comment provided by engineer. */
+"How's your experience with Infinit?" = "Infinitを使ってみた感想は?";
+
+/* No comment provided by engineer. */
+"INVITE" = "招待する";
+
+/* No comment provided by engineer. */
+"If not, tap send feedback to let us know what's wrong." = "そうでなければ、「意見・感想を送る」を押して、問題をお知らせください。";
+
+/* No comment provided by engineer. */
+"Infinit requires access to your camera roll" = "Infinitがカメラロールへのアクセスを求めています";
+
+/* No comment provided by engineer. */
+"Infinit requires access to your gallery to send photos and videos." = "写真やビデオを送るには、Infinitにアルバムへのアクセス権が必要です。";
+
+/* No comment provided by engineer. */
+"Infinit was unable to fetch the files from your gallery. Check that you have some free space and try again." = "アルバムからファイルを取り出すことができませんでした。デバイスに空き容量があることを確認し、もう一度試してください。";
+
+/* No comment provided by engineer. */
+"Install Infinit on another device to retrieve your files." = "ファイルを受け取るには、他のデバイスにInfinitをインストールしてください。";
+
+/* No comment provided by engineer. */
+"Login/Password don't match." = "アドレスかパスワードが違います。";
+
+/* No comment provided by engineer. */
+"Logout" = "ログアウト";
+
+/* No comment provided by engineer. */
+"Looks like you don't have an\naccount. Enter email." = "アカウントをお持ちでないようです。\nメールアドレスを入力してください。";
+
+/* No comment provided by engineer. */
+"Me" = "自分";
+
+/* No comment provided by engineer. */
+"Me (my other devices)" = "自分 (他のデバイス)";
+
+/* No comment provided by engineer. */
+"Mind rating us on the App Store?" = "App Storeで評価をしていただけますか?";
+
+/* No comment provided by engineer. */
+"NO, THANKS" = "やめておきます";
+
+/* No comment provided by engineer. */
+"Need a connection!" = "ネット接続が必要です!";
+
+/* No comment provided by engineer. */
+"No access to gallery." = "アルバムへのアクセス権がありません。";
+
+/* No comment provided by engineer. */
+"No one here by that name.\nTry an email instead." = "そのお名前のユーザはいません。\nメールアドレスで試してください。";
+
+/* No comment provided by engineer. */
+"No one here by that name.\nTry connecting your Contacts" = "そのお名前のユーザはいません。\n連絡先を取り込んでみてください。";
+
+/* No comment provided by engineer. */
+"Not enough free space!" = "デバイスに空き容量がありません!";
+
+/* No comment provided by engineer. */
+"Not enough space on your device." = "デバイスの空き容量が足りません。";
+
+/* No comment provided by engineer. */
+"OK" = "OK";
+
+/* No comment provided by engineer. */
+"OPEN" = "開く";
+
+/* No comment provided by engineer. */
+"Oh no! Infinit can't connect. Retry?" = "まいった! Infinitが接続できません。やり直します?";
+
+/* No comment provided by engineer. */
+"Open Infinit to ensure your transfer continues" = "Infinitを開いて送信が続いているか確認してください";
+
+/* No comment provided by engineer. */
+"Our Server is down.\nThanks for being patient." = "サーバーがダウン中です。\nしばらくお待ちください。";
+
+/* No comment provided by engineer. */
+"PAUSE" = "一時停止";
+
+/* No comment provided by engineer. */
+"Password not valid." = "パスワードが無効です。";
+
+/* No comment provided by engineer. */
+"Paused" = "一時停止中";
+
+/* No comment provided by engineer. */
+"Paused by %@" = "%@さんにより一時停止中";
+
+/* No comment provided by engineer. */
+"Paused by sending device" = "送信デバイスにより一時停止中";
+
+/* No comment provided by engineer. */
+"Paused – Check network" = "一時停止中 - ネット接続の確認を";
+
+/* No comment provided by engineer. */
+"Please update Infinit." = "Infinitをアップデートしてください。";
+
+/* No comment provided by engineer. */
+"Preparing" = "準備中";
+
+/* No comment provided by engineer. */
+"Preparing your transfer..." = "送信の準備中…";
+
+/* No comment provided by engineer. */
+"REPORT A PROBLEM" = "問題を報告";
+
+/* No comment provided by engineer. */
+"RESUME" = "再開する";
+
+/* No comment provided by engineer. */
+"Rate us" = "評価する";
+
+/* No comment provided by engineer. */
+"Received" = "受信済み";
+
+/* No comment provided by engineer. */
+"Received on another device" = "他のデバイスで受信済み";
+
+/* No comment provided by engineer. */
+"Received your files!" = "ファイルを受信しました!";
+
+/* No comment provided by engineer. */
+"Rename device" = "デバイス名の変更";
+
+/* No comment provided by engineer. */
+"Report a problem" = "問題を報告";
+
+/* No comment provided by engineer. */
+"Rest assured! Closing Infinit won't stop your transfer." = "あとはおまかせ! Infinitを閉じても送信は継続します。";
+
+/* No comment provided by engineer. */
+"SELECT CONTACT" = "連絡先を選ぶ";
+
+/* No comment provided by engineer. */
+"SELECT FILES" = "ファイルを選ぶ";
+
+/* No comment provided by engineer. */
+"SEND" = "送信する";
+
+/* No comment provided by engineer. */
+"SEND %lu FILES" = "%lu個のファイルを送る";
+
+/* No comment provided by engineer. */
+"SEND 1 FILE" = "1個のファイルを送る";
+
+/* No comment provided by engineer. */
+"SMS" = "SMS";
+
+/* No comment provided by engineer. */
+"SO SO" = "まあまあ";
+
+/* No comment provided by engineer. */
+"SURE!" = "もちろん!";
+
+/* No comment provided by engineer. */
+"Save files to your gallery" = "アルバムにファイルを保存";
+
+/* No comment provided by engineer. */
+"Saving to gallery..." = "アルバムに保存…";
+
+/* No comment provided by engineer. */
+"Search contacts by name or email..." = "名前かメールで連絡先を検索…";
+
+/* No comment provided by engineer. */
+"Select" = "選択";
+
+/* No comment provided by engineer. */
+"Send Feedback" = "意見・感想を送る";
+
+/* No comment provided by engineer. */
+"Send feedback" = "意見・感想を送る";
+
+/* No comment provided by engineer. */
+"Sent" = "送信済み";
+
+/* No comment provided by engineer. */
+"Settings" = "設定";
+
+/* No comment provided by engineer. */
+"Skip" = "スキップ";
+
+/* No comment provided by engineer. */
+"Swipe the cards left or right to remove them." = "カードは左か右にスワイプすれば取り除けます。";
+
+/* No comment provided by engineer. */
+"Take a new photo" = "写真を撮る";
+
+/* No comment provided by engineer. */
+"Take new photo" = "写真を撮る";
+
+/* No comment provided by engineer. */
+"Tap 'OK' so we can display your contacts." = "連絡先を表示するには OK を押してください。";
+
+/* No comment provided by engineer. */
+"Tap 'OK' to select your photos and videos." = "あなたの写真やビデオを選ぶには OK を押してください。";
+
+/* No comment provided by engineer. */
+"Thanks for reporting the problem, we'll get back to you as soon as we can." = "問題点を教えてくれてありがとう。できるだけ早くお返事します。";
+
+/* No comment provided by engineer. */
+"Thanks for taking the time to give us feedback." = "貴重なご意見をありがとう。";
+
+/* No comment provided by engineer. */
+"Thanks!" = "ありがとう!";
+
+/* No comment provided by engineer. */
+"This handle has already been taken." = "このハンドル名は既に使われています。";
+
+/* No comment provided by engineer. */
+"This user is already on Infinit." = "このユーザはInfinitに登録済みです。";
+
+/* No comment provided by engineer. */
+"To" = "To";
+
+/* No comment provided by engineer. */
+"To %@" = "%@さんへ";
+
+/* No comment provided by engineer. */
+"To:" = "To:";
+
+/* No comment provided by engineer. */
+"Transferring" = "転送中";
+
+/* No comment provided by engineer. */
+"Transferring on another device" = "他のデバイスに転送中";
+
+/* No comment provided by engineer. */
+"Type email or send to yourself..." = "メールアドレスを入力、または自分に送る...";
+
+/* No comment provided by engineer. */
+"UNFAVORITE" = "お気に入りから外す";
+
+/* No comment provided by engineer. */
+"Unable to accept!" = "受け取りできません!";
+
+/* No comment provided by engineer. */
+"Unable to connect with Facebook" = "Facebookに接続できません";
+
+/* No comment provided by engineer. */
+"Unable to edit your profile without an Internet connection." = "ネットに接続されていないとプロフィールの編集はできません。";
+
+/* No comment provided by engineer. */
+"Unable to fetch Facebook information" = "Facebookから情報を取り込めません";
+
+/* No comment provided by engineer. */
+"Unable to fetch files." = "ファイルの受け取りができません。";
+
+/* No comment provided by engineer. */
+"Unable to get friends from Facebook" = "Facebookから友達を取得できません";
+
+/* No comment provided by engineer. */
+"Unable to login with Facebook" = "Facebookでログインできません。";
+
+/* No comment provided by engineer. */
+"Unknown" = "不明";
+
+/* No comment provided by engineer. */
+"Unknown login error" = "不明なログインエラー";
+
+/* No comment provided by engineer. */
+"User already on Infinit" = "このユーザはInfinitに登録済みです";
+
+/* No comment provided by engineer. */
+"Waiting for %@ to accept" = "%@さんの受け取りを待機中";
+
+/* No comment provided by engineer. */
+"Waiting for you to accept" = "あなたの受け取りを待機中";
+
+/* No comment provided by engineer. */
+"We'll let you know when %@ receives your files." = "%@さんがファイルを受け取ったらお知らせします。";
+
+/* No comment provided by engineer. */
+"Write your feedback here..." = "こちらにご意見をどうぞ…";
+
+/* No comment provided by engineer. */
+"You declined the transfer!" = "あなたが受け取りを拒否しました!";
+
+/* No comment provided by engineer. */
+"You need %@ of space to accept this transfer." = "このファイルを受け取るには%@の空き容量が必要です。";
+
+/* No comment provided by engineer. */
+"You need to grant permission to access your friends to find them on Infinit." = "Infinit上の友人を探すには、連絡先へのアクセスを許可してください。";
+
+/* No comment provided by engineer. */
+"You'd like to send %ld %@" = "あなたは%1$ld個の%2$@を送ろうとしています。";
+
+/* No comment provided by engineer. */
+"You're already logged in." = "あなたは既にログインしています。";
+
+/* No comment provided by engineer. */
+"Your contact will receive an email from us inviting them to Infinit." = "指定した連絡先に、私たちからInfinitへの招待メールを送ります。";
+
+/* No comment provided by engineer. */
+"Your current transfers and notifications will show up here." = "ここに転送中のファイルと通知が表示されます。";
+
+/* No comment provided by engineer. */
+"Your email has not been confirmed." = "あなたのメールアドレスはまだ確認されていません。";
+
+/* No comment provided by engineer. */
+"file" = "ファイル";
+
+/* No comment provided by engineer. */
+"files" = "ファイル";
+
+/* No comment provided by engineer. */
+"me" = "自分";
+
+/* No comment provided by engineer. */
+"the file" = "そのファイル";
+
+/* No comment provided by engineer. */
+"the files" = "そのファイル";
+

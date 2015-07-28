@@ -8,7 +8,7 @@
 "0rw-4j-beG.title" = "ВЫБРАТЬ";
 
 /* Class = "UIButton"; normalTitle = "FAVORITE"; ObjectID = "1LK-Mw-637"; */
-"1LK-Mw-637.normalTitle" = "ФАВОРИЗИРОВАТЬ";
+"1LK-Mw-637.normalTitle" = "В ИЗБРАННОЕ";
 
 /* Class = "UINavigationController"; title = "CONTACTS"; ObjectID = "1XU-dC-dIe"; */
 "1XU-dC-dIe.title" = "КОНТАКТЫ";
@@ -86,13 +86,13 @@
 "HEy-Gq-I91.title" = "Пункт";
 
 /* Class = "UILabel"; text = "Receive and view any\ntype of file in Infinit"; ObjectID = "J59-YW-qzz"; */
-"J59-YW-qzz.text" = "Получайте и смотрите\nв Infinit любые файлы";
+"J59-YW-qzz.text" = "Получайте и просматривайте\nлюбые файлы в Infinit";
 
 /* Class = "UIViewController"; title = "Files Table iPad"; ObjectID = "KNs-fB-D4y"; */
 "KNs-fB-D4y.title" = "Таблица файлов iPad";
 
 /* Class = "UILabel"; text = "Access photos, videos, music, PDFs and more"; ObjectID = "Kjb-PN-Gxr"; */
-"Kjb-PN-Gxr.text" = "Доступ к фото, музыке, PDF и прочим файлам";
+"Kjb-PN-Gxr.text" = "Доступ к фото, видео, музыке, PDF и прочим файлам";
 
 /* Class = "UILabel"; text = "RECEIVED FILES"; ObjectID = "KlZ-FW-RX5"; */
 "KlZ-FW-RX5.text" = "ПОЛУЧЕННЫЕ ФАЙЛЫ";
@@ -107,7 +107,7 @@
 "MoH-dc-fmU.text" = "+5";
 
 /* Class = "UILabel"; text = "Send your files between\nyour own devices"; ObjectID = "N40-3y-JCe"; */
-"N40-3y-JCe.text" = "Пересылайте файлы между\nвашими устройствами";
+"N40-3y-JCe.text" = "Пересылайте ваши файлы между\nвашими устройствами";
 
 /* Class = "UINavigationItem"; title = "EDIT PROFILE"; ObjectID = "OWZ-ZK-qG3"; */
 "OWZ-ZK-qG3.title" = "РЕДАКТИРОВАТЬ ПРОФИЛЬ";
@@ -152,7 +152,7 @@
 "dDd-tw-C0S.title" = "Выбрать";
 
 /* Class = "UILabel"; text = "Send to an email address or\naccess your phone contacts!"; ObjectID = "eGc-7u-5hd"; */
-"eGc-7u-5hd.text" = "Отправить на электронный адрес или телефонному контакту";
+"eGc-7u-5hd.text" = "Отправить на электронный адрес \nили открыть ваши контакты!";
 
 /* Class = "UILabel"; text = "M"; ObjectID = "fjd-ZY-K2z"; */
 "fjd-ZY-K2z.text" = "М";

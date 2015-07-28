@@ -1,0 +1,6 @@
+/* Class = "UILabel"; text = "Send your photos and videos without size limits!"; ObjectID = "Xt0-AB-E6P"; */
+"Xt0-AB-E6P.text" = "传送照片和视频，没有大小限制！";
+
+/* Class = "UIButton"; normalTitle = "ACCESS MY CAMERA ROLL"; ObjectID = "nK8-AH-e2U"; */
+"nK8-AH-e2U.normalTitle" = "读取我的相册";
+

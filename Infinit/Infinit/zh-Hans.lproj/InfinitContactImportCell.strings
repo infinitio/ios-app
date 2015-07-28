@@ -1,0 +1,9 @@
+/* Class = "UIButton"; normalTitle = "FIND FACEBOOK FRIENDS"; ObjectID = "JJ0-ax-QO6"; */
+"JJ0-ax-QO6.normalTitle" = "查找 FACEBOOK 好友";
+
+/* Class = "UILabel"; text = "Infinit is up to 30x faster and more secure if your friends are on the app."; ObjectID = "t2U-eE-XfF"; */
+"t2U-eE-XfF.text" = "如果你的好友也同时使用 Infinit，文件传输将提速至30倍，而且安全性更高";
+
+/* Class = "UIButton"; normalTitle = "ACCESS PHONE CONTACTS"; ObjectID = "z52-CB-aDr"; */
+"z52-CB-aDr.normalTitle" = "读取手机通讯录";
+

@@ -1,0 +1,12 @@
+/* Class = "UILabel"; text = "Open Infinit now to send them!"; ObjectID = "0kE-iw-E6e"; */
+"0kE-iw-E6e.text" = "이제 Infinit을 열어 전송하세요!";
+
+/* Class = "UIButton"; normalTitle = "GOT IT"; ObjectID = "2KC-7y-XXg"; */
+"2KC-7y-XXg.normalTitle" = "알겠습니다";
+
+/* Class = "UILabel"; text = "Your files are being copied to Infinit..."; ObjectID = "P2D-7H-Xof"; */
+"P2D-7H-Xof.text" = "Infinit으로 파일이 복사되는 중입니다...";
+
+/* Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "jbw-GE-gDX"; */
+"jbw-GE-gDX.normalTitle" = "취소";
+

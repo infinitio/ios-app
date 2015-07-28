@@ -44,6 +44,9 @@
 "All set! A message will be sent to %@." = "Her şey hazır! %@ a bir mesaj gönderilecek.";
 
 /* No comment provided by engineer. */
+"Auto-save files" = "Dosyaları otomatik-kaydet";
+
+/* No comment provided by engineer. */
 "Back" = "Geri";
 
 /* No comment provided by engineer. */
@@ -77,6 +80,9 @@
 "DECLINE" = "REDDET";
 
 /* No comment provided by engineer. */
+"DONE" = "TAMAMLANDI";
+
+/* No comment provided by engineer. */
 "Delivered" = "İletildi";
 
 /* No comment provided by engineer. */
@@ -89,6 +95,9 @@
 "Download code is not valid." = "İndirme kodu geçersiz.";
 
 /* No comment provided by engineer. */
+"EMAIL" = "EPOSTA";
+
+/* No comment provided by engineer. */
 "Edit profile" = "Profili düzenle";
 
 /* No comment provided by engineer. */
@@ -96,6 +105,9 @@
 
 /* No comment provided by engineer. */
 "Email not valid." = "Eposta geçersiz.";
+
+/* No comment provided by engineer. */
+"Email sent!" = "Eposta gönderildi!";
 
 /* No comment provided by engineer. */
 "Enter the download code from\nyour SMS or email invitation." = "SMS ya da eposta davetiyenizdeki\nindirme kodunu girin.";
@@ -106,6 +118,9 @@
 /* No comment provided by engineer. */
 "Error – Please retry" = "Hata - Lütfen tekrar dene";
 
+/* shake to give feedback title */
+"Everything OK?" = "Her şey yolunda mı?";
+
 /* No comment provided by engineer. */
 "Explain your problem here..." = "Problemini burada açıkla...";
 
@@ -114,6 +129,15 @@
 
 /* No comment provided by engineer. */
 "FEEDBACK" = "GERİ BİLDİRİM";
+
+/* No comment provided by engineer. */
+"Facebook login canceled" = "Facebook girişi iptal edildi";
+
+/* No comment provided by engineer. */
+"Facebook login cancelled." = "Facebook girişi iptal edildi.";
+
+/* No comment provided by engineer. */
+"Facebook login error" = "Facebook giriş hatası";
 
 /* No comment provided by engineer. */
 "Free up some space on your device and try again or send fewer files." = "Cihazında biraz yer aç ve tekrar dene ya da daha az dosya gönder.";
@@ -131,6 +155,12 @@
 "Handle not valid" = "İşlem geçerli değil";
 
 /* No comment provided by engineer. */
+"Help" = "Yardım";
+
+/* No comment provided by engineer. */
+"Hey %@. I want to send you files using Infinit. It's a free, unlimited file sharing app. You should download it here: %@" = "Hey %1$@. Sana ınfinit'i kullanarak dosya göndermek istiyorum. Ücretsiz ve sınırsız dosya paylaşma uygulaması. Buradan indirmelisin: %2$@";
+
+/* No comment provided by engineer. */
 "Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@\n\nDon't forget to enter the following download code: %@" = "Merhaba, sana az önce Infinit'ten %1$lu %2$@ gönderdim. %3$@ yı buradan alabilirsin: %4$@\n\nBu indirme kodunu girmeyi unutma: %5$@";
 
 /* No comment provided by engineer. */
@@ -141,6 +171,12 @@
 
 /* No comment provided by engineer. */
 "How's your experience with Infinit?" = "Infinit ile deneyiminiz nasıl?";
+
+/* No comment provided by engineer. */
+"INVITE" = "DAVET ET";
+
+/* No comment provided by engineer. */
+"If not, tap send feedback to let us know what's wrong." = "Değilse, geri bildirime basarak bize neyin yanlış olduğunu söyle.";
 
 /* No comment provided by engineer. */
 "Infinit requires access to your camera roll" = "Infinit galerinize erişim gerektiriyor";
@@ -278,10 +314,16 @@
 "SEND 1 FILE" = "1 DOSYA GÖNDER";
 
 /* No comment provided by engineer. */
+"SMS" = "SMS";
+
+/* No comment provided by engineer. */
 "SO SO" = "ŞÖYLE BÖYLE";
 
 /* No comment provided by engineer. */
 "SURE!" = "ELBETTE!";
+
+/* No comment provided by engineer. */
+"Save files to your gallery" = "Galerine dosyaları kaydet";
 
 /* No comment provided by engineer. */
 "Saving to gallery..." = "Galeriye kaydediliyor...";
@@ -291,6 +333,9 @@
 
 /* No comment provided by engineer. */
 "Select" = "Seç";
+
+/* No comment provided by engineer. */
+"Send Feedback" = "Geri Bildirim Gönder";
 
 /* No comment provided by engineer. */
 "Send feedback" = "Geri bildirim gönder";
@@ -332,6 +377,9 @@
 "This handle has already been taken." = "Bu işlem zaten alındı.";
 
 /* No comment provided by engineer. */
+"This user is already on Infinit." = "Bu kullanıcı zaten Infinit'te.";
+
+/* No comment provided by engineer. */
 "To" = "Şuna";
 
 /* No comment provided by engineer. */
@@ -356,10 +404,19 @@
 "Unable to accept!" = "Kabul edilemiyor!";
 
 /* No comment provided by engineer. */
+"Unable to connect with Facebook" = "Facebook ile bağlanılamadı";
+
+/* No comment provided by engineer. */
 "Unable to edit your profile without an Internet connection." = "İnternet bağlantısı olmadan profiliniz düzenlenemiyor.";
 
 /* No comment provided by engineer. */
+"Unable to fetch Facebook information" = "Facebook bilgileri indirilemedi";
+
+/* No comment provided by engineer. */
 "Unable to fetch files." = "Dosyalar alınamıyor.";
+
+/* No comment provided by engineer. */
+"Unable to get friends from Facebook" = "Arkadaşlar Facebook'dan alınamadı";
 
 /* No comment provided by engineer. */
 "Unable to login with Facebook" = "Facebook ile giriş yapılamıyor";
@@ -369,6 +426,9 @@
 
 /* No comment provided by engineer. */
 "Unknown login error" = "Bilinmeyen giriş hatası";
+
+/* No comment provided by engineer. */
+"User already on Infinit" = "Kullanıcı zaten Infinit'te";
 
 /* No comment provided by engineer. */
 "Waiting for %@ to accept" = "%@ ın/in kabul etmesi bekleniyor";
@@ -389,10 +449,16 @@
 "You need %@ of space to accept this transfer." = "Bu aktarımı kabul edebilmen için %@ kadar alan lazım.";
 
 /* No comment provided by engineer. */
+"You need to grant permission to access your friends to find them on Infinit." = "Arkadaşlarını Infinit'te bulmak için arkadaşlarına erişime yetki vermelisin";
+
+/* No comment provided by engineer. */
 "You'd like to send %ld %@" = "%1$l d %2$@ göndermek istiyorsun";
 
 /* No comment provided by engineer. */
 "You're already logged in." = "Zaten giriş yaptın.";
+
+/* No comment provided by engineer. */
+"Your contact will receive an email from us inviting them to Infinit." = "Kişilerin bizden onları Infinit'e davet eden bir eposta alacaklar.";
 
 /* No comment provided by engineer. */
 "Your current transfers and notifications will show up here." = "Aktif aktarımlarınız ve bildirimleriniz burada görünecek.";

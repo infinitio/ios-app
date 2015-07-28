@@ -1,0 +1,483 @@
+/* No comment provided by engineer. */
+"%@ declined the transfer!" = "%@ 拒绝了传输";
+
+/* No comment provided by engineer. */
+"%@ declined your transfer!" = "%@ 婉拒了你的传输";
+
+/* No comment provided by engineer. */
+"%@ received your files!" = "%@ 已收到你的文件";
+
+/* No comment provided by engineer. */
+"%@ wants to send %ld %@ to you" = "%1$@ 想给你发送 %2$ld 个 %3$@";
+
+/* No comment provided by engineer. */
+"%lu FILES" = "%lu 个文件";
+
+/* No comment provided by engineer. */
+"%lu files" = "%lu 个文件";
+
+/* No comment provided by engineer. */
+"%lu files selected" = "%lu 个文件已勾选";
+
+/* No comment provided by engineer. */
+"(my other devices)" = "（我的其他设备）";
+
+/* No comment provided by engineer. */
+"1 file" = "1个文件";
+
+/* No comment provided by engineer. */
+"1 file selected" = "1个文件已勾选";
+
+/* No comment provided by engineer. */
+"30x faster" = "提速30倍！";
+
+/* No comment provided by engineer. */
+"ACCEPT" = "接受";
+
+/* No comment provided by engineer. */
+"Accept on receiving device" = "在收取方设备上接受";
+
+/* No comment provided by engineer. */
+"Account already registered for\nFacebook email address." = "该账户已通过\nFacebook 邮箱注册";
+
+/* No comment provided by engineer. */
+"All set! A message will be sent to %@." = "成功！消息会发送至 %@";
+
+/* No comment provided by engineer. */
+"Auto-save files" = "自动保存文件";
+
+/* No comment provided by engineer. */
+"Back" = "返回";
+
+/* No comment provided by engineer. */
+"CANCEL" = "取消";
+
+/* No comment provided by engineer. */
+"Cancel" = "取消";
+
+/* No comment provided by engineer. */
+"Canceled" = "已取消";
+
+/* No comment provided by engineer. */
+"Canceled by %@" = "已被 %@ 取消";
+
+/* No comment provided by engineer. */
+"Canceled by you" = "已被你取消";
+
+/* No comment provided by engineer. */
+"Choose a photo" = "选一张照片";
+
+/* No comment provided by engineer. */
+"Choose a photo..." = "选一张照片...";
+
+/* No comment provided by engineer. */
+"Clear avatar" = "清空头像";
+
+/* No comment provided by engineer. */
+"Connecting" = "连接中";
+
+/* No comment provided by engineer. */
+"DECLINE" = "拒绝";
+
+/* No comment provided by engineer. */
+"DONE" = "完成";
+
+/* No comment provided by engineer. */
+"Delivered" = "已送达";
+
+/* No comment provided by engineer. */
+"Do you mind sharing some feedback?" = "给我们一些反馈吧？";
+
+/* No comment provided by engineer. */
+"Done" = "完成";
+
+/* No comment provided by engineer. */
+"Download code is not valid." = "下载代码无效";
+
+/* No comment provided by engineer. */
+"EMAIL" = "邮箱";
+
+/* No comment provided by engineer. */
+"Edit profile" = "编辑个人简况";
+
+/* No comment provided by engineer. */
+"Email already registered." = "邮箱已被注册";
+
+/* No comment provided by engineer. */
+"Email not valid." = "邮箱地址无效";
+
+/* No comment provided by engineer. */
+"Email sent!" = "邮件已发出！";
+
+/* No comment provided by engineer. */
+"Enter the download code from\nyour SMS or email invitation." = "在这里输入通过短信或邀请邮件\n收到的下载代码";
+
+/* No comment provided by engineer. */
+"Error – %@ must retry" = "错误 - %@ 必须重试";
+
+/* No comment provided by engineer. */
+"Error – Please retry" = "错误 - 请重试";
+
+/* shake to give feedback title */
+"Everything OK?" = "使用体验如何？";
+
+/* No comment provided by engineer. */
+"Explain your problem here..." = "请说明问题...";
+
+/* No comment provided by engineer. */
+"FAVORITE" = "喜欢";
+
+/* No comment provided by engineer. */
+"FEEDBACK" = "反馈";
+
+/* No comment provided by engineer. */
+"Facebook login canceled" = "Facebook 登录已取消";
+
+/* No comment provided by engineer. */
+"Facebook login cancelled." = "Facebook 登录已取消";
+
+/* No comment provided by engineer. */
+"Facebook login error" = "Facebook 登录错误";
+
+/* No comment provided by engineer. */
+"Free up some space on your device and try again or send fewer files." = "请先释放一些存储空间，或者少传一些文件";
+
+/* No comment provided by engineer. */
+"From %@" = "来自 %@";
+
+/* No comment provided by engineer. */
+"Fullname not valid." = "全名无效";
+
+/* No comment provided by engineer. */
+"GOOD, I LIKE IT!" = "很好，我喜欢";
+
+/* No comment provided by engineer. */
+"Handle not valid" = "用户名无效";
+
+/* No comment provided by engineer. */
+"Help" = "帮助";
+
+/* No comment provided by engineer. */
+"Hey %@. I want to send you files using Infinit. It's a free, unlimited file sharing app. You should download it here: %@" = "%1$@ 你好！我想用 Infinit 给你发送文件。这是一个免费的文件分享程序，且无文件大小限制。你可以在这里下载： %2$@";
+
+/* No comment provided by engineer. */
+"Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@\n\nDon't forget to enter the following download code: %@" = "Hi, 我用 Infinit 给你发了 %1$lu 个 %2$@. 请在此处收取 %3$@ : %4$@\n\n到时你需要输入以下下载代码: %5$@";
+
+/* No comment provided by engineer. */
+"How To Send To Self.mp4" = "How to Send to Self.mp4";
+
+/* No comment provided by engineer. */
+"How To Send To Someone.mp4" = "How to Send to Someone.mp4";
+
+/* No comment provided by engineer. */
+"How's your experience with Infinit?" = "您使用 Infinit 感觉如何？";
+
+/* No comment provided by engineer. */
+"INVITE" = "邀请";
+
+/* No comment provided by engineer. */
+"If not, tap send feedback to let us know what's wrong." = "如果您不满意，请点“发送反馈”来告诉我们问题所在";
+
+/* No comment provided by engineer. */
+"Infinit requires access to your camera roll" = "Infinit 要求读取你的相册";
+
+/* No comment provided by engineer. */
+"Infinit requires access to your gallery to send photos and videos." = "Infinit 要求读取你的媒体库来发送照片和视频";
+
+/* No comment provided by engineer. */
+"Infinit was unable to fetch the files from your gallery. Check that you have some free space and try again." = "Infinit 无法从媒体库获取文件。请检查剩余空间是否足够，再重试";
+
+/* No comment provided by engineer. */
+"Install Infinit on another device to retrieve your files." = "在其他设备上安装 Infinit 来获取你的文件";
+
+/* No comment provided by engineer. */
+"Login/Password don't match." = "登录名与密码不吻合";
+
+/* No comment provided by engineer. */
+"Logout" = "注销";
+
+/* No comment provided by engineer. */
+"Looks like you don't have an\naccount. Enter email." = "你好像还没有账户\n请输入邮箱地址";
+
+/* No comment provided by engineer. */
+"Me" = "我";
+
+/* No comment provided by engineer. */
+"Me (my other devices)" = "我 （其他设备）";
+
+/* No comment provided by engineer. */
+"Mind rating us on the App Store?" = "给我们在 App Store 打分吧？";
+
+/* No comment provided by engineer. */
+"NO, THANKS" = "不，谢谢";
+
+/* No comment provided by engineer. */
+"Need a connection!" = "需要网络连接！";
+
+/* No comment provided by engineer. */
+"No access to gallery." = "无法访问媒体库";
+
+/* No comment provided by engineer. */
+"No one here by that name.\nTry an email instead." = "找不到这个名字\n试试邮箱地址吧";
+
+/* No comment provided by engineer. */
+"No one here by that name.\nTry connecting your Contacts" = "找不到这个名字\n试试接通你的通讯录吧";
+
+/* No comment provided by engineer. */
+"Not enough free space!" = "剩余空间不足！";
+
+/* No comment provided by engineer. */
+"Not enough space on your device." = "你的设备上空间不够";
+
+/* No comment provided by engineer. */
+"OK" = "OK";
+
+/* No comment provided by engineer. */
+"OPEN" = "打开";
+
+/* No comment provided by engineer. */
+"Oh no! Infinit can't connect. Retry?" = "糟糕！ Infinit 无法连网，重试一次？";
+
+/* No comment provided by engineer. */
+"Open Infinit to ensure your transfer continues" = "请打开 Infinit 以保证传输不被打断";
+
+/* No comment provided by engineer. */
+"Our Server is down.\nThanks for being patient." = "服务器维修中\n感谢您耐心等待";
+
+/* No comment provided by engineer. */
+"PAUSE" = "暂停";
+
+/* No comment provided by engineer. */
+"Password not valid." = "密码无效";
+
+/* No comment provided by engineer. */
+"Paused" = "已暂停";
+
+/* No comment provided by engineer. */
+"Paused by %@" = "被 %@ 暂停";
+
+/* No comment provided by engineer. */
+"Paused by sending device" = "被发送方设备暂停";
+
+/* No comment provided by engineer. */
+"Paused – Check network" = "已暂停 - 请检查网络连接";
+
+/* No comment provided by engineer. */
+"Please update Infinit." = "请升级 Infinit";
+
+/* No comment provided by engineer. */
+"Preparing" = "准备中";
+
+/* No comment provided by engineer. */
+"Preparing your transfer..." = "文件预备中 ...";
+
+/* No comment provided by engineer. */
+"REPORT A PROBLEM" = "报告问题";
+
+/* No comment provided by engineer. */
+"RESUME" = "继续";
+
+/* No comment provided by engineer. */
+"Rate us" = "评分";
+
+/* No comment provided by engineer. */
+"Received" = "已收到";
+
+/* No comment provided by engineer. */
+"Received on another device" = "在另一设备上收到";
+
+/* No comment provided by engineer. */
+"Received your files!" = "你的文件已收到！";
+
+/* No comment provided by engineer. */
+"Rename device" = "重命名设备";
+
+/* No comment provided by engineer. */
+"Report a problem" = "报告问题";
+
+/* No comment provided by engineer. */
+"Rest assured! Closing Infinit won't stop your transfer." = "别担心，关闭 Infinit 不会阻止文件传输";
+
+/* No comment provided by engineer. */
+"SELECT CONTACT" = "选择联系人";
+
+/* No comment provided by engineer. */
+"SELECT FILES" = "选择文件";
+
+/* No comment provided by engineer. */
+"SEND" = "发送";
+
+/* No comment provided by engineer. */
+"SEND %lu FILES" = "发送 %lu 个文件";
+
+/* No comment provided by engineer. */
+"SEND 1 FILE" = "发送 1 个文件";
+
+/* No comment provided by engineer. */
+"SMS" = "短信";
+
+/* No comment provided by engineer. */
+"SO SO" = "还可以";
+
+/* No comment provided by engineer. */
+"SURE!" = "当然！";
+
+/* No comment provided by engineer. */
+"Save files to your gallery" = "保存文件到媒体库";
+
+/* No comment provided by engineer. */
+"Saving to gallery..." = "保存到媒体库...";
+
+/* No comment provided by engineer. */
+"Search contacts by name or email..." = "按名称或邮箱搜索联系人...";
+
+/* No comment provided by engineer. */
+"Select" = "选择";
+
+/* No comment provided by engineer. */
+"Send Feedback" = "发送反馈";
+
+/* No comment provided by engineer. */
+"Send feedback" = "发送反馈";
+
+/* No comment provided by engineer. */
+"Sent" = "已发送";
+
+/* No comment provided by engineer. */
+"Settings" = "设置";
+
+/* No comment provided by engineer. */
+"Skip" = "跳过";
+
+/* No comment provided by engineer. */
+"Swipe the cards left or right to remove them." = "向左或向右刷卡可将其移除";
+
+/* No comment provided by engineer. */
+"Take a new photo" = "新拍一张照片";
+
+/* No comment provided by engineer. */
+"Take new photo" = "新拍一张照片";
+
+/* No comment provided by engineer. */
+"Tap 'OK' so we can display your contacts." = "点 OK 以显示你的联系人";
+
+/* No comment provided by engineer. */
+"Tap 'OK' to select your photos and videos." = "点 OK 后选择照片和视频";
+
+/* No comment provided by engineer. */
+"Thanks for reporting the problem, we'll get back to you as soon as we can." = "谢谢您报告这个问题，我们会尽快给您答复！";
+
+/* No comment provided by engineer. */
+"Thanks for taking the time to give us feedback." = "谢谢你花时间给我们反馈信息！";
+
+/* No comment provided by engineer. */
+"Thanks!" = "谢谢！";
+
+/* No comment provided by engineer. */
+"This handle has already been taken." = "此用户名已被使用";
+
+/* No comment provided by engineer. */
+"This user is already on Infinit." = "该用户已经在使用 Infinit";
+
+/* No comment provided by engineer. */
+"To" = "至";
+
+/* No comment provided by engineer. */
+"To %@" = "至 %@";
+
+/* No comment provided by engineer. */
+"To:" = "至：";
+
+/* No comment provided by engineer. */
+"Transferring" = "传输中";
+
+/* No comment provided by engineer. */
+"Transferring on another device" = "正在另一设备上传输";
+
+/* No comment provided by engineer. */
+"Type email or send to yourself..." = "输入邮箱地址，或发送给自己";
+
+/* No comment provided by engineer. */
+"UNFAVORITE" = "取消喜欢";
+
+/* No comment provided by engineer. */
+"Unable to accept!" = "无法接受文件！";
+
+/* No comment provided by engineer. */
+"Unable to connect with Facebook" = "无法与 Facebook 连接";
+
+/* No comment provided by engineer. */
+"Unable to edit your profile without an Internet connection." = "没有网络连接不能编辑你的个人简况";
+
+/* No comment provided by engineer. */
+"Unable to fetch Facebook information" = "无法获取 Facebook 信息";
+
+/* No comment provided by engineer. */
+"Unable to fetch files." = "无法获取文件";
+
+/* No comment provided by engineer. */
+"Unable to get friends from Facebook" = "无法从 Facebook 读取好友名单";
+
+/* No comment provided by engineer. */
+"Unable to login with Facebook" = "无法通过 Facebook 登录";
+
+/* No comment provided by engineer. */
+"Unknown" = "未知";
+
+/* No comment provided by engineer. */
+"Unknown login error" = "未知的登录错误";
+
+/* No comment provided by engineer. */
+"User already on Infinit" = "该用户已经在使用 Infinit";
+
+/* No comment provided by engineer. */
+"Waiting for %@ to accept" = "等待 %@ 来接受";
+
+/* No comment provided by engineer. */
+"Waiting for you to accept" = "等待你来接受";
+
+/* No comment provided by engineer. */
+"We'll let you know when %@ receives your files." = "一旦 %@ 收到你的文件我们会通知你";
+
+/* No comment provided by engineer. */
+"Write your feedback here..." = "请填写反馈信息...";
+
+/* No comment provided by engineer. */
+"You declined the transfer!" = "你已拒绝了文件传输！";
+
+/* No comment provided by engineer. */
+"You need %@ of space to accept this transfer." = "你需要 %@ 空间来接收这次文件传输";
+
+/* No comment provided by engineer. */
+"You need to grant permission to access your friends to find them on Infinit." = "为了在 Infinit 上显示好友，请先允许 Infinit 读取您的好友名单";
+
+/* No comment provided by engineer. */
+"You'd like to send %ld %@" = "你想要发送 %1$ld 个 %2$@";
+
+/* No comment provided by engineer. */
+"You're already logged in." = "你已经登录了";
+
+/* No comment provided by engineer. */
+"Your contact will receive an email from us inviting them to Infinit." = "我们会向您的联系人发出邮件，邀请其加入 Infinit";
+
+/* No comment provided by engineer. */
+"Your current transfers and notifications will show up here." = "这里会显示当前的传输状态与通知";
+
+/* No comment provided by engineer. */
+"Your email has not been confirmed." = "你的邮箱尚未被确认";
+
+/* No comment provided by engineer. */
+"file" = "文件";
+
+/* No comment provided by engineer. */
+"files" = "文件";
+
+/* No comment provided by engineer. */
+"me" = "我";
+
+/* No comment provided by engineer. */
+"the file" = "此文件";
+
+/* No comment provided by engineer. */
+"the files" = "这些文件";
+

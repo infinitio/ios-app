@@ -1,12 +1,6 @@
 /* Class = "UIButton"; normalTitle = "FIND FACEBOOK FRIENDS"; ObjectID = "7cg-9z-iSn"; */
 "7cg-9z-iSn.normalTitle" = "НАЙТИ ДРУЗЕЙ ИЗ FACEBOOK";
 
-/* Class = "UIButton"; normalTitle = "IMPORT PHONE CONTACTS"; ObjectID = "XBj-2A-RAf"; */
-"XBj-2A-RAf.normalTitle" = "ИМПОРТИРОВАТЬ КОНТАКТЫ ИЗ ТЕЛЕФОНА";
-
-/* Class = "UIButton"; normalTitle = "FIND PEOPLE ON INFINIT"; ObjectID = "wJg-um-5jN"; */
-"wJg-um-5jN.normalTitle" = "НАЙТИ ПОЛЬЗОВАТЕЛЕЙ В INFINIT";
-
 /* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "xuI-O4-o9G"; */
-"xuI-O4-o9G.normalTitle" = "Отменить";
+"xuI-O4-o9G.normalTitle" = "ОТМЕНИТЬ";
 

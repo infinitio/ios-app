@@ -1,8 +1,8 @@
 /* Class = "UIButton"; normalTitle = "ACCESS MY CONTACTS"; ObjectID = "Ovu-SQ-Jc9"; */
-"Ovu-SQ-Jc9.normalTitle" = "ДОСТУП К КОНТАКТАМ";
+"Ovu-SQ-Jc9.normalTitle" = "ДОСТУП К МОИМ КОНТАКТАМ";
 
 /* Class = "UILabel"; text = "Choose your recipients even faster when they're displayed in Infinit."; ObjectID = "de8-Xa-jKG"; */
-"de8-Xa-jKG.text" = "Выбирайте получателей быстрее, если они отображаются в Infinit.";
+"de8-Xa-jKG.text" = "Выбирать получателей еще быстрее, если они отображены в Infinit.";
 
 /* Class = "UIButton"; normalTitle = "NO, THANKS."; ObjectID = "exS-d4-4Gz"; */
 "exS-d4-4Gz.normalTitle" = "СПАСИБО, НЕТ.";

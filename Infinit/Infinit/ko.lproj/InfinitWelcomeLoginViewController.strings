@@ -1,0 +1,21 @@
+/* Class = "UIButton"; normalTitle = "Back"; ObjectID = "5mc-ln-JbU"; */
+"5mc-ln-JbU.normalTitle" = "뒤로";
+
+/* Class = "UIButton"; normalTitle = "or login with Facebook"; ObjectID = "Cyx-IQ-tWr"; */
+"Cyx-IQ-tWr.normalTitle" = "페이스북 계정으로 로그인";
+
+/* Class = "UIButton"; normalTitle = "forgot?"; ObjectID = "KkB-d0-Hgu"; */
+"KkB-d0-Hgu.normalTitle" = "잊어버리셨나요?";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "NBs-14-iOO"; */
+"NBs-14-iOO.normalTitle" = "로그인";
+
+/* Class = "UITextField"; placeholder = "●●●●●●"; ObjectID = "Pcp-Eb-fyv"; */
+"Pcp-Eb-fyv.placeholder" = "●●●●●●";
+
+/* Class = "UILabel"; text = "Enter your login details."; ObjectID = "PpZ-vy-5cV"; */
+"PpZ-vy-5cV.text" = "세부 항목을 입력하세요.";
+
+/* Class = "UITextField"; placeholder = "hey@johndoe.com"; ObjectID = "zcU-Iu-Kcd"; */
+"zcU-Iu-Kcd.placeholder" = "hey@johndoe.com";
+

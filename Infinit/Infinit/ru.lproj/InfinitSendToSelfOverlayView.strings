@@ -1,6 +1,6 @@
 /* Class = "UIButton"; normalTitle = "GOT IT!"; ObjectID = "2Lh-NQ-J3V"; */
-"2Lh-NQ-J3V.normalTitle" = "ПОНЯЛ!";
+"2Lh-NQ-J3V.normalTitle" = "ЕСТЬ!";
 
-/* Class = "UILabel"; text = "Send your files now and install the desktop app\nto receive it later."; ObjectID = "MRU-8D-Qd1"; */
-"MRU-8D-Qd1.text" = "Отправьте ваши файлы сейчас и\nустановите десктопное приложение, чтобы получить их потом.";
+/* Class = "UILabel"; text = "Send your files now and install the desktop app\nto receive them later."; ObjectID = "MRU-8D-Qd1"; */
+"MRU-8D-Qd1.text" = "Отправляйте ваши файлы сейчас и\nустановите десктопное приложение, чтобы получить их потом.";
 

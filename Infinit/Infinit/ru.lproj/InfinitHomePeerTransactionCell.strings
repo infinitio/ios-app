@@ -8,7 +8,7 @@
 "IfB-v5-ff9.normalTitle" = "Кнопка";
 
 /* Class = "UILabel"; text = "x files"; ObjectID = "nv8-VG-ULd"; */
-"nv8-VG-ULd.text" = "n файлов";
+"nv8-VG-ULd.text" = "n файл(ов)";
 
 /* Class = "UILabel"; text = "x MB"; ObjectID = "qRM-ph-frX"; */
 "qRM-ph-frX.text" = "n Мб";

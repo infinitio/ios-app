@@ -1,0 +1,9 @@
+/* Class = "UILabel"; text = "Someone invited me with\na download code."; ObjectID = "Brm-BG-ecn"; */
+"Brm-BG-ecn.text" = "知人からダウンロード用コードを\n受け取った。";
+
+/* Class = "UIButton"; normalTitle = "YES"; ObjectID = "KQN-Er-ED4"; */
+"KQN-Er-ED4.normalTitle" = "はい";
+
+/* Class = "UIButton"; normalTitle = "NO  /  I DON'T KNOW"; ObjectID = "Laf-Wb-CLT"; */
+"Laf-Wb-CLT.normalTitle" = "いいえ／わかりません";
+

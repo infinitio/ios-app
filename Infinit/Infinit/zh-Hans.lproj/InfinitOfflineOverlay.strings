@@ -1,0 +1,6 @@
+/* Class = "UIButton"; normalTitle = "GO TO MY FILES"; ObjectID = "d4i-wh-gxH"; */
+"d4i-wh-gxH.normalTitle" = "转到我的文件";
+
+/* Class = "UILabel"; text = "You're offline.\nYou can only access your files."; ObjectID = "gjd-ZU-qcc"; */
+"gjd-ZU-qcc.text" = "你不在线\n你只能访问自己的文件";
+

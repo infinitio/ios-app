@@ -1,0 +1,483 @@
+/* No comment provided by engineer. */
+"%@ declined the transfer!" = "%@이(가) 전송을 거절했습니다!";
+
+/* No comment provided by engineer. */
+"%@ declined your transfer!" = "%@이(가) 전송을 거절했습니다!";
+
+/* No comment provided by engineer. */
+"%@ received your files!" = "%@이(가) 파일을 받았습니다!";
+
+/* No comment provided by engineer. */
+"%@ wants to send %ld %@ to you" = "%1$@이(가) 당신에게 %2$ld %3$@을(를) 보내려고 합니다";
+
+/* No comment provided by engineer. */
+"%lu FILES" = "%lu개의 파일";
+
+/* No comment provided by engineer. */
+"%lu files" = "%lu개의 파일";
+
+/* No comment provided by engineer. */
+"%lu files selected" = "%lu개의 파일이 선택됨";
+
+/* No comment provided by engineer. */
+"(my other devices)" = "(나의 다른 기기)";
+
+/* No comment provided by engineer. */
+"1 file" = "1개의 파일";
+
+/* No comment provided by engineer. */
+"1 file selected" = "1개의 파일이 선택됨";
+
+/* No comment provided by engineer. */
+"30x faster" = "30배 빠름";
+
+/* No comment provided by engineer. */
+"ACCEPT" = "수락";
+
+/* No comment provided by engineer. */
+"Accept on receiving device" = "받을 기기에서 수락";
+
+/* No comment provided by engineer. */
+"Account already registered for\nFacebook email address." = "이미 등록된\n페이스북 계정입니다.";
+
+/* No comment provided by engineer. */
+"All set! A message will be sent to %@." = "준비 완료! %@에게 메시지가 전송됩니다.";
+
+/* No comment provided by engineer. */
+"Auto-save files" = "파일 자동저장";
+
+/* No comment provided by engineer. */
+"Back" = "뒤로";
+
+/* No comment provided by engineer. */
+"CANCEL" = "취소";
+
+/* No comment provided by engineer. */
+"Cancel" = "취소";
+
+/* No comment provided by engineer. */
+"Canceled" = "취소됨";
+
+/* No comment provided by engineer. */
+"Canceled by %@" = "%@에 의해 취소됨";
+
+/* No comment provided by engineer. */
+"Canceled by you" = "내가 취소함";
+
+/* No comment provided by engineer. */
+"Choose a photo" = "사진 선택";
+
+/* No comment provided by engineer. */
+"Choose a photo..." = "사진 선택...";
+
+/* No comment provided by engineer. */
+"Clear avatar" = "아바타 삭제";
+
+/* No comment provided by engineer. */
+"Connecting" = "연결중";
+
+/* No comment provided by engineer. */
+"DECLINE" = "거절";
+
+/* No comment provided by engineer. */
+"DONE" = "완료";
+
+/* No comment provided by engineer. */
+"Delivered" = "전달됨";
+
+/* No comment provided by engineer. */
+"Do you mind sharing some feedback?" = "피드백을 보내겠습니까?";
+
+/* No comment provided by engineer. */
+"Done" = "완료";
+
+/* No comment provided by engineer. */
+"Download code is not valid." = "다운로드 코드가 유효하지 않습니다.";
+
+/* No comment provided by engineer. */
+"EMAIL" = "이메일";
+
+/* No comment provided by engineer. */
+"Edit profile" = "프로필 편집";
+
+/* No comment provided by engineer. */
+"Email already registered." = "이미 등록된 이메일 입니다.";
+
+/* No comment provided by engineer. */
+"Email not valid." = "이메일이 유효하지 않습니다.";
+
+/* No comment provided by engineer. */
+"Email sent!" = "이메일 전송됨!";
+
+/* No comment provided by engineer. */
+"Enter the download code from\nyour SMS or email invitation." = "문자나 이메일 초대로부터 받은\n다운로드 코드를 입력하세요.";
+
+/* No comment provided by engineer. */
+"Error – %@ must retry" = "에러 – %@ 재시도 해야합니다";
+
+/* No comment provided by engineer. */
+"Error – Please retry" = "에러 – 다시 시도해보세요";
+
+/* shake to give feedback title */
+"Everything OK?" = "다 좋습니까?";
+
+/* No comment provided by engineer. */
+"Explain your problem here..." = "설명...";
+
+/* No comment provided by engineer. */
+"FAVORITE" = "즐겨찾기";
+
+/* No comment provided by engineer. */
+"FEEDBACK" = "피드백";
+
+/* No comment provided by engineer. */
+"Facebook login canceled" = "페이스북 로그인 취소됨";
+
+/* No comment provided by engineer. */
+"Facebook login cancelled." = "페이스북 로그인 취소됨";
+
+/* No comment provided by engineer. */
+"Facebook login error" = "페이스북 로그인 오류";
+
+/* No comment provided by engineer. */
+"Free up some space on your device and try again or send fewer files." = "저장공간을 확보한 후 다시 시도하거나 파일을 조금만 보내세요.";
+
+/* No comment provided by engineer. */
+"From %@" = "%@(으)로부터";
+
+/* No comment provided by engineer. */
+"Fullname not valid." = "이름이 유효하지 않습니다.";
+
+/* No comment provided by engineer. */
+"GOOD, I LIKE IT!" = "좋아요!";
+
+/* No comment provided by engineer. */
+"Handle not valid" = "별명이 유효하지 않습니다";
+
+/* No comment provided by engineer. */
+"Help" = "도움";
+
+/* No comment provided by engineer. */
+"Hey %@. I want to send you files using Infinit. It's a free, unlimited file sharing app. You should download it here: %@" = "%1$@님. 당신에게 Infinit으로 파일을 보내려고 합니다. 이 앱은 무료이며, 파일 전송이 무제한으로 가능합니다. %2$@ : 이곳에서 다운받으세요.";
+
+/* No comment provided by engineer. */
+"Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@\n\nDon't forget to enter the following download code: %@" = "안녕하세요, Infinit으로 %1$lu %2$@을(를) 보냈습니다. %4$@ 여기서 %3$@을(를) 다운받을 수 있습니다.\n\n코드를 입력해야 하는 걸 잊지 마세요! 코드: %5$@";
+
+/* No comment provided by engineer. */
+"How To Send To Self.mp4" = "자신에게 보내는 방법.mp4";
+
+/* No comment provided by engineer. */
+"How To Send To Someone.mp4" = "파일 보내는 방법.mp4";
+
+/* No comment provided by engineer. */
+"How's your experience with Infinit?" = "Infinit이 마음에 드시나요?";
+
+/* No comment provided by engineer. */
+"INVITE" = "초대";
+
+/* No comment provided by engineer. */
+"If not, tap send feedback to let us know what's wrong." = "아니라면, 피드백 보내기를 선택하여 무엇이 문제인지 알려주세요.";
+
+/* No comment provided by engineer. */
+"Infinit requires access to your camera roll" = "사진 앱에 대한 접근 권한이 필요합니다";
+
+/* No comment provided by engineer. */
+"Infinit requires access to your gallery to send photos and videos." = "사진과 동영상을 보내려면 사진 앱에 대한 접근이 필요합니다.";
+
+/* No comment provided by engineer. */
+"Infinit was unable to fetch the files from your gallery. Check that you have some free space and try again." = "갤러리에서 파일을 불러올 수 없습니다. 저장공간이 여유로운지 확인하고 다시 시도하세요.";
+
+/* No comment provided by engineer. */
+"Install Infinit on another device to retrieve your files." = "다른 기기에서 Infinit을 설치하고 파일을 회수할 수 있습니다.";
+
+/* No comment provided by engineer. */
+"Login/Password don't match." = "로그인/암호가 일치하지 않습니다.";
+
+/* No comment provided by engineer. */
+"Logout" = "로그아웃";
+
+/* No comment provided by engineer. */
+"Looks like you don't have an\naccount. Enter email." = "계정이 없는 것 같네요.\n이메일을 입력하세요.";
+
+/* No comment provided by engineer. */
+"Me" = "나";
+
+/* No comment provided by engineer. */
+"Me (my other devices)" = "나 (나의 다른 기기)";
+
+/* No comment provided by engineer. */
+"Mind rating us on the App Store?" = "저희 앱을 앱스토어에서 평가해주시겠습니까?";
+
+/* No comment provided by engineer. */
+"NO, THANKS" = "아니요, 괜찮습니다.";
+
+/* No comment provided by engineer. */
+"Need a connection!" = "연결이 필요합니다!";
+
+/* No comment provided by engineer. */
+"No access to gallery." = "사진 접근 권한 없음.";
+
+/* No comment provided by engineer. */
+"No one here by that name.\nTry an email instead." = "없는 이름입니다.\n대신 이메일을 입력해보세요.";
+
+/* No comment provided by engineer. */
+"No one here by that name.\nTry connecting your Contacts" = "없는 이름입니다.\n연락처를 확인해보세요";
+
+/* No comment provided by engineer. */
+"Not enough free space!" = "저장공간이 부족합니다!";
+
+/* No comment provided by engineer. */
+"Not enough space on your device." = "기기의 저장공간이 부족합니다.";
+
+/* No comment provided by engineer. */
+"OK" = "OK";
+
+/* No comment provided by engineer. */
+"OPEN" = "열기";
+
+/* No comment provided by engineer. */
+"Oh no! Infinit can't connect. Retry?" = "저런! 연결할 수 없습니다. 재시도하시겠습니까?";
+
+/* No comment provided by engineer. */
+"Open Infinit to ensure your transfer continues" = "Infinit을 열어 전송이 진행중인지 확인하세요";
+
+/* No comment provided by engineer. */
+"Our Server is down.\nThanks for being patient." = "서버가 다운되었습니다.\n기다려주셔서 감사합니다.";
+
+/* No comment provided by engineer. */
+"PAUSE" = "일시정지";
+
+/* No comment provided by engineer. */
+"Password not valid." = "암호가 유효하지 않습니다.";
+
+/* No comment provided by engineer. */
+"Paused" = "일시정지됨";
+
+/* No comment provided by engineer. */
+"Paused by %@" = "%@에 의해 일시정지됨";
+
+/* No comment provided by engineer. */
+"Paused by sending device" = "보내는 기기에서 일시정지함";
+
+/* No comment provided by engineer. */
+"Paused – Check network" = "일시정지됨 – 네트워크를 확인하세요";
+
+/* No comment provided by engineer. */
+"Please update Infinit." = "Infinit을 업데이트하세요.";
+
+/* No comment provided by engineer. */
+"Preparing" = "준비중";
+
+/* No comment provided by engineer. */
+"Preparing your transfer..." = "전송 준비중...";
+
+/* No comment provided by engineer. */
+"REPORT A PROBLEM" = "버그 리포트";
+
+/* No comment provided by engineer. */
+"RESUME" = "재개";
+
+/* No comment provided by engineer. */
+"Rate us" = "평가하기";
+
+/* No comment provided by engineer. */
+"Received" = "받음";
+
+/* No comment provided by engineer. */
+"Received on another device" = "다른 기기에서 받음";
+
+/* No comment provided by engineer. */
+"Received your files!" = "파일을 받았습니다!";
+
+/* No comment provided by engineer. */
+"Rename device" = "기기 이름 변경";
+
+/* No comment provided by engineer. */
+"Report a problem" = "버그 리포트";
+
+/* No comment provided by engineer. */
+"Rest assured! Closing Infinit won't stop your transfer." = "쉬세요! Infinit을 닫아도 전송은 유지됩니다.";
+
+/* No comment provided by engineer. */
+"SELECT CONTACT" = "연락처 선택";
+
+/* No comment provided by engineer. */
+"SELECT FILES" = "파일 선택";
+
+/* No comment provided by engineer. */
+"SEND" = "전송";
+
+/* No comment provided by engineer. */
+"SEND %lu FILES" = "%lu개의 파일 전송";
+
+/* No comment provided by engineer. */
+"SEND 1 FILE" = "1개의 파일 전송";
+
+/* No comment provided by engineer. */
+"SMS" = "SMS";
+
+/* No comment provided by engineer. */
+"SO SO" = "그저 그래요";
+
+/* No comment provided by engineer. */
+"SURE!" = "물론이죠!";
+
+/* No comment provided by engineer. */
+"Save files to your gallery" = "앨범에 저장";
+
+/* No comment provided by engineer. */
+"Saving to gallery..." = "카메라롤에 저장중...";
+
+/* No comment provided by engineer. */
+"Search contacts by name or email..." = "이름이나 이메일로 연락처 검색...";
+
+/* No comment provided by engineer. */
+"Select" = "선택";
+
+/* No comment provided by engineer. */
+"Send Feedback" = "피드백 보내기";
+
+/* No comment provided by engineer. */
+"Send feedback" = "피드백 보내기";
+
+/* No comment provided by engineer. */
+"Sent" = "전송됨";
+
+/* No comment provided by engineer. */
+"Settings" = "설정";
+
+/* No comment provided by engineer. */
+"Skip" = "건너뛰기";
+
+/* No comment provided by engineer. */
+"Swipe the cards left or right to remove them." = "카드를 왼쪽 또는 오른쪽으로 스와이프 하여 삭제하세요.";
+
+/* No comment provided by engineer. */
+"Take a new photo" = "새로운 사진 찍기";
+
+/* No comment provided by engineer. */
+"Take new photo" = "새로운 사진 찍기";
+
+/* No comment provided by engineer. */
+"Tap 'OK' so we can display your contacts." = "'OK'를 탭하면 연락처가 나타납니다.";
+
+/* No comment provided by engineer. */
+"Tap 'OK' to select your photos and videos." = "'OK'를 탭하여 사진과 동영상을 선택하세요.";
+
+/* No comment provided by engineer. */
+"Thanks for reporting the problem, we'll get back to you as soon as we can." = "감사합니다. 최대한 빠른 시일 내에 답변드리겠습니다.";
+
+/* No comment provided by engineer. */
+"Thanks for taking the time to give us feedback." = "피드백을 보내는데 시간을 내어 주셔서 감사합니다.";
+
+/* No comment provided by engineer. */
+"Thanks!" = "감사합니다!";
+
+/* No comment provided by engineer. */
+"This handle has already been taken." = "이 별명은 다른 유저가 사용중입니다.";
+
+/* No comment provided by engineer. */
+"This user is already on Infinit." = "이 사용자는 이미 Infinit을 사용중입니다.";
+
+/* No comment provided by engineer. */
+"To" = "To";
+
+/* No comment provided by engineer. */
+"To %@" = "%@에게";
+
+/* No comment provided by engineer. */
+"To:" = "To:";
+
+/* No comment provided by engineer. */
+"Transferring" = "전송중";
+
+/* No comment provided by engineer. */
+"Transferring on another device" = "다른 기기로 전송중";
+
+/* No comment provided by engineer. */
+"Type email or send to yourself..." = "이메일을 입력하거나 자신에게 보내세요...";
+
+/* No comment provided by engineer. */
+"UNFAVORITE" = "즐겨찾기 해제";
+
+/* No comment provided by engineer. */
+"Unable to accept!" = "수락할 수 없습니다!";
+
+/* No comment provided by engineer. */
+"Unable to connect with Facebook" = "페이스북에 연결할 수 없음";
+
+/* No comment provided by engineer. */
+"Unable to edit your profile without an Internet connection." = "프로필을 수정하려면 인터넷 연결이 필요합니다.";
+
+/* No comment provided by engineer. */
+"Unable to fetch Facebook information" = "페이스북 정보를 가져올 수 없음";
+
+/* No comment provided by engineer. */
+"Unable to fetch files." = "파일을 가져올 수 없습니다.";
+
+/* No comment provided by engineer. */
+"Unable to get friends from Facebook" = "페이스북으로부터 친구를 가져올 수 없음";
+
+/* No comment provided by engineer. */
+"Unable to login with Facebook" = "페이스북 계정으로 로그인할 수 없음";
+
+/* No comment provided by engineer. */
+"Unknown" = "알 수 없음";
+
+/* No comment provided by engineer. */
+"Unknown login error" = "알 수 없는 로그인 에러";
+
+/* No comment provided by engineer. */
+"User already on Infinit" = "사용자가 이미 Infinit을 사용중임";
+
+/* No comment provided by engineer. */
+"Waiting for %@ to accept" = "%@의 수락을 기다리는중";
+
+/* No comment provided by engineer. */
+"Waiting for you to accept" = "당신의 수락을 기다리는중";
+
+/* No comment provided by engineer. */
+"We'll let you know when %@ receives your files." = "%@이(가) 파일을 받으면 알려드리겠습니다.";
+
+/* No comment provided by engineer. */
+"Write your feedback here..." = "여기에 피드백을 입력하세요...";
+
+/* No comment provided by engineer. */
+"You declined the transfer!" = "전송을 거절했습니다!";
+
+/* No comment provided by engineer. */
+"You need %@ of space to accept this transfer." = "이 전송을 수락하려면 %@의 공간이 필요합니다.";
+
+/* No comment provided by engineer. */
+"You need to grant permission to access your friends to find them on Infinit." = "Infinit에서 친구를 찾으려면 먼저 친구접근을 허용해야합니다.";
+
+/* No comment provided by engineer. */
+"You'd like to send %ld %@" = "%1$ld %2$@을(를) 보내려고 합니다";
+
+/* No comment provided by engineer. */
+"You're already logged in." = "이미 로그인 되어있습니다.";
+
+/* No comment provided by engineer. */
+"Your contact will receive an email from us inviting them to Infinit." = "당신의 연락처로 Infinit 초대 이메일이 전송됩니다.";
+
+/* No comment provided by engineer. */
+"Your current transfers and notifications will show up here." = "현재 전송 상태와 알림이 여기에 나타납니다.";
+
+/* No comment provided by engineer. */
+"Your email has not been confirmed." = "이메일 승인이 되어있지 않습니다";
+
+/* No comment provided by engineer. */
+"file" = "파일";
+
+/* No comment provided by engineer. */
+"files" = "파일";
+
+/* No comment provided by engineer. */
+"me" = "나";
+
+/* No comment provided by engineer. */
+"the file" = "파일";
+
+/* No comment provided by engineer. */
+"the files" = "파일";
+

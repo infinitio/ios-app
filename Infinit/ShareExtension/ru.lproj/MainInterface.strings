@@ -2,7 +2,7 @@
 "0kE-iw-E6e.text" = "Теперь откройте Infinit, чтобы их отправить!";
 
 /* Class = "UIButton"; normalTitle = "GOT IT"; ObjectID = "2KC-7y-XXg"; */
-"2KC-7y-XXg.normalTitle" = "ПОНЯЛ";
+"2KC-7y-XXg.normalTitle" = "ЕСТЬ!";
 
 /* Class = "UILabel"; text = "Your files are being copied to Infinit..."; ObjectID = "P2D-7H-Xof"; */
 "P2D-7H-Xof.text" = "Ваши файлы копируются в Infinit...";

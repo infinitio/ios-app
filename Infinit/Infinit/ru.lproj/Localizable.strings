@@ -11,10 +11,10 @@
 "%@ wants to send %ld %@ to you" = "%1$@ хочет отправить вам %2$ld %3$@";
 
 /* No comment provided by engineer. */
-"%lu FILES" = "ФАЙЛЫ %lu";
+"%lu FILES" = "%lu ФАЙЛ(ОВ)";
 
 /* No comment provided by engineer. */
-"%lu files" = "файлы %lu";
+"%lu files" = "%lu файл(ов)";
 
 /* No comment provided by engineer. */
 "%lu files selected" = "%lu файлов выбрано";
@@ -26,7 +26,7 @@
 "1 file" = "1 файл";
 
 /* No comment provided by engineer. */
-"1 file selected" = "выбран 1 файл";
+"1 file selected" = "1 файл выбран";
 
 /* No comment provided by engineer. */
 "30x faster" = "в 30 раз быстрее";
@@ -38,10 +38,13 @@
 "Accept on receiving device" = "Принять на получающем устройстве";
 
 /* No comment provided by engineer. */
-"Account already registered for\nFacebook email address." = "Учетная запись уже зарегистрирована на\nАдрес email в Facebook.";
+"Account already registered for\nFacebook email address." = "Учетная запись уже зарегистрирована на\nemail-адрес в Facebook.";
 
 /* No comment provided by engineer. */
-"All set! A message will be sent to %@." = "Все настроено! Сообщение будет отправлено на %@.";
+"All set! A message will be sent to %@." = "Все настроено! Сообщение будет отправлено %@.";
+
+/* No comment provided by engineer. */
+"Auto-save files" = "Автоматически сохранять файлы";
 
 /* No comment provided by engineer. */
 "Back" = "Назад";
@@ -77,6 +80,9 @@
 "DECLINE" = "ОТКАЗ";
 
 /* No comment provided by engineer. */
+"DONE" = "ГОТОВО";
+
+/* No comment provided by engineer. */
 "Delivered" = "Доставлено";
 
 /* No comment provided by engineer. */
@@ -89,16 +95,22 @@
 "Download code is not valid." = "Код для скачивания недействителен.";
 
 /* No comment provided by engineer. */
+"EMAIL" = "EMAIL";
+
+/* No comment provided by engineer. */
 "Edit profile" = "Редактировать профиль";
 
 /* No comment provided by engineer. */
-"Email already registered." = "Такой адрес уже зарегистрирован.";
+"Email already registered." = "Такой адрес email уже зарегистрирован.";
 
 /* No comment provided by engineer. */
-"Email not valid." = "Адрес не подходит.";
+"Email not valid." = "Адрес email не действителен.";
 
 /* No comment provided by engineer. */
-"Enter the download code from\nyour SMS or email invitation." = "Введите код для скачивания из\nсмс или письма.";
+"Email sent!" = "Письмо отправлено!";
+
+/* No comment provided by engineer. */
+"Enter the download code from\nyour SMS or email invitation." = "Введите код для скачивания из\nСМС или пригласительного письма.";
 
 /* No comment provided by engineer. */
 "Error – %@ must retry" = "Ошибка – %@ должен попробовать еще раз";
@@ -106,17 +118,29 @@
 /* No comment provided by engineer. */
 "Error – Please retry" = "Ошибка – Попробуйте еще раз";
 
+/* shake to give feedback title */
+"Everything OK?" = "Все хорошо?";
+
 /* No comment provided by engineer. */
 "Explain your problem here..." = "Опишите вашу проблему...";
 
 /* No comment provided by engineer. */
-"FAVORITE" = "ФАВОРИЗИРОВАТЬ";
+"FAVORITE" = "В ИЗБРАННОЕ";
 
 /* No comment provided by engineer. */
 "FEEDBACK" = "ОТЗЫВ";
 
 /* No comment provided by engineer. */
-"Free up some space on your device and try again or send fewer files." = "Освободите место на диске и попробуйте снова, или отправьте меньше файлов.";
+"Facebook login canceled" = "Вход через Facebook отменен";
+
+/* No comment provided by engineer. */
+"Facebook login cancelled." = "Вход через Facebook отменен.";
+
+/* No comment provided by engineer. */
+"Facebook login error" = "Ошибка входа через Facebook";
+
+/* No comment provided by engineer. */
+"Free up some space on your device and try again or send fewer files." = "Освободите место на диске и попробуйте снова, или отправьте меньшее количество файлов.";
 
 /* No comment provided by engineer. */
 "From %@" = "От %@";
@@ -125,10 +149,16 @@
 "Fullname not valid." = "Полное имя не подходит.";
 
 /* No comment provided by engineer. */
-"GOOD, I LIKE IT!" = "ОТЛИЧНО!";
+"GOOD, I LIKE IT!" = "ХОРОШО, МНЕ НРАВИТСЯ!";
 
 /* No comment provided by engineer. */
 "Handle not valid" = "Идентификатор не подходит";
+
+/* No comment provided by engineer. */
+"Help" = "Помощь";
+
+/* No comment provided by engineer. */
+"Hey %@. I want to send you files using Infinit. It's a free, unlimited file sharing app. You should download it here: %@" = "Привет %1$@. Я хочу отправить вам файлы через Infinit. Это бесплатная программа для обмена файлами. Скачивай здесь: %2$@";
 
 /* No comment provided by engineer. */
 "Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@\n\nDon't forget to enter the following download code: %@" = "Привет! Я только что послал Вам %1$lu %2$@ через Infinit. Вы можете забрать %3$@ здесь: %4$@\n\nНе забудьте ввести этот код для скачивания: %5$@";
@@ -143,16 +173,22 @@
 "How's your experience with Infinit?" = "Как вам Infinit?";
 
 /* No comment provided by engineer. */
+"INVITE" = "ПРИГЛАСИТЬ";
+
+/* No comment provided by engineer. */
+"If not, tap send feedback to let us know what's wrong." = "если нет, нажмите кнопку \"Отзыв\" чтобы сообщить нам о проблеме.";
+
+/* No comment provided by engineer. */
 "Infinit requires access to your camera roll" = "Infinit требуется доступ к вашим фото";
 
 /* No comment provided by engineer. */
-"Infinit requires access to your gallery to send photos and videos." = "Infinit нужен доступ к вашей галлерее для отправки фото и видео";
+"Infinit requires access to your gallery to send photos and videos." = "Infinit требуется доступ к вашей галерее для отправки фото и видео";
 
 /* No comment provided by engineer. */
-"Infinit was unable to fetch the files from your gallery. Check that you have some free space and try again." = "Infinit не удалось достать файлы из вашей галереи. Убедитесь, что свободного места достаточно и попробуйте снова.";
+"Infinit was unable to fetch the files from your gallery. Check that you have some free space and try again." = "Infinit не удалось получить файлы из вашей галереи. Убедитесь что имеется свободное место и попробуйте снова.";
 
 /* No comment provided by engineer. */
-"Install Infinit on another device to retrieve your files." = "Установите Infinit на другом устройстве, чтобы забрать ваши файлы.";
+"Install Infinit on another device to retrieve your files." = "Установите Infinit на другое устройство, чтобы получить ваши файлы.";
 
 /* No comment provided by engineer. */
 "Login/Password don't match." = "Логин/Пароль не подходят.";
@@ -185,7 +221,7 @@
 "No one here by that name.\nTry an email instead." = "Нет никого с таким именем.\nПопробуйте ввести email.";
 
 /* No comment provided by engineer. */
-"No one here by that name.\nTry connecting your Contacts" = "Никого с таким именем.\nПопробуйте посмотреть Контакты";
+"No one here by that name.\nTry connecting your Contacts" = "Нет никого с таким именем.\nПопробуйте подключить Контакты";
 
 /* No comment provided by engineer. */
 "Not enough free space!" = "Не хватает свободного места!";
@@ -203,10 +239,10 @@
 "Oh no! Infinit can't connect. Retry?" = "О нет! Infinit не может подключиться. Попробовать еще раз?";
 
 /* No comment provided by engineer. */
-"Open Infinit to ensure your transfer continues" = "Откройте Infinit чтобы убедиться, что ваши передачи продолжаются";
+"Open Infinit to ensure your transfer continues" = "Откройте Infinit чтобы убедиться, что ваша передача продолжается";
 
 /* No comment provided by engineer. */
-"Our Server is down.\nThanks for being patient." = "Наш сервер 'упал'.\nСпасибо за терпение.";
+"Our Server is down.\nThanks for being patient." = "Наш сервер временно недоступен.\nСпасибо за терпение.";
 
 /* No comment provided by engineer. */
 "PAUSE" = "ПАУЗА";
@@ -221,10 +257,10 @@
 "Paused by %@" = "Приостановлено %@";
 
 /* No comment provided by engineer. */
-"Paused by sending device" = "Приостановлено посылающей стороной";
+"Paused by sending device" = "Приостановлено отправителем";
 
 /* No comment provided by engineer. */
-"Paused – Check network" = "Приостановлено – Проверьте сеть";
+"Paused – Check network" = "Приостановлено – Проверьте сетевое подключение";
 
 /* No comment provided by engineer. */
 "Please update Infinit." = "Пожалуйста, обновите Infinit.";
@@ -260,7 +296,7 @@
 "Report a problem" = "Сообщить о проблеме";
 
 /* No comment provided by engineer. */
-"Rest assured! Closing Infinit won't stop your transfer." = "Будьте уверены! Закрытие Infinit не прекратит ваши передачи.";
+"Rest assured! Closing Infinit won't stop your transfer." = "Будьте уверены! Закрытие Infinit не прервет ваши передачи.";
 
 /* No comment provided by engineer. */
 "SELECT CONTACT" = "ВЫБРАТЬ КОНТАКТ";
@@ -272,16 +308,22 @@
 "SEND" = "ОТПРАВИТЬ";
 
 /* No comment provided by engineer. */
-"SEND %lu FILES" = "ОТПРАВИТЬ %lu ФАЙЛЫ";
+"SEND %lu FILES" = "ОТПРАВИТЬ %lu ФАЙЛ(ОВ)";
 
 /* No comment provided by engineer. */
 "SEND 1 FILE" = "ОТПРАВИТЬ 1 ФАЙЛ";
+
+/* No comment provided by engineer. */
+"SMS" = "СМС";
 
 /* No comment provided by engineer. */
 "SO SO" = "ТАК СЕБЕ";
 
 /* No comment provided by engineer. */
 "SURE!" = "КОНЕЧНО!";
+
+/* No comment provided by engineer. */
+"Save files to your gallery" = "Сохранить файлы в галерею";
 
 /* No comment provided by engineer. */
 "Saving to gallery..." = "Сохранение в галерею...";
@@ -291,6 +333,9 @@
 
 /* No comment provided by engineer. */
 "Select" = "Выбрать";
+
+/* No comment provided by engineer. */
+"Send Feedback" = "Отправить отзыв";
 
 /* No comment provided by engineer. */
 "Send feedback" = "Отправить отзыв";
@@ -332,6 +377,9 @@
 "This handle has already been taken." = "Этот идентификатор уже занят.";
 
 /* No comment provided by engineer. */
+"This user is already on Infinit." = "Этот пользователь уже есть в Infinit";
+
+/* No comment provided by engineer. */
 "To" = "Кому";
 
 /* No comment provided by engineer. */
@@ -347,7 +395,7 @@
 "Transferring on another device" = "Передаем на другое устройство";
 
 /* No comment provided by engineer. */
-"Type email or send to yourself..." = "введите имя или email";
+"Type email or send to yourself..." = "Введите адрес email или отправьте самому себе";
 
 /* No comment provided by engineer. */
 "UNFAVORITE" = "УДАЛИТЬ ИЗ ИЗБРАННОГО";
@@ -356,10 +404,19 @@
 "Unable to accept!" = "Невозможно принять!";
 
 /* No comment provided by engineer. */
-"Unable to edit your profile without an Internet connection." = "Невозможно отредакировать профиль без соединения с Интернетом";
+"Unable to connect with Facebook" = "Невозможно войти через Facebook";
+
+/* No comment provided by engineer. */
+"Unable to edit your profile without an Internet connection." = "Невозможно отредакировать ваш профиль без соединения с Интернетом";
+
+/* No comment provided by engineer. */
+"Unable to fetch Facebook information" = "Неdозможно получить информацию из Facebook";
 
 /* No comment provided by engineer. */
 "Unable to fetch files." = "Невозможно получить файлы.";
+
+/* No comment provided by engineer. */
+"Unable to get friends from Facebook" = "Не удается добавить друзей из Facebook";
 
 /* No comment provided by engineer. */
 "Unable to login with Facebook" = "Невозможно войти через Facebook";
@@ -371,16 +428,19 @@
 "Unknown login error" = "Неизвестная ошибка входа";
 
 /* No comment provided by engineer. */
+"User already on Infinit" = "Этот пользователь уже есть в Infinit";
+
+/* No comment provided by engineer. */
 "Waiting for %@ to accept" = "Ожидаем %@ для принятия";
 
 /* No comment provided by engineer. */
-"Waiting for you to accept" = "Ожидаем вас для принятия";
+"Waiting for you to accept" = "Ждем пока вы примите";
 
 /* No comment provided by engineer. */
 "We'll let you know when %@ receives your files." = "Мы дадим вам знать когда  %@ получит ваши файлы.";
 
 /* No comment provided by engineer. */
-"Write your feedback here..." = "Напишите отзыв здесь...";
+"Write your feedback here..." = "Напишите ваш отзыв...";
 
 /* No comment provided by engineer. */
 "You declined the transfer!" = "Вы отменили передачу!";
@@ -389,16 +449,22 @@
 "You need %@ of space to accept this transfer." = "Вам необходимо %@ места для принятия этой передачи.";
 
 /* No comment provided by engineer. */
+"You need to grant permission to access your friends to find them on Infinit." = "Вам необходимо дать разрешение для доступа к списку друзей чтобы найти их в Infinit";
+
+/* No comment provided by engineer. */
 "You'd like to send %ld %@" = "Вы хотите отправить %1$ld %2$@";
 
 /* No comment provided by engineer. */
 "You're already logged in." = "Вы уже вошли.";
 
 /* No comment provided by engineer. */
-"Your current transfers and notifications will show up here." = "Ваши текущие передачи и уведомления появятся здесь.";
+"Your contact will receive an email from us inviting them to Infinit." = "Ваш контакт получит от нас письмо с приглашением в Infinit";
 
 /* No comment provided by engineer. */
-"Your email has not been confirmed." = "Ваш email не подтвержден";
+"Your current transfers and notifications will show up here." = "Ваши текущие передачи и уведомления будут отображены здесь";
+
+/* No comment provided by engineer. */
+"Your email has not been confirmed." = "Ваш email не был подтвержден";
 
 /* No comment provided by engineer. */
 "file" = "файл";

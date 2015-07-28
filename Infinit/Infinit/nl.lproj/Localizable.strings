@@ -44,6 +44,9 @@
 "All set! A message will be sent to %@." = "Gereed! Een bericht zal worden verstuurd naar %@.";
 
 /* No comment provided by engineer. */
+"Auto-save files" = "Automatisch Opgeslagen Bestanden";
+
+/* No comment provided by engineer. */
 "Back" = "Terug";
 
 /* No comment provided by engineer. */
@@ -77,6 +80,9 @@
 "DECLINE" = "AFWIJZEN";
 
 /* No comment provided by engineer. */
+"DONE" = "KLAAR";
+
+/* No comment provided by engineer. */
 "Delivered" = "Afgeleverd";
 
 /* No comment provided by engineer. */
@@ -89,6 +95,9 @@
 "Download code is not valid." = "Download code is niet geldig.";
 
 /* No comment provided by engineer. */
+"EMAIL" = "EMAIL";
+
+/* No comment provided by engineer. */
 "Edit profile" = "Bewerk profiel";
 
 /* No comment provided by engineer. */
@@ -96,6 +105,9 @@
 
 /* No comment provided by engineer. */
 "Email not valid." = "Email is niet geldig.";
+
+/* No comment provided by engineer. */
+"Email sent!" = "Email verstuurd!";
 
 /* No comment provided by engineer. */
 "Enter the download code from\nyour SMS or email invitation." = "Voer de download code in van\nje SMS of email uitnodiging.";
@@ -106,6 +118,9 @@
 /* No comment provided by engineer. */
 "Error – Please retry" = "Fout - Probeer het a.u.b opnieuw.";
 
+/* shake to give feedback title */
+"Everything OK?" = "Alles oké?";
+
 /* No comment provided by engineer. */
 "Explain your problem here..." = "Leg uw probleem hier uit.";
 
@@ -114,6 +129,15 @@
 
 /* No comment provided by engineer. */
 "FEEDBACK" = "FEEDBACK";
+
+/* No comment provided by engineer. */
+"Facebook login canceled" = "Facebook login geannuleerd";
+
+/* No comment provided by engineer. */
+"Facebook login cancelled." = "Facebook login geannuleerd.";
+
+/* No comment provided by engineer. */
+"Facebook login error" = "Facebook login fout";
 
 /* No comment provided by engineer. */
 "Free up some space on your device and try again or send fewer files." = "Maak wat ruimte vrij op je apparaat en probeer het opnieuw of verstuur minder bestanden.";
@@ -131,6 +155,12 @@
 "Handle not valid" = "Handeling is niet geldig.";
 
 /* No comment provided by engineer. */
+"Help" = "Help";
+
+/* No comment provided by engineer. */
+"Hey %@. I want to send you files using Infinit. It's a free, unlimited file sharing app. You should download it here: %@" = "Hallo %1$@. Ik wil je bestanden versturen via Infinit. Het is een gratis en onbeperkte bestandsoverdrachten app. Je kunt het hier downloaden: %2$@";
+
+/* No comment provided by engineer. */
 "Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@\n\nDon't forget to enter the following download code: %@" = "Hallo, ik heb jou %1$lu%2$@ via Infinit. Je kunt %3$@ hier krijgen: %4$@\n\nVergeet niet om deze download code in te voeren: %5$@";
 
 /* No comment provided by engineer. */
@@ -141,6 +171,12 @@
 
 /* No comment provided by engineer. */
 "How's your experience with Infinit?" = "Wat zijn je ervaringen met Infinit?";
+
+/* No comment provided by engineer. */
+"INVITE" = "UITNODIGEN";
+
+/* No comment provided by engineer. */
+"If not, tap send feedback to let us know what's wrong." = "Indien niet, tik om feedback te geven en ons te laten weten wat er fout ging.";
 
 /* No comment provided by engineer. */
 "Infinit requires access to your camera roll" = "Om Infinit te gebruiken, moet u toestemming geven tot uw camera album.";
@@ -278,10 +314,16 @@
 "SEND 1 FILE" = "VERSTUUR 1 BESTAND";
 
 /* No comment provided by engineer. */
+"SMS" = "SMS";
+
+/* No comment provided by engineer. */
 "SO SO" = "DUS DUS";
 
 /* No comment provided by engineer. */
 "SURE!" = "JAZEKER!";
+
+/* No comment provided by engineer. */
+"Save files to your gallery" = "Sla bestanden op in je galerij";
 
 /* No comment provided by engineer. */
 "Saving to gallery..." = "Opslaan naar foto album...";
@@ -291,6 +333,9 @@
 
 /* No comment provided by engineer. */
 "Select" = "Selecteer";
+
+/* No comment provided by engineer. */
+"Send Feedback" = "Verstuur Feedback";
 
 /* No comment provided by engineer. */
 "Send feedback" = "Verstuur feedback";
@@ -332,6 +377,9 @@
 "This handle has already been taken." = "Deze handeling wordt al uitgevoerd.";
 
 /* No comment provided by engineer. */
+"This user is already on Infinit." = "Deze gebruiker gebruikt al Infinit.";
+
+/* No comment provided by engineer. */
 "To" = "Naar";
 
 /* No comment provided by engineer. */
@@ -356,10 +404,19 @@
 "Unable to accept!" = "Kan niet accepteren!";
 
 /* No comment provided by engineer. */
+"Unable to connect with Facebook" = "Kan geen verbinding maken met Facebook.";
+
+/* No comment provided by engineer. */
 "Unable to edit your profile without an Internet connection." = "Je kan je profiel niet bewerken zonder een internet verbinding.";
 
 /* No comment provided by engineer. */
+"Unable to fetch Facebook information" = "Kan geen Facebook informatie ophalen.";
+
+/* No comment provided by engineer. */
 "Unable to fetch files." = "Kan bestanden niet ophalen.";
+
+/* No comment provided by engineer. */
+"Unable to get friends from Facebook" = "Kan geen vrienden ophalen van Facebook";
 
 /* No comment provided by engineer. */
 "Unable to login with Facebook" = "Kan niet inloggen met Facebook";
@@ -369,6 +426,9 @@
 
 /* No comment provided by engineer. */
 "Unknown login error" = "Onbekende login fout";
+
+/* No comment provided by engineer. */
+"User already on Infinit" = "Gebruiker gebruikt al Infinit";
 
 /* No comment provided by engineer. */
 "Waiting for %@ to accept" = "Wachten tot %@ accepteert";
@@ -389,10 +449,16 @@
 "You need %@ of space to accept this transfer." = "Je hebt %@ ruimte nodig om deze overdracht te accepteren.";
 
 /* No comment provided by engineer. */
+"You need to grant permission to access your friends to find them on Infinit." = "Je moet toestemming geven om je vrienden te vinden op Infinit.";
+
+/* No comment provided by engineer. */
 "You'd like to send %ld %@" = "Je wilt versturen %1$ld %2$@";
 
 /* No comment provided by engineer. */
 "You're already logged in." = "Je bent al ingelogd.";
+
+/* No comment provided by engineer. */
+"Your contact will receive an email from us inviting them to Infinit." = "Je contactpersoon ontvangt een uitnodiging van ons via email om Infinit te gebruiken.";
 
 /* No comment provided by engineer. */
 "Your current transfers and notifications will show up here." = "Je huidige overdrachten en notificaties verschijnen hier.";

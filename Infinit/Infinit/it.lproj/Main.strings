@@ -20,7 +20,7 @@
 "6G8-BA-BUD.text" = "Mike Dee";
 
 /* Class = "UIViewController"; title = "SEND_RECIPIENTS"; ObjectID = "9ZK-3B-PXo"; */
-"9ZK-3B-PXo.title" = "Invio_destinatari";
+"9ZK-3B-PXo.title" = "SEND_RECIPIENTS";
 
 /* Class = "UINavigationController"; title = "SEND"; ObjectID = "18v-p7-fft"; */
 "18v-p7-fft.title" = "INVIA";
@@ -56,7 +56,7 @@
 "ED8-ta-EAO.text" = "email";
 
 /* Class = "UITabBarItem"; title = "Item"; ObjectID = "ESf-xZ-Nqk"; */
-"ESf-xZ-Nqk.title" = "Oggetto";
+"ESf-xZ-Nqk.title" = "Elemento";
 
 /* Class = "UINavigationController"; title = "EDIT PROFILE"; ObjectID = "FTm-Xp-9pf"; */
 "FTm-Xp-9pf.title" = "MODIFICA PROFILO";
@@ -83,7 +83,7 @@
 "Fn8-5X-DLz.segmentTitles[5]" = "Altro";
 
 /* Class = "UITabBarItem"; title = "Item"; ObjectID = "HEy-Gq-I91"; */
-"HEy-Gq-I91.title" = "Oggetto";
+"HEy-Gq-I91.title" = "Elemento";
 
 /* Class = "UILabel"; text = "Receive and view any\ntype of file in Infinit"; ObjectID = "J59-YW-qzz"; */
 "J59-YW-qzz.text" = "Ricevi e visualizza qualunque\ntipo di file con Infinit";
@@ -152,7 +152,7 @@
 "dDd-tw-C0S.title" = "Seleziona";
 
 /* Class = "UILabel"; text = "Send to an email address or\naccess your phone contacts!"; ObjectID = "eGc-7u-5hd"; */
-"eGc-7u-5hd.text" = "Invia ad un indirizzo email oppure accedi ai tuoi contatti telefonici!";
+"eGc-7u-5hd.text" = "Invia ad un indirizzo email oppure accedi ai contatti del telefono!";
 
 /* Class = "UILabel"; text = "M"; ObjectID = "fjd-ZY-K2z"; */
 "fjd-ZY-K2z.text" = "M";
