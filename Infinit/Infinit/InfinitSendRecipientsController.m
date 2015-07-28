@@ -242,7 +242,8 @@ static UIImage* _send_button_image = nil;
     [res removeObject:self.add_contacts_button];
     self.navigationItem.rightBarButtonItems = res;
   }
-  else if (!hidden && ![toolbar_items containsObject:self.add_contacts_button])
+  else if (!hidden &&
+           self.add_contacts_button &&![toolbar_items containsObject:self.add_contacts_button])
   {
     NSMutableArray* res = [toolbar_items mutableCopy];
     [res addObject:self.add_contacts_button];

@@ -141,7 +141,8 @@ static NSString* _import_cell_id = @"contact_import_cell";
     [res removeObject:self.add_contacts_button];
     self.navigationItem.rightBarButtonItems = res;
   }
-  else if (!hidden && ![toolbar_items containsObject:self.add_contacts_button])
+  else if (!hidden &&
+           self.add_contacts_button && ![toolbar_items containsObject:self.add_contacts_button])
   {
     NSMutableArray* res = [toolbar_items mutableCopy];
     [res addObject:self.add_contacts_button];
@@ -679,7 +680,7 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   if (id_.unsignedIntegerValue == 0)
     return;
   InfinitContactUser* contact =
-  [InfinitContactUser contactWithInfinitUser:[InfinitUserManager userWithId:id_]];
+    [InfinitContactUser contactWithInfinitUser:[InfinitUserManager userWithId:id_]];
   self.all_swaggers = [self swaggers];
   if (self.last_search.length)
     return;
