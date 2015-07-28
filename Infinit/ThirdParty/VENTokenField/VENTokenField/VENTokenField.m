@@ -67,12 +67,12 @@ static NSDictionary* _placeholder_attrs = nil;
 - (void)awakeFromNib
 {
     [self setUpInit];
-  if (_placeholder_attrs == nil)
-  {
-    _placeholder_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:14.0f],
-                           NSForegroundColorAttributeName: [InfinitColor colorWithGray:0
-                                                                                 alpha:0.3f]};
-  }
+    if (_placeholder_attrs == nil)
+    {
+      _placeholder_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:14.0f],
+                             NSForegroundColorAttributeName: [InfinitColor colorWithGray:0
+                                                                                   alpha:0.3f]};
+    }
 }
 
 - (BOOL)becomeFirstResponder
