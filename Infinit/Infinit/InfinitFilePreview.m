@@ -115,7 +115,9 @@
   InfinitFileTypes type = [InfinitFilePreview fileTypeForPath:path];
   if (type == InfinitFileTypeImage)
   {
-    res = [UIImage imageWithContentsOfFile:path];
+    // Ensure we render files with @2x correctly.
+    NSData* image_data = [NSData dataWithContentsOfFile:path];
+    res = [UIImage imageWithData:image_data scale:1.0f];
     generated = YES;
   }
   else if (type == InfinitFileTypeVideo)
