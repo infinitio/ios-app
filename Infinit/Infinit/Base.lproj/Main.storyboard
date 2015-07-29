@@ -2259,7 +2259,7 @@ access your phone contacts!</string>
                         <barButtonItem key="leftBarButtonItem" image="icon-back-white" id="cGr-Jj-Ilw">
                             <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <action selector="backButtonTapped:" destination="pu1-dB-tPe" id="0ij-XP-HwV"/>
+                                <segue destination="pgA-uf-mar" kind="unwind" unwindAction="unwindToContactsViewController:" id="YQa-e2-NQY"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -2283,6 +2283,7 @@ access your phone contacts!</string>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oFN-nO-BVh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="pgA-uf-mar" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3338" y="-1013"/>
         </scene>
