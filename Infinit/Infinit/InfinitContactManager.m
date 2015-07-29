@@ -77,23 +77,28 @@ static dispatch_once_t _got_access_token = 0;
   CFErrorRef* error = nil;
   ABAddressBookRef address_book = ABAddressBookCreateWithOptions(NULL, error);
   CFArrayRef sources = ABAddressBookCopyArrayOfAllSources(address_book);
+  // Array containing record ids that have been fetched.
+  NSMutableArray* fetched_records = [NSMutableArray array];
   for (int i = 0; i < CFArrayGetCount(sources); i++)
   {
     ABRecordRef source = CFArrayGetValueAtIndex(sources, i);
     CFArrayRef contacts =
-    ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(address_book,
-                                                              source,
-                                                              kABPersonSortByFirstName);
+      ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(address_book,
+                                                                source,
+                                                                kABPersonSortByFirstName);
     for (int j = 0; j < CFArrayGetCount(contacts); j++)
     {
       ABRecordRef person = CFArrayGetValueAtIndex(contacts, j);
       if (person)
       {
+        int32_t record_id = ABRecordGetRecordID(person);
+        if ([fetched_records containsObject:@(record_id)])
+          continue;
         InfinitContactAddressBook* contact = [InfinitContactAddressBook contactWithABRecord:person];
-        if (contact != nil && (contact.emails.count > 0 || (contact.phone_numbers.count > 0)))
-        {
+        if (contact != nil && (contact.emails.count || (contact.phone_numbers.count)))
           [res addObject:contact];
-        }
+        [fetched_records addObject:@(contact.address_book_id)];
+        [fetched_records addObjectsFromArray:contact.linked_address_book_ids];
       }
     }
     CFRelease(contacts);

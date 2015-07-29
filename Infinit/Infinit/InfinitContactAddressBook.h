@@ -13,6 +13,7 @@
 @interface InfinitContactAddressBook : InfinitContact
 
 @property (nonatomic, readonly) int32_t address_book_id;
+@property (nonatomic, readonly) NSArray* linked_address_book_ids;
 @property (nonatomic, strong) NSArray* emails;
 @property (nonatomic, strong) NSArray* phone_numbers;
 @property (nonatomic, readwrite) NSInteger selected_email_index;

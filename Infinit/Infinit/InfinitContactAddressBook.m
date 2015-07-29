@@ -14,39 +14,35 @@
 #import <Gap/NSString+email.h>
 #import <Gap/NSString+PhoneNumber.h>
 
+static NSCharacterSet* _whitespace = nil;
+
 @implementation InfinitContactAddressBook
 
 #pragma mark - Init
 
 - (instancetype)initWithABRecord:(ABRecordRef)record
 {
-  ABMultiValueRef email_property = ABRecordCopyValue(record, kABPersonEmailProperty);
-  NSArray* temp_emails = (__bridge_transfer NSArray*)ABMultiValueCopyArrayOfAllValues(email_property);
-  CFRelease(email_property);
-  NSMutableArray* res_emails = [NSMutableArray array];
-  for (NSString* email in temp_emails)
+  if (!_whitespace)
+    _whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+  NSMutableSet* res_emails = [InfinitContactAddressBook _emailsForRecord:record];
+  NSMutableSet* res_numbers = [InfinitContactAddressBook _phoneNumbersForRecord:record];
+  NSMutableArray* res_linked_ids = [NSMutableArray array];
+  CFArrayRef linked_people = ABPersonCopyArrayOfAllLinkedPeople(record);
+  for (int i = 0; i < CFArrayGetCount(linked_people); i++)
   {
-    if (email.infinit_isEmail)
-      [res_emails addObject:email];
+    ABRecordRef linked_record = CFArrayGetValueAtIndex(linked_people, i);
+    if (!linked_record)
+      continue;
+    NSMutableSet* linked_emails = [InfinitContactAddressBook _emailsForRecord:linked_record];
+    if (linked_emails.count)
+      [res_emails addObjectsFromArray:linked_emails.allObjects];
+    NSMutableSet* linked_numbers =
+      [InfinitContactAddressBook _phoneNumbersForRecord:linked_record];
+    if (linked_numbers.count)
+      [res_numbers addObjectsFromArray:linked_numbers.allObjects];
+    [res_linked_ids addObject:@(ABRecordGetRecordID(linked_record))];
   }
-  ABMultiValueRef phone_property = ABRecordCopyValue(record, kABPersonPhoneProperty);
-  NSArray* temp_numbers = (__bridge_transfer NSArray*)ABMultiValueCopyArrayOfAllValues(phone_property);
-  CFRelease(phone_property);
-  NSMutableArray* res_numbers = [NSMutableArray array];
-  for (NSString* number in temp_numbers)
-  {
-    if (number.infinit_isPhoneNumber)
-    {
-      [res_numbers addObject:number];
-    }
-    else if ([number rangeOfString:@"00"].location == 0)
-    {
-      NSString* new_number = [number stringByReplacingCharactersInRange:NSMakeRange(0, 2)
-                                                             withString:@"+"];
-      if (new_number.infinit_isPhoneNumber)
-        [res_numbers addObject:new_number];
-    }
-  }
+  CFRelease(linked_people);
   NSString* first_name =
     (__bridge_transfer NSString*)ABRecordCopyValue(record, kABPersonFirstNameProperty);
   NSString* surname =
@@ -65,14 +61,15 @@
   else
   {
     if (res_emails.count > 0)
-      [name_str appendString:res_emails[0]];
+      [name_str appendString:res_emails.allObjects[0]];
     else if (res_numbers.count > 0)
-      [name_str appendString:res_numbers[0]];
+      [name_str appendString:res_numbers.allObjects[0]];
     else
       [name_str appendString:NSLocalizedString(@"Unknown", nil)];
   }
   NSData* image_data =
-    (__bridge_transfer NSData*)(ABPersonCopyImageDataWithFormat(record, kABPersonImageFormatThumbnail));
+    (__bridge_transfer NSData*)(ABPersonCopyImageDataWithFormat(record,
+                                                                kABPersonImageFormatThumbnail));
   UIImage* avatar = [UIImage imageWithData:image_data scale:1.0f];
   if (avatar == nil)
     avatar = [self generateAvatarWithFirstName:first_name surname:surname];
@@ -80,8 +77,9 @@
   if (self = [super initWithAvatar:avatar firstName:first_name fullname:name_str])
   {
     _address_book_id = ABRecordGetRecordID(record);
-    _emails = [res_emails copy];
-    _phone_numbers = [res_numbers copy];
+    _linked_address_book_ids = [res_linked_ids copy];
+    _emails = [res_emails.allObjects copy];
+    _phone_numbers = [res_numbers.allObjects copy];
     if (self.emails.count == 0 && self.phone_numbers.count == 0)
       return nil;
 
@@ -205,6 +203,49 @@
       return YES;
   }
   return NO;
+}
+
++ (NSMutableSet*)_emailsForRecord:(ABRecordRef)record
+{
+  ABMultiValueRef email_property = ABRecordCopyValue(record, kABPersonEmailProperty);
+  NSArray* temp_emails =
+    (__bridge_transfer NSArray*)ABMultiValueCopyArrayOfAllValues(email_property);
+  CFRelease(email_property);
+  NSMutableSet* res = [NSMutableSet set];
+  for (NSString* email in temp_emails)
+  {
+    NSString* cleaned_email =
+      [[email componentsSeparatedByCharactersInSet:_whitespace] componentsJoinedByString:@""];
+    if (cleaned_email.infinit_isEmail)
+      [res addObject:cleaned_email];
+  }
+  return res;
+}
+
++ (NSMutableSet*)_phoneNumbersForRecord:(ABRecordRef)record
+{
+  ABMultiValueRef phone_property = ABRecordCopyValue(record, kABPersonPhoneProperty);
+  NSArray* temp_numbers =
+    (__bridge_transfer NSArray*)ABMultiValueCopyArrayOfAllValues(phone_property);
+  CFRelease(phone_property);
+  NSMutableSet* res = [NSMutableSet set];
+  for (NSString* number in temp_numbers)
+  {
+    NSString* cleaned_number =
+      [[number componentsSeparatedByCharactersInSet:_whitespace] componentsJoinedByString:@""];
+    if (cleaned_number.infinit_isPhoneNumber)
+    {
+      [res addObject:cleaned_number];
+    }
+    else if ([cleaned_number rangeOfString:@"00"].location == 0)
+    {
+      NSString* new_number = [cleaned_number stringByReplacingCharactersInRange:NSMakeRange(0, 2)
+                                                                     withString:@"+"];
+      if (new_number.infinit_isPhoneNumber)
+        [res addObject:new_number];
+    }
+  }
+  return res;
 }
 
 @end
