@@ -754,6 +754,9 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   }
 }
 
+- (IBAction)unwindToContactsViewController:(UIStoryboardSegue*)segue
+{}
+
 #pragma mark - Status Changed
 
 - (void)statusChangedTo:(BOOL)status

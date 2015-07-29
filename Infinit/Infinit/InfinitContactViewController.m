@@ -24,8 +24,7 @@
 
 #import "UIImage+Rounded.h"
 
-@interface InfinitContactViewController () <InfinitInvitationOverlayProtocol,
-                                            UIGestureRecognizerDelegate>
+@interface InfinitContactViewController () <InfinitInvitationOverlayProtocol>
 
 @property (nonatomic, weak) IBOutlet UIImageView* avatar_view;
 @property (nonatomic, weak) IBOutlet UIImageView* icon_view;
@@ -79,9 +78,6 @@ static NSAttributedString* _unfavorite_title = nil;
   self.send_invite_button.imageEdgeInsets = UIEdgeInsetsMake(3.0f, -6.0f, 3.0f, 0.0f);
   self.send_invite_button.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -5.0f);
 
-  self.navigationController.interactivePopGestureRecognizer.enabled = YES;
-  self.navigationController.interactivePopGestureRecognizer.delegate = self;
-
   self.left_button.titleLabel.adjustsFontSizeToFitWidth = YES;
   self.left_button.titleLabel.minimumScaleFactor = 0.25f;
   self.send_invite_button.titleLabel.adjustsFontSizeToFitWidth = YES;
@@ -123,11 +119,6 @@ static NSAttributedString* _unfavorite_title = nil;
   [super viewWillDisappear:animated];
   _invitation_overlay = nil;
   _invitation_overlay_token = 0;
-}
-
-- (IBAction)backButtonTapped:(id)sender
-{
-  [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)configureView;
