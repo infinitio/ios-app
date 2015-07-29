@@ -35,7 +35,6 @@ static dispatch_once_t _instance_token = 0;
   NSCAssert(_instance == nil, @"Use sharedInstance.");
   if (self = [super init])
   {
-    _shake_number = 0;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didReceiveMemoryWarning)
                                                  name:UIApplicationDidReceiveMemoryWarningNotification 
@@ -79,7 +78,7 @@ static dispatch_once_t _instance_token = 0;
   }
   else
   {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)),
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)),
                    dispatch_get_main_queue(), ^
     {
       self.shake_number = 0;
