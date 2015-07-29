@@ -201,7 +201,10 @@ static NSString* _user_cell_id = @"settings_user_cell";
       {
        InfinitSettingsUserCell* cell =
           [self.table_view dequeueReusableCellWithIdentifier:_user_cell_id forIndexPath:indexPath];
-        [cell configureWithUser:[InfinitUserManager sharedInstance].me];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+        {
+          [cell configureWithUser:[InfinitUserManager sharedInstance].me];
+        });
         res = cell;
         break;
       }

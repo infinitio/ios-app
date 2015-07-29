@@ -21,12 +21,22 @@
 
 @implementation InfinitSettingsUserCell
 
+- (void)awakeFromNib
+{
+  [super awakeFromNib];
+  self.clipsToBounds = YES;
+}
+
 - (void)configureWithUser:(InfinitUser*)user
 {
-  self.name_label.text = user.fullname;
-  self.background_view.image = [user.avatar applyDarkEffect];
-  self.avatar_view.image = [user.avatar infinit_circularMaskOfSize:self.avatar_view.frame.size];
-  self.clipsToBounds = YES;
+  UIImage* background = [user.avatar applyDarkEffect];
+  UIImage* round_avatar = [user.avatar infinit_circularMaskOfSize:self.avatar_view.frame.size];
+  dispatch_async(dispatch_get_main_queue(), ^
+  {
+    self.name_label.text = user.fullname;
+    self.background_view.image = background;
+    self.avatar_view.image = round_avatar;
+  });
 }
 
 @end
