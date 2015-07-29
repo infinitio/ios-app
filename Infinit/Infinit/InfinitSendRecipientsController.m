@@ -301,7 +301,7 @@ static UIImage* _send_button_image = nil;
 
 - (void)navBarTapped
 {
-  [self.table_view scrollRectToVisible:CGRectMake(0.0f, 0.0f, 1.0f, 1.0f) animated:YES];
+  [self.table_view scrollRectToVisible:CGRectMake(0.0f, 1.0f, 1.0f, 1.0f) animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
