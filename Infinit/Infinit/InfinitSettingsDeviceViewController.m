@@ -66,6 +66,8 @@
 
 - (void)keyboardWillShow
 {
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    return;
   CGFloat delta = -30.0f;
   if (![InfinitHostDevice smallScreen])
     delta -= 30.0f;
@@ -86,6 +88,8 @@
 
 - (void)keyboardWillHide
 {
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    return;
   [UIView animateWithDuration:0.2f
                         delay:0.0f
                       options:UIViewAnimationOptionCurveEaseInOut
