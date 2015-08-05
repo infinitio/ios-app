@@ -31,6 +31,7 @@
 @property (nonatomic, weak) IBOutlet UIImageView* avatar_view;
 @property (nonatomic, weak) IBOutlet UITextField* name_field;
 @property (nonatomic, weak) IBOutlet UIView* name_view;
+@property (nonatomic, weak) IBOutlet UIButton* web_profile_button;
 
 @property (nonatomic, strong, readonly) UIImage* avatar_image;
 @property (nonatomic, strong, readonly) UIImagePickerController* picker;
@@ -73,6 +74,13 @@
                                cornerRadius:self.avatar_view.bounds.size.width].CGPath;
     [self.avatar_view.layer addSublayer:self.dark_layer];
   }
+}
+
+- (void)awakeFromNib
+{
+  [super awakeFromNib];
+  self.web_profile_button.titleLabel.adjustsFontSizeToFitWidth = YES;
+  self.web_profile_button.titleLabel.minimumScaleFactor = 0.5f;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -247,6 +255,8 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
 
 - (void)keyboardWillShow:(NSNotification*)notification
 {
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    return;
   CGFloat delta = -30.0f;
   if (![InfinitHostDevice smallScreen])
     delta -= 30.0f;
@@ -267,6 +277,8 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
 
 - (void)keyboardEntryDone
 {
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    return;
   [UIView animateWithDuration:0.2f
                         delay:0.0f
                       options:UIViewAnimationOptionCurveEaseInOut
