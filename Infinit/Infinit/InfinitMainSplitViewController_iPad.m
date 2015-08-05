@@ -240,6 +240,7 @@
 {
   _managed_files = managed_files;
   [self.recipient_controller resetView];
+  self.recipient_controller.file_count = self.managed_files.file_count;
   self.recipient_controller.managed_files = self.managed_files;
   [self.overlay_controller showController:self.recipient_controller];
 }
