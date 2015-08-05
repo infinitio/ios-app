@@ -204,7 +204,7 @@ static dispatch_once_t _first_appear = 0;
 
 - (IBAction)leftOuterTapped:(id)sender
 {
-  if (self.editing)
+  if (self.editing) // Send
   {
     NSArray* items = self.current_controller.current_selection;
     NSMutableArray* paths = [NSMutableArray array];
@@ -229,7 +229,7 @@ static dispatch_once_t _first_appear = 0;
                                method:InfinitUIMethodFiles];
     self.editing = NO;
   }
-  else
+  else // Back
   {
     UIImage* left_outer_image = nil;
     if (self.current_controller == self.folder_view_controller)
