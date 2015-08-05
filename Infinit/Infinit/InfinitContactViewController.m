@@ -78,10 +78,6 @@ static NSAttributedString* _unfavorite_title = nil;
   self.send_invite_button.imageEdgeInsets = UIEdgeInsetsMake(3.0f, -6.0f, 3.0f, 0.0f);
   self.send_invite_button.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, -5.0f);
 
-  self.left_button.titleLabel.adjustsFontSizeToFitWidth = YES;
-  self.left_button.titleLabel.minimumScaleFactor = 0.25f;
-  self.send_invite_button.titleLabel.adjustsFontSizeToFitWidth = YES;
-  self.send_invite_button.titleLabel.minimumScaleFactor = 0.25f;
   if (_invite_title == nil)
   {
     UIFont* font = [UIFont fontWithName:@"SourceSansPro-Bold" size:14.0f];
@@ -105,11 +101,20 @@ static NSAttributedString* _unfavorite_title = nil;
   }
 }
 
+- (void)awakeFromNib
+{
+  [super awakeFromNib];
+  self.left_button.titleLabel.adjustsFontSizeToFitWidth = YES;
+  self.left_button.titleLabel.minimumScaleFactor = 0.25f;
+  self.send_invite_button.titleLabel.adjustsFontSizeToFitWidth = YES;
+  self.send_invite_button.titleLabel.minimumScaleFactor = 0.25f;
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
   self.bar_width_constraint.constant = self.view.bounds.size.width - (2.0f * 45.0f);
-  [self configureView];
   [super viewWillAppear:animated];
+  [self configureView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -126,7 +131,8 @@ static NSAttributedString* _unfavorite_title = nil;
   self.navigationItem.title = self.contact.fullname;
   self.avatar_view.image =
     [self.contact.avatar infinit_circularMaskOfSize:self.avatar_view.bounds.size];
-  CGFloat send_width = self.send_invite_button.titleLabel.attributedText.size.width + 10.0f;
+  CGFloat send_width = self.send_invite_button.titleLabel.attributedText.size.width + 25.0f;
+  send_width += self.send_invite_button.imageView.bounds.size.width;
   send_width = send_width < 100.0f ? 100.0f : send_width;
   send_width = send_width > 140.0f ? 140.0f : send_width;
   self.send_size_constraint.constant = send_width;
@@ -191,7 +197,8 @@ static NSAttributedString* _unfavorite_title = nil;
   if (_button_invite_icon == nil)
     _button_invite_icon = [UIImage imageNamed:@"icon-invite-black"];
   [self.left_button setImage:_button_invite_icon forState:UIControlStateNormal];
-  CGFloat width = self.left_button.titleLabel.attributedText.size.width + 10.0f;
+  CGFloat width = self.left_button.titleLabel.attributedText.size.width + 25.0f;
+  width += self.left_button.imageView.bounds.size.width;
   width = width < 105.0f ? 105.0f : width;
   width = width > 140.0f ? 140.0f : width;
   self.left_size_constraint.constant = width;
