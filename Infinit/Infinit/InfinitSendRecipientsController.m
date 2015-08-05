@@ -1127,11 +1127,6 @@ didDeselectRowAtIndexPath:(NSIndexPath*)indexPath
     contact_ab.selected_phone_index = NSNotFound;
     contact_ab.selected_email_index = NSNotFound;
   }
-  else if ([contact isKindOfClass:InfinitContactUser.class])
-  {
-    InfinitContactUser* contact_user = (InfinitContactUser*)contact;
-    contact_user.device = nil;
-  }
   [self.search_field reloadData];
   [self reloadSearchResults];
   [self updateSendButton];
