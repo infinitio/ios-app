@@ -13,6 +13,7 @@
 
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitStateManager.h>
+#import <Gap/InfinitThreadSafeDictionary.h>
 
 #import <UIKit/UIKit.h>
 
@@ -23,11 +24,12 @@ ELLE_LOG_COMPONENT("iOS.BackgroundManager");
 
 @interface InfinitBackgroundManager () <InfinitBackgroundTaskProtocol>
 
-@property (nonatomic, readonly) NSMutableDictionary* task_map;
+@property (nonatomic, readonly) InfinitThreadSafeDictionary* task_map;
 
 @end
 
 static InfinitBackgroundManager* _instance = nil;
+static dispatch_once_t _instance_token = 0;
 
 @implementation InfinitBackgroundManager
 
@@ -38,12 +40,14 @@ static InfinitBackgroundManager* _instance = nil;
   NSCAssert(_instance == nil, @"Use sharedInstance");
   if (self = [super init])
   {
+    _task_map = [InfinitThreadSafeDictionary dictionaryWithName:@"io.Infinit.BackgroundManager"
+                                                 withNilSupport:NO];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(transactionUpdated:)
                                                  name:INFINIT_PEER_TRANSACTION_STATUS_NOTIFICATION 
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(clearModel:)
+                                             selector:@selector(clearModel)
                                                  name:INFINIT_CLEAR_MODEL_NOTIFICATION
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -61,27 +65,22 @@ static InfinitBackgroundManager* _instance = nil;
 - (void)dealloc
 {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  for (NSNumber* task_num in self.task_map)
-  {
-    UIBackgroundTaskIdentifier task = task_num.unsignedIntegerValue;
-    [[UIApplication sharedApplication] endBackgroundTask:task];
-  }
+  [self stopBackgroundTasks];
 }
 
 + (instancetype)sharedInstance
 {
-  if (_instance == nil)
+  dispatch_once(&_instance_token, ^
+  {
     _instance = [[InfinitBackgroundManager alloc] init];
+  });
   return _instance;
 }
 
 - (void)stopBackgroundTasks
 {
-  if (self.task_map != nil)
-  {
-    for (InfinitBackgroundTask* task in self.task_map.allValues)
-      [task endTask];
-  }
+  for (InfinitBackgroundTask* task in self.task_map.allValues)
+    [task endTask];
 }
 
 - (void)refreshBackgroundTasks
@@ -104,13 +103,10 @@ static InfinitBackgroundManager* _instance = nil;
   }
 }
 
-- (void)clearModel:(NSNotification*)notification
+- (void)clearModel
 {
-  for (NSNumber* task_num in self.task_map)
-  {
-    UIBackgroundTaskIdentifier task = task_num.unsignedIntegerValue;
-    [[UIApplication sharedApplication] endBackgroundTask:task];
-  }
+  [self stopBackgroundTasks];
+  _instance_token = 0;
   _instance = nil;
 }
 
@@ -178,8 +174,6 @@ static InfinitBackgroundManager* _instance = nil;
 
 - (void)addWaitTaskForTransaction:(InfinitPeerTransaction*)transaction
 {
-  if (self.task_map == nil)
-    _task_map = [NSMutableDictionary dictionary];
   if ([self.task_map objectForKey:transaction.id_])
     return;
   InfinitBackgroundTask* task = [InfinitBackgroundTask waitTaskforTransactionId:transaction.id_
@@ -190,8 +184,6 @@ static InfinitBackgroundManager* _instance = nil;
 
 - (void)addTransferTaskForTransaction:(InfinitPeerTransaction*)transaction
 {
-  if (self.task_map == nil)
-    _task_map = [NSMutableDictionary dictionary];
   if ([self.task_map objectForKey:transaction.id_])
     return;
   InfinitBackgroundTask* task =
