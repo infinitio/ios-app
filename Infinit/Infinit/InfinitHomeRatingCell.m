@@ -28,6 +28,10 @@
 {
   [super awakeFromNib];
   self.layer.shadowPath = nil;
+  self.positive_button.titleLabel.adjustsFontSizeToFitWidth = YES;
+  self.positive_button.titleLabel.minimumScaleFactor = 0.25f;
+  self.negative_button.titleLabel.adjustsFontSizeToFitWidth = YES;
+  self.negative_button.titleLabel.minimumScaleFactor = 0.25f;
   self.positive_button.layer.cornerRadius = self.positive_button.bounds.size.height / 2.0f;
   self.negative_button.layer.cornerRadius = self.negative_button.bounds.size.height / 2.0f;
   self.negative_button.layer.borderColor = [InfinitColor colorWithGray:175].CGColor;
