@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F6a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9lB-0z-aFR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F19a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9lB-0z-aFR">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -496,6 +496,7 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="BZD-yg-q6z" firstAttribute="top" secondItem="9dH-lM-NKS" secondAttribute="top" constant="36" id="04j-ep-jpH"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="nZU-c9-6fj" secondAttribute="trailing" constant="15" id="CVb-dy-eNT"/>
                             <constraint firstItem="nZU-c9-6fj" firstAttribute="top" secondItem="itA-bR-YoP" secondAttribute="bottom" constant="30" id="Fxz-bs-0AM"/>
                             <constraint firstItem="BZD-yg-q6z" firstAttribute="centerX" secondItem="r3F-ek-gH8" secondAttribute="centerX" id="MN6-15-a00"/>
                             <constraint firstAttribute="centerX" secondItem="BZD-yg-q6z" secondAttribute="centerX" id="RWr-n8-Yf5"/>
@@ -504,6 +505,7 @@
                             <constraint firstItem="itA-bR-YoP" firstAttribute="leading" secondItem="9dH-lM-NKS" secondAttribute="leading" id="cga-eE-KS3"/>
                             <constraint firstItem="BZD-yg-q6z" firstAttribute="centerY" secondItem="r3F-ek-gH8" secondAttribute="centerY" id="spD-lZ-TaA"/>
                             <constraint firstAttribute="centerX" secondItem="nZU-c9-6fj" secondAttribute="centerX" id="vnE-jS-EAz"/>
+                            <constraint firstItem="nZU-c9-6fj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="9dH-lM-NKS" secondAttribute="leading" constant="15" id="zdQ-1m-oHE"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="JjG-yq-Rq5" appends="YES" id="Wfe-Fu-uaq"/>
@@ -530,6 +532,7 @@
                         <outlet property="name_field" destination="6rL-6g-NgG" id="dEz-rp-O8A"/>
                         <outlet property="name_view" destination="itA-bR-YoP" id="K7T-1O-oVt"/>
                         <outlet property="ok_button" destination="gce-DQ-YM6" id="sd5-om-sOH"/>
+                        <outlet property="web_profile_button" destination="nZU-c9-6fj" id="edS-lt-6S7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9LB-mq-E5U" userLabel="First Responder" sceneMemberID="firstResponder"/>

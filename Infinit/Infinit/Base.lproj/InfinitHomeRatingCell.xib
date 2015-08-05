@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14E11f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F19a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <customFonts key="customFonts">
+        <mutableArray key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
+        </mutableArray>
         <mutableArray key="SourceSansPro-Bold.otf">
             <string>SourceSansPro-Bold</string>
             <string>SourceSansPro-Bold</string>
@@ -56,6 +59,7 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="omG-7W-bdf" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="19" id="2aw-zH-UqK"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ctL-FV-Za6" secondAttribute="trailing" constant="15" id="FWB-ub-wzG"/>
                 <constraint firstItem="qyT-Z9-vQF" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="JH7-gr-iRm"/>
                 <constraint firstAttribute="bottom" secondItem="qyT-Z9-vQF" secondAttribute="bottom" constant="16" id="WXm-9Z-tMv"/>
                 <constraint firstItem="omG-7W-bdf" firstAttribute="leading" secondItem="qyT-Z9-vQF" secondAttribute="leading" id="ZGR-V3-w7i"/>
