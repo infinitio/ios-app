@@ -72,6 +72,11 @@ static NSString* _cell_id = @"invitation_overlay_cell_id";
     self.whatsapp_button.hidden = YES;
     self.table_bottom_constraint.constant = -(self.whatsapp_button.bounds.size.height + 15.0f);
   }
+  else
+  {
+    self.whatsapp_button.hidden = NO;
+    self.table_bottom_constraint.constant = 0.0f;
+  }
   [self setButtonsEnabled:YES];
 }
 
