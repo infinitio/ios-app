@@ -357,11 +357,12 @@ static CGFloat _button_height = 45.0f;
       if (self.transaction.from_device && self.expanded)
         [self setFilesViewHidden:NO];
       break;
+
     case gap_transaction_waiting_accept:
       [self setButtonsHidden:!(self.expanded || self.transaction.receivable)];
       [self setStatusViewHidden:!self.expanded];
       self.top_line.hidden = !self.expanded;
-      if (self.transaction.receivable)
+      if (self.transaction.receivable && !self.transaction.recipient_device.length)
       {
         [self setAcceptRejectButtons];
         if (self.expanded)
