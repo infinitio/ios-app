@@ -72,10 +72,14 @@
   static dispatch_once_t _mutablearray_load_token = 0;
   dispatch_once(&_mutablearray_load_token, ^
   {
-    swizzle_class_selector(NSClassFromString(@"__NSArrayM"), @selector(addObject:), @selector(infinit_addObject:));
-    swizzle_class_selector(NSClassFromString(@"__NSArrayM"),
+    Class class = NSClassFromString(@"__NSArrayM");
+    swizzle_class_selector(class, @selector(addObject:), @selector(infinit_addObject:));
+    swizzle_class_selector(class,
                            @selector(insertObject:atIndex:),
                            @selector(infinit_insertObject:atIndex:));
+    swizzle_class_selector(class,
+                           @selector(removeObjectAtIndex:),
+                           @selector(infinit_removeObjectAtIndex:));
   });
 }
 
@@ -85,13 +89,17 @@
   [self infinit_addObject:anObject];
 }
 
-#define VNAME(x) [NSString stringWithUTF8String:#x]
-
 - (void)infinit_insertObject:(id)anObject
                      atIndex:(NSUInteger)index
 {
   assert(anObject != nil);
   [self infinit_insertObject:anObject atIndex:index];
+}
+
+- (void)infinit_removeObjectAtIndex:(NSUInteger)index
+{
+  assert(index < self.count);
+  [self infinit_removeObjectAtIndex:index];
 }
 
 @end
