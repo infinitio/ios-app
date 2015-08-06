@@ -145,7 +145,6 @@ static NSString* _cell_id = @"invitation_overlay_cell_id";
   NSIndexPath* index =
     [self.table_view indexPathForRowAtPoint:[sender convertPoint:CGPointZero
                                                           toView:self.table_view]];
-  NSLog(@"xxx index: %u", index.row);
   InfinitInvitationOverlayTableViewCell* cell =
     (InfinitInvitationOverlayTableViewCell*)[self.table_view cellForRowAtIndexPath:index];
   InfinitMessageMethod method = InfinitMessageNative;
