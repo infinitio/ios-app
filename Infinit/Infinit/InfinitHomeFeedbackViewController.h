@@ -12,8 +12,7 @@
 
 @interface InfinitHomeFeedbackViewController : UINavigationController
 
-@property (nonatomic, assign) id<InfinitHomeFeedbackViewProtocol,
-                                 UINavigationControllerDelegate> delegate;
+@property (nonatomic, weak) id <InfinitHomeFeedbackViewProtocol> caller_delegate;
 
 @end
 

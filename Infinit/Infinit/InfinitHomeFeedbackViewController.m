@@ -97,8 +97,8 @@ static NSString* _feedback_placeholder = nil;
 {
   [self dismissKeyboard];
   [self dismissViewControllerAnimated:YES completion:nil];
-  if (self.delegate)
-    [self.delegate feedbackViewControllerDidHide:self];
+  if (self.caller_delegate)
+    [self.caller_delegate feedbackViewControllerDidHide:self];
 }
 
 - (IBAction)sendButtonTapped:(id)sender
@@ -112,20 +112,23 @@ static NSString* _feedback_placeholder = nil;
   [[InfinitCrashReporter sharedInstance] reportAProblem:self.text_view.text file:@""];
 }
 
-- (void)alertViewCancel:(UIAlertView*)alertView
+- (void)handleDone
 {
   [self dismissKeyboard];
   [self dismissViewControllerAnimated:YES completion:nil];
   self.text_view.text = _feedback_placeholder;
-  if (self.delegate)
-    [self.delegate feedbackViewControllerDidHide:self];
+  if (self.caller_delegate)
+    [self.caller_delegate feedbackViewControllerDidHide:self];
+}
+
+- (void)alertViewCancel:(UIAlertView*)alertView
+{
+  [self handleDone];
 }
 
 - (void)alertView:(UIAlertView*)alertView
 clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-  [self dismissKeyboard];
-  [self dismissViewControllerAnimated:YES completion:nil];
-  self.text_view.text = _feedback_placeholder;
+  [self handleDone];
 }
 @end
