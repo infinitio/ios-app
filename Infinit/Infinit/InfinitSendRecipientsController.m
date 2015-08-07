@@ -336,22 +336,16 @@ static UIImage* _send_button_image = nil;
 
 - (InfinitManagedFiles*)managed_files
 {
-  @synchronized(_managed_files)
-  {
-    return _managed_files;
-  }
+  return _managed_files;
 }
 
 - (void)setManaged_files:(InfinitManagedFiles*)managed_files
 {
-  @synchronized(_managed_files)
-  {
-    _managed_files = managed_files;
-    if (!managed_files)
-      _file_count = 0;
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-      [self updateSendButton];
-  }
+  _managed_files = managed_files;
+  if (!managed_files)
+    _file_count = 0;
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    [self updateSendButton];
 }
 
 - (void)resetView
