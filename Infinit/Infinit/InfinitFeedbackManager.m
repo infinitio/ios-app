@@ -111,7 +111,7 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
     UINib* nib = [UINib nibWithNibName:NSStringFromClass(InfinitHomeFeedbackViewController.class)
                                 bundle:nil];
     _feedback_controller = [[nib instantiateWithOwner:self options:nil] firstObject];
-    _feedback_controller.delegate = self;
+    _feedback_controller.caller_delegate = self;
   }
   return _feedback_controller;
 }
