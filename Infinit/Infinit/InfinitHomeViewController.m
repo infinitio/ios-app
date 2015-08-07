@@ -1483,6 +1483,7 @@ openFileTapped:(NSUInteger)file_index
                                   bundle:nil];
       InfinitHomeFeedbackViewController* feedback_controller =
         [[nib instantiateWithOwner:self options:nil] firstObject];
+      feedback_controller.caller_delegate = nil;
       [self presentViewController:feedback_controller animated:YES completion:nil];
       break;
     }
