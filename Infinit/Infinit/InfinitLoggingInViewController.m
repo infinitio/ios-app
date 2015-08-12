@@ -16,6 +16,11 @@
 
 @implementation InfinitLoggingInViewController
 
+- (BOOL)shouldAutorotate
+{
+  return YES;
+}
+
 - (void)viewDidLoad
 {
   [super viewDidLoad];
@@ -29,7 +34,30 @@
 - (void)viewWillAppear:(BOOL)animated
 {
   [[UIApplication sharedApplication] setStatusBarHidden:NO];
-  [super viewWillAppear:animated];
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+  {
+    [super viewWillAppear:NO];
+    [UIView setAnimationsEnabled:NO];
+    [[UIDevice currentDevice] setValue:[NSNumber numberWithInt:UIDeviceOrientationPortrait]
+                                forKey:@"orientation"];
+  }
+  else
+  {
+    [super viewWillAppear:animated];
+  }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+  {
+    [super viewDidAppear:NO];
+    [UIView setAnimationsEnabled:YES];
+  }
+  else
+  {
+    [super viewDidAppear:animated];
+  }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
