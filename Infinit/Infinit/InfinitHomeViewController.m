@@ -30,11 +30,11 @@
 #import "InfinitUploadThumbnailManager.h"
 
 #import <Gap/InfinitColor.h>
-#import <Gap/InfinitDataSize.h>
 #import <Gap/InfinitDeviceManager.h>
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitTemporaryFileManager.h>
 #import <Gap/InfinitUserManager.h>
+#import <Gap/NSNumber+DataSize.h>
 
 #import "UIImage+Rounded.h"
 
@@ -1246,7 +1246,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
       title = NSLocalizedString(@"Not enough free space!", nil);
       message =
       [NSString stringWithFormat:NSLocalizedString(@"You need %@ of space to accept this transfer.", nil),
-       [InfinitDataSize fileSizeStringFrom:sender.transaction.size]];
+       sender.transaction.size.infinit_fileSize];
     }
     else
     {

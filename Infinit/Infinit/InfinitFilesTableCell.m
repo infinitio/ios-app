@@ -11,8 +11,8 @@
 #import "UIImage+Rounded.h"
 
 #import <Gap/InfinitColor.h>
-#import <Gap/InfinitDataSize.h>
 #import <Gap/InfinitUserManager.h>
+#import <Gap/NSNumber+DataSize.h>
 
 @interface InfinitFilesTableCell ()
 
@@ -42,15 +42,14 @@
   }
   self.icon_view.image = [file.thumbnail infinit_roundedMaskOfSize:self.icon_view.bounds.size
                                                       cornerRadius:3.0f];
-  self.info_label.text =
-    [NSString stringWithFormat:@"%@", [InfinitDataSize fileSizeStringFrom:file.size]];
+  self.info_label.text = [NSString stringWithFormat:@"%@", file.size.infinit_fileSize];
 }
 
 - (void)configureCellWithFolder:(InfinitFolderModel*)folder
 {
   self.name_label.text = folder.name;
-  NSString* file_size = [InfinitDataSize fileSizeStringFrom:folder.size];
-  self.info_label.text = [NSString stringWithFormat:@"%@ – %@", folder.sender_name, file_size];
+  self.info_label.text =
+    [NSString stringWithFormat:@"%@ – %@", folder.sender_name, folder.size.infinit_fileSize];
   self.icon_view.image = [folder.thumbnail infinit_roundedMaskOfSize:self.icon_view.bounds.size
                                                         cornerRadius:3.0f];
   self.duration_label.hidden = YES;

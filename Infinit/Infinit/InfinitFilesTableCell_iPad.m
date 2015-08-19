@@ -10,7 +10,7 @@
 
 #import "UIImage+Rounded.h"
 
-#import <Gap/InfinitDataSize.h>
+#import <Gap/NSNumber+DataSize.h>
 
 @implementation InfinitFilesTableCell_iPad
 
@@ -36,7 +36,7 @@
   self.thumbnail_view.image =
     [file.thumbnail infinit_roundedMaskOfSize:self.thumbnail_view.bounds.size cornerRadius:3.0f];
   self.filename_label.text = file.name;
-  self.info_label.text = [InfinitDataSize fileSizeStringFrom:file.size];
+  self.info_label.text = file.size.infinit_fileSize;
 }
 
 - (void)configureForFolder:(InfinitFolderModel*)folder
@@ -44,8 +44,8 @@
   self.thumbnail_view.image =
     [folder.thumbnail infinit_roundedMaskOfSize:self.thumbnail_view.bounds.size cornerRadius:3.0f];
   self.filename_label.text = folder.name;
-  NSString* size_str = [InfinitDataSize fileSizeStringFrom:folder.size];
-  NSString* info = [NSString stringWithFormat:@"%@ – %@", folder.sender_name, size_str];
+  NSString* info =
+    [NSString stringWithFormat:@"%@ – %@", folder.sender_name, folder.size.infinit_fileSize];
   self.info_label.text = info;
   if (folder.files.count > 1)
     self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;

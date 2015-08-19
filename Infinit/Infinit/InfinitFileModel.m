@@ -8,7 +8,7 @@
 
 #import "InfinitFileModel.h"
 
-#import <Gap/InfinitDataSize.h>
+#import <Gap/NSNumber+DataSize.h>
 
 @import AVFoundation;
 
@@ -73,8 +73,7 @@
 
 - (NSString*)description
 {
-  return [NSString stringWithFormat:@"FileModel (%@): %@",
-          self.name, [InfinitDataSize fileSizeStringFrom:self.size]];
+  return [NSString stringWithFormat:@"FileModel (%@): %@", self.name, self.size.infinit_fileSize];
 }
 
 - (BOOL)isEqual:(id)object

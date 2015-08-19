@@ -18,9 +18,9 @@
 #import "InfinitUploadThumbnailManager.h"
 
 #import <Gap/InfinitColor.h>
-#import <Gap/InfinitDataSize.h>
 #import <Gap/InfinitDeviceManager.h>
 #import <Gap/InfinitTime.h>
+#import <Gap/NSNumber+DataSize.h>
 
 #import "UIImage+Rounded.h"
 
@@ -276,7 +276,7 @@ static CGFloat _button_height = 45.0f;
   if (self.transaction.size.unsignedIntegerValue == 0)
     self.size_label.text = @"";
   else
-    self.size_label.text = [InfinitDataSize fileSizeStringFrom:self.transaction.size];
+    self.size_label.text = self.transaction.size.infinit_fileSize;
   [self setProgress];
 }
 

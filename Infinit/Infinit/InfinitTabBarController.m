@@ -81,7 +81,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   return self.selectedViewController.shouldAutorotate;
 }
 
-- (NSUInteger)supportedInterfaceOrientations
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
   return self.selectedViewController.supportedInterfaceOrientations;
 }
