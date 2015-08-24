@@ -177,6 +177,8 @@ static dispatch_once_t _got_access_token = 0;
 
 - (InfinitContactAddressBook*)contactForUser:(InfinitUser*)user
 {
+  if (ABAddressBookGetAuthorizationStatus() != kABAuthorizationStatusAuthorized)
+    return nil;
   if (!self.contact_cache)
     [self allContacts];
   NSString* email = nil;
