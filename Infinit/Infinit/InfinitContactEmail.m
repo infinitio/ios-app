@@ -8,6 +8,8 @@
 
 #import "InfinitContactEmail.h"
 
+#import <Gap/NSString+email.h>
+
 @implementation InfinitContactEmail
 
 #pragma mark - Init
@@ -55,7 +57,7 @@
 
 + (NSString*)trimEmail:(NSString*)string
 {
-  return [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]].lowercaseString;
+  return string.infinit_cleanEmail;
 }
 
 @end
