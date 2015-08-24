@@ -291,7 +291,7 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
 - (void)deleteFileAtIndex:(NSInteger)index
 {
   NSError* error = nil;
-  if (self.files.count >= index)
+  if (index >= self.files.count)
   {
     ELLE_WARN("%s: unable to remove files, index out of bounds", self.description.UTF8String);
     return;
