@@ -18,6 +18,7 @@
 #import "InfinitFilesOnboardingManager.h"
 #import "InfinitLocalNotificationManager.h"
 #import "InfinitMetricsManager.h"
+#import "InfinitQuotaManager.h"
 #import "InfinitRatingManager.h"
 #import "InfinitWelcomeOnboardingController.h"
 #import "InfinitWormhole.h"
@@ -168,6 +169,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 
   [InfinitConnectionManager sharedInstance];
   [InfinitStateManager startState];
+  [InfinitQuotaManager start];
 
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(willLogout)
@@ -395,6 +397,9 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   sourceApplication:(NSString*)sourceApplication
          annotation:(id)annotation
 {
+#ifdef DEBUG
+  NSLog(@"Opened with URL: %@", url);
+#endif
   [Adjust appWillOpenUrl:url];
   BOOL facebook_handled = [[FBSDKApplicationDelegate sharedInstance] application:application
                                                                          openURL:url
