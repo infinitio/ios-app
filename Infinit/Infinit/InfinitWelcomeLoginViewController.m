@@ -111,25 +111,26 @@
   {
     if (weak_self == nil)
       return;
-    InfinitWelcomeLoginViewController* strong_self = weak_self;
-    [strong_self.activity stopAnimating];
-    strong_self.login_button.hidden = NO;
+    [weak_self.activity stopAnimating];
+    weak_self.login_button.hidden = NO;
     if (result.success)
     {
-      [strong_self.delegate welcomeLoginDone:strong_self];
+      [weak_self.delegate welcomeLoginDone:weak_self];
       [InfinitApplicationSettings sharedInstance].login_method = InfinitLoginEmail;
     }
     else
     {
-      [strong_self shakeField:strong_self.email_field andLine:strong_self.email_line];
-      strong_self.email_line.backgroundColor = self.error_color;
-      [strong_self shakeField:strong_self.password_field andLine:strong_self.password_line];
+      [weak_self shakeField:weak_self.email_field andLine:weak_self.email_line];
+      weak_self.email_line.backgroundColor = self.error_color;
+      [weak_self shakeField:weak_self.password_field andLine:weak_self.password_line];
       self.password_line.backgroundColor = self.error_color;
-      [strong_self setErrorText:[strong_self.delegate errorStringForGapStatus:result.status]];
+      [weak_self setErrorText:[weak_self.delegate errorStringForGapStatus:result.status]];
       if (result.status == gap_email_password_dont_match)
-        strong_self.forgot_button.hidden = NO;
+        weak_self.forgot_button.hidden = NO;
+      else if (result.status == gap_email_not_confirmed)
+        [weak_self showEmailNotConfirmedAlert];
     }
-    [strong_self setInputsEnabled:YES];
+    [weak_self setInputsEnabled:YES];
   }];
 }
 
@@ -167,6 +168,19 @@
 - (BOOL)passwordGood
 {
   return self.password_field.text.length >= 3;
+}
+
+- (void)showEmailNotConfirmedAlert
+{
+  NSString* title = NSLocalizedString(@"Check your email!", nil);
+  NSString* message =
+    NSLocalizedString(@"You need to confirm your email address before you can login. Check your inbox for an email with instructions.", nil);
+  UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
+                                                  message:message
+                                                 delegate:nil
+                                        cancelButtonTitle:NSLocalizedString(@"OK", nil) 
+                                        otherButtonTitles:nil];
+  [alert show];
 }
 
 - (void)setInputsEnabled:(BOOL)enabled
