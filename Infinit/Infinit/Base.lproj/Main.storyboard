@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F19a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9lB-0z-aFR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9lB-0z-aFR">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -26,6 +26,7 @@
             <string>HelveticaNeue-Medium</string>
             <string>HelveticaNeue</string>
             <string>HelveticaNeue-Medium</string>
+            <string>HelveticaNeue</string>
             <string>HelveticaNeue</string>
             <string>HelveticaNeue</string>
             <string>HelveticaNeue</string>
@@ -450,7 +451,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="itA-bR-YoP">
-                                <rect key="frame" x="0.0" y="150" width="600" height="50"/>
+                                <rect key="frame" x="0.0" y="203" width="600" height="50"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-settings-fullname" translatesAutoresizingMaskIntoConstraints="NO" id="RgW-5p-vzS">
                                         <rect key="frame" x="30" y="15" width="17" height="20"/>
@@ -481,7 +482,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nZU-c9-6fj">
-                                <rect key="frame" x="221" y="230" width="159" height="32"/>
+                                <rect key="frame" x="221" y="283" width="159" height="32"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <state key="normal" title="Go to online profile...">
                                     <color key="titleColor" red="0.16862745098039217" green="0.74509803921568629" blue="0.74117647058823533" alpha="1" colorSpace="calibratedRGB"/>
@@ -491,6 +492,20 @@
                                     <action selector="webProfileTap:" destination="UIZ-TQ-cnt" eventType="touchUpInside" id="WYB-Cb-vEz"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Blq-ZX-sin">
+                                <rect key="frame" x="221" y="141" width="159" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="q6z-FK-Wzr"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <state key="normal" title="Plan">
+                                    <color key="titleColor" red="0.16862745100000001" green="0.74509803919999995" blue="0.74117647060000003" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="webProfileTap:" destination="UIZ-TQ-cnt" eventType="touchUpInside" id="KEK-nk-dCK"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95294117647058818" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
@@ -498,11 +513,15 @@
                             <constraint firstItem="BZD-yg-q6z" firstAttribute="top" secondItem="9dH-lM-NKS" secondAttribute="top" constant="36" id="04j-ep-jpH"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="nZU-c9-6fj" secondAttribute="trailing" constant="15" id="CVb-dy-eNT"/>
                             <constraint firstItem="nZU-c9-6fj" firstAttribute="top" secondItem="itA-bR-YoP" secondAttribute="bottom" constant="30" id="Fxz-bs-0AM"/>
+                            <constraint firstItem="Blq-ZX-sin" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="9dH-lM-NKS" secondAttribute="leading" constant="10" id="Ida-DV-zys"/>
                             <constraint firstItem="BZD-yg-q6z" firstAttribute="centerX" secondItem="r3F-ek-gH8" secondAttribute="centerX" id="MN6-15-a00"/>
                             <constraint firstAttribute="centerX" secondItem="BZD-yg-q6z" secondAttribute="centerX" id="RWr-n8-Yf5"/>
+                            <constraint firstAttribute="centerX" secondItem="Blq-ZX-sin" secondAttribute="centerX" id="Rva-gM-2nz"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Blq-ZX-sin" secondAttribute="trailing" constant="20" id="S6q-aa-MFg"/>
                             <constraint firstAttribute="trailing" secondItem="itA-bR-YoP" secondAttribute="trailing" id="T2e-jN-38Q"/>
-                            <constraint firstItem="itA-bR-YoP" firstAttribute="top" secondItem="BZD-yg-q6z" secondAttribute="bottom" constant="39" id="VjZ-n5-Hvb"/>
                             <constraint firstItem="itA-bR-YoP" firstAttribute="leading" secondItem="9dH-lM-NKS" secondAttribute="leading" id="cga-eE-KS3"/>
+                            <constraint firstItem="itA-bR-YoP" firstAttribute="top" secondItem="Blq-ZX-sin" secondAttribute="bottom" constant="30" id="fy8-Ww-ugf"/>
+                            <constraint firstItem="Blq-ZX-sin" firstAttribute="top" secondItem="BZD-yg-q6z" secondAttribute="bottom" constant="30" id="qt1-NY-l0K"/>
                             <constraint firstItem="BZD-yg-q6z" firstAttribute="centerY" secondItem="r3F-ek-gH8" secondAttribute="centerY" id="spD-lZ-TaA"/>
                             <constraint firstAttribute="centerX" secondItem="nZU-c9-6fj" secondAttribute="centerX" id="vnE-jS-EAz"/>
                             <constraint firstItem="nZU-c9-6fj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="9dH-lM-NKS" secondAttribute="leading" constant="15" id="zdQ-1m-oHE"/>
@@ -532,6 +551,7 @@
                         <outlet property="name_field" destination="6rL-6g-NgG" id="dEz-rp-O8A"/>
                         <outlet property="name_view" destination="itA-bR-YoP" id="K7T-1O-oVt"/>
                         <outlet property="ok_button" destination="gce-DQ-YM6" id="sd5-om-sOH"/>
+                        <outlet property="plan_button" destination="Blq-ZX-sin" id="Ej5-rx-xCT"/>
                         <outlet property="web_profile_button" destination="nZU-c9-6fj" id="edS-lt-6S7"/>
                     </connections>
                 </viewController>
