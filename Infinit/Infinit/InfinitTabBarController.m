@@ -64,15 +64,15 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 @property (nonatomic, strong) InfinitExtensionPopoverController* extension_popover;
 @property (nonatomic, readonly) InfinitManagedFiles* managed_files;
 
+@property (nonatomic, readonly) NSString* status_bar_error_style_id;
+@property (nonatomic, readonly) NSString* status_bar_good_style_id;
+@property (nonatomic, readonly) NSString* status_bar_warning_style_id;
+
 @end
 
+static InfinitTabBarController* _current_instance = nil;
+
 @implementation InfinitTabBarController
-{
-@private
-  NSString* _status_bar_error_style_id;
-  NSString* _status_bar_good_style_id;
-  NSString* _status_bar_warning_style_id;
-}
 
 #pragma mark - Rotation
 
@@ -141,6 +141,8 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
   }
   [super viewDidLoad];
 
+  _current_instance = self;
+
   UIViewController* home_controller =
     [self.storyboard instantiateViewControllerWithIdentifier:@"home_navigation_controller_id"];
   UIViewController* files_controller =
@@ -157,7 +159,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
                            contacts_controller,
                            settings_controller];
 
-  [JDStatusBarNotification addStyleNamed:_status_bar_error_style_id
+  [JDStatusBarNotification addStyleNamed:self.status_bar_error_style_id
                                  prepare:^JDStatusBarStyle* (JDStatusBarStyle* style)
    {
      style.barColor = [InfinitColor colorWithRed:255 green:63 blue:58];
@@ -167,7 +169,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
      return style;
    }];
 
-  [JDStatusBarNotification addStyleNamed:_status_bar_good_style_id
+  [JDStatusBarNotification addStyleNamed:self.status_bar_good_style_id
                                  prepare:^JDStatusBarStyle* (JDStatusBarStyle* style)
    {
      style.barColor = [InfinitColor colorWithRed:43 green:190 blue:189];
@@ -177,7 +179,7 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
      return style;
    }];
 
-  [JDStatusBarNotification addStyleNamed:_status_bar_warning_style_id
+  [JDStatusBarNotification addStyleNamed:self.status_bar_warning_style_id
                                  prepare:^JDStatusBarStyle* (JDStatusBarStyle* style)
    {
      style.barColor = [InfinitColor colorWithRed:245 green:166 blue:35];
@@ -316,6 +318,11 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 
 #pragma mark - General
 
++ (InfinitTabBarController*)currentTabBarController
+{
+  return _current_instance;
+}
+
 - (void)lastSelectedIndex
 {
   self.selectedIndex = _last_index;
@@ -385,6 +392,12 @@ typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
     [((UIViewController*)sender).navigationController popToRootViewControllerAnimated:YES];
   else
     self.selectedIndex = InfinitTabBarIndexHome;
+}
+
+- (void)showContactsScreen
+{
+  [[UIApplication sharedApplication] setStatusBarHidden:NO];
+  self.selectedIndex = InfinitTabBarIndexContacts;
 }
 
 - (void)showFilesScreen

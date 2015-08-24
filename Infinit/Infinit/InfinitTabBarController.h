@@ -13,12 +13,15 @@
 
 @interface InfinitTabBarController : UITabBarController
 
++ (InfinitTabBarController*)currentTabBarController;
+
 - (void)lastSelectedIndex;
 - (void)setTabBarHidden:(BOOL)hidden
                animated:(BOOL)animate;
 - (void)setTabBarHidden:(BOOL)hidden
                animated:(BOOL)animate 
               withDelay:(NSTimeInterval)delay;
+- (void)showContactsScreen;
 - (void)showFilesScreen;
 - (void)showMainScreen:(id)sender;
 - (void)showSendScreenWithContact:(InfinitContact*)contact;
