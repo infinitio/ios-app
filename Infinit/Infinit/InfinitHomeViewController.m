@@ -765,6 +765,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
       case gap_transaction_connecting:
       case gap_transaction_transferring:
       case gap_transaction_paused:
+      case gap_transaction_cloud_buffered:
         if (transaction.to_device && expanded)
         {
           height += (transaction.files.count > 3 ? 2 * file_h : file_h) + status_h + button_h;
@@ -777,7 +778,6 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
         }
         break;
 
-      case gap_transaction_cloud_buffered:
       case gap_transaction_rejected:
       case gap_transaction_finished:
       case gap_transaction_failed:
