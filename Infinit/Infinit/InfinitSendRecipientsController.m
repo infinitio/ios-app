@@ -22,6 +22,7 @@
 #import "InfinitMessagingManager.h"
 #import "InfinitMetricsManager.h"
 #import "InfinitOverlayViewController.h"
+#import "InfinitQuotaManager.h"
 #import "InfinitSendContactCell.h"
 #import "InfinitSendDeviceCell.h"
 #import "InfinitSendEmailCell.h"
@@ -36,9 +37,10 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
-#import <Gap/InfinitExternalAccountsManager.h>
+#import <Gap/InfinitAccountManager.h>
 #import <Gap/InfinitColor.h>
 #import <Gap/InfinitDeviceManager.h>
+#import <Gap/InfinitExternalAccountsManager.h>
 #import <Gap/InfinitPeerTransactionManager.h>
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitTemporaryFileManager.h>
@@ -1041,6 +1043,57 @@ shouldHighlightRowAtIndexPath:(NSIndexPath*)indexPath
   return YES;
 }
 
+- (void)sendToSelfBlocked
+{
+  [InfinitQuotaManager showSendToSelfLimitOverlay];
+  [[InfinitStateManager sharedInstance] sendMetricSendToSelfLimit];
+}
+
+- (NSIndexPath*)tableView:(UITableView*)tableView
+ willSelectRowAtIndexPath:(NSIndexPath*)indexPath
+{
+  InfinitAccountManager* manager = [InfinitAccountManager sharedInstance];
+  BOOL reached_self_quota =
+    manager.send_to_self_quota && !manager.send_to_self_quota.remaining.unsignedIntegerValue;
+  if (self.email_entered)
+  {
+    if (reached_self_quota)
+    {
+      if ([[InfinitExternalAccountsManager sharedInstance] userEmail:_last_search])
+      {
+        [self sendToSelfBlocked];
+        return nil;
+      }
+    }
+  }
+  else if (indexPath.section == InfinitSendRecipientsSectionSelf)
+  {
+    if (reached_self_quota)
+    {
+      [self sendToSelfBlocked];
+      return nil;
+    }
+
+  }
+  else if (indexPath.section == InfinitSendRecipientsSectionContacts)
+  {
+    InfinitContactAddressBook* contact =
+      (InfinitContactAddressBook*)self.contact_results[indexPath.row];
+    if (reached_self_quota)
+    {
+      for (NSString* email in contact.emails)
+      {
+        if ([[InfinitExternalAccountsManager sharedInstance] userEmail:email])
+        {
+          [self sendToSelfBlocked];
+          return nil;
+        }
+      }
+    }
+  }
+  return indexPath;
+}
+
 - (void)tableView:(UITableView*)tableView
 didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
@@ -1702,8 +1755,8 @@ didDeleteTokenAtIndex:(NSUInteger)index
     NSString* the_files = transaction.files.count == 1 ? NSLocalizedString(@"the file", nil)
                                                        : NSLocalizedString(@"the files", nil);
     NSString* message =
-      [NSString stringWithFormat:NSLocalizedString(@"Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@\n\nDon't forget to enter the following download code: %@", nil),
-     transaction.files.count, files, the_files, recipient_user.ghost_invitation_url, recipient_user.ghost_code];
+      [NSString stringWithFormat:NSLocalizedString(@"Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@", nil),
+     transaction.files.count, files, the_files, recipient_user.ghost_invitation_url];
     [self removeInvitationOverlay];
     if (self.current_message_recipient.method == InfinitMessageNative &&
         UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
