@@ -18,10 +18,8 @@
 #import "InfinitHostDevice.h"
 #import "InfinitRatingManager.h"
 #import "InfinitWelcomeAvatarViewController.h"
-#import "InfinitWelcomeCodeViewController.h"
 #import "InfinitWelcomeEmailViewController.h"
 #import "InfinitWelcomeFacebookUser.h"
-#import "InfinitWelcomeInvitedViewController.h"
 #import "InfinitWelcomeLandingViewController.h"
 #import "InfinitWelcomeLastStepViewController.h"
 #import "InfinitWelcomeLoginViewController.h"
@@ -38,9 +36,7 @@
 #import <Gap/NSString+email.h>
 
 @interface InfinitWelcomeViewController () <InfinitWelcomeAvatarProtocol,
-                                            InfinitWelcomeCodeProtocol,
                                             InfinitWelcomeEmailProtocol,
-                                            InfinitWelcomeInvitedProtocol,
                                             InfinitWelcomeLandingProtocol,
                                             InfinitWelcomeLastStepProtocol,
                                             InfinitWelcomeLoginProtocol,
@@ -53,9 +49,7 @@
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* top_logo_constraint;
 
 @property (nonatomic, strong) InfinitWelcomeAvatarViewController* avatar_controller;
-@property (nonatomic, strong) InfinitWelcomeCodeViewController* code_controller;
 @property (nonatomic, strong) InfinitWelcomeEmailViewController* email_controller;
-@property (nonatomic, strong) InfinitWelcomeInvitedViewController* invited_controller;
 @property (nonatomic, strong) InfinitWelcomeLandingViewController* landing_controller;
 @property (nonatomic, strong) InfinitWelcomeLastStepViewController* last_step_controller;
 @property (nonatomic, strong) InfinitWelcomeLoginViewController* login_controller;
@@ -72,9 +66,7 @@
 @end
 
 static dispatch_once_t _avatar_token = 0;
-static dispatch_once_t _code_token = 0;
 static dispatch_once_t _email_token = 0;
-static dispatch_once_t _invited_token = 0;
 static dispatch_once_t _landing_token = 0;
 static dispatch_once_t _last_step_token = 0;
 static dispatch_once_t _login_token = 0;
@@ -85,9 +77,7 @@ static dispatch_once_t _password_token = 0;
 - (void)dealloc
 {
   _avatar_token = 0;
-  _code_token = 0;
   _email_token = 0;
-  _invited_token = 0;
   _landing_token = 0;
   _last_step_token = 0;
   _login_token = 0;
@@ -102,20 +92,10 @@ static dispatch_once_t _password_token = 0;
     _avatar_token = 0;
     _avatar_controller = nil;
   }
-  if (self.current_controller != _code_controller)
-  {
-    _code_token = 0;
-    _code_controller = nil;
-  }
   if (self.current_controller != _email_controller)
   {
     _email_token = 0;
     _email_controller = nil;
-  }
-  if (self.current_controller != _invited_controller)
-  {
-    _invited_token = 0;
-    _invited_controller = nil;
   }
   if (self.current_controller != _landing_controller)
   {
@@ -212,16 +192,16 @@ static dispatch_once_t _password_token = 0;
   {
     if (!weak_self)
       return;
-    InfinitWelcomeViewController* strong_self = weak_self;
     if (!error && !result.isCancelled)
     {
-      [strong_self fetchFacebookMeData];
+      [weak_self fetchFacebookMeData];
       return;
     }
     dispatch_async(dispatch_get_main_queue(), ^
     {
-      InfinitWelcomeViewController* strong_self = weak_self;
-      [strong_self.current_controller resetView];
+      if (!weak_self)
+        return;
+      [weak_self.current_controller resetView];
       NSString* title = NSLocalizedString(@"Unable to login with Facebook", nil);
       NSString* message = nil;
       if (error)
@@ -263,12 +243,8 @@ static dispatch_once_t _password_token = 0;
     _password = nil;
     _avatar_token = 0;
     _avatar_controller = nil;
-    _code_token = 0;
-    _code_controller = nil;
     _email_token = 0;
     _email_controller = nil;
-    _invited_token = 0;
-    _invited_controller = nil;
     _landing_token = 0;
     _landing_controller = nil;
     _last_step_token = 0;
@@ -384,8 +360,7 @@ static dispatch_once_t _password_token = 0;
   if (self.facebook_user)
   {
     self.facebook_user.email = email;
-    if (![InfinitGhostCodeManager sharedInstance].code_set)
-      [self showViewController:self.invited_controller animated:YES reverse:NO];
+    [self facebookConnect];
   }
   else
   {
@@ -397,19 +372,14 @@ static dispatch_once_t _password_token = 0;
       __weak InfinitWelcomeAbstractViewController* view_controller = nil;
       switch (status)
       {
-        case gap_account_status_ghost:
-          view_controller = self.last_step_controller;
-          break;
         case gap_account_status_registered:
           view_controller = self.password_controller;
           break;
 
         case gap_account_status_new:
+          case gap_account_status_ghost:
         default:
-          if ([InfinitGhostCodeManager sharedInstance].code_set)
             view_controller = self.last_step_controller;
-          else
-            view_controller = self.invited_controller;
           break;
       }
       [self.email_controller gotEmailAccountType];
@@ -424,43 +394,6 @@ static dispatch_once_t _password_token = 0;
   [self openFacebookSession];
 }
 
-#pragma mark - Invitation Protocol
-
-- (void)welcomeInvited:(InfinitWelcomeInvitedViewController*)sender
-{
-  [self showViewController:self.code_controller animated:YES reverse:NO];
-}
-
-- (void)welcomeNotInvited:(InfinitWelcomeInvitedViewController*)sender
-{
-  if (self.facebook_user)
-  {
-    [self.invited_controller facebookRegister];
-    [self facebookConnect];
-  }
-  else
-  {
-    [self showViewController:self.last_step_controller animated:YES reverse:NO];
-  }
-}
-
-#pragma mark - Code Protocol
-
-- (void)welcomeCode:(InfinitWelcomeCodeViewController*)sender
-       doneWithCode:(NSString*)code
-{
-  [[InfinitGhostCodeManager sharedInstance] setCode:code wasLink:NO completionBlock:nil];
-  if (self.facebook_user)
-  {
-    [self.code_controller facebookRegister];
-    [self facebookConnect];
-  }
-  else
-  {
-    [self showViewController:self.last_step_controller animated:YES reverse:NO];
-  }
-}
-
 #pragma mark - Last Step Protocol
 
 - (void)welcomeLastStepBack:(InfinitWelcomeLastStepViewController*)sender
@@ -468,8 +401,6 @@ static dispatch_once_t _password_token = 0;
   [self.landing_controller resetView];
   [self.login_controller resetView];
   [self.email_controller resetView];
-  [self.invited_controller resetView];
-  [self.code_controller resetView];
   [self showViewController:self.landing_controller animated:YES reverse:YES];
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(500 * NSEC_PER_MSEC)),
                  dispatch_get_main_queue(), ^
@@ -621,8 +552,7 @@ static dispatch_once_t _password_token = 0;
   }
   if ([InfinitHostDevice smallScreen])
   {
-    BOOL hide = (view_controller == self.last_step_controller || 
-                 view_controller == self.code_controller ||
+    BOOL hide = (view_controller == self.last_step_controller ||
                  view_controller == self.avatar_controller);
     CGFloat alpha = hide ? 0.0f : 1.0f;
     if (self.logo_view.alpha != alpha)
@@ -713,18 +643,6 @@ static dispatch_once_t _password_token = 0;
   return _avatar_controller;
 }
 
-- (InfinitWelcomeCodeViewController*)code_controller
-{
-  dispatch_once(&_code_token, ^
-  {
-    NSString* class_name = NSStringFromClass(InfinitWelcomeCodeViewController.class);
-    _code_controller = [[InfinitWelcomeCodeViewController alloc] initWithNibName:class_name
-                                                                          bundle:nil];
-    _code_controller.delegate = self;
-  });
-  return _code_controller;
-}
-
 - (InfinitWelcomeEmailViewController*)email_controller
 {
   dispatch_once(&_email_token, ^
@@ -735,18 +653,6 @@ static dispatch_once_t _password_token = 0;
     _email_controller.delegate = self;
   });
   return _email_controller;
-}
-
-- (InfinitWelcomeInvitedViewController*)invited_controller
-{
-  dispatch_once(&_invited_token, ^
-  {
-    NSString* class_name = NSStringFromClass(InfinitWelcomeInvitedViewController.class);
-    _invited_controller = [[InfinitWelcomeInvitedViewController alloc] initWithNibName:class_name
-                                                                                bundle:nil];
-    _invited_controller.delegate = self;
-  });
-  return _invited_controller;
 }
 
 - (InfinitWelcomeLandingViewController*)landing_controller
@@ -901,7 +807,9 @@ static dispatch_once_t _password_token = 0;
       {
         InfinitWelcomeViewController* strong_self = weak_self;
         strong_self.facebook_user.account_status = status;
-        if (status == gap_account_status_new || status == gap_account_status_contact)
+        if (status == gap_account_status_new ||
+            status == gap_account_status_contact || 
+            status == gap_account_status_ghost)
         {
           _name = strong_self.facebook_user.name;
           if (strong_self.current_controller == strong_self.last_step_controller)
@@ -923,10 +831,6 @@ static dispatch_once_t _password_token = 0;
               [strong_self.email_controller gotEmailAccountType];
             self.email_controller.email = strong_self.facebook_user.email;
           }
-        }
-        else if (status == gap_account_status_ghost)
-        {
-          [strong_self showViewController:strong_self.code_controller animated:YES reverse:NO];
         }
         else if (status == gap_account_status_registered)
         {

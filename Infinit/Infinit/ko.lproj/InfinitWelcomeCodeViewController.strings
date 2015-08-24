@@ -1,9 +1,0 @@
-/* Class = "UITextField"; placeholder = "c3p0x"; ObjectID = "N7l-or-wW7"; */
-"N7l-or-wW7.placeholder" = "c3p0x";
-
-/* Class = "UIButton"; normalTitle = "I don't have a download code"; ObjectID = "XTS-SL-vZI"; */
-"XTS-SL-vZI.normalTitle" = "다운로드 코드가 없습니다.";
-
-/* Class = "UILabel"; text = "Enter the download code from\nyour SMS or email invitation."; ObjectID = "x0C-h1-tXS"; */
-"x0C-h1-tXS.text" = "문자나 이메일 초대로부터 받은\n다운로드 코드를 입력하세요.";
-
