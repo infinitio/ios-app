@@ -13,6 +13,7 @@
 #import "InfinitHostDevice.h"
 #import "UIImage+Rounded.h"
 
+#import <Gap/InfinitAccountManager.h>
 #import <Gap/InfinitAvatarManager.h>
 #import <Gap/InfinitConnectionManager.h>
 #import <Gap/InfinitStateManager.h>
@@ -26,12 +27,13 @@
                                                         UINavigationControllerDelegate,
                                                         UITextFieldDelegate>
 
-@property (nonatomic, weak) IBOutlet UIBarButtonItem* ok_button;
-@property (nonatomic, weak) IBOutlet UIButton* avatar_button;
-@property (nonatomic, weak) IBOutlet UIImageView* avatar_view;
-@property (nonatomic, weak) IBOutlet UITextField* name_field;
-@property (nonatomic, weak) IBOutlet UIView* name_view;
-@property (nonatomic, weak) IBOutlet UIButton* web_profile_button;
+@property (nonatomic) IBOutlet UIBarButtonItem* ok_button;
+@property (nonatomic) IBOutlet UIButton* avatar_button;
+@property (nonatomic) IBOutlet UIImageView* avatar_view;
+@property (nonatomic) IBOutlet UITextField* name_field;
+@property (nonatomic) IBOutlet UIView* name_view;
+@property (nonatomic) IBOutlet UIButton* plan_button;
+@property (nonatomic) IBOutlet UIButton* web_profile_button;
 
 @property (nonatomic, strong, readonly) UIImage* avatar_image;
 @property (nonatomic, strong, readonly) UIImagePickerController* picker;
@@ -79,12 +81,15 @@
 - (void)awakeFromNib
 {
   [super awakeFromNib];
+  self.plan_button.titleLabel.adjustsFontSizeToFitWidth = YES;
+  self.plan_button.titleLabel.minimumScaleFactor = 0.5f;
   self.web_profile_button.titleLabel.adjustsFontSizeToFitWidth = YES;
   self.web_profile_button.titleLabel.minimumScaleFactor = 0.5f;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+  [super viewWillAppear:animated];
   self.user = [InfinitUserManager sharedInstance].me;
   self.name_field.text = self.user.fullname;
   if (self.avatar_image == nil)
@@ -92,7 +97,7 @@
     self.avatar_view.image =
       [self.user.avatar infinit_circularMaskOfSize:self.avatar_view.bounds.size];
   }
-  [super viewWillAppear:animated];
+  [self.plan_button setTitle:[self _planButtonName]  forState:UIControlStateNormal];
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(keyboardWillShow:)
                                                name:UIKeyboardWillShowNotification
@@ -292,6 +297,24 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
        self.view.transform = CGAffineTransformIdentity;
      }
    }];
+}
+
+#pragma mark - Helpers
+
+- (NSString*)_planButtonName
+{
+  switch ([InfinitAccountManager sharedInstance].plan)
+  {
+    case InfinitAccountPlanTypeBasic:
+      return NSLocalizedString(@"Basic Plan", nil);
+    case InfinitAccountPlanTypePlus:
+      return NSLocalizedString(@"Plus Plan", nil);
+    case InfinitAccountPlanTypePremium:
+      return NSLocalizedString(@"Professional Plan", nil);
+
+    default:
+      return @"";
+  }
 }
 
 @end
