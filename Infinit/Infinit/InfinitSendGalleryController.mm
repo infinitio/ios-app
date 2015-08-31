@@ -575,13 +575,13 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
           case InfinitFileSystemErrorNoFreeSpace:
             title = NSLocalizedString(@"Not enough space on your device.", nil);
             message =
-            NSLocalizedString(@"Free up some space on your device and try again or send fewer files.", nil);
+              NSLocalizedString(@"Free up some space on your device and try again or send fewer files.", nil);
             break;
 
           default:
             title = NSLocalizedString(@"Unable to fetch files.", nil);
             message =
-            NSLocalizedString(@"Infinit was unable to fetch the files from your gallery. Check that you have some free space and try again.", nil);
+              NSLocalizedString(@"Infinit was unable to fetch the files from your gallery. Check that you have some free space and try again.", nil);
             break;
         }
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
