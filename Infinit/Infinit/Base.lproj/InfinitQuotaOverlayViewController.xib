@@ -39,7 +39,7 @@
                         <constraint firstAttribute="height" constant="55" id="vy3-Zc-C46"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
-                    <state key="normal" title="UPGRADE PLAN">
+                    <state key="normal" title="GET PRO">
                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
@@ -54,7 +54,7 @@
                         <constraint firstAttribute="height" constant="55" id="fRP-qT-Fwf"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
-                    <state key="normal" title="INVITE FRIENDS">
+                    <state key="normal" title="FREE UPGRADE">
                         <color key="titleColor" red="0.18039215689999999" green="0.18039215689999999" blue="0.18039215689999999" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>

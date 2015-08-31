@@ -27,7 +27,6 @@
 @property (nonatomic) IBOutlet UILabel* title_label;
 
 @property (nonatomic) NSString* details_str;
-@property BOOL invite_tapped;
 @property BOOL show_status_bar;
 @property BOOL single_cta;
 @property (nonatomic) NSString* title_str;
@@ -74,14 +73,13 @@
   self.title_label.text = self.title_str;
   self.details_label.text = self.details_str;
   [self _enableBothCTAButtons:!self.single_cta];
-  self.invite_tapped = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
   [super viewWillDisappear:animated];
   [self.delegate quotaOverlayWantsClose:self];
-  if (self.show_status_bar || self.invite_tapped)
+  if (self.show_status_bar)
   {
     [[UIApplication sharedApplication] setStatusBarHidden:NO
                                             withAnimation:UIStatusBarAnimationSlide];
@@ -111,7 +109,7 @@
 {
   [self _enableBothCTAButtons:YES];
   NSNumber* quota = [InfinitAccountManager sharedInstance].send_to_self_quota.quota;
-  self.title_str = NSLocalizedString(@"Invite friends to get a free upgrade!", nil);
+  self.title_str = NSLocalizedString(@"Go unlimited!", nil);
   self.details_str =
     [NSString localizedStringWithFormat:@"You've reached your monthly quota of %@ transfers to your own devices.", quota];
 }
@@ -120,7 +118,7 @@
 {
   [self _enableBothCTAButtons:YES];
   NSString* size = @([InfinitAccountManager sharedInstance].transfer_size_limit).infinit_fileSize;
-  self.title_str = NSLocalizedString(@"Invite friends to get a free upgrade!", nil);
+  self.title_str = NSLocalizedString(@"Go unlimited!", nil);
   self.details_str =
     [NSString localizedStringWithFormat:@"Your account is currently limited to %@ transfers.", size];
 }
@@ -155,25 +153,17 @@
     [self _upgradeTapped];
     return;
   }
-  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-  {
-    [[InfinitTabBarController currentTabBarController] showContactsScreen];
-  }
-  else
-  {
-    InfinitStateManager* manager = [InfinitStateManager sharedInstance];
-    [manager webLoginTokenWithCompletionBlock:^(InfinitStateResult* result,
-                                                NSString* token,
-                                                NSString* email)
-     {
-       if (!result.success || !token.length)
-         return;
-       NSString* url_str =
-       [kInfinitReferalInviteURL stringByAppendingFormat:@"&login_token=%@&email=%@", token, email];
-       [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url_str]];
-     }];
-  }
-  self.invite_tapped = YES;
+  InfinitStateManager* manager = [InfinitStateManager sharedInstance];
+  [manager webLoginTokenWithCompletionBlock:^(InfinitStateResult* result,
+                                              NSString* token,
+                                              NSString* email)
+   {
+     if (!result.success || !token.length)
+       return;
+     NSString* url_str =
+     [kInfinitReferalInviteURL stringByAppendingFormat:@"&login_token=%@&email=%@", token, email];
+     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url_str]];
+   }];
   [self.delegate quotaOverlayWantsClose:self];
 }
 
@@ -191,7 +181,7 @@
   self.cta_button_2.enabled = enable;
   self.cta_2_height.constant = enable ? self.cta_button_1.bounds.size.height : 0.0f;
   self.button_spacing.constant = enable ? 15.0f : 0.0f;
-  NSString* cta_1_str = enable ? NSLocalizedString(@"INVITE FRIENDS", nil)
+  NSString* cta_1_str = enable ? NSLocalizedString(@"FREE UPGRADE", nil)
                                : NSLocalizedString(@"REMOVE THIS LIMIT", nil);
   NSString* cancel_str =
     enable ? NSLocalizedString(@"CANCEL", nil) : NSLocalizedString(@"OK", nil);
