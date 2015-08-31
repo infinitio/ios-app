@@ -97,7 +97,8 @@
     self.avatar_view.image =
       [self.user.avatar infinit_circularMaskOfSize:self.avatar_view.bounds.size];
   }
-  [self.plan_button setTitle:[self _planButtonName]  forState:UIControlStateNormal];
+  NSString* button_tile = [InfinitAccountManager sharedInstance].plan_string;
+  [self.plan_button setTitle:button_tile  forState:UIControlStateNormal];
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(keyboardWillShow:)
                                                name:UIKeyboardWillShowNotification
@@ -297,24 +298,6 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
        self.view.transform = CGAffineTransformIdentity;
      }
    }];
-}
-
-#pragma mark - Helpers
-
-- (NSString*)_planButtonName
-{
-  switch ([InfinitAccountManager sharedInstance].plan)
-  {
-    case InfinitAccountPlanTypeBasic:
-      return NSLocalizedString(@"Basic Plan", nil);
-    case InfinitAccountPlanTypePlus:
-      return NSLocalizedString(@"Plus Plan", nil);
-    case InfinitAccountPlanTypePremium:
-      return NSLocalizedString(@"Professional Plan", nil);
-
-    default:
-      return @"";
-  }
 }
 
 @end
