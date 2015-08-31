@@ -1054,7 +1054,7 @@ shouldHighlightRowAtIndexPath:(NSIndexPath*)indexPath
 {
   InfinitAccountManager* manager = [InfinitAccountManager sharedInstance];
   BOOL reached_self_quota =
-    manager.send_to_self_quota && !manager.send_to_self_quota.remaining.unsignedIntegerValue;
+    manager.send_to_self_quota.quota && !manager.send_to_self_quota.remaining.unsignedIntegerValue;
   if (self.email_entered)
   {
     if (reached_self_quota)
@@ -1750,13 +1750,7 @@ didDeleteTokenAtIndex:(NSUInteger)index
       [self removeInvitationOverlay];
       return;
     }
-    NSString* files = transaction.files.count == 1 ? NSLocalizedString(@"file", nil)
-                                                   : NSLocalizedString(@"files", nil);
-    NSString* the_files = transaction.files.count == 1 ? NSLocalizedString(@"the file", nil)
-                                                       : NSLocalizedString(@"the files", nil);
-    NSString* message =
-      [NSString stringWithFormat:NSLocalizedString(@"Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@", nil),
-     transaction.files.count, files, the_files, recipient_user.ghost_invitation_url];
+    NSString* message = recipient_user.ghost_invitation_url;
     [self removeInvitationOverlay];
     if (self.current_message_recipient.method == InfinitMessageNative &&
         UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
