@@ -103,6 +103,7 @@
 		8384909C1A76969700969CF7 /* InfinitFilePreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 8384909B1A76969700969CF7 /* InfinitFilePreview.m */; };
 		83876AED1A77965400F79905 /* InfinitPortraitNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83876AEC1A77965400F79905 /* InfinitPortraitNavigationController.m */; };
 		83876AF31A78CCC900F79905 /* InfinitDownloadFolderManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83876AF21A78CCC900F79905 /* InfinitDownloadFolderManager.mm */; };
+		838C8DE41B9DACEB00B2A14B /* InfinitDeviceIdManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 838C8DE31B9DACEB00B2A14B /* InfinitDeviceIdManager.m */; };
 		83912C5E1AD81F6000434F6A /* InfinitExtensionPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83912C5D1AD81F6000434F6A /* InfinitExtensionPopoverController.m */; };
 		83912C611AD823DE00434F6A /* InfinitExtensionFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83912C601AD823DE00434F6A /* InfinitExtensionFileCell.m */; };
 		83912C641AD827AD00434F6A /* InfinitExtensionMoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83912C631AD827AD00434F6A /* InfinitExtensionMoreCell.m */; };
@@ -555,6 +556,8 @@
 		83876AEC1A77965400F79905 /* InfinitPortraitNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitPortraitNavigationController.m; sourceTree = "<group>"; };
 		83876AF11A78CCC900F79905 /* InfinitDownloadFolderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitDownloadFolderManager.h; sourceTree = "<group>"; };
 		83876AF21A78CCC900F79905 /* InfinitDownloadFolderManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitDownloadFolderManager.mm; sourceTree = "<group>"; };
+		838C8DE21B9DACEB00B2A14B /* InfinitDeviceIdManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitDeviceIdManager.h; sourceTree = "<group>"; };
+		838C8DE31B9DACEB00B2A14B /* InfinitDeviceIdManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitDeviceIdManager.m; sourceTree = "<group>"; };
 		83912C5C1AD81F6000434F6A /* InfinitExtensionPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitExtensionPopoverController.h; sourceTree = "<group>"; };
 		83912C5D1AD81F6000434F6A /* InfinitExtensionPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitExtensionPopoverController.m; sourceTree = "<group>"; };
 		83912C5F1AD823DE00434F6A /* InfinitExtensionFileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitExtensionFileCell.h; sourceTree = "<group>"; };
@@ -1714,6 +1717,15 @@
 			name = Utilities;
 			sourceTree = "<group>";
 		};
+		838C8DE01B9DACB400B2A14B /* Device ID Manager */ = {
+			isa = PBXGroup;
+			children = (
+				838C8DE21B9DACEB00B2A14B /* InfinitDeviceIdManager.h */,
+				838C8DE31B9DACEB00B2A14B /* InfinitDeviceIdManager.m */,
+			);
+			name = "Device ID Manager";
+			sourceTree = "<group>";
+		};
 		83912C5B1AD81F4B00434F6A /* Extension Popover */ = {
 			isa = PBXGroup;
 			children = (
@@ -1938,6 +1950,7 @@
 				83F44BDB1AEF743C0064C20C /* Contact Management */,
 				8311B5AF1A7CE0CB00832FDE /* Contacts View */,
 				83EBB0A11A947AF900144BC6 /* Customised Classes */,
+				838C8DE01B9DACB400B2A14B /* Device ID Manager */,
 				83912C5B1AD81F4B00434F6A /* Extension Popover */,
 				836FCBD31B187BC8007F5CFC /* Facebook Manager */,
 				83054E0C1B20A61A005F9558 /* Feedback Manager */,
@@ -2782,6 +2795,7 @@
 				83054E101B20A632005F9558 /* InfinitFeedbackManager.m in Sources */,
 				83F7C30C1AF771C600A643BC /* InfinitSettingsDeviceViewController.m in Sources */,
 				833E3AC61A63D16C0088D3FF /* InfinitApplicationSettings.m in Sources */,
+				838C8DE41B9DACEB00B2A14B /* InfinitDeviceIdManager.m in Sources */,
 				8311D8931AB03B1900DF31BE /* InfinitSettingsNavigationController.m in Sources */,
 				83EBB0AD1A966F1400144BC6 /* InfinitHomePeerTransactionFileCell.m in Sources */,
 				83C50FA51AB6BF8E009EBB44 /* JDStatusBarStyle.m in Sources */,
