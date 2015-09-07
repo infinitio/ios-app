@@ -11,6 +11,7 @@
 #import "InfinitApplicationSettings.h"
 #import "InfinitBackgroundManager.h"
 #import "InfinitConstants.h"
+#import "InfinitDeviceIdManager.h"
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitFacebookManager.h"
 #import "InfinitFeedbackManager.h"
@@ -153,6 +154,7 @@
 - (BOOL)application:(UIApplication*)application
 didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
+  [InfinitDeviceIdManager checkExistingOrStoreCurrentDeviceId];
   if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     [UIView setAnimationsEnabled:NO];
   [self configureAdjust];

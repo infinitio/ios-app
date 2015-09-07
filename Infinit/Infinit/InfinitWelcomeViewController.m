@@ -12,6 +12,7 @@
 #import "InfinitBackgroundManager.h"
 #import "InfinitColor.h"
 #import "InfinitConstants.h"
+#import "InfinitDeviceIdManager.h"
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitFacebookManager.h"
 #import "InfinitGalleryManager.h"
@@ -220,6 +221,7 @@ static dispatch_once_t _password_token = 0;
 
 - (void)showMainView
 {
+  [InfinitDeviceIdManager checkExistingOrStoreCurrentDeviceId];
   [InfinitBackgroundManager sharedInstance];
   [InfinitDeviceManager sharedInstance];
   [InfinitDownloadFolderManager sharedInstance];
