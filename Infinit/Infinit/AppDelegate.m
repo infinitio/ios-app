@@ -430,6 +430,13 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   }
   else
   {
+    UIRemoteNotificationType enabled_types =
+      [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
+    if (enabled_types == UIRemoteNotificationTypeNone)
+    {
+      [self doneRegisterNotifications:NO];
+      return;
+    }
     UIRemoteNotificationType types =
       UIRemoteNotificationTypeAlert |
       UIRemoteNotificationTypeBadge |
