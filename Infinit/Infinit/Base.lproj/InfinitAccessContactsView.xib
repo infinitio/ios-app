@@ -27,10 +27,10 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ovu-SQ-Jc9">
-                    <rect key="frame" x="167" y="445" width="266" height="55"/>
+                    <rect key="frame" x="80" y="445" width="440" height="55"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="266" id="hO9-ZS-g9B"/>
+                        <constraint firstAttribute="width" priority="750" constant="266" id="hO9-ZS-g9B"/>
                         <constraint firstAttribute="height" constant="55" id="nB1-nT-P73"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
@@ -40,10 +40,10 @@
                     </state>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="exS-d4-4Gz">
-                    <rect key="frame" x="167" y="515" width="266" height="55"/>
+                    <rect key="frame" x="80" y="515" width="440" height="55"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="55" id="SHV-RL-yMI"/>
-                        <constraint firstAttribute="width" constant="266" id="jVd-3h-BVy"/>
+                        <constraint firstAttribute="width" priority="750" constant="266" id="jVd-3h-BVy"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
                     <state key="normal" title="NO, THANKS.">
@@ -60,6 +60,7 @@
                 <constraint firstAttribute="bottom" secondItem="exS-d4-4Gz" secondAttribute="bottom" constant="30" id="3M9-iy-wJV"/>
                 <constraint firstAttribute="centerX" secondItem="de8-Xa-jKG" secondAttribute="centerX" id="7zO-wn-IGR"/>
                 <constraint firstItem="de8-Xa-jKG" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="50" id="L5a-p1-zzs"/>
+                <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="Ovu-SQ-Jc9" secondAttribute="trailing" constant="80" id="Rvd-wi-D9t"/>
                 <constraint firstItem="vAn-VP-2P2" firstAttribute="top" secondItem="de8-Xa-jKG" secondAttribute="bottom" constant="40" id="aLD-ca-tat"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="de8-Xa-jKG" secondAttribute="trailing" constant="20" id="ect-hk-v2f"/>
                 <constraint firstAttribute="centerX" secondItem="Ovu-SQ-Jc9" secondAttribute="centerX" id="haW-Ce-bdg"/>
@@ -67,6 +68,7 @@
                 <constraint firstAttribute="centerX" secondItem="vAn-VP-2P2" secondAttribute="centerX" id="jmZ-XJ-f4D"/>
                 <constraint firstAttribute="centerX" secondItem="exS-d4-4Gz" secondAttribute="centerX" id="oKk-Er-woR"/>
                 <constraint firstItem="de8-Xa-jKG" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="wLJ-fg-OzA"/>
+                <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="exS-d4-4Gz" secondAttribute="trailing" constant="80" id="xmH-tF-wlJ"/>
             </constraints>
             <connections>
                 <outlet property="access_button" destination="Ovu-SQ-Jc9" id="Hwh-h4-G03"/>

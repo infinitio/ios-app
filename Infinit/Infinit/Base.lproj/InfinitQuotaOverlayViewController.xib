@@ -33,9 +33,9 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gE7-Oa-zWZ">
-                    <rect key="frame" x="167" y="465" width="266" height="55"/>
+                    <rect key="frame" x="80" y="465" width="440" height="55"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="266" id="US3-Vh-ZP7"/>
+                        <constraint firstAttribute="width" priority="750" constant="266" id="US3-Vh-ZP7"/>
                         <constraint firstAttribute="height" constant="55" id="vy3-Zc-C46"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
@@ -47,10 +47,10 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z3n-SP-CVM">
-                    <rect key="frame" x="167" y="395" width="266" height="55"/>
+                    <rect key="frame" x="80" y="395" width="440" height="55"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="266" id="e3Y-QB-vI7"/>
+                        <constraint firstAttribute="width" priority="750" constant="266" id="e3Y-QB-vI7"/>
                         <constraint firstAttribute="height" constant="55" id="fRP-qT-Fwf"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
@@ -62,10 +62,10 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lv7-p1-Cgq">
-                    <rect key="frame" x="167" y="535" width="266" height="55"/>
+                    <rect key="frame" x="80" y="535" width="440" height="55"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="55" id="0UE-1c-uHS"/>
-                        <constraint firstAttribute="width" constant="266" id="ste-Ti-8QU"/>
+                        <constraint firstAttribute="width" priority="750" constant="266" id="ste-Ti-8QU"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
                     <state key="normal" title="CANCEL">
@@ -92,6 +92,8 @@
             <constraints>
                 <constraint firstItem="yQn-Ic-hfj" firstAttribute="top" secondItem="xFA-Lj-q1T" secondAttribute="bottom" constant="20" id="9So-6K-FtV"/>
                 <constraint firstAttribute="centerX" secondItem="yQn-Ic-hfj" secondAttribute="centerX" id="CIP-Tc-v4R"/>
+                <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="Z3n-SP-CVM" secondAttribute="trailing" constant="80" id="Koe-A2-gc6"/>
+                <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="gE7-Oa-zWZ" secondAttribute="trailing" constant="80" id="LEf-7r-0Qo"/>
                 <constraint firstAttribute="centerX" secondItem="Lv7-p1-Cgq" secondAttribute="centerX" id="NG8-2k-KOE"/>
                 <constraint firstItem="xFA-Lj-q1T" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="60" id="afu-WS-jhm"/>
                 <constraint firstItem="Lv7-p1-Cgq" firstAttribute="top" secondItem="gE7-Oa-zWZ" secondAttribute="bottom" constant="15" id="bnp-qR-Bki"/>
@@ -100,6 +102,7 @@
                 <constraint firstItem="xFA-Lj-q1T" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="15" id="lof-aH-RUf"/>
                 <constraint firstAttribute="bottom" secondItem="Lv7-p1-Cgq" secondAttribute="bottom" constant="10" id="mKB-0K-9VV"/>
                 <constraint firstAttribute="centerX" secondItem="gE7-Oa-zWZ" secondAttribute="centerX" id="oU6-LI-fw7"/>
+                <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="Lv7-p1-Cgq" secondAttribute="trailing" constant="80" id="q51-wR-YAe"/>
                 <constraint firstItem="gE7-Oa-zWZ" firstAttribute="top" secondItem="Z3n-SP-CVM" secondAttribute="bottom" constant="15" id="sFr-gb-IIh"/>
                 <constraint firstAttribute="centerX" secondItem="xFA-Lj-q1T" secondAttribute="centerX" id="wgP-Ci-li8"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="yQn-Ic-hfj" secondAttribute="trailing" constant="15" id="yCL-AF-lHW"/>

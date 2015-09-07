@@ -5,6 +5,9 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <customFonts key="customFonts">
+        <mutableArray key="HelveticaNeueLights.ttc">
+            <string>HelveticaNeue-Light</string>
+        </mutableArray>
         <mutableArray key="SourceSansPro-Bold.otf">
             <string>SourceSansPro-Bold</string>
         </mutableArray>
@@ -26,11 +29,11 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nK8-AH-e2U">
-                    <rect key="frame" x="167" y="515" width="266" height="55"/>
+                    <rect key="frame" x="80" y="515" width="440" height="55"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="55" id="3ap-uF-j6B"/>
-                        <constraint firstAttribute="width" constant="266" id="CM4-b9-NyI"/>
+                        <constraint firstAttribute="width" priority="750" constant="266" id="CM4-b9-NyI"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="14"/>
                     <state key="normal" title="ACCESS MY CAMERA ROLL">
@@ -46,6 +49,7 @@
                 <constraint firstAttribute="bottom" secondItem="nK8-AH-e2U" secondAttribute="bottom" constant="30" id="XkI-1g-MPR"/>
                 <constraint firstAttribute="centerX" secondItem="Xt0-AB-E6P" secondAttribute="centerX" id="dVo-L6-1rA"/>
                 <constraint firstItem="vfK-md-Jc5" firstAttribute="top" secondItem="Xt0-AB-E6P" secondAttribute="bottom" constant="81" id="iaQ-QY-PTZ"/>
+                <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="nK8-AH-e2U" secondAttribute="trailing" constant="80" id="ieD-BX-rB5"/>
                 <constraint firstAttribute="centerX" secondItem="vfK-md-Jc5" secondAttribute="centerX" id="n0t-kD-RBr"/>
                 <constraint firstItem="Xt0-AB-E6P" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="qrk-Bp-tHJ"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Xt0-AB-E6P" secondAttribute="trailing" constant="20" id="uSr-fB-tC7"/>
