@@ -12,7 +12,7 @@
 #import "InfinitBackgroundManager.h"
 #import "InfinitColor.h"
 #import "InfinitConstants.h"
-#import "InfinitDeviceIdManager.h"
+#import "InfinitDevicePasswordManager.h"
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitFacebookManager.h"
 #import "InfinitGalleryManager.h"
@@ -59,7 +59,7 @@
 @property (nonatomic, weak) InfinitWelcomeAbstractViewController* current_controller;
 
 @property (nonatomic, readonly) UIImage* avatar;
-@property (nonatomic, readonly) NSString* email;
+@property (nonatomic, readwrite) NSString* email;
 @property (nonatomic, readonly) InfinitWelcomeFacebookUser* facebook_user;
 @property (nonatomic, readonly) NSString* name;
 @property (nonatomic, readonly) NSString* password;
@@ -221,7 +221,6 @@ static dispatch_once_t _password_token = 0;
 
 - (void)showMainView
 {
-  [InfinitDeviceIdManager checkExistingOrStoreCurrentDeviceId];
   [InfinitBackgroundManager sharedInstance];
   [InfinitDeviceManager sharedInstance];
   [InfinitDownloadFolderManager sharedInstance];
@@ -328,7 +327,7 @@ static dispatch_once_t _password_token = 0;
             password:(NSString*)password
      completionBlock:(InfinitWelcomeResultBlock)completion_block
 {
-  _email = email;
+  self.email = email;
   _password = password;
   [[InfinitStateManager sharedInstance] login:email
                                      password:password
@@ -358,7 +357,7 @@ static dispatch_once_t _password_token = 0;
                withEmail:(NSString*)email
          completionBlock:(InfinitWelcomeEmailBlock)completion_block
 {
-  _email = email;
+  self.email = email;
   if (self.facebook_user)
   {
     self.facebook_user.email = email;
@@ -734,11 +733,14 @@ static dispatch_once_t _password_token = 0;
   if (!self.email.length || !self.password.length)
     return;
   [InfinitApplicationSettings sharedInstance].username = self.email;
-  InfinitKeychain* keychain = [InfinitKeychain sharedInstance];
-  if ([keychain credentialsForAccountInKeychain:self.email])
-    [keychain updatePassword:self.password forAccount:self.email];
-  else
-    [keychain addPassword:self.password forAccount:self.email];
+  [InfinitDevicePasswordManager storeDeviceIdWithPassword:self.password forIdentifier:self.email];
+}
+
+- (void)setEmail:(NSString*)email
+{
+  _email = email;
+  if (email.length)
+    [InfinitDevicePasswordManager checkForExistingDeviceIdForAccount:email];
 }
 
 - (void)facebookConnect
@@ -752,6 +754,8 @@ static dispatch_once_t _password_token = 0;
     InfinitWelcomeViewController* strong_self = weak_self;
     if (result.success)
     {
+      [InfinitDevicePasswordManager storeDeviceIdWithPassword:nil
+                                                forIdentifier:strong_self.facebook_user.id_];
       if (strong_self.facebook_user.account_status == gap_account_status_ghost ||
           strong_self.facebook_user.account_status == gap_account_status_new ||
           strong_self.facebook_user.account_status == gap_account_status_contact)
@@ -792,7 +796,7 @@ static dispatch_once_t _password_token = 0;
           strong_self.email_controller.email.infinit_isEmail)
       {
         strong_self.facebook_user.email = strong_self.email_controller.email;
-        strong_self->_email = strong_self.email_controller.email;
+        strong_self.email = strong_self.email_controller.email;
       }
       if (strong_self.current_controller == strong_self.last_step_controller)
         strong_self.facebook_user.email = strong_self.email;
@@ -837,7 +841,7 @@ static dispatch_once_t _password_token = 0;
         else if (status == gap_account_status_registered)
         {
           // Their Facebook email is already registered so they must do a normal login.
-          _email = strong_self.facebook_user.email;
+          strong_self.email = strong_self.facebook_user.email;
           _facebook_user = nil;
           if (strong_self.current_controller != strong_self.password_controller)
             [strong_self showViewController:strong_self.password_controller animated:YES reverse:NO];
@@ -885,6 +889,7 @@ static dispatch_once_t _password_token = 0;
       NSDictionary* user_dict = (NSDictionary*)result;
       strong_self->_facebook_user =
         [InfinitWelcomeFacebookUser facebookUserFromGraphDictionary:user_dict];
+      [InfinitDevicePasswordManager checkForExistingDeviceIdForAccount:strong_self.facebook_user.id_];
       dispatch_async(dispatch_get_main_queue(), ^
       {
         InfinitWelcomeViewController* strong_self = weak_self;
