@@ -39,7 +39,7 @@ ELLE_LOG_COMPONENT("iOS.SendGalleryViewController");
 @property (nonatomic, strong) NSArray* assets;
 @property (nonatomic, strong) PHCachingImageManager* image_caching_manager;
 @property (nonatomic, readwrite, copy) NSArray* last_selection;
-@property (nonatomic, readonly) InfinitManagedFiles* managed_files;
+@property (atomic, readwrite, weak) InfinitManagedFiles* managed_files;
 @property (nonatomic, strong) UITapGestureRecognizer* nav_bar_tap;
 @property (nonatomic, readwrite) CGRect previous_preheat_rect;
 @property (nonatomic, readonly) BOOL selected_something;
@@ -51,8 +51,6 @@ static CGSize _cell_size = {0.0f, 0.0f};
 static NSString* _cell_identifier = @"gallery_cell";
 
 @implementation InfinitSendGalleryController
-
-@synthesize managed_files = _managed_files;
 
 - (void)resetCellSize
 {
@@ -350,7 +348,7 @@ static NSString* _cell_identifier = @"gallery_cell";
 - (void)resetView
 {
   self.assets = nil;
-  _managed_files = nil;
+  self.managed_files = nil;
   for (NSIndexPath* path in self.collection_view.indexPathsForSelectedItems)
     [self.collection_view deselectItemAtIndexPath:path animated:NO];
 }
@@ -545,7 +543,7 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
   self.next_constraint.constant = - 3.0f * self.next_button.bounds.size.height;
   [(InfinitTabBarController*)self.tabBarController lastSelectedIndex];
   [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:self.managed_files];
-  _managed_files = nil;
+  self.managed_files = nil;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue*)segue
@@ -561,10 +559,12 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
     }
     InfinitTemporaryFileManager* manager = [InfinitTemporaryFileManager sharedInstance];
     if (!self.managed_files)
-      _managed_files = [manager createManagedFiles];
+      self.managed_files = [manager createManagedFiles];
     __weak InfinitSendGalleryController* weak_self = self;
     InfinitTemporaryFileManagerCallback callback = ^(BOOL success, NSError* error)
     {
+      if (!weak_self)
+        return;
       InfinitSendGalleryController* strong_self = weak_self;
       if (error)
       {
@@ -584,12 +584,15 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
               NSLocalizedString(@"Infinit was unable to fetch the files from your gallery. Check that you have some free space and try again.", nil);
             break;
         }
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
-                                                        message:message
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+        dispatch_async(dispatch_get_main_queue(), ^
+        {
+          UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
+                                                          message:message
+                                                         delegate:nil
+                                                cancelButtonTitle:@"OK"
+                                                otherButtonTitles:nil];
+          [alert show];
+        });
         [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:strong_self.managed_files];
         strong_self->_managed_files = nil;
       }
