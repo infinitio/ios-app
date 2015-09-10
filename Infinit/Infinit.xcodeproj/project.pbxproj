@@ -56,6 +56,7 @@
 		83294B911AA6FEA700C6CA9A /* InfinitUploadThumbnailManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83294B901AA6FEA700C6CA9A /* InfinitUploadThumbnailManager.mm */; };
 		832A8B001A6EB7930024A304 /* InfinitSettingsReportProblemController.m in Sources */ = {isa = PBXBuildFile; fileRef = 832A8AFF1A6EB7930024A304 /* InfinitSettingsReportProblemController.m */; };
 		832C12F31AF914110014895D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 832C12F51AF914110014895D /* Localizable.strings */; };
+		832FF1381B9F48BC00B3BA78 /* InfinitDevicePasswordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 832FF1371B9F48BC00B3BA78 /* InfinitDevicePasswordManager.m */; };
 		8332F92B1ADFFA23007392A4 /* InfinitFilesFolderViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 8332F92A1ADFFA23007392A4 /* InfinitFilesFolderViewController_iPad.m */; };
 		83376EE81AEFB9530001A61E /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83376EE71AEFB9530001A61E /* iAd.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		83376EEA1AEFB95F0001A61E /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83376EE91AEFB95F0001A61E /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -103,7 +104,6 @@
 		8384909C1A76969700969CF7 /* InfinitFilePreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 8384909B1A76969700969CF7 /* InfinitFilePreview.m */; };
 		83876AED1A77965400F79905 /* InfinitPortraitNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83876AEC1A77965400F79905 /* InfinitPortraitNavigationController.m */; };
 		83876AF31A78CCC900F79905 /* InfinitDownloadFolderManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83876AF21A78CCC900F79905 /* InfinitDownloadFolderManager.mm */; };
-		838C8DE41B9DACEB00B2A14B /* InfinitDeviceIdManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 838C8DE31B9DACEB00B2A14B /* InfinitDeviceIdManager.m */; };
 		83912C5E1AD81F6000434F6A /* InfinitExtensionPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83912C5D1AD81F6000434F6A /* InfinitExtensionPopoverController.m */; };
 		83912C611AD823DE00434F6A /* InfinitExtensionFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83912C601AD823DE00434F6A /* InfinitExtensionFileCell.m */; };
 		83912C641AD827AD00434F6A /* InfinitExtensionMoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 83912C631AD827AD00434F6A /* InfinitExtensionMoreCell.m */; };
@@ -442,6 +442,8 @@
 		832C12F01AF914100014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitWelcomeLoginViewController.strings; sourceTree = "<group>"; };
 		832C12F41AF914110014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		832C12F61AF914120014895D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfinitHomePeerTransactionCell.strings; sourceTree = "<group>"; };
+		832FF1361B9F48BC00B3BA78 /* InfinitDevicePasswordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitDevicePasswordManager.h; sourceTree = "<group>"; };
+		832FF1371B9F48BC00B3BA78 /* InfinitDevicePasswordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitDevicePasswordManager.m; sourceTree = "<group>"; };
 		8332F9291ADFFA23007392A4 /* InfinitFilesFolderViewController_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFilesFolderViewController_iPad.h; sourceTree = "<group>"; };
 		8332F92A1ADFFA23007392A4 /* InfinitFilesFolderViewController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFilesFolderViewController_iPad.m; sourceTree = "<group>"; };
 		83376EE71AEFB9530001A61E /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
@@ -556,8 +558,6 @@
 		83876AEC1A77965400F79905 /* InfinitPortraitNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitPortraitNavigationController.m; sourceTree = "<group>"; };
 		83876AF11A78CCC900F79905 /* InfinitDownloadFolderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitDownloadFolderManager.h; sourceTree = "<group>"; };
 		83876AF21A78CCC900F79905 /* InfinitDownloadFolderManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitDownloadFolderManager.mm; sourceTree = "<group>"; };
-		838C8DE21B9DACEB00B2A14B /* InfinitDeviceIdManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitDeviceIdManager.h; sourceTree = "<group>"; };
-		838C8DE31B9DACEB00B2A14B /* InfinitDeviceIdManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitDeviceIdManager.m; sourceTree = "<group>"; };
 		83912C5C1AD81F6000434F6A /* InfinitExtensionPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitExtensionPopoverController.h; sourceTree = "<group>"; };
 		83912C5D1AD81F6000434F6A /* InfinitExtensionPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitExtensionPopoverController.m; sourceTree = "<group>"; };
 		83912C5F1AD823DE00434F6A /* InfinitExtensionFileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitExtensionFileCell.h; sourceTree = "<group>"; };
@@ -1717,13 +1717,13 @@
 			name = Utilities;
 			sourceTree = "<group>";
 		};
-		838C8DE01B9DACB400B2A14B /* Device ID Manager */ = {
+		838C8DE01B9DACB400B2A14B /* Device Password Manager */ = {
 			isa = PBXGroup;
 			children = (
-				838C8DE21B9DACEB00B2A14B /* InfinitDeviceIdManager.h */,
-				838C8DE31B9DACEB00B2A14B /* InfinitDeviceIdManager.m */,
+				832FF1361B9F48BC00B3BA78 /* InfinitDevicePasswordManager.h */,
+				832FF1371B9F48BC00B3BA78 /* InfinitDevicePasswordManager.m */,
 			);
-			name = "Device ID Manager";
+			name = "Device Password Manager";
 			sourceTree = "<group>";
 		};
 		83912C5B1AD81F4B00434F6A /* Extension Popover */ = {
@@ -1950,7 +1950,7 @@
 				83F44BDB1AEF743C0064C20C /* Contact Management */,
 				8311B5AF1A7CE0CB00832FDE /* Contacts View */,
 				83EBB0A11A947AF900144BC6 /* Customised Classes */,
-				838C8DE01B9DACB400B2A14B /* Device ID Manager */,
+				838C8DE01B9DACB400B2A14B /* Device Password Manager */,
 				83912C5B1AD81F4B00434F6A /* Extension Popover */,
 				836FCBD31B187BC8007F5CFC /* Facebook Manager */,
 				83054E0C1B20A61A005F9558 /* Feedback Manager */,
@@ -2754,6 +2754,7 @@
 				8369E8791A83684700ECD519 /* InfinitHomeRatingCell.m in Sources */,
 				83054E291B26DF6C005F9558 /* InfinitMessagingManager.mm in Sources */,
 				8332F92B1ADFFA23007392A4 /* InfinitFilesFolderViewController_iPad.m in Sources */,
+				832FF1381B9F48BC00B3BA78 /* InfinitDevicePasswordManager.m in Sources */,
 				83D763D91B84D3DB0046B2EE /* InfinitQuotaManager.m in Sources */,
 				83F7C3BE1A6EAEDD00FA283C /* InfinitSettingsUserCell.m in Sources */,
 				83157EDB1A73D49D00F8E87F /* InfinitFilesViewController.m in Sources */,
@@ -2795,7 +2796,6 @@
 				83054E101B20A632005F9558 /* InfinitFeedbackManager.m in Sources */,
 				83F7C30C1AF771C600A643BC /* InfinitSettingsDeviceViewController.m in Sources */,
 				833E3AC61A63D16C0088D3FF /* InfinitApplicationSettings.m in Sources */,
-				838C8DE41B9DACEB00B2A14B /* InfinitDeviceIdManager.m in Sources */,
 				8311D8931AB03B1900DF31BE /* InfinitSettingsNavigationController.m in Sources */,
 				83EBB0AD1A966F1400144BC6 /* InfinitHomePeerTransactionFileCell.m in Sources */,
 				83C50FA51AB6BF8E009EBB44 /* JDStatusBarStyle.m in Sources */,
