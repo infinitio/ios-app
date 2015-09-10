@@ -1582,7 +1582,7 @@ didDeleteTokenAtIndex:(NSUInteger)index
   if ([uuid isEqualToString:self.managed_files.uuid])
   {
     [self doneSending];
-    _managed_files = nil;
+    self.managed_files = nil;
   }
 }
 
