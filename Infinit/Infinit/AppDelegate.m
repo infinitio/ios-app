@@ -11,7 +11,7 @@
 #import "InfinitApplicationSettings.h"
 #import "InfinitBackgroundManager.h"
 #import "InfinitConstants.h"
-#import "InfinitDeviceIdManager.h"
+#import "InfinitDevicePasswordManager.h"
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitFacebookManager.h"
 #import "InfinitFeedbackManager.h"
@@ -154,9 +154,11 @@
 - (BOOL)application:(UIApplication*)application
 didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
-  [InfinitDeviceIdManager checkExistingOrStoreCurrentDeviceId];
   if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     [UIView setAnimationsEnabled:NO];
+  InfinitApplicationSettings* settings = [InfinitApplicationSettings sharedInstance];
+  if (settings.login_method == InfinitLoginEmail && settings.username.length)
+    [InfinitDevicePasswordManager ensureDeviceIdStoredForAccount:settings.username];
   [self configureAdjust];
   [[FBSDKApplicationDelegate sharedInstance] application:application
                            didFinishLaunchingWithOptions:launchOptions];
@@ -203,6 +205,12 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
         view_controller =
           [self.storyboard instantiateViewControllerWithIdentifier:self.logging_in_controller_id];
         [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:15.0f];
+        NSString* fb_id = [FBSDKAccessToken currentAccessToken].userID;
+        if (!settings.stored_device_id)
+        {
+          [InfinitDevicePasswordManager storeDeviceIdWithPassword:nil
+                                                    forIdentifier:fb_id];
+        }
       }
       else
       {
@@ -243,6 +251,12 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
             self.root_controller =
               [self.storyboard instantiateViewControllerWithIdentifier:self.welcome_controller_id];
             return;
+          }
+          NSString* fb_id = [FBSDKAccessToken currentAccessToken].userID;
+          if (!settings.stored_device_id)
+          {
+            [InfinitDevicePasswordManager storeDeviceIdWithPassword:nil
+                                                      forIdentifier:fb_id];
           }
           [self tryFacebookLogin];
         }];
@@ -303,8 +317,8 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 
 - (void)tryLogin
 {
-  NSString* username = [[InfinitApplicationSettings sharedInstance] username];
-  NSString* password = [[InfinitKeychain sharedInstance] passwordForAccount:username];
+  NSString* username = [InfinitApplicationSettings sharedInstance].username;
+  NSString* password = [InfinitDevicePasswordManager passwordForAccount:username];
   if (password == nil)
     password = @"";
   [[InfinitStateManager sharedInstance] login:username
@@ -558,12 +572,19 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 
 - (void)willLogout
 {
-  if ([InfinitApplicationSettings sharedInstance].login_method == InfinitLoginEmail)
+  InfinitApplicationSettings* settings = [InfinitApplicationSettings sharedInstance];
+  if (settings.login_method == InfinitLoginEmail)
   {
-    NSString* account_email = [InfinitApplicationSettings sharedInstance].username;
+    NSString* account_email = settings.username;
     if (account_email != nil)
       [[InfinitKeychain sharedInstance] removeAccount:account_email];
   }
+  else if (settings.login_method == InfinitLoginFacebook)
+  {
+    NSString* fb_id = [FBSDKAccessToken currentAccessToken].userID;
+    [[InfinitKeychain sharedInstance] removeAccount:fb_id];
+  }
+  [InfinitApplicationSettings sharedInstance].stored_device_id = NO;
   [[InfinitWormhole sharedInstance] unregisterAllObservers];
 }
 
