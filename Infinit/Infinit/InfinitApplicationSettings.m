@@ -18,6 +18,7 @@ typedef NS_ENUM(NSUInteger, InfinitSettings)
   InfinitSettingRatedApp,
   InfinitSettingRatingTransactions,
   InfinitSettingSendToSelfOnboarded,
+  InfinitSettingStoredDeviceId,
   InfinitSettingUsername,
   InfinitSettingWelcomeOnboarded,
   // Home onboarding
@@ -165,6 +166,16 @@ static dispatch_once_t _instance_token = 0;
                    forKey:[self keyForSetting:InfinitSettingSendToSelfOnboarded]];
 }
 
+- (BOOL)stored_device_id
+{
+  return [self boolForKey:InfinitSettingStoredDeviceId];
+}
+
+- (void)setStored_device_id:(BOOL)stored_device_id
+{
+  [self setBool:stored_device_id forKey:InfinitSettingStoredDeviceId];
+}
+
 - (NSString*)username
 {
   return [self.defaults valueForKey:[self keyForSetting:InfinitSettingUsername]];
@@ -271,6 +282,8 @@ static dispatch_once_t _instance_token = 0;
       return @"rating_transactions";
     case InfinitSettingSendToSelfOnboarded:
       return @"send_to_self_onboarded";
+    case InfinitSettingStoredDeviceId:
+      return @"stored_device_id";
     case InfinitSettingUsername:
       return @"username";
     case InfinitSettingWelcomeOnboarded:

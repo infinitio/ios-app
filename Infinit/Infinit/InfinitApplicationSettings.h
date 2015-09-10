@@ -26,6 +26,7 @@ typedef NS_ENUM(NSInteger, InfinitLoginMethod)
 @property (atomic, readwrite) BOOL rated_app;
 @property (atomic, readwrite) NSNumber* rating_transactions;
 @property (atomic, readwrite) NSNumber* send_to_self_onboarded;
+@property (atomic, readwrite) BOOL stored_device_id;
 @property (atomic, readwrite) NSString* username;
 @property (atomic, readwrite) NSNumber* welcome_onboarded;
 
