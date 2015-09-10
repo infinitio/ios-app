@@ -58,6 +58,40 @@
   }
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+  UIDeviceOrientation orientation =
+  [[[UIDevice currentDevice] valueForKey:@"orientation"] integerValue];
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone &&
+      orientation != UIDeviceOrientationPortrait)
+  {
+    [super viewWillAppear:NO];
+    [UIView setAnimationsEnabled:NO];
+    [[UIDevice currentDevice] setValue:[NSNumber numberWithInt:UIDeviceOrientationPortrait]
+                                forKey:@"orientation"];
+  }
+  else
+  {
+    [super viewWillAppear:animated];
+  }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+  UIDeviceOrientation orientation =
+  [[[UIDevice currentDevice] valueForKey:@"orientation"] integerValue];
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone &&
+      orientation != UIDeviceOrientationPortrait)
+  {
+    [super viewDidAppear:NO];
+  }
+  else
+  {
+    [super viewDidAppear:animated];
+  }
+  [UIView setAnimationsEnabled:YES];
+}
+
 #pragma mark - Button Handling
 
 - (IBAction)doneTapped:(id)sender
