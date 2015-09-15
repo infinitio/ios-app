@@ -398,6 +398,7 @@ static CGFloat _button_height = 45.0f;
       break;
 
     case gap_transaction_cloud_buffered:
+    case gap_transaction_ghost_uploaded:
       [self setButtonsHidden:!self.expanded];
       if (self.expanded)
         [self setCancelOnlyButton];
@@ -463,6 +464,7 @@ static CGFloat _button_height = 45.0f;
       break;
 
     case gap_transaction_cloud_buffered:
+    case gap_transaction_ghost_uploaded:
       self.status_view.image = [UIImage imageNamed:@"icon-sent"];
       break;
 
@@ -487,7 +489,7 @@ static CGFloat _button_height = 45.0f;
 - (void)setProgress
 {
   float progress = self.transaction.progress;
-  if (!self.transaction.done && self.transaction.status != gap_transaction_cloud_buffered &&
+  if (!self.transaction.done && !self.transaction.bufferred &&
       (progress > 0.0f || self.transaction.status == gap_transaction_transferring))
   {
     self.avatar_view.progress = progress;
@@ -542,6 +544,7 @@ static CGFloat _button_height = 45.0f;
     case gap_transaction_paused:
       return NSLocalizedString(@"Paused", nil);
     case gap_transaction_cloud_buffered:
+    case gap_transaction_ghost_uploaded:
       return NSLocalizedString(@"Sent", nil);
     case gap_transaction_canceled:
       if (self.transaction.canceler.is_self)
@@ -703,6 +706,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
     case gap_transaction_paused:
     case gap_transaction_waiting_data:
     case gap_transaction_cloud_buffered:
+    case gap_transaction_ghost_uploaded:
       [self.delegate cellPauseTapped:self];
       break;
 
@@ -733,6 +737,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
     case gap_transaction_paused:
     case gap_transaction_waiting_data:
     case gap_transaction_cloud_buffered:
+    case gap_transaction_ghost_uploaded:
       [self.delegate cellCancelTapped:self];
       break;
 
