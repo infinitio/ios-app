@@ -26,6 +26,7 @@ ELLE_LOG_COMPONENT("iOS.GalleryManager");
 
 @interface InfinitGalleryManager ()
 
+@property (atomic, readonly) NSDateFormatter* gps_date_formatter;
 @property (nonatomic, readonly) ALAssetsLibrary* library;
 @property (nonatomic, readonly) dispatch_once_t library_token;
 
@@ -46,6 +47,9 @@ static InfinitGalleryManager* _instance = nil;
   if (self = [super init])
   {
     self.autosave = [InfinitApplicationSettings sharedInstance].autosave_to_gallery;
+    _gps_date_formatter = [[NSDateFormatter alloc] init];
+    self.gps_date_formatter.dateFormat = @"yyyy:MM:dd HH:mm:ss";
+    self.gps_date_formatter.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
   }
   return self;
 }
@@ -98,6 +102,7 @@ static InfinitGalleryManager* _instance = nil;
 {
   if (paths.count == 0 || ![self haveGalleryAccess])
     return;
+  ELLE_LOG("%s: saving %lu items to the gallery", self.description.UTF8String, paths.count);
   if ([InfinitHostDevice PHAssetClass])
   {
     [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^
@@ -132,7 +137,26 @@ static InfinitGalleryManager* _instance = nil;
            NSURL* url = [NSURL fileURLWithPath:path];
            asset_request = [PHAssetChangeRequest creationRequestForAssetFromImageAtFileURL:url];
            if (asset_request)
+           {
+             NSData* image_data = [NSData dataWithContentsOfFile:path];
+             CGImageSourceRef source =
+              CGImageSourceCreateWithData((__bridge CFDataRef)image_data, NULL);
+             NSDictionary* metadata =
+              CFBridgingRelease(CGImageSourceCopyPropertiesAtIndex(source, 0, NULL));
+             CFRelease(source);
+             NSDictionary* gps_data = metadata[(__bridge NSString*)kCGImagePropertyGPSDictionary];
+             if (gps_data)
+             {
+               ELLE_DEBUG("%s: found EXIF GPS data, adding to asset", self.description.UTF8String);
+               NSDate* gps_date = [self dateFromDictionary:gps_data];
+               if (gps_date)
+                 asset_request.creationDate = gps_date;
+               CLLocation* gps_location = [self locationFromDictionary:gps_data];
+               if (gps_location)
+                 asset_request.location = gps_location;
+             }
              [assets addObject:asset_request.placeholderForCreatedAsset];
+           }
          }
          else if (type == InfinitFileTypeVideo)
          {
@@ -140,6 +164,14 @@ static InfinitGalleryManager* _instance = nil;
            asset_request = [PHAssetChangeRequest creationRequestForAssetFromVideoAtFileURL:url];
            if (asset_request)
              [assets addObject:asset_request.placeholderForCreatedAsset];
+         }
+         else
+         {
+           if (path.lastPathComponent.length)
+           {
+             ELLE_DEBUG("%s: item is not an image or video: %s", self.description.UTF8String,
+                        path.lastPathComponent.UTF8String);
+           }
          }
        }
        [collection_request addAssets:assets];
@@ -225,6 +257,43 @@ static InfinitGalleryManager* _instance = nil;
   if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusAuthorized)
     return YES;
   return NO;
+}
+
+- (NSDate*)dateFromDictionary:(NSDictionary*)dict
+{
+  NSString* gps_time_str = [NSString stringWithFormat:@"%@ %@",
+                            dict[(__bridge NSString*)kCGImagePropertyGPSDateStamp],
+                            dict[(__bridge NSString*)kCGImagePropertyGPSTimeStamp]];
+  NSDate* gps_date = [self.gps_date_formatter dateFromString:gps_time_str];
+  return gps_date;
+}
+
+- (double)doubleForKey:(CFStringRef)key
+                  dict:(NSDictionary*)dict
+{
+  if (![dict.allKeys containsObject:(__bridge NSString*)key])
+    return 0.0f;
+  return [dict[(__bridge NSString*)key] doubleValue];
+}
+
+- (CLLocation*)locationFromDictionary:(NSDictionary*)dict
+{
+  if (![dict.allKeys containsObject:(__bridge NSString*)kCGImagePropertyGPSLatitude] ||
+      ![dict.allKeys containsObject:(__bridge NSString*)kCGImagePropertyGPSLongitude])
+    return nil;
+  CLLocationCoordinate2D coords;
+  coords.latitude = [self doubleForKey:kCGImagePropertyGPSLatitude dict:dict] * ([dict[(__bridge NSString*)kCGImagePropertyGPSLatitudeRef] isEqualToString:@"S"] ? -1.0f : 1.0f);
+  coords.longitude = [self doubleForKey:kCGImagePropertyGPSLongitude dict:dict] * ([dict[(__bridge NSString*)kCGImagePropertyGPSLongitudeRef] isEqualToString:@"W"] ? -1.0f : 1.0f);
+  NSDate* date = [self dateFromDictionary:dict];
+  if (!date)
+    return nil;
+  return [[CLLocation alloc] initWithCoordinate:coords
+                                       altitude:[self doubleForKey:kCGImagePropertyGPSAltitude dict:dict]
+                             horizontalAccuracy:[self doubleForKey:kCGImagePropertyGPSHPositioningError dict:dict]
+                               verticalAccuracy:0.0f
+                                         course:[self doubleForKey:kCGImagePropertyGPSImgDirection dict:dict]
+                                          speed:[self doubleForKey:kCGImagePropertyGPSSpeed dict:dict]
+                                      timestamp:[self dateFromDictionary:dict]];
 }
 
 @end
