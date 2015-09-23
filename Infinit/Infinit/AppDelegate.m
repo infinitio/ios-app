@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 
+#import "InfinitAppBadgeManager.h"
 #import "InfinitApplicationSettings.h"
 #import "InfinitBackgroundManager.h"
 #import "InfinitConstants.h"
@@ -172,6 +173,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   }
 
   [InfinitConnectionManager sharedInstance];
+  [InfinitAppBadgeManager startManager];
   [InfinitStateManager startState];
   [InfinitQuotaManager start];
 
@@ -219,7 +221,8 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
           [self.storyboard instantiateViewControllerWithIdentifier:self.logging_in_controller_id];
         [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:20.0f];
         FBSDKLoginManager* manager = [InfinitFacebookManager sharedInstance].login_manager;
-        [manager logInWithReadPermissions:kInfinitFacebookReadPermissions
+        [manager logInWithPublishPermissions:kInfinitFacebookReadPermissions
+                          fromViewController:nil
                                   handler:^(FBSDKLoginManagerLoginResult* result,
                                             NSError* error)
         {
@@ -397,7 +400,6 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   [FBSDKAppEvents activateApp];
 
   [[UIApplication sharedApplication] cancelAllLocalNotifications];
-  [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 }
 
 - (void)applicationWillTerminate:(UIApplication*)application
