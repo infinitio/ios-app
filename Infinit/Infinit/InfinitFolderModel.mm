@@ -50,8 +50,7 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
   if (self.meta_data == nil)
     return;
   _ctime = self.meta_data[@"ctime"];
-  NSNumber* done_ = self.meta_data[@"done"];
-  _done = done_.boolValue;
+  _done = [self.meta_data[@"done"] boolValue];
   _name = self.meta_data[@"name"];
   _sender_name = self.meta_data[@"sender_fullname"];
   _sender_meta_id = self.meta_data[@"sender_meta_id"];
