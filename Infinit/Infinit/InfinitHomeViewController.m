@@ -10,6 +10,7 @@
 
 #import "InfinitApplicationSettings.h"
 #import "InfinitConstants.h"
+#import "InfinitContactManager.h"
 #import "InfinitDownloadFolderManager.h"
 #import "InfinitFilesMultipleViewController.h"
 #import "InfinitFilePreviewController.h"
@@ -21,7 +22,10 @@
 #import "InfinitHomeRatingCell.h"
 #import "InfinitHostDevice.h"
 #import "InfinitMainSplitViewController_iPad.h"
+#import "InfinitMessagingManager.h"
+#import "InfinitMessagingRecipient.h"
 #import "InfinitMetricsManager.h"
+#import "InfinitNonLocalizedString.h"
 #import "InfinitOfflineOverlay.h"
 #import "InfinitRatingManager.h"
 #import "InfinitResizableNavigationBar.h"
@@ -32,9 +36,11 @@
 #import <Gap/InfinitColor.h>
 #import <Gap/InfinitDeviceManager.h>
 #import <Gap/InfinitPeerTransactionManager.h>
+#import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitTemporaryFileManager.h>
 #import <Gap/InfinitUserManager.h>
 #import <Gap/NSNumber+DataSize.h>
+#import <Gap/NSString+PhoneNumber.h>
 
 #import "UIImage+Rounded.h"
 
@@ -1193,6 +1199,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
     return;
   @synchronized(self.data)
   {
+    InfinitUploadThumbnailManager* thumb_manager = [InfinitUploadThumbnailManager sharedInstance];
     if (self.data.count == 1)
     {
       InfinitTransaction* transaction = [self.data[path.row] transaction];
@@ -1201,7 +1208,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
         InfinitPeerTransaction* peer_transaction = (InfinitPeerTransaction*)transaction;
         [[InfinitPeerTransactionManager sharedInstance] archiveTransaction:peer_transaction];
         if (transaction.from_device)
-          [[InfinitUploadThumbnailManager sharedInstance] removeThumbnailsForTransaction:peer_transaction];
+          [thumb_manager removeThumbnailsForTransaction:peer_transaction];
       }
       [self.data removeAllObjects];
       [self.collection_view reloadData];
@@ -1218,7 +1225,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
           InfinitPeerTransaction* peer_transaction = (InfinitPeerTransaction*)transaction;
           [[InfinitPeerTransactionManager sharedInstance] archiveTransaction:peer_transaction];
           if (transaction.from_device)
-            [[InfinitUploadThumbnailManager sharedInstance] removeThumbnailsForTransaction:peer_transaction];
+            [thumb_manager removeThumbnailsForTransaction:peer_transaction];
         }
         [self.data removeObjectAtIndex:path.row];
         [self.collection_view deleteItemsAtIndexPaths:@[path]];
@@ -1283,8 +1290,9 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 
 - (void)cellOpenTapped:(InfinitHomePeerTransactionCell*)sender
 {
+  InfinitDownloadFolderManager* manager = [InfinitDownloadFolderManager sharedInstance];
   InfinitFolderModel* folder =
-    [[InfinitDownloadFolderManager sharedInstance] completedFolderForTransactionMetaId:sender.transaction.meta_id];
+    [manager completedFolderForTransactionMetaId:sender.transaction.meta_id];
   if (folder.files.count == 1)
   {
     self.previewing_files = YES;
@@ -1342,6 +1350,43 @@ openFileTapped:(NSUInteger)file_index
     _sending = YES;
     [self performSegueWithIdentifier:@"home_card_to_send_segue" sender:sender];
   }
+}
+
+- (void)cellPokeTapped:(InfinitHomePeerTransactionCell*)sender
+{
+  InfinitUser* user = sender.transaction.recipient;
+  NSString* first_name = @"";
+  if (!user.fullname.infinit_isPhoneNumber)
+    first_name = [@" " stringByAppendingString:[user.fullname componentsSeparatedByString:@" "][0]];
+  NSString* message =
+    [NSString stringWithFormat:InfinitNonLocalizedString(@"Hey%@! You've still got a file I sent you with Infinit waiting: %@"),
+     first_name, user.ghost_invitation_url];
+  InfinitMessagingRecipient* message_recipient =
+    [InfinitMessagingRecipient phoneNumber:user.ghost_identifier];
+  if (!message_recipient)
+    return;
+  [[InfinitMessagingManager sharedInstance] sendMessage:message
+                                            toRecipient:message_recipient
+                                        completionBlock:^(InfinitMessagingRecipient*recipient,
+                                                          NSString* message,
+                                                          InfinitMessageStatus status)
+  {
+    if (status != InfinitMessageStatusSuccess)
+    {
+      [[InfinitStateManager sharedInstance] sendInvitation:user.ghost_identifier
+                                                   message:message
+                                                 ghostCode:user.ghost_code
+                                                userCancel:(status == InfinitMessageStatusCancel)
+                                                      type:@"reminder"];
+    }
+  }];
+}
+
+- (void)cellInstallTapped:(InfinitHomePeerTransactionCell*)sender
+{
+  NSURL* url =
+    [NSURL URLWithString:@"http://help.infinit.io/knowledgebase/articles/737748"];
+  [[UIApplication sharedApplication] openURL:url];
 }
 
 #pragma mark - Onboarding Cell Handling

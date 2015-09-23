@@ -15,12 +15,14 @@
 #import "InfinitHostDevice.h"
 #import "InfinitHomePeerTransactionFileCell.h"
 #import "InfinitHomePeerTransactionMoreFilesCell.h"
+#import "InfinitNonLocalizedString.h"
 #import "InfinitUploadThumbnailManager.h"
 
 #import <Gap/InfinitColor.h>
 #import <Gap/InfinitDeviceManager.h>
 #import <Gap/InfinitTime.h>
 #import <Gap/NSNumber+DataSize.h>
+#import <Gap/NSString+PhoneNumber.h>
 
 #import "UIImage+Rounded.h"
 
@@ -75,11 +77,16 @@ static NSAttributedString* _pause_str = nil;
 static NSAttributedString* _resume_str = nil;
 static NSAttributedString* _send_str = nil;
 
+static NSAttributedString* _poke_str = nil;
+static NSAttributedString* _install_str = nil;
+
 static UIImage* _accept_image = nil;
 static UIImage* _cancel_image = nil;
 static UIImage* _open_image = nil;
 static UIImage* _pause_image = nil;
 static UIImage* _send_image = nil;
+static UIImage* _poke_image = nil;
+static UIImage* _install_image = nil;
 
 static CGFloat _status_height = 45.0f;
 static CGFloat _button_height = 45.0f;
@@ -184,6 +191,16 @@ static CGFloat _button_height = 45.0f;
     _send_str = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"SEND", nil)
                                                 attributes:red_attrs];
   }
+  if (!_poke_str)
+  {
+    _poke_str = [[NSAttributedString alloc] initWithString:InfinitNonLocalizedString(@"REMIND")
+                                                attributes:green_attrs];
+  }
+  if (!_install_str)
+  {
+    _install_str = [[NSAttributedString alloc] initWithString:InfinitNonLocalizedString(@"GET FILES")
+                                                   attributes:green_attrs];
+  }
 
   if (!_accept_image)
     _accept_image = [UIImage imageNamed:@"icon-accept"];
@@ -195,6 +212,10 @@ static CGFloat _button_height = 45.0f;
     _pause_image = [UIImage imageNamed:@"icon-pause"];
   if (!_send_image)
     _send_image = [UIImage imageNamed:@"icon-send-home"];
+  if (!_poke_image)
+    _poke_image = [UIImage imageNamed:@"icon-remind"];
+  if (!_install_image)
+    _install_image = [UIImage imageNamed:@"icon-get-files"];
 }
 
 - (void)setUpWithDelegate:(id<InfinitHomePeerTransactionCellProtocol>)delegate
@@ -305,16 +326,51 @@ static CGFloat _button_height = 45.0f;
 - (void)setCancelOnlyButton
 {
   [self setPauseCancelButtons];
-  self.button_separator_constraint.constant = floor(self.bounds.size.width / 2.0f);
-  self.button_separator_line.hidden = YES;
-  self.left_button.hidden = YES;
+  [self enableLeftButton:NO];
+}
+
+- (void)enableLeftButton:(BOOL)enable
+{
+  self.button_separator_line.hidden = !enable;
+  self.left_button.hidden = !enable;
+  self.button_separator_constraint.constant = enable ? 0.0f: floor(self.bounds.size.width / 2.0f);
+}
+
+- (void)setCancelPokeButtons
+{
+  if (![InfinitHostDevice english])
+  {
+    [self setCancelOnlyButton];
+    return;
+  }
+  [self enableLeftButton:YES];
+  [self.left_button setImage:_poke_image forState:UIControlStateNormal];
+  self.left_button.tintColor = [InfinitColor colorFromPalette:InfinitPaletteColorShamRock];
+  [self.left_button setAttributedTitle:_poke_str forState:UIControlStateNormal];
+  [self.right_button setImage:_cancel_image forState:UIControlStateNormal];
+  self.right_button.tintColor = [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
+  [self.right_button setAttributedTitle:_cancel_str forState:UIControlStateNormal];
+}
+
+- (void)setCancelInstallButtons
+{
+  if (![InfinitHostDevice english])
+  {
+    [self setCancelOnlyButton];
+    return;
+  }
+  [self enableLeftButton:YES];
+  [self.left_button setImage:_install_image forState:UIControlStateNormal];
+  self.left_button.tintColor = [InfinitColor colorFromPalette:InfinitPaletteColorShamRock];
+  [self.left_button setAttributedTitle:_install_str forState:UIControlStateNormal];
+  [self.right_button setImage:_cancel_image forState:UIControlStateNormal];
+  self.right_button.tintColor = [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
+  [self.right_button setAttributedTitle:_cancel_str forState:UIControlStateNormal];
 }
 
 - (void)setPauseCancelButtons
 {
-  self.button_separator_line.hidden = NO;
-  self.left_button.hidden = NO;
-  self.button_separator_constraint.constant = 0.0f;
+  [self enableLeftButton:YES];
   [self.left_button setImage:_pause_image forState:UIControlStateNormal];
   self.left_button.tintColor = [InfinitColor colorFromPalette:InfinitPaletteColorShamRock];
   if (self.transaction.status == gap_transaction_paused)
@@ -328,6 +384,7 @@ static CGFloat _button_height = 45.0f;
 
 - (void)setAcceptRejectButtons
 {
+  [self enableLeftButton:YES];
   [self.left_button setImage:_accept_image forState:UIControlStateNormal];
   self.right_button.tintColor = [InfinitColor colorFromPalette:InfinitPaletteColorShamRock];
   [self.left_button setAttributedTitle:_accept_str forState:UIControlStateNormal];
@@ -338,6 +395,7 @@ static CGFloat _button_height = 45.0f;
 
 - (void)setOpenSendButtons
 {
+  [self enableLeftButton:YES];
   [self.left_button setImage:_open_image forState:UIControlStateNormal];
   self.left_button.tintColor = [InfinitColor colorFromPalette:InfinitPaletteColorBurntSienna];
   [self.left_button setAttributedTitle:_open_str forState:UIControlStateNormal];
@@ -396,12 +454,34 @@ static CGFloat _button_height = 45.0f;
       if (self.transaction.from_device && self.expanded)
         [self setFilesViewHidden:NO];
       break;
-
-    case gap_transaction_cloud_buffered:
+      
     case gap_transaction_ghost_uploaded:
+      if (self.transaction.recipient.fullname.infinit_isPhoneNumber ||
+          self.transaction.recipient.ghost_identifier.infinit_isPhoneNumber)
+      {
+        [self setButtonsHidden:!self.expanded];
+        if (self.expanded)
+          [self setCancelPokeButtons];
+        [self setStatusViewHidden:!self.expanded];
+        self.top_line.hidden = !self.expanded;
+        [self setFilesViewHidden:!self.expanded];
+        break;
+      } // else fall through to cloud_buffered
+    case gap_transaction_cloud_buffered:
       [self setButtonsHidden:!self.expanded];
       if (self.expanded)
-        [self setCancelOnlyButton];
+      {
+        if (self.transaction.from_device &&
+            self.transaction.recipient.is_self &&
+            ![InfinitDeviceManager sharedInstance].other_devices.count)
+        {
+          [self setCancelInstallButtons];
+        }
+        else
+        {
+          [self setCancelOnlyButton];
+        }
+      }
       [self setStatusViewHidden:!self.expanded];
       self.top_line.hidden = !self.expanded;
       [self setFilesViewHidden:!self.expanded];
@@ -489,7 +569,7 @@ static CGFloat _button_height = 45.0f;
 - (void)setProgress
 {
   float progress = self.transaction.progress;
-  if (!self.transaction.done && !self.transaction.bufferred &&
+  if (!self.transaction.done && !self.transaction.buffered &&
       (progress > 0.0f || self.transaction.status == gap_transaction_transferring))
   {
     self.avatar_view.progress = progress;
@@ -544,6 +624,10 @@ static CGFloat _button_height = 45.0f;
     case gap_transaction_paused:
       return NSLocalizedString(@"Paused", nil);
     case gap_transaction_cloud_buffered:
+      if (self.transaction.recipient.is_self && self.transaction.from_device && [InfinitHostDevice english])
+        return InfinitNonLocalizedString(@"Download on another device");
+      else
+        return NSLocalizedString(@"Sent", nil);
     case gap_transaction_ghost_uploaded:
       return NSLocalizedString(@"Sent", nil);
     case gap_transaction_canceled:
@@ -705,14 +789,22 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
     case gap_transaction_transferring:
     case gap_transaction_paused:
     case gap_transaction_waiting_data:
-    case gap_transaction_cloud_buffered:
-    case gap_transaction_ghost_uploaded:
       [self.delegate cellPauseTapped:self];
+      break;
+      
+    case gap_transaction_cloud_buffered:
+      // Only shown when sending to yourself with no devices.
+      [self.delegate cellInstallTapped:self];
+      break;
+
+    case gap_transaction_ghost_uploaded:
+      [self.delegate cellPokeTapped:self];
       break;
 
     case gap_transaction_finished:
       [self.delegate cellOpenTapped:self];
-
+      break;
+    
     default:
       break;
   }
@@ -743,6 +835,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 
     case gap_transaction_finished:
       [self.delegate cellSendTapped:self];
+      break;
 
     default:
       break;

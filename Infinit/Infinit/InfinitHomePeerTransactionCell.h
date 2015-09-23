@@ -35,14 +35,13 @@
 
 - (void)cellAcceptTapped:(InfinitHomePeerTransactionCell*)sender;
 - (void)cellRejectTapped:(InfinitHomePeerTransactionCell*)sender;
-
 - (void)cellPauseTapped:(InfinitHomePeerTransactionCell*)sender;
-
 - (void)cellCancelTapped:(InfinitHomePeerTransactionCell*)sender;
-
 - (void)cellOpenTapped:(InfinitHomePeerTransactionCell*)sender;
 - (void)cell:(InfinitHomePeerTransactionCell*)sender
 openFileTapped:(NSUInteger)file_index;
 - (void)cellSendTapped:(InfinitHomePeerTransactionCell*)sender;
+- (void)cellPokeTapped:(InfinitHomePeerTransactionCell*)sender;
+- (void)cellInstallTapped:(InfinitHomePeerTransactionCell*)sender;
 
 @end
