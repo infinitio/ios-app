@@ -1,0 +1,44 @@
+PODS:
+  - Adjust (4.3.0):
+    - Adjust/Core (= 4.3.0)
+  - Adjust/Core (4.3.0)
+  - Bolts (1.2.2):
+    - Bolts/AppLinks (= 1.2.2)
+    - Bolts/Tasks (= 1.2.2)
+  - Bolts/AppLinks (1.2.2):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.2.2)
+  - FBSDKCoreKit (4.6.0):
+    - Bolts (~> 1.1)
+    - FBSDKCoreKit/arc (= 4.6.0)
+    - FBSDKCoreKit/no-arc (= 4.6.0)
+  - FBSDKCoreKit/arc (4.6.0):
+    - Bolts (~> 1.1)
+  - FBSDKCoreKit/no-arc (4.6.0):
+    - Bolts (~> 1.1)
+    - FBSDKCoreKit/arc
+  - FBSDKLoginKit (4.6.0):
+    - FBSDKCoreKit
+
+DEPENDENCIES:
+  - Adjust (from `git://github.com/adjust/ios_sdk.git`, tag `v4.3.0`)
+  - FBSDKCoreKit (= 4.6.0)
+  - FBSDKLoginKit (= 4.6.0)
+
+EXTERNAL SOURCES:
+  Adjust:
+    :git: git://github.com/adjust/ios_sdk.git
+    :tag: v4.3.0
+
+CHECKOUT OPTIONS:
+  Adjust:
+    :git: git://github.com/adjust/ios_sdk.git
+    :tag: v4.3.0
+
+SPEC CHECKSUMS:
+  Adjust: b9efb9de555474ab5bc0f331842280f0bc7a25fd
+  Bolts: 20a2bd788273360cb1e31530dc19b8544eef2544
+  FBSDKCoreKit: 9954492d90c5fd65ae831395697a1660360d61f1
+  FBSDKLoginKit: 3d07febbfa884b9878cacba54f705bb41f07d4b6
+
+COCOAPODS: 0.38.2

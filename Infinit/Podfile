@@ -1,0 +1,4 @@
+platform :ios, '7.1'
+pod 'Adjust', :git => 'git://github.com/adjust/ios_sdk.git', :tag => 'v4.3.0'
+pod 'FBSDKCoreKit', '4.6.0'
+pod 'FBSDKLoginKit', '4.6.0'

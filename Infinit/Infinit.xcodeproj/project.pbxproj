@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A653CE88D81CB3D9E63DC07 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 097948D4A0B7709C991EDFDE /* libPods.a */; };
 		8301A6F71AF91ECC00E9FABF /* Gap_Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8301A6F51AF91ECC00E9FABF /* Gap_Localizable.strings */; };
 		8303307D1B1DFA2100FE2931 /* InfinitContactAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 8303307C1B1DFA2100FE2931 /* InfinitContactAddressBook.m */; };
 		830330801B1DFCA800FE2931 /* InfinitContactEmail.m in Sources */ = {isa = PBXBuildFile; fileRef = 8303307F1B1DFCA800FE2931 /* InfinitContactEmail.m */; };
@@ -60,7 +61,6 @@
 		8332F92B1ADFFA23007392A4 /* InfinitFilesFolderViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 8332F92A1ADFFA23007392A4 /* InfinitFilesFolderViewController_iPad.m */; };
 		83376EE81AEFB9530001A61E /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83376EE71AEFB9530001A61E /* iAd.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		83376EEA1AEFB95F0001A61E /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83376EE91AEFB95F0001A61E /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		83376F081AEFBE640001A61E /* Adjust.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83376F071AEFBE640001A61E /* Adjust.framework */; };
 		83376F1F1AEFDF1C0001A61E /* InfinitWelcomeAvatarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83376F1D1AEFDF1C0001A61E /* InfinitWelcomeAvatarViewController.m */; };
 		83376F291AF0EE340001A61E /* InfinitLoggingInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83376F281AF0EE340001A61E /* InfinitLoggingInViewController.m */; };
 		833DFCBC1A2F837400B0D213 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 833DFCBB1A2F837400B0D213 /* AssetsLibrary.framework */; };
@@ -92,8 +92,6 @@
 		8369E8821A83BC1D00ECD519 /* InfinitHomeFeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8369E8801A83BC1D00ECD519 /* InfinitHomeFeedbackViewController.m */; };
 		836D39A11A69409300892206 /* UIImage+Rounded.m in Sources */ = {isa = PBXBuildFile; fileRef = 836D39A01A69409300892206 /* UIImage+Rounded.m */; };
 		836F5C8C1A166720007C9C4E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836F5C8B1A166720007C9C4E /* SystemConfiguration.framework */; };
-		836FCBC61B175A2F007F5CFC /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836FCBC41B17590B007F5CFC /* FBSDKCoreKit.framework */; };
-		836FCBC81B175A2F007F5CFC /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 836FCBC71B175A2F007F5CFC /* FBSDKLoginKit.framework */; };
 		836FCBD61B187BF7007F5CFC /* InfinitFacebookManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 836FCBD51B187BF7007F5CFC /* InfinitFacebookManager.m */; };
 		837640F81A9D1F2A00BB2316 /* InfinitHomeEmptyOverlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 837640FA1A9D1F2A00BB2316 /* InfinitHomeEmptyOverlay.xib */; };
 		837F664A1AADCB5100EA49C4 /* InfinitSendDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 837F66491AADCB5100EA49C4 /* InfinitSendDeviceCell.m */; };
@@ -321,6 +319,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		097948D4A0B7709C991EDFDE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7EBD589BB691ED41E9506EC5 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		83016DE71B00D499004864B9 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = "../../../objcpp-gap/Gap/es.lproj/Gap_Localizable.strings"; sourceTree = "<group>"; };
 		8301A6F61AF91ECC00E9FABF /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = "../../../objcpp-gap/Gap/fr.lproj/Gap_Localizable.strings"; sourceTree = "<group>"; };
 		8303307B1B1DFA2100FE2931 /* InfinitContactAddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitContactAddressBook.h; sourceTree = "<group>"; };
@@ -448,7 +448,6 @@
 		8332F92A1ADFFA23007392A4 /* InfinitFilesFolderViewController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFilesFolderViewController_iPad.m; sourceTree = "<group>"; };
 		83376EE71AEFB9530001A61E /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		83376EE91AEFB95F0001A61E /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
-		83376F071AEFBE640001A61E /* Adjust.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Adjust.framework; path = ThirdParty/Adjust.framework; sourceTree = "<group>"; };
 		83376F1C1AEFDF1C0001A61E /* InfinitWelcomeAvatarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitWelcomeAvatarViewController.h; sourceTree = "<group>"; };
 		83376F1D1AEFDF1C0001A61E /* InfinitWelcomeAvatarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitWelcomeAvatarViewController.m; sourceTree = "<group>"; };
 		83376F271AF0EE330001A61E /* InfinitLoggingInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitLoggingInViewController.h; sourceTree = "<group>"; };
@@ -506,8 +505,6 @@
 		836D399F1A69409300892206 /* UIImage+Rounded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Rounded.h"; sourceTree = "<group>"; };
 		836D39A01A69409300892206 /* UIImage+Rounded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Rounded.m"; sourceTree = "<group>"; };
 		836F5C8B1A166720007C9C4E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		836FCBC41B17590B007F5CFC /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ThirdParty/FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		836FCBC71B175A2F007F5CFC /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ThirdParty/FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		836FCBD41B187BF7007F5CFC /* InfinitFacebookManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFacebookManager.h; sourceTree = "<group>"; };
 		836FCBD51B187BF7007F5CFC /* InfinitFacebookManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFacebookManager.m; sourceTree = "<group>"; };
 		837640F91A9D1F2A00BB2316 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfinitHomeEmptyOverlay.xib; sourceTree = "<group>"; };
@@ -1218,6 +1215,7 @@
 		83FEF1151B67811400DECD80 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		83FEF1161B67811400DECD80 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfinitHomePeerTransactionCell.strings"; sourceTree = "<group>"; };
 		83FEF1171B67811400DECD80 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfinitInvitationOverlayViewController.strings"; sourceTree = "<group>"; };
+		C94FA457909EE79866C36412 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D00045BB1A499A20008DB448 /* InfinitContactImportCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitContactImportCell.h; sourceTree = "<group>"; };
 		D00045BC1A499A20008DB448 /* InfinitContactImportCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitContactImportCell.m; sourceTree = "<group>"; };
 		D05726B11A50BA880097083C /* InfinitSendUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendUserCell.m; sourceTree = "<group>"; };
@@ -1261,19 +1259,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				836FCBC81B175A2F007F5CFC /* FBSDKLoginKit.framework in Frameworks */,
-				836FCBC61B175A2F007F5CFC /* FBSDKCoreKit.framework in Frameworks */,
+				83F31BB51A9D190B00A6007C /* libc++.a in Frameworks */,
+				83F31BB61A9D190B00A6007C /* libc++abi.a in Frameworks */,
+				83F4D0961A13902A0068BEB2 /* libGap-iOS.a in Frameworks */,
 				83376EEA1AEFB95F0001A61E /* AdSupport.framework in Frameworks */,
 				83376EE81AEFB9530001A61E /* iAd.framework in Frameworks */,
 				83F4282F1AAE048B009A1A7C /* CoreTelephony.framework in Frameworks */,
-				83F31BB51A9D190B00A6007C /* libc++.a in Frameworks */,
-				83F31BB61A9D190B00A6007C /* libc++abi.a in Frameworks */,
 				83825BE11A701FE900420F24 /* Photos.framework in Frameworks */,
 				830AD1F51A6D172200E2B058 /* Accelerate.framework in Frameworks */,
 				83B5D60E1A6663430061931F /* Security.framework in Frameworks */,
 				833DFCBC1A2F837400B0D213 /* AssetsLibrary.framework in Frameworks */,
 				836F5C8C1A166720007C9C4E /* SystemConfiguration.framework in Frameworks */,
-				83F4D0961A13902A0068BEB2 /* libGap-iOS.a in Frameworks */,
 				83F4D08B1A1389430068BEB2 /* libiconv.dylib in Frameworks */,
 				83F4D0591A1388050068BEB2 /* libboost_signals-mt-s.a in Frameworks */,
 				83F4D07D1A1388C50068BEB2 /* libmetrics.a in Frameworks */,
@@ -1305,7 +1301,7 @@
 				83F4D05A1A1388050068BEB2 /* libboost_system-mt-s.a in Frameworks */,
 				83F4D0671A13882B0068BEB2 /* libarchive.a in Frameworks */,
 				83F4D0601A13880F0068BEB2 /* libcryptography.a in Frameworks */,
-				83376F081AEFBE640001A61E /* Adjust.framework in Frameworks */,
+				3A653CE88D81CB3D9E63DC07 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1319,6 +1315,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		273FC09D057488572C59C608 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C94FA457909EE79866C36412 /* Pods.debug.xcconfig */,
+				7EBD589BB691ED41E9506EC5 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		83054E0C1B20A61A005F9558 /* Feedback Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -1680,16 +1685,14 @@
 				83F31BB31A9D190B00A6007C /* libc++.a */,
 				83F31BB41A9D190B00A6007C /* libc++abi.a */,
 				830AD1F41A6D172200E2B058 /* Accelerate.framework */,
-				83376F071AEFBE640001A61E /* Adjust.framework */,
 				83376EE91AEFB95F0001A61E /* AdSupport.framework */,
 				833DFCBB1A2F837400B0D213 /* AssetsLibrary.framework */,
 				83F4282E1AAE048B009A1A7C /* CoreTelephony.framework */,
-				836FCBC41B17590B007F5CFC /* FBSDKCoreKit.framework */,
-				836FCBC71B175A2F007F5CFC /* FBSDKLoginKit.framework */,
 				83376EE71AEFB9530001A61E /* iAd.framework */,
 				83825BE01A701FE900420F24 /* Photos.framework */,
 				83B5D60D1A6663430061931F /* Security.framework */,
 				836F5C8B1A166720007C9C4E /* SystemConfiguration.framework */,
+				097948D4A0B7709C991EDFDE /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1928,6 +1931,7 @@
 				83B32D791A136486004AB945 /* InfinitTests */,
 				83B32D5E1A136485004AB945 /* Products */,
 				83F4D08D1A1390160068BEB2 /* Gap.xcodeproj */,
+				273FC09D057488572C59C608 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2430,10 +2434,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 83B32D801A136486004AB945 /* Build configuration list for PBXNativeTarget "Infinit" */;
 			buildPhases = (
+				A2F1F9C63C134B838F993BBE /* Check Pods Manifest.lock */,
 				83B32D591A136485004AB945 /* Sources */,
 				83B32D5A1A136485004AB945 /* Frameworks */,
 				83B32D5B1A136485004AB945 /* Resources */,
 				D05D5D141A24BFAB005529E8 /* Embed App Extensions */,
+				202367366EC6901B5E44F3BE /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2648,6 +2654,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		202367366EC6901B5E44F3BE /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A2F1F9C63C134B838F993BBE /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		830A38FA1AD3DBF60017F258 /* Sources */ = {
@@ -3723,6 +3762,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3767,6 +3807,7 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3777,6 +3818,7 @@
 		};
 		83B32D811A136486004AB945 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C94FA457909EE79866C36412 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -3824,7 +3866,7 @@
 				);
 				LINKER_DISPLAYS_MANGLED_NAMES = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3836,6 +3878,7 @@
 		};
 		83B32D821A136486004AB945 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7EBD589BB691ED41E9506EC5 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -3883,7 +3926,7 @@
 				);
 				LINKER_DISPLAYS_MANGLED_NAMES = YES;
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
