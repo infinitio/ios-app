@@ -14,7 +14,7 @@
 
 - (void)sendEvent:(UIEvent*)event
 {
-  if (event && (event.subtype==UIEventSubtypeMotionShake))
+  if (event && (event.subtype == UIEventSubtypeMotionShake))
   {
     AppDelegate* delegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
     [delegate handleShakeEvent:event];
