@@ -416,7 +416,9 @@ static NSAttributedString* _unfavorite_title = nil;
       {
         [[InfinitStateManager sharedInstance] sendInvitation:recipient.identifier
                                                      message:message
-                                                   ghostCode:code];
+                                                   ghostCode:code
+                                                  userCancel:(status == InfinitMessageStatusCancel)
+                                                        type:@"plain"];
       }
     }
   };
