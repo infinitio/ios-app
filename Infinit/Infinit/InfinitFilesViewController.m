@@ -73,7 +73,8 @@ static dispatch_once_t _library_token = 0;
 
 - (void)viewDidLoad
 {
-  UINib* cell_nib = [UINib nibWithNibName:NSStringFromClass(InfinitFilesTableCell.class) bundle:nil];
+  UINib* cell_nib =
+    [UINib nibWithNibName:NSStringFromClass(InfinitFilesTableCell.class) bundle:nil];
   [self.table_view registerNib:cell_nib forCellReuseIdentifier:_file_cell_id];
   CGRect footer_rect = CGRectMake(0.0f, 0.0f, self.table_view.bounds.size.width, 60.0f);
   self.table_view.tableFooterView = [[UIView alloc] initWithFrame:footer_rect];
@@ -113,21 +114,21 @@ static dispatch_once_t _library_token = 0;
   [self.bottom_bar.save_button addTarget:self
                                   action:@selector(saveTapped:)
                         forControlEvents:UIControlEventTouchUpInside];
+  [self.bottom_bar.share_button addTarget:self
+                                   action:@selector(shareTapped:)
+                         forControlEvents:UIControlEventTouchUpInside];
   [self.bottom_bar.send_button addTarget:self
                                   action:@selector(sendTapped:)
                         forControlEvents:UIControlEventTouchUpInside];
   [self.bottom_bar.delete_button addTarget:self
                                     action:@selector(deleteTapped:)
                           forControlEvents:UIControlEventTouchUpInside];
+  self.bottom_bar.enabled = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
   _library_token = 0;
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(appplicationIsActive)
-                                               name:UIApplicationDidBecomeActiveNotification
-                                             object:nil];
   if (self.table_view.indexPathForSelectedRow != nil)
     [self.table_view deselectRowAtIndexPath:self.table_view.indexPathForSelectedRow animated:YES];
   _all_folders = self.download_manager.completed_folders;
@@ -180,6 +181,10 @@ static dispatch_once_t _library_token = 0;
   [super viewWillAppear:animated];
   self.bottom_bar.save_button.hidden = ![self haveGalleryAccess];
   self.bottom_bar.save_button.enabled = NO;
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(applicationWillResignActive)
+                                               name:UIApplicationWillResignActiveNotification
+                                             object:nil];
 }
 
 - (void)showNoFilesOverlay
@@ -355,9 +360,8 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 
 #pragma mark - Button Handling
 
-- (void)saveTapped:(id)sender
+- (NSArray*)filePathsForSelectedTransactions
 {
-  [((InfinitTabBarController*)self.tabBarController) showCopyToGalleryNotification];
   NSMutableArray* paths = [NSMutableArray array];
   for (NSIndexPath* index in self.table_view.indexPathsForSelectedRows)
   {
@@ -365,8 +369,30 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
     for (NSString* path in folder.file_paths)
       [paths addObject:path];
   }
+  return paths;
+}
+
+- (void)saveTapped:(id)sender
+{
+  [((InfinitTabBarController*)self.tabBarController) showCopyToGalleryNotification];
+  NSArray* paths = [self filePathsForSelectedTransactions];
   [InfinitGalleryManager saveToGallery:paths];
   [self setTableEditing:NO animated:YES];
+}
+
+- (void)shareTapped:(id)sender
+{
+  NSArray* path_strs = [self filePathsForSelectedTransactions];
+  NSMutableArray* paths = [NSMutableArray array];
+  for (NSString* path in path_strs)
+    [paths addObject:[NSURL fileURLWithPath:path]];
+  UIActivityViewController* activity_controller =
+    [[UIActivityViewController alloc] initWithActivityItems:paths
+                                      applicationActivities:nil];
+  [self presentViewController:activity_controller animated:YES completion:^
+  {
+    [self setTableEditing:NO animated:NO];
+  }];
 }
 
 - (IBAction)selectTapped:(id)sender
@@ -551,6 +577,12 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusAuthorized)
     return YES;
   return NO;
+}
+
+- (void)applicationWillResignActive
+{
+  if (self.table_view.editing)
+    [self setTableEditing:NO animated:NO];
 }
 
 @end

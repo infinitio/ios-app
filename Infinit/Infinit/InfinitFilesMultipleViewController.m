@@ -98,21 +98,21 @@ static dispatch_once_t _library_token = 0;
   [self.bottom_bar.save_button addTarget:self
                                   action:@selector(saveTapped:)
                         forControlEvents:UIControlEventTouchUpInside];
+  [self.bottom_bar.share_button addTarget:self
+                                   action:@selector(shareTapped:)
+                         forControlEvents:UIControlEventTouchUpInside];
   [self.bottom_bar.send_button addTarget:self
                                   action:@selector(sendTapped:)
                         forControlEvents:UIControlEventTouchUpInside];
   [self.bottom_bar.delete_button addTarget:self
                                     action:@selector(deleteTapped:)
                           forControlEvents:UIControlEventTouchUpInside];
+  self.bottom_bar.enabled = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
   _library_token = 0;
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(appplicationIsActive)
-                                               name:UIApplicationDidBecomeActiveNotification
-                                             object:nil];
   NSDictionary* nav_bar_attrs = @{NSFontAttributeName: [UIFont fontWithName:@"SourceSansPro-Bold"
                                                                        size:17.0f],
                                   NSForegroundColorAttributeName: [InfinitColor colorWithRed:81
@@ -142,12 +142,10 @@ static dispatch_once_t _library_token = 0;
   [self.table_view deselectRowAtIndexPath:self.table_view.indexPathForSelectedRow animated:animated];
   self.bottom_bar.save_button.hidden = ![self haveGalleryAccess];
   self.bottom_bar.save_button.enabled = NO;
-}
-
-- (void)appplicationIsActive
-{
-  if (self.table_view.editing)
-    [self setTableEditing:NO animated:NO];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(applicationWillResignActive)
+                                               name:UIApplicationWillResignActiveNotification
+                                             object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -310,11 +308,23 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer*)otherGestureReco
   [((InfinitTabBarController*)self.tabBarController) showCopyToGalleryNotification];
   NSMutableArray* paths = [NSMutableArray array];
   for (NSIndexPath* index in self.table_view.indexPathsForSelectedRows)
-  {
     [paths addObject:self.folder.file_paths[index.row]];
-  }
   [InfinitGalleryManager saveToGallery:paths];
   [self setTableEditing:NO animated:YES];
+}
+
+- (void)shareTapped:(id)sender
+{
+  NSMutableArray* paths = [NSMutableArray array];
+  for (NSIndexPath* index in self.table_view.indexPathsForSelectedRows)
+    [paths addObject:[NSURL fileURLWithPath:self.folder.file_paths[index.row]]];
+  UIActivityViewController* activity_controller =
+  [[UIActivityViewController alloc] initWithActivityItems:paths
+                                    applicationActivities:nil];
+  [self presentViewController:activity_controller animated:YES completion:^
+   {
+     [self setTableEditing:NO animated:NO];
+   }];
 }
 
 - (void)sendTapped:(id)sender
@@ -391,6 +401,12 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer*)otherGestureReco
   if ([ALAssetsLibrary authorizationStatus] == ALAuthorizationStatusAuthorized)
     return YES;
   return NO;
+}
+
+- (void)applicationWillResignActive
+{
+  if (self.table_view.editing)
+    [self setTableEditing:NO animated:NO];
 }
 
 @end
