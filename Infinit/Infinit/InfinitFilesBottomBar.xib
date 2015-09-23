@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8164.2" systemVersion="14F6a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9046" systemVersion="15B17c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8135.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9035"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -13,6 +13,7 @@
             <subviews>
                 <button opaque="NO" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iyp-1t-hXd">
                     <rect key="frame" x="20" y="10" width="30" height="30"/>
+                    <animations/>
                     <constraints>
                         <constraint firstAttribute="width" constant="30" id="LuA-iR-xcn"/>
                         <constraint firstAttribute="height" constant="30" id="Qhf-1Q-sf0"/>
@@ -23,6 +24,7 @@
                 </button>
                 <button opaque="NO" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FW0-IA-Qjv">
                     <rect key="frame" x="550" y="10" width="30" height="30"/>
+                    <animations/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="ZRr-cO-mEu"/>
                         <constraint firstAttribute="width" constant="30" id="fRl-A2-9S1"/>
@@ -31,8 +33,9 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
-                <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VA6-rw-Dpj">
+                <button opaque="NO" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VA6-rw-Dpj">
                     <rect key="frame" x="80" y="10" width="30" height="30"/>
+                    <animations/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="Ry2-0I-Nnm"/>
                         <constraint firstAttribute="width" constant="30" id="rba-HY-q6D"/>
@@ -47,12 +50,29 @@
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GvW-Xk-Y7u">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="1"/>
+                    <animations/>
                     <color key="backgroundColor" red="0.88235294119999996" green="0.88235294119999996" blue="0.88235294119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="ddg-TD-huj"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="center" ambiguous="YES" misplaced="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sk0-4E-46s">
+                    <rect key="frame" x="140" y="10" width="30" height="30"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="KAt-iY-9c4"/>
+                        <constraint firstAttribute="width" constant="30" id="XmZ-eF-Brp"/>
+                    </constraints>
+                    <state key="normal" image="icon-share">
+                        <color key="titleColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="disabled">
+                        <color key="titleColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                </button>
             </subviews>
+            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="FW0-IA-Qjv" secondAttribute="trailing" constant="20" id="3Wu-EY-TQC"/>
@@ -62,6 +82,7 @@
                 <constraint firstItem="Iyp-1t-hXd" firstAttribute="leading" secondItem="z7W-fk-rRI" secondAttribute="leading" constant="20" id="K2n-qW-XEe"/>
                 <constraint firstAttribute="centerY" secondItem="Iyp-1t-hXd" secondAttribute="centerY" id="SVl-MH-M7S"/>
                 <constraint firstItem="GvW-Xk-Y7u" firstAttribute="leading" secondItem="z7W-fk-rRI" secondAttribute="leading" id="X6l-lf-8mc"/>
+                <constraint firstItem="Sk0-4E-46s" firstAttribute="leading" secondItem="VA6-rw-Dpj" secondAttribute="trailing" constant="30" id="f5o-gF-ILQ"/>
                 <constraint firstAttribute="centerY" secondItem="VA6-rw-Dpj" secondAttribute="centerY" id="gc6-DN-qSc"/>
                 <constraint firstItem="GvW-Xk-Y7u" firstAttribute="top" secondItem="z7W-fk-rRI" secondAttribute="top" id="gr9-L9-4BC"/>
             </constraints>
@@ -70,6 +91,7 @@
                 <outlet property="delete_button" destination="FW0-IA-Qjv" id="mdv-re-c3H"/>
                 <outlet property="save_button" destination="VA6-rw-Dpj" id="c8w-mW-O9e"/>
                 <outlet property="send_button" destination="Iyp-1t-hXd" id="qy0-fp-KOD"/>
+                <outlet property="share_button" destination="Sk0-4E-46s" id="lxu-l2-ZVk"/>
             </connections>
             <point key="canvasLocation" x="294" y="259"/>
         </view>
@@ -78,5 +100,6 @@
         <image name="icon-delete-red" width="19" height="22"/>
         <image name="icon-save-red" width="22" height="27"/>
         <image name="icon-send-red" width="25" height="21"/>
+        <image name="icon-share" width="22" height="27"/>
     </resources>
 </document>

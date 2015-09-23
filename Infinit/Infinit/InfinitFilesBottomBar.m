@@ -8,6 +8,8 @@
 
 #import "InfinitFilesBottomBar.h"
 
+#import "InfinitHostDevice.h"
+
 #import <Gap/InfinitConnectionManager.h>
 
 @implementation InfinitFilesBottomBar
@@ -16,6 +18,10 @@
 {
   _enabled = NO;
   self.translatesAutoresizingMaskIntoConstraints = NO;
+  if ([InfinitHostDevice iOS7])
+  {
+    self.share_button.hidden = YES;
+  }
 }
 
 - (void)setEnabled:(BOOL)enabled
@@ -25,6 +31,7 @@
   _enabled = enabled;
   self.delete_button.enabled = enabled;
   self.send_button.enabled = enabled && [InfinitConnectionManager sharedInstance].was_logged_in;
+  self.share_button.enabled = enabled && ![InfinitHostDevice iOS7];
 }
 
 @end
