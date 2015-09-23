@@ -284,7 +284,10 @@ static dispatch_once_t _got_access_token = 0;
         NSString* stripped_number = [self strippedNumber:contact_phone];
         if ([stripped_number isEqualToString:phone])
         {
-          [ghost updateGhostWithFullname:contact.fullname avatar:contact.avatar];
+          dispatch_async(dispatch_get_main_queue(), ^
+          {
+            [ghost updateGhostWithFullname:contact.fullname avatar:contact.avatar];
+          });
           *stop = YES;
           break;
         }
