@@ -143,6 +143,20 @@
   return _can_send_whatsapp;
 }
 
+#pragma mark - Language
+
++ (BOOL)english
+{
+  static BOOL _english;
+  static dispatch_once_t _english_token = 0;
+  dispatch_once(&_english_token, ^
+  {
+    NSString* language = [[NSLocale preferredLanguages].firstObject lowercaseString];
+    _english = [language rangeOfString:@"en"].location == 0;
+  });
+  return _english;
+}
+
 #pragma mark - OS Version
 
 + (BOOL)iOS7
