@@ -4,3 +4,6 @@ xcuserdata
 xcdebugger
 *.xcuserdatad
 *.xcuserstate
+*.xcscmblueprint
+*.xccheckout
+Podfile.lock
