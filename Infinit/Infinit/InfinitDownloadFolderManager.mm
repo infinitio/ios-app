@@ -16,14 +16,15 @@
 
 ELLE_LOG_COMPONENT("iOS.DownloadFolderManager");
 
-static InfinitDownloadFolderManager* _instance = nil;
-
 @interface InfinitDownloadFolderManager ()
 
 @property (nonatomic, readonly) NSString* download_dir;
 @property (nonatomic, readonly) NSMutableDictionary* folder_map;
 
 @end
+
+static dispatch_once_t _instance_token = 0;
+static InfinitDownloadFolderManager* _instance = nil;
 
 @implementation InfinitDownloadFolderManager
 
@@ -99,8 +100,15 @@ static InfinitDownloadFolderManager* _instance = nil;
         {
           InfinitPeerTransaction* transaction =
             [[InfinitPeerTransactionManager sharedInstance] transactionWithMetaId:folder.id_];
-          if (transaction.done)
+          if (transaction.status == gap_transaction_finished)
+          {
             folder.done = YES;
+          }
+          else if (transaction.status == gap_transaction_canceled ||
+                   transaction.status == gap_transaction_failed)
+          {
+            [folder deleteFolder];
+          }
         }
       }
     }
@@ -109,7 +117,7 @@ static InfinitDownloadFolderManager* _instance = nil;
 
 - (void)loadFolders
 {
-  if (_folder_map == nil)
+  if (self.folder_map == nil)
     _folder_map = [NSMutableDictionary dictionary];
   NSError* error = nil;
   NSArray* contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:self.download_dir
@@ -133,17 +141,14 @@ static InfinitDownloadFolderManager* _instance = nil;
 
 + (instancetype)sharedInstance
 {
-  if (_instance == nil)
+  dispatch_once(&_instance_token, ^
+  {
     _instance = [[InfinitDownloadFolderManager alloc] init];
+  });
   return _instance;
 }
 
 #pragma mark - General
-
-- (void)setDelegate:(id<InfinitDownloadFolderManagerProtocol>)delegate
-{
-  _delegate = delegate;
-}
 
 - (NSArray*)completed_folders
 {
@@ -162,14 +167,23 @@ static InfinitDownloadFolderManager* _instance = nil;
 {
   InfinitFolderModel* res = [self.folder_map objectForKey:meta_id];
   if (res && !res.done)
+  {
+    InfinitPeerTransaction* transaction =
+      [InfinitPeerTransactionManager transactionWithMetaId:meta_id];
+    if (transaction && transaction.status == gap_transaction_finished)
+    {
+      res.done = YES;
+      return res;
+    }
     return nil;
+  }
   return res;
 }
 
 - (void)deleteFolder:(InfinitFolderModel*)folder
 {
   [self.folder_map removeObjectForKey:folder.id_];
-  [_delegate downloadFolderManager:self deletedFolder:folder];
+  [self.delegate downloadFolderManager:self deletedFolder:folder];
   [folder deleteFolder];
 }
 
@@ -199,7 +213,7 @@ static InfinitDownloadFolderManager* _instance = nil;
         InfinitFolderModel* folder = [[InfinitFolderModel alloc] initWithPath:path];
         folder.done = NO;
         [self.folder_map setObject:folder forKey:folder.id_];
-        [_delegate downloadFolderManager:self addedFolder:folder];
+        [self.delegate downloadFolderManager:self addedFolder:folder];
       }
       return;
     }
@@ -212,13 +226,14 @@ static InfinitDownloadFolderManager* _instance = nil;
         folder = [[InfinitFolderModel alloc] initWithPath:path];
         folder.done = YES;
         [self.folder_map setObject:folder forKey:folder.id_];
-        [_delegate downloadFolderManager:self folderFinished:folder];
+        [self.delegate downloadFolderManager:self folderFinished:folder];
       }
       else
       {
         folder.done = YES;
-        [_delegate downloadFolderManager:self folderFinished:folder];
+        [self.delegate downloadFolderManager:self folderFinished:folder];
       }
+      ELLE_DEBUG("%s: marked folder (%s) as done", self.description.UTF8String, folder.name);
       return;
     }
 
@@ -229,7 +244,7 @@ static InfinitDownloadFolderManager* _instance = nil;
       if (folder == nil)
         return;
       [self.folder_map removeObjectForKey:folder.id_];
-      [_delegate downloadFolderManager:self deletedFolder:folder];
+      [self.delegate downloadFolderManager:self deletedFolder:folder];
       [folder deleteFolder];
       return;
     }
