@@ -10,6 +10,8 @@
 
 #import "InfinitContactAddressBook.h"
 
+#import <Gap/NSString+PhoneNumber.h>
+
 static NSCharacterSet* _whitespace = nil;
 
 @implementation InfinitMessagingRecipient
@@ -52,10 +54,28 @@ static NSCharacterSet* _whitespace = nil;
   return self;
 }
 
+- (instancetype)initWithPhoneNumber:(NSString*)number
+{
+  if (!number.infinit_isPhoneNumber)
+    return nil;
+  if (self = [super init])
+  {
+    _identifier = number;
+    _method = InfinitMessageNative;
+    _name = number;
+  }
+  return self;
+}
+
 + (instancetype)recipient:(InfinitContactAddressBook*)contact
                withMethod:(InfinitMessageMethod)method
 {
   return [[self alloc] initWithRecipient:contact method:method];
+}
+
++ (instancetype)phoneNumber:(NSString*)number
+{
+  return [[self alloc] initWithPhoneNumber:number];
 }
 
 #pragma mark - Helpers

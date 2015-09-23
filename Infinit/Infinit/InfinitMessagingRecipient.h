@@ -27,4 +27,6 @@ typedef NS_ENUM(NSUInteger, InfinitMessageMethod)
 + (instancetype)recipient:(InfinitContactAddressBook*)contact
                withMethod:(InfinitMessageMethod)method;
 
++ (instancetype)phoneNumber:(NSString*)number;
+
 @end
