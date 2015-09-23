@@ -1791,7 +1791,9 @@ didDeleteTokenAtIndex:(NSUInteger)index
       {
         [[InfinitStateManager sharedInstance] sendInvitation:recipient.identifier
                                                      message:message
-                                                   ghostCode:transaction.recipient.ghost_code];
+                                                   ghostCode:transaction.recipient.ghost_code
+                                                  userCancel:(status == InfinitMessageStatusCancel)
+                                                        type:@"ghost"];
       }
       self.sent_to_contact = YES;
       dispatch_async(dispatch_get_main_queue(), ^
