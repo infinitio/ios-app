@@ -123,6 +123,7 @@ static dispatch_once_t _password_token = 0;
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+  [[InfinitFacebookManager sharedInstance] logout];
   if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
   {
     self.top_logo_constraint.constant = 250.0f;
@@ -141,7 +142,6 @@ static dispatch_once_t _password_token = 0;
 
 - (void)viewWillAppear:(BOOL)animated
 {
-  [[InfinitFacebookManager sharedInstance] logout];
   [super viewWillAppear:animated];
   [[UIApplication sharedApplication] setStatusBarHidden:YES];
   [[NSNotificationCenter defaultCenter] addObserver:self
@@ -786,67 +786,68 @@ static dispatch_once_t _password_token = 0;
                                                      completionBlock:^(InfinitStateResult* result,
                                                                        BOOL registered)
   {
-    InfinitWelcomeViewController* strong_self = weak_self;
     if (result.success && registered)
     {
-      [strong_self facebookConnect];
+      [weak_self facebookConnect];
     }
     else
     {
-      if (strong_self.current_controller == strong_self.email_controller &&
-          strong_self.email_controller.email.infinit_isEmail)
+      if (weak_self.current_controller == weak_self.email_controller &&
+          weak_self.email_controller.email.infinit_isEmail)
       {
-        strong_self.facebook_user.email = strong_self.email_controller.email;
-        strong_self.email = strong_self.email_controller.email;
+        weak_self.facebook_user.email = weak_self.email_controller.email;
+        weak_self.email = weak_self.email_controller.email;
       }
-      if (strong_self.current_controller == strong_self.last_step_controller)
-        strong_self.facebook_user.email = strong_self.email;
-      if (!strong_self.facebook_user.email.length)
+      if (weak_self.current_controller == weak_self.last_step_controller)
+        weak_self.facebook_user.email = weak_self.email;
+      if (!weak_self.facebook_user.email.length)
       {
-        [strong_self showViewController:self.email_controller animated:YES reverse:NO];
-        [strong_self.email_controller facebookNoAccount];
+        [weak_self showViewController:self.email_controller animated:YES reverse:NO];
+        [weak_self.email_controller facebookNoAccount];
         return;
       }
-      [[InfinitStateManager sharedInstance] accountStatusForEmail:strong_self.facebook_user.email
+      [[InfinitStateManager sharedInstance] accountStatusForEmail:weak_self.facebook_user.email
                                                   completionBlock:^(InfinitStateResult* result,
                                                                     NSString* email,
                                                                     AccountStatus status)
       {
-        InfinitWelcomeViewController* strong_self = weak_self;
-        strong_self.facebook_user.account_status = status;
+        weak_self.facebook_user.account_status = status;
         if (status == gap_account_status_new ||
             status == gap_account_status_contact || 
             status == gap_account_status_ghost)
         {
-          _name = strong_self.facebook_user.name;
-          if (strong_self.current_controller == strong_self.last_step_controller)
+          _name = weak_self.facebook_user.name;
+          if (weak_self.current_controller == weak_self.last_step_controller)
           {
-            strong_self.last_step_controller.name = strong_self.facebook_user.name;
-            [strong_self facebookConnect];
+            weak_self.last_step_controller.name = weak_self.facebook_user.name;
+            [weak_self facebookConnect];
           }
-          else if (strong_self.current_controller == strong_self.login_controller)
+          else if (weak_self.current_controller == weak_self.login_controller)
           {
-            [strong_self showViewController:strong_self.email_controller animated:YES reverse:NO];
-            strong_self.email_controller.email = strong_self.facebook_user.email;
-            [strong_self.email_controller facebookNoAccount];
+            [weak_self showViewController:weak_self.email_controller animated:YES reverse:NO];
+            weak_self.email_controller.email = weak_self.facebook_user.email;
+            [weak_self.email_controller facebookNoAccount];
           }
           else
           {
-            if (strong_self.current_controller != strong_self.email_controller)
-              [strong_self showViewController:strong_self.email_controller animated:YES reverse:NO];
+            if (weak_self.current_controller != weak_self.email_controller)
+              [weak_self showViewController:weak_self.email_controller animated:YES reverse:NO];
             else
-              [strong_self.email_controller gotEmailAccountType];
-            self.email_controller.email = strong_self.facebook_user.email;
+              [weak_self.email_controller gotEmailAccountType];
+            self.email_controller.email = weak_self.facebook_user.email;
           }
         }
         else if (status == gap_account_status_registered)
         {
           // Their Facebook email is already registered so they must do a normal login.
-          strong_self.email = strong_self.facebook_user.email;
-          _facebook_user = nil;
-          if (strong_self.current_controller != strong_self.password_controller)
-            [strong_self showViewController:strong_self.password_controller animated:YES reverse:NO];
-          strong_self.password_controller.hide_facebook_button = YES;
+          weak_self.email = weak_self.facebook_user.email;
+          {
+            InfinitWelcomeViewController* strong_self = weak_self;
+            strong_self->_facebook_user = nil;
+          }
+          if (weak_self.current_controller != weak_self.password_controller)
+            [weak_self showViewController:weak_self.password_controller animated:YES reverse:NO];
+          weak_self.password_controller.hide_facebook_button = YES;
         }
       }];
     }
@@ -868,8 +869,7 @@ static dispatch_once_t _password_token = 0;
     {
       dispatch_async(dispatch_get_main_queue(), ^
       {
-        InfinitWelcomeViewController* strong_self = weak_self;
-        [strong_self.current_controller resetView];
+        [weak_self.current_controller resetView];
         NSString* title = NSLocalizedString(@"Unable to fetch Facebook information", nil);
         NSString* message = nil;
         if (error)
@@ -880,21 +880,22 @@ static dispatch_once_t _password_token = 0;
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
-        [strong_self.current_controller resetView];
+        [weak_self.current_controller resetView];
       });
       return;
     }
-    InfinitWelcomeViewController* strong_self = weak_self;
     if ([result isKindOfClass:NSDictionary.class])
     {
       NSDictionary* user_dict = (NSDictionary*)result;
-      strong_self->_facebook_user =
-        [InfinitWelcomeFacebookUser facebookUserFromGraphDictionary:user_dict];
-      [InfinitDevicePasswordManager checkForExistingDeviceIdForAccount:strong_self.facebook_user.id_];
-      dispatch_async(dispatch_get_main_queue(), ^
       {
         InfinitWelcomeViewController* strong_self = weak_self;
-        [strong_self determineFacebookUserType];
+        strong_self->_facebook_user =
+          [InfinitWelcomeFacebookUser facebookUserFromGraphDictionary:user_dict];
+      }
+      [InfinitDevicePasswordManager checkForExistingDeviceIdForAccount:weak_self.facebook_user.id_];
+      dispatch_async(dispatch_get_main_queue(), ^
+      {
+        [weak_self determineFacebookUserType];
       });
     }
   }];
