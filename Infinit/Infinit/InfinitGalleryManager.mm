@@ -15,6 +15,7 @@
 #import "InfinitHostDevice.h"
 
 #import "ALAssetsLibrary+CustomPhotoAlbum.h"
+#import "ISO6709Location.h"
 #import <Photos/Photos.h>
 
 #import <Gap/InfinitPeerTransactionManager.h>
@@ -162,6 +163,38 @@ static InfinitGalleryManager* _instance = nil;
          {
            NSURL* url = [NSURL fileURLWithPath:path];
            asset_request = [PHAssetChangeRequest creationRequestForAssetFromVideoAtFileURL:url];
+           AVURLAsset* meta_asset = [AVURLAsset assetWithURL:url];
+           NSArray<AVMetadataItem*>* meta_data = meta_asset.metadata;
+           for (AVMetadataItem* item in meta_data)
+           {
+             if ([item.identifier isEqualToString:AVMetadataIdentifierQuickTimeUserDataCreationDate])
+             {
+               asset_request.creationDate = item.dateValue;
+             }
+           }
+           for (AVMetadataItem* item in meta_data)
+           {
+             if ([item.identifier isEqualToString:AVMetadataIdentifierQuickTimeUserDataLocationISO6709])
+             {
+               if (![item.value isKindOfClass:NSString.class])
+                 break;
+               NSString* location_str = (NSString*)item.value;
+               if (location_str.length)
+               {
+                 CLLocationCoordinate2D coord = ISO6709Location_coordinateFromString(location_str);
+                 if (CLLocationCoordinate2DIsValid(coord))
+                 {
+                   // FIXME: Get altitude from location string.
+                   asset_request.location =
+                    [[CLLocation alloc] initWithCoordinate:coord
+                                                  altitude:0
+                                        horizontalAccuracy:0
+                                          verticalAccuracy:0
+                                                 timestamp:asset_request.creationDate];;
+                 }
+               }
+             }
+           }
            if (asset_request)
              [assets addObject:asset_request.placeholderForCreatedAsset];
          }
@@ -235,9 +268,15 @@ static InfinitGalleryManager* _instance = nil;
     return;
   if (transaction.to_device && status == gap_transaction_finished)
   {
-    InfinitDownloadFolderManager* manager = [InfinitDownloadFolderManager sharedInstance];
-    InfinitFolderModel* folder = [manager completedFolderForTransactionMetaId:transaction.meta_id];
-    [self saveToGallery:folder.file_paths];
+    __weak InfinitGalleryManager* weak_self = self;
+    ELLE_TRACE("%s: autosaving files to gallery", self.description.UTF8String);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(500 * NSEC_PER_MSEC)),
+                   dispatch_get_main_queue(), ^
+    {
+      InfinitDownloadFolderManager* manager = [InfinitDownloadFolderManager sharedInstance];
+      InfinitFolderModel* folder = [manager completedFolderForTransactionMetaId:transaction.meta_id];
+      [weak_self saveToGallery:folder.file_paths];
+    });
   }
 }
 
