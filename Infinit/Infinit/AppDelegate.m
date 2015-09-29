@@ -57,6 +57,7 @@
     NSLog(@"Advertising identifier: %@",
           [ASIdentifierManager sharedManager].advertisingIdentifier.UUIDString);
     swizzle_class_selector(self.class, @selector(openURL:), @selector(infinit_openURL:));
+    swizzle_class_selector(self.class, @selector(canOpenURL:), @selector(infinit_canOpenURL:));
   });
 }
 
@@ -64,6 +65,13 @@
 {
   NSLog(@"Opening URL: %@", url);
   return [self infinit_openURL:url];
+}
+
+- (BOOL)infinit_canOpenURL:(NSURL*)url
+{
+  BOOL res = [self infinit_canOpenURL:url];
+  NSLog(@"Can open URL (%@): %@", url, (res ? @"yes" : @"no"));
+  return res;
 }
 
 @end
@@ -187,10 +195,10 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
                                                name:INFINIT_CONNECTION_STATUS_CHANGE
                                              object:nil];
 
-  if (![[[InfinitApplicationSettings sharedInstance] welcome_onboarded] isEqualToNumber:@1])
+  if (![[InfinitApplicationSettings sharedInstance].welcome_onboarded isEqualToNumber:@1])
   {
     _onboarding = YES;
-    [[InfinitApplicationSettings sharedInstance] setWelcome_onboarded:@1];
+    [InfinitApplicationSettings sharedInstance].welcome_onboarded = @1;
     UINavigationController* nav_controller =
       [self.storyboard instantiateViewControllerWithIdentifier:self.welcome_onboarding_id];
     ((InfinitWelcomeOnboardingController*)nav_controller.topViewController).delegate = self;
@@ -221,8 +229,8 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
           [self.storyboard instantiateViewControllerWithIdentifier:self.logging_in_controller_id];
         [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:20.0f];
         FBSDKLoginManager* manager = [InfinitFacebookManager sharedInstance].login_manager;
-        [manager logInWithPublishPermissions:kInfinitFacebookReadPermissions
-                          fromViewController:nil
+        [manager logInWithReadPermissions:kInfinitFacebookReadPermissions
+                       fromViewController:nil
                                   handler:^(FBSDKLoginManagerLoginResult* result,
                                             NSError* error)
         {
@@ -246,7 +254,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
           {
             UIAlertView* alert =
               [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Facebook login canceled", nil)
-                                         message:NSLocalizedString(@"", nil)
+                                         message:@""
                                         delegate:nil 
                                cancelButtonTitle:NSLocalizedString(@"OK", nil) 
                                otherButtonTitles:nil];
