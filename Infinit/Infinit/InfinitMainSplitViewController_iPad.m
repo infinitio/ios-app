@@ -95,11 +95,6 @@
 {
   [super viewWillAppear:animated];
   [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-  [super viewDidAppear:animated];
   if ([InfinitConnectionManager sharedInstance].connected && [self addressBookAccessible])
     [[InfinitContactManager sharedInstance] gotAddressBookAccess];
 }
