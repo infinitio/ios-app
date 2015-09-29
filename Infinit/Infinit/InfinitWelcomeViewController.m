@@ -188,6 +188,7 @@ static dispatch_once_t _password_token = 0;
   InfinitFacebookManager* manager = [InfinitFacebookManager sharedInstance];
   __weak InfinitWelcomeViewController* weak_self = self;
   [manager.login_manager logInWithReadPermissions:kInfinitFacebookReadPermissions
+                               fromViewController:self
                                           handler:^(FBSDKLoginManagerLoginResult* result,
                                                     NSError* error)
   {
