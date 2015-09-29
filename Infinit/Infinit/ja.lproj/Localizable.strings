@@ -38,9 +38,6 @@
 "Accept on receiving device" = "受信先のデバイスで受け取る";
 
 /* No comment provided by engineer. */
-"Account already registered for\nFacebook email address." = "このアカウントはすでにFacebookの\nメールアドレスで登録されています。";
-
-/* No comment provided by engineer. */
 "All set! A message will be sent to %@." = "作業完了!  %@さんにメッセージが送信されます。";
 
 /* No comment provided by engineer. */
@@ -63,6 +60,9 @@
 
 /* No comment provided by engineer. */
 "Canceled by you" = "あなたによりキャンセル済み";
+
+/* No comment provided by engineer. */
+"Check your email!" = "メールをチェックしてください!";
 
 /* No comment provided by engineer. */
 "Choose a photo" = "写真を選ぶ";
@@ -92,9 +92,6 @@
 "Done" = "完了";
 
 /* No comment provided by engineer. */
-"Download code is not valid." = "ダウンロードコードが無効です。";
-
-/* No comment provided by engineer. */
 "EMAIL" = "メール";
 
 /* No comment provided by engineer. */
@@ -108,9 +105,6 @@
 
 /* No comment provided by engineer. */
 "Email sent!" = "メール完了!";
-
-/* No comment provided by engineer. */
-"Enter the download code from\nyour SMS or email invitation." = "メッセージアプリやメールで受け取った\nダウンロード用コードを入力してください。";
 
 /* No comment provided by engineer. */
 "Error – %@ must retry" = "エラー：%@は再送が必要です";
@@ -129,6 +123,9 @@
 
 /* No comment provided by engineer. */
 "FEEDBACK" = "意見・感想";
+
+/* No comment provided by engineer. */
+"FREE UPGRADE" = "無料アップグレード";
 
 /* No comment provided by engineer. */
 "Facebook login canceled" = "Facebookでのログインを中断";
@@ -152,6 +149,9 @@
 "GOOD, I LIKE IT!" = "いいね、気に入った!";
 
 /* No comment provided by engineer. */
+"Go unlimited!" = "無制限にしよう!";
+
+/* No comment provided by engineer. */
 "Handle not valid" = "ハンドルが無効です";
 
 /* No comment provided by engineer. */
@@ -159,9 +159,6 @@
 
 /* No comment provided by engineer. */
 "Hey %@. I want to send you files using Infinit. It's a free, unlimited file sharing app. You should download it here: %@" = "こんにちは。%1$@さんにInfinitでファイルを送ろうと思います。Infinitは、無料で制限もないファイル共有アプリです。ぜひダウンロードしてください：%2$@";
-
-/* No comment provided by engineer. */
-"Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@\n\nDon't forget to enter the following download code: %@" = "こんにちは。%1$lu個の %2$@ をInfinitで送りました。%3$@ の受け取りはこちらです: %4$@\n\nこのダウンロードコードを忘れずに入力してください: %5$@";
 
 /* No comment provided by engineer. */
 "How To Send To Self.mp4" = "自分にファイルを送る方法.mp4";
@@ -197,9 +194,6 @@
 "Logout" = "ログアウト";
 
 /* No comment provided by engineer. */
-"Looks like you don't have an\naccount. Enter email." = "アカウントをお持ちでないようです。\nメールアドレスを入力してください。";
-
-/* No comment provided by engineer. */
 "Me" = "自分";
 
 /* No comment provided by engineer. */
@@ -218,12 +212,6 @@
 "No access to gallery." = "アルバムへのアクセス権がありません。";
 
 /* No comment provided by engineer. */
-"No one here by that name.\nTry an email instead." = "そのお名前のユーザはいません。\nメールアドレスで試してください。";
-
-/* No comment provided by engineer. */
-"No one here by that name.\nTry connecting your Contacts" = "そのお名前のユーザはいません。\n連絡先を取り込んでみてください。";
-
-/* No comment provided by engineer. */
 "Not enough free space!" = "デバイスに空き容量がありません!";
 
 /* No comment provided by engineer. */
@@ -240,9 +228,6 @@
 
 /* No comment provided by engineer. */
 "Open Infinit to ensure your transfer continues" = "Infinitを開いて送信が続いているか確認してください";
-
-/* No comment provided by engineer. */
-"Our Server is down.\nThanks for being patient." = "サーバーがダウン中です。\nしばらくお待ちください。";
 
 /* No comment provided by engineer. */
 "PAUSE" = "一時停止";
@@ -270,6 +255,9 @@
 
 /* No comment provided by engineer. */
 "Preparing your transfer..." = "送信の準備中…";
+
+/* No comment provided by engineer. */
+"REMOVE THIS LIMIT" = "制限を解除する";
 
 /* No comment provided by engineer. */
 "REPORT A PROBLEM" = "問題を報告";
@@ -449,6 +437,9 @@
 "You need %@ of space to accept this transfer." = "このファイルを受け取るには%@の空き容量が必要です。";
 
 /* No comment provided by engineer. */
+"You need to confirm your email address before you can login. Check your inbox for an email with instructions." = "ログインするには、まずあなたのメールアドレスを確認してください。お送りしたメールに手順が記載されています。";
+
+/* No comment provided by engineer. */
 "You need to grant permission to access your friends to find them on Infinit." = "Infinit上の友人を探すには、連絡先へのアクセスを許可してください。";
 
 /* No comment provided by engineer. */
@@ -467,6 +458,9 @@
 "Your email has not been confirmed." = "あなたのメールアドレスはまだ確認されていません。";
 
 /* No comment provided by engineer. */
+"You’re a power sharer!" = "まさに共有のプロ！";
+
+/* No comment provided by engineer. */
 "file" = "ファイル";
 
 /* No comment provided by engineer. */
@@ -474,10 +468,4 @@
 
 /* No comment provided by engineer. */
 "me" = "自分";
-
-/* No comment provided by engineer. */
-"the file" = "そのファイル";
-
-/* No comment provided by engineer. */
-"the files" = "そのファイル";
 

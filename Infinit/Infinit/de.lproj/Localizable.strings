@@ -38,9 +38,6 @@
 "Accept on receiving device" = "Auf dem Empfangsgerät akzeptieren";
 
 /* No comment provided by engineer. */
-"Account already registered for\nFacebook email address." = "Account ist bereits für diese\nFacebook E-Mail-Adresse registriert.";
-
-/* No comment provided by engineer. */
 "All set! A message will be sent to %@." = "Alles bereit! Eine Nachricht wird an %@ gesendet.";
 
 /* No comment provided by engineer. */
@@ -63,6 +60,9 @@
 
 /* No comment provided by engineer. */
 "Canceled by you" = "Von Ihnen abgebrochen";
+
+/* No comment provided by engineer. */
+"Check your email!" = "Prüfe deine E-Mails!";
 
 /* No comment provided by engineer. */
 "Choose a photo" = "Foto auswählen";
@@ -92,9 +92,6 @@
 "Done" = "Fertig";
 
 /* No comment provided by engineer. */
-"Download code is not valid." = "Download-Code ist nicht gültig.";
-
-/* No comment provided by engineer. */
 "EMAIL" = "E-MAIL";
 
 /* No comment provided by engineer. */
@@ -108,9 +105,6 @@
 
 /* No comment provided by engineer. */
 "Email sent!" = "E-Mail gesendet!";
-
-/* No comment provided by engineer. */
-"Enter the download code from\nyour SMS or email invitation." = "Gib den Download-Code aus\ndeiner SMS- oder E-Mail-Einladung ein.";
 
 /* No comment provided by engineer. */
 "Error – %@ must retry" = "Fehler – %@ muss es erneut versuchen";
@@ -131,6 +125,9 @@
 "FEEDBACK" = "FEEDBACK";
 
 /* No comment provided by engineer. */
+"FREE UPGRADE" = "GRATIS UPGRADE";
+
+/* No comment provided by engineer. */
 "Facebook login canceled" = "Facebook-Login abgebrochen";
 
 /* No comment provided by engineer. */
@@ -140,7 +137,7 @@
 "Facebook login error" = "Facebook-Login Fehler";
 
 /* No comment provided by engineer. */
-"Free up some space on your device and try again or send fewer files." = "Mach auf deinem Gerät etwas mehr Speicherplatz frei und versuch es erneut, oder sende weniger Dateien.";
+"Free up some space on your device and try again or send fewer files." = "Mache auf deinem Gerät etwas mehr Speicherplatz frei und versuche es erneut, oder sende weniger Dateien.";
 
 /* No comment provided by engineer. */
 "From %@" = "Von %@";
@@ -149,7 +146,10 @@
 "Fullname not valid." = "Vollständiger Name ist nicht gültig.";
 
 /* No comment provided by engineer. */
-"GOOD, I LIKE IT!" = "GUT!";
+"GOOD, I LIKE IT!" = "GUT, ICH MAG'S!";
+
+/* No comment provided by engineer. */
+"Go unlimited!" = "Sei ohne Limit!";
 
 /* No comment provided by engineer. */
 "Handle not valid" = "Name ist nicht gültig";
@@ -159,9 +159,6 @@
 
 /* No comment provided by engineer. */
 "Hey %@. I want to send you files using Infinit. It's a free, unlimited file sharing app. You should download it here: %@" = "Hey %1$@. Ich möchte dir Dateien per Infinit versenden. Es ist eine kostenlose, unbegrenzte Filesharing App. Du kannst sie dir hier herunterladen: %2$@";
-
-/* No comment provided by engineer. */
-"Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@\n\nDon't forget to enter the following download code: %@" = "Hallo, ich habe dir gerade %1$lu %2$@ über Infinit gesendet. Du kannst %3$@ hier erhalten: %4$@\n\nVergiss bitte nicht den folgenden Download-Code einzugeben: %5$@";
 
 /* No comment provided by engineer. */
 "How To Send To Self.mp4" = "Wie Man An Sich Versendet.mp4";
@@ -197,9 +194,6 @@
 "Logout" = "Abmelden";
 
 /* No comment provided by engineer. */
-"Looks like you don't have an\naccount. Enter email." = "Anscheinend hast du noch kein\nAccount. Bitte E-Mail eingeben.";
-
-/* No comment provided by engineer. */
 "Me" = "Ich";
 
 /* No comment provided by engineer. */
@@ -209,19 +203,13 @@
 "Mind rating us on the App Store?" = "Hast du Lust, uns eine Bewertung im App Store zu hinterlassen?";
 
 /* No comment provided by engineer. */
-"NO, THANKS" = "NEIN DANKE";
+"NO, THANKS" = "NEIN, DANKE";
 
 /* No comment provided by engineer. */
 "Need a connection!" = "Benötige eine Verbindung!";
 
 /* No comment provided by engineer. */
 "No access to gallery." = "Kein Zugriff auf die Aufnahmen.";
-
-/* No comment provided by engineer. */
-"No one here by that name.\nTry an email instead." = "Keiner mit diesem Namen vorhanden.\nVersuche stattdessen eine E-Mail.";
-
-/* No comment provided by engineer. */
-"No one here by that name.\nTry connecting your Contacts" = "Keiner mit diesem Namen vorhanden.\nVersuche Kontakte zu verbinden";
 
 /* No comment provided by engineer. */
 "Not enough free space!" = "Nicht genügend Speicherplatz!";
@@ -240,9 +228,6 @@
 
 /* No comment provided by engineer. */
 "Open Infinit to ensure your transfer continues" = "Öffne Infinit, um sicherzustellen, dass dein Transfer fortgesetzt wird";
-
-/* No comment provided by engineer. */
-"Our Server is down.\nThanks for being patient." = "Unser Server ist abgestürzt.\nVielen Dank für die Geduld.";
 
 /* No comment provided by engineer. */
 "PAUSE" = "PAUSE";
@@ -272,6 +257,9 @@
 "Preparing your transfer..." = "Bereite deinen Transfer vor...";
 
 /* No comment provided by engineer. */
+"REMOVE THIS LIMIT" = "DIESES LIMIT AUFHEBEN";
+
+/* No comment provided by engineer. */
 "REPORT A PROBLEM" = "EIN PROBLEM MELDEN";
 
 /* No comment provided by engineer. */
@@ -284,7 +272,7 @@
 "Received" = "Erhalten";
 
 /* No comment provided by engineer. */
-"Received on another device" = "An einem anderen Gerät erhalten";
+"Received on another device" = "Auf einem anderen Gerät erhalten";
 
 /* No comment provided by engineer. */
 "Received your files!" = "Deine Dateien erhalten!";
@@ -368,7 +356,7 @@
 "Thanks for reporting the problem, we'll get back to you as soon as we can." = "Vielen Dank für deinen Problemreport, wir werden uns so bald wie möglich bei dir melden.";
 
 /* No comment provided by engineer. */
-"Thanks for taking the time to give us feedback." = "Vielen Dank, dass du dir Zeit für unser Feedback genommen hast.";
+"Thanks for taking the time to give us feedback." = "Vielen Dank, dass du dir Zeit für dein Feedback genommen hast.";
 
 /* No comment provided by engineer. */
 "Thanks!" = "Danke!";
@@ -434,7 +422,7 @@
 "Waiting for %@ to accept" = "Warte bis %@ akzeptiert hat";
 
 /* No comment provided by engineer. */
-"Waiting for you to accept" = "Wartet auf deine Bestätigung";
+"Waiting for you to accept" = "Warte auf deine Bestätigung";
 
 /* No comment provided by engineer. */
 "We'll let you know when %@ receives your files." = "Wir werden dich wissen lassen, wenn %@ deine Dateien erhält.";
@@ -447,6 +435,9 @@
 
 /* No comment provided by engineer. */
 "You need %@ of space to accept this transfer." = "Du brauchst %@ Speicherplatz, um diesen Transfer zu empfangen.";
+
+/* No comment provided by engineer. */
+"You need to confirm your email address before you can login. Check your inbox for an email with instructions." = "Du musst deine E-Mail-Adresse bestätigen, um dich anmelden zu können. Prüf dein Postfach nach einer E-Mail mit weiteren Schritten.";
 
 /* No comment provided by engineer. */
 "You need to grant permission to access your friends to find them on Infinit." = "Du musst den Zugriff auf deine Freunde gewähren, damit du sie bei Infinit finden kannst.";
@@ -467,6 +458,9 @@
 "Your email has not been confirmed." = "Deine E-Mail wurde noch nicht bestätigt.";
 
 /* No comment provided by engineer. */
+"You’re a power sharer!" = "Du bist ein echter Power-Sharer!";
+
+/* No comment provided by engineer. */
 "file" = "Datei";
 
 /* No comment provided by engineer. */
@@ -474,10 +468,4 @@
 
 /* No comment provided by engineer. */
 "me" = "ich";
-
-/* No comment provided by engineer. */
-"the file" = "die Datei";
-
-/* No comment provided by engineer. */
-"the files" = "die Dateien";
 

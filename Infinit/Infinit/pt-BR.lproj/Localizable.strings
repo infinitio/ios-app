@@ -38,9 +38,6 @@
 "Accept on receiving device" = "Aceitar no dispositivo de recebimento";
 
 /* No comment provided by engineer. */
-"Account already registered for\nFacebook email address." = "Conta já registrada para\ne-mail do Facebook.";
-
-/* No comment provided by engineer. */
 "All set! A message will be sent to %@." = "Tudo certo! Uma mensagem será enviada para %@.";
 
 /* No comment provided by engineer. */
@@ -92,9 +89,6 @@
 "Done" = "Pronto";
 
 /* No comment provided by engineer. */
-"Download code is not valid." = "Código de download não é válido.";
-
-/* No comment provided by engineer. */
 "EMAIL" = "E-MAIL";
 
 /* No comment provided by engineer. */
@@ -108,9 +102,6 @@
 
 /* No comment provided by engineer. */
 "Email sent!" = "E-mail enviado!";
-
-/* No comment provided by engineer. */
-"Enter the download code from\nyour SMS or email invitation." = "Insira o código de download \ndo SMS ou do e-mail de convite.";
 
 /* No comment provided by engineer. */
 "Error – %@ must retry" = "Erro - %@ deve tentar novamente";
@@ -161,9 +152,6 @@
 "Hey %@. I want to send you files using Infinit. It's a free, unlimited file sharing app. You should download it here: %@" = "Ei %1$@. Eu quero te enviar arquivos usando o Infinit. É um app de compartilhamento de graça e ilimitado. Você pode baixar ele aqui: %2$@";
 
 /* No comment provided by engineer. */
-"Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@\n\nDon't forget to enter the following download code: %@" = "Olá, eu acabei de mandar %1$lu %2$@ no Infinit. Você pode pegar %3$@ aqui: %4$@\n\nNão se esqueça de informar o código de download: %5$@";
-
-/* No comment provided by engineer. */
 "How To Send To Self.mp4" = "Como enviar para eu mesmo.mp4";
 
 /* No comment provided by engineer. */
@@ -197,9 +185,6 @@
 "Logout" = "Sair";
 
 /* No comment provided by engineer. */
-"Looks like you don't have an\naccount. Enter email." = "Parece que você não tem uma\nconta. Insira um e-mail.";
-
-/* No comment provided by engineer. */
 "Me" = "Eu";
 
 /* No comment provided by engineer. */
@@ -218,12 +203,6 @@
 "No access to gallery." = "Sem acesso a galeria.";
 
 /* No comment provided by engineer. */
-"No one here by that name.\nTry an email instead." = "Ninguém com esse nome.\nTente com email.";
-
-/* No comment provided by engineer. */
-"No one here by that name.\nTry connecting your Contacts" = "Ninguém com esse nome.\nTente conectando seus Contatos";
-
-/* No comment provided by engineer. */
 "Not enough free space!" = "Sem espaço livre suficiente!";
 
 /* No comment provided by engineer. */
@@ -240,9 +219,6 @@
 
 /* No comment provided by engineer. */
 "Open Infinit to ensure your transfer continues" = "Abra o Infinit para garantir que a transferência continue.";
-
-/* No comment provided by engineer. */
-"Our Server is down.\nThanks for being patient." = "Nosso servidor esta fora.\n Obrigado por ser paciente.";
 
 /* No comment provided by engineer. */
 "PAUSE" = "PAUSA";
@@ -474,10 +450,4 @@
 
 /* No comment provided by engineer. */
 "me" = "eu";
-
-/* No comment provided by engineer. */
-"the file" = "o arquivo";
-
-/* No comment provided by engineer. */
-"the files" = "os arquivos";
 

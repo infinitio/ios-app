@@ -1,0 +1,21 @@
+/* Class = "UIButton"; normalTitle = "Back"; ObjectID = "5mc-ln-JbU"; */
+"5mc-ln-JbU.normalTitle" = "Class = \"UIButton\"; normalTitle = \"Wstecz\"; ObjectID = \"5mc-ln-JbU\";";
+
+/* Class = "UIButton"; normalTitle = "or login with Facebook"; ObjectID = "Cyx-IQ-tWr"; */
+"Cyx-IQ-tWr.normalTitle" = "Class = \"UIButton\"; normalTitle = \"lub zaloguj przez Facebook\"; ObjectID = \"Cyx-IQ-tWr\";";
+
+/* Class = "UIButton"; normalTitle = "forgot?"; ObjectID = "KkB-d0-Hgu"; */
+"KkB-d0-Hgu.normalTitle" = "Class = \"UIButton\"; normalTitle = \"zapomniałeś?\"; ObjectID = \"KkB-d0-Hgu\";";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "NBs-14-iOO"; */
+"NBs-14-iOO.normalTitle" = "Class = \"UIButton\"; normalTitle = \"Zaloguj\"; ObjectID = \"NBs-14-iOO\";";
+
+/* Class = "UITextField"; placeholder = "●●●●●●"; ObjectID = "Pcp-Eb-fyv"; */
+"Pcp-Eb-fyv.placeholder" = "Class = \"UITextField\"; placeholder = \"●●●●●●\"; ObjectID = \"Pcp-Eb-fyv\";";
+
+/* Class = "UILabel"; text = "Enter your login details."; ObjectID = "PpZ-vy-5cV"; */
+"PpZ-vy-5cV.text" = "Class = \"UILabel\"; text = \"Wprowadź dane logowania.\"; ObjectID = \"PpZ-vy-5cV\";";
+
+/* Class = "UITextField"; placeholder = "hey@johndoe.com"; ObjectID = "zcU-Iu-Kcd"; */
+"zcU-Iu-Kcd.placeholder" = "Class = \"UITextField\"; placeholder = \"czesc@JanKowalski.pl\"; ObjectID = \"zcU-Iu-Kcd\";";
+

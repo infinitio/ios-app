@@ -38,9 +38,6 @@
 "Accept on receiving device" = "Acceptera på mottagande enhet";
 
 /* No comment provided by engineer. */
-"Account already registered for\nFacebook email address." = "Kontot är redan registrerat med\nFacebook-emailadress";
-
-/* No comment provided by engineer. */
 "All set! A message will be sent to %@." = "Färdigt! Ett meddelande har skickats till %@.";
 
 /* No comment provided by engineer. */
@@ -63,6 +60,9 @@
 
 /* No comment provided by engineer. */
 "Canceled by you" = "Avbröts av dig";
+
+/* No comment provided by engineer. */
+"Check your email!" = "Kolla din email!";
 
 /* No comment provided by engineer. */
 "Choose a photo" = "Välj en bild";
@@ -92,9 +92,6 @@
 "Done" = "Klart";
 
 /* No comment provided by engineer. */
-"Download code is not valid." = "Nedladdningskod ej giltig.";
-
-/* No comment provided by engineer. */
 "EMAIL" = "EMAIL";
 
 /* No comment provided by engineer. */
@@ -108,9 +105,6 @@
 
 /* No comment provided by engineer. */
 "Email sent!" = "Email skickat!";
-
-/* No comment provided by engineer. */
-"Enter the download code from\nyour SMS or email invitation." = "Skriv in nedladdningskod från\ndin SMS- eller emailinbjudan.";
 
 /* No comment provided by engineer. */
 "Error – %@ must retry" = "Fel - %@ måste försöka igen";
@@ -129,6 +123,9 @@
 
 /* No comment provided by engineer. */
 "FEEDBACK" = "FEEDBACK";
+
+/* No comment provided by engineer. */
+"FREE UPGRADE" = "GRATIS UPPGRADERING";
 
 /* No comment provided by engineer. */
 "Facebook login canceled" = "Facebookinloggning avbruten";
@@ -152,6 +149,9 @@
 "GOOD, I LIKE IT!" = "BRA!";
 
 /* No comment provided by engineer. */
+"Go unlimited!" = "Skaffa obegränsat!";
+
+/* No comment provided by engineer. */
 "Handle not valid" = "Användarnamn inte giltigt";
 
 /* No comment provided by engineer. */
@@ -159,9 +159,6 @@
 
 /* No comment provided by engineer. */
 "Hey %@. I want to send you files using Infinit. It's a free, unlimited file sharing app. You should download it here: %@" = "Hej %1$@. Jag vill skicka filer till dig via Infinit. Det är en gratis, obegränsad fildelningsapp. Du borde ladda ner den här: %2$@";
-
-/* No comment provided by engineer. */
-"Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@\n\nDon't forget to enter the following download code: %@" = "Hej, jag skickade just %1$lu %2$@ till dig på Infinit. Du kan få tag på %3$@ här: %4$@\n\nGlöm inte att skriva in följande nedladdningskod:%5$@";
 
 /* No comment provided by engineer. */
 "How To Send To Self.mp4" = "How To Send To Self.mp4";
@@ -197,9 +194,6 @@
 "Logout" = "Logga ut";
 
 /* No comment provided by engineer. */
-"Looks like you don't have an\naccount. Enter email." = "Det verkar som att du inte har ett\nkonto. Skriv in emailadress.";
-
-/* No comment provided by engineer. */
 "Me" = "Mig";
 
 /* No comment provided by engineer. */
@@ -218,12 +212,6 @@
 "No access to gallery." = "Ingen tillgång till galleri.";
 
 /* No comment provided by engineer. */
-"No one here by that name.\nTry an email instead." = "Det finns ingen här med det namnet.\nFörsök med en emailadress istället.";
-
-/* No comment provided by engineer. */
-"No one here by that name.\nTry connecting your Contacts" = "Det finns ingen här med det namnet.\nFörsök att ansluta dina kontakter.";
-
-/* No comment provided by engineer. */
 "Not enough free space!" = "Inte tillräckligt med utrymme!";
 
 /* No comment provided by engineer. */
@@ -240,9 +228,6 @@
 
 /* No comment provided by engineer. */
 "Open Infinit to ensure your transfer continues" = "Öppna Infinit för att tillåta din överföring att fortsätta";
-
-/* No comment provided by engineer. */
-"Our Server is down.\nThanks for being patient." = "Vår server ligger nere.\nTack för ditt tålamod.";
 
 /* No comment provided by engineer. */
 "PAUSE" = "PAUSA";
@@ -270,6 +255,9 @@
 
 /* No comment provided by engineer. */
 "Preparing your transfer..." = "Förbereder din överföring...";
+
+/* No comment provided by engineer. */
+"REMOVE THIS LIMIT" = "TA BORT DENNA BEGRÄNSNING";
 
 /* No comment provided by engineer. */
 "REPORT A PROBLEM" = "RAPPORTERA ETT PROBLEM";
@@ -449,6 +437,9 @@
 "You need %@ of space to accept this transfer." = "Du behöver %@ utrymme för att kunna acceptera denna överföring.";
 
 /* No comment provided by engineer. */
+"You need to confirm your email address before you can login. Check your inbox for an email with instructions." = "Du måste bekräfta din emailadress innan du kan logga in. Kolla din inkorg för ett email med instruktioner.";
+
+/* No comment provided by engineer. */
 "You need to grant permission to access your friends to find them on Infinit." = "Du måste tillåta tillgång till dina vänner för att hitta dem på Infinit.";
 
 /* No comment provided by engineer. */
@@ -467,6 +458,9 @@
 "Your email has not been confirmed." = "Din emailadress är ännu inte bekräftad.";
 
 /* No comment provided by engineer. */
+"You’re a power sharer!" = "Du är en kraftfull delare!";
+
+/* No comment provided by engineer. */
 "file" = "fil";
 
 /* No comment provided by engineer. */
@@ -474,10 +468,4 @@
 
 /* No comment provided by engineer. */
 "me" = "mig";
-
-/* No comment provided by engineer. */
-"the file" = "filen";
-
-/* No comment provided by engineer. */
-"the files" = "filerna";
 

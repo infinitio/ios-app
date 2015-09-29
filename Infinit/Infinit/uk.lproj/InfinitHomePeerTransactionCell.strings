@@ -1,0 +1,21 @@
+/* Class = "UILabel"; text = "Time"; ObjectID = "6Wf-vV-jNI"; */
+"6Wf-vV-jNI.text" = "Час";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "CBZ-Aw-azY"; */
+"CBZ-Aw-azY.normalTitle" = "Кнопка";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "IfB-v5-ff9"; */
+"IfB-v5-ff9.normalTitle" = "Кнопка";
+
+/* Class = "UILabel"; text = "x files"; ObjectID = "nv8-VG-ULd"; */
+"nv8-VG-ULd.text" = "х файлів";
+
+/* Class = "UILabel"; text = "x MB"; ObjectID = "qRM-ph-frX"; */
+"qRM-ph-frX.text" = "х МБ";
+
+/* Class = "UILabel"; text = "Status"; ObjectID = "t2m-Pz-bey"; */
+"t2m-Pz-bey.text" = "Статус";
+
+/* Class = "UILabel"; text = "Other user"; ObjectID = "ykT-DY-Cbm"; */
+"ykT-DY-Cbm.text" = "Інший користувач";
+

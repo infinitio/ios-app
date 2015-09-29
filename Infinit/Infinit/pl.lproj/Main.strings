@@ -1,0 +1,198 @@
+/* Class = "UILabel"; text = "No limits. No waiting. No hassle. Always works!"; ObjectID = "0G6-1i-g1R"; */
+"0G6-1i-g1R.text" = "Bez limitów. Bez czekania. Bez kłopotów. Zawsze działa!";
+
+/* Class = "UILabel"; text = "Mike Dee"; ObjectID = "0RN-Xm-k4b"; */
+"0RN-Xm-k4b.text" = "Class = \"UILabel\"; text = \"Mike Dee\"; ObjectID = \"0RN-Xm-k4b\";";
+
+/* Class = "UINavigationItem"; title = "SELECT"; ObjectID = "0rw-4j-beG"; */
+"0rw-4j-beG.title" = "Class = \"UINavigationItem\"; title = \"WYBIERZ\"; ObjectID = \"0rw-4j-beG\";";
+
+/* Class = "UIButton"; normalTitle = "FAVORITE"; ObjectID = "1LK-Mw-637"; */
+"1LK-Mw-637.normalTitle" = "Class = \"UIButton\"; normalTitle = \"ULUBIONE\"; ObjectID = \"1LK-Mw-637\";";
+
+/* Class = "UINavigationController"; title = "CONTACTS"; ObjectID = "1XU-dC-dIe"; */
+"1XU-dC-dIe.title" = "Class = \"UINavigationController\"; title = \"KONTAKTY\"; ObjectID = \"1XU-dC-dIe\";";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "2OQ-eh-oJ7"; */
+"2OQ-eh-oJ7.text" = "Class = \"UILabel\"; text = \"Etykieta\"; ObjectID = \"2OQ-eh-oJ7\";";
+
+/* Class = "UILabel"; text = "Mike Dee"; ObjectID = "6G8-BA-BUD"; */
+"6G8-BA-BUD.text" = "Class = \"UILabel\"; text = \"Mike Dee\"; ObjectID = \"6G8-BA-BUD\";";
+
+/* Class = "UIViewController"; title = "SEND_RECIPIENTS"; ObjectID = "9ZK-3B-PXo"; */
+"9ZK-3B-PXo.title" = "Class = \"UIViewController\"; title = \"WYŚLIJ_ODBIORCOM\"; ObjectID = \"9ZK-3B-PXo\";";
+
+/* Class = "UINavigationController"; title = "SEND"; ObjectID = "18v-p7-fft"; */
+"18v-p7-fft.title" = "Class = \"UINavigationController\"; title = \"WYŚLIJ\"; ObjectID = \"18v-p7-fft\";";
+
+/* Class = "UIButton"; normalTitle = "GET STARTED"; ObjectID = "97m-pM-Fe4"; */
+"97m-pM-Fe4.normalTitle" = "Class = \"UIButton\"; normalTitle = \"ROZPOCZNIJ\"; ObjectID = \"97m-pM-Fe4\";";
+
+/* Class = "UITabBarController"; title = "TAB CONTROLLER IPAD"; ObjectID = "BGv-th-9AK"; */
+"BGv-th-9AK.title" = "Class = \"UITabBarController\"; title = \"PASEK KONTROLI IPAD\"; ObjectID = \"BGv-th-9AK\";";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "BMO-Tq-quz"; */
+"BMO-Tq-quz.text" = "Class = \"UILabel\"; text = \"Etykieta\"; ObjectID = \"BMO-Tq-quz\";";
+
+/* Class = "UIButton"; normalTitle = "ACCESS PHONE CONTACTS"; ObjectID = "CQ1-1P-kb6"; */
+"CQ1-1P-kb6.normalTitle" = "Class = \"UIButton\"; normalTitle = \"OTWÓRZ KONTAKTY TELEFONU\"; ObjectID = \"CQ1-1P-kb6\";";
+
+/* Class = "UIViewController"; title = "SEND_GALLERY"; ObjectID = "Cz7-xE-6Ks"; */
+"Cz7-xE-6Ks.title" = "Class = \"UIViewController\"; title = \"WYŚLIJ_GALERIĘ\"; ObjectID = \"Cz7-xE-6Ks\";";
+
+/* Class = "UINavigationItem"; title = "CONTACTS"; ObjectID = "Diz-0I-QjG"; */
+"Diz-0I-QjG.title" = "Class = \"UINavigationItem\"; title = \"KONTAKTY\"; ObjectID = \"Diz-0I-QjG\";";
+
+/* Class = "UILabel"; text = "Mike Dee"; ObjectID = "Dz8-88-hEf"; */
+"Dz8-88-hEf.text" = "Class = \"UILabel\"; text = \"Mike Dee\"; ObjectID = \"Dz8-88-hEf\";";
+
+/* Class = "UINavigationController"; title = "FILES"; ObjectID = "E3A-FT-LpY"; */
+"E3A-FT-LpY.title" = "Class = \"UINavigationController\"; title = \"PLIKI\"; ObjectID = \"E3A-FT-LpY\";";
+
+/* Class = "UILabel"; text = "email"; ObjectID = "ED8-ta-EAO"; */
+"ED8-ta-EAO.text" = "Class = \"UILabel\"; text = \"email\"; ObjectID = \"ED8-ta-EAO\";";
+
+/* Class = "UITabBarItem"; title = "Item"; ObjectID = "ESf-xZ-Nqk"; */
+"ESf-xZ-Nqk.title" = "Class = \"UITabBarItem\"; title = \"Obiekt\"; ObjectID = \"ESf-xZ-Nqk\";";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Fb4-h2-ykq"; */
+"Fb4-h2-ykq.text" = "Class = \"UILabel\"; text = \"Etykieta\"; ObjectID = \"Fb4-h2-ykq\";";
+
+/* Class = "UISegmentedControl"; Fn8-5X-DLz.segmentTitles[0] = "All"; ObjectID = "Fn8-5X-DLz"; */
+"Fn8-5X-DLz.segmentTitles[0]" = "Class = \"UISegmentedControl\"; Fn8-5X-DLz.segmentTitles[0] = \"Wszystko\"; ObjectID = \"Fn8-5X-DLz\";";
+
+/* Class = "UISegmentedControl"; Fn8-5X-DLz.segmentTitles[1] = "Photos"; ObjectID = "Fn8-5X-DLz"; */
+"Fn8-5X-DLz.segmentTitles[1]" = "Class = \"UISegmentedControl\"; Fn8-5X-DLz.segmentTitles[1] = \"Zdjęcia\"; ObjectID = \"Fn8-5X-DLz\";";
+
+/* Class = "UISegmentedControl"; Fn8-5X-DLz.segmentTitles[2] = "Videos"; ObjectID = "Fn8-5X-DLz"; */
+"Fn8-5X-DLz.segmentTitles[2]" = "Class = \"UISegmentedControl\"; Fn8-5X-DLz.segmentTitles[2] = \"Filmy\"; ObjectID = \"Fn8-5X-DLz\";";
+
+/* Class = "UISegmentedControl"; Fn8-5X-DLz.segmentTitles[3] = "Docs"; ObjectID = "Fn8-5X-DLz"; */
+"Fn8-5X-DLz.segmentTitles[3]" = "Class = \"UISegmentedControl\"; Fn8-5X-DLz.segmentTitles[3] = \"Dokumenty\"; ObjectID = \"Fn8-5X-DLz\";";
+
+/* Class = "UISegmentedControl"; Fn8-5X-DLz.segmentTitles[4] = "Music"; ObjectID = "Fn8-5X-DLz"; */
+"Fn8-5X-DLz.segmentTitles[4]" = "Class = \"UISegmentedControl\"; Fn8-5X-DLz.segmentTitles[4] = \"Muzyka\"; ObjectID = \"Fn8-5X-DLz\";";
+
+/* Class = "UISegmentedControl"; Fn8-5X-DLz.segmentTitles[5] = "Other"; ObjectID = "Fn8-5X-DLz"; */
+"Fn8-5X-DLz.segmentTitles[5]" = "Class = \"UISegmentedControl\"; Fn8-5X-DLz.segmentTitles[5] = \"Inne\"; ObjectID = \"Fn8-5X-DLz\";";
+
+/* Class = "UITabBarItem"; title = "Item"; ObjectID = "HEy-Gq-I91"; */
+"HEy-Gq-I91.title" = "Class = \"UITabBarItem\"; title = \"Obiekt\"; ObjectID = \"HEy-Gq-I91\";";
+
+/* Class = "UIViewController"; title = "Files Table iPad"; ObjectID = "KNs-fB-D4y"; */
+"KNs-fB-D4y.title" = "Class = \"UIViewController\"; title = \"Tabela plików iPad\"; ObjectID = \"KNs-fB-D4y\";";
+
+/* Class = "UILabel"; text = "Access photos, videos, music, PDFs and more"; ObjectID = "Kjb-PN-Gxr"; */
+"Kjb-PN-Gxr.text" = "Class = \"UILabel\"; text = \"Uzyskaj dostęp do zdjęć, filmów, muzyki, PDFów i innych\"; ObjectID = \"Kjb-PN-Gxr\";";
+
+/* Class = "UILabel"; text = "RECEIVED FILES"; ObjectID = "KlZ-FW-RX5"; */
+"KlZ-FW-RX5.text" = "Class = \"UILabel\"; text = \"PLIKI OTRZYMANE\"; ObjectID = \"KlZ-FW-RX5\";";
+
+/* Class = "UIViewController"; title = "Files Table iPad"; ObjectID = "LjX-qk-19E"; */
+"LjX-qk-19E.title" = "Class = \"UIViewController\"; title = \"Tabela Plików iPad\"; ObjectID = \"LjX-qk-19E\";";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "M8v-h9-tSJ"; */
+"M8v-h9-tSJ.text" = "Class = \"UILabel\"; text = \"Etykieta\"; ObjectID = \"M8v-h9-tSJ\";";
+
+/* Class = "UILabel"; text = "+5"; ObjectID = "MoH-dc-fmU"; */
+"MoH-dc-fmU.text" = "Class = \"UILabel\"; text = \"+5\"; ObjectID = \"MoH-dc-fmU\";";
+
+/* Class = "UINavigationItem"; title = "EDIT PROFILE"; ObjectID = "OWZ-ZK-qG3"; */
+"OWZ-ZK-qG3.title" = "Class = \"UINavigationItem\"; title = \"EDYTUJ PROFIL\"; ObjectID = \"OWZ-ZK-qG3\";";
+
+/* Class = "UINavigationItem"; title = "REPORT A PROBLEM"; ObjectID = "Q7Z-b7-sHF"; */
+"Q7Z-b7-sHF.title" = "Class = \"UINavigationItem\"; title = \"ZGŁOŚ PROBLEM\"; ObjectID = \"Q7Z-b7-sHF\";";
+
+/* Class = "UIBarButtonItem"; title = "OK"; ObjectID = "RBf-3C-mkH"; */
+"RBf-3C-mkH.title" = "Class = \"UIBarButtonItem\"; title = \"OK\"; ObjectID = \"RBf-3C-mkH\";";
+
+/* Class = "UIViewController"; title = "Home View Controller"; ObjectID = "RJM-ey-XCj"; */
+"RJM-ey-XCj.title" = "Class = \"UIViewController\"; title = \"Kontroler Widoku Domowego\"; ObjectID = \"RJM-ey-XCj\";";
+
+/* Class = "UISearchBar"; placeholder = "Search"; ObjectID = "UIT-gc-l6k"; */
+"UIT-gc-l6k.placeholder" = "Class = \"UISearchBar\"; placeholder = \"Szukaj\"; ObjectID = \"UIT-gc-l6k\";";
+
+/* Class = "UIButton"; normalTitle = "FIND FACEBOOK FRIENDS"; ObjectID = "YNY-lR-rkF"; */
+"YNY-lR-rkF.normalTitle" = "Class = \"UIButton\"; normalTitle = \"ZNAJDŻ ZNAJOMYCH Z FACEBOOKA\"; ObjectID = \"YNY-lR-rkF\";";
+
+/* Class = "UINavigationItem"; title = "RECEIVED FILES"; ObjectID = "ZoT-BP-9BH"; */
+"ZoT-BP-9BH.title" = "Class = \"UINavigationItem\"; title = \"PLIKI OTRZYMANO\"; ObjectID = \"ZoT-BP-9BH\";";
+
+/* Class = "UINavigationController"; title = "HOME"; ObjectID = "aTr-06-n7W"; */
+"aTr-06-n7W.title" = "Class = \"UINavigationController\"; title = \"HOME\"; ObjectID = \"aTr-06-n7W\";";
+
+/* Class = "UINavigationItem"; title = "SETTINGS"; ObjectID = "auf-bJ-QRX"; */
+"auf-bJ-QRX.title" = "Class = \"UINavigationItem\"; title = \"USTAWIENIA\"; ObjectID = \"auf-bJ-QRX\";";
+
+/* Class = "UIButton"; normalTitle = "SEND"; ObjectID = "bqF-ty-XIH"; */
+"bqF-ty-XIH.normalTitle" = "Class = \"UIButton\"; normalTitle = \"WYŚLIJ\"; ObjectID = \"bqF-ty-XIH\";";
+
+/* Class = "UIButton"; normalTitle = "SEND"; ObjectID = "cAz-dS-fQ5"; */
+"cAz-dS-fQ5.normalTitle" = "Class = \"UIButton\"; normalTitle = \"WYŚLIJ\"; ObjectID = \"cAz-dS-fQ5\";";
+
+/* Class = "UIViewController"; title = "CONTACTS"; ObjectID = "cyR-zH-YxB"; */
+"cyR-zH-YxB.title" = "Class = \"UIViewController\"; title = \"KONTAKTY\"; ObjectID = \"cyR-zH-YxB\";";
+
+/* Class = "UIBarButtonItem"; title = "Select"; ObjectID = "dDd-tw-C0S"; */
+"dDd-tw-C0S.title" = "Class = \"UIBarButtonItem\"; title = \"Wybierz\"; ObjectID = \"dDd-tw-C0S\";";
+
+/* Class = "UILabel"; text = "M"; ObjectID = "fjd-ZY-K2z"; */
+"fjd-ZY-K2z.text" = "Class = \"UILabel\"; text = \"M\"; ObjectID = \"fjd-ZY-K2z\";";
+
+/* Class = "UIButton"; normalTitle = "Select"; ObjectID = "gOC-Dq-oEk"; */
+"gOC-Dq-oEk.normalTitle" = "Class = \"UIButton\"; normalTitle = \"Wybierz\"; ObjectID = \"gOC-Dq-oEk\";";
+
+/* Class = "UIBarButtonItem"; title = "OK"; ObjectID = "gce-DQ-YM6"; */
+"gce-DQ-YM6.title" = "Class = \"UIBarButtonItem\"; title = \"OK\"; ObjectID = \"gce-DQ-YM6\";";
+
+/* Class = "UIViewController"; title = "SETTINGS"; ObjectID = "gyX-52-PGb"; */
+"gyX-52-PGb.title" = "Class = \"UIViewController\"; title = \"USTAWIENIA\"; ObjectID = \"gyX-52-PGb\";";
+
+/* Class = "UIBarButtonItem"; title = "Select"; ObjectID = "hHs-X5-8Rx"; */
+"hHs-X5-8Rx.title" = "Class = \"UIBarButtonItem\"; title = \"Wybierz\"; ObjectID = \"hHs-X5-8Rx\";";
+
+/* Class = "UIViewController"; title = "RECEIVED FILES IPAD"; ObjectID = "hHz-xi-viG"; */
+"hHz-xi-viG.title" = "Class = \"UIViewController\"; title = \"OTRZYMANO PLIKI IPAD\"; ObjectID = \"hHz-xi-viG\";";
+
+/* Class = "UISearchBar"; placeholder = "Search"; ObjectID = "ijA-4P-WMS"; */
+"ijA-4P-WMS.placeholder" = "Class = \"UISearchBar\"; placeholder = \"Szukaj\"; ObjectID = \"ijA-4P-WMS\";";
+
+/* Class = "UIButton"; normalTitle = "NEXT"; ObjectID = "jCk-aB-ANg"; */
+"jCk-aB-ANg.normalTitle" = "Class = \"UIButton\"; normalTitle = \"NASTĘPNY\"; ObjectID = \"jCk-aB-ANg\";";
+
+/* Class = "UIViewController"; title = "Files Collection iPad"; ObjectID = "kH3-GE-cwM"; */
+"kH3-GE-cwM.title" = "Class = \"UIViewController\"; title = \"Odbiór plików iPad\"; ObjectID = \"kH3-GE-cwM\";";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "mGE-WJ-uld"; */
+"mGE-WJ-uld.text" = "Class = \"UILabel\"; text = \"Etykieta\"; ObjectID = \"mGE-WJ-uld\";";
+
+/* Class = "UIButton"; normalTitle = "Go to online profile..."; ObjectID = "nZU-c9-6fj"; */
+"nZU-c9-6fj.normalTitle" = "Class = \"UIButton\"; normalTitle = \"Idź do profilu online...\"; ObjectID = \"nZU-c9-6fj\";";
+
+/* Class = "UILabel"; text = "email"; ObjectID = "nnb-QO-NCG"; */
+"nnb-QO-NCG.text" = "Class = \"UILabel\"; text = \"email\"; ObjectID = \"nnb-QO-NCG\";";
+
+/* Class = "UIViewController"; title = "CONTACT"; ObjectID = "pu1-dB-tPe"; */
+"pu1-dB-tPe.title" = "Class = \"UIViewController\"; title = \"KONTAKT\"; ObjectID = \"pu1-dB-tPe\";";
+
+/* Class = "UINavigationItem"; title = "FILES"; ObjectID = "qGT-HW-jdc"; */
+"qGT-HW-jdc.title" = "Class = \"UINavigationItem\"; title = \"PLIKI\"; ObjectID = \"qGT-HW-jdc\";";
+
+/* Class = "UINavigationItem"; title = "RENAME DEVICE"; ObjectID = "rRS-HT-VPY"; */
+"rRS-HT-VPY.title" = "Class = \"UINavigationItem\"; title = \"ZMIEŃ NAZWĘ URZĄDZENIA\"; ObjectID = \"rRS-HT-VPY\";";
+
+/* Class = "UINavigationController"; title = "SETTINGS"; ObjectID = "rsj-6b-IS1"; */
+"rsj-6b-IS1.title" = "Class = \"UINavigationController\"; title = \"USTAWIENIA\"; ObjectID = \"rsj-6b-IS1\";";
+
+/* Class = "UILabel"; text = "phone"; ObjectID = "w7i-pX-6rC"; */
+"w7i-pX-6rC.text" = "Class = \"UILabel\"; text = \"telefon\"; ObjectID = \"w7i-pX-6rC\";";
+
+/* Class = "UINavigationItem"; title = "CONTACT"; ObjectID = "wAF-uM-uRe"; */
+"wAF-uM-uRe.title" = "Class = \"UINavigationItem\"; title = \"KONTAKT\"; ObjectID = \"wAF-uM-uRe\";";
+
+/* Class = "UIButton"; normalTitle = "SEND"; ObjectID = "z9O-hM-TV6"; */
+"z9O-hM-TV6.normalTitle" = "Class = \"UIButton\"; normalTitle = \"WYŚLIJ\"; ObjectID = \"z9O-hM-TV6\";";
+
+/* Class = "UINavigationItem"; title = "SEND"; ObjectID = "zuc-EM-7Qy"; */
+"zuc-EM-7Qy.title" = "Class = \"UINavigationItem\"; title = \"WYŚLIJ\"; ObjectID = \"zuc-EM-7Qy\";";
+

@@ -1,0 +1,15 @@
+/* Class = "UIButton"; normalTitle = "or sign up with Facebook"; ObjectID = "8EL-62-1HZ"; */
+"8EL-62-1HZ.normalTitle" = "чи зайти через Фейсбук";
+
+/* Class = "UILabel"; text = "Enter your name and a password."; ObjectID = "CYa-ax-CQN"; */
+"CYa-ax-CQN.text" = "Введіть ваше ім'я та пароль.";
+
+/* Class = "UITextField"; placeholder = "●●●●●●"; ObjectID = "ipO-57-IeG"; */
+"ipO-57-IeG.placeholder" = "●●●●●●";
+
+/* Class = "UIButton"; normalTitle = "Register"; ObjectID = "kZJ-Mq-KUh"; */
+"kZJ-Mq-KUh.normalTitle" = "Зареєструватись";
+
+/* Class = "UIButton"; normalTitle = "Back"; ObjectID = "wFL-F1-Zle"; */
+"wFL-F1-Zle.normalTitle" = "Назад";
+

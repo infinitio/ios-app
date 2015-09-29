@@ -38,9 +38,6 @@
 "Accept on receiving device" = "在收取方设备上接受";
 
 /* No comment provided by engineer. */
-"Account already registered for\nFacebook email address." = "该账户已通过\nFacebook 邮箱注册";
-
-/* No comment provided by engineer. */
 "All set! A message will be sent to %@." = "成功！消息会发送至 %@";
 
 /* No comment provided by engineer. */
@@ -92,9 +89,6 @@
 "Done" = "完成";
 
 /* No comment provided by engineer. */
-"Download code is not valid." = "下载代码无效";
-
-/* No comment provided by engineer. */
 "EMAIL" = "邮箱";
 
 /* No comment provided by engineer. */
@@ -108,9 +102,6 @@
 
 /* No comment provided by engineer. */
 "Email sent!" = "邮件已发出！";
-
-/* No comment provided by engineer. */
-"Enter the download code from\nyour SMS or email invitation." = "在这里输入通过短信或邀请邮件\n收到的下载代码";
 
 /* No comment provided by engineer. */
 "Error – %@ must retry" = "错误 - %@ 必须重试";
@@ -161,9 +152,6 @@
 "Hey %@. I want to send you files using Infinit. It's a free, unlimited file sharing app. You should download it here: %@" = "%1$@ 你好！我想用 Infinit 给你发送文件。这是一个免费的文件分享程序，且无文件大小限制。你可以在这里下载： %2$@";
 
 /* No comment provided by engineer. */
-"Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@\n\nDon't forget to enter the following download code: %@" = "Hi, 我用 Infinit 给你发了 %1$lu 个 %2$@. 请在此处收取 %3$@ : %4$@\n\n到时你需要输入以下下载代码: %5$@";
-
-/* No comment provided by engineer. */
 "How To Send To Self.mp4" = "How to Send to Self.mp4";
 
 /* No comment provided by engineer. */
@@ -197,9 +185,6 @@
 "Logout" = "注销";
 
 /* No comment provided by engineer. */
-"Looks like you don't have an\naccount. Enter email." = "你好像还没有账户\n请输入邮箱地址";
-
-/* No comment provided by engineer. */
 "Me" = "我";
 
 /* No comment provided by engineer. */
@@ -218,12 +203,6 @@
 "No access to gallery." = "无法访问媒体库";
 
 /* No comment provided by engineer. */
-"No one here by that name.\nTry an email instead." = "找不到这个名字\n试试邮箱地址吧";
-
-/* No comment provided by engineer. */
-"No one here by that name.\nTry connecting your Contacts" = "找不到这个名字\n试试接通你的通讯录吧";
-
-/* No comment provided by engineer. */
 "Not enough free space!" = "剩余空间不足！";
 
 /* No comment provided by engineer. */
@@ -240,9 +219,6 @@
 
 /* No comment provided by engineer. */
 "Open Infinit to ensure your transfer continues" = "请打开 Infinit 以保证传输不被打断";
-
-/* No comment provided by engineer. */
-"Our Server is down.\nThanks for being patient." = "服务器维修中\n感谢您耐心等待";
 
 /* No comment provided by engineer. */
 "PAUSE" = "暂停";
@@ -474,10 +450,4 @@
 
 /* No comment provided by engineer. */
 "me" = "我";
-
-/* No comment provided by engineer. */
-"the file" = "此文件";
-
-/* No comment provided by engineer. */
-"the files" = "这些文件";
 

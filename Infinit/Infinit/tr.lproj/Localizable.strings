@@ -38,9 +38,6 @@
 "Accept on receiving device" = "Alıcı cihazda kabul et";
 
 /* No comment provided by engineer. */
-"Account already registered for\nFacebook email address." = "Facebook eposta adresi için\nbir hesap kaydolmuş.";
-
-/* No comment provided by engineer. */
 "All set! A message will be sent to %@." = "Her şey hazır! %@ a bir mesaj gönderilecek.";
 
 /* No comment provided by engineer. */
@@ -92,9 +89,6 @@
 "Done" = "Tamamlandı";
 
 /* No comment provided by engineer. */
-"Download code is not valid." = "İndirme kodu geçersiz.";
-
-/* No comment provided by engineer. */
 "EMAIL" = "EPOSTA";
 
 /* No comment provided by engineer. */
@@ -108,9 +102,6 @@
 
 /* No comment provided by engineer. */
 "Email sent!" = "Eposta gönderildi!";
-
-/* No comment provided by engineer. */
-"Enter the download code from\nyour SMS or email invitation." = "SMS ya da eposta davetiyenizdeki\nindirme kodunu girin.";
 
 /* No comment provided by engineer. */
 "Error – %@ must retry" = "Hata - %@ tekrar denemeli";
@@ -161,9 +152,6 @@
 "Hey %@. I want to send you files using Infinit. It's a free, unlimited file sharing app. You should download it here: %@" = "Hey %1$@. Sana ınfinit'i kullanarak dosya göndermek istiyorum. Ücretsiz ve sınırsız dosya paylaşma uygulaması. Buradan indirmelisin: %2$@";
 
 /* No comment provided by engineer. */
-"Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@\n\nDon't forget to enter the following download code: %@" = "Merhaba, sana az önce Infinit'ten %1$lu %2$@ gönderdim. %3$@ yı buradan alabilirsin: %4$@\n\nBu indirme kodunu girmeyi unutma: %5$@";
-
-/* No comment provided by engineer. */
 "How To Send To Self.mp4" = "Kendine Nasıl Gönderirsin.mp4";
 
 /* No comment provided by engineer. */
@@ -197,9 +185,6 @@
 "Logout" = "Çıkış yap";
 
 /* No comment provided by engineer. */
-"Looks like you don't have an\naccount. Enter email." = "Görünüşe göre hesabın\nyok. Eposta gir.";
-
-/* No comment provided by engineer. */
 "Me" = "Ben";
 
 /* No comment provided by engineer. */
@@ -218,12 +203,6 @@
 "No access to gallery." = "Galeriye erişim yok.";
 
 /* No comment provided by engineer. */
-"No one here by that name.\nTry an email instead." = "O isimde kimse yok burada.\nOnun yerine bir eposta dene.";
-
-/* No comment provided by engineer. */
-"No one here by that name.\nTry connecting your Contacts" = "O isimde kimde yok burada.\nKişilerinize bağlanmayı deneyin";
-
-/* No comment provided by engineer. */
 "Not enough free space!" = "Yeterli miktarda boş alan yok!";
 
 /* No comment provided by engineer. */
@@ -240,9 +219,6 @@
 
 /* No comment provided by engineer. */
 "Open Infinit to ensure your transfer continues" = "Aktarımınızın devam ettiğini doğrulamak için Infinit'i açın";
-
-/* No comment provided by engineer. */
-"Our Server is down.\nThanks for being patient." = "Sunucumuz çöktü.\nSabrınız için teşekkürler.";
 
 /* No comment provided by engineer. */
 "PAUSE" = "DURAKLAT";
@@ -474,10 +450,4 @@
 
 /* No comment provided by engineer. */
 "me" = "ben";
-
-/* No comment provided by engineer. */
-"the file" = "dosya";
-
-/* No comment provided by engineer. */
-"the files" = "dosyalar";
 

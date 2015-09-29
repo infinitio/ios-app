@@ -38,9 +38,6 @@
 "Accept on receiving device" = "Accepteer op het apparaat van de ontvanger.";
 
 /* No comment provided by engineer. */
-"Account already registered for\nFacebook email address." = "Account is al geregistreerd voor een\nFacebook email adres.";
-
-/* No comment provided by engineer. */
 "All set! A message will be sent to %@." = "Gereed! Een bericht zal worden verstuurd naar %@.";
 
 /* No comment provided by engineer. */
@@ -63,6 +60,9 @@
 
 /* No comment provided by engineer. */
 "Canceled by you" = "Geannuleerd door u";
+
+/* No comment provided by engineer. */
+"Check your email!" = "Controleer je email!";
 
 /* No comment provided by engineer. */
 "Choose a photo" = "Kies een foto";
@@ -92,9 +92,6 @@
 "Done" = "Klaar";
 
 /* No comment provided by engineer. */
-"Download code is not valid." = "Download code is niet geldig.";
-
-/* No comment provided by engineer. */
 "EMAIL" = "EMAIL";
 
 /* No comment provided by engineer. */
@@ -108,9 +105,6 @@
 
 /* No comment provided by engineer. */
 "Email sent!" = "Email verstuurd!";
-
-/* No comment provided by engineer. */
-"Enter the download code from\nyour SMS or email invitation." = "Voer de download code in van\nje SMS of email uitnodiging.";
 
 /* No comment provided by engineer. */
 "Error – %@ must retry" = "Fout - %@ moet het opnieuw proberen.";
@@ -161,9 +155,6 @@
 "Hey %@. I want to send you files using Infinit. It's a free, unlimited file sharing app. You should download it here: %@" = "Hallo %1$@. Ik wil je bestanden versturen via Infinit. Het is een gratis en onbeperkte bestandsoverdrachten app. Je kunt het hier downloaden: %2$@";
 
 /* No comment provided by engineer. */
-"Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@\n\nDon't forget to enter the following download code: %@" = "Hallo, ik heb jou %1$lu%2$@ via Infinit. Je kunt %3$@ hier krijgen: %4$@\n\nVergeet niet om deze download code in te voeren: %5$@";
-
-/* No comment provided by engineer. */
 "How To Send To Self.mp4" = "Hoe te versturen naar jezelf.mp4";
 
 /* No comment provided by engineer. */
@@ -197,13 +188,10 @@
 "Logout" = "Log uit";
 
 /* No comment provided by engineer. */
-"Looks like you don't have an\naccount. Enter email." = "Het lijkt erop dat je geen\naccount hebt. Voer je email in.";
+"Me" = "Ik";
 
 /* No comment provided by engineer. */
-"Me" = "Mij";
-
-/* No comment provided by engineer. */
-"Me (my other devices)" = "Mij (Mijn andere apparaten)";
+"Me (my other devices)" = "Ik (Mijn andere apparaten)";
 
 /* No comment provided by engineer. */
 "Mind rating us on the App Store?" = "Wilt u a.u.b een beoordeling geven in de App Store?";
@@ -216,12 +204,6 @@
 
 /* No comment provided by engineer. */
 "No access to gallery." = "Geen toegang tot foto album.";
-
-/* No comment provided by engineer. */
-"No one here by that name.\nTry an email instead." = "Deze naam is niet in gebruik.\nProbeer inplaats van daarvan een email.";
-
-/* No comment provided by engineer. */
-"No one here by that name.\nTry connecting your Contacts" = "Niemand heeft die naam.\nProbeer je contacten te koppelen.";
 
 /* No comment provided by engineer. */
 "Not enough free space!" = "Niet genoeg vrije ruimte!";
@@ -240,9 +222,6 @@
 
 /* No comment provided by engineer. */
 "Open Infinit to ensure your transfer continues" = "Open Infinit om er zeker van te zijn dat de uitwisseling doorgaat!";
-
-/* No comment provided by engineer. */
-"Our Server is down.\nThanks for being patient." = "Onze server ligt plat.\nBedankt voor het wachten.";
 
 /* No comment provided by engineer. */
 "PAUSE" = "PAUZE";
@@ -270,6 +249,9 @@
 
 /* No comment provided by engineer. */
 "Preparing your transfer..." = "Voorbereiden van overdracht...";
+
+/* No comment provided by engineer. */
+"REMOVE THIS LIMIT" = "HAAL DEZE LIMIET WEG";
 
 /* No comment provided by engineer. */
 "REPORT A PROBLEM" = "MELD EEN PROBLEEM";
@@ -449,6 +431,9 @@
 "You need %@ of space to accept this transfer." = "Je hebt %@ ruimte nodig om deze overdracht te accepteren.";
 
 /* No comment provided by engineer. */
+"You need to confirm your email address before you can login. Check your inbox for an email with instructions." = "Je moet je email adres bevestigen voordat je kunt inloggen. Controleer je Postvak IN voor instructies.";
+
+/* No comment provided by engineer. */
 "You need to grant permission to access your friends to find them on Infinit." = "Je moet toestemming geven om je vrienden te vinden op Infinit.";
 
 /* No comment provided by engineer. */
@@ -467,6 +452,9 @@
 "Your email has not been confirmed." = "Je email is niet bevestigd.";
 
 /* No comment provided by engineer. */
+"You’re a power sharer!" = "Je bent een super deler!";
+
+/* No comment provided by engineer. */
 "file" = "bestand";
 
 /* No comment provided by engineer. */
@@ -474,10 +462,4 @@
 
 /* No comment provided by engineer. */
 "me" = "ik";
-
-/* No comment provided by engineer. */
-"the file" = "het bestand";
-
-/* No comment provided by engineer. */
-"the files" = "de bestanden";
 

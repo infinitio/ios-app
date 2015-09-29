@@ -1,0 +1,15 @@
+/* Class = "UIButton"; normalTitle = "Back"; ObjectID = "5mc-ln-JbU"; */
+"5mc-ln-JbU.normalTitle" = "Назад";
+
+/* Class = "UIButton"; normalTitle = "or login with Facebook"; ObjectID = "Cyx-IQ-tWr"; */
+"Cyx-IQ-tWr.normalTitle" = "чи зайти через Фейсбук";
+
+/* Class = "UIButton"; normalTitle = "forgot?"; ObjectID = "KkB-d0-Hgu"; */
+"KkB-d0-Hgu.normalTitle" = "забули?";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "NBs-14-iOO"; */
+"NBs-14-iOO.normalTitle" = "Вхід";
+
+/* Class = "UITextField"; placeholder = "●●●●●●"; ObjectID = "Pcp-Eb-fyv"; */
+"Pcp-Eb-fyv.placeholder" = "●●●●●●";
+

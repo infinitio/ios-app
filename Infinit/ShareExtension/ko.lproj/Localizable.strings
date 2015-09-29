@@ -14,17 +14,8 @@
 "Oops!" = "저런!";
 
 /* No comment provided by engineer. */
-"Oops!\nNot enough space." = "어머나!\n저장공간이 부족합니다.";
-
-/* No comment provided by engineer. */
-"Open Infinit now\nto send them!" = "Infinit을 열어서\n파일을 보내세요!";
-
-/* No comment provided by engineer. */
 "Preparing your files..." = "파일 준비중...";
 
 /* No comment provided by engineer. */
 "SEND" = "전송";
-
-/* No comment provided by engineer. */
-"Your files are being\ncopied to Infinit..." = "Infinit으로 파일이\n복사되는 중입니다...";
 

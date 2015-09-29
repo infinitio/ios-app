@@ -38,9 +38,6 @@
 "Accept on receiving device" = "받을 기기에서 수락";
 
 /* No comment provided by engineer. */
-"Account already registered for\nFacebook email address." = "이미 등록된\n페이스북 계정입니다.";
-
-/* No comment provided by engineer. */
 "All set! A message will be sent to %@." = "준비 완료! %@에게 메시지가 전송됩니다.";
 
 /* No comment provided by engineer. */
@@ -63,6 +60,9 @@
 
 /* No comment provided by engineer. */
 "Canceled by you" = "내가 취소함";
+
+/* No comment provided by engineer. */
+"Check your email!" = "이메일을 확인하세요!";
 
 /* No comment provided by engineer. */
 "Choose a photo" = "사진 선택";
@@ -92,9 +92,6 @@
 "Done" = "완료";
 
 /* No comment provided by engineer. */
-"Download code is not valid." = "다운로드 코드가 유효하지 않습니다.";
-
-/* No comment provided by engineer. */
 "EMAIL" = "이메일";
 
 /* No comment provided by engineer. */
@@ -108,9 +105,6 @@
 
 /* No comment provided by engineer. */
 "Email sent!" = "이메일 전송됨!";
-
-/* No comment provided by engineer. */
-"Enter the download code from\nyour SMS or email invitation." = "문자나 이메일 초대로부터 받은\n다운로드 코드를 입력하세요.";
 
 /* No comment provided by engineer. */
 "Error – %@ must retry" = "에러 – %@ 재시도 해야합니다";
@@ -129,6 +123,9 @@
 
 /* No comment provided by engineer. */
 "FEEDBACK" = "피드백";
+
+/* No comment provided by engineer. */
+"FREE UPGRADE" = "무료 업그레이드";
 
 /* No comment provided by engineer. */
 "Facebook login canceled" = "페이스북 로그인 취소됨";
@@ -152,16 +149,16 @@
 "GOOD, I LIKE IT!" = "좋아요!";
 
 /* No comment provided by engineer. */
+"Go unlimited!" = "무제한으로 이용하세요!";
+
+/* No comment provided by engineer. */
 "Handle not valid" = "별명이 유효하지 않습니다";
 
 /* No comment provided by engineer. */
-"Help" = "도움";
+"Help" = "도움말";
 
 /* No comment provided by engineer. */
 "Hey %@. I want to send you files using Infinit. It's a free, unlimited file sharing app. You should download it here: %@" = "%1$@님. 당신에게 Infinit으로 파일을 보내려고 합니다. 이 앱은 무료이며, 파일 전송이 무제한으로 가능합니다. %2$@ : 이곳에서 다운받으세요.";
-
-/* No comment provided by engineer. */
-"Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@\n\nDon't forget to enter the following download code: %@" = "안녕하세요, Infinit으로 %1$lu %2$@을(를) 보냈습니다. %4$@ 여기서 %3$@을(를) 다운받을 수 있습니다.\n\n코드를 입력해야 하는 걸 잊지 마세요! 코드: %5$@";
 
 /* No comment provided by engineer. */
 "How To Send To Self.mp4" = "자신에게 보내는 방법.mp4";
@@ -197,9 +194,6 @@
 "Logout" = "로그아웃";
 
 /* No comment provided by engineer. */
-"Looks like you don't have an\naccount. Enter email." = "계정이 없는 것 같네요.\n이메일을 입력하세요.";
-
-/* No comment provided by engineer. */
 "Me" = "나";
 
 /* No comment provided by engineer. */
@@ -218,12 +212,6 @@
 "No access to gallery." = "사진 접근 권한 없음.";
 
 /* No comment provided by engineer. */
-"No one here by that name.\nTry an email instead." = "없는 이름입니다.\n대신 이메일을 입력해보세요.";
-
-/* No comment provided by engineer. */
-"No one here by that name.\nTry connecting your Contacts" = "없는 이름입니다.\n연락처를 확인해보세요";
-
-/* No comment provided by engineer. */
 "Not enough free space!" = "저장공간이 부족합니다!";
 
 /* No comment provided by engineer. */
@@ -240,9 +228,6 @@
 
 /* No comment provided by engineer. */
 "Open Infinit to ensure your transfer continues" = "Infinit을 열어 전송이 진행중인지 확인하세요";
-
-/* No comment provided by engineer. */
-"Our Server is down.\nThanks for being patient." = "서버가 다운되었습니다.\n기다려주셔서 감사합니다.";
 
 /* No comment provided by engineer. */
 "PAUSE" = "일시정지";
@@ -270,6 +255,9 @@
 
 /* No comment provided by engineer. */
 "Preparing your transfer..." = "전송 준비중...";
+
+/* No comment provided by engineer. */
+"REMOVE THIS LIMIT" = "제한 삭제";
 
 /* No comment provided by engineer. */
 "REPORT A PROBLEM" = "버그 리포트";
@@ -359,10 +347,10 @@
 "Take new photo" = "새로운 사진 찍기";
 
 /* No comment provided by engineer. */
-"Tap 'OK' so we can display your contacts." = "'OK'를 탭하면 연락처가 나타납니다.";
+"Tap 'OK' so we can display your contacts." = "'승인'을 탭하면 연락처가 나타납니다.";
 
 /* No comment provided by engineer. */
-"Tap 'OK' to select your photos and videos." = "'OK'를 탭하여 사진과 동영상을 선택하세요.";
+"Tap 'OK' to select your photos and videos." = "'승인'을 탭하여 사진과 동영상을 선택하세요.";
 
 /* No comment provided by engineer. */
 "Thanks for reporting the problem, we'll get back to you as soon as we can." = "감사합니다. 최대한 빠른 시일 내에 답변드리겠습니다.";
@@ -449,6 +437,9 @@
 "You need %@ of space to accept this transfer." = "이 전송을 수락하려면 %@의 공간이 필요합니다.";
 
 /* No comment provided by engineer. */
+"You need to confirm your email address before you can login. Check your inbox for an email with instructions." = "지시 사항이 적혀 있는 이메일을 확인한 후 로그인 하세요.";
+
+/* No comment provided by engineer. */
 "You need to grant permission to access your friends to find them on Infinit." = "Infinit에서 친구를 찾으려면 먼저 친구접근을 허용해야합니다.";
 
 /* No comment provided by engineer. */
@@ -467,6 +458,9 @@
 "Your email has not been confirmed." = "이메일 승인이 되어있지 않습니다";
 
 /* No comment provided by engineer. */
+"You’re a power sharer!" = "당신은 파워 공유자입니다!";
+
+/* No comment provided by engineer. */
 "file" = "파일";
 
 /* No comment provided by engineer. */
@@ -474,10 +468,4 @@
 
 /* No comment provided by engineer. */
 "me" = "나";
-
-/* No comment provided by engineer. */
-"the file" = "파일";
-
-/* No comment provided by engineer. */
-"the files" = "파일";
 

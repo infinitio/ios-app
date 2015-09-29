@@ -34,9 +34,6 @@
 /* Class = "UILabel"; text = "Label"; ObjectID = "BMO-Tq-quz"; */
 "BMO-Tq-quz.text" = "标签";
 
-/* Class = "UILabel"; text = "Send any photo or video\nto your friends"; ObjectID = "Bbd-IZ-yiZ"; */
-"Bbd-IZ-yiZ.text" = "给好友发送\n任何照片或视频";
-
 /* Class = "UIButton"; normalTitle = "ACCESS PHONE CONTACTS"; ObjectID = "CQ1-1P-kb6"; */
 "CQ1-1P-kb6.normalTitle" = "ACCESS PHONE CONTACTS";
 
@@ -57,9 +54,6 @@
 
 /* Class = "UITabBarItem"; title = "Item"; ObjectID = "ESf-xZ-Nqk"; */
 "ESf-xZ-Nqk.title" = "条目";
-
-/* Class = "UINavigationController"; title = "EDIT PROFILE"; ObjectID = "FTm-Xp-9pf"; */
-"FTm-Xp-9pf.title" = "编辑个人简况";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "Fb4-h2-ykq"; */
 "Fb4-h2-ykq.text" = "标签";
@@ -85,9 +79,6 @@
 /* Class = "UITabBarItem"; title = "Item"; ObjectID = "HEy-Gq-I91"; */
 "HEy-Gq-I91.title" = "条目";
 
-/* Class = "UILabel"; text = "Receive and view any\ntype of file in Infinit"; ObjectID = "J59-YW-qzz"; */
-"J59-YW-qzz.text" = "用 Infinit 收取、查看\n任何类型的文件";
-
 /* Class = "UIViewController"; title = "Files Table iPad"; ObjectID = "KNs-fB-D4y"; */
 "KNs-fB-D4y.title" = "Files Table iPad";
 
@@ -106,17 +97,11 @@
 /* Class = "UILabel"; text = "+5"; ObjectID = "MoH-dc-fmU"; */
 "MoH-dc-fmU.text" = "+5";
 
-/* Class = "UILabel"; text = "Send your files between\nyour own devices"; ObjectID = "N40-3y-JCe"; */
-"N40-3y-JCe.text" = "在你自己的设备之间\n传送文件";
-
 /* Class = "UINavigationItem"; title = "EDIT PROFILE"; ObjectID = "OWZ-ZK-qG3"; */
 "OWZ-ZK-qG3.title" = "编辑个人简况";
 
 /* Class = "UINavigationItem"; title = "REPORT A PROBLEM"; ObjectID = "Q7Z-b7-sHF"; */
 "Q7Z-b7-sHF.title" = "报告问题";
-
-/* Class = "UINavigationController"; title = "REPORT A PROBLEM"; ObjectID = "RBB-kt-vOH"; */
-"RBB-kt-vOH.title" = "报告问题";
 
 /* Class = "UIBarButtonItem"; title = "OK"; ObjectID = "RBf-3C-mkH"; */
 "RBf-3C-mkH.title" = "OK";
@@ -150,9 +135,6 @@
 
 /* Class = "UIBarButtonItem"; title = "Select"; ObjectID = "dDd-tw-C0S"; */
 "dDd-tw-C0S.title" = "选择";
-
-/* Class = "UILabel"; text = "Send to an email address or\naccess your phone contacts!"; ObjectID = "eGc-7u-5hd"; */
-"eGc-7u-5hd.text" = "通过邮箱地址发送，\n或使用电话通讯簿";
 
 /* Class = "UILabel"; text = "M"; ObjectID = "fjd-ZY-K2z"; */
 "fjd-ZY-K2z.text" = "M";

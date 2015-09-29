@@ -1,0 +1,72 @@
+/* No comment provided by engineer. */
+"%@ declined the transfer!" = "%@ відмінив передачу!";
+
+/* No comment provided by engineer. */
+"%@ declined your transfer!" = "%@ відмінив вашу передачу!";
+
+/* No comment provided by engineer. */
+"%@ received your files!" = "%@ прийняв ваші файли!";
+
+/* No comment provided by engineer. */
+"%@ wants to send %ld %@ to you" = "%1$@ хоче надіслати вам %2$ld %3$@";
+
+/* No comment provided by engineer. */
+"%lu FILES" = "%lu ФАЙЛИ";
+
+/* No comment provided by engineer. */
+"%lu files" = "%lu файли";
+
+/* No comment provided by engineer. */
+"%lu files selected" = "%lu файлів вибрано";
+
+/* No comment provided by engineer. */
+"1 file" = "1 файл";
+
+/* No comment provided by engineer. */
+"1 file selected" = "1 файл вибрано";
+
+/* No comment provided by engineer. */
+"30x faster" = "30р швидше";
+
+/* No comment provided by engineer. */
+"ACCEPT" = "ПРИЙНЯТИ";
+
+/* No comment provided by engineer. */
+"All set! A message will be sent to %@." = "Зроблено! Повідомлення буде надіслано %@.";
+
+/* No comment provided by engineer. */
+"Back" = "Назад";
+
+/* No comment provided by engineer. */
+"CANCEL" = "ВІДМІНИТИ";
+
+/* No comment provided by engineer. */
+"Cancel" = "Відмінити";
+
+/* No comment provided by engineer. */
+"Canceled" = "Відмінено";
+
+/* No comment provided by engineer. */
+"Canceled by %@" = "Відмінено %@";
+
+/* No comment provided by engineer. */
+"Canceled by you" = "Відмінено вами";
+
+/* No comment provided by engineer. */
+"Choose a photo" = "Виберіть фото";
+
+/* No comment provided by engineer. */
+"Choose a photo..." = "Виберіть фото...";
+
+/* No comment provided by engineer. */
+"Clear avatar" = "Очистити аватарку";
+
+/* No comment provided by engineer. */
+"DECLINE" = "ВІДМІНА";
+
+/* No comment provided by engineer. */
+"DONE" = "ТАК";
+
+/* No comment provided by engineer. */
+"Delivered" = "Доставлено";
+

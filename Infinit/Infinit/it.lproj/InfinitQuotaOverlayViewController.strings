@@ -1,0 +1,15 @@
+/* Class = "UIButton"; normalTitle = "CANCEL"; ObjectID = "Lv7-p1-Cgq"; */
+"Lv7-p1-Cgq.normalTitle" = "ANNULLA";
+
+/* Class = "UIButton"; normalTitle = "FREE UPGRADE"; ObjectID = "Z3n-SP-CVM"; */
+"Z3n-SP-CVM.normalTitle" = "UPGRADE GRATUITO";
+
+/* Class = "UIButton"; normalTitle = "GET PRO"; ObjectID = "gE7-Oa-zWZ"; */
+"gE7-Oa-zWZ.normalTitle" = "DIVENTA PRO";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "xFA-Lj-q1T"; */
+"xFA-Lj-q1T.text" = "Titolo";
+
+/* Class = "UILabel"; text = "Details"; ObjectID = "yQn-Ic-hfj"; */
+"yQn-Ic-hfj.text" = "Dettagli";
+

@@ -1,0 +1,27 @@
+/* Class = "UINavigationController"; title = "CONTACTS"; ObjectID = "1XU-dC-dIe"; */
+"1XU-dC-dIe.title" = "КОНТАКТИ";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "2OQ-eh-oJ7"; */
+"2OQ-eh-oJ7.text" = "Ярлик";
+
+/* Class = "UIButton"; normalTitle = "GET STARTED"; ObjectID = "97m-pM-Fe4"; */
+"97m-pM-Fe4.normalTitle" = "ПОЧАТОК";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "BMO-Tq-quz"; */
+"BMO-Tq-quz.text" = "Ярлик";
+
+/* Class = "UIButton"; normalTitle = "ACCESS PHONE CONTACTS"; ObjectID = "CQ1-1P-kb6"; */
+"CQ1-1P-kb6.normalTitle" = "ДОСТУП ДО КОНТАКТІВ ТЕЛЕФОНУ";
+
+/* Class = "UINavigationItem"; title = "CONTACTS"; ObjectID = "Diz-0I-QjG"; */
+"Diz-0I-QjG.title" = "КОНТАКТИ";
+
+/* Class = "UILabel"; text = "phone"; ObjectID = "w7i-pX-6rC"; */
+"w7i-pX-6rC.text" = "телефон";
+
+/* Class = "UINavigationItem"; title = "CONTACT"; ObjectID = "wAF-uM-uRe"; */
+"wAF-uM-uRe.title" = "КОНТАКТ";
+
+/* Class = "UIButton"; normalTitle = "SEND"; ObjectID = "z9O-hM-TV6"; */
+"z9O-hM-TV6.normalTitle" = "ПЕРЕСЛАТИ";
+

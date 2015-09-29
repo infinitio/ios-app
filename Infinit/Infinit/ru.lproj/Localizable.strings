@@ -38,9 +38,6 @@
 "Accept on receiving device" = "Принять на получающем устройстве";
 
 /* No comment provided by engineer. */
-"Account already registered for\nFacebook email address." = "Учетная запись уже зарегистрирована на\nemail-адрес в Facebook.";
-
-/* No comment provided by engineer. */
 "All set! A message will be sent to %@." = "Все настроено! Сообщение будет отправлено %@.";
 
 /* No comment provided by engineer. */
@@ -63,6 +60,9 @@
 
 /* No comment provided by engineer. */
 "Canceled by you" = "Отменено вами";
+
+/* No comment provided by engineer. */
+"Check your email!" = "Проверьте вашу почту!";
 
 /* No comment provided by engineer. */
 "Choose a photo" = "Выберите фото";
@@ -92,9 +92,6 @@
 "Done" = "Готово";
 
 /* No comment provided by engineer. */
-"Download code is not valid." = "Код для скачивания недействителен.";
-
-/* No comment provided by engineer. */
 "EMAIL" = "EMAIL";
 
 /* No comment provided by engineer. */
@@ -108,9 +105,6 @@
 
 /* No comment provided by engineer. */
 "Email sent!" = "Письмо отправлено!";
-
-/* No comment provided by engineer. */
-"Enter the download code from\nyour SMS or email invitation." = "Введите код для скачивания из\nСМС или пригласительного письма.";
 
 /* No comment provided by engineer. */
 "Error – %@ must retry" = "Ошибка – %@ должен попробовать еще раз";
@@ -129,6 +123,9 @@
 
 /* No comment provided by engineer. */
 "FEEDBACK" = "ОТЗЫВ";
+
+/* No comment provided by engineer. */
+"FREE UPGRADE" = "БЕСПЛАТНОЕ УЛУЧШЕНИЕ";
 
 /* No comment provided by engineer. */
 "Facebook login canceled" = "Вход через Facebook отменен";
@@ -152,6 +149,9 @@
 "GOOD, I LIKE IT!" = "ХОРОШО, МНЕ НРАВИТСЯ!";
 
 /* No comment provided by engineer. */
+"Go unlimited!" = "Получить неограниченную версию!";
+
+/* No comment provided by engineer. */
 "Handle not valid" = "Идентификатор не подходит";
 
 /* No comment provided by engineer. */
@@ -159,9 +159,6 @@
 
 /* No comment provided by engineer. */
 "Hey %@. I want to send you files using Infinit. It's a free, unlimited file sharing app. You should download it here: %@" = "Привет %1$@. Я хочу отправить вам файлы через Infinit. Это бесплатная программа для обмена файлами. Скачивай здесь: %2$@";
-
-/* No comment provided by engineer. */
-"Hi, I just sent you %lu %@ over Infinit. You can get %@ here: %@\n\nDon't forget to enter the following download code: %@" = "Привет! Я только что послал Вам %1$lu %2$@ через Infinit. Вы можете забрать %3$@ здесь: %4$@\n\nНе забудьте ввести этот код для скачивания: %5$@";
 
 /* No comment provided by engineer. */
 "How To Send To Self.mp4" = "Как Отправить Самому Себе.mp4";
@@ -197,9 +194,6 @@
 "Logout" = "Выйти";
 
 /* No comment provided by engineer. */
-"Looks like you don't have an\naccount. Enter email." = "Похоже, что у вас нет\nучетной записи. Введите email.";
-
-/* No comment provided by engineer. */
 "Me" = "Я";
 
 /* No comment provided by engineer. */
@@ -218,12 +212,6 @@
 "No access to gallery." = "Нет доступа к галерее.";
 
 /* No comment provided by engineer. */
-"No one here by that name.\nTry an email instead." = "Нет никого с таким именем.\nПопробуйте ввести email.";
-
-/* No comment provided by engineer. */
-"No one here by that name.\nTry connecting your Contacts" = "Нет никого с таким именем.\nПопробуйте подключить Контакты";
-
-/* No comment provided by engineer. */
 "Not enough free space!" = "Не хватает свободного места!";
 
 /* No comment provided by engineer. */
@@ -240,9 +228,6 @@
 
 /* No comment provided by engineer. */
 "Open Infinit to ensure your transfer continues" = "Откройте Infinit чтобы убедиться, что ваша передача продолжается";
-
-/* No comment provided by engineer. */
-"Our Server is down.\nThanks for being patient." = "Наш сервер временно недоступен.\nСпасибо за терпение.";
 
 /* No comment provided by engineer. */
 "PAUSE" = "ПАУЗА";
@@ -270,6 +255,9 @@
 
 /* No comment provided by engineer. */
 "Preparing your transfer..." = "Готовим вашу передачу...";
+
+/* No comment provided by engineer. */
+"REMOVE THIS LIMIT" = "УБРАТЬ ЭТО ОГРАНИЧЕНИЕ";
 
 /* No comment provided by engineer. */
 "REPORT A PROBLEM" = "СООБЩИТЬ О ПРОБЛЕМЕ";
@@ -449,6 +437,9 @@
 "You need %@ of space to accept this transfer." = "Вам необходимо %@ места для принятия этой передачи.";
 
 /* No comment provided by engineer. */
+"You need to confirm your email address before you can login. Check your inbox for an email with instructions." = "Прежде чем войти, необходимо подтвердить email. Проверьте ваш почтовый ящик, там будет письмо с инструкциями.";
+
+/* No comment provided by engineer. */
 "You need to grant permission to access your friends to find them on Infinit." = "Вам необходимо дать разрешение для доступа к списку друзей чтобы найти их в Infinit";
 
 /* No comment provided by engineer. */
@@ -467,6 +458,9 @@
 "Your email has not been confirmed." = "Ваш email не был подтвержден";
 
 /* No comment provided by engineer. */
+"You’re a power sharer!" = "Вы продвинутый участник!";
+
+/* No comment provided by engineer. */
 "file" = "файл";
 
 /* No comment provided by engineer. */
@@ -474,10 +468,4 @@
 
 /* No comment provided by engineer. */
 "me" = "я";
-
-/* No comment provided by engineer. */
-"the file" = "файл";
-
-/* No comment provided by engineer. */
-"the files" = "файлы";
 
