@@ -217,10 +217,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
         [self performSelector:@selector(tooLongToLogin) withObject:nil afterDelay:15.0f];
         NSString* fb_id = [FBSDKAccessToken currentAccessToken].userID;
         if (!settings.stored_device_id)
-        {
-          [InfinitDevicePasswordManager storeDeviceIdWithPassword:nil
-                                                    forIdentifier:fb_id];
-        }
+          [InfinitDevicePasswordManager storeDeviceIdWithPassword:nil forIdentifier:fb_id];
       }
       else
       {
