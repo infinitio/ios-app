@@ -147,17 +147,17 @@ static NSString* _cell_id = @"invitation_overlay_cell_id";
                                                           toView:self.table_view]];
   InfinitInvitationOverlayTableViewCell* cell =
     (InfinitInvitationOverlayTableViewCell*)[self.table_view cellForRowAtIndexPath:index];
-  InfinitMessageMethod method = InfinitMessageNative;
+  InfinitMessageMethod method = InfinitMessageNativeSMS;
   if (cell.email)
   {
-    method = InfinitMessageEmail;
+    method = InfinitMessageMetaEmail;
     self.contact.selected_email_index = [self.table_view indexPathForCell:cell].row;
     if ([InfinitHostDevice canSendSMS])
       self.contact.selected_email_index -= self.contact.phone_numbers.count;
   }
   else if (cell.phone)
   {
-    method = InfinitMessageNative;
+    method = InfinitMessageNativeSMS;
     self.contact.selected_phone_index = [self.table_view indexPathForCell:cell].row;
   }
   InfinitMessagingRecipient* recipient =
