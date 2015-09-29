@@ -130,9 +130,10 @@ static dispatch_once_t _got_access_token = 0;
     return;
   dispatch_once(&_got_access_token, ^
   {
+    NSArray* contacts = [[InfinitContactManager sharedInstance] allContacts];
+    [[InfinitContactManager sharedInstance] fetchGhostData];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
     {
-      NSArray* contacts = [self allContacts];
       NSMutableArray* upload_array = [NSMutableArray array];
       [contacts enumerateObjectsUsingBlock:^(InfinitContactAddressBook* contact,
                                              NSUInteger i,
@@ -140,7 +141,6 @@ static dispatch_once_t _got_access_token = 0;
        {
          [upload_array addObject:[self dictForContact:contact]];
        }];
-      [[InfinitContactManager sharedInstance] fetchGhostData];
       if ([InfinitApplicationSettings sharedInstance].address_book_uploaded)
         return;
       [[InfinitStateManager sharedInstance] uploadContacts:upload_array
@@ -157,22 +157,19 @@ static dispatch_once_t _got_access_token = 0;
 {
   if (ABAddressBookGetAuthorizationStatus() != kABAuthorizationStatusAuthorized)
     return;
-  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
+  NSMutableArray* ghosts = [NSMutableArray array];
+  NSArray* swaggers = [InfinitUserManager sharedInstance].alphabetical_swaggers;
+  for (InfinitUser* user in swaggers)
   {
-    NSMutableArray* ghosts = [NSMutableArray array];
-    NSArray* swaggers = [InfinitUserManager sharedInstance].alphabetical_swaggers;
-    for (InfinitUser* user in swaggers)
-    {
-      if (user.ghost)
-        [ghosts addObject:user];
-    }
-    if (ghosts.count == 0)
-      return;
-    for (InfinitUser* ghost in ghosts)
-    {
-      [self tryUpdateGhost:ghost];
-    }
-  });
+    if (user.ghost)
+      [ghosts addObject:user];
+  }
+  if (ghosts.count == 0)
+    return;
+  for (InfinitUser* ghost in ghosts)
+  {
+    [self tryUpdateGhost:ghost];
+  }
 }
 
 - (InfinitContactAddressBook*)contactForUser:(InfinitUser*)user
@@ -284,10 +281,7 @@ static dispatch_once_t _got_access_token = 0;
         NSString* stripped_number = [self strippedNumber:contact_phone];
         if ([stripped_number isEqualToString:phone])
         {
-          dispatch_async(dispatch_get_main_queue(), ^
-          {
-            [ghost updateGhostWithFullname:contact.fullname avatar:contact.avatar];
-          });
+          [ghost updateGhostWithFullname:contact.fullname avatar:contact.avatar];
           *stop = YES;
           break;
         }
