@@ -347,6 +347,7 @@ static NSString* _import_cell_id = @"contact_import_cell";
   __weak InfinitContactsViewController* weak_self = self;
   InfinitFacebookManager* manager = [InfinitFacebookManager sharedInstance];
   [manager.login_manager logInWithReadPermissions:kInfinitFacebookReadPermissions
+                               fromViewController:self
                                           handler:^(FBSDKLoginManagerLoginResult* result,
                                                     NSError* error)
   {
@@ -706,7 +707,10 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
       NSIndexPath* path = [NSIndexPath indexPathForRow:row
                                              inSection:InfinitContactsSectionSwaggers];
       InfinitContactCell* cell = (InfinitContactCell*)[self.table_view cellForRowAtIndexPath:path];
-      [cell performSelectorOnMainThread:@selector(updateAvatar) withObject:nil waitUntilDone:NO];
+      dispatch_async(dispatch_get_main_queue(), ^
+      {
+        [cell updateAvatar];
+      });
       return;
     }
     row++;
