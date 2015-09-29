@@ -40,6 +40,7 @@
 #import <Gap/InfinitTemporaryFileManager.h>
 #import <Gap/InfinitUserManager.h>
 #import <Gap/NSNumber+DataSize.h>
+#import <Gap/NSString+email.h>
 #import <Gap/NSString+PhoneNumber.h>
 
 #import "UIImage+Rounded.h"
@@ -1355,31 +1356,94 @@ openFileTapped:(NSUInteger)file_index
 - (void)cellPokeTapped:(InfinitHomePeerTransactionCell*)sender
 {
   InfinitUser* user = sender.transaction.recipient;
-  NSString* first_name = @"";
-  if (!user.fullname.infinit_isPhoneNumber)
-    first_name = [@" " stringByAppendingString:[user.fullname componentsSeparatedByString:@" "][0]];
-  NSString* message =
-    [NSString stringWithFormat:InfinitNonLocalizedString(@"Hey%@! You've still got a file I sent you with Infinit waiting: %@"),
-     first_name, user.ghost_invitation_url];
-  InfinitMessagingRecipient* message_recipient =
-    [InfinitMessagingRecipient phoneNumber:user.ghost_identifier];
-  if (!message_recipient)
-    return;
-  [[InfinitMessagingManager sharedInstance] sendMessage:message
-                                            toRecipient:message_recipient
-                                        completionBlock:^(InfinitMessagingRecipient*recipient,
-                                                          NSString* message,
-                                                          InfinitMessageStatus status)
+  NSString* (^firstNameFrom)(NSString* fullname) = ^NSString*(NSString* fullname)
   {
-    if (status != InfinitMessageStatusSuccess)
+    if (fullname.infinit_isEmail || fullname.infinit_isPhoneNumber)
+      return @"";
+    return [@" " stringByAppendingString:[fullname componentsSeparatedByString:@" "][0]];
+  };
+  if (user.ghost_identifier.infinit_isPhoneNumber)
+  {
+    InfinitMessagingRecipient* message_recipient =
+      [InfinitMessagingRecipient nativeSMS:user.ghost_identifier];
+    if (!message_recipient)
+      return;
+    NSString* first_name = firstNameFrom(user.fullname);
+    NSString* message =
+      [NSString stringWithFormat:InfinitNonLocalizedString(@"Hey%@! You've still got a file I sent you with Infinit waiting: %@"),
+       first_name, user.ghost_invitation_url];
+    [[InfinitMessagingManager sharedInstance] sendMessage:message
+                                              toRecipient:message_recipient
+                                          completionBlock:^(InfinitMessagingRecipient* recipient,
+                                                            NSString* message,
+                                                            InfinitMessageStatus status)
     {
-      [[InfinitStateManager sharedInstance] sendInvitation:user.ghost_identifier
-                                                   message:message
-                                                 ghostCode:user.ghost_code
-                                                userCancel:(status == InfinitMessageStatusCancel)
-                                                      type:@"reminder"];
-    }
-  }];
+      if (status != InfinitMessageStatusSuccess)
+      {
+        [[InfinitStateManager sharedInstance] sendInvitation:user.ghost_identifier
+                                                     message:message
+                                                   ghostCode:user.ghost_code
+                                                  userCancel:(status == InfinitMessageStatusCancel)
+                                                        type:@"reminder"];
+      }
+      NSString* fail_reason = nil;
+      switch (InfinitMessageStatusSuccess)
+      {
+        case InfinitMessageStatusCancel:
+          fail_reason = @"cancel";
+          break;
+        case InfinitMessageStatusFail:
+          fail_reason = @"fail";
+          break;
+        default:
+          break;
+      }
+      [InfinitMetricsManager sendMetricGhostReminder:(status == InfinitMessageStatusSuccess)
+                                              method:gap_invite_message_native_sms
+                                                code:user.ghost_code
+                                          failReason:nil];
+    }];
+  }
+  else if (user.ghost_identifier.infinit_isEmail)
+  {
+    InfinitMessagingRecipient* message_recipient =
+      [InfinitMessagingRecipient nativeEmail:user.ghost_identifier];
+    if (!message_recipient)
+      return;
+    NSString* first_name = firstNameFrom(user.fullname);
+    NSString* subject = @"Reminder you about the photos I sent";
+    NSString* message = [NSString stringWithFormat:
+    @"Hi%@,\n\n"
+    "I just wanted to remind you that I sent you some photos recently. "
+    "You can download them here: %@\n\n"
+    "Let me know if you like them!\n\n"
+    "Best,\n%@",
+    first_name, user.ghost_invitation_url, firstNameFrom(sender.transaction.sender.fullname)];
+    [[InfinitMessagingManager sharedInstance] sendMessage:InfinitNonLocalizedString(message)
+                                              withSubject:subject
+                                              toRecipient:message_recipient
+                                          completionBlock:^(InfinitMessagingRecipient* recipient,
+                                                            NSString* message,
+                                                            InfinitMessageStatus status)
+    {
+      NSString* fail_reason = nil;
+      switch (InfinitMessageStatusSuccess)
+      {
+        case InfinitMessageStatusCancel:
+          fail_reason = @"cancel";
+          break;
+        case InfinitMessageStatusFail:
+          fail_reason = @"fail";
+          break;
+        default:
+          break;
+      }
+      [InfinitMetricsManager sendMetricGhostReminder:(status == InfinitMessageStatusSuccess)
+                                              method:gap_invite_message_native_email
+                                                code:user.ghost_code
+                                          failReason:nil];
+    }];
+  }
 }
 
 - (void)cellInstallTapped:(InfinitHomePeerTransactionCell*)sender
