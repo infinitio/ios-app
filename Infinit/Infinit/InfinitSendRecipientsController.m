@@ -593,6 +593,7 @@ static UIImage* _send_button_image = nil;
   __weak InfinitSendRecipientsController* weak_self = self;
   InfinitFacebookManager* manager = [InfinitFacebookManager sharedInstance];
   [manager.login_manager logInWithReadPermissions:kInfinitFacebookReadPermissions
+                               fromViewController:self
                                           handler:^(FBSDKLoginManagerLoginResult* result,
                                                     NSError* error)
   {
@@ -1735,7 +1736,7 @@ didDeleteTokenAtIndex:(NSUInteger)index
     if (transaction == nil)
       return;
     InfinitUser* recipient_user = transaction.recipient;
-    if (self.current_message_recipient.method == InfinitMessageEmail)
+    if (self.current_message_recipient.method == InfinitMessageMetaEmail)
     {
       [self removeInvitationOverlay];
       self.sent_to_contact = YES;
@@ -1752,7 +1753,7 @@ didDeleteTokenAtIndex:(NSUInteger)index
     }
     NSString* message = recipient_user.ghost_invitation_url;
     [self removeInvitationOverlay];
-    if (self.current_message_recipient.method == InfinitMessageNative &&
+    if (self.current_message_recipient.method == InfinitMessageNativeSMS &&
         UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
       if ([self.navigationController isKindOfClass:InfinitSendNavigationController.class])
@@ -1766,7 +1767,7 @@ didDeleteTokenAtIndex:(NSUInteger)index
                                                             NSString* message,
                                                             InfinitMessageStatus status)
     {
-      if (recipient.method == InfinitMessageNative || recipient.method == InfinitMessageWhatsApp)
+      if (recipient.method == InfinitMessageNativeSMS || recipient.method == InfinitMessageWhatsApp)
       {
         switch (status)
         {
@@ -1787,7 +1788,7 @@ didDeleteTokenAtIndex:(NSUInteger)index
             break;
         }
       }
-      if (recipient.method == InfinitMessageNative && status != InfinitMessageStatusSuccess)
+      if (recipient.method == InfinitMessageNativeSMS && status != InfinitMessageStatusSuccess)
       {
         [[InfinitStateManager sharedInstance] sendInvitation:recipient.identifier
                                                      message:message
