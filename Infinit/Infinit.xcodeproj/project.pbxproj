@@ -64,6 +64,7 @@
 		83376EEA1AEFB95F0001A61E /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83376EE91AEFB95F0001A61E /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		83376F1F1AEFDF1C0001A61E /* InfinitWelcomeAvatarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83376F1D1AEFDF1C0001A61E /* InfinitWelcomeAvatarViewController.m */; };
 		83376F291AF0EE340001A61E /* InfinitLoggingInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83376F281AF0EE340001A61E /* InfinitLoggingInViewController.m */; };
+		833AF4851BB43E4900E32837 /* ISO6709Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 833AF4841BB43E4900E32837 /* ISO6709Location.m */; };
 		833DFCBC1A2F837400B0D213 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 833DFCBB1A2F837400B0D213 /* AssetsLibrary.framework */; };
 		833E3AC31A63CF4D0088D3FF /* InfinitAccessContactsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 833E3AC21A63CF4D0088D3FF /* InfinitAccessContactsView.m */; };
 		833E3AC61A63D16C0088D3FF /* InfinitApplicationSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 833E3AC51A63D16C0088D3FF /* InfinitApplicationSettings.m */; };
@@ -505,6 +506,8 @@
 		83376F1D1AEFDF1C0001A61E /* InfinitWelcomeAvatarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitWelcomeAvatarViewController.m; sourceTree = "<group>"; };
 		83376F271AF0EE330001A61E /* InfinitLoggingInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitLoggingInViewController.h; sourceTree = "<group>"; };
 		83376F281AF0EE340001A61E /* InfinitLoggingInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitLoggingInViewController.m; sourceTree = "<group>"; };
+		833AF4831BB43E4900E32837 /* ISO6709Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ISO6709Location.h; path = ThirdParty/ISO6709Location/ISO6709Location.h; sourceTree = "<group>"; };
+		833AF4841BB43E4900E32837 /* ISO6709Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ISO6709Location.m; path = ThirdParty/ISO6709Location/ISO6709Location.m; sourceTree = "<group>"; };
 		833DFCBB1A2F837400B0D213 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		833E3AC11A63CF4D0088D3FF /* InfinitAccessContactsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitAccessContactsView.h; sourceTree = "<group>"; };
 		833E3AC21A63CF4D0088D3FF /* InfinitAccessContactsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitAccessContactsView.m; sourceTree = "<group>"; };
@@ -1605,6 +1608,15 @@
 			name = "Logging in";
 			sourceTree = "<group>";
 		};
+		833AF4821BB43E3C00E32837 /* ISO6709Location */ = {
+			isa = PBXGroup;
+			children = (
+				833AF4831BB43E4900E32837 /* ISO6709Location.h */,
+				833AF4841BB43E4900E32837 /* ISO6709Location.m */,
+			);
+			name = ISO6709Location;
+			sourceTree = "<group>";
+		};
 		833E3AD31A63EF260088D3FF /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -2301,6 +2313,7 @@
 		83FA72591A66FEF90014B0E4 /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
+				833AF4821BB43E3C00E32837 /* ISO6709Location */,
 				836080511ACEC68E00EBC4E2 /* ALAssetsLibrary-CustomPhotoAlbum */,
 				83FA73001A66FF260014B0E4 /* FrameAccessor */,
 				83EBB0741A93943C00144BC6 /* JDStatusBarNotification */,
@@ -2807,6 +2820,7 @@
 				83054E291B26DF6C005F9558 /* InfinitMessagingManager.mm in Sources */,
 				8332F92B1ADFFA23007392A4 /* InfinitFilesFolderViewController_iPad.m in Sources */,
 				832FF1381B9F48BC00B3BA78 /* InfinitDevicePasswordManager.m in Sources */,
+				833AF4851BB43E4900E32837 /* ISO6709Location.m in Sources */,
 				83D763D91B84D3DB0046B2EE /* InfinitQuotaManager.m in Sources */,
 				83F7C3BE1A6EAEDD00FA283C /* InfinitSettingsUserCell.m in Sources */,
 				83157EDB1A73D49D00F8E87F /* InfinitFilesViewController.m in Sources */,
