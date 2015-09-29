@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9046" systemVersion="15A282b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9lB-0z-aFR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9052" systemVersion="15B17c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9lB-0z-aFR">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9035"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9040"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -63,6 +63,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wh0-c4-8bq">
+                                <rect key="frame" x="0.0" y="120" width="600" height="480"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JnR-bR-MVm">
+                                        <rect key="frame" x="474" y="354" width="76" height="76"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="76" id="Xkt-oP-zGF"/>
+                                            <constraint firstAttribute="height" constant="76" id="tSQ-sw-7p8"/>
+                                        </constraints>
+                                        <state key="normal" image="icon-send-ipad">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="sendButtonTapped:" destination="hHz-xi-viG" eventType="touchUpInside" id="pJA-7y-Jkb"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="JnR-bR-MVm" secondAttribute="bottom" constant="50" id="KXi-oZ-fDp"/>
+                                    <constraint firstAttribute="trailing" secondItem="JnR-bR-MVm" secondAttribute="trailing" constant="50" id="QWE-dt-WrA"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lUz-L3-9vu">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="120"/>
                                 <subviews>
@@ -119,14 +144,18 @@
                                         </connections>
                                     </button>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lXi-k8-j5W">
-                                        <rect key="frame" x="75" y="33" width="22" height="27"/>
+                                        <rect key="frame" x="70" y="31" width="30" height="30"/>
                                         <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="Guc-fM-d9k"/>
+                                            <constraint firstAttribute="width" constant="30" id="Uuc-J1-hsp"/>
+                                        </constraints>
                                         <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" image="icon-save-red">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="leftInnerTapped:" destination="hHz-xi-viG" eventType="touchUpInside" id="4bq-A4-l2l"/>
+                                            <action selector="leftCenterTapped:" destination="hHz-xi-viG" eventType="touchUpInside" id="t96-Rg-e7L"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fA9-fw-VaH">
@@ -144,6 +173,21 @@
                                             <action selector="rightInnerTapped:" destination="hHz-xi-viG" eventType="touchUpInside" id="xVH-Xj-xNN"/>
                                         </connections>
                                     </button>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0vT-Mt-uG1">
+                                        <rect key="frame" x="115" y="31" width="30" height="30"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="5QQ-gc-9L4"/>
+                                            <constraint firstAttribute="width" constant="30" id="zaR-sR-48K"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" image="icon-share">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="leftInnerTapped:" destination="hHz-xi-viG" eventType="touchUpInside" id="s3t-4z-q57"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -158,36 +202,13 @@
                                     <constraint firstItem="Fn8-5X-DLz" firstAttribute="leading" secondItem="lUz-L3-9vu" secondAttribute="leading" constant="20" id="VWP-Ij-6rR"/>
                                     <constraint firstItem="Fn8-5X-DLz" firstAttribute="top" secondItem="KlZ-FW-RX5" secondAttribute="bottom" constant="20" id="WfJ-pg-ZHy"/>
                                     <constraint firstAttribute="trailing" secondItem="Fn8-5X-DLz" secondAttribute="trailing" constant="20" id="cI3-FH-hyu"/>
+                                    <constraint firstItem="KlZ-FW-RX5" firstAttribute="centerY" secondItem="0vT-Mt-uG1" secondAttribute="centerY" id="mSN-8N-2DA"/>
                                     <constraint firstAttribute="height" constant="120" id="pPN-xG-aZv"/>
                                     <constraint firstItem="fA9-fw-VaH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="KlZ-FW-RX5" secondAttribute="trailing" constant="10" id="pxr-0O-Jne"/>
                                     <constraint firstItem="KlZ-FW-RX5" firstAttribute="centerY" secondItem="fA9-fw-VaH" secondAttribute="centerY" id="qDx-d6-0e8"/>
-                                    <constraint firstItem="lXi-k8-j5W" firstAttribute="leading" secondItem="7Mf-Fs-5w9" secondAttribute="trailing" constant="20" id="zGT-Cs-iD7"/>
+                                    <constraint firstItem="0vT-Mt-uG1" firstAttribute="leading" secondItem="lXi-k8-j5W" secondAttribute="trailing" constant="15" id="vvK-4j-b8d"/>
+                                    <constraint firstItem="lXi-k8-j5W" firstAttribute="leading" secondItem="7Mf-Fs-5w9" secondAttribute="trailing" constant="15" id="zGT-Cs-iD7"/>
                                     <constraint firstItem="gOC-Dq-oEk" firstAttribute="leading" secondItem="fA9-fw-VaH" secondAttribute="trailing" constant="20" id="zUw-g0-NxG"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wh0-c4-8bq">
-                                <rect key="frame" x="0.0" y="120" width="600" height="480"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JnR-bR-MVm">
-                                        <rect key="frame" x="474" y="354" width="76" height="76"/>
-                                        <animations/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="76" id="Xkt-oP-zGF"/>
-                                            <constraint firstAttribute="height" constant="76" id="tSQ-sw-7p8"/>
-                                        </constraints>
-                                        <state key="normal" image="icon-send-ipad">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="sendButtonTapped:" destination="hHz-xi-viG" eventType="touchUpInside" id="pJA-7y-Jkb"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <animations/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="JnR-bR-MVm" secondAttribute="bottom" constant="50" id="KXi-oZ-fDp"/>
-                                    <constraint firstAttribute="trailing" secondItem="JnR-bR-MVm" secondAttribute="trailing" constant="50" id="QWE-dt-WrA"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -204,7 +225,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="left_button_inner" destination="lXi-k8-j5W" id="jFy-h5-Qju"/>
+                        <outlet property="left_button_center" destination="lXi-k8-j5W" id="Etf-NV-yiw"/>
+                        <outlet property="left_button_inner" destination="0vT-Mt-uG1" id="Cwn-y6-p4j"/>
                         <outlet property="left_button_outer" destination="7Mf-Fs-5w9" id="CTW-UU-erX"/>
                         <outlet property="main_view" destination="Wh0-c4-8bq" id="kRG-RI-YLC"/>
                         <outlet property="right_button_inner" destination="fA9-fw-VaH" id="e3A-K7-MTK"/>
@@ -3001,6 +3023,7 @@ type of file in Infinit</string>
         <image name="icon-send-red" width="25" height="21"/>
         <image name="icon-send-white" width="18" height="15"/>
         <image name="icon-settings-fullname" width="17" height="20"/>
+        <image name="icon-share" width="22" height="27"/>
         <image name="icon-tab-contacts" width="18" height="21"/>
         <image name="icon-tab-files" width="23" height="21"/>
         <image name="icon-tab-home" width="26" height="21"/>
