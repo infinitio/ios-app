@@ -14,7 +14,8 @@
 #import <Gap/InfinitStateManager.h>
 
 static InfinitRatingManager* _instance = nil;
-static NSUInteger _required_transaction_count = 3;
+static dispatch_once_t _instance_token = 0;
+static NSUInteger _required_transaction_count = 2;
 
 @interface InfinitRatingManager ()
 
@@ -44,7 +45,7 @@ static NSUInteger _required_transaction_count = 3;
       }
       else
       {
-        _show_transaction_rating = NO;
+        _show_transaction_rating = YES;
       }
     }
   }
@@ -58,8 +59,10 @@ static NSUInteger _required_transaction_count = 3;
 
 + (instancetype)sharedInstance
 {
-  if (_instance == nil)
+  dispatch_once(&_instance_token, ^
+  {
     _instance = [[InfinitRatingManager alloc] init];
+  });
   return _instance;
 }
 
