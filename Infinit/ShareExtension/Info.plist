@@ -17,11 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.2.1</string>
+	<string>1.3.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>78</string>
+	<string>79</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionActionWantsFullScreenPresentation</key>
@@ -37,9 +37,10 @@
   (
     $extensionItem.attachments,
     $attachment,
-    ANY $attachment.registeredTypeIdentifiers UTI-EQUALS "public.file-url" ||
-    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.image" ||
-    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.audiovisual-content"
+    ANY $attachment.registeredTypeIdentifiers UTI-EQUALS &quot;public.file-url&quot; ||
+    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;public.text&quot; ||
+    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;public.image&quot; ||
+    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO &quot;public.audiovisual-content&quot;
   ).@count &gt;= 1
 ).@count &gt;= 1</string>
 		</dict>

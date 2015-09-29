@@ -167,11 +167,38 @@ static float _min_delay = 1.5f; // seconds
                           completionHandler:^(NSURL* url, NSError* error)
          {
            if (!error)
-           {
              [self.item_paths addObject:url.path];
-           }
            dispatch_semaphore_signal(fetch_sema);
          }];
+      }
+      else if ([provider hasItemConformingToTypeIdentifier:(NSString*)kUTTypeText])
+      {
+        [provider loadItemForTypeIdentifier:(NSString*)kUTTypeData
+                                    options:nil
+                          completionHandler:^(NSURL* url, NSError* error)
+        {
+          if (!error)
+          {
+            [self.item_paths addObject:url.path];
+            dispatch_semaphore_signal(fetch_sema);
+          }
+          else
+          {
+            [provider loadItemForTypeIdentifier:(NSString*)kUTTypeText
+                                        options:nil
+                              completionHandler:^(NSString* string, NSError* error)
+            {
+              if (!error && string.length)
+              {
+                NSString* filename = [NSString stringWithFormat:@"Text %@.txt", [self dateString]];
+                NSString* path = [self.temp_dir stringByAppendingPathComponent:filename];
+                [string writeToFile:path atomically:NO encoding:NSUTF8StringEncoding error:nil];
+                [self.item_paths addObject:path];
+              }
+              dispatch_semaphore_signal(fetch_sema);
+            }];
+          }
+        }];
       }
       else if (([provider hasItemConformingToTypeIdentifier:(NSString*)kUTTypeImage] ||
                [provider hasItemConformingToTypeIdentifier:(NSString*)kUTTypeAudiovisualContent]) &&
@@ -194,11 +221,7 @@ static float _min_delay = 1.5f; // seconds
             {
               if (image && !error)
               {
-                NSDate* date = [NSDate date];
-                NSDateFormatter* date_formatter = [[NSDateFormatter alloc] init];
-                date_formatter.dateFormat = @"yyyy-MM-DD HH:mm:ss";
-                NSString* filename =
-                  [NSString stringWithFormat:@"Image %@.jpg", [date_formatter stringFromDate:date]];
+                NSString* filename = [NSString stringWithFormat:@"Image %@.jpg", [self dateString]];
                 NSData* data = UIImageJPEGRepresentation(image, 1.0f);
                 NSString* path = [self.temp_dir stringByAppendingPathComponent:filename];
                 [data writeToFile:path atomically:NO];
@@ -581,6 +604,21 @@ static float _min_delay = 1.5f; // seconds
   res = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
   return res;
+}
+
+#pragma mark - Helpers
+
+- (NSString*)dateString
+{
+  NSDate* date = [NSDate date];
+  static dispatch_once_t _date_formatter_token = 0;
+  static NSDateFormatter* date_formatter = nil;
+  dispatch_once(&_date_formatter_token, ^
+  {
+    date_formatter = [[NSDateFormatter alloc] init];
+    date_formatter.dateFormat = @"yyyy-MM-dd HH.mm.ss";
+  });
+  return [date_formatter stringFromDate:date];
 }
 
 @end

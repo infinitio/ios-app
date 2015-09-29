@@ -7,6 +7,7 @@ SUBQUERY
     $extensionItem.attachments,
     $attachment,
     ANY $attachment.registeredTypeIdentifiers UTI-EQUALS "public.file-url" ||
+    ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.text" ||
     ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.image" ||
     ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.audiovisual-content"
   ).@count >= 1
