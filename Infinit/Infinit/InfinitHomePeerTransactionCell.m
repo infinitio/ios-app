@@ -338,7 +338,8 @@ static CGFloat _button_height = 45.0f;
 
 - (void)setCancelPokeButtons
 {
-  if (![InfinitHostDevice english])
+  if (![InfinitHostDevice english] ||
+      (self.transaction.recipient.ghost_identifier.infinit_isPhoneNumber && ![InfinitHostDevice canSendSMS]))
   {
     [self setCancelOnlyButton];
     return;
@@ -456,17 +457,13 @@ static CGFloat _button_height = 45.0f;
       break;
       
     case gap_transaction_ghost_uploaded:
-      if (self.transaction.recipient.fullname.infinit_isPhoneNumber ||
-          self.transaction.recipient.ghost_identifier.infinit_isPhoneNumber)
-      {
-        [self setButtonsHidden:!self.expanded];
-        if (self.expanded)
-          [self setCancelPokeButtons];
-        [self setStatusViewHidden:!self.expanded];
-        self.top_line.hidden = !self.expanded;
-        [self setFilesViewHidden:!self.expanded];
-        break;
-      } // else fall through to cloud_buffered
+      [self setButtonsHidden:!self.expanded];
+      if (self.expanded)
+        [self setCancelPokeButtons];
+      [self setStatusViewHidden:!self.expanded];
+      self.top_line.hidden = !self.expanded;
+      [self setFilesViewHidden:!self.expanded];
+      break;
     case gap_transaction_cloud_buffered:
       [self setButtonsHidden:!self.expanded];
       if (self.expanded)
@@ -793,8 +790,13 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
       break;
       
     case gap_transaction_cloud_buffered:
-      // Only shown when sending to yourself with no devices.
-      [self.delegate cellInstallTapped:self];
+      if (self.transaction.from_device &&
+          self.transaction.recipient.is_self &&
+          ![InfinitDeviceManager sharedInstance].other_devices.count)
+      {
+        // Only shown when sending to yourself with no devices.
+        [self.delegate cellInstallTapped:self];
+      }
       break;
 
     case gap_transaction_ghost_uploaded:
