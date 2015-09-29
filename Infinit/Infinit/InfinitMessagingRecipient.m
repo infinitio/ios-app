@@ -10,6 +10,7 @@
 
 #import "InfinitContactAddressBook.h"
 
+#import <Gap/NSString+email.h>
 #import <Gap/NSString+PhoneNumber.h>
 
 static NSCharacterSet* _whitespace = nil;
@@ -28,14 +29,14 @@ static NSCharacterSet* _whitespace = nil;
     _name = contact.first_name;
     if (!_whitespace)
       _whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-    if (self.method == InfinitMessageEmail)
+    if (self.method == InfinitMessageMetaEmail || self.method == InfinitMessageNativeEmail)
     {
       if (contact.selected_email_index >= contact.emails.count)
         return nil;
       NSString* email = [contact.emails[contact.selected_email_index] copy];
       _identifier = [email stringByTrimmingCharactersInSet:_whitespace];
     }
-    else if (self.method == InfinitMessageNative)
+    else if (self.method == InfinitMessageNativeSMS)
     {
       if (contact.selected_phone_index >= contact.phone_numbers.count)
         return nil;
@@ -61,8 +62,21 @@ static NSCharacterSet* _whitespace = nil;
   if (self = [super init])
   {
     _identifier = number;
-    _method = InfinitMessageNative;
+    _method = InfinitMessageNativeSMS;
     _name = number;
+  }
+  return self;
+}
+
+- (instancetype)initWithEmail:(NSString*)email
+{
+  if (!email.infinit_isEmail)
+    return nil;
+  if (self = [super init])
+  {
+    _identifier = email;
+    _method = InfinitMessageNativeEmail;
+    _name = email;
   }
   return self;
 }
@@ -73,7 +87,12 @@ static NSCharacterSet* _whitespace = nil;
   return [[self alloc] initWithRecipient:contact method:method];
 }
 
-+ (instancetype)phoneNumber:(NSString*)number
++ (instancetype)nativeEmail:(NSString*)email
+{
+  return [[self alloc] initWithEmail:email];
+}
+
++ (instancetype)nativeSMS:(NSString*)number
 {
   return [[self alloc] initWithPhoneNumber:number];
 }
@@ -85,6 +104,24 @@ static NSCharacterSet* _whitespace = nil;
   number = [number stringByTrimmingCharactersInSet:_whitespace];
   NSArray* number_parts = [number componentsSeparatedByCharactersInSet:_whitespace];
   return [number_parts componentsJoinedByString:@""];
+}
+
+- (NSString*)method_description
+{
+  switch (self.method)
+  {
+    case InfinitMessageMetaEmail:
+      return @"meta email";
+    case InfinitMessageNativeEmail:
+      return @"native email";
+    case InfinitMessageNativeSMS:
+      return @"native SMS";
+    case InfinitMessageWhatsApp:
+      return @"whatsapp";
+      
+    default:
+      return @"unknown";
+  }
 }
 
 @end
