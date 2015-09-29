@@ -192,9 +192,9 @@ static InfinitTabBarController* _current_instance = nil;
 
 - (void)viewWillAppear:(BOOL)animated
 {
-  [super viewWillAppear:animated];
   if ([InfinitStateManager sharedInstance].logged_in && [self addressBookAccessible])
     [[InfinitContactManager sharedInstance] gotAddressBookAccess];
+  [super viewWillAppear:animated];
   [[UIApplication sharedApplication] setStatusBarHidden:NO];
   if (!self.first_appear)
   {
