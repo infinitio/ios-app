@@ -19,4 +19,6 @@
 
 @property (nonatomic, weak, readwrite) InfinitContact* contact;
 
+- (void)updateAvatar;
+
 @end

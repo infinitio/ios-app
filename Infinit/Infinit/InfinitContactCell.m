@@ -39,17 +39,33 @@ static UIImage* _me_icon = nil;
     return;
   _contact = contact;
   self.name_label.text = contact.fullname;
-  self.avatar_view.image = [contact.avatar infinit_circularMaskOfSize:self.avatar_view.bounds.size];
+  __weak InfinitContactCell* weak_self = self;
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
+  {
+    UIImage* round_avatar = [contact.avatar infinit_circularMaskOfSize:weak_self.avatar_view.bounds.size];
+    dispatch_async(dispatch_get_main_queue(), ^
+    {
+      weak_self.avatar_view.image = round_avatar;
+    });
+  });
   self.letter_label.text = [self.contact.fullname substringToIndex:1].uppercaseString;
 }
 
 - (void)updateAvatar
 {
-  InfinitContactUser* contact_user = (InfinitContactUser*)self.contact;
-  [contact_user updateAvatar];
-  self.avatar_view.image =
-    [self.contact.avatar infinit_circularMaskOfSize:self.avatar_view.bounds.size];
-  [self setNeedsDisplay];
+  __weak InfinitContactCell* weak_self = self;
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^
+  {
+    InfinitContactUser* contact_user = (InfinitContactUser*)weak_self.contact;
+    [contact_user updateAvatar];
+    UIImage* round_avatar =
+      [weak_self.contact.avatar infinit_circularMaskOfSize:weak_self.avatar_view.bounds.size];
+    dispatch_async(dispatch_get_main_queue(), ^
+    {
+      weak_self.avatar_view.image = round_avatar;
+      [weak_self setNeedsDisplay];
+    });
+  });
 }
 
 @end

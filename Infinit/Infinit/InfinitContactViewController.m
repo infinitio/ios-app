@@ -355,14 +355,15 @@ static NSAttributedString* _unfavorite_title = nil;
       [self removeInvitationOverlay];
       return;
     }
-    if (recipient.method == InfinitMessageEmail)
+    if (recipient.method == InfinitMessageMetaEmail)
     {
       NSString* message =
         NSLocalizedString(@"Your contact will receive an email from us inviting them to Infinit.", nil);
       [strong_self showAlertWithTitle:NSLocalizedString(@"Email sent!", nil) message:message];
       return;
     }
-    else if (recipient.method == InfinitMessageNative || recipient.method == InfinitMessageWhatsApp)
+    else if (recipient.method == InfinitMessageNativeSMS ||
+             recipient.method == InfinitMessageWhatsApp)
     {
       NSString* message =
         [NSString stringWithFormat:NSLocalizedString(@"Hey %@. I want to send you files using Infinit. It's a free, unlimited file sharing app. You should download it here: %@", nil),
@@ -385,8 +386,8 @@ static NSAttributedString* _unfavorite_title = nil;
     gap_InviteMessageMethod method;
     switch (recipient.method)
     {
-      case InfinitMessageNative:
-        method = gap_invite_message_native;
+      case InfinitMessageNativeSMS:
+        method = gap_invite_message_native_sms;
         break;
       case InfinitMessageWhatsApp:
         method = gap_invite_message_whatsapp;
@@ -410,7 +411,7 @@ static NSAttributedString* _unfavorite_title = nil;
                                                           code:code
                                                         method:method
                                                     failReason:fail_message];
-    if (recipient.method == InfinitMessageNative && status != InfinitMessageStatusSuccess)
+    if (recipient.method == InfinitMessageNativeSMS && status != InfinitMessageStatusSuccess)
     {
       if ([recipient.identifier isKindOfClass:NSString.class])
       {
