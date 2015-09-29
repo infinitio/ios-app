@@ -17,6 +17,7 @@
 #import "InfinitFilesSearchPopover_iPad.h"
 #import "InfinitFilesTableViewController_iPad.h"
 #import "InfinitGalleryManager.h"
+#import "InfinitHostDevice.h"
 #import "InfinitMainSplitViewController_iPad.h"
 #import "InfinitMetricsManager.h"
 #import "InfinitStatusBarNotifier.h"
@@ -27,12 +28,14 @@
 
 @interface InfinitFilesViewController_iPad () <InfinitDownloadFolderManagerProtocol,
                                                InfinitFilesDisplayProtocol,
-                                               InfinitFilesSearchProtocol>
+                                               InfinitFilesSearchProtocol,
+                                               UIPopoverPresentationControllerDelegate>
 
 @property (nonatomic, weak) IBOutlet UISegmentedControl* segmented_control;
 @property (nonatomic, weak) IBOutlet UIButton* right_button_inner;
 @property (nonatomic, weak) IBOutlet UIButton* right_button_outer;
 @property (nonatomic, weak) IBOutlet UIView* main_view;
+@property (nonatomic, weak) IBOutlet UIButton* left_button_center;
 @property (nonatomic, weak) IBOutlet UIButton* left_button_inner;
 @property (nonatomic, weak) IBOutlet UIButton* left_button_outer;
 @property (nonatomic, weak) IBOutlet UIButton* send_button;
@@ -255,7 +258,7 @@ static dispatch_once_t _first_appear = 0;
   }
 }
 
-- (IBAction)leftInnerTapped:(id)sender
+- (IBAction)leftCenterTapped:(id)sender
 {
   if (self.editing)
   {
@@ -281,6 +284,43 @@ static dispatch_once_t _first_appear = 0;
                                                     ofType:InfinitStatusBarNotificationInfo
                                                   duration:4.0f];
     self.editing = NO;
+  }
+}
+
+- (IBAction)leftInnerTapped:(id)sender
+{
+  if (self.editing)
+  {
+    NSArray* items = self.current_controller.current_selection;
+    if (items.count == 0)
+      return;
+    NSMutableArray* paths = [NSMutableArray array];
+    if ([items[0] isKindOfClass:InfinitFolderModel.class])
+    {
+      for (InfinitFolderModel* folder in items)
+      {
+        for (NSString* path in folder.file_paths)
+          [paths addObject:[NSURL fileURLWithPath:path]];
+      }
+    }
+    else if ([items[0] isKindOfClass:InfinitFileModel.class])
+    {
+      for (InfinitFileModel* file in items)
+        [paths addObject:[NSURL fileURLWithPath:file.path]];
+    }
+    UIActivityViewController* activity_controller =
+      [[UIActivityViewController alloc] initWithActivityItems:paths applicationActivities:nil];
+    if ([activity_controller respondsToSelector:@selector(popoverPresentationController)])
+    {
+      activity_controller.popoverPresentationController.sourceView = self.left_button_inner;
+      activity_controller.popoverPresentationController.sourceRect = self.left_button_inner.bounds;
+      activity_controller.popoverPresentationController.delegate = self;
+    }
+    [self presentViewController:activity_controller animated:YES completion:^
+     {
+       if (![activity_controller respondsToSelector:@selector(popoverPresentationController)])
+         self.editing = NO;
+     }];
   }
 }
 
@@ -336,6 +376,7 @@ static dispatch_once_t _first_appear = 0;
     return;
   _editing = editing;
   self.current_controller.editing = self.editing;
+  self.left_button_center.hidden = !self.editing;
   self.left_button_inner.hidden = !self.editing;
   UIImage* left_outer_image = nil;
   UIImage* right_inner_image = nil;
@@ -683,6 +724,14 @@ static dispatch_once_t _first_appear = 0;
     [self hideReceiveOnboarding];
     [self hideSendOnboarding];
   }
+}
+
+#pragma mark - UIPopoverPresentationControllerDelegate
+
+- (BOOL)popoverPresentationControllerShouldDismissPopover:(UIPopoverPresentationController*)popoverPresentationController
+{
+  self.editing = NO;
+  return YES;
 }
 
 @end
