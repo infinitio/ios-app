@@ -11,6 +11,7 @@
 #import <Gap/InfinitStateManager.h>
 
 static InfinitMetricsManager* _instance = nil;
+static dispatch_once_t _instance_token = 0;
 
 @implementation InfinitMetricsManager
 
@@ -27,8 +28,10 @@ static InfinitMetricsManager* _instance = nil;
 
 + (instancetype)sharedInstance
 {
-  if (_instance == nil)
+  dispatch_once(&_instance_token, ^
+  {
     _instance = [[InfinitMetricsManager alloc] init];
+  });
   return _instance;
 }
 
@@ -63,6 +66,17 @@ static InfinitMetricsManager* _instance = nil;
   [[InfinitStateManager sharedInstance] sendMetricGhostSMSSent:success
                                                           code:[code copy]
                                                     failReason:fail_reason];
+}
+
++ (void)sendMetricGhostReminder:(BOOL)success
+                         method:(gap_InviteMessageMethod)method
+                           code:(NSString*)code
+                     failReason:(NSString*)fail_reason
+{
+  [[InfinitStateManager sharedInstance] sendMetricGhostReminderSent:success
+                                                             method:method
+                                                               code:code
+                                                         failReason:fail_reason];
 }
 
 #pragma mark - Enums to Strings
