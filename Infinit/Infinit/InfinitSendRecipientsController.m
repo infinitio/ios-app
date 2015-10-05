@@ -1110,13 +1110,8 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
   }
   else if (indexPath.section == InfinitSendRecipientsSectionSelf)
   {
-    InfinitApplicationSettings* settings = [InfinitApplicationSettings sharedInstance];
-    if (![[settings send_to_self_onboarded] isEqualToNumber:@1])
-    {
-      [settings setSend_to_self_onboarded:@1];
-      if ([InfinitDeviceManager sharedInstance].other_devices.count == 0)
-        [self showSendToSelfOverlay];
-    }
+    if ([InfinitDeviceManager sharedInstance].other_devices.count == 0)
+      [self showSendToSelfOverlay];
     contact = self.device_results[indexPath.row];
   }
   else if (indexPath.section == InfinitSendRecipientsSectionSwaggers)
