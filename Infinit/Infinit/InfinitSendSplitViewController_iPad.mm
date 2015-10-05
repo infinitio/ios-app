@@ -16,8 +16,13 @@
 
 #import <Gap/InfinitTemporaryFileManager.h>
 
-@import AssetsLibrary;
-@import Photos;
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <Photos/Photos.h>
+
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("iOS.SendSplitViewController");
 
 @interface InfinitSendSplitViewController_iPad () <InfinitSendGalleryProtocol,
                                                    UIAlertViewDelegate>
@@ -194,6 +199,25 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
                              otherButtonTitles:nil];
   }
   [alert show];
+  NSString* status = nil;
+  switch ([ALAssetsLibrary authorizationStatus])
+  {
+    case ALAuthorizationStatusNotDetermined:
+      status = @"not determined";
+      break;
+    case ALAuthorizationStatusDenied:
+      status = @"denied";
+      break;
+    case ALAuthorizationStatusRestricted:
+      status = @"restricted";
+      break;
+
+    default:
+      status = @"unknown";
+      break;
+  }
+  ELLE_WARN("%s: unable to access gallery, authorization status: %s",
+            self.description.UTF8String, status.UTF8String);
 }
 
 - (void)accessGallery:(id)sender

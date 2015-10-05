@@ -33,9 +33,13 @@
 #import <Gap/InfinitStateManager.h>
 #import <Gap/InfinitTemporaryFileManager.h>
 
-@import AddressBook;
-@import AssetsLibrary;
-@import MessageUI;
+#import <AddressBook/AddressBook.h>
+#import <AssetsLibrary/AssetsLibrary.h>
+
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("iOS.TabBarController");
 
 typedef NS_ENUM(NSUInteger, InfinitTabBarIndex)
 {
@@ -279,9 +283,10 @@ static InfinitTabBarController* _current_instance = nil;
   [self.tabBar.items[InfinitTabBarIndexHome] setBadgeValue:badge];
 }
 
-- (UIImage*)imageForTabBarItem:(InfinitTabBarIndex)index
+- (UIImage*)imageForTabBarItem:(NSUInteger)index_
                       selected:(BOOL)selected
 {
+  InfinitTabBarIndex index = static_cast<InfinitTabBarIndex>(index_);
   NSString* image_name = nil;
   switch (index)
   {
@@ -515,6 +520,25 @@ shouldSelectViewController:(UIViewController*)viewController
                                         cancelButtonTitle:@"OK"
                                         otherButtonTitles:nil];
   [alert show];
+  NSString* status = nil;
+  switch ([ALAssetsLibrary authorizationStatus])
+  {
+    case ALAuthorizationStatusNotDetermined:
+      status = @"not determined";
+      break;
+    case ALAuthorizationStatusDenied:
+      status = @"denied";
+      break;
+    case ALAuthorizationStatusRestricted:
+      status = @"restricted";
+      break;
+
+    default:
+      status = @"unknown";
+      break;
+  }
+  ELLE_WARN("%s: unable to access gallery, authorization status: %s",
+            self.description.UTF8String, status.UTF8String);
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)tabBarController:(UITabBarController*)tabBarController
