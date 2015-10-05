@@ -9,11 +9,13 @@
 #import "InfinitSettingsViewController.h"
 
 #import "InfinitApplicationSettings.h"
+#import "InfinitChecklistViewController.h"
 #import "InfinitColor.h"
 #import "InfinitConstants.h"
 #import "InfinitGalleryManager.h"
 #import "InfinitHostDevice.h"
 #import "InfinitMetricsManager.h"
+#import "InfinitNonLocalizedString.h"
 #import "InfinitSettingsCell.h"
 #import "InfinitSettingsExpandedCell.h"
 #import "InfinitSettingsReportProblemController.h"
@@ -43,6 +45,7 @@ typedef NS_ENUM(NSUInteger, InfinitAccountSettings)
   InfinitAccountSettingUser = 0,
   InfinitAccountSettingEdit,
   InfinitAccountSettingDevice,
+  InfinitAccountSettingChecklist,
 
   InfinitAccountSettingsCount,
 };
@@ -228,6 +231,18 @@ static NSString* _user_cell_id = @"settings_user_cell";
         res = cell;
         break;
       }
+      case InfinitAccountSettingChecklist:
+      {
+        InfinitSettingsCell* cell = [self.table_view dequeueReusableCellWithIdentifier:_norm_cell_id
+                                                                          forIndexPath:indexPath];
+#ifndef DEBUG
+        xxx missing icon
+#endif
+        cell.icon_view.image = nil;
+        cell.title_label.text = InfinitNonLocalizedString(@"Checklist");
+        res = cell;
+        break;
+      }
     }
   }
   else if (indexPath.section == InfinitSettingsSectionApp)
@@ -392,6 +407,10 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
         [self performSegueWithIdentifier:@"settings_edit_device" sender:self];
         break;
 
+      case InfinitAccountSettingChecklist:
+        [self performSegueWithIdentifier:@"settings_checklist" sender:self];
+        break;
+
       default:
         break;
     }
@@ -513,6 +532,11 @@ viewForFooterInSection:(NSInteger)section
   {
     InfinitSettingsReportProblemController* controller = segue.destinationViewController;
     controller.feedback_mode = YES;
+  }
+  else if ([segue.identifier isEqualToString:@"settings_checklist"])
+  {
+    InfinitChecklistViewController* controller = segue.destinationViewController;
+    controller.settings = YES;
   }
 }
 
