@@ -8,7 +8,6 @@
 
 #import "InfinitMessagingManager.h"
 
-#import "AppDelegate.h"
 #import "InfinitContact.h"
 #import "InfinitHostDevice.h"
 #import "InfinitMessagingRecipient.h"
@@ -225,7 +224,10 @@ static dispatch_once_t _instance_token = 0;
 
 - (UIViewController*)main_view_controller
 {
-  return ((AppDelegate*)[UIApplication sharedApplication].delegate).root_controller;
+  UIViewController* res = [UIApplication sharedApplication].keyWindow.rootViewController;
+  if (res.presentedViewController)
+    res = res.presentedViewController;
+  return res;
 }
 
 - (NSString*)stringFromStatus:(InfinitMessageStatus)status
