@@ -426,7 +426,7 @@ didFailWithError:(NSError*)error
      if (!result.success || !token.length)
        return;
      NSString* url_str =
-       [kInfinitSelfQuotaPostTwitterURL stringByAppendingFormat:@"&login_token=%@&email=%@",
+       [kInfinitChecklistPostTwitterURL stringByAppendingFormat:@"&login_token=%@&email=%@",
         token, email];
        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url_str]];
    }];
