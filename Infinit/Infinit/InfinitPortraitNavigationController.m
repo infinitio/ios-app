@@ -23,7 +23,10 @@
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-  return UIInterfaceOrientationMaskPortrait;
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    return UIInterfaceOrientationMaskPortrait;
+  else
+    return UIInterfaceOrientationMaskAll;
 }
 
 - (void)viewWillAppear:(BOOL)animated
