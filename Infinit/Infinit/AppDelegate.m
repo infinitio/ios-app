@@ -431,7 +431,10 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   NSString* ghost_code = [InfinitURLParser getGhostCodeFromURL:url];
   if (ghost_code.length)
     [[InfinitGhostCodeManager sharedInstance] setCode:ghost_code wasLink:YES completionBlock:nil];
-  return (facebook_handled || ghost_code.length);
+  NSString* referral_code = [InfinitURLParser getReferralCodeFromURL:url];
+  if (referral_code.length)
+    [[InfinitStateManager sharedInstance] addFingerprint:referral_code];
+  return (facebook_handled || ghost_code.length || referral_code.length);
 }
 
 #pragma mark - Notification Handling
