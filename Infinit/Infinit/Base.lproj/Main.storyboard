@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9052" systemVersion="15B17c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9lB-0z-aFR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9052" systemVersion="15B22c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9lB-0z-aFR">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9040"/>
@@ -8,6 +8,18 @@
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
             <string>HelveticaNeue</string>
             <string>HelveticaNeue</string>
             <string>HelveticaNeue</string>
@@ -44,6 +56,9 @@
             <string>SourceSansPro-Bold</string>
             <string>SourceSansPro-Bold</string>
             <string>SourceSansPro-Bold</string>
+        </mutableArray>
+        <mutableArray key="SourceSansPro-Light.otf">
+            <string>SourceSansPro-Light</string>
         </mutableArray>
         <mutableArray key="SourceSansPro-Regular.otf">
             <string>SourceSansPro-Regular</string>
@@ -398,6 +413,7 @@
                         <segue destination="UIZ-TQ-cnt" kind="show" identifier="settings_edit_profile" id="DT0-HJ-b8j"/>
                         <segue destination="n3a-58-YZv" kind="show" identifier="settings_feedback" id="Hpk-c8-hun"/>
                         <segue destination="n3a-58-YZv" kind="show" identifier="settings_report_problem" id="7Vb-QM-Foc"/>
+                        <segue destination="b0r-JU-PxT" kind="show" identifier="settings_checklist" id="tHx-4e-ap2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rBL-up-kiJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1675,6 +1691,372 @@ access your phone contacts!</string>
             <point key="canvasLocation" x="1500" y="-3115"/>
         </scene>
         <!--Infinit Portrait Navigation Controller-->
+        <scene sceneID="WLA-Nc-X9T">
+            <objects>
+                <navigationController storyboardIdentifier="self_quota_nav_controller" id="fGX-lH-I2y" customClass="InfinitPortraitNavigationController" sceneMemberID="viewController">
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="f5K-0G-ZuD">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="b0r-JU-PxT" kind="relationship" relationship="rootViewController" id="1b9-l5-7NA"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aMD-OH-WSJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1099" y="556"/>
+        </scene>
+        <!--CHECKLIST-->
+        <scene sceneID="CQl-a8-hVa">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="b0r-JU-PxT" customClass="InfinitChecklistViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="GPV-x3-YZg"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ai5-kz-G0I"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ZZ0-aa-A0e">
+                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="Complete these tasks to make your Infinit experience better!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yKr-ep-mT8">
+                                <rect key="frame" x="59" y="20" width="483" height="26"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" name="SourceSansPro-Light" family="Source Sans Pro" pointSize="20"/>
+                                <color key="textColor" red="0.31764705882352939" green="0.31764705882352939" blue="0.28627450980392155" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="62" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NqO-rS-CRq">
+                                <rect key="frame" x="20" y="61" width="560" height="426"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="checklist_cell_avatar" id="tHQ-c3-h1o" customClass="InfinitChecklistTableViewCell">
+                                        <rect key="frame" x="0.0" y="28" width="560" height="62"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tHQ-c3-h1o" id="GSt-4y-dz7">
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="61"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-checklist-avatar" translatesAutoresizingMaskIntoConstraints="NO" id="zaH-Il-iYX">
+                                                    <rect key="frame" x="13" y="10" width="40" height="40"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="jJE-Rh-E36"/>
+                                                        <constraint firstAttribute="height" constant="40" id="ln2-MN-OOG"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="Add an avatar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3k2-wx-XGS">
+                                                    <rect key="frame" x="68" y="10" width="100" height="19"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                                    <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" misplaced="YES" text="Help your contacts find you" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8ID-0U-XR8">
+                                                    <rect key="frame" x="68" y="33" width="179" height="17"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" red="0.70196078429999997" green="0.70196078429999997" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstItem="3k2-wx-XGS" firstAttribute="leading" secondItem="zaH-Il-iYX" secondAttribute="trailing" constant="15" id="CBd-D8-dRA"/>
+                                                <constraint firstItem="8ID-0U-XR8" firstAttribute="leading" secondItem="3k2-wx-XGS" secondAttribute="leading" id="Eie-yQ-AbJ"/>
+                                                <constraint firstItem="zaH-Il-iYX" firstAttribute="centerY" secondItem="GSt-4y-dz7" secondAttribute="centerY" id="EuH-B2-Kic"/>
+                                                <constraint firstItem="zaH-Il-iYX" firstAttribute="leading" secondItem="GSt-4y-dz7" secondAttribute="leadingMargin" constant="5" id="G9C-Gl-a53"/>
+                                                <constraint firstItem="3k2-wx-XGS" firstAttribute="top" secondItem="zaH-Il-iYX" secondAttribute="top" id="Uj6-EE-oit"/>
+                                                <constraint firstItem="8ID-0U-XR8" firstAttribute="bottom" secondItem="zaH-Il-iYX" secondAttribute="bottom" id="hY9-Cz-faz"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                        <connections>
+                                            <outlet property="action_label" destination="3k2-wx-XGS" id="oIf-ry-YEf"/>
+                                            <outlet property="description_label" destination="8ID-0U-XR8" id="hQt-xZ-J2E"/>
+                                            <outlet property="icon_view" destination="zaH-Il-iYX" id="7aA-e6-dX0"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="checklist_cell_fb_connect" id="vcu-Jj-y7T" customClass="InfinitChecklistTableViewCell">
+                                        <rect key="frame" x="0.0" y="90" width="560" height="62"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vcu-Jj-y7T" id="eZ7-BG-CWO">
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="61"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-checklist-facebook" translatesAutoresizingMaskIntoConstraints="NO" id="Pby-5c-7bn">
+                                                    <rect key="frame" x="13" y="10" width="40" height="40"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="MXa-La-ncF"/>
+                                                        <constraint firstAttribute="height" constant="40" id="hrn-s2-RsW"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="Connect Facebook" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DD7-Zn-bfL">
+                                                    <rect key="frame" x="68" y="10" width="137" height="19"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                                    <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" misplaced="YES" text="Find your friends" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U2C-Gq-y2d">
+                                                    <rect key="frame" x="68" y="33" width="136" height="17"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" red="0.70196078429999997" green="0.70196078429999997" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstItem="U2C-Gq-y2d" firstAttribute="leading" secondItem="DD7-Zn-bfL" secondAttribute="leading" id="8Kw-vY-XEl"/>
+                                                <constraint firstItem="Pby-5c-7bn" firstAttribute="leading" secondItem="eZ7-BG-CWO" secondAttribute="leadingMargin" constant="5" id="AgH-i7-k6i"/>
+                                                <constraint firstItem="U2C-Gq-y2d" firstAttribute="bottom" secondItem="Pby-5c-7bn" secondAttribute="bottom" id="eBM-Dw-HvT"/>
+                                                <constraint firstItem="Pby-5c-7bn" firstAttribute="centerY" secondItem="eZ7-BG-CWO" secondAttribute="centerY" id="fdw-aq-iNK"/>
+                                                <constraint firstItem="DD7-Zn-bfL" firstAttribute="top" secondItem="Pby-5c-7bn" secondAttribute="top" id="raO-Nh-9EG"/>
+                                                <constraint firstItem="DD7-Zn-bfL" firstAttribute="leading" secondItem="Pby-5c-7bn" secondAttribute="trailing" constant="15" id="ryE-V5-EcG"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                        <connections>
+                                            <outlet property="action_label" destination="DD7-Zn-bfL" id="YG7-54-G7a"/>
+                                            <outlet property="description_label" destination="U2C-Gq-y2d" id="YTz-Gd-BN2"/>
+                                            <outlet property="icon_view" destination="Pby-5c-7bn" id="lFE-v5-scc"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="checklist_cell_fb_post" id="6pB-RV-eic" customClass="InfinitChecklistTableViewCell">
+                                        <rect key="frame" x="0.0" y="152" width="560" height="62"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6pB-RV-eic" id="eG9-hh-6ag">
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="61"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-checklist-facebook" translatesAutoresizingMaskIntoConstraints="NO" id="vOt-Vq-9nL">
+                                                    <rect key="frame" x="13" y="10" width="40" height="40"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="bfS-wv-8Wl"/>
+                                                        <constraint firstAttribute="width" constant="40" id="lAa-RM-7AG"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="Post on Facebook" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cuT-gp-8Uv">
+                                                    <rect key="frame" x="68" y="10" width="131" height="19"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                                    <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" misplaced="YES" text="Tell your friends about Infinit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6iI-b7-YhV">
+                                                    <rect key="frame" x="68" y="33" width="184" height="17"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" red="0.70196078429999997" green="0.70196078429999997" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstItem="6iI-b7-YhV" firstAttribute="bottom" secondItem="vOt-Vq-9nL" secondAttribute="bottom" id="78T-LH-FUC"/>
+                                                <constraint firstItem="6iI-b7-YhV" firstAttribute="leading" secondItem="cuT-gp-8Uv" secondAttribute="leading" id="MnB-Wo-Jwg"/>
+                                                <constraint firstItem="vOt-Vq-9nL" firstAttribute="leading" secondItem="eG9-hh-6ag" secondAttribute="leadingMargin" constant="5" id="bcI-TQ-4DJ"/>
+                                                <constraint firstItem="cuT-gp-8Uv" firstAttribute="leading" secondItem="vOt-Vq-9nL" secondAttribute="trailing" constant="15" id="jYs-AS-ItF"/>
+                                                <constraint firstItem="vOt-Vq-9nL" firstAttribute="centerY" secondItem="eG9-hh-6ag" secondAttribute="centerY" id="pWj-Lu-378"/>
+                                                <constraint firstItem="cuT-gp-8Uv" firstAttribute="top" secondItem="vOt-Vq-9nL" secondAttribute="top" id="qge-o6-Km0"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                        <connections>
+                                            <outlet property="action_label" destination="cuT-gp-8Uv" id="z3i-z5-CnK"/>
+                                            <outlet property="description_label" destination="6iI-b7-YhV" id="3hO-kb-Rgx"/>
+                                            <outlet property="icon_view" destination="vOt-Vq-9nL" id="0ac-U8-mbx"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="checklist_cell_twitter_post" id="dlq-KG-2AR" customClass="InfinitChecklistTableViewCell">
+                                        <rect key="frame" x="0.0" y="214" width="560" height="62"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dlq-KG-2AR" id="WlD-W2-rRB">
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="61"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-checklist-twitter" translatesAutoresizingMaskIntoConstraints="NO" id="gy9-7Q-9Rs">
+                                                    <rect key="frame" x="13" y="10" width="40" height="40"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="d7c-Cv-Pfu"/>
+                                                        <constraint firstAttribute="width" constant="40" id="tp2-a0-e5F"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="Post on Twitter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZS7-QB-Tm5">
+                                                    <rect key="frame" x="68" y="10" width="107" height="19"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                                    <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" misplaced="YES" text="Tell your friends about Infinit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dnL-mb-o2B">
+                                                    <rect key="frame" x="68" y="33" width="184" height="17"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" red="0.70196078429999997" green="0.70196078429999997" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstItem="gy9-7Q-9Rs" firstAttribute="centerY" secondItem="WlD-W2-rRB" secondAttribute="centerY" id="3X1-Yd-VUI"/>
+                                                <constraint firstItem="dnL-mb-o2B" firstAttribute="bottom" secondItem="gy9-7Q-9Rs" secondAttribute="bottom" id="5jP-p4-kbI"/>
+                                                <constraint firstItem="ZS7-QB-Tm5" firstAttribute="top" secondItem="gy9-7Q-9Rs" secondAttribute="top" id="Bu4-FB-VUJ"/>
+                                                <constraint firstItem="gy9-7Q-9Rs" firstAttribute="leading" secondItem="WlD-W2-rRB" secondAttribute="leadingMargin" constant="5" id="RUe-wL-gz8"/>
+                                                <constraint firstItem="dnL-mb-o2B" firstAttribute="leading" secondItem="ZS7-QB-Tm5" secondAttribute="leading" id="ad5-Uy-wPW"/>
+                                                <constraint firstItem="ZS7-QB-Tm5" firstAttribute="leading" secondItem="gy9-7Q-9Rs" secondAttribute="trailing" constant="15" id="vpQ-XK-nEc"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                        <connections>
+                                            <outlet property="action_label" destination="ZS7-QB-Tm5" id="RlI-B6-czY"/>
+                                            <outlet property="description_label" destination="dnL-mb-o2B" id="khW-Jc-KMn"/>
+                                            <outlet property="icon_view" destination="gy9-7Q-9Rs" id="yxV-2N-LhU"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="checklist_cell_invite" id="c5Q-vx-YIt" customClass="InfinitChecklistTableViewCell">
+                                        <rect key="frame" x="0.0" y="276" width="560" height="62"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="c5Q-vx-YIt" id="JZv-S7-gn6">
+                                            <rect key="frame" x="0.0" y="0.0" width="527" height="61"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-checklist-invite" translatesAutoresizingMaskIntoConstraints="NO" id="Zws-bL-lHg">
+                                                    <rect key="frame" x="13" y="10" width="40" height="40"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="glt-BG-JQF"/>
+                                                        <constraint firstAttribute="height" constant="40" id="kBP-9x-vw1"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" misplaced="YES" text="Invite friends" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TKN-Kr-dbE">
+                                                    <rect key="frame" x="68" y="10" width="133" height="19"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                                    <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" misplaced="YES" text="Share Infinit!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sTK-pm-byD">
+                                                    <rect key="frame" x="68" y="33" width="85" height="17"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" red="0.70196078429999997" green="0.70196078429999997" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstItem="Zws-bL-lHg" firstAttribute="leading" secondItem="JZv-S7-gn6" secondAttribute="leadingMargin" constant="5" id="3RR-Mu-zcd"/>
+                                                <constraint firstItem="Zws-bL-lHg" firstAttribute="centerY" secondItem="JZv-S7-gn6" secondAttribute="centerY" id="SZi-lL-WJb"/>
+                                                <constraint firstItem="sTK-pm-byD" firstAttribute="bottom" secondItem="Zws-bL-lHg" secondAttribute="bottom" id="Skk-gc-uNO"/>
+                                                <constraint firstItem="TKN-Kr-dbE" firstAttribute="leading" secondItem="Zws-bL-lHg" secondAttribute="trailing" constant="15" id="Xfi-gL-FKW"/>
+                                                <constraint firstItem="sTK-pm-byD" firstAttribute="leading" secondItem="TKN-Kr-dbE" secondAttribute="leading" id="b87-oi-c1F"/>
+                                                <constraint firstItem="TKN-Kr-dbE" firstAttribute="top" secondItem="Zws-bL-lHg" secondAttribute="top" id="jYF-NO-NAm"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                        <connections>
+                                            <outlet property="action_label" destination="TKN-Kr-dbE" id="QvN-E9-zO7"/>
+                                            <outlet property="description_label" destination="sTK-pm-byD" id="Zjj-ED-160"/>
+                                            <outlet property="icon_view" destination="Zws-bL-lHg" id="8jV-Fy-mUo"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="checklist_cell_referral" id="f1j-dV-ulb" customClass="InfinitChecklistTableViewCell">
+                                        <rect key="frame" x="0.0" y="338" width="560" height="62"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="f1j-dV-ulb" id="fww-g9-gxY">
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="61"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="K6s-9i-GCa">
+                                                    <rect key="frame" x="13" y="10" width="40" height="40"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="65M-pk-xKd"/>
+                                                        <constraint firstAttribute="height" constant="40" id="sZj-gn-yHC"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" misplaced="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1eI-Ll-9Wh">
+                                                    <rect key="frame" x="68" y="10" width="107" height="19"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                                    <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" misplaced="YES" text="status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qs6-lz-t3q">
+                                                    <rect key="frame" x="68" y="33" width="136" height="17"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" red="0.70196078429999997" green="0.70196078429999997" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstItem="K6s-9i-GCa" firstAttribute="leading" secondItem="fww-g9-gxY" secondAttribute="leadingMargin" constant="5" id="79d-vm-oQF"/>
+                                                <constraint firstItem="Qs6-lz-t3q" firstAttribute="leading" secondItem="1eI-Ll-9Wh" secondAttribute="leading" id="S1I-Ov-bbT"/>
+                                                <constraint firstItem="1eI-Ll-9Wh" firstAttribute="leading" secondItem="K6s-9i-GCa" secondAttribute="trailing" constant="15" id="k6j-VV-OwZ"/>
+                                                <constraint firstItem="Qs6-lz-t3q" firstAttribute="bottom" secondItem="K6s-9i-GCa" secondAttribute="bottom" id="lhv-ys-VkO"/>
+                                                <constraint firstItem="1eI-Ll-9Wh" firstAttribute="top" secondItem="K6s-9i-GCa" secondAttribute="top" id="vG0-xy-70S"/>
+                                                <constraint firstItem="K6s-9i-GCa" firstAttribute="centerY" secondItem="fww-g9-gxY" secondAttribute="centerY" id="vyN-z4-lWJ"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                        <connections>
+                                            <outlet property="action_label" destination="1eI-Ll-9Wh" id="Qdw-CH-qhW"/>
+                                            <outlet property="description_label" destination="Qs6-lz-t3q" id="DKe-F7-bP7"/>
+                                            <outlet property="icon_view" destination="K6s-9i-GCa" id="rCN-pw-Olh"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <sections/>
+                                <connections>
+                                    <outlet property="dataSource" destination="b0r-JU-PxT" id="CAv-Sh-vf0"/>
+                                    <outlet property="delegate" destination="b0r-JU-PxT" id="Nog-DG-WYz"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="yKr-ep-mT8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ZZ0-aa-A0e" secondAttribute="leadingMargin" constant="5" id="B5r-MO-mLN"/>
+                            <constraint firstItem="NqO-rS-CRq" firstAttribute="leading" secondItem="ZZ0-aa-A0e" secondAttribute="leadingMargin" id="BYr-zi-j0O"/>
+                            <constraint firstItem="NqO-rS-CRq" firstAttribute="top" secondItem="yKr-ep-mT8" secondAttribute="bottom" constant="15" id="HLX-Lm-v0C"/>
+                            <constraint firstItem="Ai5-kz-G0I" firstAttribute="top" secondItem="NqO-rS-CRq" secondAttribute="bottom" id="IUy-Mh-Kt8"/>
+                            <constraint firstItem="yKr-ep-mT8" firstAttribute="centerX" secondItem="ZZ0-aa-A0e" secondAttribute="centerX" id="UQ8-vI-DYl"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="NqO-rS-CRq" secondAttribute="trailing" id="VQ5-St-s8F"/>
+                            <constraint firstItem="yKr-ep-mT8" firstAttribute="top" secondItem="GPV-x3-YZg" secondAttribute="bottom" constant="20" id="jTt-Xu-oih"/>
+                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="yKr-ep-mT8" secondAttribute="trailing" constant="5" id="l4V-Vg-8yg"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="CHECKLIST" id="EOC-nj-OWM">
+                        <barButtonItem key="leftBarButtonItem" image="icon-close" id="56q-NO-5s0">
+                            <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="closeTapped:" destination="b0r-JU-PxT" id="2MT-Rh-ief"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="close_button" destination="56q-NO-5s0" id="K4V-3Q-Qi4"/>
+                        <outlet property="table_view" destination="NqO-rS-CRq" id="Shd-6A-7mm"/>
+                        <segue destination="cyR-zH-YxB" kind="show" identifier="checklist_invite_segue" id="XNA-2s-qWv"/>
+                        <segue destination="pxw-3X-tID" kind="unwind" identifier="settings_checklist_unwind" unwindAction="unwindToSettingsViewController:" id="Pa6-GZ-ETQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="T40-es-sFw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="pxw-3X-tID" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="-410" y="556"/>
+        </scene>
+        <!--Infinit Portrait Navigation Controller-->
         <scene sceneID="AIE-em-0TB">
             <objects>
                 <navigationController storyboardIdentifier="logging_in_controller_portrait" id="NI8-fY-CZf" customClass="InfinitPortraitNavigationController" sceneMemberID="viewController">
@@ -1824,7 +2206,7 @@ access your phone contacts!</string>
         <!--CONTACTS-->
         <scene sceneID="50R-fa-0UL">
             <objects>
-                <viewController title="CONTACTS" extendedLayoutIncludesOpaqueBars="YES" id="cyR-zH-YxB" customClass="InfinitContactsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="contacts_view_controller" title="CONTACTS" extendedLayoutIncludesOpaqueBars="YES" id="cyR-zH-YxB" customClass="InfinitContactsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="kKi-6k-w7y"/>
                         <viewControllerLayoutGuide type="bottom" id="981-Yf-G3y"/>
@@ -3002,6 +3384,10 @@ type of file in Infinit</string>
         <image name="bg-balloon" width="230" height="226"/>
         <image name="icon-add-red" width="30" height="30"/>
         <image name="icon-back-white" width="11" height="18"/>
+        <image name="icon-checklist-avatar" width="40" height="41"/>
+        <image name="icon-checklist-facebook" width="38" height="38"/>
+        <image name="icon-checklist-invite" width="38" height="38"/>
+        <image name="icon-checklist-twitter" width="40" height="40"/>
         <image name="icon-close" width="16" height="17"/>
         <image name="icon-contact-favorite" width="19" height="18"/>
         <image name="icon-contacts" width="17" height="20"/>
@@ -3035,12 +3421,14 @@ type of file in Infinit</string>
         <image name="schema-onboarding-infinite" width="214" height="90"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="FIr-rc-U7J"/>
-        <segue reference="geu-yv-K0l"/>
         <segue reference="Yah-cg-ZRU"/>
-        <segue reference="7Vb-QM-Foc"/>
+        <segue reference="iUI-7h-033"/>
+        <segue reference="G1u-me-VrO"/>
         <segue reference="zep-Dc-F4h"/>
-        <segue reference="19z-F9-Cn7"/>
+        <segue reference="7Vb-QM-Foc"/>
+        <segue reference="tHx-4e-ap2"/>
+        <segue reference="XNA-2s-qWv"/>
         <segue reference="5jp-t6-Gni"/>
+        <segue reference="19z-F9-Cn7"/>
     </inferredMetricsTieBreakers>
 </document>
