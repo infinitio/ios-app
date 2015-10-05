@@ -89,7 +89,7 @@ static dispatch_once_t _instance_token = 0;
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView*)alertView
-clickedButtonAtIndex:(NSInteger)buttonIndex
+didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
   if (alertView.cancelButtonIndex == buttonIndex)
   {
@@ -97,8 +97,11 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
   }
   else
   {
-    AppDelegate* delegate = [UIApplication sharedApplication].delegate;
-    [delegate.root_controller presentViewController:self.feedback_controller animated:YES completion:nil];
+    UIViewController* root_controller =
+      [UIApplication sharedApplication].keyWindow.rootViewController;
+    if (root_controller.presentedViewController)
+      root_controller = root_controller.presentedViewController;
+    [root_controller presentViewController:self.feedback_controller animated:YES completion:nil];
   }
 }
 
