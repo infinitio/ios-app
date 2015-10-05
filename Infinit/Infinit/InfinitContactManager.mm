@@ -17,7 +17,12 @@
 #import <Gap/NSString+email.h>
 #import <Gap/NSString+PhoneNumber.h>
 
-@import AddressBook;
+#import <AddressBook/AddressBook.h>
+
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("iOS.ContactManager");
 
 @interface InfinitContactManager ()
 
@@ -72,7 +77,28 @@ static dispatch_once_t _got_access_token = 0;
 - (NSArray*)allContacts
 {
   if (ABAddressBookGetAuthorizationStatus() != kABAuthorizationStatusAuthorized)
+  {
+    NSString* status = nil;
+    switch (ABAddressBookGetAuthorizationStatus())
+    {
+      case kABAuthorizationStatusNotDetermined:
+        status = @"not determined";
+        break;
+      case kABAuthorizationStatusRestricted:
+        status = @"restricted";
+        break;
+      case kABAuthorizationStatusDenied:
+        status = @"denied";
+        break;
+
+      default:
+        status = @"unknown";
+        break;
+    }
+    ELLE_WARN("%s: unable to access contacts, authorization status: %s",
+              self.description.UTF8String, status.UTF8String);
     return nil;
+  }
   NSMutableArray* res = [NSMutableArray array];
   CFErrorRef* error = nil;
   ABAddressBookRef address_book = ABAddressBookCreateWithOptions(NULL, error);
@@ -212,6 +238,40 @@ static dispatch_once_t _got_access_token = 0;
       }
     }
   }];
+  return res;
+}
+
+- (InfinitContactAddressBook*)contactForIdentifier:(NSString*)identifier
+{
+  if (ABAddressBookGetAuthorizationStatus() != kABAuthorizationStatusAuthorized)
+    return nil;
+  if (!self.contact_cache)
+    [self allContacts];
+  __block InfinitContactAddressBook* res = nil;
+  [self.contact_cache enumerateObjectsUsingBlock:^(InfinitContactAddressBook* contact,
+                                                   NSUInteger i,
+                                                   BOOL* stop)
+   {
+     if (contact.emails.count &&
+         identifier.infinit_isEmail &&
+         [contact.emails containsObject:identifier.infinit_cleanEmail])
+     {
+       res = contact;
+       *stop = YES;
+     }
+     else if (contact.phone_numbers.count && identifier.infinit_isPhoneNumber)
+     {
+       for (NSString* contact_phone in contact.phone_numbers)
+       {
+         if ([[self strippedNumber:contact_phone] isEqualToString:[self strippedNumber:identifier]])
+         {
+           res = contact;
+           *stop = YES;
+           break;
+         }
+       }
+     }
+   }];
   return res;
 }
 

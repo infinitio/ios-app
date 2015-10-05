@@ -33,4 +33,11 @@
  */
 - (InfinitContactAddressBook*)contactForUser:(InfinitUser*)user;
 
+/** Contact for identifier.
+ @param identifier
+  Phone number or email address.
+ @return address book contact
+ */
+- (InfinitContactAddressBook*)contactForIdentifier:(NSString*)identifier;
+
 @end
