@@ -488,6 +488,7 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
         break;
       case InfinitDebugSettingSetLaunchCount:
         [InfinitApplicationSettings sharedInstance].launch_count = 9;
+        [InfinitApplicationSettings sharedInstance].checklist_auto_shown = NO;
         break;
     }
   }
