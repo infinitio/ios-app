@@ -318,8 +318,7 @@ static dispatch_once_t _first_appear = 0;
     }
     [self presentViewController:activity_controller animated:YES completion:^
      {
-       if (![activity_controller respondsToSelector:@selector(popoverPresentationController)])
-         self.editing = NO;
+       self.editing = NO;
      }];
   }
 }
