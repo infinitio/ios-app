@@ -237,6 +237,16 @@ titleForHeaderInSection:(NSInteger)section
 
 #pragma mark - UITableViewDelegate
 
+- (CGFloat)tableView:(UITableView*)tableView
+heightForHeaderInSection:(NSInteger)section
+{
+  NSUInteger referral_count =
+    [InfinitAccountManager sharedInstance].referral_actions.referrals.count;
+  if (section == 1 && !referral_count)
+    return 0.0f;
+  return UITableViewAutomaticDimension;
+}
+
 - (BOOL)tableView:(UITableView*)tableView
 shouldHighlightRowAtIndexPath:(NSIndexPath*)indexPath
 {
@@ -493,6 +503,18 @@ didFailWithError:(NSError*)error
     [self performSegueWithIdentifier:@"settings_checklist_unwind" sender:self];
   else
     [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+#pragma mark - Segue
+
+- (void)prepareForSegue:(UIStoryboardSegue*)segue
+                 sender:(id)sender
+{
+  if ([segue.destinationViewController isKindOfClass:InfinitContactsViewController.class])
+  {
+    InfinitContactsViewController* contacts_controller = segue.destinationViewController;
+    contacts_controller.invitation_mode = YES;
+  }
 }
 
 #pragma mark - Helpers
