@@ -14,6 +14,7 @@ typedef NS_ENUM(NSUInteger, InfinitSettings)
   InfinitSettingAskedNotifications,
   InfinitSettingAutoSaveToGallery,
   InfinitSettingBeenLaunched,
+  InfinitSettingChecklistAutoShown,
   InfinitSettingLaunchCount,
   InfinitSettingLoginMethod,
   InfinitSettingRatedApp,
