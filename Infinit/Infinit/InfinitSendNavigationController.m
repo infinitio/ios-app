@@ -25,6 +25,14 @@
   [super viewDidLoad];
   Class this_class = InfinitSendNavigationController.class;
     [UINavigationBar appearanceWhenContainedIn:this_class, nil].tintColor = [UIColor whiteColor];
+  UIImage* back_image = [UIImage imageNamed:@"icon-back-white"];
+  self.navigationController.navigationBar.backIndicatorImage = back_image;
+  self.navigationController.navigationBar.backIndicatorTransitionMaskImage = back_image;
+  self.navigationItem.backBarButtonItem =
+    [[UIBarButtonItem alloc] initWithImage:back_image
+                                     style:UIBarButtonItemStylePlain
+                                    target:nil
+                                    action:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -35,6 +43,15 @@
     [self resetSendViews];
   }
   [super viewWillAppear:animated];
+  if (!self.tabBarController.tabBar.hidden)
+    [(InfinitTabBarController*)self.tabBarController setTabBarHidden:YES animated:NO];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+  [super viewDidAppear:animated];
+  if (![UIApplication sharedApplication].statusBarHidden)
+    [UIApplication sharedApplication].statusBarHidden = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
