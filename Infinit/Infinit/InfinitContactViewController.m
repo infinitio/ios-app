@@ -33,6 +33,7 @@
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* send_center_constraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* send_size_constraint;
 @property (nonatomic, weak) IBOutlet UIButton* left_button;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* left_center_constraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* left_size_constraint;
 @property (nonatomic, weak) IBOutlet UIView* email_view;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* email_height;
@@ -140,6 +141,8 @@ static NSAttributedString* _unfavorite_title = nil;
   {
     InfinitContactAddressBook* contact_ab = (InfinitContactAddressBook*)self.contact;
     self.icon_view.hidden = YES;
+    if (self.invitation_mode)
+      [self setSendButtonHidden:YES];
     [self setLeftButtonHidden:NO];
     [self configureLeftButtonInvite];
     self.email_view.hidden = !(contact_ab.emails.count > 0);
@@ -209,6 +212,13 @@ static NSAttributedString* _unfavorite_title = nil;
   CGFloat send_width = self.send_size_constraint.constant;
   self.send_center_constraint.constant = hidden ? -floor(send_width / 2.0f) : 10.0f;
   self.left_button.hidden = hidden;
+}
+
+- (void)setSendButtonHidden:(BOOL)hidden
+{
+  CGFloat left_width = self.left_size_constraint.constant;
+  self.left_center_constraint.constant = hidden ? -floor(left_width / 2.0f) : 0.0f;
+  self.send_invite_button.hidden = hidden;
 }
 
 - (void)setFavoriteButtonFavorite:(BOOL)favorite

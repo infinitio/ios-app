@@ -13,5 +13,6 @@
 @interface InfinitContactViewController : UIViewController
 
 @property (nonatomic, weak, readwrite) InfinitContact* contact;
+@property BOOL invitation_mode;
 
 @end
