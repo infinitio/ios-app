@@ -62,10 +62,13 @@ static dispatch_once_t _instance_token = 0;
       InfinitApplicationSettings* settings = [InfinitApplicationSettings sharedInstance];
       settings.launch_count += 1;
       ELLE_TRACE("%s: launch count: %lu", self.description.UTF8String, settings.launch_count);
-      if ([InfinitHostDevice english] && settings.launch_count == 10)
+      if (![InfinitHostDevice english])
+        return;
+      if (settings.launch_count >= 10 && !settings.checklist_auto_shown)
       {
         ELLE_LOG("%s: show checklist after launch %lu",
                  self.description.UTF8String, settings.launch_count);
+        settings.checklist_auto_shown = YES;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)),
                        dispatch_get_main_queue(), ^
         {
