@@ -5,9 +5,12 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9040"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
             <string>HelveticaNeue</string>
             <string>HelveticaNeue</string>
             <string>HelveticaNeue</string>
@@ -56,6 +59,7 @@
             <string>SourceSansPro-Bold</string>
             <string>SourceSansPro-Bold</string>
             <string>SourceSansPro-Bold</string>
+            <string>SourceSansPro-Bold</string>
         </mutableArray>
         <mutableArray key="SourceSansPro-Light.otf">
             <string>SourceSansPro-Light</string>
@@ -63,6 +67,10 @@
         <mutableArray key="SourceSansPro-Regular.otf">
             <string>SourceSansPro-Regular</string>
             <string>SourceSansPro-Regular</string>
+        </mutableArray>
+        <mutableArray key="SourceSansPro-Semibold.otf">
+            <string>SourceSansPro-Semibold</string>
+            <string>SourceSansPro-Semibold</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -819,7 +827,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="9ZK-3B-PXo" kind="show" identifier="send_to_segue" id="zep-Dc-F4h"/>
+                                    <action selector="nextButtonTapped:" destination="Cz7-xE-6Ks" eventType="touchUpInside" id="zVd-ff-pvS"/>
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="twX-us-XtL">
@@ -861,12 +869,15 @@
                         </barButtonItem>
                     </navigationItem>
                     <keyCommands/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="collection_view" destination="twX-us-XtL" id="qMf-oi-xtn"/>
                         <outlet property="layout" destination="GIU-o5-Bjl" id="Hf1-D6-Ysp"/>
                         <outlet property="next_button" destination="jCk-aB-ANg" id="DTo-Nf-blu"/>
                         <outlet property="next_constraint" destination="jTs-Me-fnt" id="gyh-Fz-dwe"/>
                         <outlet property="view" destination="HT9-3T-yrz" id="Yg4-i7-CPW"/>
+                        <segue destination="FIQ-Ap-F2N" kind="show" identifier="gallery_self_only" id="men-F4-6Tu"/>
+                        <segue destination="9ZK-3B-PXo" kind="show" identifier="send_to_segue" id="3h7-TB-AdP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MVo-LB-ZAT" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1632,6 +1643,184 @@ access your phone contacts!</string>
             </objects>
             <point key="canvasLocation" x="3165" y="-216"/>
         </scene>
+        <!--SEND TO...-->
+        <scene sceneID="CaX-Vx-arG">
+            <objects>
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="FIQ-Ap-F2N" customClass="InfinitSendSelfViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5b9-NK-037"/>
+                        <viewControllerLayoutGuide type="bottom" id="BYN-j7-c7x"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lXR-RB-BfI">
+                        <rect key="frame" x="0.0" y="44" width="600" height="556"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2nq-2h-6qU">
+                                <rect key="frame" x="0.0" y="278" width="600" height="278"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vUH-ln-NeC">
+                                        <rect key="frame" x="204" y="56" width="192" height="167"/>
+                                        <subviews>
+                                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-send-contact" translatesAutoresizingMaskIntoConstraints="NO" id="brC-Qi-zq0">
+                                                <rect key="frame" x="40" y="0.0" width="112" height="112"/>
+                                                <animations/>
+                                                <gestureRecognizers/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="112" id="XSn-qZ-q5E"/>
+                                                    <constraint firstAttribute="height" constant="112" id="l0Q-tv-syk"/>
+                                                </constraints>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="i7I-fl-K7v" appends="YES" id="kyY-qe-q4o"/>
+                                                </connections>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XWx-xU-YJ4">
+                                                <rect key="frame" x="0.0" y="137" width="192" height="30"/>
+                                                <animations/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="Teb-qv-03q"/>
+                                                    <constraint firstAttribute="width" constant="192" id="ef6-46-zUu"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="17"/>
+                                                <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
+                                                <inset key="imageEdgeInsets" minX="180" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="SEND TO A CONTACT" image="icon-send-self-arrow-right">
+                                                    <color key="titleColor" red="0.35686274509999999" green="0.34901960780000002" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <segue destination="9ZK-3B-PXo" kind="show" identifier="self_only_send_contact" id="lVz-vi-huA"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <animations/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="XWx-xU-YJ4" secondAttribute="trailing" id="3U4-rJ-ph8"/>
+                                            <constraint firstAttribute="bottom" secondItem="XWx-xU-YJ4" secondAttribute="bottom" id="AoI-Rn-5Mv"/>
+                                            <constraint firstItem="brC-Qi-zq0" firstAttribute="centerX" secondItem="vUH-ln-NeC" secondAttribute="centerX" id="EcR-uW-mFC"/>
+                                            <constraint firstItem="XWx-xU-YJ4" firstAttribute="top" secondItem="brC-Qi-zq0" secondAttribute="bottom" constant="25" id="KXI-g6-ylM"/>
+                                            <constraint firstItem="XWx-xU-YJ4" firstAttribute="centerX" secondItem="vUH-ln-NeC" secondAttribute="centerX" id="Lwi-A3-bbh"/>
+                                            <constraint firstItem="XWx-xU-YJ4" firstAttribute="leading" secondItem="vUH-ln-NeC" secondAttribute="leading" id="aag-QI-WPZ"/>
+                                            <constraint firstItem="brC-Qi-zq0" firstAttribute="top" secondItem="vUH-ln-NeC" secondAttribute="top" id="zok-xe-96h"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <animations/>
+                                <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="vUH-ln-NeC" firstAttribute="centerX" secondItem="2nq-2h-6qU" secondAttribute="centerX" id="YXR-qW-kul"/>
+                                    <constraint firstItem="vUH-ln-NeC" firstAttribute="centerY" secondItem="2nq-2h-6qU" secondAttribute="centerY" id="rvG-wq-doU"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wcM-fv-WUf">
+                                <rect key="frame" x="0.0" y="279" width="600" height="2"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.89803921568627454" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="pYp-8A-FJj"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EA8-hT-7of">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="278"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TyN-Eb-13j">
+                                        <rect key="frame" x="165" y="50" width="270" height="178"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t1S-Jf-8DN">
+                                                <rect key="frame" x="37" y="148" width="196" height="30"/>
+                                                <animations/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="196" id="RAR-Od-uWH"/>
+                                                    <constraint firstAttribute="height" constant="30" id="sFb-Vv-rc9"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="17"/>
+                                                <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="20" maxY="0.0"/>
+                                                <inset key="imageEdgeInsets" minX="180" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="SEND TO MY DEVICES" image="icon-send-self-arrow-right">
+                                                    <color key="titleColor" red="0.35686274509803922" green="0.34901960784313724" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="deviceTapped:" destination="FIQ-Ap-F2N" eventType="touchUpInside" id="Qam-eG-j8C"/>
+                                                </connections>
+                                            </button>
+                                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-sendtoself" translatesAutoresizingMaskIntoConstraints="NO" id="4gY-Vd-RDI">
+                                                <rect key="frame" x="0.0" y="0.0" width="270" height="123"/>
+                                                <animations/>
+                                                <gestureRecognizers/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="123" id="1hU-Fd-bhs"/>
+                                                    <constraint firstAttribute="width" constant="270" id="3uj-g8-zfd"/>
+                                                </constraints>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="mFE-yz-Uje" appends="YES" id="16Z-tz-nC3"/>
+                                                </connections>
+                                            </imageView>
+                                        </subviews>
+                                        <animations/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="t1S-Jf-8DN" firstAttribute="centerX" secondItem="TyN-Eb-13j" secondAttribute="centerX" id="Ive-6L-2KJ"/>
+                                            <constraint firstItem="4gY-Vd-RDI" firstAttribute="centerX" secondItem="TyN-Eb-13j" secondAttribute="centerX" id="L1L-mA-2c5"/>
+                                            <constraint firstAttribute="trailing" secondItem="4gY-Vd-RDI" secondAttribute="trailing" id="Wc2-Gw-p2T"/>
+                                            <constraint firstAttribute="bottom" secondItem="t1S-Jf-8DN" secondAttribute="bottom" id="mkr-bL-nQO"/>
+                                            <constraint firstItem="t1S-Jf-8DN" firstAttribute="top" secondItem="4gY-Vd-RDI" secondAttribute="bottom" constant="25" id="pEj-xV-yus"/>
+                                            <constraint firstItem="4gY-Vd-RDI" firstAttribute="top" secondItem="TyN-Eb-13j" secondAttribute="top" id="qWB-1q-tM1"/>
+                                            <constraint firstItem="4gY-Vd-RDI" firstAttribute="leading" secondItem="TyN-Eb-13j" secondAttribute="leading" id="yWV-1b-2UZ"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="TyN-Eb-13j" firstAttribute="centerX" secondItem="EA8-hT-7of" secondAttribute="centerX" id="6hO-XH-ipT"/>
+                                    <constraint firstItem="TyN-Eb-13j" firstAttribute="centerY" secondItem="EA8-hT-7of" secondAttribute="centerY" id="eoM-HI-ddd"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="wcM-fv-WUf" firstAttribute="leading" secondItem="lXR-RB-BfI" secondAttribute="leading" id="2X5-SG-J80"/>
+                            <constraint firstItem="wcM-fv-WUf" firstAttribute="top" secondItem="2nq-2h-6qU" secondAttribute="top" constant="1" id="41F-RG-mhJ"/>
+                            <constraint firstItem="EA8-hT-7of" firstAttribute="top" secondItem="5b9-NK-037" secondAttribute="bottom" id="65o-y3-L3q"/>
+                            <constraint firstItem="2nq-2h-6qU" firstAttribute="height" secondItem="lXR-RB-BfI" secondAttribute="height" multiplier="1:2" id="KFX-Y3-h37"/>
+                            <constraint firstItem="BYN-j7-c7x" firstAttribute="top" secondItem="2nq-2h-6qU" secondAttribute="bottom" id="Sqh-58-IfD"/>
+                            <constraint firstItem="2nq-2h-6qU" firstAttribute="leading" secondItem="lXR-RB-BfI" secondAttribute="leading" id="WDE-QU-LVU"/>
+                            <constraint firstItem="EA8-hT-7of" firstAttribute="leading" secondItem="lXR-RB-BfI" secondAttribute="leading" id="XDP-xR-XUS"/>
+                            <constraint firstAttribute="trailing" secondItem="2nq-2h-6qU" secondAttribute="trailing" id="XrH-Sf-b5w"/>
+                            <constraint firstAttribute="trailing" secondItem="EA8-hT-7of" secondAttribute="trailing" id="c04-gE-gkE"/>
+                            <constraint firstItem="2nq-2h-6qU" firstAttribute="top" secondItem="EA8-hT-7of" secondAttribute="bottom" id="kSF-nM-5NU"/>
+                            <constraint firstAttribute="trailing" secondItem="wcM-fv-WUf" secondAttribute="trailing" id="oaJ-K2-3sW"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" title="SEND TO..." id="fzW-Wh-Feg">
+                        <barButtonItem key="leftBarButtonItem" image="icon-back-white" id="WaD-mw-gDM">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="backTapped:" destination="FIQ-Ap-F2N" id="XkS-JP-J3A"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <segue destination="QUm-9G-MOo" kind="unwind" identifier="self_only_gallery" unwindAction="unwindToGalleryViewController:" id="3xK-Ag-CVH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sK2-37-Td6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="QUm-9G-MOo" userLabel="Exit" sceneMemberID="exit"/>
+                <tapGestureRecognizer id="mFE-yz-Uje">
+                    <connections>
+                        <action selector="selfImageTapped:" destination="FIQ-Ap-F2N" id="XJL-H3-k4h"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="i7I-fl-K7v">
+                    <connections>
+                        <action selector="contactsImageTapped:" destination="FIQ-Ap-F2N" id="azc-Ne-8r0"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="3165" y="450"/>
+        </scene>
         <!--Infinit Welcome View Controller-->
         <scene sceneID="ML7-zP-jiP">
             <objects>
@@ -1693,8 +1882,10 @@ access your phone contacts!</string>
         <!--Infinit Portrait Navigation Controller-->
         <scene sceneID="WLA-Nc-X9T">
             <objects>
-                <navigationController storyboardIdentifier="self_quota_nav_controller" id="fGX-lH-I2y" customClass="InfinitPortraitNavigationController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="self_quota_nav_controller" extendedLayoutIncludesOpaqueBars="YES" id="fGX-lH-I2y" customClass="InfinitPortraitNavigationController" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="f5K-0G-ZuD">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1711,13 +1902,13 @@ access your phone contacts!</string>
         <!--CHECKLIST-->
         <scene sceneID="CQl-a8-hVa">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="b0r-JU-PxT" customClass="InfinitChecklistViewController" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" hidesBottomBarWhenPushed="YES" id="b0r-JU-PxT" customClass="InfinitChecklistViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="GPV-x3-YZg"/>
                         <viewControllerLayoutGuide type="bottom" id="Ai5-kz-G0I"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ZZ0-aa-A0e">
-                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" text="Complete these tasks to make your Infinit experience better!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yKr-ep-mT8">
@@ -1728,20 +1919,20 @@ access your phone contacts!</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="62" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NqO-rS-CRq">
-                                <rect key="frame" x="20" y="61" width="560" height="426"/>
+                                <rect key="frame" x="0.0" y="81" width="600" height="455"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
+                                <inset key="separatorInset" minX="25" minY="0.0" maxX="25" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="checklist_cell_avatar" id="tHQ-c3-h1o" customClass="InfinitChecklistTableViewCell">
-                                        <rect key="frame" x="0.0" y="28" width="560" height="62"/>
+                                        <rect key="frame" x="0.0" y="28" width="600" height="62"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tHQ-c3-h1o" id="GSt-4y-dz7">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="61"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="61"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-checklist-avatar" translatesAutoresizingMaskIntoConstraints="NO" id="zaH-Il-iYX">
-                                                    <rect key="frame" x="13" y="10" width="40" height="40"/>
+                                                    <rect key="frame" x="23" y="10" width="40" height="40"/>
                                                     <animations/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="jJE-Rh-E36"/>
@@ -1749,14 +1940,14 @@ access your phone contacts!</string>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="Add an avatar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3k2-wx-XGS">
-                                                    <rect key="frame" x="68" y="10" width="100" height="19"/>
+                                                    <rect key="frame" x="78" y="10" width="100" height="19"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                                     <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" misplaced="YES" text="Help your contacts find you" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8ID-0U-XR8">
-                                                    <rect key="frame" x="68" y="33" width="179" height="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="Help your contacts find you" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="8ID-0U-XR8">
+                                                    <rect key="frame" x="78" y="33" width="173" height="17"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                     <color key="textColor" red="0.70196078429999997" green="0.70196078429999997" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -1768,8 +1959,10 @@ access your phone contacts!</string>
                                                 <constraint firstItem="3k2-wx-XGS" firstAttribute="leading" secondItem="zaH-Il-iYX" secondAttribute="trailing" constant="15" id="CBd-D8-dRA"/>
                                                 <constraint firstItem="8ID-0U-XR8" firstAttribute="leading" secondItem="3k2-wx-XGS" secondAttribute="leading" id="Eie-yQ-AbJ"/>
                                                 <constraint firstItem="zaH-Il-iYX" firstAttribute="centerY" secondItem="GSt-4y-dz7" secondAttribute="centerY" id="EuH-B2-Kic"/>
-                                                <constraint firstItem="zaH-Il-iYX" firstAttribute="leading" secondItem="GSt-4y-dz7" secondAttribute="leadingMargin" constant="5" id="G9C-Gl-a53"/>
+                                                <constraint firstItem="zaH-Il-iYX" firstAttribute="leading" secondItem="GSt-4y-dz7" secondAttribute="leadingMargin" constant="15" id="G9C-Gl-a53"/>
                                                 <constraint firstItem="3k2-wx-XGS" firstAttribute="top" secondItem="zaH-Il-iYX" secondAttribute="top" id="Uj6-EE-oit"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="8ID-0U-XR8" secondAttribute="trailing" constant="10" id="gRK-30-ebQ"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="3k2-wx-XGS" secondAttribute="trailing" constant="10" id="h6C-Ph-TK0"/>
                                                 <constraint firstItem="8ID-0U-XR8" firstAttribute="bottom" secondItem="zaH-Il-iYX" secondAttribute="bottom" id="hY9-Cz-faz"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -1780,30 +1973,30 @@ access your phone contacts!</string>
                                             <outlet property="icon_view" destination="zaH-Il-iYX" id="7aA-e6-dX0"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="checklist_cell_fb_connect" id="vcu-Jj-y7T" customClass="InfinitChecklistTableViewCell">
-                                        <rect key="frame" x="0.0" y="90" width="560" height="62"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="checklist_cell_add_device" id="C27-y1-gwJ" customClass="InfinitChecklistTableViewCell">
+                                        <rect key="frame" x="0.0" y="90" width="600" height="62"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vcu-Jj-y7T" id="eZ7-BG-CWO">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="61"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="C27-y1-gwJ" id="hNX-zx-LsF">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="61"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-checklist-facebook" translatesAutoresizingMaskIntoConstraints="NO" id="Pby-5c-7bn">
-                                                    <rect key="frame" x="13" y="10" width="40" height="40"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-checklist-device" translatesAutoresizingMaskIntoConstraints="NO" id="uef-eo-Wf7">
+                                                    <rect key="frame" x="23" y="10" width="40" height="40"/>
                                                     <animations/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="40" id="MXa-La-ncF"/>
-                                                        <constraint firstAttribute="height" constant="40" id="hrn-s2-RsW"/>
+                                                        <constraint firstAttribute="height" constant="40" id="Bie-zI-3tJ"/>
+                                                        <constraint firstAttribute="width" constant="40" id="zQ8-Rg-ZvF"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="Connect Facebook" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DD7-Zn-bfL">
-                                                    <rect key="frame" x="68" y="10" width="137" height="19"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="Add another device" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YeF-zj-KRJ">
+                                                    <rect key="frame" x="78" y="10" width="140" height="19"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                                     <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" misplaced="YES" text="Find your friends" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U2C-Gq-y2d">
-                                                    <rect key="frame" x="68" y="33" width="136" height="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" misplaced="YES" text="Transfer files between your devices" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="77L-F0-WyN">
+                                                    <rect key="frame" x="78" y="33" width="244" height="17"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                     <color key="textColor" red="0.70196078429999997" green="0.70196078429999997" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -1812,10 +2005,61 @@ access your phone contacts!</string>
                                             </subviews>
                                             <animations/>
                                             <constraints>
+                                                <constraint firstItem="YeF-zj-KRJ" firstAttribute="top" secondItem="uef-eo-Wf7" secondAttribute="top" id="2cn-3D-NtW"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="77L-F0-WyN" secondAttribute="trailing" constant="10" id="3xW-ef-yLi"/>
+                                                <constraint firstItem="uef-eo-Wf7" firstAttribute="centerY" secondItem="hNX-zx-LsF" secondAttribute="centerY" id="GgU-Zy-74x"/>
+                                                <constraint firstItem="YeF-zj-KRJ" firstAttribute="leading" secondItem="uef-eo-Wf7" secondAttribute="trailing" constant="15" id="Hc5-d7-iC6"/>
+                                                <constraint firstItem="77L-F0-WyN" firstAttribute="bottom" secondItem="uef-eo-Wf7" secondAttribute="bottom" id="IIA-D7-G00"/>
+                                                <constraint firstItem="uef-eo-Wf7" firstAttribute="leading" secondItem="hNX-zx-LsF" secondAttribute="leadingMargin" constant="15" id="LBT-aI-I5p"/>
+                                                <constraint firstItem="77L-F0-WyN" firstAttribute="leading" secondItem="YeF-zj-KRJ" secondAttribute="leading" id="S86-kw-yGP"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="YeF-zj-KRJ" secondAttribute="trailing" constant="10" id="jDa-rx-TbN"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                        <connections>
+                                            <outlet property="action_label" destination="YeF-zj-KRJ" id="xm4-RI-7FI"/>
+                                            <outlet property="description_label" destination="77L-F0-WyN" id="6MH-y6-HWA"/>
+                                            <outlet property="icon_view" destination="uef-eo-Wf7" id="URM-gN-5yy"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="checklist_cell_fb_connect" id="vcu-Jj-y7T" customClass="InfinitChecklistTableViewCell">
+                                        <rect key="frame" x="0.0" y="152" width="600" height="62"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vcu-Jj-y7T" id="eZ7-BG-CWO">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="61"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-checklist-facebook" translatesAutoresizingMaskIntoConstraints="NO" id="Pby-5c-7bn">
+                                                    <rect key="frame" x="23" y="10" width="40" height="40"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="MXa-La-ncF"/>
+                                                        <constraint firstAttribute="height" constant="40" id="hrn-s2-RsW"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="Connect Facebook" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DD7-Zn-bfL">
+                                                    <rect key="frame" x="78" y="10" width="137" height="19"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                                    <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="Find your friends" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="U2C-Gq-y2d">
+                                                    <rect key="frame" x="78" y="33" width="106" height="17"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" red="0.70196078429999997" green="0.70196078429999997" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="DD7-Zn-bfL" secondAttribute="trailing" constant="10" id="7uH-NS-IUg"/>
                                                 <constraint firstItem="U2C-Gq-y2d" firstAttribute="leading" secondItem="DD7-Zn-bfL" secondAttribute="leading" id="8Kw-vY-XEl"/>
-                                                <constraint firstItem="Pby-5c-7bn" firstAttribute="leading" secondItem="eZ7-BG-CWO" secondAttribute="leadingMargin" constant="5" id="AgH-i7-k6i"/>
+                                                <constraint firstItem="Pby-5c-7bn" firstAttribute="leading" secondItem="eZ7-BG-CWO" secondAttribute="leadingMargin" constant="15" id="AgH-i7-k6i"/>
                                                 <constraint firstItem="U2C-Gq-y2d" firstAttribute="bottom" secondItem="Pby-5c-7bn" secondAttribute="bottom" id="eBM-Dw-HvT"/>
                                                 <constraint firstItem="Pby-5c-7bn" firstAttribute="centerY" secondItem="eZ7-BG-CWO" secondAttribute="centerY" id="fdw-aq-iNK"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="U2C-Gq-y2d" secondAttribute="trailing" constant="10" id="mFl-TH-gDG"/>
                                                 <constraint firstItem="DD7-Zn-bfL" firstAttribute="top" secondItem="Pby-5c-7bn" secondAttribute="top" id="raO-Nh-9EG"/>
                                                 <constraint firstItem="DD7-Zn-bfL" firstAttribute="leading" secondItem="Pby-5c-7bn" secondAttribute="trailing" constant="15" id="ryE-V5-EcG"/>
                                             </constraints>
@@ -1828,14 +2072,14 @@ access your phone contacts!</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="checklist_cell_fb_post" id="6pB-RV-eic" customClass="InfinitChecklistTableViewCell">
-                                        <rect key="frame" x="0.0" y="152" width="560" height="62"/>
+                                        <rect key="frame" x="0.0" y="214" width="600" height="62"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6pB-RV-eic" id="eG9-hh-6ag">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="61"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="61"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-checklist-facebook" translatesAutoresizingMaskIntoConstraints="NO" id="vOt-Vq-9nL">
-                                                    <rect key="frame" x="13" y="10" width="40" height="40"/>
+                                                    <rect key="frame" x="23" y="10" width="40" height="40"/>
                                                     <animations/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="bfS-wv-8Wl"/>
@@ -1843,14 +2087,14 @@ access your phone contacts!</string>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="Post on Facebook" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cuT-gp-8Uv">
-                                                    <rect key="frame" x="68" y="10" width="131" height="19"/>
+                                                    <rect key="frame" x="78" y="10" width="131" height="19"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                                     <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" misplaced="YES" text="Tell your friends about Infinit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6iI-b7-YhV">
-                                                    <rect key="frame" x="68" y="33" width="184" height="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="Tell your friends about Infinit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="6iI-b7-YhV">
+                                                    <rect key="frame" x="78" y="33" width="176" height="17"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                     <color key="textColor" red="0.70196078429999997" green="0.70196078429999997" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -1860,8 +2104,10 @@ access your phone contacts!</string>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstItem="6iI-b7-YhV" firstAttribute="bottom" secondItem="vOt-Vq-9nL" secondAttribute="bottom" id="78T-LH-FUC"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="cuT-gp-8Uv" secondAttribute="trailing" constant="10" id="IqS-FB-StW"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="6iI-b7-YhV" secondAttribute="trailing" constant="10" id="LrM-V5-ksO"/>
                                                 <constraint firstItem="6iI-b7-YhV" firstAttribute="leading" secondItem="cuT-gp-8Uv" secondAttribute="leading" id="MnB-Wo-Jwg"/>
-                                                <constraint firstItem="vOt-Vq-9nL" firstAttribute="leading" secondItem="eG9-hh-6ag" secondAttribute="leadingMargin" constant="5" id="bcI-TQ-4DJ"/>
+                                                <constraint firstItem="vOt-Vq-9nL" firstAttribute="leading" secondItem="eG9-hh-6ag" secondAttribute="leadingMargin" constant="15" id="bcI-TQ-4DJ"/>
                                                 <constraint firstItem="cuT-gp-8Uv" firstAttribute="leading" secondItem="vOt-Vq-9nL" secondAttribute="trailing" constant="15" id="jYs-AS-ItF"/>
                                                 <constraint firstItem="vOt-Vq-9nL" firstAttribute="centerY" secondItem="eG9-hh-6ag" secondAttribute="centerY" id="pWj-Lu-378"/>
                                                 <constraint firstItem="cuT-gp-8Uv" firstAttribute="top" secondItem="vOt-Vq-9nL" secondAttribute="top" id="qge-o6-Km0"/>
@@ -1875,14 +2121,14 @@ access your phone contacts!</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="checklist_cell_twitter_post" id="dlq-KG-2AR" customClass="InfinitChecklistTableViewCell">
-                                        <rect key="frame" x="0.0" y="214" width="560" height="62"/>
+                                        <rect key="frame" x="0.0" y="276" width="600" height="62"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dlq-KG-2AR" id="WlD-W2-rRB">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="61"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="61"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-checklist-twitter" translatesAutoresizingMaskIntoConstraints="NO" id="gy9-7Q-9Rs">
-                                                    <rect key="frame" x="13" y="10" width="40" height="40"/>
+                                                    <rect key="frame" x="23" y="10" width="40" height="40"/>
                                                     <animations/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="d7c-Cv-Pfu"/>
@@ -1890,14 +2136,14 @@ access your phone contacts!</string>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="Post on Twitter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZS7-QB-Tm5">
-                                                    <rect key="frame" x="68" y="10" width="107" height="19"/>
+                                                    <rect key="frame" x="78" y="10" width="107" height="19"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                                     <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" misplaced="YES" text="Tell your friends about Infinit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dnL-mb-o2B">
-                                                    <rect key="frame" x="68" y="33" width="184" height="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="Tell your friends about Infinit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="dnL-mb-o2B">
+                                                    <rect key="frame" x="78" y="33" width="176" height="17"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                     <color key="textColor" red="0.70196078429999997" green="0.70196078429999997" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -1909,8 +2155,10 @@ access your phone contacts!</string>
                                                 <constraint firstItem="gy9-7Q-9Rs" firstAttribute="centerY" secondItem="WlD-W2-rRB" secondAttribute="centerY" id="3X1-Yd-VUI"/>
                                                 <constraint firstItem="dnL-mb-o2B" firstAttribute="bottom" secondItem="gy9-7Q-9Rs" secondAttribute="bottom" id="5jP-p4-kbI"/>
                                                 <constraint firstItem="ZS7-QB-Tm5" firstAttribute="top" secondItem="gy9-7Q-9Rs" secondAttribute="top" id="Bu4-FB-VUJ"/>
-                                                <constraint firstItem="gy9-7Q-9Rs" firstAttribute="leading" secondItem="WlD-W2-rRB" secondAttribute="leadingMargin" constant="5" id="RUe-wL-gz8"/>
+                                                <constraint firstItem="gy9-7Q-9Rs" firstAttribute="leading" secondItem="WlD-W2-rRB" secondAttribute="leadingMargin" constant="15" id="RUe-wL-gz8"/>
                                                 <constraint firstItem="dnL-mb-o2B" firstAttribute="leading" secondItem="ZS7-QB-Tm5" secondAttribute="leading" id="ad5-Uy-wPW"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="dnL-mb-o2B" secondAttribute="trailing" constant="10" id="eVf-0h-fZ4"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="ZS7-QB-Tm5" secondAttribute="trailing" constant="10" id="hTP-Ow-bXN"/>
                                                 <constraint firstItem="ZS7-QB-Tm5" firstAttribute="leading" secondItem="gy9-7Q-9Rs" secondAttribute="trailing" constant="15" id="vpQ-XK-nEc"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -1922,40 +2170,42 @@ access your phone contacts!</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="checklist_cell_invite" id="c5Q-vx-YIt" customClass="InfinitChecklistTableViewCell">
-                                        <rect key="frame" x="0.0" y="276" width="560" height="62"/>
+                                        <rect key="frame" x="0.0" y="338" width="600" height="62"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="c5Q-vx-YIt" id="JZv-S7-gn6">
-                                            <rect key="frame" x="0.0" y="0.0" width="527" height="61"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="567" height="61"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="Invite friends" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TKN-Kr-dbE">
+                                                    <rect key="frame" x="78" y="10" width="92" height="19"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                                    <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="Share Infinit!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="sTK-pm-byD">
+                                                    <rect key="frame" x="78" y="33" width="78" height="17"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" red="0.70196078429999997" green="0.70196078429999997" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-checklist-invite" translatesAutoresizingMaskIntoConstraints="NO" id="Zws-bL-lHg">
-                                                    <rect key="frame" x="13" y="10" width="40" height="40"/>
+                                                    <rect key="frame" x="23" y="10" width="40" height="40"/>
                                                     <animations/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="glt-BG-JQF"/>
                                                         <constraint firstAttribute="height" constant="40" id="kBP-9x-vw1"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" misplaced="YES" text="Invite friends" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TKN-Kr-dbE">
-                                                    <rect key="frame" x="68" y="10" width="133" height="19"/>
-                                                    <animations/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
-                                                    <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" misplaced="YES" text="Share Infinit!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sTK-pm-byD">
-                                                    <rect key="frame" x="68" y="33" width="85" height="17"/>
-                                                    <animations/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                                    <color key="textColor" red="0.70196078429999997" green="0.70196078429999997" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
                                             <animations/>
                                             <constraints>
-                                                <constraint firstItem="Zws-bL-lHg" firstAttribute="leading" secondItem="JZv-S7-gn6" secondAttribute="leadingMargin" constant="5" id="3RR-Mu-zcd"/>
+                                                <constraint firstItem="Zws-bL-lHg" firstAttribute="leading" secondItem="JZv-S7-gn6" secondAttribute="leadingMargin" constant="15" id="3RR-Mu-zcd"/>
                                                 <constraint firstItem="Zws-bL-lHg" firstAttribute="centerY" secondItem="JZv-S7-gn6" secondAttribute="centerY" id="SZi-lL-WJb"/>
                                                 <constraint firstItem="sTK-pm-byD" firstAttribute="bottom" secondItem="Zws-bL-lHg" secondAttribute="bottom" id="Skk-gc-uNO"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="sTK-pm-byD" secondAttribute="trailing" constant="10" id="VTK-lU-xv3"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="TKN-Kr-dbE" secondAttribute="trailing" constant="10" id="Wte-XI-h1u"/>
                                                 <constraint firstItem="TKN-Kr-dbE" firstAttribute="leading" secondItem="Zws-bL-lHg" secondAttribute="trailing" constant="15" id="Xfi-gL-FKW"/>
                                                 <constraint firstItem="sTK-pm-byD" firstAttribute="leading" secondItem="TKN-Kr-dbE" secondAttribute="leading" id="b87-oi-c1F"/>
                                                 <constraint firstItem="TKN-Kr-dbE" firstAttribute="top" secondItem="Zws-bL-lHg" secondAttribute="top" id="jYF-NO-NAm"/>
@@ -1969,29 +2219,29 @@ access your phone contacts!</string>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="checklist_cell_referral" id="f1j-dV-ulb" customClass="InfinitChecklistTableViewCell">
-                                        <rect key="frame" x="0.0" y="338" width="560" height="62"/>
+                                        <rect key="frame" x="0.0" y="400" width="600" height="62"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="f1j-dV-ulb" id="fww-g9-gxY">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="61"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="61"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="K6s-9i-GCa">
-                                                    <rect key="frame" x="13" y="10" width="40" height="40"/>
+                                                    <rect key="frame" x="23" y="10" width="40" height="40"/>
                                                     <animations/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="65M-pk-xKd"/>
                                                         <constraint firstAttribute="height" constant="40" id="sZj-gn-yHC"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" misplaced="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1eI-Ll-9Wh">
-                                                    <rect key="frame" x="68" y="10" width="107" height="19"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1eI-Ll-9Wh">
+                                                    <rect key="frame" x="78" y="10" width="43" height="19"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                                     <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" misplaced="YES" text="status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qs6-lz-t3q">
-                                                    <rect key="frame" x="68" y="33" width="136" height="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Qs6-lz-t3q">
+                                                    <rect key="frame" x="78" y="33" width="39" height="17"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                     <color key="textColor" red="0.70196078429999997" green="0.70196078429999997" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -2000,7 +2250,9 @@ access your phone contacts!</string>
                                             </subviews>
                                             <animations/>
                                             <constraints>
-                                                <constraint firstItem="K6s-9i-GCa" firstAttribute="leading" secondItem="fww-g9-gxY" secondAttribute="leadingMargin" constant="5" id="79d-vm-oQF"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Qs6-lz-t3q" secondAttribute="trailing" constant="10" id="5Sn-z7-ETI"/>
+                                                <constraint firstItem="K6s-9i-GCa" firstAttribute="leading" secondItem="fww-g9-gxY" secondAttribute="leadingMargin" constant="15" id="79d-vm-oQF"/>
+                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="1eI-Ll-9Wh" secondAttribute="trailing" constant="10" id="CHX-yb-ycr"/>
                                                 <constraint firstItem="Qs6-lz-t3q" firstAttribute="leading" secondItem="1eI-Ll-9Wh" secondAttribute="leading" id="S1I-Ov-bbT"/>
                                                 <constraint firstItem="1eI-Ll-9Wh" firstAttribute="leading" secondItem="K6s-9i-GCa" secondAttribute="trailing" constant="15" id="k6j-VV-OwZ"/>
                                                 <constraint firstItem="Qs6-lz-t3q" firstAttribute="bottom" secondItem="K6s-9i-GCa" secondAttribute="bottom" id="lhv-ys-VkO"/>
@@ -2022,20 +2274,42 @@ access your phone contacts!</string>
                                     <outlet property="delegate" destination="b0r-JU-PxT" id="Nog-DG-WYz"/>
                                 </connections>
                             </tableView>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" misplaced="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="zcQ-bj-Mab">
+                                <rect key="frame" x="59" y="61" width="441" height="5"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="5" id="Km5-7T-UYl"/>
+                                </constraints>
+                                <color key="progressTintColor" red="0.16862745098039217" green="0.74509803921568629" blue="0.74117647058823533" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="trackTintColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
+                            </progressView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50 %" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kxU-Qf-VSy">
+                                <rect key="frame" x="510" y="54" width="32" height="19"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="15"/>
+                                <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="NqO-rS-CRq" firstAttribute="top" secondItem="zcQ-bj-Mab" secondAttribute="bottom" constant="15" id="5fP-wa-L8N"/>
+                            <constraint firstItem="NqO-rS-CRq" firstAttribute="leading" secondItem="ZZ0-aa-A0e" secondAttribute="leading" id="B5q-mT-TNS"/>
                             <constraint firstItem="yKr-ep-mT8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ZZ0-aa-A0e" secondAttribute="leadingMargin" constant="5" id="B5r-MO-mLN"/>
-                            <constraint firstItem="NqO-rS-CRq" firstAttribute="leading" secondItem="ZZ0-aa-A0e" secondAttribute="leadingMargin" id="BYr-zi-j0O"/>
-                            <constraint firstItem="NqO-rS-CRq" firstAttribute="top" secondItem="yKr-ep-mT8" secondAttribute="bottom" constant="15" id="HLX-Lm-v0C"/>
+                            <constraint firstAttribute="trailing" secondItem="NqO-rS-CRq" secondAttribute="trailing" id="Dya-Gp-nK8"/>
+                            <constraint firstItem="zcQ-bj-Mab" firstAttribute="leading" secondItem="yKr-ep-mT8" secondAttribute="leading" id="FKs-lb-m0D"/>
                             <constraint firstItem="Ai5-kz-G0I" firstAttribute="top" secondItem="NqO-rS-CRq" secondAttribute="bottom" id="IUy-Mh-Kt8"/>
                             <constraint firstItem="yKr-ep-mT8" firstAttribute="centerX" secondItem="ZZ0-aa-A0e" secondAttribute="centerX" id="UQ8-vI-DYl"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="NqO-rS-CRq" secondAttribute="trailing" id="VQ5-St-s8F"/>
+                            <constraint firstItem="kxU-Qf-VSy" firstAttribute="leading" secondItem="zcQ-bj-Mab" secondAttribute="trailing" constant="10" id="Z7p-Bu-fKb"/>
+                            <constraint firstItem="zcQ-bj-Mab" firstAttribute="top" secondItem="yKr-ep-mT8" secondAttribute="bottom" constant="15" id="iTL-SK-P5s"/>
                             <constraint firstItem="yKr-ep-mT8" firstAttribute="top" secondItem="GPV-x3-YZg" secondAttribute="bottom" constant="20" id="jTt-Xu-oih"/>
                             <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="yKr-ep-mT8" secondAttribute="trailing" constant="5" id="l4V-Vg-8yg"/>
+                            <constraint firstItem="kxU-Qf-VSy" firstAttribute="centerY" secondItem="zcQ-bj-Mab" secondAttribute="centerY" id="qy7-3g-OM4"/>
+                            <constraint firstItem="kxU-Qf-VSy" firstAttribute="trailing" secondItem="yKr-ep-mT8" secondAttribute="trailing" id="rPp-Pb-bNZ"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="CHECKLIST" id="EOC-nj-OWM">
                         <barButtonItem key="leftBarButtonItem" image="icon-close" id="56q-NO-5s0">
                             <color key="tintColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -2044,8 +2318,11 @@ access your phone contacts!</string>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="close_button" destination="56q-NO-5s0" id="K4V-3Q-Qi4"/>
+                        <outlet property="progress_bar" destination="zcQ-bj-Mab" id="3pN-Bp-QUr"/>
+                        <outlet property="progress_label" destination="kxU-Qf-VSy" id="GfM-HT-l1S"/>
                         <outlet property="table_view" destination="NqO-rS-CRq" id="Shd-6A-7mm"/>
                         <segue destination="cyR-zH-YxB" kind="show" identifier="checklist_invite_segue" id="XNA-2s-qWv"/>
                         <segue destination="pxw-3X-tID" kind="unwind" identifier="settings_checklist_unwind" unwindAction="unwindToSettingsViewController:" id="Pa6-GZ-ETQ"/>
@@ -3385,6 +3662,7 @@ type of file in Infinit</string>
         <image name="icon-add-red" width="30" height="30"/>
         <image name="icon-back-white" width="11" height="18"/>
         <image name="icon-checklist-avatar" width="40" height="41"/>
+        <image name="icon-checklist-device" width="40" height="40"/>
         <image name="icon-checklist-facebook" width="38" height="38"/>
         <image name="icon-checklist-invite" width="38" height="38"/>
         <image name="icon-checklist-twitter" width="40" height="40"/>
@@ -3405,9 +3683,12 @@ type of file in Infinit</string>
         <image name="icon-rename-device-iphone" width="12" height="23"/>
         <image name="icon-save-red" width="22" height="27"/>
         <image name="icon-search" width="21" height="19"/>
+        <image name="icon-send-contact" width="112" height="112"/>
         <image name="icon-send-ipad" width="76" height="76"/>
         <image name="icon-send-red" width="25" height="21"/>
+        <image name="icon-send-self-arrow-right" width="9" height="14"/>
         <image name="icon-send-white" width="18" height="15"/>
+        <image name="icon-sendtoself" width="270" height="123"/>
         <image name="icon-settings-fullname" width="17" height="20"/>
         <image name="icon-share" width="22" height="27"/>
         <image name="icon-tab-contacts" width="18" height="21"/>
@@ -3421,13 +3702,13 @@ type of file in Infinit</string>
         <image name="schema-onboarding-infinite" width="214" height="90"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Yah-cg-ZRU"/>
+        <segue reference="1b9-l5-7NA"/>
+        <segue reference="XNA-2s-qWv"/>
         <segue reference="iUI-7h-033"/>
         <segue reference="G1u-me-VrO"/>
-        <segue reference="zep-Dc-F4h"/>
+        <segue reference="Yah-cg-ZRU"/>
         <segue reference="7Vb-QM-Foc"/>
-        <segue reference="tHx-4e-ap2"/>
-        <segue reference="XNA-2s-qWv"/>
+        <segue reference="lVz-vi-huA"/>
         <segue reference="5jp-t6-Gni"/>
         <segue reference="19z-F9-Cn7"/>
     </inferredMetricsTieBreakers>
