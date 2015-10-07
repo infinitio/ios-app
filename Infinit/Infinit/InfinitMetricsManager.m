@@ -131,6 +131,8 @@ static dispatch_once_t _instance_token = 0;
       return @"feedback open";
     case InfinitUIEventHelpOpen:
       return @"help open";
+    case InfinitUIEventChecklistOpen:
+      return @"checklist open";
 
     default:
       NSCAssert(false, @"Unknown metrics event");
@@ -187,6 +189,8 @@ static dispatch_once_t _instance_token = 0;
       return @"negative";
     case InfinitUIMethodSettingsMenu:
       return @"settings menu";
+    case InfinitUIMethodAuto:
+      return @"auto";
 
     default:
       NSCAssert(false, @"Unknown metrics method");

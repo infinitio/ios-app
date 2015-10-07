@@ -44,6 +44,7 @@ typedef NS_ENUM(NSUInteger, InfinitUIEvents)
   // Settings
   InfinitUIEventFeedbackOpen,
   InfinitUIEventHelpOpen,
+  InfinitUIEventChecklistOpen,
 };
 
 typedef NS_ENUM(NSUInteger, InfinitUIMethods)
@@ -71,6 +72,7 @@ typedef NS_ENUM(NSUInteger, InfinitUIMethods)
   InfinitUIMethodPositive,
   InfinitUIMethodNegative,
   InfinitUIMethodSettingsMenu,
+  InfinitUIMethodAuto,
 };
 
 #endif
