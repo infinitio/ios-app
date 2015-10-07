@@ -11,6 +11,7 @@
 #import "InfinitAppBadgeManager.h"
 #import "InfinitApplicationSettings.h"
 #import "InfinitBackgroundManager.h"
+#import "InfinitChecklistManager.h"
 #import "InfinitConstants.h"
 #import "InfinitDevicePasswordManager.h"
 #import "InfinitDownloadFolderManager.h"
@@ -181,6 +182,7 @@ didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
   }
 
   [InfinitConnectionManager sharedInstance];
+  [InfinitChecklistManager start];
   [InfinitAppBadgeManager startManager];
   [InfinitStateManager startState];
   [InfinitQuotaManager start];
