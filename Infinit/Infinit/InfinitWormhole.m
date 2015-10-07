@@ -21,6 +21,15 @@ static dispatch_once_t _instance_token = 0;
 
 #pragma mark - Init
 
+- (instancetype)init
+{
+  if (self = [super init])
+  {
+    _notifications_map = [NSMutableDictionary dictionary];
+  }
+  return self;
+}
+
 - (void)dealloc
 {
   CFNotificationCenterRemoveEveryObserver(CFNotificationCenterGetDarwinNotifyCenter(),
@@ -35,7 +44,9 @@ static dispatch_once_t _instance_token = 0;
         [[NSNotificationCenter defaultCenter] removeObserver:observer forKeyPath:notification];
       }
       @catch (NSException* exception)
-      {}
+      {
+        // Pass
+      }
     }
   }
   _notifications_map = nil;
@@ -58,8 +69,6 @@ static dispatch_once_t _instance_token = 0;
 {
   @synchronized(self)
   {
-    if (self.notifications_map == nil)
-      _notifications_map = [NSMutableDictionary dictionary];
     NSArray* observers = [self.notifications_map objectForKey:name];
     if (!observers || observers.count == 0)
     {
@@ -140,11 +149,12 @@ static dispatch_once_t _instance_token = 0;
 
 #pragma mark - Helpers
 
-void wormholeNotificationCallback(CFNotificationCenterRef center,
-                                  void* observer,
-                                  CFStringRef name,
-                                  void const* object,
-                                  CFDictionaryRef user_info)
+void
+wormholeNotificationCallback(CFNotificationCenterRef center,
+                             void* observer,
+                             CFStringRef name,
+                             void const* object,
+                             CFDictionaryRef user_info)
 {
   dispatch_async(dispatch_get_main_queue(), ^
   {
