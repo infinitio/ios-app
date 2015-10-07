@@ -76,6 +76,8 @@
 		834595891AE6B5230020B25D /* InfinitFilesEmptyOverlay_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8345958B1AE6B5230020B25D /* InfinitFilesEmptyOverlay_iPad.xib */; };
 		8345958C1AE6B5370020B25D /* InfinitFilesSearchPopover_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8345958E1AE6B5370020B25D /* InfinitFilesSearchPopover_iPad.xib */; };
 		8346D2061B8B13E2004D5040 /* InfinitQuotaOverlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8346D2081B8B13E2004D5040 /* InfinitQuotaOverlayViewController.xib */; };
+		8349EA351BC40F9400E8A4DA /* InfinitChecklistManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8349EA341BC40F9400E8A4DA /* InfinitChecklistManager.mm */; };
+		8349EA391BC4283C00E8A4DA /* InfinitSendSelfViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8349EA381BC4283C00E8A4DA /* InfinitSendSelfViewController.m */; };
 		834EA5091BC2A0F70081A2EC /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 834EA5081BC2A0F70081A2EC /* MessageUI.framework */; };
 		834FCFC41A7B93CA00930BD8 /* InfinitBackgroundManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 834FCFC31A7B93CA00930BD8 /* InfinitBackgroundManager.mm */; };
 		83519B461A9793B800541B5E /* InfinitHomeTransactionStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 83519B451A9793B800541B5E /* InfinitHomeTransactionStatusView.m */; };
@@ -530,6 +532,10 @@
 		8345958A1AE6B5230020B25D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfinitFilesEmptyOverlay_iPad.xib; sourceTree = "<group>"; };
 		8345958D1AE6B5370020B25D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfinitFilesSearchPopover_iPad.xib; sourceTree = "<group>"; };
 		8346D2071B8B13E2004D5040 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InfinitQuotaOverlayViewController.xib; sourceTree = "<group>"; };
+		8349EA331BC40F9400E8A4DA /* InfinitChecklistManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitChecklistManager.h; sourceTree = "<group>"; };
+		8349EA341BC40F9400E8A4DA /* InfinitChecklistManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitChecklistManager.mm; sourceTree = "<group>"; };
+		8349EA371BC4283C00E8A4DA /* InfinitSendSelfViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendSelfViewController.h; sourceTree = "<group>"; };
+		8349EA381BC4283C00E8A4DA /* InfinitSendSelfViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendSelfViewController.m; sourceTree = "<group>"; };
 		834EA5081BC2A0F70081A2EC /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		834FCFC21A7B93CA00930BD8 /* InfinitBackgroundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitBackgroundManager.h; sourceTree = "<group>"; };
 		834FCFC31A7B93CA00930BD8 /* InfinitBackgroundManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitBackgroundManager.mm; sourceTree = "<group>"; };
@@ -1635,6 +1641,8 @@
 				838157F11BBAD63600446D77 /* Cells */,
 				838157EB1BBAC7E700446D77 /* InfinitChecklistViewController.h */,
 				838157EC1BBAC7E700446D77 /* InfinitChecklistViewController.mm */,
+				8349EA331BC40F9400E8A4DA /* InfinitChecklistManager.h */,
+				8349EA341BC40F9400E8A4DA /* InfinitChecklistManager.mm */,
 			);
 			name = "Check List";
 			sourceTree = "<group>";
@@ -1652,6 +1660,15 @@
 				830330831B1DFD9700FE2931 /* InfinitContactUser.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		8349EA361BC4282700E8A4DA /* Self */ = {
+			isa = PBXGroup;
+			children = (
+				8349EA371BC4283C00E8A4DA /* InfinitSendSelfViewController.h */,
+				8349EA381BC4283C00E8A4DA /* InfinitSendSelfViewController.m */,
+			);
+			name = Self;
 			sourceTree = "<group>";
 		};
 		834FCFC11A7B93B900930BD8 /* Background Manager */ = {
@@ -2479,6 +2496,7 @@
 			children = (
 				8309EAFE1B33FDB8009348C7 /* Gallery */,
 				8309EB001B33FDDE009348C7 /* Recipients */,
+				8349EA361BC4282700E8A4DA /* Self */,
 				83A5E4C81A6EFCC000FB8578 /* InfinitSendNavigationBar.h */,
 				83A5E4C91A6EFCC000FB8578 /* InfinitSendNavigationBar.m */,
 				830AD20C1A6D57C900E2B058 /* InfinitSendNavigationController.h */,
@@ -2797,6 +2815,7 @@
 				8311B5C31A7D407900832FDE /* InfinitFilesNavigationController.m in Sources */,
 				8311D88A1AAF371D00DF31BE /* InfinitHomeEmptyOverlay.m in Sources */,
 				83E112DD1A8266D60072DAE0 /* InfinitOnboardingProgressView.m in Sources */,
+				8349EA351BC40F9400E8A4DA /* InfinitChecklistManager.mm in Sources */,
 				833FA7971BC275470011A363 /* UIImage+GreyScale.m in Sources */,
 				830AD1F01A6CF48000E2B058 /* InfinitSettingsViewController.m in Sources */,
 				83E0AC0A1A6A608B003F60C6 /* InfinitHomeItem.m in Sources */,
@@ -2850,6 +2869,7 @@
 				83A0D63E1ADE9AC000D9D3AD /* InfinitHomeOnboardingItem.m in Sources */,
 				D00045BD1A499A20008DB448 /* InfinitContactImportCell.m in Sources */,
 				83054E131B20ADA2005F9558 /* InfinitApplication.m in Sources */,
+				8349EA391BC4283C00E8A4DA /* InfinitSendSelfViewController.m in Sources */,
 				834FCFC41A7B93CA00930BD8 /* InfinitBackgroundManager.mm in Sources */,
 				831AB8601AA6054900E10E65 /* InfinitSettingsExpandedCell.m in Sources */,
 				D05D5D1A1A24C4B1005529E8 /* InfinitSendGalleryCell.m in Sources */,
