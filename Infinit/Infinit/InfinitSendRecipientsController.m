@@ -28,6 +28,7 @@
 #import "InfinitSendEmailCell.h"
 #import "InfinitSendNavigationController.h"
 #import "InfinitSendNoResultsCell.h"
+#import "InfinitSendSelfViewController.h"
 #import "InfinitSendToSelfOverlayView.h"
 #import "InfinitSendUserCell.h"
 #import "InfinitStatusBarNotifier.h"
@@ -135,8 +136,6 @@ static UIImage* _send_button_image = nil;
 
 - (void)viewDidLoad
 {
-  self.navigationController.interactivePopGestureRecognizer.enabled = YES;
-  self.navigationController.interactivePopGestureRecognizer.delegate = self;
   self.table_view.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
   self.send_button.titleEdgeInsets =
     UIEdgeInsetsMake(0.0f,
@@ -298,6 +297,10 @@ static UIImage* _send_button_image = nil;
                self.file_count];
     }
     self.navigationItem.title = title;
+    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+    self.navigationController.interactivePopGestureRecognizer.delegate = self;
+    [self.navigationController.interactivePopGestureRecognizer addTarget:self
+                                                                  action:@selector(backButtonTapped:)];
   }
 }
 
@@ -310,10 +313,11 @@ static UIImage* _send_button_image = nil;
 {
   self.recipient = nil;
   [self.navigationController.navigationBar.subviews[0] removeGestureRecognizer:self.nav_bar_tap];
-  self.navigationController.interactivePopGestureRecognizer.delegate = nil;
   _nav_bar_tap = nil;
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   [super viewWillDisappear:animated];
+  self.navigationController.interactivePopGestureRecognizer.delegate = nil;
+  [self.navigationController.interactivePopGestureRecognizer removeTarget:self action:nil];
 }
 
 #pragma mark - General
@@ -646,9 +650,12 @@ static UIImage* _send_button_image = nil;
   }
   else
   {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (![sender isKindOfClass:UIGestureRecognizer.class])
+      [self.navigationController popViewControllerAnimated:YES];
     Class gallery_class = InfinitSendGalleryController.class;
-    if (![self.navigationController.topViewController isKindOfClass:gallery_class])
+    Class self_only_class = InfinitSendSelfViewController.class;
+    if (![self.navigationController.topViewController isKindOfClass:gallery_class] &&
+        ![self.navigationController.topViewController isKindOfClass:self_only_class])
     {
       dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
       {
