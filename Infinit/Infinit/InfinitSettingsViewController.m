@@ -77,6 +77,7 @@ typedef NS_ENUM(NSUInteger, InfinitLogoutSettings)
 typedef NS_ENUM(NSUInteger, InfinitDebugSettings)
 {
   InfinitDebugSettingResetOnboarding = 0,
+  InfinitDebugSettingSetLaunchCount,
 
   InfinitDebugSettingsCount,
 };
@@ -176,7 +177,10 @@ static NSString* _user_cell_id = @"settings_user_cell";
   switch (section)
   {
     case InfinitSettingsSectionAccount:
-      return InfinitAccountSettingsCount;
+      if ([InfinitHostDevice english])
+        return InfinitAccountSettingsCount;
+      else
+        return InfinitAccountSettingsCount - 1;
     case InfinitSettingsSectionApp:
       return InfinitAppSettingsCount;
     case InfinitSettingsSectionFeedback:
@@ -235,11 +239,9 @@ static NSString* _user_cell_id = @"settings_user_cell";
       {
         InfinitSettingsCell* cell = [self.table_view dequeueReusableCellWithIdentifier:_norm_cell_id
                                                                           forIndexPath:indexPath];
-#ifndef DEBUG
-        xxx missing icon
-#endif
-        cell.icon_view.image = nil;
+        cell.icon_view.image = [UIImage imageNamed:@"icon-checklist"];
         cell.title_label.text = InfinitNonLocalizedString(@"Checklist");
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         res = cell;
         break;
       }
@@ -318,6 +320,11 @@ static NSString* _user_cell_id = @"settings_user_cell";
     {
       case InfinitDebugSettingResetOnboarding:
         cell.title_label.text = @"Reset onboarding";
+        cell.icon_view.image = nil;
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        break;
+      case InfinitDebugSettingSetLaunchCount:
+        cell.title_label.text = @"Set launch count";
         cell.icon_view.image = nil;
         cell.accessoryType = UITableViewCellAccessoryNone;
         break;
@@ -409,6 +416,8 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 
       case InfinitAccountSettingChecklist:
         [self performSegueWithIdentifier:@"settings_checklist" sender:self];
+        [InfinitMetricsManager sendMetric:InfinitUIEventChecklistOpen
+                                   method:InfinitUIMethodSettingsMenu];
         break;
 
       default:
@@ -476,6 +485,9 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
     {
       case InfinitDebugSettingResetOnboarding:
         [[InfinitApplicationSettings sharedInstance] resetOnboarding];
+        break;
+      case InfinitDebugSettingSetLaunchCount:
+        [InfinitApplicationSettings sharedInstance].launch_count = 9;
         break;
     }
   }
