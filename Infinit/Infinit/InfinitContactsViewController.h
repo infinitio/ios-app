@@ -12,6 +12,8 @@
 
 @interface InfinitContactsViewController : InfinitOfflineViewController
 
+@property BOOL invitation_mode;
+
 - (void)tabIconTap;
 
 @end
