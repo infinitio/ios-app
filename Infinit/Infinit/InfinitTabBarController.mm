@@ -317,6 +317,8 @@ static InfinitTabBarController* _current_instance = nil;
 {
   if (selectedIndex == self.selectedIndex)
     return;
+  if (selectedIndex == InfinitTabBarIndexContacts)
+    [self.viewControllers[InfinitTabBarIndexContacts] setInvitation_mode:NO];
   [super setSelectedIndex:selectedIndex];
   [self selectorToPosition:selectedIndex];
 }
