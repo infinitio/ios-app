@@ -157,6 +157,8 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
                     completionBlock:callback];
     for (PHAsset* asset in difference)
       [self.managed_files.remove_assets addObject:asset.localIdentifier];
+    for (PHAsset* asset in assets)
+      [self.managed_files.remove_assets removeObject:asset.localIdentifier];
   }
   else
   {
@@ -167,6 +169,11 @@ clickedButtonAtIndex:(NSInteger)buttonIndex
     {
       NSURL* asset_url = [asset valueForProperty:ALAssetPropertyAssetURL];
       [self.managed_files.remove_assets addObject:asset_url];
+    }
+    for (ALAsset* asset in assets)
+    {
+      NSURL* asset_url = [asset valueForProperty:ALAssetPropertyAssetURL];
+      [self.managed_files.remove_assets removeObject:asset_url];
     }
   }
   self.recipient_controller.file_count = assets.count;
