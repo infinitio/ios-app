@@ -14,6 +14,7 @@ typedef NS_ENUM(NSUInteger, InfinitSettings)
   InfinitSettingAskedNotifications,
   InfinitSettingAutoSaveToGallery,
   InfinitSettingBeenLaunched,
+  InfinitSettingLaunchCount,
   InfinitSettingLoginMethod,
   InfinitSettingRatedApp,
   InfinitSettingRatingTransactions,
@@ -115,6 +116,25 @@ static dispatch_once_t _instance_token = 0;
   return [self boolForKey:InfinitSettingBeenLaunched];
 }
 
+- (void)setBeen_launched:(BOOL)been_launched
+{
+  [self setBool:been_launched forKey:InfinitSettingBeenLaunched];
+}
+
+- (NSUInteger)launch_count
+{
+  NSNumber* res = nil;
+  res = [self.defaults valueForKey:[self keyForSetting:InfinitSettingLaunchCount]];
+  if (res)
+    return res.unsignedIntegerValue;
+  return 0;
+}
+
+- (void)setLaunch_count:(NSUInteger)launch_count
+{
+  [self.defaults setValue:@(launch_count) forKey:[self keyForSetting:InfinitSettingLaunchCount]];
+}
+
 - (InfinitLoginMethod)login_method
 {
   NSNumber* res = [self.defaults valueForKey:[self keyForSetting:InfinitSettingLoginMethod]];
@@ -127,11 +147,6 @@ static dispatch_once_t _instance_token = 0;
 - (void)setLogin_method:(InfinitLoginMethod)login_method
 {
   [self.defaults setValue:@(login_method) forKey:[self keyForSetting:InfinitSettingLoginMethod]];
-}
-
-- (void)setBeen_launched:(BOOL)been_launched
-{
-  [self setBool:been_launched forKey:InfinitSettingBeenLaunched];
 }
 
 - (BOOL)rated_app
@@ -274,6 +289,8 @@ static dispatch_once_t _instance_token = 0;
       return @"autosave_to_gallery";
     case InfinitSettingBeenLaunched:
       return @"been_launched";
+    case InfinitSettingLaunchCount:
+      return @"launch_count";
     case InfinitSettingLoginMethod:
       return @"login_method";
     case InfinitSettingRatedApp:
