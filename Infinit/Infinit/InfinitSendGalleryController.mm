@@ -12,6 +12,7 @@
 #import "InfinitMetricsManager.h"
 #import "InfinitSendGalleryCell.h"
 #import "InfinitSendRecipientsController.h"
+#import "InfinitSendSelfViewController.h"
 #import "InfinitTabBarController.h"
 
 #import "ALAsset+Date.h"
@@ -20,6 +21,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <Photos/Photos.h>
 
+#import <Gap/InfinitDeviceManager.h>
 #import <Gap/InfinitTemporaryFileManager.h>
 
 #undef check
@@ -546,98 +548,110 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
   self.managed_files = nil;
 }
 
+- (IBAction)nextButtonTapped:(id)sender
+{
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+  {
+    NSString* segue_id = @"send_to_segue";
+    if ([InfinitHostDevice english] && ![InfinitDeviceManager sharedInstance].other_devices.count)
+      segue_id = @"gallery_self_only";
+    [self performSegueWithIdentifier:segue_id sender:sender];
+  }
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue*)segue
                  sender:(id)sender
 {
-  if ([segue.identifier isEqualToString:@"send_to_segue"])
+  NSMutableArray* assets = [NSMutableArray array];
+  for (NSIndexPath* path in self.collection_view.indexPathsForSelectedItems)
   {
-    NSMutableArray* assets = [NSMutableArray array];
-    for (NSIndexPath* path in self.collection_view.indexPathsForSelectedItems)
+    id asset = self.assets[path.row];
+    [assets addObject:asset];
+  }
+  InfinitTemporaryFileManager* manager = [InfinitTemporaryFileManager sharedInstance];
+  if (!self.managed_files)
+    self.managed_files = [manager createManagedFiles];
+  __weak InfinitSendGalleryController* weak_self = self;
+  InfinitTemporaryFileManagerCallback callback = ^(BOOL success, NSError* error)
+  {
+    if (!weak_self)
+      return;
+    InfinitSendGalleryController* strong_self = weak_self;
+    if (error)
     {
-      id asset = self.assets[path.row];
-      [assets addObject:asset];
-    }
-    InfinitTemporaryFileManager* manager = [InfinitTemporaryFileManager sharedInstance];
-    if (!self.managed_files)
-      self.managed_files = [manager createManagedFiles];
-    __weak InfinitSendGalleryController* weak_self = self;
-    InfinitTemporaryFileManagerCallback callback = ^(BOOL success, NSError* error)
-    {
-      if (!weak_self)
-        return;
-      InfinitSendGalleryController* strong_self = weak_self;
-      if (error)
+      NSString* title = nil;
+      NSString* message = nil;
+      switch (error.code)
       {
-        NSString* title = nil;
-        NSString* message = nil;
-        switch (error.code)
-        {
-          case InfinitFileSystemErrorNoFreeSpace:
-            title = NSLocalizedString(@"Not enough space on your device.", nil);
-            message =
-              NSLocalizedString(@"Free up some space on your device and try again or send fewer files.", nil);
-            break;
+        case InfinitFileSystemErrorNoFreeSpace:
+          title = NSLocalizedString(@"Not enough space on your device.", nil);
+          message =
+            NSLocalizedString(@"Free up some space on your device and try again or send fewer files.", nil);
+          break;
 
-          default:
-            title = NSLocalizedString(@"Unable to fetch files.", nil);
-            message =
-              NSLocalizedString(@"Infinit was unable to fetch the files from your gallery. Check that you have some free space and try again.", nil);
-            break;
-        }
-        dispatch_async(dispatch_get_main_queue(), ^
-        {
-          UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
-                                                          message:message
-                                                         delegate:nil
-                                                cancelButtonTitle:@"OK"
-                                                otherButtonTitles:nil];
-          [alert show];
-        });
-        [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:strong_self.managed_files];
-        strong_self->_managed_files = nil;
+        default:
+          title = NSLocalizedString(@"Unable to fetch files.", nil);
+          message =
+            NSLocalizedString(@"Infinit was unable to fetch the files from your gallery. Check that you have some free space and try again.", nil);
+          break;
       }
-    };
-    NSMutableArray* difference = [self.last_selection mutableCopy];
-    [difference removeObjectsInArray:assets];
-    if ([InfinitHostDevice PHAssetClass])
-    {
-      [manager addPHAssetsLibraryList:assets
-                       toManagedFiles:self.managed_files
-                      completionBlock:callback];
-      for (PHAsset* asset in difference)
-        [self.managed_files.remove_assets addObject:asset.localIdentifier];
-      for (PHAsset* asset in assets)
+      dispatch_async(dispatch_get_main_queue(), ^
       {
-        if ([self.managed_files.remove_assets containsObject:asset.localIdentifier])
-          [self.managed_files.remove_assets removeObject:asset.localIdentifier];
-      }
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
+                                                        message:message
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+      });
+      [[InfinitTemporaryFileManager sharedInstance] deleteManagedFiles:strong_self.managed_files];
+      strong_self->_managed_files = nil;
     }
-    else
+  };
+  NSMutableArray* difference = [self.last_selection mutableCopy];
+  [difference removeObjectsInArray:assets];
+  if ([InfinitHostDevice PHAssetClass])
+  {
+    [manager addPHAssetsLibraryList:assets
+                     toManagedFiles:self.managed_files
+                    completionBlock:callback];
+    for (PHAsset* asset in difference)
+      [self.managed_files.remove_assets addObject:asset.localIdentifier];
+    for (PHAsset* asset in assets)
+      [self.managed_files.remove_assets removeObject:asset.localIdentifier];
+  }
+  else
+  {
+    [manager addALAssetsLibraryList:assets
+                     toManagedFiles:self.managed_files
+                    completionBlock:callback];
+    for (ALAsset* asset in difference)
     {
-      [manager addALAssetsLibraryList:assets
-                       toManagedFiles:self.managed_files
-                      completionBlock:callback];
-      for (ALAsset* asset in difference)
-      {
-        NSURL* asset_url = [asset valueForProperty:ALAssetPropertyAssetURL];
-        [self.managed_files.remove_assets addObject:asset_url];
-      }
-      for (ALAsset* asset in assets)
-      {
-        NSURL* asset_url = [asset valueForProperty:ALAssetPropertyAssetURL];
-        if ([self.managed_files.remove_assets containsObject:asset_url])
-          [self.managed_files.remove_assets removeObject:asset_url];
-      }
+      NSURL* asset_url = [asset valueForProperty:ALAssetPropertyAssetURL];
+      [self.managed_files.remove_assets addObject:asset_url];
     }
-
+    for (ALAsset* asset in assets)
+    {
+      NSURL* asset_url = [asset valueForProperty:ALAssetPropertyAssetURL];
+      [self.managed_files.remove_assets removeObject:asset_url];
+    }
+  }
+  if ([segue.identifier isEqualToString:@"gallery_self_only"])
+  {
+    InfinitSendSelfViewController* view_controller =
+      (InfinitSendSelfViewController*)segue.destinationViewController;
+    view_controller.managed_files = self.managed_files;
+  }
+  else if ([segue.identifier isEqualToString:@"send_to_segue"])
+  {
     InfinitSendRecipientsController* view_controller =
       (InfinitSendRecipientsController*)segue.destinationViewController;
     view_controller.file_count = assets.count;
     view_controller.managed_files = self.managed_files;
     [InfinitMetricsManager sendMetric:InfinitUIEventSendRecipientViewOpen
                                method:InfinitUIMethodSendGalleryNext];
-    self.last_selection = assets;
   }
+  self.last_selection = assets;
 }
 
 - (void)configureNextButton
@@ -689,5 +703,10 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
   // button show.
   self.next_constraint.constant = - 3.0f * self.next_button.bounds.size.height;
 }
+
+#pragma mark - Unwind
+
+- (IBAction)unwindToGalleryViewController:(UIStoryboardSegue*)segue
+{}
 
 @end
