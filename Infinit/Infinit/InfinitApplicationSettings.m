@@ -121,6 +121,16 @@ static dispatch_once_t _instance_token = 0;
   [self setBool:been_launched forKey:InfinitSettingBeenLaunched];
 }
 
+- (BOOL)checklist_auto_shown
+{
+  return [self boolForKey:InfinitSettingChecklistAutoShown];
+}
+
+- (void)setChecklist_auto_shown:(BOOL)checklist_auto_shown
+{
+  [self setBool:checklist_auto_shown forKey:InfinitSettingChecklistAutoShown];
+}
+
 - (NSUInteger)launch_count
 {
   NSNumber* res = nil;
@@ -289,6 +299,8 @@ static dispatch_once_t _instance_token = 0;
       return @"autosave_to_gallery";
     case InfinitSettingBeenLaunched:
       return @"been_launched";
+    case InfinitSettingChecklistAutoShown:
+      return @"checklist_auto_shown";
     case InfinitSettingLaunchCount:
       return @"launch_count";
     case InfinitSettingLoginMethod:

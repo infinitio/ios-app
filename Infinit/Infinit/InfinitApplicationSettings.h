@@ -22,6 +22,7 @@ typedef NS_ENUM(NSInteger, InfinitLoginMethod)
 @property (atomic, readwrite) BOOL asked_notifications;
 @property (atomic, readwrite) BOOL autosave_to_gallery;
 @property (atomic, readwrite) BOOL been_launched;
+@property (atomic, readwrite) BOOL checklist_auto_shown;
 @property (atomic, readwrite) NSUInteger launch_count;
 @property (atomic, readwrite) InfinitLoginMethod login_method;
 @property (atomic, readwrite) BOOL rated_app;
