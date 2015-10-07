@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9052" systemVersion="15B22c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9lB-0z-aFR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9058" systemVersion="15B22c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9lB-0z-aFR">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9040"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9048"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -3101,6 +3101,7 @@ access your phone contacts!</string>
                         <outlet property="email_view" destination="q4l-OY-INA" id="Tf4-jB-HMu"/>
                         <outlet property="icon_view" destination="9aQ-yQ-UJE" id="16s-5u-CaJ"/>
                         <outlet property="left_button" destination="1LK-Mw-637" id="agH-dL-BXT"/>
+                        <outlet property="left_center_constraint" destination="8u9-Sh-2UL" id="cIw-p2-W3h"/>
                         <outlet property="left_size_constraint" destination="gOH-o9-6Sj" id="TzJ-EP-8Yo"/>
                         <outlet property="name_label" destination="Fb4-h2-ykq" id="TK1-PV-CxI"/>
                         <outlet property="phone_height" destination="cjl-CV-2RB" id="pfh-Zw-dP8"/>
