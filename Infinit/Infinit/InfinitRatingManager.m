@@ -83,11 +83,10 @@ static NSUInteger _required_transaction_count = 2;
   NSNumber* id_ = notification.userInfo[kInfinitTransactionId];
   InfinitPeerTransaction* transaction =
     [[InfinitPeerTransactionManager sharedInstance] transactionWithId:id_];
-  NSString* self_device_id = [InfinitStateManager sharedInstance].self_device_id;
   if (transaction.status == gap_transaction_finished)
   {
-    if ([transaction.sender_device_id isEqualToString:self_device_id] ||
-        transaction.recipient.is_self)
+    // Can use to_device as no finished transaction will have an empty recipient_device_id.
+    if (transaction.from_device || transaction.to_device)
     {
       NSUInteger rating_transactions = self.settings.rating_transactions.unsignedIntegerValue;
       self.settings.rating_transactions = @(++rating_transactions);
