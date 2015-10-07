@@ -12,7 +12,7 @@
 
 @property (nonatomic, readwrite) NSString* description_str;
 @property (nonatomic, readwrite) BOOL enabled;
-@property (nonatomic, readwrite) UIImage* icon;
+@property (nonatomic, readwrite) UIImage* avatar;
 @property (nonatomic, readonly) CGSize icon_size;
 @property (nonatomic, readwrite) NSString* title_str;
 

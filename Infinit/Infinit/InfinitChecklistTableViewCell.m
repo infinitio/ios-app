@@ -18,12 +18,16 @@
 
 @end
 
+static UIImage* _done_image = nil;
+
 @implementation InfinitChecklistTableViewCell
 
 - (void)awakeFromNib
 {
   [super awakeFromNib];
   self.selectionStyle = UITableViewCellSelectionStyleNone;
+  if (!_done_image)
+    _done_image = [UIImage imageNamed:@"icon-checklist-done"];
 }
 
 - (void)prepareForReuse
@@ -45,20 +49,27 @@
     image_name = @"icon-checklist-twitter";
   else if ([self.reuseIdentifier rangeOfString:@"avatar"].location != NSNotFound)
     image_name = @"icon-checklist-avatar";
+  else if ([self.reuseIdentifier rangeOfString:@"device"].location != NSNotFound)
+    image_name = @"icon-checklist-device";
   else if ([self.reuseIdentifier rangeOfString:@"invite"].location != NSNotFound)
     image_name = @"icon-checklist-invite";
-  if (image_name.length)
-    self.icon = [UIImage imageNamed:image_name];
+  if (image_name.length && enabled)
+    self.icon_view.image = [UIImage imageNamed:image_name];
+  else if (image_name)
+    self.icon_view.image = _done_image;
 }
 
-- (void)setIcon:(UIImage*)icon
+- (void)setAvatar:(UIImage*)avatar
 {
-  UIImage* image = icon;
-  if (!self.enabled)
-    image = image.infinit_grey_scale_image;
-  if (image)
-    self.icon_view.image = image;
-  self.icon_view.alpha = self.enabled ? 1.0f : 0.7f;
+  __weak InfinitChecklistTableViewCell* weak_self = self;
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
+  {
+    UIImage* grey_image = avatar.infinit_grey_scale_image;
+    dispatch_async(dispatch_get_main_queue(), ^
+    {
+      weak_self.icon_view.image = grey_image;
+    });
+  });
 }
 
 - (void)setTitle_str:(NSString*)title

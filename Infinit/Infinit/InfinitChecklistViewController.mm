@@ -21,6 +21,7 @@
 #import <Gap/InfinitAccountManager.h>
 #import <Gap/InfinitAvatarManager.h>
 #import <Gap/InfinitColor.h>
+#import <Gap/InfinitDeviceManager.h>
 #import <Gap/InfinitExternalAccountsManager.h>
 #import <Gap/InfinitStateManager.h>
 
@@ -42,6 +43,9 @@ ELLE_LOG_COMPONENT("iOS.ChecklistOverlay");
                                               UITableViewDelegate>
 
 @property (nonatomic) IBOutlet UIBarButtonItem* close_button;
+@property (nonatomic) IBOutlet UILabel* progress_label;
+@property (nonatomic) IBOutlet UIProgressView* progress_bar;
+
 @property (nonatomic) IBOutlet UITableView* table_view;
 
 @property (nonatomic) UIImage* avatar;
@@ -51,11 +55,12 @@ ELLE_LOG_COMPONENT("iOS.ChecklistOverlay");
 
 typedef NS_ENUM(NSUInteger, InfinitSelfQuotaOverlayRow)
 {
-  InfinitCheckListOverlayRow_Avatar = 0,
-  InfinitCheckListOverlayRow_FBConnect,
-  InfinitCheckListOverlayRow_FBPost,
-  InfinitCheckListOverlayRow_TwitterPost,
-  InfinitCheckListOverlayRow_Invite,
+  InfinitChecklistOverlayRow_Avatar = 0,
+  InfinitChecklistOverlayRow_AddDevice,
+  InfinitChecklistOverlayRow_FBConnect,
+  InfinitChecklistOverlayRow_FBPost,
+  InfinitChecklistOverlayRow_TwitterPost,
+  InfinitChecklistOverlayRow_Invite,
 
   InfinitCheckListOverlayRow_Count,
 };
@@ -63,12 +68,6 @@ typedef NS_ENUM(NSUInteger, InfinitSelfQuotaOverlayRow)
 @implementation InfinitChecklistViewController
 
 #pragma mark - Init
-
-//UIViewController* root_controller =
-//((AppDelegate*)[UIApplication sharedApplication].delegate).root_controller;
-//UINavigationController* nav_controller =
-//[self.storyboard instantiateViewControllerWithIdentifier:@"self_quota_nav_controller"];
-//[root_controller presentViewController:nav_controller animated:YES completion:NULL];
 
 - (void)viewDidLoad
 {
@@ -100,83 +99,113 @@ typedef NS_ENUM(NSUInteger, InfinitSelfQuotaOverlayRow)
     self.close_button.image = [UIImage imageNamed:@"icon-back-white"];
   else
     self.close_button.image = [UIImage imageNamed:@"icon-close"];
+  self.progress_bar.progress = [self completion];
+  self.progress_label.text = [NSString stringWithFormat:@"%.0f %%", [self completion] * 100.0f];
 }
 
 #pragma mark - UITableViewDataSource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
+{
+  return 2;
+}
+
+- (NSString*)tableView:(UITableView*)tableView
+titleForHeaderInSection:(NSInteger)section
+{
+  switch (section)
+  {
+    case 1:
+      return InfinitNonLocalizedString(@"Invitees");
+
+    default:
+      return nil;;
+  }
+}
+
 - (NSInteger)tableView:(UITableView*)tableView
  numberOfRowsInSection:(NSInteger)section
 {
-  NSUInteger referrals_count =
-    [InfinitAccountManager sharedInstance].referral_actions.referrals.count;
-  return InfinitCheckListOverlayRow_Count + referrals_count;
+  switch (section)
+  {
+    case 0:
+      return InfinitCheckListOverlayRow_Count;
+    case 1:
+      return [InfinitAccountManager sharedInstance].referral_actions.referrals.count;
+
+    default:
+      return 0;
+  }
 }
 
 - (UITableViewCell*)tableView:(UITableView*)tableView
         cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-  NSString* identifer = nil;
+  NSString* identifier = nil;
   BOOL enabled = YES;
   InfinitAccountReferralActions* referral_actions =
     [InfinitAccountManager sharedInstance].referral_actions;
   InfinitExternalAccountsManager* manager = [InfinitExternalAccountsManager sharedInstance];
-  switch (indexPath.row)
+  if (indexPath.section == 0)
   {
-    case InfinitCheckListOverlayRow_Avatar:
-      identifer = @"checklist_cell_avatar";
-      if (referral_actions.has_avatar)
-        enabled = NO;
-      break;
-    case InfinitCheckListOverlayRow_FBConnect:
-      identifer = @"checklist_cell_fb_connect";
-      if (manager.have_facebook)
-        enabled = NO;
-      break;
-    case InfinitCheckListOverlayRow_FBPost:
-      identifer = @"checklist_cell_fb_post";
-      if (referral_actions.facebook_posts > 0)
-        enabled = NO;
-      break;
-    case InfinitCheckListOverlayRow_TwitterPost:
-      identifer = @"checklist_cell_twitter_post";
-      if (referral_actions.twitter_posts > 0)
-        enabled = NO;
-      break;
-    case InfinitCheckListOverlayRow_Invite:
-      identifer = @"checklist_cell_invite";
-      break;
-
-    default:
-      identifer = @"checklist_cell_referral";
-      enabled = NO;
-      break;
+    switch (indexPath.row)
+    {
+      case InfinitChecklistOverlayRow_Avatar:
+        identifier = @"checklist_cell_avatar";
+        if (referral_actions.has_avatar)
+          enabled = NO;
+        break;
+      case InfinitChecklistOverlayRow_AddDevice:
+        identifier = @"checklist_cell_add_device";
+        if ([InfinitDeviceManager sharedInstance].other_devices.count)
+          enabled = NO;
+        break;
+      case InfinitChecklistOverlayRow_FBConnect:
+        identifier = @"checklist_cell_fb_connect";
+        if (manager.have_facebook)
+          enabled = NO;
+        break;
+      case InfinitChecklistOverlayRow_FBPost:
+        identifier = @"checklist_cell_fb_post";
+        if (referral_actions.facebook_posts > 0)
+          enabled = NO;
+        break;
+      case InfinitChecklistOverlayRow_TwitterPost:
+        identifier = @"checklist_cell_twitter_post";
+        if (referral_actions.twitter_posts > 0)
+          enabled = NO;
+        break;
+      case InfinitChecklistOverlayRow_Invite:
+        identifier = @"checklist_cell_invite";
+        break;
+    }
   }
-  if (identifer == nil)
+  else
+  {
+    identifier = @"checklist_cell_referral";
+    enabled = NO;
+  }
+  if (identifier == nil)
     return nil;
   InfinitChecklistTableViewCell* cell =
-    [tableView dequeueReusableCellWithIdentifier:identifer forIndexPath:indexPath];
+    [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
   cell.enabled = enabled;
-  if ([identifer isEqualToString:@"checklist_cell_referral"])
+  if ([identifier isEqualToString:@"checklist_cell_referral"])
   {
     NSArray* referrals = [InfinitAccountManager sharedInstance].referral_actions.referrals;
-    InfinitAccountReferral* referral = referrals[indexPath.row - InfinitCheckListOverlayRow_Count];
+    InfinitAccountReferral* referral = referrals[indexPath.row];
     InfinitContactAddressBook* contact =
       [[InfinitContactManager sharedInstance] contactForIdentifier:referral.identifier];
     if (contact && contact.avatar)
     {
-      cell.icon = contact.avatar;
       dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
       {
-        UIImage* icon = [contact.avatar infinit_circularMaskOfSize:cell.icon_size];
-        dispatch_async(dispatch_get_main_queue(), ^
-        {
-          cell.icon = icon;
-        });
+        cell.avatar = [contact.avatar infinit_circularMaskOfSize:cell.icon_size];
       });
     }
     else
     {
-      cell.icon = [UIImage imageNamed:@"icon-checklist-avatar"];
+      cell.avatar = [UIImage imageNamed:@"icon-checklist-avatar"];
     }
     if (contact && contact.fullname.length)
       cell.title_str = contact.fullname;
@@ -218,25 +247,31 @@ shouldHighlightRowAtIndexPath:(NSIndexPath*)indexPath
 - (void)tableView:(UITableView*)tableView
 didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
+  if (indexPath.section != 0)
+    return;
   switch (indexPath.row)
   {
-    case InfinitCheckListOverlayRow_Avatar:
+    case InfinitChecklistOverlayRow_Avatar:
       ELLE_TRACE("%s: add avatar selected", self.description.UTF8String);
       [self addAvatar];
       break;
-    case InfinitCheckListOverlayRow_FBConnect:
+    case InfinitChecklistOverlayRow_AddDevice:
+      ELLE_TRACE("%s: add device selected", self.description.UTF8String);
+      [self addDevice];
+      break;
+    case InfinitChecklistOverlayRow_FBConnect:
       ELLE_TRACE("%s: connect facebook selected", self.description.UTF8String);
       [self connectFacebookAccount];
       break;
-    case InfinitCheckListOverlayRow_FBPost:
+    case InfinitChecklistOverlayRow_FBPost:
       ELLE_TRACE("%s: post facebook selected", self.description.UTF8String);
       [self postOnFacebook];
       break;
-    case InfinitCheckListOverlayRow_TwitterPost:
+    case InfinitChecklistOverlayRow_TwitterPost:
       ELLE_TRACE("%s: post twitter selected", self.description.UTF8String);
       [self postOnTwitter];
       break;
-    case InfinitCheckListOverlayRow_Invite:
+    case InfinitChecklistOverlayRow_Invite:
       ELLE_TRACE("%s: invite selected", self.description.UTF8String);
       [self invite];
       break;
@@ -308,8 +343,17 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
 {
   self.avatar = info[UIImagePickerControllerEditedImage];
   [[InfinitAvatarManager sharedInstance] setSelfAvatar:self.avatar];
-  [self disableRow:InfinitCheckListOverlayRow_Avatar];
+  [self disableRow:InfinitChecklistOverlayRow_Avatar];
   [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Device
+
+- (void)addDevice
+{
+  NSURL* url =
+    [NSURL URLWithString:@"http://help.infinit.io/knowledgebase/articles/737748"];
+  [[UIApplication sharedApplication] openURL:url];
 }
 
 #pragma mark - Facebook
@@ -343,7 +387,7 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
        {
          NSString* token = [FBSDKAccessToken currentAccessToken].tokenString;
          [[InfinitStateManager sharedInstance] addFacebookAccount:token];
-         [weak_self disableRow:InfinitCheckListOverlayRow_FBConnect];
+         [weak_self disableRow:InfinitChecklistOverlayRow_FBConnect];
        }
        else
        {
@@ -375,7 +419,8 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
        if ([[FBSDKAccessToken currentAccessToken].permissions containsObject:@"publish_actions"])
        {
          FBSDKShareLinkContent* link = [[FBSDKShareLinkContent alloc] init];
-         link.contentURL = [NSURL URLWithString:@"https://infinit.io?utm_source=facebook&utm_medium=checklist&utm_campaign=ios"];
+         link.contentURL =
+          [NSURL URLWithString:@"https://infinit.io?utm_source=facebook&utm_medium=checklist&utm_campaign=ios"];
          link.contentTitle = @"Infinit - Unlimited File Sharing";
          [FBSDKShareDialog showFromViewController:weak_self withContent:link delegate:weak_self];
        }
@@ -400,7 +445,7 @@ didFinishPickingMediaWithInfo:(NSDictionary*)info
 - (void)sharer:(id<FBSDKSharing>)sharer
 didCompleteWithResults:(NSDictionary*)results
 {
-  [self disableRow:InfinitCheckListOverlayRow_FBPost];
+  [self disableRow:InfinitChecklistOverlayRow_FBPost];
   [[InfinitStateManager sharedInstance] performSocialPostOnMedium:@"facebook"];
 }
 
@@ -430,7 +475,7 @@ didFailWithError:(NSError*)error
         token, email];
        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url_str]];
    }];
-  [self disableRow:InfinitCheckListOverlayRow_TwitterPost];
+  [self disableRow:InfinitChecklistOverlayRow_TwitterPost];
 }
 
 #pragma mark - Invite
@@ -450,7 +495,7 @@ didFailWithError:(NSError*)error
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
-#pragma mark - Disable Row
+#pragma mark - Helpers
 
 - (void)disableRow:(NSUInteger)row
 {
@@ -462,5 +507,26 @@ didFailWithError:(NSError*)error
   });
 }
 
+- (double)completion
+{
+  NSUInteger total = 6;
+  NSUInteger progress = 0;
+  InfinitAccountReferralActions* referral_actions =
+    [InfinitAccountManager sharedInstance].referral_actions;
+  InfinitExternalAccountsManager* manager = [InfinitExternalAccountsManager sharedInstance];
+  if (referral_actions.has_avatar)
+    progress++;
+  if ([InfinitDeviceManager sharedInstance].other_devices.count)
+    progress++;
+  if (manager.have_facebook)
+    progress++;
+  if (referral_actions.facebook_posts > 0)
+    progress++;
+  if (referral_actions.twitter_posts > 0)
+    progress++;
+  if (referral_actions.referrals.count)
+    progress++;
+  return (double)progress / (double)total;
+}
 
 @end
