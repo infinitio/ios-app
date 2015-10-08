@@ -20,7 +20,10 @@
 
 @interface InfinitSendSelfViewController () <UIGestureRecognizerDelegate>
 
-@property (nonatomic) IBOutlet UIBarButtonItem* back_button;
+@property (nonatomic) IBOutlet UIButton* contact_button;
+@property (nonatomic) IBOutlet UIGestureRecognizer* contact_gesture;
+@property (nonatomic) IBOutlet UIButton* device_button;
+@property (nonatomic) IBOutlet UIGestureRecognizer* device_gesture;
 
 @end
 
@@ -35,7 +38,6 @@
                                                                        size:17.0f],
                                   NSForegroundColorAttributeName: [UIColor whiteColor]};
   [self.navigationController.navigationBar setTitleTextAttributes:nav_bar_attrs];
-  self.back_button.image = [UIImage imageNamed:@"icon-back-white"];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -45,6 +47,7 @@
   self.navigationController.interactivePopGestureRecognizer.delegate = self;
   [self.navigationController.interactivePopGestureRecognizer addTarget:self
                                                                 action:@selector(backTapped:)];
+  [self enableInteraction:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -58,6 +61,7 @@
 
 - (IBAction)deviceTapped:(id)sender
 {
+  [self enableInteraction:NO];
   void (^send_block)() = ^()
   {
     InfinitUser* me = [InfinitUserManager sharedInstance].me;
@@ -102,17 +106,13 @@
   {
     send_block();
   }
-  [self doneSending];
-}
-
-- (void)doneSending
-{
   if (self.managed_files && !self.managed_files.sending)
     self.managed_files.sending = YES;
-  dispatch_async(dispatch_get_main_queue(), ^
-  {
-    [((InfinitTabBarController*)self.tabBarController) showMainScreen:self];
-  });
+}
+
+- (IBAction)selfImageTapped:(id)sender
+{
+  [self deviceTapped:sender];
 }
 
 - (IBAction)backTapped:(id)sender
@@ -121,14 +121,15 @@
     [self performSegueWithIdentifier:@"self_only_gallery" sender:sender];
 }
 
-- (IBAction)selfImageTapped:(id)sender
+- (IBAction)contactTapped:(id)sender
 {
-  [self deviceTapped:sender];
+  [self enableInteraction:NO];
+  [self performSegueWithIdentifier:@"self_only_send_contact" sender:sender];
 }
 
 - (IBAction)contactsImageTapped:(id)sender
 {
-  [self performSegueWithIdentifier:@"self_only_send_contact" sender:sender];
+  [self contactTapped:sender];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue*)segue
@@ -140,6 +141,16 @@
       (InfinitSendRecipientsController*)segue.destinationViewController;
     recipient_controller.managed_files = self.managed_files;
   }
+}
+
+#pragma mark - Helpers
+
+- (void)enableInteraction:(BOOL)enable
+{
+  self.contact_button.enabled = enable;
+  self.contact_gesture.enabled = enable;
+  self.device_button.enabled = enable;
+  self.device_gesture.enabled = enable;
 }
 
 @end
