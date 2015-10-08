@@ -87,6 +87,7 @@
 		835B9D5E1A9E29E400FD0D54 /* InfinitHomePeerTransactionMoreFilesCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 835B9D5C1A9E29E400FD0D54 /* InfinitHomePeerTransactionMoreFilesCell.xib */; };
 		835B9D611A9E61EE00FD0D54 /* InfinitFilesBottomBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 835B9D601A9E61EE00FD0D54 /* InfinitFilesBottomBar.m */; };
 		835B9D631A9E620900FD0D54 /* InfinitFilesBottomBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 835B9D621A9E620900FD0D54 /* InfinitFilesBottomBar.xib */; };
+		835F0EFB1BC6565D008DB605 /* InfinitSendSelfDoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 835F0EFA1BC6565D008DB605 /* InfinitSendSelfDoneViewController.m */; };
 		836024EF1A6FAC00002889DB /* InfinitHostDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 836024EE1A6FAC00002889DB /* InfinitHostDevice.m */; };
 		836080541ACEC68E00EBC4E2 /* ALAssetsLibrary+CustomPhotoAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = 836080531ACEC68E00EBC4E2 /* ALAssetsLibrary+CustomPhotoAlbum.m */; };
 		83612F8E1A5D7FDB00BDF7CE /* NSData+Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = 83612F8D1A5D7FDB00BDF7CE /* NSData+Conversion.m */; };
@@ -554,6 +555,8 @@
 		835B9D601A9E61EE00FD0D54 /* InfinitFilesBottomBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFilesBottomBar.m; sourceTree = "<group>"; };
 		835B9D621A9E620900FD0D54 /* InfinitFilesBottomBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitFilesBottomBar.xib; sourceTree = "<group>"; };
 		835CAD311B05EE7600F3FD7F /* InfinitConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InfinitConstants.h; path = "../../../objcpp-gap/Gap/InfinitConstants.h"; sourceTree = "<group>"; };
+		835F0EF91BC6565D008DB605 /* InfinitSendSelfDoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitSendSelfDoneViewController.h; sourceTree = "<group>"; };
+		835F0EFA1BC6565D008DB605 /* InfinitSendSelfDoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitSendSelfDoneViewController.m; sourceTree = "<group>"; };
 		836024ED1A6FAC00002889DB /* InfinitHostDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitHostDevice.h; sourceTree = "<group>"; };
 		836024EE1A6FAC00002889DB /* InfinitHostDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitHostDevice.m; sourceTree = "<group>"; };
 		836080521ACEC68E00EBC4E2 /* ALAssetsLibrary+CustomPhotoAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAssetsLibrary+CustomPhotoAlbum.h"; sourceTree = "<group>"; };
@@ -1667,6 +1670,8 @@
 			children = (
 				8349EA371BC4283C00E8A4DA /* InfinitSendSelfViewController.h */,
 				8349EA381BC4283C00E8A4DA /* InfinitSendSelfViewController.m */,
+				835F0EF91BC6565D008DB605 /* InfinitSendSelfDoneViewController.h */,
+				835F0EFA1BC6565D008DB605 /* InfinitSendSelfDoneViewController.m */,
 			);
 			name = Self;
 			sourceTree = "<group>";
@@ -2905,6 +2910,7 @@
 				83FE65911A6E571600D3CA9A /* InfinitHomeOnboardingCell.m in Sources */,
 				83EBB0841A93951600144BC6 /* InfinitOfflineOverlay.m in Sources */,
 				83157ED71A73D29100F8E87F /* InfinitFilesTableCell.m in Sources */,
+				835F0EFB1BC6565D008DB605 /* InfinitSendSelfDoneViewController.m in Sources */,
 				83F5C3B11A814C8900E751CD /* InfinitSendToSelfOverlayView.m in Sources */,
 				839B813F1A6407990057E92B /* InfinitSendContactCell.m in Sources */,
 				8311B5B91A7CE7F600832FDE /* InfinitContactCell.m in Sources */,
