@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9058" systemVersion="15B22c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9lB-0z-aFR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9058" systemVersion="15B30a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="9lB-0z-aFR">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9048"/>
@@ -45,8 +45,11 @@
             <string>HelveticaNeue</string>
             <string>HelveticaNeue</string>
             <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
         </mutableArray>
         <mutableArray key="SourceSansPro-Bold.otf">
+            <string>SourceSansPro-Bold</string>
             <string>SourceSansPro-Bold</string>
             <string>SourceSansPro-Bold</string>
             <string>SourceSansPro-Bold</string>
@@ -69,6 +72,7 @@
             <string>SourceSansPro-Regular</string>
         </mutableArray>
         <mutableArray key="SourceSansPro-Semibold.otf">
+            <string>SourceSansPro-Semibold</string>
             <string>SourceSansPro-Semibold</string>
             <string>SourceSansPro-Semibold</string>
         </mutableArray>
@@ -1687,6 +1691,7 @@ access your phone contacts!</string>
                                                     <color key="titleColor" red="0.35686274509999999" green="0.34901960780000002" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
+                                                    <action selector="contactTapped:" destination="FIQ-Ap-F2N" eventType="touchUpInside" id="nkA-WT-x1x"/>
                                                     <segue destination="9ZK-3B-PXo" kind="show" identifier="self_only_send_contact" id="lVz-vi-huA"/>
                                                 </connections>
                                             </button>
@@ -1740,6 +1745,7 @@ access your phone contacts!</string>
                                                 </state>
                                                 <connections>
                                                     <action selector="deviceTapped:" destination="FIQ-Ap-F2N" eventType="touchUpInside" id="Qam-eG-j8C"/>
+                                                    <segue destination="OW4-1K-MlA" kind="show" id="bzP-Dh-TRq"/>
                                                 </connections>
                                             </button>
                                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-sendtoself" translatesAutoresizingMaskIntoConstraints="NO" id="4gY-Vd-RDI">
@@ -1803,6 +1809,9 @@ access your phone contacts!</string>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="contact_gesture" destination="i7I-fl-K7v" id="lae-PX-bv4"/>
+                        <outlet property="device_button" destination="XWx-xU-YJ4" id="g6P-XA-aEf"/>
+                        <outlet property="device_gesture" destination="mFE-yz-Uje" id="ZEG-XZ-LzV"/>
                         <segue destination="QUm-9G-MOo" kind="unwind" identifier="self_only_gallery" unwindAction="unwindToGalleryViewController:" id="3xK-Ag-CVH"/>
                     </connections>
                 </viewController>
@@ -1820,6 +1829,139 @@ access your phone contacts!</string>
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3165" y="450"/>
+        </scene>
+        <!--SENT!-->
+        <scene sceneID="Kfb-m6-o0P">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="OW4-1K-MlA" customClass="InfinitSendSelfDoneViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="pFG-hN-t14"/>
+                        <viewControllerLayoutGuide type="bottom" id="AUQ-Fa-ZsD"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="N1l-8b-70G">
+                        <rect key="frame" x="0.0" y="44" width="600" height="556"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VeO-ES-mkS">
+                                <rect key="frame" x="0.0" y="501" width="600" height="55"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.94901960780000005" green="0.36862745099999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="55" id="R2S-iC-Kg8"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="17"/>
+                                <state key="normal" title="GOT IT">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="doneTapped:" destination="OW4-1K-MlA" eventType="touchUpInside" id="JfP-nN-3dX"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" text="Now, Install Infinit on another device!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FQN-4Q-ePj">
+                                <rect key="frame" x="169" y="293" width="263" height="19"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                <color key="textColor" red="0.35686274509803922" green="0.34901960784313724" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" text="We sent an email with a download link to &lt;email&gt;." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MLH-E2-JjC">
+                                <rect key="frame" x="121" y="337" width="358" height="19"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3VW-z7-SW2">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="278"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HvT-gW-qaV">
+                                        <rect key="frame" x="165" y="50" width="270" height="178"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g0c-Zp-JKK">
+                                                <rect key="frame" x="37" y="148" width="196" height="30"/>
+                                                <animations/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="nmH-OY-qCi"/>
+                                                    <constraint firstAttribute="width" constant="196" id="zgl-Zf-aNR"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="17"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="20" maxY="0.0"/>
+                                                <state key="normal" title="SENT!" image="icon-sendtoself-check">
+                                                    <color key="titleColor" red="0.35686274509999999" green="0.34901960780000002" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <state key="disabled" image="icon-sendtoself-check"/>
+                                            </button>
+                                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-sendtoself" translatesAutoresizingMaskIntoConstraints="NO" id="ohT-Qw-ded">
+                                                <rect key="frame" x="0.0" y="0.0" width="270" height="123"/>
+                                                <animations/>
+                                                <gestureRecognizers/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="123" id="7Rq-hZ-G0c"/>
+                                                    <constraint firstAttribute="width" constant="270" id="TR0-oF-5ga"/>
+                                                </constraints>
+                                            </imageView>
+                                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="5ep-fI-v38">
+                                                <rect key="frame" x="125" y="153" width="20" height="20"/>
+                                                <animations/>
+                                                <color key="color" red="0.35686274509999999" green="0.34901960780000002" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
+                                            </activityIndicatorView>
+                                        </subviews>
+                                        <animations/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="g0c-Zp-JKK" firstAttribute="centerX" secondItem="HvT-gW-qaV" secondAttribute="centerX" id="9ZG-AT-JEG"/>
+                                            <constraint firstItem="ohT-Qw-ded" firstAttribute="leading" secondItem="HvT-gW-qaV" secondAttribute="leading" id="AsS-ws-Hqf"/>
+                                            <constraint firstItem="g0c-Zp-JKK" firstAttribute="centerY" secondItem="5ep-fI-v38" secondAttribute="centerY" id="Bd8-aa-kvW"/>
+                                            <constraint firstAttribute="bottom" secondItem="g0c-Zp-JKK" secondAttribute="bottom" id="EZK-Xf-fyW"/>
+                                            <constraint firstItem="g0c-Zp-JKK" firstAttribute="centerX" secondItem="5ep-fI-v38" secondAttribute="centerX" id="OYk-Zl-L70"/>
+                                            <constraint firstAttribute="trailing" secondItem="ohT-Qw-ded" secondAttribute="trailing" id="T7h-7V-dAF"/>
+                                            <constraint firstItem="g0c-Zp-JKK" firstAttribute="top" secondItem="ohT-Qw-ded" secondAttribute="bottom" constant="25" id="Wn4-qR-5I1"/>
+                                            <constraint firstItem="ohT-Qw-ded" firstAttribute="top" secondItem="HvT-gW-qaV" secondAttribute="top" id="aUH-be-3s0"/>
+                                            <constraint firstItem="ohT-Qw-ded" firstAttribute="centerX" secondItem="HvT-gW-qaV" secondAttribute="centerX" id="akv-nt-b0K"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="HvT-gW-qaV" firstAttribute="centerY" secondItem="3VW-z7-SW2" secondAttribute="centerY" id="cWk-rc-xoF"/>
+                                    <constraint firstItem="HvT-gW-qaV" firstAttribute="centerX" secondItem="3VW-z7-SW2" secondAttribute="centerX" id="x5k-4M-FII"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="AUQ-Fa-ZsD" firstAttribute="top" secondItem="3VW-z7-SW2" secondAttribute="bottom" multiplier="2:1" id="4L9-Js-b7J"/>
+                            <constraint firstItem="MLH-E2-JjC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="N1l-8b-70G" secondAttribute="leadingMargin" id="6QR-xh-luN"/>
+                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="MLH-E2-JjC" secondAttribute="trailing" id="8BE-rS-PDw"/>
+                            <constraint firstAttribute="trailing" secondItem="3VW-z7-SW2" secondAttribute="trailing" id="Ala-xW-ftv"/>
+                            <constraint firstItem="FQN-4Q-ePj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="N1l-8b-70G" secondAttribute="leadingMargin" id="CHw-RN-pUJ"/>
+                            <constraint firstItem="MLH-E2-JjC" firstAttribute="centerX" secondItem="N1l-8b-70G" secondAttribute="centerX" id="N2N-DC-Xxw"/>
+                            <constraint firstItem="MLH-E2-JjC" firstAttribute="top" secondItem="FQN-4Q-ePj" secondAttribute="bottom" constant="25" id="Vlf-Gx-gvj"/>
+                            <constraint firstItem="3VW-z7-SW2" firstAttribute="leading" secondItem="N1l-8b-70G" secondAttribute="leading" id="g5q-hu-d3P"/>
+                            <constraint firstItem="FQN-4Q-ePj" firstAttribute="centerX" secondItem="N1l-8b-70G" secondAttribute="centerX" id="m4a-JU-hY2"/>
+                            <constraint firstItem="3VW-z7-SW2" firstAttribute="top" secondItem="pFG-hN-t14" secondAttribute="bottom" id="nRK-uU-FHr"/>
+                            <constraint firstItem="VeO-ES-mkS" firstAttribute="leading" secondItem="N1l-8b-70G" secondAttribute="leading" id="s0Z-U6-3dD"/>
+                            <constraint firstItem="AUQ-Fa-ZsD" firstAttribute="top" secondItem="VeO-ES-mkS" secondAttribute="bottom" id="s4o-mu-gds"/>
+                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="FQN-4Q-ePj" secondAttribute="trailing" id="tif-Jn-ziZ"/>
+                            <constraint firstAttribute="trailing" secondItem="VeO-ES-mkS" secondAttribute="trailing" id="xrB-Pd-E9Z"/>
+                            <constraint firstItem="FQN-4Q-ePj" firstAttribute="top" secondItem="3VW-z7-SW2" secondAttribute="bottom" constant="15" id="ydK-Tp-cZ5"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="SENT!" id="eFx-xc-X6c"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="activity_view" destination="5ep-fI-v38" id="y4H-Gt-Dta"/>
+                        <outlet property="email_details" destination="MLH-E2-JjC" id="SZk-KQ-yrM"/>
+                        <outlet property="sent_button" destination="g0c-Zp-JKK" id="h9O-Bm-T4c"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="R37-gQ-hDb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3887" y="450"/>
         </scene>
         <!--Infinit Welcome View Controller-->
         <scene sceneID="ML7-zP-jiP">
@@ -3690,6 +3832,7 @@ type of file in Infinit</string>
         <image name="icon-send-self-arrow-right" width="9" height="14"/>
         <image name="icon-send-white" width="18" height="15"/>
         <image name="icon-sendtoself" width="270" height="123"/>
+        <image name="icon-sendtoself-check" width="14" height="13"/>
         <image name="icon-settings-fullname" width="17" height="20"/>
         <image name="icon-share" width="22" height="27"/>
         <image name="icon-tab-contacts" width="18" height="21"/>
@@ -3703,8 +3846,8 @@ type of file in Infinit</string>
         <image name="schema-onboarding-infinite" width="214" height="90"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="1b9-l5-7NA"/>
         <segue reference="XNA-2s-qWv"/>
+        <segue reference="1b9-l5-7NA"/>
         <segue reference="iUI-7h-033"/>
         <segue reference="G1u-me-VrO"/>
         <segue reference="Yah-cg-ZRU"/>
