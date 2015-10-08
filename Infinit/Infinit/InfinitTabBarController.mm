@@ -318,7 +318,11 @@ static InfinitTabBarController* _current_instance = nil;
   if (selectedIndex == self.selectedIndex)
     return;
   if (selectedIndex == InfinitTabBarIndexContacts)
-    [self.viewControllers[InfinitTabBarIndexContacts] setInvitation_mode:NO];
+  {
+    UIViewController* view_controller = self.viewControllers[InfinitTabBarIndexContacts];
+    if ([view_controller isKindOfClass:InfinitContactsViewController.class])
+      ((InfinitContactsViewController*)view_controller).invitation_mode = NO;
+  }
   [super setSelectedIndex:selectedIndex];
   [self selectorToPosition:selectedIndex];
 }
@@ -567,7 +571,7 @@ shouldSelectViewController:(UIViewController*)viewController
         CGPointMake(self.view.frame.size.width / 2.0f, self.view.frame.size.height -
                     self.send_tab_icon.frame.size.height / 3.0f);
     }
-    else if ([send_nav_controller.topViewController.restorationIdentifier isEqualToString:@"send_recipients_controller_id"])
+    else
     {
       self.animator.animation = AnimateDownUp;
     }
