@@ -8,6 +8,8 @@
 
 #import "InfinitContactUser.h"
 
+#import <Gap/NSString+PhoneNumber.h>
+
 @implementation InfinitContactUser
 
 #pragma mark - Init
@@ -26,11 +28,18 @@
   else
     fullname = user.fullname;
   NSString* first_name = nil;
-  NSArray* temp = [user.fullname componentsSeparatedByString:@" "];
-  if (temp.count > 0 && [temp[0] length] > 0)
-    first_name = temp[0];
+  if (fullname.infinit_isPhoneNumber)
+  {
+    first_name = fullname;
+  }
   else
-    first_name = user.fullname;
+  {
+    NSArray* temp = [user.fullname componentsSeparatedByString:@" "];
+    if (temp.count > 0 && [temp[0] length] > 0)
+      first_name = temp[0];
+    else
+      first_name = user.fullname;
+  }
   if (self = [super initWithAvatar:user.avatar firstName:first_name fullname:fullname])
   {
     _infinit_user = user;
@@ -100,6 +109,8 @@
 
 - (BOOL)isEqual:(id)object
 {
+  if (object == self)
+    return YES;
   if (![object isKindOfClass:self.class])
     return NO;
   InfinitContactUser* other = (InfinitContactUser*)object;
@@ -116,6 +127,11 @@
     }
   }
   return NO;
+}
+
+- (NSUInteger)hash
+{
+  return self.infinit_user.hash;
 }
 
 @end

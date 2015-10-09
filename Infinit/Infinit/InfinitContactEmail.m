@@ -45,12 +45,20 @@
 
 - (BOOL)isEqual:(id)object
 {
+  if (object == self)
+    return YES;
   if (![object isKindOfClass:self.class])
     return NO;
+  NSLog(@"xxx email");
   InfinitContactEmail* other = (InfinitContactEmail*)object;
   if ([self.email isEqualToString:other.email])
     return YES;
   return NO;
+}
+
+- (NSUInteger)hash
+{
+  return self.email.hash;
 }
 
 #pragma mark - Helpers

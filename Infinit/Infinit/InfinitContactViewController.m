@@ -111,9 +111,14 @@ static NSAttributedString* _unfavorite_title = nil;
   self.send_invite_button.titleLabel.minimumScaleFactor = 0.25f;
 }
 
+- (void)updateViewConstraints
+{
+  [super updateViewConstraints];
+  self.bar_width_constraint.constant = self.view.bounds.size.width - (2.0f * 45.0f);
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
-  self.bar_width_constraint.constant = self.view.bounds.size.width - (2.0f * 45.0f);
   [super viewWillAppear:animated];
   [self configureView];
 }

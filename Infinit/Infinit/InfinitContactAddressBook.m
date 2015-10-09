@@ -142,15 +142,26 @@ static NSCharacterSet* _whitespace = nil;
 
 - (BOOL)isEqual:(id)object
 {
+  if (object == self)
+    return YES;
   if (![object isKindOfClass:self.class])
     return NO;
   InfinitContactAddressBook* other = (InfinitContactAddressBook*)object;
+  if (self.address_book_id == other.address_book_id)
+  {
+    return YES;
+  }
   if (self.emails && other.emails && [self.emails isEqualToArray:other.emails])
     return YES;
   if (self.phone_numbers && other.phone_numbers &&
       [self.phone_numbers isEqualToArray:other.phone_numbers])
     return YES;
   return NO;
+}
+
+- (NSUInteger)hash
+{
+  return self.address_book_id;
 }
 
 #pragma mark - Helpers
