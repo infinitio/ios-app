@@ -4,3 +4,5 @@
 /* Class = "UIButton"; normalTitle = "YES"; ObjectID = "eiV-uK-z6m"; */
 "eiV-uK-z6m.normalTitle" = "JA";
 
+/* Class = "UILabel"; text = "Do you already have an\nInfinit account?"; ObjectID = "tBX-13-sdM"; */
+"tBX-13-sdM.text" = "Heb jij al een\nInfinit account?";
