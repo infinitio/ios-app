@@ -137,8 +137,6 @@ static NSString* _cell_identifier = @"gallery_cell";
                        0.0f,
                        - (self.next_button.titleLabel.frame.size.width + 10.0f));
   }
-  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone && [InfinitHostDevice iOS7])
-    self.hidesBottomBarWhenPushed = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
