@@ -1617,42 +1617,50 @@ didDeleteTokenAtIndex:(NSUInteger)index
 
 - (void)removeInvitationOverlay
 {
+  [self removeInvitationOverlayCanceled:NO];
+}
+
+- (void)removeInvitationOverlayCanceled:(BOOL)canceled
+{
   UIView* view = self.invitation_overlay.view;
   InfinitContactAddressBook* contact_ab = self.invitation_overlay.contact;
   NSUInteger row = [self.contact_results indexOfObject:contact_ab];
-  if (row != NSNotFound)
+  if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone || canceled)
   {
-    NSIndexPath* index = [NSIndexPath indexPathForRow:row
-                                            inSection:InfinitSendRecipientsSectionContacts];
-    if ([self.table_view.indexPathsForSelectedRows containsObject:index])
-      [self.table_view deselectRowAtIndexPath:index animated:NO];
-    else
-      row = NSNotFound;
-  }
-  if (row == NSNotFound)
-  {
-    [self.swagger_results enumerateObjectsUsingBlock:^(InfinitContactUser* contact_user,
-                                                       NSUInteger i,
-                                                       BOOL* stop)
+    if (row != NSNotFound)
     {
-      if (contact_user.infinit_user.ghost)
+      NSIndexPath* index = [NSIndexPath indexPathForRow:row
+                                              inSection:InfinitSendRecipientsSectionContacts];
+      if ([self.table_view.indexPathsForSelectedRows containsObject:index])
+        [self.table_view deselectRowAtIndexPath:index animated:NO];
+      else
+        row = NSNotFound;
+    }
+    if (row == NSNotFound)
+    {
+      [self.swagger_results enumerateObjectsUsingBlock:^(InfinitContactUser* contact_user,
+                                                         NSUInteger i,
+                                                         BOOL* stop)
       {
-        NSString* identifier =
-          [contact_user.infinit_user.ghost_identifier stringByReplacingOccurrencesOfString:@" "
-                                                                                withString:@""];
-        if ([contact_ab.phone_numbers indexOfObject:identifier] != NSNotFound ||
-            [contact_ab.emails indexOfObject:identifier] != NSNotFound)
+        if (contact_user.infinit_user.ghost)
         {
-          NSIndexPath* index = [NSIndexPath indexPathForRow:i
-                                                  inSection:InfinitSendRecipientsSectionSwaggers];
-          if ([self.table_view.indexPathsForSelectedRows containsObject:index])
+          NSString* identifier =
+            [contact_user.infinit_user.ghost_identifier stringByReplacingOccurrencesOfString:@" "
+                                                                                  withString:@""];
+          if ([contact_ab.phone_numbers indexOfObject:identifier] != NSNotFound ||
+              [contact_ab.emails indexOfObject:identifier] != NSNotFound)
           {
-            [self.table_view deselectRowAtIndexPath:index animated:NO];
-            *stop = YES;
+            NSIndexPath* index = [NSIndexPath indexPathForRow:i
+                                                    inSection:InfinitSendRecipientsSectionSwaggers];
+            if ([self.table_view.indexPathsForSelectedRows containsObject:index])
+            {
+              [self.table_view deselectRowAtIndexPath:index animated:NO];
+              *stop = YES;
+            }
           }
         }
-      }
-    }];
+      }];
+    }
   }
   if (view == nil)
     return;
@@ -1818,7 +1826,7 @@ didDeleteTokenAtIndex:(NSUInteger)index
 
 - (void)invitationOverlayGotCancel:(InfinitInvitationOverlayViewController*)sender
 {
-  [self removeInvitationOverlay];
+  [self removeInvitationOverlayCanceled:YES];
 }
 
 #pragma mark - Helpers
