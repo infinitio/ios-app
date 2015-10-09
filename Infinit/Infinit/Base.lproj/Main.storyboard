@@ -810,7 +810,7 @@
         <!--SEND_GALLERY-->
         <scene sceneID="28I-PS-ga1">
             <objects>
-                <viewController storyboardIdentifier="send_gallery_controller_id" title="SEND_GALLERY" extendedLayoutIncludesOpaqueBars="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Cz7-xE-6Ks" customClass="InfinitSendGalleryController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="send_gallery_controller_id" title="SEND_GALLERY" extendedLayoutIncludesOpaqueBars="YES" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Cz7-xE-6Ks" customClass="InfinitSendGalleryController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Beg-AB-V7t"/>
                         <viewControllerLayoutGuide type="bottom" id="WOe-0g-zHE"/>
@@ -3033,14 +3033,14 @@ access your phone contacts!</string>
                         <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LHl-Q8-2Gf">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LHl-Q8-2Gf">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VWT-t1-haC">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                    <view contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VWT-t1-haC">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SXc-4G-LTM">
-                                                <rect key="frame" x="234" y="20" width="84" height="83"/>
+                                                <rect key="frame" x="234" y="25" width="84" height="83"/>
                                                 <animations/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="83" id="LI4-9c-geO"/>
@@ -3048,14 +3048,14 @@ access your phone contacts!</string>
                                                 </constraints>
                                             </imageView>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9aQ-yQ-UJE">
-                                                <rect key="frame" x="283" y="82" width="40" height="40"/>
+                                                <rect key="frame" x="283" y="87" width="40" height="40"/>
                                                 <animations/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="Bgf-PC-k29"/>
                                                     <constraint firstAttribute="width" constant="40" id="aBz-Za-aKP"/>
                                                 </constraints>
                                             </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fb4-h2-ykq">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fb4-h2-ykq">
                                                 <rect key="frame" x="254" y="125" width="42" height="20"/>
                                                 <animations/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
@@ -3067,8 +3067,8 @@ access your phone contacts!</string>
                                                 <animations/>
                                                 <color key="backgroundColor" red="0.89411764705882346" green="0.89411764705882346" blue="0.89411764705882346" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="230" id="54A-Ok-REu"/>
                                                     <constraint firstAttribute="height" constant="1" id="gFk-lR-wQl"/>
+                                                    <constraint firstAttribute="width" constant="510" id="l8Y-GT-GAC"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9lD-iS-7NT">
@@ -3082,14 +3082,14 @@ access your phone contacts!</string>
                                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q4l-OY-INA">
                                                 <rect key="frame" x="20" y="287" width="510" height="50"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ED8-ta-EAO">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ED8-ta-EAO">
                                                         <rect key="frame" x="0.0" y="0.0" width="510" height="17"/>
                                                         <animations/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
                                                         <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mGE-WJ-uld">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mGE-WJ-uld">
                                                         <rect key="frame" x="0.0" y="27" width="510" height="17"/>
                                                         <animations/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
@@ -3112,14 +3112,14 @@ access your phone contacts!</string>
                                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QNS-J9-iHx">
                                                 <rect key="frame" x="20" y="342" width="510" height="50"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="phone" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w7i-pX-6rC">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="phone" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w7i-pX-6rC">
                                                         <rect key="frame" x="0.0" y="0.0" width="510" height="17"/>
                                                         <animations/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="14"/>
                                                         <color key="textColor" red="0.31764705879999999" green="0.31764705879999999" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2OQ-eh-oJ7">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2OQ-eh-oJ7">
                                                         <rect key="frame" x="0.0" y="27" width="510" height="17"/>
                                                         <animations/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
@@ -3177,7 +3177,7 @@ access your phone contacts!</string>
                                         <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="QNS-J9-iHx" secondAttribute="bottom" constant="35" id="1F5-Pw-OXZ"/>
+                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="QNS-J9-iHx" secondAttribute="bottom" constant="35" id="1F5-Pw-OXZ"/>
                                             <constraint firstItem="SXc-4G-LTM" firstAttribute="centerX" secondItem="1LK-Mw-637" secondAttribute="trailing" constant="10" id="8u9-Sh-2UL"/>
                                             <constraint firstAttribute="trailing" secondItem="22f-OX-yjp" secondAttribute="trailing" constant="45" id="9i5-qB-KnO"/>
                                             <constraint firstItem="1LK-Mw-637" firstAttribute="top" secondItem="22f-OX-yjp" secondAttribute="bottom" constant="32" id="FE0-QM-aKA"/>
@@ -3235,10 +3235,10 @@ access your phone contacts!</string>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="avatar_view" destination="SXc-4G-LTM" id="gUt-eb-YXf"/>
-                        <outlet property="bar_width_constraint" destination="54A-Ok-REu" id="g4N-MM-Uhz"/>
+                        <outlet property="bar_width_constraint" destination="l8Y-GT-GAC" id="nJx-4v-r29"/>
                         <outlet property="email_address_label" destination="mGE-WJ-uld" id="SQ4-ta-zaB"/>
                         <outlet property="email_height" destination="vvA-6j-3Oq" id="xtv-OI-rKV"/>
                         <outlet property="email_view" destination="q4l-OY-INA" id="Tf4-jB-HMu"/>
@@ -3253,6 +3253,7 @@ access your phone contacts!</string>
                         <outlet property="send_center_constraint" destination="Yry-m6-IGY" id="7AE-nz-4cO"/>
                         <outlet property="send_invite_button" destination="cAz-dS-fQ5" id="4S1-cu-fFh"/>
                         <outlet property="send_size_constraint" destination="uMN-g1-e9e" id="DWi-t3-3SE"/>
+                        <outlet property="view" destination="z4J-xO-e5w" id="KpZ-YS-gpq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oFN-nO-BVh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3852,9 +3853,9 @@ type of file in Infinit</string>
         <segue reference="Yah-cg-ZRU"/>
         <segue reference="3h7-TB-AdP"/>
         <segue reference="7Vb-QM-Foc"/>
-        <segue reference="XNA-2s-qWv"/>
-        <segue reference="1b9-l5-7NA"/>
+        <segue reference="HDy-pb-z8U"/>
         <segue reference="5jp-t6-Gni"/>
+        <segue reference="1b9-l5-7NA"/>
         <segue reference="19z-F9-Cn7"/>
     </inferredMetricsTieBreakers>
 </document>
