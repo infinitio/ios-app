@@ -357,7 +357,7 @@ static NSAttributedString* _unfavorite_title = nil;
                                                              NSString* url)
   {
     InfinitContactViewController* strong_self = weak_self;
-    if (!result.success)
+    if (!result.success || !code.length || !url.length)
     {
       NSString* message = NSLocalizedString(@"This user is already on Infinit.", nil);
       [strong_self showAlertWithTitle:NSLocalizedString(@"User already on Infinit", nil)
