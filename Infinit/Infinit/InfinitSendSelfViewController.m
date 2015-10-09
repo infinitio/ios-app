@@ -108,6 +108,7 @@
   }
   if (self.managed_files && !self.managed_files.sending)
     self.managed_files.sending = YES;
+  [self performSegueWithIdentifier:@"self_only_send_self" sender:sender];
 }
 
 - (IBAction)selfImageTapped:(id)sender

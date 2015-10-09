@@ -39,11 +39,11 @@
             <string>HelveticaNeue</string>
             <string>HelveticaNeue</string>
             <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
+            <string>HelveticaNeue</string>
             <string>HelveticaNeue-Medium</string>
             <string>HelveticaNeue</string>
             <string>HelveticaNeue-Medium</string>
-            <string>HelveticaNeue</string>
-            <string>HelveticaNeue</string>
             <string>HelveticaNeue</string>
             <string>HelveticaNeue</string>
             <string>HelveticaNeue</string>
@@ -784,6 +784,7 @@
                     <tabBarItem key="tabBarItem" title="" id="KgD-ZR-jZX"/>
                     <toolbarItems/>
                     <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="uCo-zV-vR7" customClass="InfinitSendNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1650,7 +1651,7 @@ access your phone contacts!</string>
         <!--SEND TO...-->
         <scene sceneID="CaX-Vx-arG">
             <objects>
-                <viewController extendedLayoutIncludesOpaqueBars="YES" id="FIQ-Ap-F2N" customClass="InfinitSendSelfViewController" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" hidesBottomBarWhenPushed="YES" id="FIQ-Ap-F2N" customClass="InfinitSendSelfViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5b9-NK-037"/>
                         <viewControllerLayoutGuide type="bottom" id="BYN-j7-c7x"/>
@@ -1692,7 +1693,6 @@ access your phone contacts!</string>
                                                 </state>
                                                 <connections>
                                                     <action selector="contactTapped:" destination="FIQ-Ap-F2N" eventType="touchUpInside" id="nkA-WT-x1x"/>
-                                                    <segue destination="9ZK-3B-PXo" kind="show" identifier="self_only_send_contact" id="lVz-vi-huA"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -1745,7 +1745,6 @@ access your phone contacts!</string>
                                                 </state>
                                                 <connections>
                                                     <action selector="deviceTapped:" destination="FIQ-Ap-F2N" eventType="touchUpInside" id="Qam-eG-j8C"/>
-                                                    <segue destination="OW4-1K-MlA" kind="show" id="bzP-Dh-TRq"/>
                                                 </connections>
                                             </button>
                                             <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-sendtoself" translatesAutoresizingMaskIntoConstraints="NO" id="4gY-Vd-RDI">
@@ -1813,6 +1812,8 @@ access your phone contacts!</string>
                         <outlet property="device_button" destination="XWx-xU-YJ4" id="g6P-XA-aEf"/>
                         <outlet property="device_gesture" destination="mFE-yz-Uje" id="ZEG-XZ-LzV"/>
                         <segue destination="QUm-9G-MOo" kind="unwind" identifier="self_only_gallery" unwindAction="unwindToGalleryViewController:" id="3xK-Ag-CVH"/>
+                        <segue destination="9ZK-3B-PXo" kind="show" identifier="self_only_send_contact" id="ZX2-G0-xPo"/>
+                        <segue destination="OW4-1K-MlA" kind="show" identifier="self_only_send_self" id="TaF-qC-lib"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sK2-37-Td6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3846,13 +3847,13 @@ type of file in Infinit</string>
         <image name="schema-onboarding-infinite" width="214" height="90"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="XNA-2s-qWv"/>
-        <segue reference="1b9-l5-7NA"/>
         <segue reference="iUI-7h-033"/>
         <segue reference="G1u-me-VrO"/>
         <segue reference="Yah-cg-ZRU"/>
+        <segue reference="3h7-TB-AdP"/>
         <segue reference="7Vb-QM-Foc"/>
-        <segue reference="lVz-vi-huA"/>
+        <segue reference="XNA-2s-qWv"/>
+        <segue reference="1b9-l5-7NA"/>
         <segue reference="5jp-t6-Gni"/>
         <segue reference="19z-F9-Cn7"/>
     </inferredMetricsTieBreakers>
