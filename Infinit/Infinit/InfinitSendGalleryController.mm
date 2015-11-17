@@ -577,6 +577,11 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
     if (!weak_self)
       return;
     InfinitSendGalleryController* strong_self = weak_self;
+    if (success)
+    {
+      ELLE_TRACE("%s: temporary files copied successfully", strong_self.description.UTF8String);
+      return;
+    }
     if (error)
     {
       NSString* title = nil;
@@ -595,6 +600,8 @@ didDeselectItemAtIndexPath:(NSIndexPath*)indexPath
             NSLocalizedString(@"Infinit was unable to fetch the files from your gallery. Check that you have some free space and try again.", nil);
           break;
       }
+      ELLE_WARN("%s: error copying temporary files, show alert with message: %s",
+                strong_self.description.UTF8String, message.UTF8String);
       dispatch_async(dispatch_get_main_queue(), ^
       {
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
