@@ -140,7 +140,13 @@ static dispatch_once_t _instance_token = 0;
   }
   else
   {
-    [existing endTask];
+    // Give us time to tidy up if we're the sender.
+    uint16_t delay = transaction.from_device ? 3 : 0;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)),
+                   dispatch_get_main_queue(), ^
+    {
+      [existing endTask];
+    });
   }
 }
 
