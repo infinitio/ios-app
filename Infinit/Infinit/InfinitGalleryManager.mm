@@ -224,13 +224,17 @@ static InfinitGalleryManager* _instance = nil;
          {
            if (error)
            {
-             ELLE_ERR("%s: unable to save image: %s", self.description.UTF8String, path.UTF8String);
+             NSString* error_msg = error.description.length ? error.description : @"<unknown>";
+             ELLE_ERR("%s: unable to save image (%s): %s",
+                      self.description.UTF8String, path.UTF8String, error_msg.UTF8String);
            }
          } failure:^(NSError* error)
          {
            if (error)
            {
-             ELLE_ERR("%s: unable to save image: %s", self.description.UTF8String, path.UTF8String);
+             NSString* error_msg = error.description.length ? error.description : @"<unknown>";
+             ELLE_ERR("%s: unable to save image (%s): %s",
+                      self.description.UTF8String, path.UTF8String, error_msg.UTF8String);
            }
          }];
       }
@@ -242,13 +246,17 @@ static InfinitGalleryManager* _instance = nil;
          {
            if (error)
            {
-             ELLE_ERR("%s: unable to save video: %s", self.description.UTF8String, path.UTF8String);
+             NSString* error_msg = error.description.length ? error.description : @"<unknown>";
+             ELLE_ERR("%s: unable to save video (%s): %s",
+                      self.description.UTF8String, path.UTF8String, error_msg.UTF8String);
            }
          } failure:^(NSError* error)
          {
            if (error)
            {
-             ELLE_ERR("%s: unable to save video: %s", self.description.UTF8String, path.UTF8String);
+             NSString* error_msg = error.description.length ? error.description : @"<unknown>";
+             ELLE_ERR("%s: unable to save video (%s): %s",
+                      self.description.UTF8String, path.UTF8String, error_msg.UTF8String);
            }
          }];
       }
