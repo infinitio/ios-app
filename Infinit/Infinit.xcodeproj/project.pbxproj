@@ -120,7 +120,7 @@
 		83A0D63E1ADE9AC000D9D3AD /* InfinitHomeOnboardingItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A0D63D1ADE9AC000D9D3AD /* InfinitHomeOnboardingItem.m */; };
 		83A0D64A1ADEB70200D9D3AD /* InfinitTabBarController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A0D6491ADEB70200D9D3AD /* InfinitTabBarController_iPad.m */; };
 		83A0D64E1ADECE6500D9D3AD /* InfinitFilesViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A0D64D1ADECE6500D9D3AD /* InfinitFilesViewController_iPad.m */; };
-		83A0D6521ADECF6C00D9D3AD /* InfinitFilesTableViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A0D6511ADECF6C00D9D3AD /* InfinitFilesTableViewController_iPad.m */; };
+		83A0D6521ADECF6C00D9D3AD /* InfinitFilesTableViewController_iPad.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83A0D6511ADECF6C00D9D3AD /* InfinitFilesTableViewController_iPad.mm */; };
 		83A0D6561ADED03A00D9D3AD /* InfinitFilesTableCell_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A0D6551ADED03A00D9D3AD /* InfinitFilesTableCell_iPad.m */; };
 		83A0D6581ADED1E000D9D3AD /* InfinitFilesTableCell_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83A0D6571ADED1E000D9D3AD /* InfinitFilesTableCell_iPad.xib */; };
 		83A0D65D1ADFA0D200D9D3AD /* InfinitFilesCollectionViewController_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 83A0D65C1ADFA0D200D9D3AD /* InfinitFilesCollectionViewController_iPad.m */; };
@@ -616,7 +616,7 @@
 		83A0D64C1ADECE6500D9D3AD /* InfinitFilesViewController_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFilesViewController_iPad.h; sourceTree = "<group>"; };
 		83A0D64D1ADECE6500D9D3AD /* InfinitFilesViewController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFilesViewController_iPad.m; sourceTree = "<group>"; };
 		83A0D6501ADECF6C00D9D3AD /* InfinitFilesTableViewController_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFilesTableViewController_iPad.h; sourceTree = "<group>"; };
-		83A0D6511ADECF6C00D9D3AD /* InfinitFilesTableViewController_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFilesTableViewController_iPad.m; sourceTree = "<group>"; };
+		83A0D6511ADECF6C00D9D3AD /* InfinitFilesTableViewController_iPad.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = InfinitFilesTableViewController_iPad.mm; sourceTree = "<group>"; };
 		83A0D6541ADED03A00D9D3AD /* InfinitFilesTableCell_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfinitFilesTableCell_iPad.h; sourceTree = "<group>"; };
 		83A0D6551ADED03A00D9D3AD /* InfinitFilesTableCell_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfinitFilesTableCell_iPad.m; sourceTree = "<group>"; };
 		83A0D6571ADED1E000D9D3AD /* InfinitFilesTableCell_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfinitFilesTableCell_iPad.xib; sourceTree = "<group>"; };
@@ -1854,7 +1854,7 @@
 			children = (
 				83A0D6531ADED01400D9D3AD /* Cells */,
 				83A0D6501ADECF6C00D9D3AD /* InfinitFilesTableViewController_iPad.h */,
-				83A0D6511ADECF6C00D9D3AD /* InfinitFilesTableViewController_iPad.m */,
+				83A0D6511ADECF6C00D9D3AD /* InfinitFilesTableViewController_iPad.mm */,
 			);
 			name = "Table View";
 			sourceTree = "<group>";
@@ -2562,6 +2562,9 @@
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
+							com.apple.Push = {
+								enabled = 1;
+							};
 						};
 					};
 				};
@@ -2804,7 +2807,7 @@
 				83A0D64E1ADECE6500D9D3AD /* InfinitFilesViewController_iPad.m in Sources */,
 				83A759BB1AE6652C0026FB26 /* InfinitSendSplitViewController_iPad.mm in Sources */,
 				838490981A767F6E00969CF7 /* InfinitFilePreviewController.mm in Sources */,
-				83A0D6521ADECF6C00D9D3AD /* InfinitFilesTableViewController_iPad.m in Sources */,
+				83A0D6521ADECF6C00D9D3AD /* InfinitFilesTableViewController_iPad.mm in Sources */,
 				83F7C3B51A6E96C600FA283C /* InfinitSendNoResultsCell.m in Sources */,
 				D0BC70471A41C04C006923F2 /* InfinitSendGalleryController.mm in Sources */,
 				83C50FA41AB6BF8E009EBB44 /* JDStatusBarNotification.m in Sources */,
