@@ -12,6 +12,11 @@
 #import "InfinitFilesTableCell_iPad.h"
 #import "InfinitFolderModel.h"
 
+#undef check
+#import <elle/log.hh>
+
+ELLE_LOG_COMPONENT("iOS.FilesTableViewControlleriPad");
+
 @interface InfinitFilesTableViewController_iPad () <UITableViewDataSource,
                                                     UITableViewDelegate>
 
@@ -125,6 +130,12 @@ didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
   if (!tableView.editing)
   {
+    if (indexPath.row >= self.folder_results.count)
+    {
+      ELLE_WARN("%s: tried to select item out of range: %ld/%ld",
+                self.description.UTF8String, indexPath.row, self.folder_results.count - 1);
+      return;
+    }
     [self.delegate actionForFolder:self.folder_results[indexPath.row] sender:self];
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
   }
