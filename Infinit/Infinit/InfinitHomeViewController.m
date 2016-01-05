@@ -756,7 +756,7 @@ didSelectItemAtIndexPath:(NSIndexPath*)indexPath
         {
           height += (transaction.files.count > 3 ? 2 * file_h : file_h) + status_h + button_h;
         }
-        else if (transaction.receivable)
+        else if (transaction.receivable && !transaction.recipient_device.length)
         {
           height += button_h;
         }

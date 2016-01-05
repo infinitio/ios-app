@@ -198,8 +198,9 @@ static CGFloat _button_height = 45.0f;
   }
   if (!_install_str)
   {
-    _install_str = [[NSAttributedString alloc] initWithString:InfinitNonLocalizedString(@"GET FILES")
-                                                   attributes:green_attrs];
+    _install_str =
+      [[NSAttributedString alloc] initWithString:InfinitNonLocalizedString(@"GET FILES")
+                                      attributes:green_attrs];
   }
 
   if (!_accept_image)
@@ -422,7 +423,7 @@ static CGFloat _button_height = 45.0f;
       break;
 
     case gap_transaction_waiting_accept:
-      [self setButtonsHidden:!(self.expanded || self.transaction.receivable)];
+      [self setButtonsHidden:!(self.expanded || self.transaction.receivable) || self.transaction.recipient_device.length];
       [self setStatusViewHidden:!self.expanded];
       self.top_line.hidden = !self.expanded;
       if (self.transaction.receivable && !self.transaction.recipient_device.length)
