@@ -63,7 +63,8 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
     [[NSFileManager defaultManager] enumeratorAtURL:url
                          includingPropertiesForKeys:@[NSURLNameKey,
                                                       NSURLIsDirectoryKey,
-                                                      NSURLFileSizeKey]
+                                                      NSURLFileSizeKey,
+                                                      NSURLIsPackageKey]
                                             options:NSDirectoryEnumerationSkipsPackageDescendants
                                        errorHandler:^BOOL(NSURL* url, NSError* error)
   {
@@ -79,6 +80,7 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
   NSUInteger total_size = 0;
   NSNumber* file_size;
   NSNumber* is_directory;
+  NSNumber* is_package;
   NSString* url_name;
   for (NSURL* url in enumerator)
   {
@@ -87,9 +89,17 @@ ELLE_LOG_COMPONENT("iOS.FolderModel");
       continue;
     [url getResourceValue:&is_directory forKey:NSURLIsDirectoryKey error:nil];
     if (is_directory.boolValue)
-      continue;
-
-    [url getResourceValue:&file_size forKey:NSURLFileSizeKey error:nil];
+    {
+      // Handle Apple bundles.
+      [url getResourceValue:&is_package forKey:NSURLIsPackageKey error:nil];
+      if (!is_package.boolValue)
+        continue;
+      file_size = @([[InfinitDirectoryManager sharedInstance] folderSize:url.path]);
+    }
+    else
+    {
+      [url getResourceValue:&file_size forKey:NSURLFileSizeKey error:nil];
+    }
     total_size += file_size.unsignedIntegerValue;
     NSString* file_path = url.path;
     InfinitFileModel* file = [[InfinitFileModel alloc] initWithPath:file_path
