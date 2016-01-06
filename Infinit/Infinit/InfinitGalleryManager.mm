@@ -135,6 +135,8 @@ static InfinitGalleryManager* _instance = nil;
          PHAssetChangeRequest* asset_request = nil;
          if (type == InfinitFileTypeImage)
          {
+           ELLE_DEBUG("%s: adding image to gallery: %s",
+                      self.description.UTF8String, path.UTF8String);
            NSURL* url = [NSURL fileURLWithPath:path];
            asset_request = [PHAssetChangeRequest creationRequestForAssetFromImageAtFileURL:url];
            if (asset_request)
@@ -158,9 +160,16 @@ static InfinitGalleryManager* _instance = nil;
              }
              [assets addObject:asset_request.placeholderForCreatedAsset];
            }
+           else
+           {
+             ELLE_ERR("%s: unable to create asset from image path: %s",
+                      self.description.UTF8String, path.UTF8String);
+           }
          }
          else if (type == InfinitFileTypeVideo)
          {
+           ELLE_DEBUG("%s: adding video to gallery: %s",
+                      self.description.UTF8String, path.UTF8String);
            NSURL* url = [NSURL fileURLWithPath:path];
            asset_request = [PHAssetChangeRequest creationRequestForAssetFromVideoAtFileURL:url];
            AVURLAsset* meta_asset = [AVURLAsset assetWithURL:url];
@@ -168,9 +177,7 @@ static InfinitGalleryManager* _instance = nil;
            for (AVMetadataItem* item in meta_data)
            {
              if ([item.identifier isEqualToString:AVMetadataIdentifierQuickTimeUserDataCreationDate])
-             {
                asset_request.creationDate = item.dateValue;
-             }
            }
            for (AVMetadataItem* item in meta_data)
            {
@@ -196,7 +203,14 @@ static InfinitGalleryManager* _instance = nil;
              }
            }
            if (asset_request)
+           {
              [assets addObject:asset_request.placeholderForCreatedAsset];
+           }
+           else
+           {
+             ELLE_ERR("%s: unable to create asset from video path: %s",
+                      self.description.UTF8String, path.UTF8String);
+           }
          }
          else
          {
@@ -217,6 +231,7 @@ static InfinitGalleryManager* _instance = nil;
       InfinitFileTypes type = [InfinitFilePreview fileTypeForPath:path];
       if (type == InfinitFileTypeImage)
       {
+        ELLE_DEBUG("%s: adding image to gallery: %s", self.description.UTF8String, path.UTF8String);
         [self.library saveImageData:[NSData dataWithContentsOfFile:path]
                             toAlbum:kInfinitAlbumName
                            metadata:nil
@@ -240,6 +255,7 @@ static InfinitGalleryManager* _instance = nil;
       }
       else if (type == InfinitFileTypeVideo)
       {
+        ELLE_DEBUG("%s: adding video to gallery: %s", self.description.UTF8String, path.UTF8String);
         [self.library saveVideo:[NSURL URLWithString:path]
                         toAlbum:kInfinitAlbumName
                      completion:^(NSURL* assetURL, NSError* error)
